@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/plugins/qquake" >
+        <file>icon.svg</file>
+    </qresource>
+</RCC>

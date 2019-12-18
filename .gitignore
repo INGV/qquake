@@ -1,0 +1,7 @@
+*.pyc
+.idea/*
+.backuputils.py
+*.zip
+__pycache__/
+.coverage
+.noseids
