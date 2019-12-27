@@ -1,0 +1,217 @@
+{
+  "fdsnevent": [
+    {
+      "title": "AHEAD, European Archive of Historical EArthquake Data (pre 1900)",
+      "info": "Albini P., Locati M., Rovida A., Stucchi M. (2013). European Archive of Historical EArthquake Data (AHEAD). Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.6092/INGV.IT-AHEAD",
+      "infourl": "https://www.emidius.eu/AHEAD",
+      "datalicense": "CC BY-SA 4.0",
+      "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+      "dataproviderurl": "http://www.ingv.it",
+      "endpointurl": "https://www.emidius.eu/fdsnws/event/1/query?",
+      "datestart": "1000-01-01T01:01:01+00:00",
+      "dateend": "1899-12-31T23:59:59+00:00",
+      "boundingbox": [
+        32,
+        75,
+        -33,
+        32
+      ],
+      "default": {
+        "datestart": "1000-01-01T01:01:01+00:00",
+        "dateend": "1899-12-31T23:59:59+00:00",
+        "boundingboxpredefined": "europe"
+      },
+      "queryeventid": true,
+      "queryupdatedafter": false,
+      "querycatalog": true,
+      "querycontributor": true,
+      "querycontributorid": true,
+      "queryeventtype": false,
+      "querymagnitudetype": false,
+      "queryincludeallorigins": true,
+      "queryincludeallmagnitudes": true,
+      "queryincludearrivals": true,
+      "querylimit": true,
+      "querylimitmaxentries": 5000,
+      "querycircular": true,
+      "querycircularradiuskm": true,
+      "outputtext": true,
+      "outputxml": true,
+      "outputgeojson": true,
+      "outputjson": true,
+      "outputkml": false,
+      "outputxlsx": false,
+      "httpcodenodata": "204",
+      "configversion": 0.1,
+      "configlastupdate": "2019-12-27T11:37:27+00:00"
+    },
+    {
+      "title": "CPTI, Catalogo Parametrico dei Terremoti Italiani (INGV)",
+      "info": "Rovida A., Locati M., Camassi R., Lolli B., Gasperini P. (2019). Catalogo Parametrico dei Terremoti Italiani (CPTI15), versione 2.0 [Data set]. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/CPTI/CPTI15.2",
+      "infourl": "https://emidius.mi.ingv.it/CPTI15-DBMI15",
+      "datalicense": "CC BY-SA 4.0",
+      "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+      "dataproviderurl": "http://www.ingv.it",
+      "urlendpoint": "https://emidius.mi.ingv.it/fdsnws/event/1/query?",
+      "datestart": "1000-01-01T01:01:01+00:00",
+      "dateend": "2017-12-31T23:59:59+00:00",
+      "boundingbox": [
+        35,
+        48,
+        5,
+        21
+      ],
+      "default": {
+        "datestart": "1000-01-01T01:01:01+00:00",
+        "dateend": "1899-12-31T23:59:59+00:00",
+        "boundingboxpredefined": "italy"
+      },
+      "queryeventid": true,
+      "queryupdatedafter": false,
+      "querycatalog": true,
+      "querycontributor": true,
+      "querycontributorid": true,
+      "queryeventtype": false,
+      "querymagnitudetype": false,
+      "queryincludeallorigins": true,
+      "queryincludeallmagnitudes": true,
+      "queryincludearrivals": true,
+      "querylimit": true,
+      "querylimitmaxentries": 5000,
+      "querycircular": true,
+      "querycircularradiuskm": true,
+      "outputtext": true,
+      "outputxml": true,
+      "outputgeojson": true,
+      "outputjson": true,
+      "outputkml": false,
+      "outputxlsx": false,
+      "httpcodenodata": "204",
+      "configversion": 0.1,
+      "configlastupdate": "2019-12-27T11:37:27+00:00"
+    }
+  ],
+  "boundingboxpredefined": [
+    {
+      "id":"europe",
+      "title": "Europe",
+      "boundingbox": [
+        32,
+        75,
+        -33,
+        32
+      ]
+    },
+    {
+      "id":"italy",
+      "title": "Italy",
+      "boundingbox": [
+        35,
+        48,
+        5,
+        21
+      ]
+    },
+    {
+      "id":"mediterranean",
+      "title": "Mediterranean Sea",
+      "boundingbox": [
+        27,
+        48,
+        -7,
+        38
+      ]
+    }
+  ],
+  "fdsnstation": [
+    {
+      "title": "EIDA Stations, European Integrated Data Archive",
+      "info": "EIDA station metadata and instrument specifics in FDSN StationXML format. Metadata can be selected on SEED network, station, location or channel identifiers in addition to spatiotemporal constraints. Metadata can be extracted at multiple levels of detail",
+      "infourl": "https://www.orfeus-eu.org/data/eida/webservices/station/",
+      "datalicense": "CC BY-SA 4.0",
+      "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "dataprovider": "Observatories & Research Facilities for European Seismology (ORFEUS)",
+      "dataproviderurl": "https://www.orfeus-eu.org/",
+      "endpointurl": "http://www.orfeus-eu.org/fdsnws/station/1/query?",
+      "datestart": "",
+      "dateend": "",
+      "boundingbox": [],
+      "default": {
+        "boundingboxpredefined": "europe"
+      },
+      "querystartbefore":true,
+      "querystartafter":true,
+      "queryendbefore":true,
+      "queryendafter":true,
+      "querycircular": true,
+      "querycircularradiuskm": true,
+      "queryincluderestricted": true,
+      "queryincludeavailability": true,
+      "queryupdatedafter": true,
+      "querymatchtimeseries": true,
+      "outputtext": true,
+      "outputxml": true,
+      "outputgeojson": true,
+      "outputjson": true,
+      "outputkml": false,
+      "outputxlsx": false,
+      "httpcodenodata": "204",
+      "configversion": 0.1,
+      "configlastupdate": "2019-12-27T11:37:27+00:00"
+    }
+  ],
+  "wfs": [
+    {
+      "title": "AHEAD, EuroMed historical earthquakes (pre 1900)",
+      "info": "Albini P., Locati M., Rovida A., Stucchi M. (2013). European Archive of Historical EArthquake Data (AHEAD). Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.6092/INGV.IT-AHEAD",
+      "infourl": "https://www.emidius.eu/AHEAD",
+      "datalicense": "CC BY-SA 4.0",
+      "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+      "dataproviderurl": "http://www.ingv.it",
+      "endpointurl": "https://www.emidius.eu/services/europe/wfs/?",
+      "datestart": "1000-01-01T01:01:01+00:00",
+      "dateend": "1899-12-31T23:59:59+00:00",
+      "boundingbox": [
+        32,
+        75,
+        -33,
+        32
+      ],
+      "default": {
+        "wfsversion": "2.0.0"
+      },
+      "configversion": 0.1,
+      "configlastupdate": "2019-12-27T11:37:27+00:00"
+    }
+  ],
+  "wms": [
+    {
+      "title": "AHEAD, EuroMed historical earthquakes (pre 1900)",
+      "info": "Albini P., Locati M., Rovida A., Stucchi M. (2013). European Archive of Historical EArthquake Data (AHEAD). Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.6092/INGV.IT-AHEAD",
+      "infourl": "https://www.emidius.eu/AHEAD",
+      "datalicense": "CC BY-SA 4.0",
+      "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+      "dataproviderurl": "http://www.ingv.it",
+      "endpointurl": "https://www.emidius.eu/services/europe/wms/?",
+      "datestart": "1000-01-01T01:01:01+00:00",
+      "dateend": "1899-12-31T23:59:59+00:00",
+      "boundingbox": [
+        32,
+        75,
+        -33,
+        32
+      ],
+      "default": {
+        "wmsversion": "1.3.0"
+      },
+      "configversion": 0.1,
+      "configlastupdate": "2019-12-27T11:37:27+00:00"
+    }
+  ],
+  "configversion": 0.1,
+  "lastupdate": "2019-12-27T11:37:27+00:00"
+}
