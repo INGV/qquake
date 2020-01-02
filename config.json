@@ -24,6 +24,9 @@
       },
       "settings":{
         "queryeventid": true,
+        "queryoriginid": false,
+        "querymagnitudeid": false,
+        "queryfocalmechanismid": false,
         "queryupdatedafter": false,
         "querycatalog": true,
         "querycontributor": true,
@@ -32,11 +35,13 @@
         "querymagnitudetype": false,
         "queryincludeallorigins": true,
         "queryincludeallmagnitudes": true,
-        "queryincludearrivals": true,
+        "queryincludearrivals": false,
+        "queryincludeallstationsmagnitudes": false,
         "querylimit": true,
         "querylimitmaxentries": 5000,
         "querycircular": true,
         "querycircularradiuskm": true,
+        "querydepth": false,
         "outputtext": true,
         "outputxml": true,
         "outputgeojson": true,
@@ -49,8 +54,8 @@
       "configlastupdate": "2019-12-27T11:37:27+00:00"
     },
     {
-      "title": "CPTI, Catalogo Parametrico dei Terremoti Italiani (INGV)",
-      "info": "Rovida A., Locati M., Camassi R., Lolli B., Gasperini P. (2019). Catalogo Parametrico dei Terremoti Italiani (CPTI15), versione 2.0 [Data set]. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/CPTI/CPTI15.2",
+      "title": "ASMI, Archivio Storico Macrosismico Italiano (INGV)",
+      "info": "Rovida A., Locati M., Antonucci A., Camassi R. (2017). Archivio Storico Macrosismico Italiano (ASMI). Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/ASMI",
       "infourl": "https://emidius.mi.ingv.it/CPTI15-DBMI15",
       "datalicense": "CC BY-SA 4.0",
       "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
@@ -67,11 +72,14 @@
       ],
       "default": {
         "datestart": "1000-01-01T01:01:01+00:00",
-        "dateend": "1899-12-31T23:59:59+00:00",
+        "dateend": "2017-12-31T23:59:59+00:00",
         "boundingboxpredefined": "italy"
       },
       "settings":{
         "queryeventid": true,
+        "queryoriginid": false,
+        "querymagnitudeid": false,
+        "queryfocalmechanismid": false,
         "queryupdatedafter": false,
         "querycatalog": true,
         "querycontributor": true,
@@ -80,11 +88,64 @@
         "querymagnitudetype": false,
         "queryincludeallorigins": true,
         "queryincludeallmagnitudes": true,
-        "queryincludearrivals": true,
+        "queryincludearrivals": false,
+        "queryincludeallstationsmagnitudes": false,
         "querylimit": true,
         "querylimitmaxentries": 5000,
         "querycircular": true,
         "querycircularradiuskm": true,
+        "querydepth": false,
+        "outputtext": true,
+        "outputxml": true,
+        "outputgeojson": true,
+        "outputjson": true,
+        "outputkml": false,
+        "outputxlsx": false,
+        "httpcodenodata": "204"
+      },
+      "configversion": 0.1,
+      "configlastupdate": "2019-12-27T11:37:27+00:00"
+    },
+    {
+      "title": "ISIDe, Italian Seismological Instrumental and Parametric Database (INGV)",
+      "info": "ISIDe Working Group (2007). Italian Seismological Instrumental and Parametric Database (ISIDe). Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/ISIDE",
+      "infourl": "http://terremoti.ingv.it/",
+      "datalicense": "CC BY 4.0",
+      "datalicenseurl": "https://creativecommons.org/licenses/by/4.0/",
+      "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+      "dataproviderurl": "http://www.ingv.it",
+      "urlendpoint": "http://webservices.ingv.it/fdsnws/event/1/query?",
+      "datestart": "1000-01-01T01:01:01+00:00",
+      "dateend": "",
+      "boundingbox": [
+        35,
+        48,
+        6,
+        19
+      ],
+      "default": {
+        "boundingboxpredefined": "italy"
+      },
+      "settings":{
+        "queryeventid": true,
+        "queryoriginid": true,
+        "querymagnitudeid": true,
+        "queryfocalmechanismid": true,
+        "queryupdatedafter": true,
+        "querycatalog": true,
+        "querycontributor": true,
+        "querycontributorid": true,
+        "queryeventtype": true,
+        "querymagnitudetype": true,
+        "queryincludeallorigins": true,
+        "queryincludeallmagnitudes": true,
+        "queryincludearrivals": true,
+        "queryincludeallstationsmagnitudes": true,
+        "querylimit": true,
+        "querylimitmaxentries": 5000,
+        "querycircular": true,
+        "querycircularradiuskm": true,
+        "querydepth": true,
         "outputtext": true,
         "outputxml": true,
         "outputgeojson": true,
@@ -138,9 +199,9 @@
   ],
   "wfs": [
     {
-      "title": "AHEAD, EuroMed historical earthquakes (pre 1900)",
-      "info": "Albini P., Locati M., Rovida A., Stucchi M. (2013). European Archive of Historical EArthquake Data (AHEAD). Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.6092/INGV.IT-AHEAD",
-      "infourl": "https://www.emidius.eu/AHEAD",
+      "title": "SHARE European Earthquake Catalogue (SHEEC) 1000-1899",
+      "info": "Stucchi M., Rovida A., Gómez Capera A. A., Alexandre P., Camelbeeck T., Demircioglu M. B. et al. (2012). SHARE European Earthquake Catalogue (SHEEC) 1000-1899. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.6092/INGV.IT-SHARE-SHEEC.1000-1899",
+      "infourl": "https://www.emidius.eu/SHEEC/sheec_1000_1899.html",
       "datalicense": "CC BY-SA 4.0",
       "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
@@ -158,7 +219,7 @@
         "wfsversion": "2.0.0",
         "layers":[
          {
-           "layername":"italy:CPTI15",
+           "layername":"SHEEC_1000_1899",
            "style":"CPTI"
          } 
         ]
@@ -173,13 +234,43 @@
       },
       "configversion": 0.1,
       "configlastupdate": "2019-12-27T11:37:27+00:00"
+    },
+    {
+      "title": "CPTI, Catalogo Parametrico dei Terremoti Italiani (INGV)",
+      "info": "Rovida A., Locati M., Camassi R., Lolli B., Gasperini P. (2019). Catalogo Parametrico dei Terremoti Italiani (CPTI15), versione 2.0 [Data set]. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/CPTI/CPTI15.2",
+      "infourl": "https://emidius.mi.ingv.it/CPTI15-DBMI15",
+      "datalicense": "CC BY-SA 4.0",
+      "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+      "dataproviderurl": "http://www.ingv.it",
+      "endpointurl": "https://emidius.mi.ingv.it/services/italy/wfs/?",
+      "datestart": "1000-01-01T01:01:01+00:00",
+      "dateend": "2017-12-31T23:59:59+00:00",
+      "boundingbox": [
+        35,
+        48,
+        5,
+        21
+      ],
+      "default": {
+        "wmsversion": "1.3.0",
+        "layers":[
+         {
+           "layername":"CPTI15",
+           "style":"CPTI"
+         } 
+        ]
+
+      },
+      "configversion": 0.1,
+      "configlastupdate": "2019-12-27T11:37:27+00:00"
     }
   ],
   "wms": [
     {
-      "title": "AHEAD, EuroMed historical earthquakes (pre 1900)",
-      "info": "Albini P., Locati M., Rovida A., Stucchi M. (2013). European Archive of Historical EArthquake Data (AHEAD). Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.6092/INGV.IT-AHEAD",
-      "infourl": "https://www.emidius.eu/AHEAD",
+      "title": "SHARE European Earthquake Catalogue (SHEEC) 1000-1899",
+      "info": "Stucchi M., Rovida A., Gómez Capera A. A., Alexandre P., Camelbeeck T., Demircioglu M. B. et al. (2012). SHARE European Earthquake Catalogue (SHEEC) 1000-1899. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.6092/INGV.IT-SHARE-SHEEC.1000-1899",
+      "infourl": "https://www.emidius.eu/SHEEC/sheec_1000_1899.html",
       "datalicense": "CC BY-SA 4.0",
       "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
@@ -194,7 +285,44 @@
         32
       ],
       "default": {
-        "wmsversion": "1.3.0"
+        "wmsversion": "1.3.0",
+        "layers":[
+         {
+           "layername":"SHEEC_1000_1899",
+           "style":"CPTI"
+         } 
+        ]
+
+      },
+      "configversion": 0.1,
+      "configlastupdate": "2019-12-27T11:37:27+00:00"
+    },
+    {
+      "title": "CPTI, Catalogo Parametrico dei Terremoti Italiani (INGV)",
+      "info": "Rovida A., Locati M., Camassi R., Lolli B., Gasperini P. (2019). Catalogo Parametrico dei Terremoti Italiani (CPTI15), versione 2.0 [Data set]. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/CPTI/CPTI15.2",
+      "infourl": "https://emidius.mi.ingv.it/CPTI15-DBMI15",
+      "datalicense": "CC BY-SA 4.0",
+      "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+      "dataproviderurl": "http://www.ingv.it",
+      "endpointurl": "https://emidius.mi.ingv.it/services/italy/wms/?",
+      "datestart": "1000-01-01T01:01:01+00:00",
+      "dateend": "2017-12-31T23:59:59+00:00",
+      "boundingbox": [
+        35,
+        48,
+        5,
+        21
+      ],
+      "default": {
+        "wmsversion": "1.3.0",
+        "layers":[
+         {
+           "layername":"italy:CPTI15",
+           "style":"CPTI"
+         } 
+        ]
+
       },
       "configversion": 0.1,
       "configlastupdate": "2019-12-27T11:37:27+00:00"
