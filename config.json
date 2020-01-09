@@ -20,7 +20,8 @@
       "default": {
         "datestart": "1000-01-01T01:01:01+00:00",
         "dateend": "1899-12-31T23:59:59+00:00",
-        "boundingboxpredefined": "europe"
+        "boundingboxpredefined": "europe",
+        "style":"CPTI"
       },
       "settings":{
         "queryeventid": true,
@@ -56,7 +57,7 @@
     {
       "title": "ASMI, Archivio Storico Macrosismico Italiano (INGV)",
       "info": "Rovida A., Locati M., Antonucci A., Camassi R. (2017). Archivio Storico Macrosismico Italiano (ASMI). Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/ASMI",
-      "infourl": "https://emidius.mi.ingv.it/CPTI15-DBMI15",
+      "infourl": "https://emidius.mi.ingv.it/ASMI",
       "datalicense": "CC BY-SA 4.0",
       "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
@@ -73,7 +74,8 @@
       "default": {
         "datestart": "1000-01-01T01:01:01+00:00",
         "dateend": "2017-12-31T23:59:59+00:00",
-        "boundingboxpredefined": "italy"
+        "boundingboxpredefined": "italy",
+        "style":"CPTI"
       },
       "settings":{
         "queryeventid": true,
@@ -124,7 +126,8 @@
         19
       ],
       "default": {
-        "boundingboxpredefined": "italy"
+        "boundingboxpredefined": "italy",
+        "style":"CPTI"
       },
       "settings":{
         "queryeventid": true,
@@ -172,7 +175,8 @@
       "dateend": "",
       "boundingbox": [],
       "default": {
-        "boundingboxpredefined": "europe"
+        "boundingboxpredefined": "europe",
+        "style":"stations"
       },
       "settings":{
         "querystartbefore":true,
@@ -185,6 +189,122 @@
         "queryincludeavailability": true,
         "queryupdatedafter": true,
         "querymatchtimeseries": true,
+        "outputtext": true,
+        "outputxml": true,
+        "outputgeojson": true,
+        "outputjson": true,
+        "outputkml": false,
+        "outputxlsx": false,
+        "httpcodenodata": "204"
+      },
+      "configversion": 0.1,
+      "configlastupdate": "2019-12-27T11:37:27+00:00"
+    }
+  ],
+  "macroseismic": [
+    {
+      "title": "AHEAD, European Archive of Historical EArthquake Data (pre 1900)",
+      "info": "Albini P., Locati M., Rovida A., Stucchi M. (2013). European Archive of Historical EArthquake Data (AHEAD). Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.6092/INGV.IT-AHEAD",
+      "infourl": "https://www.emidius.eu/AHEAD",
+      "datalicense": "CC BY-SA 4.0",
+      "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+      "dataproviderurl": "http://www.ingv.it",
+      "endpointurl": "https://www.emidius.eu/services/macroseismic/query?",
+      "datestart": "1000-01-01T01:01:01+00:00",
+      "dateend": "1899-12-31T23:59:59+00:00",
+      "boundingbox": [
+        32,
+        75,
+        -33,
+        32
+      ],
+      "default": {
+        "datestart": "1000-01-01T01:01:01+00:00",
+        "dateend": "1899-12-31T23:59:59+00:00",
+        "boundingboxpredefined": "europe",
+        "style":"AHEAD_intensities"
+      },
+      "settings":{
+        "queryeventid": true,
+        "queryoriginid": false,
+        "querymagnitudeid": false,
+        "queryfocalmechanismid": false,
+        "querymdpsetid": true,
+        "queryupdatedafter": false,
+        "querycatalog": true,
+        "querycontributor": true,
+        "querycontributorid": true,
+        "queryeventtype": false,
+        "querymagnitudetype": false,
+        "queryincludeallorigins": true,
+        "queryincludeallmagnitudes": true,
+        "queryincludearrivals": false,
+        "queryincludeallstationsmagnitudes": false,
+        "includemdps": true,
+        "includeallmdpsets": true,
+        "querylimit": true,
+        "querylimitmaxentries": 5000,
+        "querycircular": true,
+        "querycircularradiuskm": true,
+        "querydepth": false,
+        "outputtext": true,
+        "outputxml": true,
+        "outputgeojson": true,
+        "outputjson": true,
+        "outputkml": false,
+        "outputxlsx": false,
+        "httpcodenodata": "204"
+      },
+      "configversion": 0.1,
+      "configlastupdate": "2019-12-27T11:37:27+00:00"
+    },
+    {
+      "title": "ASMI, Archivio Storico Macrosismico Italiano (INGV)",
+      "info": "Rovida A., Locati M., Antonucci A., Camassi R. (2017). Archivio Storico Macrosismico Italiano (ASMI). Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/ASMI",
+      "infourl": "https://emidius.mi.ingv.it/ASMI",
+      "datalicense": "CC BY-SA 4.0",
+      "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+      "dataproviderurl": "http://www.ingv.it",
+      "urlendpoint": "https://emidius.mi.ingv.it/services/macroseismic/query?",
+      "datestart": "1000-01-01T01:01:01+00:00",
+      "dateend": "2017-12-31T23:59:59+00:00",
+      "boundingbox": [
+        35,
+        48,
+        5,
+        21
+      ],
+      "default": {
+        "datestart": "1000-01-01T01:01:01+00:00",
+        "dateend": "2017-12-31T23:59:59+00:00",
+        "boundingboxpredefined": "italy",
+        "style":"AHEAD_intensities"
+      },
+      "settings":{
+        "queryeventid": true,
+        "queryoriginid": false,
+        "querymagnitudeid": false,
+        "queryfocalmechanismid": false,
+        "querymdpsetid": true,
+        "queryupdatedafter": false,
+        "querycatalog": true,
+        "querycontributor": true,
+        "querycontributorid": true,
+        "queryeventtype": false,
+        "querymagnitudetype": false,
+        "queryincludeallorigins": true,
+        "queryincludeallmagnitudes": true,
+        "queryincludearrivals": false,
+        "queryincludeallstationsmagnitudes": false,
+        "includemdps": true,
+        "includeallmdpsets": true,
+        "querylimit": true,
+        "querylimitmaxentries": 5000,
+        "querycircular": true,
+        "querycircularradiuskm": true,
+        "querydepth": false,
         "outputtext": true,
         "outputxml": true,
         "outputgeojson": true,
@@ -224,14 +344,7 @@
          } 
         ]
       },
-      "settings":{
-        "styles":[
-          {
-            "id":"CPTI",
-            "url":"https://emidius.mi.ingv.it/CPTI/symbols/CPTI15_symbols.qml"
-          } 
-        ]
-      },
+      "settings":{},
       "configversion": 0.1,
       "configlastupdate": "2019-12-27T11:37:27+00:00"
     },
@@ -328,9 +441,19 @@
       "configlastupdate": "2019-12-27T11:37:27+00:00"
     }
   ],
-  "boundingboxpredefined": [
-    {
-      "id":"europe",
+  "styles":{
+      "CPTI": {
+      "url":"https://www.emidius.eu/AHEAD/symbols/CPTI15_symbols.qml"
+      },
+      "AHEAD_intensities": {
+        "url":"https://www.emidius.eu/AHEAD/symbols/AHEAD_intensities.qml"
+      },
+      "stations": {
+      "url":"https://www.emidius.eu/AHEAD/symbols/stations.qml"
+      }
+    },
+  "boundingboxpredefined": {
+    "europe":{
       "title": "Europe",
       "boundingbox": [
         32,
@@ -339,8 +462,7 @@
         32
       ]
     },
-    {
-      "id":"italy",
+    "italy":{
       "title": "Italy",
       "boundingbox": [
         35,
@@ -349,8 +471,7 @@
         21
       ]
     },
-    {
-      "id":"mediterranean",
+    "mediterranean":{
       "title": "Mediterranean Sea",
       "boundingbox": [
         27,
@@ -359,7 +480,5 @@
         38
       ]
     }
-  ],
-  "configversion": 0.1,
-  "lastupdate": "2019-12-27T11:37:27+00:00"
+  }
 }
