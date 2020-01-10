@@ -145,7 +145,7 @@
         "queryincludearrivals": true,
         "queryincludeallstationsmagnitudes": true,
         "querylimit": true,
-        "querylimitmaxentries": 5000,
+        "querylimitmaxentries": 15000,
         "querycircular": true,
         "querycircularradiuskm": true,
         "querydepth": true,
