@@ -14,11 +14,11 @@ __copyright__ = 'Copyright 2019, Faunalia'
 
 import unittest
 
-from qgis.PyQt.QtGui import QDialogButtonBox, QDialog
+from qgis.PyQt.QtWidgets import QDialogButtonBox, QDialog
 
-from qquake_dialog import QQuakeDialog
+from qseismo.qquake_dialog import QQuakeDialog
 
-from utilities import get_qgis_app
+from qseismo.test.utilities import get_qgis_app
 QGIS_APP = get_qgis_app()
 
 
