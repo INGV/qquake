@@ -81,8 +81,8 @@ class QQuakeDialog(QtWidgets.QDialog, FORM_CLASS):
         # QgsExtentGroupBox utilities to se tup in the init
         self.mExtentGroupBox.setMapCanvas(self.iface.mapCanvas())
         self.mExtentGroupBox.setCurrentExtent(self.iface.mapCanvas().extent(), self.iface.mapCanvas().mapSettings().destinationCrs())
-        self.mExtentGroupBox.setOriginalExtent(QgsRectangle(*MAX_LON_LAT), QgsCoordinateReferenceSystem(4326))
-        self.mExtentGroupBox.setOutputCrs(QgsCoordinateReferenceSystem(4326))
+        self.mExtentGroupBox.setOriginalExtent(QgsRectangle(*MAX_LON_LAT), QgsCoordinateReferenceSystem('EPSG:4326'))
+        self.mExtentGroupBox.setOutputCrs(QgsCoordinateReferenceSystem('EPSG:4326'))
 
         # connect the date chaning to the refreshing function
         self.fdsn_event_start_date.dateChanged.connect(self.refreshDate)
