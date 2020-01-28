@@ -41,7 +41,7 @@ from qgis.core import (
     QgsCoordinateReferenceSystem
 )
 
-from qseismo.qquake_defs import (
+from qquake.qquake_defs import (
     fdsn_events_capabilities,
     fdsn_event_fields,
     getFDSNEvent,

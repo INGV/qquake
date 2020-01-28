@@ -16,9 +16,9 @@ import unittest
 
 from qgis.PyQt.QtWidgets import QDialogButtonBox, QDialog
 
-from qseismo.qquake_dialog import QQuakeDialog
+from qquake.qquake_dialog import QQuakeDialog
 
-from qseismo.test.utilities import get_qgis_app
+from qquake.test.utilities import get_qgis_app
 
 QGIS_APP, CANVAS, IFACE, PARENT = get_qgis_app()
 

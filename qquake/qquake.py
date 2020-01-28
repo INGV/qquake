@@ -31,8 +31,8 @@ from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QAction
 
 # Import the code for the dialog
-from qseismo.qquake_dialog import QQuakeDialog
-from qseismo.gui.gui_utils import GuiUtils
+from qquake.qquake_dialog import QQuakeDialog
+from qquake.gui.gui_utils import GuiUtils
 
 
 class QQuake:

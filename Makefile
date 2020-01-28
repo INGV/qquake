@@ -37,11 +37,11 @@ QGISDIR=.local/share/QGIS/QGIS3/profiles/default
 
 # translation
 SOURCES = \
-    qseismo/__init__.py \
-    qseismo/qquake.py \
-    qseismo/qquake_dialog.py
+    qquake/__init__.py \
+    qquake/qquake.py \
+    qquake/qquake_dialog.py
 
-PLUGIN_NAME = qseismo
+PLUGIN_NAME = qquake
 
 EXTRAS = metadata.txt icon.png icon.svg
 
@@ -82,7 +82,6 @@ deploy:
 	# the Python plugin directory is located at:
 	# $HOME/$(QGISDIR)/python/plugins
 	ln -s `pwd`/$(PLUGIN_NAME) $(HOME)/$(QGISDIR)/python/plugins/$(PLUGIN_NAME)
-
 
 transup:
 	@echo
