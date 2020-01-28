@@ -1,6 +1,8 @@
 #!/bin/bash
 LOCALES=$*
 
+PYLUPDATE=${PYLUPDATE:-pylupdate5}
+
 # Get newest .py files so we don't update strings unnecessarily
 
 CHANGED_FILES=0
@@ -19,7 +21,7 @@ done
 UPDATE=false
 for LOCALE in ${LOCALES}
 do
-  TRANSLATION_FILE="i18n/$LOCALE.ts"
+  TRANSLATION_FILE="qseismo/i18n/$LOCALE.ts"
   if [ ! -f ${TRANSLATION_FILE} ]
   then
     # Force translation string collection as we have a new language file
@@ -40,15 +42,15 @@ done
 if [ ${UPDATE} == true ]
 # retrieve all python files
 then
-  echo ${PYTHON_FILES}
+  print ${PYTHON_FILES}
   # update .ts
   echo "Please provide translations by editing the translation files below:"
   for LOCALE in ${LOCALES}
   do
-    echo "i18n/"${LOCALE}".ts"
+    echo "qseismo/i18n/"${LOCALE}".ts"
     # Note we don't use pylupdate with qt .pro file approach as it is flakey
     # about what is made available.
-    pylupdate4 -noobsolete ${PYTHON_FILES} -ts i18n/${LOCALE}.ts
+    ${PYLUPDATE} -noobsolete ${PYTHON_FILES} -ts qseismo/i18n/${LOCALE}.ts
   done
 else
   echo "No need to edit any translation files (.ts) because no python files"
