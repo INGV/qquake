@@ -19,7 +19,7 @@ from qgis.PyQt.QtWidgets import QDialogButtonBox, QDialog
 from qseismo.qquake_dialog import QQuakeDialog
 
 from qseismo.test.utilities import get_qgis_app
-QGIS_APP = get_qgis_app()
+QGIS_APP, CANVAS, IFACE, PARENT = get_qgis_app()
 
 
 class QQuakeDialogTest(unittest.TestCase):
@@ -27,7 +27,7 @@ class QQuakeDialogTest(unittest.TestCase):
 
     def setUp(self):
         """Runs before each test."""
-        self.dialog = QQuakeDialog(None)
+        self.dialog = QQuakeDialog(IFACE)
 
     def tearDown(self):
         """Runs after each test."""
