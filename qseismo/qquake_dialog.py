@@ -32,27 +32,27 @@ from qgis.PyQt.QtCore import (
     QVariant
 )
 from qgis.core import (
-        QgsVectorLayer,
-        QgsField,
-        QgsFields,
-        QgsFeature,
-        QgsGeometry,
-        QgsPointXY,
-        QgsProject,
-        QgsWkbTypes,
-        QgsRectangle,
-        QgsCoordinateReferenceSystem
+    QgsVectorLayer,
+    QgsField,
+    QgsFields,
+    QgsFeature,
+    QgsGeometry,
+    QgsPointXY,
+    QgsProject,
+    QgsWkbTypes,
+    QgsRectangle,
+    QgsCoordinateReferenceSystem
 )
 
 from qgis.gui import (
-        QgsRubberBand,
-        QgsMapCanvas
+    QgsRubberBand,
+    QgsMapCanvas
 )
 
 from .qquake_defs import (
-        fdsn_events_capabilities,
-        fdsn_event_fields,
-        getFDSNEvent,
+    fdsn_events_capabilities,
+    fdsn_event_fields,
+    getFDSNEvent,
 )
 
 import csv
@@ -63,7 +63,8 @@ from collections import defaultdict
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
     os.path.dirname(__file__), 'qquake_dialog_base.ui'))
 
-MAX_LON_LAT = [-180,-90,180,90]
+MAX_LON_LAT = [-180, -90, 180, 90]
+
 
 class QQuakeDialog(QtWidgets.QDialog, FORM_CLASS):
     def __init__(self, iface, parent=None):
@@ -80,7 +81,8 @@ class QQuakeDialog(QtWidgets.QDialog, FORM_CLASS):
 
         # QgsExtentGroupBox utilities to se tup in the init
         self.mExtentGroupBox.setMapCanvas(self.iface.mapCanvas())
-        self.mExtentGroupBox.setCurrentExtent(self.iface.mapCanvas().extent(), self.iface.mapCanvas().mapSettings().destinationCrs())
+        self.mExtentGroupBox.setCurrentExtent(self.iface.mapCanvas().extent(),
+                                              self.iface.mapCanvas().mapSettings().destinationCrs())
         self.mExtentGroupBox.setOriginalExtent(QgsRectangle(*MAX_LON_LAT), QgsCoordinateReferenceSystem('EPSG:4326'))
         self.mExtentGroupBox.setOutputCrs(QgsCoordinateReferenceSystem('EPSG:4326'))
 
@@ -133,7 +135,6 @@ class QQuakeDialog(QtWidgets.QDialog, FORM_CLASS):
             fdsn_events_capabilities[self.fdsn_event_ws_combobox.currentText()]['defaultdate'].addDays(-7)
         )
 
-
     def _getEventList(self):
         '''
         read the event URL and convert the response in a list
@@ -154,10 +155,10 @@ class QQuakeDialog(QtWidgets.QDialog, FORM_CLASS):
         if self.mExtentGroupBox.isChecked():
             ext = self.mExtentGroupBox.outputExtent()
             fdsn_event_text += '&minlat={ymin}&maxlat={ymax}&minlon={xmin}&maxlon={xmax}'.format(
-                ymin = ext.yMinimum(),
-                ymax = ext.yMaximum(),
-                xmin = ext.xMinimum(),
-                xmax = ext.xMaximum()
+                ymin=ext.yMinimum(),
+                ymax=ext.yMaximum(),
+                xmin=ext.xMinimum(),
+                xmax=ext.xMaximum()
             )
 
         fdsn_event_text += '&limit=1000&format=text'
@@ -179,7 +180,6 @@ class QQuakeDialog(QtWidgets.QDialog, FORM_CLASS):
         # write QgsFeatures of the FDSN Events
         lid = []
         for i in list(zip(*fdsn_event_dict.values())):
-
             lid.append('{}eventid={}&includeallorigins=true&includeallmagnitudes=true&format=xml'.format(
                 cap,
                 i[0])
@@ -189,11 +189,9 @@ class QQuakeDialog(QtWidgets.QDialog, FORM_CLASS):
             feat.setAttributes(list(i))
             vl.dataProvider().addFeatures([feat])
 
-
         # add the layer to the map
         print(lid)
         QgsProject.instance().addMapLayer(vl)
-
 
     def checkstate(self):
         if self.mExtentGroupBox.isChecked():

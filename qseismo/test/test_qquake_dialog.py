@@ -19,6 +19,7 @@ from qgis.PyQt.QtWidgets import QDialogButtonBox, QDialog
 from qseismo.qquake_dialog import QQuakeDialog
 
 from qseismo.test.utilities import get_qgis_app
+
 QGIS_APP, CANVAS, IFACE, PARENT = get_qgis_app()
 
 
@@ -48,8 +49,8 @@ class QQuakeDialogTest(unittest.TestCase):
         result = self.dialog.result()
         self.assertEqual(result, QDialog.Rejected)
 
+
 if __name__ == "__main__":
     suite = unittest.makeSuite(QQuakeDialogTest)
     runner = unittest.TextTestRunner(verbosity=2)
     runner.run(suite)
-
