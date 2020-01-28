@@ -22,97 +22,91 @@
  ***************************************************************************/
 """
 
-from qgis.PyQt.QtCore import (
-        Qt,
-        QDate,
-        QDateTime,
-        QVariant
-)
-from qgis.utils import iface
-
 import csv
 import urllib.request
 from collections import defaultdict
-
+from qgis.PyQt.QtCore import (
+    QDate,
+    QVariant
+)
 
 now = QDate.currentDate()
 
 # define the capabilities of each fdsn-event web service
 fdsn_events_capabilities = {
-    'AHEAD/SHEEC' : {
+    'AHEAD/SHEEC': {
         'ws': 'https://www.emidius.eu/fdsnws/event/1/query?',
         'mindate': QDate(1000, 1, 1),
         'maxdate': QDate(1899, 12, 31),
         'defaultdate': QDate(1000, 1, 1),
     },
-    'INGV ASMI/CPTI' : {
+    'INGV ASMI/CPTI': {
         'ws': 'https://emidius.mi.ingv.it/fdsnws/event/1/query?',
         'mindate': QDate(1000, 1, 1),
         'maxdate': QDate(2014, 12, 31),
         'defaultdate': now,
     },
-    'INGV ONT/ISIDe' : {
+    'INGV ONT/ISIDe': {
         'ws': 'http://webservices.ingv.it/fdsnws/event/1/query?',
         'mindate': QDate(1985, 1, 1),
         'maxdate': now,
         'defaultdate': now,
     },
-    'ETHZ SED' : {
+    'ETHZ SED': {
         'ws': 'http://arclink.ethz.ch/fdsnws/event/1/query?',
         'mindate': QDate(1000, 1, 1),
         'maxdate': now,
         'defaultdate': now,
     },
-    'EMSC-CSEM' : {
+    'EMSC-CSEM': {
         'ws': 'http://www.seismicportal.eu/fdsnws/event/1/query?',
         'mindate': QDate(1998, 1, 1),
         'maxdate': now,
         'defaultdate': now,
     },
-    'ORFEUS ESM' : {
+    'ORFEUS ESM': {
         'ws': 'http://esm.mi.ingv.it/fdsnws/event/1/query?',
         'mindate': QDate(1950, 1, 1),
         'maxdate': now,
         'defaultdate': now,
     },
-    'ISC' : {
+    'ISC': {
         'ws': 'http://www.isc.ac.uk/fdsnws/event/1/query?',
         'mindate': QDate(1900, 1, 1),
         'maxdate': now,
         'defaultdate': now,
     },
-    'ISC (IRIS mirror)' : {
+    'ISC (IRIS mirror)': {
         'ws': 'http://isc-mirror.iris.washington.edu/fdsnws/event/1/query?',
         'mindate': QDate(1900, 1, 1),
         'maxdate': now,
         'defaultdate': now,
     },
-    'IRIS' : {
+    'IRIS': {
         'ws': 'http://service.iris.edu/fdsnws/event/1/query?',
         'mindate': QDate(1960, 1, 1),
         'maxdate': now,
         'defaultdate': now,
     },
-    'USGS' : {
+    'USGS': {
         'ws': 'http://earthquake.usgs.gov/fdsnws/event/1/query?',
         'mindate': QDate(1000, 1, 1),
         'maxdate': now,
         'defaultdate': now,
     },
-    'NCEDC' : {
+    'NCEDC': {
         'ws': 'http://service.ncedc.org/fdsnws/event/1/query?',
         'mindate': QDate(1000, 1, 1),
         'maxdate': now,
         'defaultdate': now,
     },
-    'SCEDC' : {
+    'SCEDC': {
         'ws': 'http://service.scedc.caltech.edu/fdsnws/event/1/query?',
         'mindate': QDate(1000, 1, 1),
         'maxdate': now,
         'defaultdate': now,
     }
 }
-
 
 fdsn_event_fields = {
     '#EventID': QVariant.String,

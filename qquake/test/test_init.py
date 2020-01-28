@@ -1,17 +1,24 @@
 # coding=utf-8
-"""Tests QGIS plugin init."""
+"""Tests QGIS plugin init.
 
-__author__ = 'Tim Sutton <tim@linfiniti.com>'
+.. note:: This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+"""
+
+__author__ = 'Nyall Dawson <nyall@north-road.com>'
 __revision__ = '$Format:%H$'
-__date__ = '17/10/2010'
+__date__ = '20/04/2018'
 __license__ = "GPL"
-__copyright__ = 'Copyright 2012, Australia Indonesia Facility for '
-__copyright__ += 'Disaster Reduction'
+__copyright__ = 'Copyright 2018, LINZ'
+
 
 import os
 import unittest
 import logging
 import configparser
+
 
 LOGGER = logging.getLogger('QGIS')
 
@@ -59,6 +66,7 @@ class TestInit(unittest.TestCase):
                 expectation, file_path))
 
             self.assertIn(expectation, dict(metadata), message)
+
 
 if __name__ == '__main__':
     unittest.main()

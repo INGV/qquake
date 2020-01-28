@@ -14,12 +14,13 @@ __copyright__ = 'Copyright 2019, Faunalia'
 
 import unittest
 
-from qgis.PyQt.QtGui import QDialogButtonBox, QDialog
+from qgis.PyQt.QtWidgets import QDialogButtonBox, QDialog
 
-from qquake_dialog import QQuakeDialog
+from qquake.qquake_dialog import QQuakeDialog
 
-from utilities import get_qgis_app
-QGIS_APP = get_qgis_app()
+from qquake.test.utilities import get_qgis_app
+
+QGIS_APP, CANVAS, IFACE, PARENT = get_qgis_app()
 
 
 class QQuakeDialogTest(unittest.TestCase):
@@ -27,7 +28,7 @@ class QQuakeDialogTest(unittest.TestCase):
 
     def setUp(self):
         """Runs before each test."""
-        self.dialog = QQuakeDialog(None)
+        self.dialog = QQuakeDialog(IFACE)
 
     def tearDown(self):
         """Runs after each test."""
@@ -48,8 +49,8 @@ class QQuakeDialogTest(unittest.TestCase):
         result = self.dialog.result()
         self.assertEqual(result, QDialog.Rejected)
 
+
 if __name__ == "__main__":
     suite = unittest.makeSuite(QQuakeDialogTest)
     runner = unittest.TextTestRunner(verbosity=2)
     runner.run(suite)
-
