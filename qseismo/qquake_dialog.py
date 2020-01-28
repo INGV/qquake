@@ -49,7 +49,7 @@ from qgis.gui import (
     QgsMapCanvas
 )
 
-from .qquake_defs import (
+from qseismo.qquake_defs import (
     fdsn_events_capabilities,
     fdsn_event_fields,
     getFDSNEvent,

@@ -26,7 +26,8 @@ from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QAction
 
 # Import the code for the dialog
-from .qquake_dialog import QQuakeDialog
+from qseismo.qquake_dialog import QQuakeDialog
+from qseismo.gui.gui_utils import GuiUtils
 import os.path
 
 
@@ -157,7 +158,7 @@ class QQuake:
     def initGui(self):
         """Create the menu entries and toolbar icons inside the QGIS GUI."""
 
-        icon_path = ':/plugins/qquake/icon.svg'
+        icon_path = GuiUtils.get_icon_svg('icon.svg')
         self.add_action(
             icon_path,
             text=self.tr(u'QQuake'),
