@@ -21,14 +21,18 @@
  *                                                                         *
  ***************************************************************************/
 """
-from qgis.PyQt.QtCore import QSettings, QTranslator, QCoreApplication
+import os.path
+from qgis.PyQt.QtCore import (
+    QSettings,
+    QTranslator,
+    QCoreApplication
+)
 from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QAction
 
 # Import the code for the dialog
 from qseismo.qquake_dialog import QQuakeDialog
 from qseismo.gui.gui_utils import GuiUtils
-import os.path
 
 
 class QQuake:
@@ -44,6 +48,7 @@ class QQuake:
         """
         # Save reference to the QGIS interface
         self.iface = iface
+        self.dlg = None
         # initialize plugin directory
         self.plugin_dir = os.path.dirname(__file__)
         # initialize locale
@@ -180,7 +185,8 @@ class QQuake:
         """Run method that performs all the real work"""
 
         # Create the dialog with elements (after translation) and keep reference
-        # Only create GUI ONCE in callback, so that it will only load when the plugin is started
+        # Only create GUI ONCE in callback, so that it will only load when the
+        # plugin is started
         if self.first_start:
             self.first_start = False
             self.dlg = QQuakeDialog(self.iface)

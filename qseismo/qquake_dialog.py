@@ -27,9 +27,7 @@ import os
 from qgis.PyQt import uic
 from qgis.PyQt import QtWidgets
 from qgis.PyQt.QtCore import (
-    Qt,
-    QDate,
-    QVariant
+    Qt
 )
 from qgis.core import (
     QgsVectorLayer,
@@ -39,14 +37,8 @@ from qgis.core import (
     QgsGeometry,
     QgsPointXY,
     QgsProject,
-    QgsWkbTypes,
     QgsRectangle,
     QgsCoordinateReferenceSystem
-)
-
-from qgis.gui import (
-    QgsRubberBand,
-    QgsMapCanvas
 )
 
 from qseismo.qquake_defs import (
@@ -55,9 +47,6 @@ from qseismo.qquake_defs import (
     getFDSNEvent,
 )
 
-import csv
-import urllib.request
-from collections import defaultdict
 
 # This loads your .ui file so that PyQt can populate your plugin with the elements from Qt Designer
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
