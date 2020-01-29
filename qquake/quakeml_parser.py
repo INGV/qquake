@@ -20,13 +20,90 @@ from qgis.core import (
     QgsField,
     QgsFeature,
     QgsGeometry,
-    QgsPointXY,
+    QgsPoint,
     NULL
 )
 
 from qquake.qquake_defs import (
     fdsn_event_fields
 )
+
+
+class ElementParser:
+
+    def __init__(self, element):
+        self.element = element
+
+    def string(self, attribute, optional=True, is_attribute=False):
+        if is_attribute:
+            if optional and not self.element.hasAttribute(attribute):
+                return None
+            else:
+                return self.element.attribute(attribute)
+        else:
+            child = self.element.elementsByTagName(attribute).at(0).toElement()
+            if optional and child.isNull():
+                return None
+
+            return child.text()
+
+    def resource_reference(self, attribute, optional=True):
+        child = self.element.elementsByTagName(attribute).at(0).toElement()
+        if optional and child.isNull():
+            return None
+
+        return child.text()
+
+    def datetime(self, attribute, optional=True):
+        child = self.element.elementsByTagName(attribute).at(0).toElement()
+        if optional and child.isNull():
+            return None
+
+        # TODO - return as QDateTime
+        return child.text()
+
+    def time_quantity(self, attribute, optional=True):
+        child = self.element.elementsByTagName(attribute).at(0).toElement()
+        if optional and child.isNull():
+            return None
+
+        # TODO - return as QDateTime
+        return child.elementsByTagName('value').at(0).toElement().text()
+
+    def real_quantity(self, attribute, optional=True):
+        child = self.element.elementsByTagName(attribute).at(0).toElement()
+        if optional:
+            return RealQuantity.from_element(child) if not child.isNull() else None
+        else:
+            return RealQuantity.from_element(child)
+
+    def float(self, attribute, optional=True):
+        child = self.element.elementsByTagName(attribute).at(0).toElement()
+        if optional:
+            return float(child.text()) if not child.isNull() else None
+        else:
+            return float(child.text())
+
+    def int(self, attribute, optional=True):
+        child = self.element.elementsByTagName(attribute).at(0).toElement()
+        if optional:
+            return int(child.text()) if not child.isNull() else None
+        else:
+            return int(child.text())
+
+    def boolean(self, attribute, optional=True):
+        child = self.element.elementsByTagName(attribute).at(0).toElement()
+        if optional:
+            return bool(child.text()) if not child.isNull() else None
+        else:
+            return bool(child.text())
+
+    def creation_info(self, attribute, optional=True):
+        child = self.element.elementsByTagName(attribute).at(0).toElement()
+        if optional and child.isNull():
+            return None
+
+        return CreationInfo.from_element(child)
 
 
 class CreationInfo:
@@ -47,19 +124,13 @@ class CreationInfo:
 
     @staticmethod
     def from_element(element):
-        agency_id = element.elementsByTagName('agencyID').at(0).toElement().text()
-        author = element.elementsByTagName('author').at(0).toElement().text()
-        version = element.elementsByTagName('version').at(0).toElement().text()
-        author_uri = element.elementsByTagName('authorURI').at(0).toElement().text()
-        agency_uri = element.elementsByTagName('agencyURI').at(0).toElement().text()
-        creation_time = element.elementsByTagName('creationTime').at(0).toElement().text()
-
-        return CreationInfo(agencyID=agency_id,
-                            agencyURI=agency_uri,
-                            author=author,
-                            authorURI=author_uri,
-                            creationTime=creation_time,
-                            version=version)
+        parser = ElementParser(element)
+        return CreationInfo(agencyID=parser.string('agencyID'),
+                            agencyURI=parser.string('agencyURI'),
+                            author=parser.string('author'),
+                            authorURI=parser.string('authorURI'),
+                            creationTime=parser.datetime('creationTime'),
+                            version=parser.string('version'))
 
 
 class EventDescription:
@@ -70,9 +141,8 @@ class EventDescription:
 
     @staticmethod
     def from_element(element):
-        type = element.elementsByTagName('type').at(0).toElement().text()
-        text = element.elementsByTagName('text').at(0).toElement().text()
-        return EventDescription(text=text, type=type)
+        parser = ElementParser(element)
+        return EventDescription(text=parser.string('text'), type=parser.string('type'))
 
 
 class Origin:
@@ -119,38 +189,26 @@ class Origin:
 
     @staticmethod
     def from_element(element):
-        publicId = element.attribute('publicID')
-        time = element.elementsByTagName('time').at(0).toElement().elementsByTagName('value').at(0).toElement().text()
-        region = element.elementsByTagName('region').at(0).toElement().text()
-        latitude = element.elementsByTagName('latitude').at(0).toElement().elementsByTagName('value').at(
-            0).toElement().text()
-        longitude = element.elementsByTagName('longitude').at(0).toElement().elementsByTagName('value').at(
-            0).toElement().text()
-        depth = element.elementsByTagName('depth').at(0).toElement().elementsByTagName('value').at(
-            0).toElement().text()
-        evaluationMode = element.elementsByTagName('evaluationMode').at(0).toElement().text()
-        evaluationStatus = element.elementsByTagName('evaluationStatus').at(0).toElement().text()
-        creation_info = CreationInfo.from_element(element.elementsByTagName('creationInfo').at(0).toElement())
-
-        return Origin(publicID=publicId,
-                      time=time,
-                      longitude=longitude,
-                      latitude=latitude,
-                      depth=depth,
+        parser = ElementParser(element)
+        return Origin(publicID=parser.string('publicID', optional=False, is_attribute=False),
+                      time=parser.time_quantity('time'),
+                      longitude=parser.real_quantity('longitude'),
+                      latitude=parser.real_quantity('latitude'),
+                      depth=parser.real_quantity('depth', optional=True),
                       depthType=None,
-                      timeFixed=None,
-                      epicenterFixed=None,
-                      referenceSystemID=None,
-                      methodID=None,
-                      earthModeID=None,
+                      timeFixed=parser.boolean('timeFixed'),
+                      epicenterFixed=parser.boolean('epicenterFixed'),
+                      referenceSystemID=parser.resource_reference('referenceSystemID'),
+                      methodID=parser.resource_reference('methodID'),
+                      earthModeID=parser.resource_reference('earthModeID'),
                       compositeTime=None,
                       quality=None,
                       type=None,
-                      region=region,
-                      evaluationMode=evaluationMode,
-                      evaluationStatus=evaluationStatus,
+                      region=parser.string('region'),
+                      evaluationMode=parser.string('evaluationMode'),
+                      evaluationStatus=parser.string('evaluationStatus'),
                       comment=None,
-                      creationInfo=creation_info)
+                      creationInfo=parser.creation_info('creationInfo'))
 
 
 class RealQuantity:
@@ -169,24 +227,12 @@ class RealQuantity:
 
     @staticmethod
     def from_element(element):
-        value = element.elementsByTagName('value').at(0).toElement().text()
-        uncertainty = element.elementsByTagName('uncertainty').at(
-            0).toElement().text() if not element.elementsByTagName('uncertainty').at(0).toElement().isNull() else None
-        lowerUncertainty = element.elementsByTagName('lowerUncertainty').at(
-            0).toElement().text() if not element.elementsByTagName('lowerUncertainty').at(
-            0).toElement().isNull() else None
-        upperUncertainty = element.elementsByTagName('upperUncertainty').at(
-            0).toElement().text() if not element.elementsByTagName('upperUncertainty').at(
-            0).toElement().isNull() else None
-        confidenceLevel = element.elementsByTagName('confidenceLevel').at(
-            0).toElement().text() if not element.elementsByTagName('confidenceLevel').at(
-            0).toElement().isNull() else None
-
-        return RealQuantity(value=value,
-                            uncertainty=uncertainty,
-                            lowerUncertainty=lowerUncertainty,
-                            upperUncertainty=upperUncertainty,
-                            confidenceLevel=confidenceLevel)
+        parser = ElementParser(element)
+        return RealQuantity(value=parser.float('value', optional=False),
+                            uncertainty=parser.float('uncertainty'),
+                            lowerUncertainty=parser.float('lowerUncertainty'),
+                            upperUncertainty=parser.float('upperUncertainty'),
+                            confidenceLevel=parser.float('confidenceLevel'))
 
 
 class Magnitude:
@@ -218,27 +264,18 @@ class Magnitude:
 
     @staticmethod
     def from_element(element):
-        publicId = element.attribute('publicID')
-        type = element.elementsByTagName('type').at(0).toElement().text()
-        originID = element.elementsByTagName('originID').at(0).toElement().text()
-        mag = Magnitude.from_element(
-            element.elementsByTagName('mag').at(0).toElement()) if not element.elementsByTagName('mag').at(
-            0).toElement().isNull() else None
-        evaluationMode = element.elementsByTagName('evaluationMode').at(0).toElement().text()
-        evaluationStatus = element.elementsByTagName('evaluationStatus').at(0).toElement().text()
-        creation_info = CreationInfo.from_element(element.elementsByTagName('creationInfo').at(0).toElement())
-
-        return Magnitude(publicID=publicId,
-                         mag=mag,
-                         type=type,
-                         originID=originID,
-                         methodID=None,
-                         stationCount=None,
-                         azimuthalGap=None,
-                         evalutionMode=evaluationMode,
-                         evaluationStatus=evaluationStatus,
+        parser = ElementParser(element)
+        return Magnitude(publicID=parser.string('publicID', is_attribute=True),
+                         mag=parser.real_quantity('mag', optional=False),
+                         type=parser.string('type'),
+                         originID=parser.resource_reference('originID'),
+                         methodID=parser.resource_reference('methodID'),
+                         stationCount=parser.int('stationCount'),
+                         azimuthalGap=parser.float('azimuthalGap'),
+                         evalutionMode=parser.string('evaluationMode'),
+                         evaluationStatus=parser.string('evaluationStatus'),
                          comment=None,
-                         creationInfo=creation_info)
+                         creationInfo=parser.creation_info('creationInfo'))
 
 
 class Event:
@@ -276,9 +313,9 @@ class Event:
             f = QgsFeature(fields)
             f['EventID'] = self.publicID
             f['Time'] = o.time
-            f['Latitude'] = o.latitude
-            f['Longitude'] = o.longitude
-            f['DepthKm'] = o.depth
+            f['Latitude'] = o.latitude.value
+            f['Longitude'] = o.longitude.value
+            f['DepthKm'] = o.depth.value if o.depth else NULL
             f['Author'] = o.creationInfo.author if o.creationInfo else NULL
             f['Catalog'] = NULL  # ?
             f['Contributor'] = NULL  # ?
@@ -288,17 +325,18 @@ class Event:
             f['MagAuthor'] = NULL  # ?
             f['EventLocationName'] = o.region  # ?
 
-            f.setGeometry(QgsGeometry.fromPointXY(QgsPointXY(float(o.longitude), float(o.latitude))))
+            if o.depth is not None:
+                geom = QgsPoint(x=o.longitude.value, y=o.latitude.value, z=-o.depth.value*1000)
+            else:
+                geom = QgsPoint(x=o.longitude.value, y=o.latitude.value)
+            f.setGeometry(QgsGeometry(geom))
             features.append(f)
 
         return features
 
     @staticmethod
     def from_element(element):
-        publicId = element.attribute('publicID')
-        type = element.elementsByTagName('type').at(0).toElement().text()
-        typeCertainty = element.elementsByTagName('typeCertainty').at(0).toElement().text()
-        creation_info = CreationInfo.from_element(element.elementsByTagName('creationInfo').at(0).toElement())
+        parser = ElementParser(element)
 
         description_nodes = element.elementsByTagName('description')
         descriptions = []
@@ -315,15 +353,15 @@ class Event:
         for e in range(magnitude_nodes.length()):
             magnitudes.append(Magnitude.from_element(magnitude_nodes.at(e).toElement()))
 
-        return Event(publicID=publicId,
-                     type=type,
-                     typeCertainty=typeCertainty,
+        return Event(publicID=parser.string('publicID', is_attribute=True, optional=False),
+                     type=parser.string('type'),
+                     typeCertainty=parser.string('typeCertainty'),
                      description=descriptions,
                      preferredOriginID=None,
                      preferredMagnitudeID=None,
                      preferredFocalMechanismID=None,
                      comment=None,
-                     creationInfo=creation_info,
+                     creationInfo=parser.creation_info('creationInfo'),
                      origins=origins,
                      magnitudes=magnitudes)
 
