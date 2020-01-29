@@ -25,10 +25,11 @@
 import os
 
 from qgis.PyQt import uic
-from qgis.PyQt import QtWidgets
-from qgis.PyQt.QtCore import (
-    Qt
+from qgis.PyQt.QtWidgets import (
+    QDialogButtonBox,
+    QDialog
 )
+
 from qgis.core import (
     QgsVectorLayer,
     QgsField,
@@ -56,7 +57,7 @@ FORM_CLASS, _ = uic.loadUiType(os.path.join(
 MAX_LON_LAT = [-180, -90, 180, 90]
 
 
-class QQuakeDialog(QtWidgets.QDialog, FORM_CLASS):
+class QQuakeDialog(QDialog, FORM_CLASS):
 
     def __init__(self, iface, parent=None):
         """Constructor."""
@@ -65,6 +66,7 @@ class QQuakeDialog(QtWidgets.QDialog, FORM_CLASS):
         self.setupUi(self)
 
         self.url_text_browser.viewport().setAutoFillBackground(False)
+        self.button_box.button(QDialogButtonBox.Ok).setText(self.tr('Fetch Data'))
 
         self.iface = iface
 
