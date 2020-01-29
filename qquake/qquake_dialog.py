@@ -64,6 +64,8 @@ class QQuakeDialog(QtWidgets.QDialog, FORM_CLASS):
 
         self.setupUi(self)
 
+        self.url_text_browser.viewport().setAutoFillBackground(False)
+
         self.iface = iface
 
         # QgsExtentGroupBox utilities to se tup in the init
@@ -95,6 +97,8 @@ class QQuakeDialog(QtWidgets.QDialog, FORM_CLASS):
 
         self.button_box.accepted.connect(self._getEventList)
 
+        self._refresh_url()
+
     def _refresh_date(self):
         """
         Avoids negative date intervals by checking start_date > end_date
@@ -114,7 +118,7 @@ class QQuakeDialog(QtWidgets.QDialog, FORM_CLASS):
                        extent=self.mExtentGroupBox.outputExtent() if self.mExtentGroupBox.isChecked() else None)
 
     def _refresh_url(self):
-        self.lineEdit.setText(self.get_fetcher().generate_url())
+        self.url_text_browser.setText('<a href="{0}">{0}</a>'.format(self.get_fetcher().generate_url()))
 
     def refreshWidgets(self):
         """
