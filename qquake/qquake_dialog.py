@@ -46,6 +46,7 @@ from qquake.qquake_defs import (
     fdsn_events_capabilities,
     fdsn_event_fields,
     getFDSNEvent,
+    MAX_LON_LAT
 )
 
 from qquake.fetcher import Fetcher
@@ -53,8 +54,6 @@ from qquake.fetcher import Fetcher
 # This loads your .ui file so that PyQt can populate your plugin with the elements from Qt Designer
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
     os.path.dirname(__file__), 'qquake_dialog_base.ui'))
-
-MAX_LON_LAT = [-180, -90, 180, 90]
 
 
 class QQuakeDialog(QDialog, FORM_CLASS):
