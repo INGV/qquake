@@ -136,7 +136,7 @@ class Fetcher(QObject):
         """
         Creates an empty layer for earthquake data
         """
-        vl = QgsVectorLayer('Point?crs=EPSG:4326', self._generate_layer_name(), 'memory')
+        vl = QgsVectorLayer('PointZ?crs=EPSG:4326', self._generate_layer_name(), 'memory')
 
         fields = QgsFields()
         for k, v in fdsn_event_fields.items():
