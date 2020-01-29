@@ -31,9 +31,6 @@ from qgis.PyQt.QtWidgets import (
 )
 
 from qgis.core import (
-    QgsVectorLayer,
-    QgsField,
-    QgsFields,
     QgsFeature,
     QgsGeometry,
     QgsPointXY,
@@ -44,8 +41,6 @@ from qgis.core import (
 
 from qquake.qquake_defs import (
     fdsn_events_capabilities,
-    fdsn_event_fields,
-    getFDSNEvent,
     MAX_LON_LAT
 )
 
@@ -171,47 +166,24 @@ class QQuakeDialog(QDialog, FORM_CLASS):
     def _fetcher_finished(self):
         self.button_box.button(QDialogButtonBox.Ok).setText(self.tr('Fetch Data'))
         self.button_box.button(QDialogButtonBox.Ok).setEnabled(True)
+
+        vl = self.fetcher.create_empty_layer()
+
         self.fetcher.deleteLater()
         self.fetcher = None
 
-        return
-
-
-        fdsn_event_dict = getFDSNEvent(fetcher.generate_url())
-
-        # define QgsVectorLayer to add to the map
-        vl = QgsVectorLayer('Point?crs=EPSG:4326', 'mem', 'memory')
-
-        # define and write QgsFields and get types from dictionary
-        fields = QgsFields()
-        for k, v in fdsn_event_fields.items():
-            fields.append(QgsField(k, v))
-        vl.dataProvider().addAttributes(fields)
-        vl.updateFields()
-
-        # write QgsFeatures of the FDSN Events
-        lid = []
-        for i in list(zip(*fdsn_event_dict.values())):
-            lid.append('{}eventid={}&includeallorigins=true&includeallmagnitudes=true&format=xml'.format(
-                cap,
-                i[0])
-            )
-            feat = QgsFeature(vl.fields())
-            feat.setGeometry(QgsGeometry.fromPointXY(QgsPointXY(float(i[3]), float(i[2]))))
-            feat.setAttributes(list(i))
-            vl.dataProvider().addFeatures([feat])
+       # # write QgsFeatures of the FDSN Events
+       #lid = []
+       #for i in list(zip(*fdsn_event_dict.values())):
+       #    lid.append('{}eventid={}&includeallorigins=true&includeallmagnitudes=true&format=xml'.format(
+       #        cap,
+       #        i[0])
+       #    )
+       #    feat = QgsFeature(vl.fields())
+       #    feat.setGeometry(QgsGeometry.fromPointXY(QgsPointXY(float(i[3]), float(i[2]))))
+       #    feat.setAttributes(list(i))
+       #    vl.dataProvider().addFeatures([feat])
 
         # add the layer to the map
-        print(lid)
         QgsProject.instance().addMapLayer(vl)
 
-    def checkstate(self):
-        if self.mExtentGroupBox.isChecked():
-            ext = self.mExtentGroupBox.outputExtent()
-            print(ext.xMinimum())
-            print(ext.yMaximum())
-            print(ext.xMaximum())
-            print(ext.yMinimum())
-
-        else:
-            print('nononono')

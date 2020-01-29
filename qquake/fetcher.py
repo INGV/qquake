@@ -21,7 +21,12 @@ from qgis.PyQt.QtCore import (
 )
 from qgis.PyQt.QtNetwork import QNetworkRequest
 
-from qgis.core import QgsNetworkAccessManager
+from qgis.core import (
+    QgsNetworkAccessManager,
+    QgsVectorLayer,
+    QgsFields,
+    QgsField
+)
 
 from qquake.qquake_defs import (
     fdsn_events_capabilities,
@@ -44,7 +49,8 @@ class Fetcher(QObject):
                  event_min_magnitude=None,
                  event_max_magnitude=None,
                  extent=None,
-                 limit=1000, parent=None
+                 limit=1000,
+                 parent=None
                  ):
         super().__init__(parent=parent)
 
@@ -56,7 +62,7 @@ class Fetcher(QObject):
         self.extent = extent
         self.limit = limit
 
-    def generate_url(self):
+    def generate_url(self, format='text'):
         """
         Returns the URL request for the query
         """
@@ -87,7 +93,7 @@ class Fetcher(QObject):
         if self.limit:
             query.append('limit={}'.format(self.limit))
 
-        query.append('format=text')
+        query.append('format={}'.format(format))
 
         return service + '&'.join(query)
 
@@ -95,7 +101,7 @@ class Fetcher(QObject):
         """
         Starts the fetch request
         """
-        request = QNetworkRequest(QUrl(self.generate_url()))
+        request = QNetworkRequest(QUrl(self.generate_url(format='xml')))
 
         reply = QgsNetworkAccessManager.instance().get(request)
 
@@ -108,3 +114,29 @@ class Fetcher(QObject):
 
     def _reply_finished(self):
         self.finished.emit()
+
+    def _generate_layer_name(self):
+        name = self.event_service
+
+        if self.event_min_magnitude is not None and self.event_max_magnitude is not None:
+            name += ' ({} ≤ Magnitude ≤ {})'.format(self.event_min_magnitude, self.event_max_magnitude)
+        elif self.event_min_magnitude is not None:
+            name += ' ({} ≤ Magnitude)'.format(self.event_min_magnitude)
+        elif self.event_max_magnitude is not None:
+            name += ' (Magnitude ≤ {})'.format(self.event_max_magnitude)
+
+        return name
+
+    def create_empty_layer(self):
+        """
+        Creates an empty layer for earthquake data
+        """
+        vl = QgsVectorLayer('Point?crs=EPSG:4326', self._generate_layer_name(), 'memory')
+
+        fields = QgsFields()
+        for k, v in fdsn_event_fields.items():
+            fields.append(QgsField(k, v))
+        vl.dataProvider().addAttributes(fields)
+        vl.updateFields()
+
+        return vl

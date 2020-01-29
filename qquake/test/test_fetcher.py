@@ -61,6 +61,22 @@ class QQuakeFetcherTest(unittest.TestCase):
         fetcher = Fetcher(event_service='AHEAD/SHEEC', limit=None)
         self.assertEqual(fetcher.generate_url(), 'https://www.emidius.eu/fdsnws/event/1/query?format=text')
 
+    def test_name(self):
+        fetcher = Fetcher(event_service='AHEAD/SHEEC')
+        self.assertEqual(fetcher._generate_layer_name(), 'AHEAD/SHEEC')
+
+        fetcher = Fetcher(event_service='AHEAD/SHEEC', event_min_magnitude=7, event_max_magnitude=9)
+        self.assertEqual(fetcher._generate_layer_name(),
+                         'AHEAD/SHEEC (7 ≤ Magnitude ≤ 9)')
+
+        fetcher = Fetcher(event_service='AHEAD/SHEEC', event_min_magnitude=7)
+        self.assertEqual(fetcher._generate_layer_name(),
+                         'AHEAD/SHEEC (7 ≤ Magnitude)')
+
+        fetcher = Fetcher(event_service='AHEAD/SHEEC', event_max_magnitude=9)
+        self.assertEqual(fetcher._generate_layer_name(),
+                         'AHEAD/SHEEC (Magnitude ≤ 9)')
+
 
 if __name__ == "__main__":
     suite = unittest.makeSuite(QQuakeFetcherTest)
