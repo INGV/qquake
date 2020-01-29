@@ -13,7 +13,16 @@ __copyright__ = 'Copyright 2020, North Road'
 # This will get replaced with a git SHA1 when you do a git archive
 __revision__ = '$Format:%H$'
 
-from qgis.PyQt.QtCore import Qt
+from qgis.PyQt.QtCore import (
+    Qt,
+    QUrl,
+    QObject,
+    pyqtSignal
+)
+from qgis.PyQt.QtNetwork import QNetworkRequest
+
+from qgis.core import QgsNetworkAccessManager
+
 from qquake.qquake_defs import (
     fdsn_events_capabilities,
     fdsn_event_fields,
@@ -21,10 +30,13 @@ from qquake.qquake_defs import (
 )
 
 
-class Fetcher:
+class Fetcher(QObject):
     """
     Fetcher for feeds
     """
+
+    progress = pyqtSignal(float)
+    finished = pyqtSignal()
 
     def __init__(self, event_service,
                  event_start_date=None,
@@ -32,8 +44,9 @@ class Fetcher:
                  event_min_magnitude=None,
                  event_max_magnitude=None,
                  extent=None,
-                 limit=1000
+                 limit=1000, parent=None
                  ):
+        super().__init__(parent=parent)
 
         self.event_service = event_service
         self.event_start_date = event_start_date
@@ -78,3 +91,20 @@ class Fetcher:
 
         return service + '&'.join(query)
 
+    def fetch_data(self):
+        """
+        Starts the fetch request
+        """
+        request = QNetworkRequest(QUrl(self.generate_url()))
+
+        reply = QgsNetworkAccessManager.instance().get(request)
+
+        reply.finished.connect(self._reply_finished)
+        reply.downloadProgress.connect(self._reply_progress)
+
+    def _reply_progress(self, received, total):
+        if total > 0:
+            self.progress.emit(float(received) / total * 100)
+
+    def _reply_finished(self):
+        self.finished.emit()

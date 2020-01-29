@@ -98,6 +98,8 @@ class QQuakeDialog(QDialog, FORM_CLASS):
 
         self.button_box.accepted.connect(self._getEventList)
 
+        self.fetcher = None
+
         self._refresh_url()
 
     def _refresh_date(self):
@@ -119,7 +121,8 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                        extent=self.mExtentGroupBox.outputExtent() if self.mExtentGroupBox.isChecked() else None)
 
     def _refresh_url(self):
-        self.url_text_browser.setText('<a href="{0}">{0}</a>'.format(self.get_fetcher().generate_url()))
+        fetcher = self.get_fetcher()
+        self.url_text_browser.setText('<a href="{0}">{0}</a>'.format(fetcher.generate_url()))
 
     def refreshWidgets(self):
         """
@@ -153,8 +156,27 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         """
         read the event URL and convert the response in a list
         """
+        if self.fetcher:
+            # TODO - cancel current request
+            return
 
-        fetcher = self.get_fetcher()
+        self.fetcher = self.get_fetcher()
+        self.fetcher.progress.connect(self.progressBar.setValue)
+        self.fetcher.finished.connect(self._fetcher_finished)
+        self.button_box.button(QDialogButtonBox.Ok).setText(self.tr('Fetching'))
+        self.button_box.button(QDialogButtonBox.Ok).setEnabled(False)
+
+        self.fetcher.fetch_data()
+
+    def _fetcher_finished(self):
+        self.button_box.button(QDialogButtonBox.Ok).setText(self.tr('Fetch Data'))
+        self.button_box.button(QDialogButtonBox.Ok).setEnabled(True)
+        self.fetcher.deleteLater()
+        self.fetcher = None
+
+        return
+
+
         fdsn_event_dict = getFDSNEvent(fetcher.generate_url())
 
         # define QgsVectorLayer to add to the map
