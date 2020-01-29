@@ -22,9 +22,6 @@
  ***************************************************************************/
 """
 
-import csv
-import urllib.request
-from collections import defaultdict
 from qgis.PyQt.QtCore import (
     QDate,
     QVariant
@@ -32,7 +29,6 @@ from qgis.PyQt.QtCore import (
 
 NOW = QDate.currentDate()
 MAX_LON_LAT = [-180, -90, 180, 90]
-
 
 # define the capabilities of each fdsn-event web service
 fdsn_events_capabilities = {
@@ -125,33 +121,3 @@ fdsn_event_fields = {
     'MagAuthor': QVariant.String,
     'EventLocationName': QVariant.String
 }
-
-
-def getFDSNEvent(fdsn_string, custom_delimiter='|') -> list:
-    '''
-    Returns a list with the FDSN Events
-
-    params:
-        fdsn_string ('string'): complete string as final URL
-        custom_delimiter ('string'): text delimiter as string
-
-    :return: a list os lists of events
-    '''
-
-    # use the string to get a response and transform it as text by decoding it
-    with urllib.request.urlopen(fdsn_string) as response:
-        my_text = response.read().decode()
-
-    # split lines and use the custom delimiter
-    # lines = my_text.splitlines()
-    # reader = csv.reader(lines, delimiter=custom_delimiter)
-    # my_list = list(reader)
-
-    lines = my_text.splitlines()
-    d = defaultdict(list)
-    reader = csv.DictReader(lines, delimiter='|')
-    for row in reader:
-        for k, v in row.items():
-            d[k.strip()].append(v)
-
-    return d
