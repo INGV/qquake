@@ -47,6 +47,7 @@ from qquake.qquake_defs import (
     getFDSNEvent,
 )
 
+from qquake.fetcher import Fetcher
 
 # This loads your .ui file so that PyQt can populate your plugin with the elements from Qt Designer
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
@@ -56,14 +57,11 @@ MAX_LON_LAT = [-180, -90, 180, 90]
 
 
 class QQuakeDialog(QtWidgets.QDialog, FORM_CLASS):
+
     def __init__(self, iface, parent=None):
         """Constructor."""
-        super(QQuakeDialog, self).__init__(parent)
-        # Set up the user interface from Designer through FORM_CLASS.
-        # After self.setupUi() you can access any designer object by doing
-        # self.<objectname>, and you can use autoconnect slots - see
-        # http://qt-project.org/doc/qt-4.8/designer-using-a-ui-file.html
-        # #widgets-and-dialogs-with-auto-connect
+        super().__init__(parent)
+
         self.setupUi(self)
 
         self.iface = iface
@@ -75,8 +73,8 @@ class QQuakeDialog(QtWidgets.QDialog, FORM_CLASS):
         self.mExtentGroupBox.setOriginalExtent(QgsRectangle(*MAX_LON_LAT), QgsCoordinateReferenceSystem('EPSG:4326'))
         self.mExtentGroupBox.setOutputCrs(QgsCoordinateReferenceSystem('EPSG:4326'))
 
-        # connect the date chaning to the refreshing function
-        self.fdsn_event_start_date.dateChanged.connect(self.refreshDate)
+        # connect the date changing to the refreshing function
+        self.fdsn_event_start_date.dateChanged.connect(self._refresh_date)
 
         # fill the FDSN combobox with the dictionary keys
         self.fdsn_event_ws_combobox.addItems(fdsn_events_capabilities.keys())
@@ -87,19 +85,41 @@ class QQuakeDialog(QtWidgets.QDialog, FORM_CLASS):
         # change the UI parameter according to the web service chosen
         self.fdsn_event_ws_combobox.currentIndexChanged.connect(self.refreshWidgets)
 
+        self.fdsn_event_ws_combobox.currentIndexChanged.connect(self._refresh_url)
+        self.fdsn_event_start_date.dateChanged.connect(self._refresh_url)
+        self.fdsn_event_end_date.dateChanged.connect(self._refresh_url)
+        self.fdsn_event_min_magnitude.valueChanged.connect(self._refresh_url)
+        self.fdsn_event_max_magnitude.valueChanged.connect(self._refresh_url)
+        self.mExtentGroupBox.extentChanged.connect(self._refresh_url)
+        self.mExtentGroupBox.toggled.connect(self._refresh_url)
+
         self.button_box.accepted.connect(self._getEventList)
 
-    def refreshDate(self):
-        '''
-        Avoids negative date internvals bu checking start_date > end_date
-        '''
+    def _refresh_date(self):
+        """
+        Avoids negative date intervals by checking start_date > end_date
+        """
         if self.fdsn_event_start_date.dateTime() > self.fdsn_event_end_date.dateTime():
             self.fdsn_event_end_date.setDate(self.fdsn_event_start_date.date())
 
+    def get_fetcher(self):
+        """
+        Returns a quake fetcher corresponding to the current dialog settings
+        """
+        return Fetcher(event_service=self.fdsn_event_ws_combobox.currentText(),
+                       event_start_date=self.fdsn_event_start_date.dateTime(),
+                       event_end_date=self.fdsn_event_end_date.dateTime(),
+                       event_min_magnitude=self.fdsn_event_min_magnitude.value(),
+                       event_max_magnitude=self.fdsn_event_max_magnitude.value(),
+                       extent=self.mExtentGroupBox.outputExtent() if self.mExtentGroupBox.isChecked() else None)
+
+    def _refresh_url(self):
+        self.lineEdit.setText(self.get_fetcher().generate_url())
+
     def refreshWidgets(self):
-        '''
+        """
         Refreshing the FDSN-Event UI depending on the WS chosen
-        '''
+        """
 
         # set DateTime Widget START according to the combobox choice
         self.fdsn_event_start_date.setMinimumDate(
@@ -125,36 +145,12 @@ class QQuakeDialog(QtWidgets.QDialog, FORM_CLASS):
         )
 
     def _getEventList(self):
-        '''
+        """
         read the event URL and convert the response in a list
-        '''
+        """
 
-        # create the initial string depending on the WS chosen in the comobobox
-        cap = fdsn_events_capabilities[self.fdsn_event_ws_combobox.currentText()]['ws']
-        fdsn_event_text = fdsn_events_capabilities[self.fdsn_event_ws_combobox.currentText()]['ws']
-
-        # append to the string the parameter of the UI (starttime, endtime, etc)
-        fdsn_event_text += 'starttime={}&endtime={}&minmag={}&maxmag={}'.format(
-            self.fdsn_event_start_date.dateTime().toString(Qt.ISODate),
-            self.fdsn_event_end_date.dateTime().toString(Qt.ISODate),
-            self.fdsn_event_min_magnitude.value(),
-            self.fdsn_event_max_magnitude.value()
-        )
-
-        if self.mExtentGroupBox.isChecked():
-            ext = self.mExtentGroupBox.outputExtent()
-            fdsn_event_text += '&minlat={ymin}&maxlat={ymax}&minlon={xmin}&maxlon={xmax}'.format(
-                ymin=ext.yMinimum(),
-                ymax=ext.yMaximum(),
-                xmin=ext.xMinimum(),
-                xmax=ext.xMaximum()
-            )
-
-        fdsn_event_text += '&limit=1000&format=text'
-
-        self.lineEdit.setText(fdsn_event_text)
-
-        fdsn_event_dict = getFDSNEvent(fdsn_event_text)
+        fetcher = self.get_fetcher()
+        fdsn_event_dict = getFDSNEvent(fetcher.generate_url())
 
         # define QgsVectorLayer to add to the map
         vl = QgsVectorLayer('Point?crs=EPSG:4326', 'mem', 'memory')
