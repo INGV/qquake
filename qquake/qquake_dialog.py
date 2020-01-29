@@ -25,17 +25,12 @@
 import os
 
 from qgis.PyQt import uic
-from qgis.PyQt import QtWidgets
-from qgis.PyQt.QtCore import (
-    Qt
+from qgis.PyQt.QtWidgets import (
+    QDialogButtonBox,
+    QDialog
 )
+
 from qgis.core import (
-    QgsVectorLayer,
-    QgsField,
-    QgsFields,
-    QgsFeature,
-    QgsGeometry,
-    QgsPointXY,
     QgsProject,
     QgsRectangle,
     QgsCoordinateReferenceSystem
@@ -43,28 +38,26 @@ from qgis.core import (
 
 from qquake.qquake_defs import (
     fdsn_events_capabilities,
-    fdsn_event_fields,
-    getFDSNEvent,
+    MAX_LON_LAT
 )
 
+from qquake.fetcher import Fetcher
 
 # This loads your .ui file so that PyQt can populate your plugin with the elements from Qt Designer
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
     os.path.dirname(__file__), 'qquake_dialog_base.ui'))
 
-MAX_LON_LAT = [-180, -90, 180, 90]
 
+class QQuakeDialog(QDialog, FORM_CLASS):
 
-class QQuakeDialog(QtWidgets.QDialog, FORM_CLASS):
     def __init__(self, iface, parent=None):
         """Constructor."""
-        super(QQuakeDialog, self).__init__(parent)
-        # Set up the user interface from Designer through FORM_CLASS.
-        # After self.setupUi() you can access any designer object by doing
-        # self.<objectname>, and you can use autoconnect slots - see
-        # http://qt-project.org/doc/qt-4.8/designer-using-a-ui-file.html
-        # #widgets-and-dialogs-with-auto-connect
+        super().__init__(parent)
+
         self.setupUi(self)
+
+        self.url_text_browser.viewport().setAutoFillBackground(False)
+        self.button_box.button(QDialogButtonBox.Ok).setText(self.tr('Fetch Data'))
 
         self.iface = iface
 
@@ -75,8 +68,8 @@ class QQuakeDialog(QtWidgets.QDialog, FORM_CLASS):
         self.mExtentGroupBox.setOriginalExtent(QgsRectangle(*MAX_LON_LAT), QgsCoordinateReferenceSystem('EPSG:4326'))
         self.mExtentGroupBox.setOutputCrs(QgsCoordinateReferenceSystem('EPSG:4326'))
 
-        # connect the date chaning to the refreshing function
-        self.fdsn_event_start_date.dateChanged.connect(self.refreshDate)
+        # connect the date changing to the refreshing function
+        self.fdsn_event_start_date.dateChanged.connect(self._refresh_date)
 
         # fill the FDSN combobox with the dictionary keys
         self.fdsn_event_ws_combobox.addItems(fdsn_events_capabilities.keys())
@@ -87,19 +80,46 @@ class QQuakeDialog(QtWidgets.QDialog, FORM_CLASS):
         # change the UI parameter according to the web service chosen
         self.fdsn_event_ws_combobox.currentIndexChanged.connect(self.refreshWidgets)
 
+        self.fdsn_event_ws_combobox.currentIndexChanged.connect(self._refresh_url)
+        self.fdsn_event_start_date.dateChanged.connect(self._refresh_url)
+        self.fdsn_event_end_date.dateChanged.connect(self._refresh_url)
+        self.fdsn_event_min_magnitude.valueChanged.connect(self._refresh_url)
+        self.fdsn_event_max_magnitude.valueChanged.connect(self._refresh_url)
+        self.mExtentGroupBox.extentChanged.connect(self._refresh_url)
+        self.mExtentGroupBox.toggled.connect(self._refresh_url)
+
         self.button_box.accepted.connect(self._getEventList)
 
-    def refreshDate(self):
-        '''
-        Avoids negative date internvals bu checking start_date > end_date
-        '''
+        self.fetcher = None
+
+        self._refresh_url()
+
+    def _refresh_date(self):
+        """
+        Avoids negative date intervals by checking start_date > end_date
+        """
         if self.fdsn_event_start_date.dateTime() > self.fdsn_event_end_date.dateTime():
             self.fdsn_event_end_date.setDate(self.fdsn_event_start_date.date())
 
+    def get_fetcher(self):
+        """
+        Returns a quake fetcher corresponding to the current dialog settings
+        """
+        return Fetcher(event_service=self.fdsn_event_ws_combobox.currentText(),
+                       event_start_date=self.fdsn_event_start_date.dateTime(),
+                       event_end_date=self.fdsn_event_end_date.dateTime(),
+                       event_min_magnitude=self.fdsn_event_min_magnitude.value(),
+                       event_max_magnitude=self.fdsn_event_max_magnitude.value(),
+                       extent=self.mExtentGroupBox.outputExtent() if self.mExtentGroupBox.isChecked() else None)
+
+    def _refresh_url(self):
+        fetcher = self.get_fetcher()
+        self.url_text_browser.setText('<a href="{0}">{0}</a>'.format(fetcher.generate_url()))
+
     def refreshWidgets(self):
-        '''
+        """
         Refreshing the FDSN-Event UI depending on the WS chosen
-        '''
+        """
 
         # set DateTime Widget START according to the combobox choice
         self.fdsn_event_start_date.setMinimumDate(
@@ -125,70 +145,30 @@ class QQuakeDialog(QtWidgets.QDialog, FORM_CLASS):
         )
 
     def _getEventList(self):
-        '''
+        """
         read the event URL and convert the response in a list
-        '''
+        """
+        if self.fetcher:
+            # TODO - cancel current request
+            return
 
-        # create the initial string depending on the WS chosen in the comobobox
-        cap = fdsn_events_capabilities[self.fdsn_event_ws_combobox.currentText()]['ws']
-        fdsn_event_text = fdsn_events_capabilities[self.fdsn_event_ws_combobox.currentText()]['ws']
+        self.fetcher = self.get_fetcher()
+        self.fetcher.progress.connect(self.progressBar.setValue)
+        self.fetcher.finished.connect(self._fetcher_finished)
+        self.button_box.button(QDialogButtonBox.Ok).setText(self.tr('Fetching'))
+        self.button_box.button(QDialogButtonBox.Ok).setEnabled(False)
 
-        # append to the string the parameter of the UI (starttime, endtime, etc)
-        fdsn_event_text += 'starttime={}&endtime={}&minmag={}&maxmag={}'.format(
-            self.fdsn_event_start_date.dateTime().toString(Qt.ISODate),
-            self.fdsn_event_end_date.dateTime().toString(Qt.ISODate),
-            self.fdsn_event_min_magnitude.value(),
-            self.fdsn_event_max_magnitude.value()
-        )
+        self.fetcher.fetch_data()
 
-        if self.mExtentGroupBox.isChecked():
-            ext = self.mExtentGroupBox.outputExtent()
-            fdsn_event_text += '&minlat={ymin}&maxlat={ymax}&minlon={xmin}&maxlon={xmax}'.format(
-                ymin=ext.yMinimum(),
-                ymax=ext.yMaximum(),
-                xmin=ext.xMinimum(),
-                xmax=ext.xMaximum()
-            )
+    def _fetcher_finished(self):
+        self.button_box.button(QDialogButtonBox.Ok).setText(self.tr('Fetch Data'))
+        self.button_box.button(QDialogButtonBox.Ok).setEnabled(True)
 
-        fdsn_event_text += '&limit=1000&format=text'
+        vl = self.fetcher.create_layer()
 
-        self.lineEdit.setText(fdsn_event_text)
-
-        fdsn_event_dict = getFDSNEvent(fdsn_event_text)
-
-        # define QgsVectorLayer to add to the map
-        vl = QgsVectorLayer('Point?crs=EPSG:4326', 'mem', 'memory')
-
-        # define and write QgsFields and get types from dictionary
-        fields = QgsFields()
-        for k, v in fdsn_event_fields.items():
-            fields.append(QgsField(k, v))
-        vl.dataProvider().addAttributes(fields)
-        vl.updateFields()
-
-        # write QgsFeatures of the FDSN Events
-        lid = []
-        for i in list(zip(*fdsn_event_dict.values())):
-            lid.append('{}eventid={}&includeallorigins=true&includeallmagnitudes=true&format=xml'.format(
-                cap,
-                i[0])
-            )
-            feat = QgsFeature(vl.fields())
-            feat.setGeometry(QgsGeometry.fromPointXY(QgsPointXY(float(i[3]), float(i[2]))))
-            feat.setAttributes(list(i))
-            vl.dataProvider().addFeatures([feat])
+        self.fetcher.deleteLater()
+        self.fetcher = None
 
         # add the layer to the map
-        print(lid)
         QgsProject.instance().addMapLayer(vl)
 
-    def checkstate(self):
-        if self.mExtentGroupBox.isChecked():
-            ext = self.mExtentGroupBox.outputExtent()
-            print(ext.xMinimum())
-            print(ext.yMaximum())
-            print(ext.xMaximum())
-            print(ext.yMinimum())
-
-        else:
-            print('nononono')
