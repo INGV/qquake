@@ -31,9 +31,6 @@ from qgis.PyQt.QtWidgets import (
 )
 
 from qgis.core import (
-    QgsFeature,
-    QgsGeometry,
-    QgsPointXY,
     QgsProject,
     QgsRectangle,
     QgsCoordinateReferenceSystem
@@ -167,22 +164,10 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.button_box.button(QDialogButtonBox.Ok).setText(self.tr('Fetch Data'))
         self.button_box.button(QDialogButtonBox.Ok).setEnabled(True)
 
-        vl = self.fetcher.create_empty_layer()
+        vl = self.fetcher.create_layer()
 
         self.fetcher.deleteLater()
         self.fetcher = None
-
-       # # write QgsFeatures of the FDSN Events
-       #lid = []
-       #for i in list(zip(*fdsn_event_dict.values())):
-       #    lid.append('{}eventid={}&includeallorigins=true&includeallmagnitudes=true&format=xml'.format(
-       #        cap,
-       #        i[0])
-       #    )
-       #    feat = QgsFeature(vl.fields())
-       #    feat.setGeometry(QgsGeometry.fromPointXY(QgsPointXY(float(i[3]), float(i[2]))))
-       #    feat.setAttributes(list(i))
-       #    vl.dataProvider().addFeatures([feat])
 
         # add the layer to the map
         QgsProject.instance().addMapLayer(vl)

@@ -111,11 +111,11 @@ fdsn_events_capabilities = {
 }
 
 fdsn_event_fields = {
-    '#EventID': QVariant.String,
+    'EventID': QVariant.String,
     'Time': QVariant.String,
     'Latitude': QVariant.Double,
     'Longitude': QVariant.Double,
-    'Depth/km': QVariant.Double,
+    'DepthKm': QVariant.Double,
     'Author': QVariant.String,
     'Catalog': QVariant.String,
     'Contributor': QVariant.String,

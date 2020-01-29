@@ -19,7 +19,8 @@ import unittest
 from qgis.PyQt.QtCore import (
     QDate,
     QTime,
-    QDateTime
+    QDateTime,
+    QCoreApplication
 )
 from qgis.core import QgsRectangle
 
@@ -76,6 +77,27 @@ class QQuakeFetcherTest(unittest.TestCase):
         fetcher = Fetcher(event_service='AHEAD/SHEEC', event_max_magnitude=9)
         self.assertEqual(fetcher._generate_layer_name(),
                          'AHEAD/SHEEC (Magnitude ≤ 9)')
+
+    def test_fetch_and_parse(self):
+        fetcher = Fetcher(event_service='INGV ASMI/CPTI', event_start_date=QDateTime(QDate(2013, 1, 1)),
+                          event_end_date=QDateTime(QDate(2014, 1, 1)))
+
+        self.done = False
+
+        self.result = None
+        def parse_reply():
+            self.done = True
+            self.result = fetcher.events
+
+        fetcher.finished.connect(parse_reply)
+        fetcher.fetch_data()
+
+        while not self.done:
+            QCoreApplication.processEvents()
+
+        self.assertTrue(self.result)
+
+
 
 
 if __name__ == "__main__":
