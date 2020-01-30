@@ -221,9 +221,10 @@ class QQuakeDialog(QDialog, FORM_CLASS):
 
         event_layer = self.fetcher.create_event_layer()
         origin_layer = self.fetcher.create_origin_layer()
+        magnitude_layer = self.fetcher.create_magnitude_layer()
 
         self.fetcher.deleteLater()
         self.fetcher = None
 
-        QgsProject.instance().addMapLayers([event_layer, origin_layer])
+        QgsProject.instance().addMapLayers([event_layer, origin_layer, magnitude_layer])
 

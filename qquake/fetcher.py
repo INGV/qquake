@@ -155,6 +155,17 @@ class Fetcher(QObject):
 
         return vl
 
+    def _create_empty_magnitudes_layer(self):
+        """
+        Creates an empty layer for earthquake data
+        """
+        vl = QgsVectorLayer('PointZ?crs=EPSG:4326', self._generate_layer_name('Magnitudes'), 'memory')
+
+        vl.dataProvider().addAttributes(Magnitude.to_fields())
+        vl.updateFields()
+
+        return vl
+
     def events_to_layer(self, events):
         """
         Returns a new vector layer containing the reply contents
@@ -183,8 +194,25 @@ class Fetcher(QObject):
 
         return vl
 
+    def magnitudes_to_layer(self, events):
+        """
+        Returns a new vector layer containing the reply contents
+        """
+        vl = self._create_empty_magnitudes_layer()
+
+        features = []
+        for e in events:
+            features.extend(e.to_magnitude_features())
+
+        vl.dataProvider().addFeatures(features)
+
+        return vl
+
     def create_event_layer(self):
         return self.events_to_layer(self.result)
 
     def create_origin_layer(self):
         return self.origins_to_layer(self.result)
+
+    def create_magnitude_layer(self):
+        return self.magnitudes_to_layer(self.result)

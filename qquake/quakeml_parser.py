@@ -101,6 +101,20 @@ ORIGIN_FIELDS = {
     'originEvaluationStatus': QVariant.String,
 }
 
+MAGNITUDE_FIELDS = {
+    'publicID': QVariant.String,
+    'eventID': QVariant.String,
+    'eventType': QVariant.String,
+    'mag': QVariant.Double,
+    'magnitudeType': QVariant.String,
+    'magnitudeMethodID': QVariant.String,
+    'stationCount': QVariant.Int,
+    'azimuthalGap': QVariant.Double,
+    'magnitudeEvaluationMode': QVariant.String,
+    'magnitudeEvaluationStatus': QVariant.String,
+}
+
+
 class ElementParser:
 
     def __init__(self, element):
@@ -599,6 +613,13 @@ class Magnitude:
                          comments=comments,
                          creationInfo=parser.creation_info('creationInfo'))
 
+    @staticmethod
+    def to_fields():
+        fields = QgsFields()
+        for k, v in MAGNITUDE_FIELDS.items():
+            fields.append(QgsField(k, v))
+        return fields
+
 
 class Event:
 
@@ -723,6 +744,35 @@ class Event:
 
         return features
 
+    def to_magnitude_features(self):
+        features = []
+        f = QgsFeature(Magnitude.to_fields())
+
+        for _, o in self.magnitudes.items():
+            f['publicID'] = o.publicID
+            f['eventID'] = self.publicID
+            f['eventType'] = self.type
+
+            f['mag'] = o.mag.value
+            f['magnitudeType'] = o.type if o.type is not None else NULL
+            f['magnitudeMethodID'] = o.methodID if o.methodID is not None else NULL
+            f['stationCount'] = o.stationCount if o.stationCount is not None else NULL
+            f['azimuthalGap'] = o.azimuthalGap if o.azimuthalGap is not None else NULL
+            f['magnitudeEvaluationMode'] = o.evaluationMode if o.evaluationMode is not None else NULL
+            f['magnitudeEvaluationStatus'] = o.evaluationStatus if o.evaluationStatus is not None else NULL
+
+            origin = self.origins[o.originID]
+
+            if origin.depth is not None:
+                geom = QgsPoint(x=origin.longitude.value, y=origin.latitude.value,
+                                z=-origin.depth.value * 1000)
+            else:
+                geom = QgsPoint(x=origin.longitude.value, y=origin.latitude.value)
+            f.setGeometry(QgsGeometry(geom))
+
+            features.append(f)
+
+        return features
 
     @staticmethod
     def from_element(element):
