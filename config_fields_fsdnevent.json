@@ -1,0 +1,2342 @@
+{
+  "field_groups": [
+    {
+      "basic_event_info": {
+        "label": "basic event infos",
+        "fields": [
+          {
+            "field": "eventid",
+            "source": "eventParameters>event§publicID",
+            "description": ""
+          },
+          {
+            "field": "eventype",
+            "source": "eventParameters>event>type",
+            "description": ""
+          },
+          {
+            "field": "eventtypec",
+            "source": "eventParameters>event>typeCertainty",
+            "description": ""
+          },
+          {
+            "field": "preforigin",
+            "source": "eventParameters>event>preferredOriginID",
+            "description": ""
+          },
+          {
+            "field": "prefmag",
+            "source": "eventParameters>event>preferredMagnitudeID",
+            "description": ""
+          },
+          {
+            "field": "prefmechan",
+            "source": "eventParameters>event>preferredFocalMechanismID",
+            "description": ""
+          },
+          {
+            "field": "eventx",
+            "source": "eventParameters>event>description>text",
+            "description": ""
+          },
+          {
+            "field": "eventxtype",
+            "source": "eventParameters>event>description>type",
+            "description": ""
+          },
+          {
+            "field": "eventcm",
+            "source": "eventParameters>event>comment>text",
+            "description": ""
+          },
+          {
+            "field": "eventcmagi",
+            "source": "eventParameters>event>comment>creationInfo>agencyID",
+            "description": ""
+          },
+          {
+            "field": "eventcmagu",
+            "source": "eventParameters>event>comment>creationInfo>agencyURI",
+            "description": ""
+          },
+          {
+            "field": "eventcmau",
+            "source": "eventParameters>event>comment>creationInfo>author",
+            "description": ""
+          },
+          {
+            "field": "eventcmauu",
+            "source": "eventParameters>event>comment>creationInfo>authorURI",
+            "description": ""
+          },
+          {
+            "field": "eventcmtim",
+            "source": "eventParameters>event>comment>creationInfo>creationTime",
+            "description": ""
+          },
+          {
+            "field": "eventcmver",
+            "source": "eventParameters>event>comment>creationInfo>version",
+            "description": ""
+          },
+          {
+            "field": "eventcragi",
+            "source": "eventParameters>event>creationInfo>agencyID",
+            "description": ""
+          },
+          {
+            "field": "eventcragu",
+            "source": "eventParameters>event>creationInfo>agencyURI",
+            "description": ""
+          },
+          {
+            "field": "eventcrau",
+            "source": "eventParameters>event>creationInfo>author",
+            "description": ""
+          },
+          {
+            "field": "eventcrauu",
+            "source": "eventParameters>event>creationInfo>authorURI",
+            "description": ""
+          },
+          {
+            "field": "eventcrtim",
+            "source": "eventParameters>event>creationInfo>creationTime",
+            "description": ""
+          },
+          {
+            "field": "eventcrver",
+            "source": "eventParameters>event>creationInfo>version",
+            "description": ""
+          }
+        ]
+      }
+    },
+    {
+      "origin": {
+        "label": "origin",
+        "fields": [
+          {
+            "field": "originid",
+            "source": "eventParameters>event>origin§publicID",
+            "description": ""
+          },
+          {
+            "field": "time",
+            "source": "eventParameters>event>origin>time>value",
+            "description": ""
+          },
+          {
+            "field": "timeunc",
+            "source": "eventParameters>event>origin>time>uncertainty",
+            "description": ""
+          },
+          {
+            "field": "timeunclo",
+            "source": "eventParameters>event>origin>time>lowerUncertainty",
+            "description": ""
+          },
+          {
+            "field": "timeuncup",
+            "source": "eventParameters>event>origin>time>upperUncertainty",
+            "description": ""
+          },
+          {
+            "field": "timeconf",
+            "source": "eventParameters>event>origin>time>confidenceLevel",
+            "description": ""
+          },
+          {
+            "field": "year",
+            "source": "eventParameters>event>origin>compositeTime>year>value",
+            "description": ""
+          },
+          {
+            "field": "yearunc",
+            "source": "eventParameters>event>origin>compositeTime>year>uncertainty",
+            "description": ""
+          },
+          {
+            "field": "yearunclo",
+            "source": "eventParameters>event>origin>compositeTime>year>lowerUncertainty",
+            "description": ""
+          },
+          {
+            "field": "yearuncup",
+            "source": "eventParameters>event>origin>compositeTime>year>upperUncertainty",
+            "description": ""
+          },
+          {
+            "field": "yearconf",
+            "source": "eventParameters>event>origin>compositeTime>year>confidenceLevel",
+            "description": ""
+          },
+          {
+            "field": "month",
+            "source": "eventParameters>event>origin>compositeTime>month>value",
+            "description": ""
+          },
+          {
+            "field": "monthunc",
+            "source": "eventParameters>event>origin>compositeTime>month>uncertainty",
+            "description": ""
+          },
+          {
+            "field": "monthunclo",
+            "source": "eventParameters>event>origin>compositeTime>month>lowerUncertainty",
+            "description": ""
+          },
+          {
+            "field": "monthuncup",
+            "source": "eventParameters>event>origin>compositeTime>month>upperUncertainty",
+            "description": ""
+          },
+          {
+            "field": "monthconf",
+            "source": "eventParameters>event>origin>compositeTime>month>confidenceLevel",
+            "description": ""
+          },
+          {
+            "field": "day",
+            "source": "eventParameters>event>origin>compositeTime>day>value",
+            "description": ""
+          },
+          {
+            "field": "dayunc",
+            "source": "eventParameters>event>origin>compositeTime>day>uncertainty",
+            "description": ""
+          },
+          {
+            "field": "dayunclo",
+            "source": "eventParameters>event>origin>compositeTime>day>lowerUncertainty",
+            "description": ""
+          },
+          {
+            "field": "dayuncup",
+            "source": "eventParameters>event>origin>compositeTime>day>upperUncertainty",
+            "description": ""
+          },
+          {
+            "field": "dayconf",
+            "source": "eventParameters>event>origin>compositeTime>day>confidenceLevel",
+            "description": ""
+          },
+          {
+            "field": "hour",
+            "source": "eventParameters>event>origin>compositeTime>hour>value",
+            "description": ""
+          },
+          {
+            "field": "hourunc",
+            "source": "eventParameters>event>origin>compositeTime>hour>uncertainty",
+            "description": ""
+          },
+          {
+            "field": "hourunclo",
+            "source": "eventParameters>event>origin>compositeTime>hour>lowerUncertainty",
+            "description": ""
+          },
+          {
+            "field": "houruncup",
+            "source": "eventParameters>event>origin>compositeTime>hour>upperUncertainty",
+            "description": ""
+          },
+          {
+            "field": "hourconf",
+            "source": "eventParameters>event>origin>compositeTime>hour>confidenceLevel",
+            "description": ""
+          },
+          {
+            "field": "min",
+            "source": "eventParameters>event>origin>compositeTime>minute>value",
+            "description": ""
+          },
+          {
+            "field": "minunc",
+            "source": "eventParameters>event>origin>compositeTime>hour>uncertainty",
+            "description": ""
+          },
+          {
+            "field": "minunclo",
+            "source": "eventParameters>event>origin>compositeTime>hour>lowerUncertainty",
+            "description": ""
+          },
+          {
+            "field": "minuncup",
+            "source": "eventParameters>event>origin>compositeTime>hour>upperUncertainty",
+            "description": ""
+          },
+          {
+            "field": "minconf",
+            "source": "eventParameters>event>origin>compositeTime>hour>confidenceLevel",
+            "description": ""
+          },
+          {
+            "field": "sec",
+            "source": "eventParameters>event>origin>compositeTime>second>value",
+            "description": ""
+          },
+          {
+            "field": "secunc",
+            "source": "eventParameters>event>origin>compositeTime>second>uncertainty",
+            "description": ""
+          },
+          {
+            "field": "secunclo",
+            "source": "eventParameters>event>origin>compositeTime>second>lowerUncertainty",
+            "description": ""
+          },
+          {
+            "field": "secuncup",
+            "source": "eventParameters>event>origin>compositeTime>second>upperUncertainty",
+            "description": ""
+          },
+          {
+            "field": "secconf",
+            "source": "eventParameters>event>origin>compositeTime>second>confidenceLevel",
+            "description": ""
+          },
+          {
+            "field": "region",
+            "source": "eventParameters>event>origin>region",
+            "description": ""
+          },
+          {
+            "field": "lat",
+            "source": "eventParameters>event>origin>latitude>value",
+            "description": ""
+          },
+          {
+            "field": "latunc",
+            "source": "eventParameters>event>origin>latitude>uncertainty",
+            "description": ""
+          },
+          {
+            "field": "latunclo",
+            "source": "eventParameters>event>origin>latitude>lowerUncertainty",
+            "description": ""
+          },
+          {
+            "field": "latuncup",
+            "source": "eventParameters>event>origin>latitude>upperUncertainty",
+            "description": ""
+          },
+          {
+            "field": "latconf",
+            "source": "eventParameters>event>origin>latitude>confidenceLevel",
+            "description": ""
+          },
+          {
+            "field": "lon",
+            "source": "eventParameters>event>origin>longitude>value",
+            "description": ""
+          },
+          {
+            "field": "lonunc",
+            "source": "eventParameters>event>origin>longitude>uncertainty",
+            "description": ""
+          },
+          {
+            "field": "lonunclo",
+            "source": "eventParameters>event>origin>longitude>lowerUncertainty",
+            "description": ""
+          },
+          {
+            "field": "lonuncup",
+            "source": "eventParameters>event>origin>longitude>upperUncertainty",
+            "description": ""
+          },
+          {
+            "field": "lonconf",
+            "source": "eventParameters>event>origin>longitude>confidenceLevel",
+            "description": ""
+          },
+          {
+            "field": "depth",
+            "source": "eventParameters>event>origin>depth>value",
+            "description": ""
+          },
+          {
+            "field": "depthunc",
+            "source": "eventParameters>event>origin>depth>uncertainty",
+            "description": ""
+          },
+          {
+            "field": "depthunclo",
+            "source": "eventParameters>event>origin>depth>lowerUncertainty",
+            "description": ""
+          },
+          {
+            "field": "depthuncup",
+            "source": "eventParameters>event>origin>depth>upperUncertainty",
+            "description": ""
+          },
+          {
+            "field": "depthconf",
+            "source": "eventParameters>event>origin>depth>confidenceLevel",
+            "description": ""
+          },
+          {
+            "field": "depthtype",
+            "source": "eventParameters>event>origin>depthType",
+            "description": ""
+          },
+          {
+            "field": "origmethod",
+            "source": "eventParameters>event>origin>methodID",
+            "description": ""
+          },
+          {
+            "field": "origearthm",
+            "source": "eventParameters>event>origin>earthModelID",
+            "description": ""
+          },
+          {
+            "field": "orighunc",
+            "source": "eventParameters>event>origin>originUncertainty>horizontalUncertainty",
+            "description": ""
+          },
+          {
+            "field": "orighunclo",
+            "source": "eventParameters>event>origin>originUncertainty>minHorizontalUncertainty",
+            "description": ""
+          },
+          {
+            "field": "orighuncup",
+            "source": "eventParameters>event>origin>originUncertainty>maxHorizontalUncertainty",
+            "description": ""
+          },
+          {
+            "field": "origaziunc",
+            "source": "eventParameters>event>origin>originUncertainty>azimuthMaxHorizontalUncertainty",
+            "description": ""
+          },
+          {
+            "field": "origconfel",
+            "source": "eventParameters>event>origin>originUncertainty>confidenceEllipsoid",
+            "description": ""
+          },
+          {
+            "field": "origprefde",
+            "source": "eventParameters>event>origin>originUncertainty>preferredDescription",
+            "description": ""
+          },
+          {
+            "field": "origconflv",
+            "source": "eventParameters>event>origin>originUncertainty>confidenceLevel",
+            "description": ""
+          },
+          {
+            "field": "origphatot",
+            "source": "eventParameters>event>origin>quality>associatedPhaseCount",
+            "description": ""
+          },
+          {
+            "field": "origphause",
+            "source": "eventParameters>event>origin>quality>usedPhaseCount",
+            "description": ""
+          },
+          {
+            "field": "origstatot",
+            "source": "eventParameters>event>origin>quality>associatedStationCount",
+            "description": ""
+          },
+          {
+            "field": "origstause",
+            "source": "eventParameters>event>origin>quality>usedStationCount",
+            "description": ""
+          },
+          {
+            "field": "origdeppht",
+            "source": "eventParameters>event>origin>quality>depthPhaseCount",
+            "description": ""
+          },
+          {
+            "field": "origstderr",
+            "source": "eventParameters>event>origin>quality>standardError",
+            "description": ""
+          },
+          {
+            "field": "origazgap",
+            "source": "eventParameters>event>origin>quality>azimuthalGap",
+            "description": ""
+          },
+          {
+            "field": "origazgap2",
+            "source": "eventParameters>event>origin>quality>secondaryAzimuthalGap",
+            "description": ""
+          },
+          {
+            "field": "origgrthlv",
+            "source": "eventParameters>event>origin>quality>groundTruthLevel",
+            "description": ""
+          },
+          {
+            "field": "origdismax",
+            "source": "eventParameters>event>origin>quality>maximumDistance",
+            "description": ""
+          },
+          {
+            "field": "origdismin",
+            "source": "eventParameters>event>origin>quality>minimumDistance",
+            "description": ""
+          },
+          {
+            "field": "origdismdn",
+            "source": "eventParameters>event>origin>quality>medianDistance",
+            "description": ""
+          },
+          {
+            "field": "origevalmd",
+            "source": "eventParameters>event>origin>evaluationMode",
+            "description": ""
+          },
+          {
+            "field": "origevalst",
+            "source": "eventParameters>event>origin>evaluationStatus",
+            "description": ""
+          },
+          {
+            "field": "origtx",
+            "source": "eventParameters>event>origin>comment>text",
+            "description": ""
+          },
+          {
+            "field": "origtxagid",
+            "source": "eventParameters>event>origin>comment>creationInfo>agencyID",
+            "description": ""
+          },
+          {
+            "field": "origtxagur",
+            "source": "eventParameters>event>origin>comment>creationInfo>agencyURI",
+            "description": ""
+          },
+          {
+            "field": "origtxaut",
+            "source": "eventParameters>event>origin>comment>creationInfo>author",
+            "description": ""
+          },
+          {
+            "field": "origtxautu",
+            "source": "eventParameters>event>origin>comment>creationInfo>authorURI",
+            "description": ""
+          },
+          {
+            "field": "origtxtime",
+            "source": "eventParameters>event>origin>comment>creationInfo>creationTime",
+            "description": ""
+          },
+          {
+            "field": "origtxver",
+            "source": "eventParameters>event>origin>comment>creationInfo>version",
+            "description": ""
+          },
+          {
+            "field": "origcragid",
+            "source": "eventParameters>event>origin>creationInfo>agencyID",
+            "description": ""
+          },
+          {
+            "field": "origcragur",
+            "source": "eventParameters>event>origin>creationInfo>agencyURI",
+            "description": ""
+          },
+          {
+            "field": "origcrau",
+            "source": "eventParameters>event>origin>creationInfo>author",
+            "description": ""
+          },
+          {
+            "field": "origcrauur",
+            "source": "eventParameters>event>origin>creationInfo>authorURI",
+            "description": ""
+          },
+          {
+            "field": "origcrtime",
+            "source": "eventParameters>event>origin>creationInfo>creationTime",
+            "description": ""
+          },
+          {
+            "field": "origcrvers",
+            "source": "eventParameters>event>origin>creationInfo>version",
+            "description": ""
+          }
+        ]
+      }
+    },
+    {
+      "origin_arrival": {
+        "label": "origin arrival",
+        "fields": [
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>origin>arrival§publicID",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>origin>arrival>pickID",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>origin>arrival>phase",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>origin>arrival>timeCorrection",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>origin>arrival>azimuth",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>origin>arrival>distance",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>origin>arrival>takeoffAngle>value",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>origin>arrival>takeoffAngle>uncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>origin>arrival>takeoffAngle>lowerUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>origin>arrival>takeoffAngle>upperUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>origin>arrival>takeoffAngle>confidenceLevel",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>origin>arrival>timeResidual",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>origin>arrival>horizontalSlownessResidual",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>origin>arrival>backazimuthResidual",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>origin>arrival>timeWeight",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>origin>arrival>horizontalSlownessWeight",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>origin>arrival>backazimuthWeight",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>origin>arrival>earthModelID",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>origin>arrival>comment>text",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>origin>arrival>comment>creationInfo>agencyID",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>origin>arrival>comment>creationInfo>agencyURI",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>origin>arrival>comment>creationInfo>author",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>origin>arrival>comment>creationInfo>authorURI",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>origin>arrival>comment>creationInfo>creationTime",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>origin>arrival>comment>creationInfo>version",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>origin>arrival>creationInfo>agencyID",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>origin>arrival>creationInfo>agencyURI",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>origin>arrival>creationInfo>author",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>origin>arrival>creationInfo>authorURI",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>origin>arrival>creationInfo>creationTime",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>origin>arrival>creationInfo>version",
+            "description": ""
+          }
+        ]
+      }
+    },
+    {
+      "magnitude": {
+        "label": "magnitude",
+        "fields": [
+          {
+            "field": "magid",
+            "source": "eventParameters>event>magnitude§publicID",
+            "description": ""
+          },
+          {
+            "field": "magorigid",
+            "source": "eventParameters>event>magnitude>originID",
+            "description": ""
+          },
+          {
+            "field": "magmethod",
+            "source": "eventParameters>event>magnitude>methodID",
+            "description": ""
+          },
+          {
+            "field": "magstatmag",
+            "source": "eventParameters>event>magnitude>stationMagnitudeContribution>stationMagnitudeID",
+            "description": ""
+          },
+          {
+            "field": "magstatres",
+            "source": "eventParameters>event>magnitude>stationMagnitudeContribution>residual",
+            "description": ""
+          },
+          {
+            "field": "magstatwei",
+            "source": "eventParameters>event>magnitude>stationMagnitudeContribution>weight",
+            "description": ""
+          },
+          {
+            "field": "mag",
+            "source": "eventParameters>event>magnitude>mag>value",
+            "description": ""
+          },
+          {
+            "field": "magunc",
+            "source": "eventParameters>event>magnitude>mag>uncertainty",
+            "description": ""
+          },
+          {
+            "field": "magunclo",
+            "source": "eventParameters>event>magnitude>mag>lowerUncertainty",
+            "description": ""
+          },
+          {
+            "field": "magup",
+            "source": "eventParameters>event>magnitude>mag>upperUncertainty",
+            "description": ""
+          },
+          {
+            "field": "magconf",
+            "source": "eventParameters>event>magnitude>mag>confidenceLevel",
+            "description": ""
+          },
+          {
+            "field": "magtype",
+            "source": "eventParameters>event>magnitude>type",
+            "description": ""
+          },
+          {
+            "field": "magstatot",
+            "source": "eventParameters>event>magnitude>stationCount",
+            "description": ""
+          },
+          {
+            "field": "magazigap",
+            "source": "eventParameters>event>magnitude>azimuthalGap",
+            "description": ""
+          },
+          {
+            "field": "magevalmod",
+            "source": "eventParameters>event>magnitude>evaluationMode",
+            "description": ""
+          },
+          {
+            "field": "magevalsta",
+            "source": "eventParameters>event>magnitude>evaluationStatus",
+            "description": ""
+          },
+          {
+            "field": "magcmtx",
+            "source": "eventParameters>event>magnitude>comment>text",
+            "description": ""
+          },
+          {
+            "field": "magcmagid",
+            "source": "eventParameters>event>magnitude>comment>creationInfo>agencyID",
+            "description": ""
+          },
+          {
+            "field": "magcmaguri",
+            "source": "eventParameters>event>magnitude>comment>creationInfo>agencyURI",
+            "description": ""
+          },
+          {
+            "field": "magcmau",
+            "source": "eventParameters>event>magnitude>comment>creationInfo>author",
+            "description": ""
+          },
+          {
+            "field": "magcmauuri",
+            "source": "eventParameters>event>magnitude>comment>creationInfo>authorURI",
+            "description": ""
+          },
+          {
+            "field": "magcmtime",
+            "source": "eventParameters>event>magnitude>comment>creationInfo>creationTime",
+            "description": ""
+          },
+          {
+            "field": "magcmver",
+            "source": "eventParameters>event>magnitude>comment>creationInfo>version",
+            "description": ""
+          },
+          {
+            "field": "magcragid",
+            "source": "eventParameters>event>magnitude>creationInfo>agencyID",
+            "description": ""
+          },
+          {
+            "field": "magcraguri",
+            "source": "eventParameters>event>magnitude>creationInfo>agencyURI",
+            "description": ""
+          },
+          {
+            "field": "magcrau",
+            "source": "eventParameters>event>magnitude>creationInfo>author",
+            "description": ""
+          },
+          {
+            "field": "magcrauri",
+            "source": "eventParameters>event>magnitude>creationInfo>authorURI",
+            "description": ""
+          },
+          {
+            "field": "magcrtime",
+            "source": "eventParameters>event>magnitude>creationInfo>creationTime",
+            "description": ""
+          },
+          {
+            "field": "magcrver",
+            "source": "eventParameters>event>magnitude>creationInfo>version",
+            "description": ""
+          }
+        ]
+      }
+    },
+    {
+      "amplitude": {
+        "label": "amplitude",
+        "fields": [
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>amplitude§publicID",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>amplitude>methodID",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>amplitude>pickID",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>amplitude>filterID",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>amplitude>waveformID§networkCode",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>amplitude>waveformID§stationCode",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>amplitude>waveformID§channelCode",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>amplitude>waveformID§locationCode",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>amplitude>waveformID",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>amplitude>genericAmplitude>value",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>amplitude>genericAmplitude>uncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>amplitude>genericAmplitude>lowerUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>amplitude>genericAmplitude>upperUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>amplitude>genericAmplitude>confidenceLevel",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>amplitude>type",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>amplitude>category",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>amplitude>unit",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>amplitude>period>value",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>amplitude>period>uncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>amplitude>period>lowerUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>amplitude>period>upperUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>amplitude>period>confidenceLevel",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>amplitude>snr",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>amplitude>timeWindow>begin",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>amplitude>timeWindow>end",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>amplitude>timeWindow>reference",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>amplitude>scalingTime>value",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>amplitude>scalingTime>uncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>amplitude>scalingTime>lowerUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>amplitude>scalingTime>upperUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>amplitude>scalingTime>confidenceLevel",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>amplitude>magnitudeHint",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>amplitude>evaluationMode",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>amplitude>evaluationStatus",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>amplitude>comment>text",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>amplitude>comment>creationInfo>agencyID",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>amplitude>comment>creationInfo>agencyURI",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>amplitude>comment>creationInfo>author",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>amplitude>comment>creationInfo>authorURI",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>amplitude>comment>creationInfo>creationTime",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>amplitude>comment>creationInfo>version",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>amplitude>creationInfo>agencyID",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>amplitude>creationInfo>agencyURI",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>amplitude>creationInfo>author",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>amplitude>creationInfo>authorURI",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>amplitude>creationInfo>creationTime",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>amplitude>creationInfo>version",
+            "description": ""
+          }
+        ]
+      }
+    },
+    {
+      "pick": {
+        "label": "pick",
+        "fields": [
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>pick§publicID",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>pick>waveformID§networkCode",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>pick>waveformID§stationCode",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>pick>waveformID§channelCode",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>pick>waveformID§locationCode",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>pick>waveformID",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>pick>filterID",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>pick>methodID",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>pick>slownessMethodID",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>pick>time>value",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>pick>time>uncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>pick>time>lowerUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>pick>time>upperUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>pick>time>confidenceLevel",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>pick>horizontalSlowness>value",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>pick>horizontalSlowness>uncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>pick>horizontalSlowness>lowerUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>pick>horizontalSlowness>upperUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>pick>horizontalSlowness>confidenceLevel",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>pick>backazimuth>value",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>pick>backazimuth>uncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>pick>backazimuth>lowerUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>pick>backazimuth>upperUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>pick>backazimuth>confidenceLevel",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>pick>onset",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>pick>phaseHint",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>pick>polarity",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>pick>evaluationMode",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>pick>evaluationStatus",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>pick>comment>text",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>pick>comment>creationInfo>agencyID",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>pick>comment>creationInfo>agencyURI",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>pick>comment>creationInfo>author",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>pick>comment>creationInfo>authorURI",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>pick>comment>creationInfo>creationTime",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>pick>comment>creationInfo>version",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>pick>creationInfo>agencyID",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>pick>creationInfo>agencyURI",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>pick>creationInfo>author",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>pick>creationInfo>authorURI",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>pick>creationInfo>creationTime",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>pick>creationInfo>version",
+            "description": ""
+          }
+        ]
+      }
+    },
+    {
+      "station_magnitude": {
+        "label": "station magnitude",
+        "fields": [
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>stationMagnitude§publicID",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>stationMagnitude>originID",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>stationMagnitude>mag>value",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>stationMagnitude>mag>uncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>stationMagnitude>mag>lowerUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>stationMagnitude>mag>upperUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>stationMagnitude>mag>confidenceLevel",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>stationMagnitude>type",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>stationMagnitude>amplitudeID",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>stationMagnitude>methodID",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>stationMagnitude>waveformID",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>stationMagnitude>comment>text",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>stationMagnitude>comment>creationInfo>agencyID",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>stationMagnitude>comment>creationInfo>agencyURI",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>stationMagnitude>comment>creationInfo>author",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>stationMagnitude>comment>creationInfo>authorURI",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>stationMagnitude>comment>creationInfo>creationTime",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>stationMagnitude>comment>creationInfo>version",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>stationMagnitude>creationInfo>agencyID",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>stationMagnitude>creationInfo>agencyURI",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>stationMagnitude>creationInfo>author",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>stationMagnitude>creationInfo>authorURI",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>stationMagnitude>creationInfo>creationTime",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>stationMagnitude>creationInfo>version",
+            "description": ""
+          }
+        ]
+      }
+    },
+    {
+      "focal_mechanism": {
+        "label": "focal mechanism",
+        "fields": [
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism§publicID",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>triggeringOriginID",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>methodID",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>waveformID§networkCode",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>waveformID§stationCode",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>waveformID§channelCode",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>waveformID§locationCode",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>waveformID",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>azimuthalGap",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>stationPolarityCount",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>misfit",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>stationDistributionRatio",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>evaluationMode",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>evaluationStatus",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>comment>text",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>comment>creationInfo>agencyID",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>comment>creationInfo>agencyURI",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>comment>creationInfo>author",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>comment>creationInfo>authorURI",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>comment>creationInfo>creationTime",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>comment>creationInfo>version",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>creationInfo>agencyID",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>creationInfo>agencyURI",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>creationInfo>author",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>creationInfo>authorURI",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>creationInfo>creationTime",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>creationInfo>version",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor§publicID",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>derivedOriginID",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>momentMagnitudeID",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>greensFunctionID",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>methodID",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>filterID",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>dataUsed>waveType",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>dataUsed>stationCount",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>dataUsed>componentCount",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>dataUsed>shortestPeriod",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>dataUsed>longestPeriod",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>scalarMoment>value",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>scalarMoment>uncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>scalarMoment>lowerUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>scalarMoment>upperUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>scalarMoment>confidenceLevel",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>tensor>Mrr>value",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>tensor>Mrr>uncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>tensor>Mrr>lowerUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>tensor>Mrr>upperUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>tensor>Mrr>confidenceLevel",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>tensor>Mtt>value",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>tensor>Mtt>uncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>tensor>Mtt>lowerUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>tensor>Mtt>upperUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>tensor>Mtt>confidenceLevel",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>tensor>Mpp>value",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>tensor>Mpp>uncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>tensor>Mpp>lowerUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>tensor>Mpp>upperUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>tensor>Mpp>confidenceLevel",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>tensor>Mrt>value",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>tensor>Mrt>uncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>tensor>Mrt>lowerUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>tensor>Mrt>upperUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>tensor>Mrt>confidenceLevel",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>tensor>Mrp>value",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>tensor>Mrp>uncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>tensor>Mrp>lowerUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>tensor>Mrp>upperUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>tensor>Mrp>confidenceLevel",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>tensor>Mtp>value",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>tensor>Mtp>uncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>tensor>Mtp>lowerUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>tensor>Mtp>upperUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>tensor>Mtp>confidenceLevel",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>variance",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>varianceReduction",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>doubleCouple",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>clvd",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>iso",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>sourceTimeFunction>type",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>sourceTimeFunction>duration",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>sourceTimeFunction>riseTime",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>sourceTimeFunction>decayTime",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>category",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>inversionType",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>comment>text",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>comment>creationInfo>agencyID",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>comment>creationInfo>agencyURI",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>comment>creationInfo>author",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>comment>creationInfo>authorURI",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>comment>creationInfo>creationTime",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>comment>creationInfo>version",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>creationInfo>agencyID",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>creationInfo>agencyURI",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>creationInfo>author",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>creationInfo>authorURI",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>creationInfo>creationTime",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>momentTensor>creationInfo>version",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>nodalPlanes>nodalPlane1>strike>value",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>nodalPlanes>nodalPlane1>strike>uncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>nodalPlanes>nodalPlane1>strike>lowerUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>nodalPlanes>nodalPlane1>strike>upperUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>nodalPlanes>nodalPlane1>strike>confidenceLevel",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>nodalPlanes>nodalPlane1>dip>value",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>nodalPlanes>nodalPlane1>dip>uncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>nodalPlanes>nodalPlane1>dip>lowerUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>nodalPlanes>nodalPlane1>dip>upperUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>nodalPlanes>nodalPlane1>dip>confidenceLevel",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>nodalPlanes>nodalPlane1>rake>value",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>nodalPlanes>nodalPlane1>rake>uncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>nodalPlanes>nodalPlane1>rake>lowerUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>nodalPlanes>nodalPlane1>rake>upperUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>nodalPlanes>nodalPlane1>rake>confidenceLevel",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>nodalPlanes>nodalPlane2>strike>value",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>nodalPlanes>nodalPlane2>strike>uncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>nodalPlanes>nodalPlane2>strike>lowerUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>nodalPlanes>nodalPlane2>strike>upperUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>nodalPlanes>nodalPlane2>strike>confidenceLevel",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>nodalPlanes>nodalPlane2>dip>value",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>nodalPlanes>nodalPlane2>dip>uncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>nodalPlanes>nodalPlane2>dip>lowerUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>nodalPlanes>nodalPlane2>dip>upperUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>nodalPlanes>nodalPlane2>dip>confidenceLevel",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>nodalPlanes>nodalPlane2>rake>value",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>nodalPlanes>nodalPlane2>rake>uncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>nodalPlanes>nodalPlane2>rake>lowerUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>nodalPlanes>nodalPlane2>rake>upperUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>nodalPlanes>nodalPlane2>rake>confidenceLevel",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>nodalPlanes>preferredPlane",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>principalAxes>tAxis>azimuth>value",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>principalAxes>tAxis>azimuth>uncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>principalAxes>tAxis>azimuth>lowerUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>principalAxes>tAxis>azimuth>upperUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>principalAxes>tAxis>azimuth>confidenceLevel",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>principalAxes>tAxis>plunge>value",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>principalAxes>tAxis>plunge>uncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>principalAxes>tAxis>plunge>lowerUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>principalAxes>tAxis>plunge>upperUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>principalAxes>tAxis>plunge>confidenceLevel",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>principalAxes>tAxis>length>value",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>principalAxes>tAxis>length>uncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>principalAxes>tAxis>length>lowerUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>principalAxes>tAxis>length>upperUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>principalAxes>tAxis>length>confidenceLevel",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>principalAxes>pAxis>azimuth>value",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>principalAxes>pAxis>azimuth>uncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>principalAxes>pAxis>azimuth>lowerUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>principalAxes>pAxis>azimuth>upperUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>principalAxes>pAxis>azimuth>confidenceLevel",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>principalAxes>pAxis>plunge>value",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>principalAxes>pAxis>plunge>uncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>principalAxes>pAxis>plunge>lowerUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>principalAxes>pAxis>plunge>upperUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>principalAxes>pAxis>plunge>confidenceLevel",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>principalAxes>pAxis>length>value",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>principalAxes>pAxis>length>uncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>principalAxes>pAxis>length>lowerUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>principalAxes>pAxis>length>upperUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>principalAxes>pAxis>length>confidenceLevel",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>principalAxes>nAxis>azimuth>value",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>principalAxes>nAxis>azimuth>uncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>principalAxes>nAxis>azimuth>lowerUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>principalAxes>nAxis>azimuth>upperUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>principalAxes>nAxis>azimuth>confidenceLevel",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>principalAxes>nAxis>plunge>value",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>principalAxes>nAxis>plunge>uncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>principalAxes>nAxis>plunge>lowerUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>principalAxes>nAxis>plunge>upperUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>principalAxes>nAxis>plunge>confidenceLevel",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>principalAxes>nAxis>length>value",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>principalAxes>nAxis>length>uncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>principalAxes>nAxis>length>lowerUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>principalAxes>nAxis>length>upperUncertainty",
+            "description": ""
+          },
+          {
+            "field": "xxxxxxx",
+            "source": "eventParameters>event>focalMechanism>principalAxes>nAxis>length>confidenceLevel",
+            "description": ""
+          }
+        ]
+      }
+    }
+  ],
+  "configversion": 0.1,
+  "configlastupdate": "2020-01-30T16:50:27+00:00"
+}
