@@ -49,6 +49,8 @@ from qquake.fetcher import Fetcher
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
     os.path.dirname(__file__), 'qquake_dialog_base.ui'))
 
+PREFERRED='PREFERRED'
+ALL='ALL'
 
 class QQuakeDialog(QDialog, FORM_CLASS):
 
@@ -57,6 +59,9 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         super().__init__(parent)
 
         self.setupUi(self)
+
+        self.output_combo_box.addItem(self.tr('Preferred Magnitude/Origin Only'), PREFERRED)
+        self.output_combo_box.addItem(self.tr('All Magnitudes/Origins'), ALL)
 
         self.url_text_browser.viewport().setAutoFillBackground(False)
         self.button_box.button(QDialogButtonBox.Ok).setText(self.tr('Fetch Data'))
@@ -111,6 +116,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                                                                              self.mExtentGroupBox.outputExtent().xMaximum(),
                                                                              self.mExtentGroupBox.outputExtent().yMaximum()))
         s.setValue('/plugins/qquake/last_event_extent_enabled', self.mExtentGroupBox.isChecked())
+        s.setValue('/plugins/qquake/last_output_type', self.output_combo_box.currentData())
 
     def _restore_settings(self):
         s = QgsSettings()
@@ -145,6 +151,12 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         last_event_extent_enabled = s.value('/plugins/qquake/last_event_extent_enabled')
         if last_event_extent_enabled is not None:
             self.mExtentGroupBox.setChecked(bool(last_event_extent_enabled))
+
+        last_output_type = s.value('/plugins/qquake/last_output_type')
+        if last_output_type is None:
+            last_output_type = PREFERRED
+        self.output_combo_box.setCurrentIndex(self.output_combo_box.findData(last_output_type))
+
 
     def _refresh_date(self):
         """
@@ -219,12 +231,14 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.button_box.button(QDialogButtonBox.Ok).setText(self.tr('Fetch Data'))
         self.button_box.button(QDialogButtonBox.Ok).setEnabled(True)
 
-        event_layer = self.fetcher.create_event_layer()
-        origin_layer = self.fetcher.create_origin_layer()
-        magnitude_layer = self.fetcher.create_magnitude_layer()
+        layers = []
+        layers.append(self.fetcher.create_event_layer())
+        if self.output_combo_box.currentData() == ALL:
+            layers.append(self.fetcher.create_origin_layer())
+            layers.append(self.fetcher.create_magnitude_layer())
 
         self.fetcher.deleteLater()
         self.fetcher = None
 
-        QgsProject.instance().addMapLayers([event_layer, origin_layer, magnitude_layer])
+        QgsProject.instance().addMapLayers(layers)
 
