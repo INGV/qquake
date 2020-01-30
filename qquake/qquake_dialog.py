@@ -215,14 +215,15 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.fetcher.fetch_data()
 
     def _fetcher_finished(self):
+        self.progressBar.reset()
         self.button_box.button(QDialogButtonBox.Ok).setText(self.tr('Fetch Data'))
         self.button_box.button(QDialogButtonBox.Ok).setEnabled(True)
 
-        vl = self.fetcher.create_layer()
+        event_layer = self.fetcher.create_event_layer()
+        origin_layer = self.fetcher.create_origin_layer()
 
         self.fetcher.deleteLater()
         self.fetcher = None
 
-        # add the layer to the map
-        QgsProject.instance().addMapLayer(vl)
+        QgsProject.instance().addMapLayers([event_layer, origin_layer])
 

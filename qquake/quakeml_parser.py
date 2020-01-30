@@ -81,6 +81,25 @@ EVENT_FIELDS = {
     'magnitudeEvaluationStatus': QVariant.String,
 }
 
+ORIGIN_FIELDS = {
+    'publicID': QVariant.String,
+    'eventID': QVariant.String,
+    'eventType': QVariant.String,
+    'time': QVariant.DateTime,
+    'longitude': QVariant.Double,
+    'latitude': QVariant.Double,
+    'depth': QVariant.Double,
+    'depthType': QVariant.String,
+    'timeFixed': QVariant.Bool,
+    'epicenterFixed': QVariant.Bool,
+    'referenceSystemID': QVariant.String,
+    'originMethodID': QVariant.String,
+    'earthModelID': QVariant.String,
+    'originType': QVariant.String,
+    'region': QVariant.String,
+    'originEvaluationMode': QVariant.String,
+    'originEvaluationStatus': QVariant.String,
+}
 
 class ElementParser:
 
@@ -432,6 +451,13 @@ class Origin:
                       creationInfo=parser.creation_info('creationInfo'),
                       origin_uncertainties=origin_uncertainties)
 
+    @staticmethod
+    def to_fields():
+        fields = QgsFields()
+        for k, v in ORIGIN_FIELDS.items():
+            fields.append(QgsField(k, v))
+        return fields
+
 
 class Comment:
 
@@ -656,6 +682,47 @@ class Event:
             'magnitudeEvaluationStatus'] = preferred_magnitude.evaluationStatus if preferred_magnitude.evaluationStatus is not None else NULL
 
         return f
+
+    def to_origin_features(self):
+        features = []
+        f = QgsFeature(Origin.to_fields())
+
+        for _, o in self.origins.items():
+            f['publicID'] = o.publicID
+            f['eventID'] = self.publicID
+            f['eventType'] = self.type
+
+            f['time'] = o.time
+            f['longitude'] = o.longitude.value
+            f['latitude'] = o.latitude.value
+            f['depth'] = o.depth.value if o.depth is not None else NULL
+            f['depthType'] = o.depthType if o.depthType is not None else NULL
+            f['timeFixed'] = o.timeFixed if o.timeFixed is not None else NULL
+            f['epicenterFixed'] = o.epicenterFixed if o.epicenterFixed is not None else NULL
+            f[
+                'referenceSystemID'] = o.referenceSystemID if o.referenceSystemID is not None else NULL
+            f['originMethodID'] = o.methodID if o.methodID is not None else NULL
+            f['earthModelID'] = o.earthModelID if o.earthModelID is not None else NULL
+            # compositeTime ??
+            # quality
+            f['originType'] = o.type if o.type is not None else NULL
+            f['region'] = o.region if o.region is not None else NULL
+            f[
+                'originEvaluationMode'] = o.evaluationMode if o.evaluationMode is not None else NULL
+            f[
+                'originEvaluationStatus'] = o.evaluationStatus if o.evaluationStatus is not None else NULL
+
+            if o.depth is not None:
+                geom = QgsPoint(x=o.longitude.value, y=o.latitude.value,
+                                z=-o.depth.value * 1000)
+            else:
+                geom = QgsPoint(x=o.longitude.value, y=o.latitude.value)
+            f.setGeometry(QgsGeometry(geom))
+
+            features.append(f)
+
+        return features
+
 
     @staticmethod
     def from_element(element):

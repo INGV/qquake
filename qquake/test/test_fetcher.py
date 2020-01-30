@@ -64,19 +64,19 @@ class QQuakeFetcherTest(unittest.TestCase):
 
     def test_name(self):
         fetcher = Fetcher(event_service='AHEAD/SHEEC')
-        self.assertEqual(fetcher._generate_layer_name(), 'AHEAD/SHEEC')
+        self.assertEqual(fetcher._generate_layer_name('Events'), 'AHEAD/SHEEC - Events')
 
         fetcher = Fetcher(event_service='AHEAD/SHEEC', event_min_magnitude=7, event_max_magnitude=9)
-        self.assertEqual(fetcher._generate_layer_name(),
-                         'AHEAD/SHEEC (7 ≤ Magnitude ≤ 9)')
+        self.assertEqual(fetcher._generate_layer_name('Events'),
+                         'AHEAD/SHEEC (7 ≤ Magnitude ≤ 9) - Events')
 
         fetcher = Fetcher(event_service='AHEAD/SHEEC', event_min_magnitude=7)
-        self.assertEqual(fetcher._generate_layer_name(),
-                         'AHEAD/SHEEC (7 ≤ Magnitude)')
+        self.assertEqual(fetcher._generate_layer_name('Events'),
+                         'AHEAD/SHEEC (7 ≤ Magnitude) - Events')
 
         fetcher = Fetcher(event_service='AHEAD/SHEEC', event_max_magnitude=9)
-        self.assertEqual(fetcher._generate_layer_name(),
-                         'AHEAD/SHEEC (Magnitude ≤ 9)')
+        self.assertEqual(fetcher._generate_layer_name('Events'),
+                         'AHEAD/SHEEC (Magnitude ≤ 9) - Events')
 
     def test_fetch_and_parse(self):
         fetcher = Fetcher(event_service='INGV ASMI/CPTI', event_start_date=QDateTime(QDate(2013, 1, 1)),
@@ -87,7 +87,7 @@ class QQuakeFetcherTest(unittest.TestCase):
         self.result = None
         def parse_reply():
             self.done = True
-            self.result = fetcher.events
+            self.result = fetcher.result
 
         fetcher.finished.connect(parse_reply)
         fetcher.fetch_data()
