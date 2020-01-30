@@ -616,14 +616,16 @@ class Event:
             descriptions.append(EventDescription.from_element(description_nodes.at(e).toElement()))
 
         origin_nodes = element.elementsByTagName('origin')
-        origins = []
+        origins = {}
         for e in range(origin_nodes.length()):
-            origins.append(Origin.from_element(origin_nodes.at(e).toElement()))
+            origin = Origin.from_element(origin_nodes.at(e).toElement())
+            origins[origin.publicID] = origin
 
         magnitude_nodes = element.elementsByTagName('magnitude')
-        magnitudes = []
+        magnitudes = {}
         for e in range(magnitude_nodes.length()):
-            magnitudes.append(Magnitude.from_element(magnitude_nodes.at(e).toElement()))
+            magnitude = Magnitude.from_element(magnitude_nodes.at(e).toElement())
+            magnitudes[magnitude.publicID] = magnitude
 
         comment_nodes = element.elementsByTagName('comment')
         comments = []
