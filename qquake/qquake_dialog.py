@@ -33,8 +33,10 @@ from qgis.PyQt.QtWidgets import (
 from qgis.core import (
     QgsProject,
     QgsRectangle,
-    QgsCoordinateReferenceSystem
+    QgsCoordinateReferenceSystem,
+    QgsSettings
 )
+from qgis.gui import QgsGui
 
 from qquake.qquake_defs import (
     fdsn_events_capabilities,
@@ -47,6 +49,8 @@ from qquake.fetcher import Fetcher
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
     os.path.dirname(__file__), 'qquake_dialog_base.ui'))
 
+PREFERRED='PREFERRED'
+ALL='ALL'
 
 class QQuakeDialog(QDialog, FORM_CLASS):
 
@@ -55,6 +59,9 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         super().__init__(parent)
 
         self.setupUi(self)
+
+        self.output_combo_box.addItem(self.tr('Preferred Magnitude/Origin Only'), PREFERRED)
+        self.output_combo_box.addItem(self.tr('All Magnitudes/Origins'), ALL)
 
         self.url_text_browser.viewport().setAutoFillBackground(False)
         self.button_box.button(QDialogButtonBox.Ok).setText(self.tr('Fetch Data'))
@@ -92,7 +99,64 @@ class QQuakeDialog(QDialog, FORM_CLASS):
 
         self.fetcher = None
 
+        QgsGui.enableAutoGeometryRestore(self)
+
+        self._restore_settings()
         self._refresh_url()
+
+    def _save_settings(self):
+        s = QgsSettings()
+        s.setValue('/plugins/qquake/last_event_service', self.fdsn_event_ws_combobox.currentText())
+        s.setValue('/plugins/qquake/last_event_start_date', self.fdsn_event_start_date.dateTime())
+        s.setValue('/plugins/qquake/last_event_end_date', self.fdsn_event_end_date.dateTime())
+        s.setValue('/plugins/qquake/last_event_min_magnitude',self.fdsn_event_min_magnitude.value())
+        s.setValue('/plugins/qquake/last_event_max_magnitude', self.fdsn_event_max_magnitude.value())
+        s.setValue('/plugins/qquake/last_event_extent', '{}|{}|{}|{}'.format(self.mExtentGroupBox.outputExtent().xMinimum(),
+                                                                             self.mExtentGroupBox.outputExtent().yMinimum(),
+                                                                             self.mExtentGroupBox.outputExtent().xMaximum(),
+                                                                             self.mExtentGroupBox.outputExtent().yMaximum()))
+        s.setValue('/plugins/qquake/last_event_extent_enabled', self.mExtentGroupBox.isChecked())
+        s.setValue('/plugins/qquake/last_output_type', self.output_combo_box.currentData())
+
+    def _restore_settings(self):
+        s = QgsSettings()
+        last_service = s.value('/plugins/qquake/last_event_service')
+        if last_service is not None:
+            self.fdsn_event_ws_combobox.setCurrentIndex(self.fdsn_event_ws_combobox.findText(last_service))
+        last_event_start_date = s.value('/plugins/qquake/last_event_start_date')
+        if last_event_start_date is not None:
+            self.fdsn_event_start_date.setDateTime(last_event_start_date)
+        last_event_end_date = s.value('/plugins/qquake/last_event_end_date')
+        if last_event_end_date is not None:
+            self.fdsn_event_end_date.setDateTime(last_event_end_date)
+        last_event_min_magnitude = s.value('/plugins/qquake/last_event_min_magnitude')
+        if last_event_min_magnitude is not None:
+            self.fdsn_event_min_magnitude.setValue(last_event_min_magnitude)
+        last_event_max_magnitude = s.value('/plugins/qquake/last_event_max_magnitude')
+        if last_event_max_magnitude is not None:
+            self.fdsn_event_max_magnitude.setValue(last_event_max_magnitude)
+        last_event_extent = s.value('/plugins/qquake/last_event_extent')
+        if last_event_extent:
+            parts = last_event_extent.split('|')
+            if len(parts) == 4:
+                r = QgsRectangle()
+                try:
+                    r.setXMinimum(float(parts[0]))
+                    r.setYMinimum(float(parts[1]))
+                    r.setXMaximum(float(parts[2]))
+                    r.setYMaximum(float(parts[3]))
+                    self.mExtentGroupBox.setOriginalExtent(r, QgsCoordinateReferenceSystem('EPSG:4326'))
+                except:
+                    pass
+        last_event_extent_enabled = s.value('/plugins/qquake/last_event_extent_enabled')
+        if last_event_extent_enabled is not None:
+            self.mExtentGroupBox.setChecked(bool(last_event_extent_enabled))
+
+        last_output_type = s.value('/plugins/qquake/last_output_type')
+        if last_output_type is None:
+            last_output_type = PREFERRED
+        self.output_combo_box.setCurrentIndex(self.output_combo_box.findData(last_output_type))
+
 
     def _refresh_date(self):
         """
@@ -152,6 +216,8 @@ class QQuakeDialog(QDialog, FORM_CLASS):
             # TODO - cancel current request
             return
 
+        self._save_settings()
+
         self.fetcher = self.get_fetcher()
         self.fetcher.progress.connect(self.progressBar.setValue)
         self.fetcher.finished.connect(self._fetcher_finished)
@@ -161,14 +227,18 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.fetcher.fetch_data()
 
     def _fetcher_finished(self):
+        self.progressBar.reset()
         self.button_box.button(QDialogButtonBox.Ok).setText(self.tr('Fetch Data'))
         self.button_box.button(QDialogButtonBox.Ok).setEnabled(True)
 
-        vl = self.fetcher.create_layer()
+        layers = []
+        layers.append(self.fetcher.create_event_layer())
+        if self.output_combo_box.currentData() == ALL:
+            layers.append(self.fetcher.create_origin_layer())
+            layers.append(self.fetcher.create_magnitude_layer())
 
         self.fetcher.deleteLater()
         self.fetcher = None
 
-        # add the layer to the map
-        QgsProject.instance().addMapLayer(vl)
+        QgsProject.instance().addMapLayers(layers)
 

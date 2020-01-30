@@ -20,19 +20,20 @@ from qgis.PyQt.QtCore import (
     pyqtSignal
 )
 from qgis.PyQt.QtNetwork import QNetworkRequest
-from qgis.PyQt.QtXml import QDomDocument
 
 from qgis.core import (
     QgsNetworkAccessManager,
-    QgsVectorLayer,
-    QgsFields,
-    QgsField
+    QgsVectorLayer
 )
 
-from qquake.quakeml_parser import QuakeMlParser
+from qquake.quakeml_parser import (
+    QuakeMlParser,
+    Event,
+    Origin,
+    Magnitude
+)
 from qquake.qquake_defs import (
     fdsn_events_capabilities,
-    fdsn_event_fields
 )
 
 
@@ -120,7 +121,7 @@ class Fetcher(QObject):
         self.result = QuakeMlParser.parse(reply.readAll())
         self.finished.emit()
 
-    def _generate_layer_name(self):
+    def _generate_layer_name(self, layer_type):
         name = self.event_service
 
         if self.event_min_magnitude is not None and self.event_max_magnitude is not None:
@@ -130,18 +131,37 @@ class Fetcher(QObject):
         elif self.event_max_magnitude is not None:
             name += ' (Magnitude ≤ {})'.format(self.event_max_magnitude)
 
-        return name
+        return name + ' - {}'.format(layer_type)
 
-    def _create_empty_layer(self):
+    def _create_empty_event_layer(self):
         """
         Creates an empty layer for earthquake data
         """
-        vl = QgsVectorLayer('PointZ?crs=EPSG:4326', self._generate_layer_name(), 'memory')
+        vl = QgsVectorLayer('PointZ?crs=EPSG:4326', self._generate_layer_name('Events'), 'memory')
 
-        fields = QgsFields()
-        for k, v in fdsn_event_fields.items():
-            fields.append(QgsField(k, v))
-        vl.dataProvider().addAttributes(fields)
+        vl.dataProvider().addAttributes(Event.to_fields())
+        vl.updateFields()
+
+        return vl
+
+    def _create_empty_origin_layer(self):
+        """
+        Creates an empty layer for earthquake data
+        """
+        vl = QgsVectorLayer('PointZ?crs=EPSG:4326', self._generate_layer_name('Origins'), 'memory')
+
+        vl.dataProvider().addAttributes(Origin.to_fields())
+        vl.updateFields()
+
+        return vl
+
+    def _create_empty_magnitudes_layer(self):
+        """
+        Creates an empty layer for earthquake data
+        """
+        vl = QgsVectorLayer('PointZ?crs=EPSG:4326', self._generate_layer_name('Magnitudes'), 'memory')
+
+        vl.dataProvider().addAttributes(Magnitude.to_fields())
         vl.updateFields()
 
         return vl
@@ -150,16 +170,49 @@ class Fetcher(QObject):
         """
         Returns a new vector layer containing the reply contents
         """
-        vl = self._create_empty_layer()
+        vl = self._create_empty_event_layer()
 
         features = []
         for e in events:
-            features.extend(e.to_features())
+            features.append(e.to_feature())
 
         vl.dataProvider().addFeatures(features)
 
         return vl
 
-    def create_layer(self):
+    def origins_to_layer(self, events):
+        """
+        Returns a new vector layer containing the reply contents
+        """
+        vl = self._create_empty_origin_layer()
+
+        features = []
+        for e in events:
+            features.extend(e.to_origin_features())
+
+        vl.dataProvider().addFeatures(features)
+
+        return vl
+
+    def magnitudes_to_layer(self, events):
+        """
+        Returns a new vector layer containing the reply contents
+        """
+        vl = self._create_empty_magnitudes_layer()
+
+        features = []
+        for e in events:
+            features.extend(e.to_magnitude_features())
+
+        vl.dataProvider().addFeatures(features)
+
+        return vl
+
+    def create_event_layer(self):
         return self.events_to_layer(self.result)
 
+    def create_origin_layer(self):
+        return self.origins_to_layer(self.result)
+
+    def create_magnitude_layer(self):
+        return self.magnitudes_to_layer(self.result)
