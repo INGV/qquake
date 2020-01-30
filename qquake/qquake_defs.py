@@ -22,10 +22,7 @@
  ***************************************************************************/
 """
 
-from qgis.PyQt.QtCore import (
-    QDate,
-    QVariant
-)
+from qgis.PyQt.QtCore import QDate
 
 NOW = QDate.currentDate()
 MAX_LON_LAT = [-180, -90, 180, 90]
@@ -106,18 +103,3 @@ fdsn_events_capabilities = {
     }
 }
 
-fdsn_event_fields = {
-    'EventID': QVariant.String,
-    'Time': QVariant.String,
-    'Latitude': QVariant.Double,
-    'Longitude': QVariant.Double,
-    'DepthKm': QVariant.Double,
-    'Author': QVariant.String,
-    'Catalog': QVariant.String,
-    'Contributor': QVariant.String,
-    'ContributorID': QVariant.String,
-    'MagType': QVariant.String,
-    'Magnitude': QVariant.Double,
-    'MagAuthor': QVariant.String,
-    'EventLocationName': QVariant.String
-}

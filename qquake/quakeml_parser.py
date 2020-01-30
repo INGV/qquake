@@ -13,6 +13,7 @@ __copyright__ = 'Copyright 2020, North Road'
 # This will get replaced with a git SHA1 when you do a git archive
 __revision__ = '$Format:%H$'
 
+from qgis.PyQt.QtCore import QVariant
 from qgis.PyQt.QtXml import QDomDocument
 
 from qgis.core import (
@@ -22,10 +23,6 @@ from qgis.core import (
     QgsGeometry,
     QgsPoint,
     NULL
-)
-
-from qquake.qquake_defs import (
-    fdsn_event_fields
 )
 
 ORIGIN_DEPTH_TYPES = {
@@ -52,6 +49,36 @@ ORIGIN_UNCERTAINTY_DESCRIPTIONS = {
     'ELLIPSE': 'uncertainty ellipse',
     'ELLIPSOID': 'confidence ellipsoid',
     'PDF': 'probability density function'
+}
+
+EVENT_FIELDS = {
+    'publicID': QVariant.String,
+    'type': QVariant.String,
+    'typeCertainty': QVariant.String,
+    'preferredOriginID': QVariant.String,
+    'preferredMagnitudeID': QVariant.String,
+    'preferredFocalMechanismID': QVariant.String,
+    'time': QVariant.DateTime,
+    'longitude': QVariant.Double,
+    'latitude': QVariant.Double,
+    'depth': QVariant.Double,
+    'depthType': QVariant.String,
+    'timeFixed': QVariant.Bool,
+    'epicenterFixed': QVariant.Bool,
+    'referenceSystemID': QVariant.String,
+    'originMethodID': QVariant.String,
+    'earthModelID': QVariant.String,
+    'originType': QVariant.String,
+    'region': QVariant.String,
+    'originEvaluationMode': QVariant.String,
+    'originEvaluationStatus': QVariant.String,
+    'mag': QVariant.Double,
+    'magnitudeType': QVariant.String,
+    'magnitudeMethodID': QVariant.String,
+    'stationCount': QVariant.Int,
+    'azimuthalGap': QVariant.Double,
+    'magnitudeEvaluationMode': QVariant.String,
+    'magnitudeEvaluationStatus': QVariant.String,
 }
 
 
@@ -340,7 +367,7 @@ class Origin:
                  epicenterFixed,
                  referenceSystemID,
                  methodID,
-                 earthModeID,
+                 earthModelID,
                  compositeTime,
                  quality,
                  type,
@@ -360,7 +387,7 @@ class Origin:
         self.epicenterFixed = epicenterFixed
         self.referenceSystemID = referenceSystemID
         self.methodID = methodID
-        self.earthModeID = earthModeID
+        self.earthModelID = earthModelID
         self.compositeTime = compositeTime
         self.quality = quality
         self.type = type
@@ -394,7 +421,7 @@ class Origin:
                       epicenterFixed=parser.boolean('epicenterFixed'),
                       referenceSystemID=parser.resource_reference('referenceSystemID'),
                       methodID=parser.resource_reference('methodID'),
-                      earthModeID=parser.resource_reference('earthModeID'),
+                      earthModelID=parser.resource_reference('earthModelID'),
                       compositeTime=parser.composite_time('compositeTime'),
                       quality=parser.origin_quality('quality'),
                       type=parser.origin_type('type'),
@@ -509,7 +536,7 @@ class Magnitude:
                  methodID,
                  stationCount,
                  azimuthalGap,
-                 evalutionMode,
+                 evaluationMode,
                  evaluationStatus,
                  comments,
                  creationInfo):
@@ -520,7 +547,7 @@ class Magnitude:
         self.azimuthalGap = azimuthalGap
         self.stationCount = stationCount
         self.stationCount = stationCount
-        self.evalutionMode = evalutionMode
+        self.evaluationMode = evaluationMode
         self.type = type
         self.evaluationStatus = evaluationStatus
         self.comments = comments
@@ -541,7 +568,7 @@ class Magnitude:
                          methodID=parser.resource_reference('methodID'),
                          stationCount=parser.int('stationCount'),
                          azimuthalGap=parser.float('azimuthalGap'),
-                         evalutionMode=parser.string('evaluationMode'),
+                         evaluationMode=parser.string('evaluationMode'),
                          evaluationStatus=parser.string('evaluationStatus'),
                          comments=comments,
                          creationInfo=parser.creation_info('creationInfo'))
@@ -553,7 +580,7 @@ class Event:
                  publicID,
                  type,
                  typeCertainty,
-                 description,
+                 descriptions,
                  preferredOriginID,
                  preferredMagnitudeID,
                  preferredFocalMechanismID,
@@ -564,7 +591,7 @@ class Event:
         self.publicID = publicID
         self.type = type
         self.typeCertainty = typeCertainty
-        self.description = description
+        self.descriptions = descriptions
         self.preferredOriginID = preferredOriginID
         self.preferredMagnitudeID = preferredMagnitudeID
         self.preferredFocalMechanismID = preferredFocalMechanismID
@@ -573,38 +600,62 @@ class Event:
         self.magnitudes = magnitudes
         self.comments = comments
 
-    def to_features(self):
+    @staticmethod
+    def to_fields():
         fields = QgsFields()
-        for k, v in fdsn_event_fields.items():
+        for k, v in EVENT_FIELDS.items():
             fields.append(QgsField(k, v))
+        return fields
 
-        assert False
+    def to_feature(self):
+        f = QgsFeature(self.to_fields())
+        f['publicID'] = self.publicID
+        f['type'] = self.type
+        f['typeCertainty'] = self.typeCertainty
+        f['preferredOriginID'] = self.preferredOriginID
+        f['preferredMagnitudeID'] = self.preferredMagnitudeID
+        f['preferredFocalMechanismID'] = self.preferredFocalMechanismID
 
-        features = []
-        for o in self.origins:
-            f = QgsFeature(fields)
-            f['EventID'] = self.publicID
-            f['Time'] = o.time
-            f['Latitude'] = o.latitude.value
-            f['Longitude'] = o.longitude.value
-            f['DepthKm'] = o.depth.value if o.depth else NULL
-            f['Author'] = o.creationInfo.author if o.creationInfo else NULL
-            f['Catalog'] = NULL  # ?
-            f['Contributor'] = NULL  # ?
-            f['ContributorID'] = NULL  # ?
-            f['MagType'] = NULL  # ?
-            f['Magnitude'] = NULL  # ?
-            f['MagAuthor'] = NULL  # ?
-            f['EventLocationName'] = o.region  # ?
+        preferred_origin = self.origins[self.preferredOriginID]
+        f['time'] = preferred_origin.time
+        f['longitude'] = preferred_origin.longitude.value
+        f['latitude'] = preferred_origin.latitude.value
+        f['depth'] = preferred_origin.depth.value if preferred_origin.depth is not None else NULL
+        f['depthType'] = preferred_origin.depthType if preferred_origin.depthType is not None else NULL
+        f['timeFixed'] = preferred_origin.timeFixed if preferred_origin.timeFixed is not None else NULL
+        f['epicenterFixed'] = preferred_origin.epicenterFixed if preferred_origin.epicenterFixed is not None else NULL
+        f[
+            'referenceSystemID'] = preferred_origin.referenceSystemID if preferred_origin.referenceSystemID is not None else NULL
+        f['originMethodID'] = preferred_origin.methodID if preferred_origin.methodID is not None else NULL
+        f['earthModelID'] = preferred_origin.earthModelID if preferred_origin.earthModelID is not None else NULL
+        # compositeTime ??
+        # quality
+        f['originType'] = preferred_origin.type if preferred_origin.type is not None else NULL
+        f['region'] = preferred_origin.region if preferred_origin.region is not None else NULL
+        f[
+            'originEvaluationMode'] = preferred_origin.evaluationMode if preferred_origin.evaluationMode is not None else NULL
+        f[
+            'originEvaluationStatus'] = preferred_origin.evaluationStatus if preferred_origin.evaluationStatus is not None else NULL
 
-            if o.depth is not None:
-                geom = QgsPoint(x=o.longitude.value, y=o.latitude.value, z=-o.depth.value * 1000)
-            else:
-                geom = QgsPoint(x=o.longitude.value, y=o.latitude.value)
-            f.setGeometry(QgsGeometry(geom))
-            features.append(f)
+        if preferred_origin.depth is not None:
+            geom = QgsPoint(x=preferred_origin.longitude.value, y=preferred_origin.latitude.value,
+                            z=-preferred_origin.depth.value * 1000)
+        else:
+            geom = QgsPoint(x=preferred_origin.longitude.value, y=preferred_origin.latitude.value)
+        f.setGeometry(QgsGeometry(geom))
 
-        return features
+        preferred_magnitude = self.magnitudes[self.preferredMagnitudeID]
+        f['mag'] = preferred_magnitude.mag.value
+        f['magnitudeType'] = preferred_magnitude.type if preferred_magnitude.type is not None else NULL
+        f['magnitudeMethodID'] = preferred_magnitude.methodID if preferred_magnitude.methodID is not None else NULL
+        f['stationCount'] = preferred_magnitude.stationCount if preferred_magnitude.stationCount is not None else NULL
+        f['azimuthalGap'] = preferred_magnitude.azimuthalGap if preferred_magnitude.azimuthalGap is not None else NULL
+        f[
+            'magnitudeEvaluationMode'] = preferred_magnitude.evaluationMode if preferred_magnitude.evaluationMode is not None else NULL
+        f[
+            'magnitudeEvaluationStatus'] = preferred_magnitude.evaluationStatus if preferred_magnitude.evaluationStatus is not None else NULL
+
+        return f
 
     @staticmethod
     def from_element(element):
@@ -635,7 +686,7 @@ class Event:
         return Event(publicID=parser.string('publicID', is_attribute=True, optional=False),
                      type=parser.string('type'),
                      typeCertainty=parser.string('typeCertainty'),
-                     description=descriptions,
+                     descriptions=descriptions,
                      preferredOriginID=parser.resource_reference('preferredOriginID'),
                      preferredMagnitudeID=parser.resource_reference('preferredMagnitudeID'),
                      preferredFocalMechanismID=parser.resource_reference('preferredFocalMechanismID'),

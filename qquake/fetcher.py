@@ -20,19 +20,18 @@ from qgis.PyQt.QtCore import (
     pyqtSignal
 )
 from qgis.PyQt.QtNetwork import QNetworkRequest
-from qgis.PyQt.QtXml import QDomDocument
 
 from qgis.core import (
     QgsNetworkAccessManager,
-    QgsVectorLayer,
-    QgsFields,
-    QgsField
+    QgsVectorLayer
 )
 
-from qquake.quakeml_parser import QuakeMlParser
+from qquake.quakeml_parser import (
+    QuakeMlParser,
+    Event
+)
 from qquake.qquake_defs import (
     fdsn_events_capabilities,
-    fdsn_event_fields
 )
 
 
@@ -138,10 +137,7 @@ class Fetcher(QObject):
         """
         vl = QgsVectorLayer('PointZ?crs=EPSG:4326', self._generate_layer_name(), 'memory')
 
-        fields = QgsFields()
-        for k, v in fdsn_event_fields.items():
-            fields.append(QgsField(k, v))
-        vl.dataProvider().addAttributes(fields)
+        vl.dataProvider().addAttributes(Event.to_fields())
         vl.updateFields()
 
         return vl
@@ -154,7 +150,7 @@ class Fetcher(QObject):
 
         features = []
         for e in events:
-            features.extend(e.to_features())
+            features.append(e.to_feature())
 
         vl.dataProvider().addFeatures(features)
 
