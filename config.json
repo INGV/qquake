@@ -5,8 +5,8 @@
       "info": "Albini P., Locati M., Rovida A., Stucchi M. (2013). European Archive of Historical EArthquake Data (AHEAD). Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.6092/INGV.IT-AHEAD",
       "infourl": "https://doi.org/10.6092/INGV.IT-AHEAD",
       "help": "https://www.emidius.eu/AHEAD/services/",
-      "datalicense": "CC BY-SA 4.0",
-      "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "datalicense": "custom",
+      "datalicenseurl": "https://www.emidius.eu/AHEAD/introduction.php#copyright",
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
       "dataproviderurl": "http://www.ingv.it",
       "endpointurl": "https://www.emidius.eu/fdsnws/event/1/query?",
@@ -81,12 +81,12 @@
         "httpcodenodata": "204"
       },
       "configversion": 0.1,
-      "configlastupdate": "2019-12-27T11:37:27+00:00"
+      "configlastupdate": "2020-01-31T11:37:27+00:00"
     },
     {
       "title": "ASMI, Archivio Storico Macrosismico Italiano (INGV)",
       "info": "Rovida A., Locati M., Antonucci A., Camassi R. (2017). Archivio Storico Macrosismico Italiano (ASMI). Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/ASMI",
-      "infourl": "https://emidius.mi.ingv.it/ASMI",
+      "infourl": "https://doi.org/10.13127/ASMI",
       "help": "https://emidius.mi.ingv.it/ASMI/services/",
       "datalicense": "CC BY-SA 4.0",
       "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
@@ -165,7 +165,7 @@
         "httpcodenodata": "204"
       },
       "configversion": 0.1,
-      "configlastupdate": "2019-12-27T11:37:27+00:00"
+      "configlastupdate": "2020-01-31T11:37:27+00:00"
     },
     {
       "title": "ISIDe, Italian Seismological Instrumental and Parametric Database (INGV)",
@@ -217,7 +217,7 @@
         "httpcodenodata": "204"
       },
       "configversion": 0.1,
-      "configlastupdate": "2019-12-27T11:37:27+00:00"
+      "configlastupdate": "2020-01-31T11:37:27+00:00"
     }
   ],
   "fdsnstation": [
@@ -257,7 +257,7 @@
         "httpcodenodata": "204"
       },
       "configversion": 0.1,
-      "configlastupdate": "2019-12-27T11:37:27+00:00"
+      "configlastupdate": "2020-01-31T11:37:27+00:00"
     }
   ],
   "macroseismic": [
@@ -265,8 +265,8 @@
       "title": "AHEAD, European Archive of Historical EArthquake Data (pre 1900)",
       "info": "Albini P., Locati M., Rovida A., Stucchi M. (2013). European Archive of Historical EArthquake Data (AHEAD). Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.6092/INGV.IT-AHEAD",
       "infourl": "https://www.emidius.eu/AHEAD",
-      "datalicense": "CC BY-SA 4.0",
-      "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "datalicense": "custom",
+      "datalicenseurl": "https://www.emidius.eu/AHEAD/introduction.php#copyright",
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
       "dataproviderurl": "http://www.ingv.it",
       "endpointurl": "https://www.emidius.eu/services/macroseismic/query?",
@@ -316,7 +316,7 @@
         "httpcodenodata": "204"
       },
       "configversion": 0.1,
-      "configlastupdate": "2019-12-27T11:37:27+00:00"
+      "configlastupdate": "2020-01-31T11:37:27+00:00"
     },
     {
       "title": "ASMI, Archivio Storico Macrosismico Italiano (INGV)",
@@ -373,7 +373,7 @@
         "httpcodenodata": "204"
       },
       "configversion": 0.1,
-      "configlastupdate": "2019-12-27T11:37:27+00:00"
+      "configlastupdate": "2020-01-31T11:37:27+00:00"
     }
   ],
   "wfs": [
@@ -385,27 +385,21 @@
       "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
       "dataproviderurl": "http://www.ingv.it",
-      "endpointurl": "https://www.emidius.eu/services/europe/wfs/?",
+      "endpointurl": "https://www.emidius.eu/services/europe/wfs?",
       "datestart": "1000-01-01T01:01:01+00:00",
       "dateend": "1899-12-31T23:59:59+00:00",
-      "boundingbox": [
-        32,
-        75,
-        -33,
-        32
-      ],
       "default": {
         "wfsversion": "2.0.0",
         "layers":[
          {
-           "layername":"SHEEC_1000_1899",
+           "layername":"europe:SHEEC_1000_1899",
            "style":"CPTI"
-         } 
+         }
         ]
       },
       "settings":{},
       "configversion": 0.1,
-      "configlastupdate": "2019-12-27T11:37:27+00:00"
+      "configlastupdate": "2020-01-31T11:37:27+00:00"
     },
     {
       "title": "CPTI, Catalogo Parametrico dei Terremoti Italiani (INGV)",
@@ -415,27 +409,55 @@
       "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
       "dataproviderurl": "http://www.ingv.it",
-      "endpointurl": "https://emidius.mi.ingv.it/services/italy/wfs/?",
+      "endpointurl": "https://emidius.mi.ingv.it/services/italy/wfs?",
       "datestart": "1000-01-01T01:01:01+00:00",
       "dateend": "2017-12-31T23:59:59+00:00",
-      "boundingbox": [
-        35,
-        48,
-        5,
-        21
-      ],
       "default": {
-        "wmsversion": "1.3.0",
+        "wfsversion": "2.0.0",
         "layers":[
          {
-           "layername":"CPTI15",
+           "layername":"italy:CPTI15",
            "style":"CPTI"
-         } 
+         }
         ]
-
       },
       "configversion": 0.1,
-      "configlastupdate": "2019-12-27T11:37:27+00:00"
+      "configlastupdate": "2020-01-31T11:37:27+00:00"
+    },
+    {
+      "title": "EDSF, European Database of Seismogenic Faults",
+      "info": "Basili R., Kastelic V., Demircioglu M. B., Garcia Moreno D., Nemser E. S., Petricca P., Sboras S. P., Besana-Ostman G. M., Cabral J., Camelbeeck T., Caputo R., Danciu L., Domac H., Fonseca J., García-Mayordomo J., Giardini D., Glavatovic B., Gulen L., Ince Y., Pavlides S., Sesetyan K., Tarabusi G., Tiberti M. M., Utkucu M., Valensise G., Vanneste K., Vilanova S., Wössner J. (2013). The European Database of Seismogenic Faults (EDSF) compiled in the framework of the Project SHARE. https://doi.org/10.6092/INGV.IT-SHARE-EDSF",
+      "infourl": "http://diss.rm.ingv.it/share-edsf/",
+      "datalicense": "custom",
+      "datalicenseurl": "http://diss.rm.ingv.it/share-edsf/SHARE_WP3.2_Disclaimer.html",
+      "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+      "dataproviderurl": "http://www.ingv.it",
+      "endpointurl": "http://services.seismofaults.eu/geoserver/EDSF/wfs?",
+      "datestart": "",
+      "dateend": "",
+      "default": {
+        "wfsversion": "2.0.0",
+        "layers":[
+         {
+           "layername":"EDSF:crustal_fault_sources_pln",
+           "style":"default"
+         },
+         {
+           "layername":"EDSF:crustal_fault_sources_top",
+           "style":"default"
+         },
+         {
+           "layername":"EDSF:subduction_zones",
+           "style":"default"
+         },
+         {
+           "layername":"EDSF:subduction_contours",
+           "style":"default"
+         }
+        ]
+      },
+      "configversion": 0.1,
+      "configlastupdate": "2020-01-31T11:37:27+00:00"
     }
   ],
   "wms": [
@@ -447,27 +469,21 @@
       "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
       "dataproviderurl": "http://www.ingv.it",
-      "endpointurl": "https://www.emidius.eu/services/europe/wms/?",
+      "endpointurl": "https://www.emidius.eu/services/europe/wms?",
       "datestart": "1000-01-01T01:01:01+00:00",
       "dateend": "1899-12-31T23:59:59+00:00",
-      "boundingbox": [
-        32,
-        75,
-        -33,
-        32
-      ],
       "default": {
         "wmsversion": "1.3.0",
         "layers":[
          {
-           "layername":"SHEEC_1000_1899",
-           "style":"CPTI"
-         } 
+           "layername":"europe:SHEEC_1000_1899",
+           "style":"europe:SHEEC_squares_colors"
+         }
         ]
 
       },
       "configversion": 0.1,
-      "configlastupdate": "2019-12-27T11:37:27+00:00"
+      "configlastupdate": "2020-01-31T11:37:27+00:00"
     },
     {
       "title": "CPTI, Catalogo Parametrico dei Terremoti Italiani (INGV)",
@@ -477,27 +493,49 @@
       "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
       "dataproviderurl": "http://www.ingv.it",
-      "endpointurl": "https://emidius.mi.ingv.it/services/italy/wms/?",
+      "endpointurl": "https://emidius.mi.ingv.it/services/italy/wms?",
       "datestart": "1000-01-01T01:01:01+00:00",
       "dateend": "2017-12-31T23:59:59+00:00",
-      "boundingbox": [
-        35,
-        48,
-        5,
-        21
-      ],
       "default": {
         "wmsversion": "1.3.0",
         "layers":[
          {
            "layername":"italy:CPTI15",
-           "style":"CPTI"
-         } 
+           "style":"italy:CPTI15_squares_colors"
+         }
         ]
 
       },
       "configversion": 0.1,
       "configlastupdate": "2019-12-27T11:37:27+00:00"
+    },
+    {
+      "title": "EDSF, European Database of Seismogenic Faults",
+      "info": "Basili R., Kastelic V., Demircioglu M. B., Garcia Moreno D., Nemser E. S., Petricca P., Sboras S. P., Besana-Ostman G. M., Cabral J., Camelbeeck T., Caputo R., Danciu L., Domac H., Fonseca J., García-Mayordomo J., Giardini D., Glavatovic B., Gulen L., Ince Y., Pavlides S., Sesetyan K., Tarabusi G., Tiberti M. M., Utkucu M., Valensise G., Vanneste K., Vilanova S., Wössner J. (2013). The European Database of Seismogenic Faults (EDSF) compiled in the framework of the Project SHARE. https://doi.org/10.6092/INGV.IT-SHARE-EDSF",
+      "infourl": "http://diss.rm.ingv.it/share-edsf/",
+      "datalicense": "custom",
+      "datalicenseurl": "http://diss.rm.ingv.it/share-edsf/SHARE_WP3.2_Disclaimer.html",
+      "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+      "dataproviderurl": "http://www.ingv.it",
+      "endpointurl": "http://services.seismofaults.eu/geoserver/EDSF/wms?",
+      "datestart": "",
+      "dateend": "",
+      "default": {
+        "wmsversion": "1.3.0",
+        "layers":[
+         {
+           "layername":"EDSF:EDSF.Crustal_Fault_Sources",
+           "style":"default"
+         },
+         {
+           "layername":"EDSF:EDSF.Subduction_Zones",
+           "style":"default"
+         }
+        ]
+
+      },
+      "configversion": 0.1,
+      "configlastupdate": "2020-01-31T11:37:27+00:00"
     }
   ],
   "styles":{
