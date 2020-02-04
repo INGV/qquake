@@ -131,10 +131,10 @@ class QQuakeDialog(QDialog, FORM_CLASS):
             self.fdsn_event_end_date.setDateTime(last_event_end_date)
         last_event_min_magnitude = s.value('/plugins/qquake/last_event_min_magnitude')
         if last_event_min_magnitude is not None:
-            self.fdsn_event_min_magnitude.setValue(last_event_min_magnitude)
+            self.fdsn_event_min_magnitude.setValue(float(last_event_min_magnitude))
         last_event_max_magnitude = s.value('/plugins/qquake/last_event_max_magnitude')
         if last_event_max_magnitude is not None:
-            self.fdsn_event_max_magnitude.setValue(last_event_max_magnitude)
+            self.fdsn_event_max_magnitude.setValue(float(last_event_max_magnitude))
         last_event_extent = s.value('/plugins/qquake/last_event_extent')
         if last_event_extent:
             parts = last_event_extent.split('|')
