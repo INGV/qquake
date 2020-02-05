@@ -24,8 +24,7 @@ from qgis.core import (
     QgsField,
     QgsFeature,
     QgsGeometry,
-    QgsPoint,
-    NULL
+    QgsPoint
 )
 
 ORIGIN_DEPTH_TYPES = {
@@ -54,44 +53,11 @@ ORIGIN_UNCERTAINTY_DESCRIPTIONS = {
     'PDF': 'probability density function'
 }
 
-ORIGIN_FIELDS = {
-    'publicID': QVariant.String,
-    'eventID': QVariant.String,
-    'eventType': QVariant.String,
-    'time': QVariant.DateTime,
-    'longitude': QVariant.Double,
-    'latitude': QVariant.Double,
-    'depth': QVariant.Double,
-    'depthType': QVariant.String,
-    'timeFixed': QVariant.Bool,
-    'epicenterFixed': QVariant.Bool,
-    'referenceSystemID': QVariant.String,
-    'originMethodID': QVariant.String,
-    'earthModelID': QVariant.String,
-    'originType': QVariant.String,
-    'region': QVariant.String,
-    'originEvaluationMode': QVariant.String,
-    'originEvaluationStatus': QVariant.String,
-}
-
-MAGNITUDE_FIELDS = {
-    'publicID': QVariant.String,
-    'eventID': QVariant.String,
-    'eventType': QVariant.String,
-    'mag': QVariant.Double,
-    'magnitudeType': QVariant.String,
-    'magnitudeMethodID': QVariant.String,
-    'stationCount': QVariant.Int,
-    'azimuthalGap': QVariant.Double,
-    'magnitudeEvaluationMode': QVariant.String,
-    'magnitudeEvaluationStatus': QVariant.String,
-}
-
 CONFIG_FIELDS_PATH = os.path.join(
     os.path.dirname(__file__),
     'config',
     'config_fields_fsdnevent.json')
-CONFIG_FIELDS = {}
+
 with open(CONFIG_FIELDS_PATH, 'r') as f:
     CONFIG_FIELDS = json.load(f)
 
