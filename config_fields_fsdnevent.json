@@ -52,32 +52,38 @@
           {
             "field": "eventcmagi",
             "source": "eventParameters>event>comment>creationInfo>agencyID",
-            "description": ""
+            "description": "",
+            "skip": true
           },
           {
             "field": "eventcmagu",
             "source": "eventParameters>event>comment>creationInfo>agencyURI",
-            "description": ""
+            "description": "",
+            "skip": true
           },
           {
             "field": "eventcmau",
             "source": "eventParameters>event>comment>creationInfo>author",
-            "description": ""
+            "description": "",
+            "skip": true
           },
           {
             "field": "eventcmauu",
             "source": "eventParameters>event>comment>creationInfo>authorURI",
-            "description": ""
+            "description": "",
+            "skip": true
           },
           {
             "field": "eventcmtim",
             "source": "eventParameters>event>comment>creationInfo>creationTime",
-            "description": ""
+            "description": "",
+            "skip": true
           },
           {
             "field": "eventcmver",
             "source": "eventParameters>event>comment>creationInfo>version",
-            "description": ""
+            "description": "",
+            "skip": true
           },
           {
             "field": "eventcragi",
@@ -499,37 +505,44 @@
           {
             "field": "origtx",
             "source": "eventParameters>event>origin>comment>text",
-            "description": ""
+            "description": "",
+            "skip": true
           },
           {
             "field": "origtxagid",
             "source": "eventParameters>event>origin>comment>creationInfo>agencyID",
-            "description": ""
+            "description": "",
+            "skip": true
           },
           {
             "field": "origtxagur",
             "source": "eventParameters>event>origin>comment>creationInfo>agencyURI",
-            "description": ""
+            "description": "",
+            "skip": true
           },
           {
             "field": "origtxaut",
             "source": "eventParameters>event>origin>comment>creationInfo>author",
-            "description": ""
+            "description": "",
+            "skip": true
           },
           {
             "field": "origtxautu",
             "source": "eventParameters>event>origin>comment>creationInfo>authorURI",
-            "description": ""
+            "description": "",
+            "skip": true
           },
           {
             "field": "origtxtime",
             "source": "eventParameters>event>origin>comment>creationInfo>creationTime",
-            "description": ""
+            "description": "",
+            "skip": true
           },
           {
             "field": "origtxver",
             "source": "eventParameters>event>origin>comment>creationInfo>version",
-            "description": ""
+            "description": "",
+            "skip": true
           },
           {
             "field": "origcragid",
@@ -586,17 +599,20 @@
           {
             "field": "magstatmag",
             "source": "eventParameters>event>magnitude>stationMagnitudeContribution>stationMagnitudeID",
-            "description": ""
+            "description": "",
+            "skip": true
           },
           {
             "field": "magstatres",
             "source": "eventParameters>event>magnitude>stationMagnitudeContribution>residual",
-            "description": ""
+            "description": "",
+            "skip": true
           },
           {
             "field": "magstatwei",
             "source": "eventParameters>event>magnitude>stationMagnitudeContribution>weight",
-            "description": ""
+            "description": "",
+            "skip": true
           },
           {
             "field": "mag",
@@ -651,37 +667,44 @@
           {
             "field": "magcmtx",
             "source": "eventParameters>event>magnitude>comment>text",
-            "description": ""
+            "description": "",
+            "skip": true
           },
           {
             "field": "magcmagid",
             "source": "eventParameters>event>magnitude>comment>creationInfo>agencyID",
-            "description": ""
+            "description": "",
+            "skip": true
           },
           {
             "field": "magcmaguri",
             "source": "eventParameters>event>magnitude>comment>creationInfo>agencyURI",
-            "description": ""
+            "description": "",
+            "skip": true
           },
           {
             "field": "magcmau",
             "source": "eventParameters>event>magnitude>comment>creationInfo>author",
-            "description": ""
+            "description": "",
+            "skip": true
           },
           {
             "field": "magcmauuri",
             "source": "eventParameters>event>magnitude>comment>creationInfo>authorURI",
-            "description": ""
+            "description": "",
+            "skip": true
           },
           {
             "field": "magcmtime",
             "source": "eventParameters>event>magnitude>comment>creationInfo>creationTime",
-            "description": ""
+            "description": "",
+            "skip": true
           },
           {
             "field": "magcmver",
             "source": "eventParameters>event>magnitude>comment>creationInfo>version",
-            "description": ""
+            "description": "",
+            "skip": true
           },
           {
             "field": "magcragid",
