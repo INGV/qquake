@@ -430,8 +430,7 @@ class Origin:
         origin_uncertainty_nodes = element.elementsByTagName('originUncertainty')
         origin_uncertainty = None
         if origin_uncertainty_nodes.length():
-            origin_uncertainty = OriginUncertainty.from_element(
-                OriginUncertainty.from_element(origin_uncertainty_nodes.at(0).toElement()))
+            OriginUncertainty.from_element(origin_uncertainty_nodes.at(0).toElement())
 
         parser = ElementParser(element)
         return Origin(publicID=parser.string('publicID', optional=False, is_attribute=True),
