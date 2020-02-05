@@ -524,11 +524,11 @@ class TimeQuantity:
     @staticmethod
     def from_element(element):
         parser = ElementParser(element)
-        return IntegerQuantity(value=parser.datetime('value', optional=False),
-                               uncertainty=parser.int('uncertainty'),
-                               lowerUncertainty=parser.int('lowerUncertainty'),
-                               upperUncertainty=parser.int('upperUncertainty'),
-                               confidenceLevel=parser.int('confidenceLevel'))
+        return TimeQuantity(value=parser.datetime('value', optional=False),
+                               uncertainty=parser.float('uncertainty'),
+                               lowerUncertainty=parser.float('lowerUncertainty'),
+                               upperUncertainty=parser.float('upperUncertainty'),
+                               confidenceLevel=parser.float('confidenceLevel'))
 
 
 class CompositeTime:
