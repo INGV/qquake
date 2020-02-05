@@ -13,6 +13,9 @@ __copyright__ = 'Copyright 2020, North Road'
 # This will get replaced with a git SHA1 when you do a git archive
 __revision__ = '$Format:%H$'
 
+import json
+import os
+
 from qgis.PyQt.QtCore import QVariant
 from qgis.PyQt.QtXml import QDomDocument
 
@@ -21,8 +24,7 @@ from qgis.core import (
     QgsField,
     QgsFeature,
     QgsGeometry,
-    QgsPoint,
-    NULL
+    QgsPoint
 )
 
 ORIGIN_DEPTH_TYPES = {
@@ -51,67 +53,21 @@ ORIGIN_UNCERTAINTY_DESCRIPTIONS = {
     'PDF': 'probability density function'
 }
 
-EVENT_FIELDS = {
-    'publicID': QVariant.String,
-    'type': QVariant.String,
-    'typeCertainty': QVariant.String,
-    'preferredOriginID': QVariant.String,
-    'preferredMagnitudeID': QVariant.String,
-    'preferredFocalMechanismID': QVariant.String,
-    'time': QVariant.DateTime,
-    'longitude': QVariant.Double,
-    'latitude': QVariant.Double,
-    'depth': QVariant.Double,
-    'depthType': QVariant.String,
-    'timeFixed': QVariant.Bool,
-    'epicenterFixed': QVariant.Bool,
-    'referenceSystemID': QVariant.String,
-    'originMethodID': QVariant.String,
-    'earthModelID': QVariant.String,
-    'originType': QVariant.String,
-    'region': QVariant.String,
-    'originEvaluationMode': QVariant.String,
-    'originEvaluationStatus': QVariant.String,
-    'mag': QVariant.Double,
-    'magnitudeType': QVariant.String,
-    'magnitudeMethodID': QVariant.String,
-    'stationCount': QVariant.Int,
-    'azimuthalGap': QVariant.Double,
-    'magnitudeEvaluationMode': QVariant.String,
-    'magnitudeEvaluationStatus': QVariant.String,
-}
+CONFIG_FIELDS_PATH = os.path.join(
+    os.path.dirname(__file__),
+    'config',
+    'config_fields_fsdnevent.json')
 
-ORIGIN_FIELDS = {
-    'publicID': QVariant.String,
-    'eventID': QVariant.String,
-    'eventType': QVariant.String,
-    'time': QVariant.DateTime,
-    'longitude': QVariant.Double,
-    'latitude': QVariant.Double,
-    'depth': QVariant.Double,
-    'depthType': QVariant.String,
-    'timeFixed': QVariant.Bool,
-    'epicenterFixed': QVariant.Bool,
-    'referenceSystemID': QVariant.String,
-    'originMethodID': QVariant.String,
-    'earthModelID': QVariant.String,
-    'originType': QVariant.String,
-    'region': QVariant.String,
-    'originEvaluationMode': QVariant.String,
-    'originEvaluationStatus': QVariant.String,
-}
+with open(CONFIG_FIELDS_PATH, 'r') as f:
+    CONFIG_FIELDS = json.load(f)
 
-MAGNITUDE_FIELDS = {
-    'publicID': QVariant.String,
-    'eventID': QVariant.String,
-    'eventType': QVariant.String,
-    'mag': QVariant.Double,
-    'magnitudeType': QVariant.String,
-    'magnitudeMethodID': QVariant.String,
-    'stationCount': QVariant.Int,
-    'azimuthalGap': QVariant.Double,
-    'magnitudeEvaluationMode': QVariant.String,
-    'magnitudeEvaluationStatus': QVariant.String,
+FIELD_TYPE_MAP = {
+    'String': QVariant.String,
+    'Int': QVariant.Int,
+    'Double': QVariant.Double,
+    'Time': QVariant.Time,
+    'DateTime': QVariant.DateTime,
+    'Date': QVariant.Date
 }
 
 
@@ -153,8 +109,7 @@ class ElementParser:
         if optional and child.isNull():
             return None
 
-        # TODO - return as QDateTime
-        return child.elementsByTagName('value').at(0).toElement().text()
+        return TimeQuantity.from_element(child)
 
     def real_quantity(self, attribute, optional=True):
         child = self.element.elementsByTagName(attribute).at(0).toElement()
@@ -419,7 +374,7 @@ class Origin:
                  evaluationStatus,
                  comments,
                  creationInfo,
-                 origin_uncertainties):
+                 originUncertainty):
         self.publicID = publicID
         self.time = time
         self.longitude = longitude
@@ -439,7 +394,7 @@ class Origin:
         self.evaluationStatus = evaluationStatus
         self.comments = comments
         self.creationInfo = creationInfo
-        self.origin_uncertainties = origin_uncertainties
+        self.originUncertainty = originUncertainty
 
     @staticmethod
     def from_element(element):
@@ -449,9 +404,9 @@ class Origin:
             comments.append(Comment.from_element(comment_nodes.at(e).toElement()))
 
         origin_uncertainty_nodes = element.elementsByTagName('originUncertainty')
-        origin_uncertainties = []
-        for e in range(origin_uncertainty_nodes.length()):
-            origin_uncertainties.append(OriginUncertainty.from_element(origin_uncertainty_nodes.at(e).toElement()))
+        origin_uncertainty = None
+        if origin_uncertainty_nodes.length():
+            OriginUncertainty.from_element(origin_uncertainty_nodes.at(0).toElement())
 
         parser = ElementParser(element)
         return Origin(publicID=parser.string('publicID', optional=False, is_attribute=True),
@@ -473,13 +428,16 @@ class Origin:
                       evaluationStatus=parser.string('evaluationStatus'),
                       comments=comments,
                       creationInfo=parser.creation_info('creationInfo'),
-                      origin_uncertainties=origin_uncertainties)
+                      originUncertainty=origin_uncertainty)
 
     @staticmethod
     def to_fields():
         fields = QgsFields()
-        for k, v in ORIGIN_FIELDS.items():
-            fields.append(QgsField(k, v))
+        for f in CONFIG_FIELDS['field_groups']['origin']['fields']:
+            if f.get('skip'):
+                continue
+
+            fields.append(QgsField(f['field'], FIELD_TYPE_MAP[f['type']]))
         return fields
 
 
@@ -543,6 +501,30 @@ class IntegerQuantity:
     def from_element(element):
         parser = ElementParser(element)
         return IntegerQuantity(value=parser.int('value', optional=False),
+                               uncertainty=parser.int('uncertainty'),
+                               lowerUncertainty=parser.int('lowerUncertainty'),
+                               upperUncertainty=parser.int('upperUncertainty'),
+                               confidenceLevel=parser.int('confidenceLevel'))
+
+
+class TimeQuantity:
+
+    def __init__(self,
+                 value,
+                 uncertainty,
+                 lowerUncertainty,
+                 upperUncertainty,
+                 confidenceLevel):
+        self.value = value
+        self.uncertainty = uncertainty
+        self.lowerUncertainty = lowerUncertainty
+        self.upperUncertainty = upperUncertainty
+        self.confidenceLevel = confidenceLevel
+
+    @staticmethod
+    def from_element(element):
+        parser = ElementParser(element)
+        return IntegerQuantity(value=parser.datetime('value', optional=False),
                                uncertainty=parser.int('uncertainty'),
                                lowerUncertainty=parser.int('lowerUncertainty'),
                                upperUncertainty=parser.int('upperUncertainty'),
@@ -626,8 +608,11 @@ class Magnitude:
     @staticmethod
     def to_fields():
         fields = QgsFields()
-        for k, v in MAGNITUDE_FIELDS.items():
-            fields.append(QgsField(k, v))
+        for f in CONFIG_FIELDS['field_groups']['magnitude']['fields']:
+            if f.get('skip'):
+                continue
+
+            fields.append(QgsField(f['field'], FIELD_TYPE_MAP[f['type']]))
         return fields
 
 
@@ -660,40 +645,33 @@ class Event:
     @staticmethod
     def to_fields():
         fields = QgsFields()
-        for k, v in EVENT_FIELDS.items():
-            fields.append(QgsField(k, v))
+        for f in CONFIG_FIELDS['field_groups']['basic_event_info']['fields']:
+            if f.get('skip'):
+                continue
+
+            fields.append(QgsField(f['field'], FIELD_TYPE_MAP[f['type']]))
         return fields
 
     def to_feature(self):
         f = QgsFeature(self.to_fields())
-        f['publicID'] = self.publicID
-        f['type'] = self.type
-        f['typeCertainty'] = self.typeCertainty
-        f['preferredOriginID'] = self.preferredOriginID
-        f['preferredMagnitudeID'] = self.preferredMagnitudeID
-        f['preferredFocalMechanismID'] = self.preferredFocalMechanismID
+        for dest_field in CONFIG_FIELDS['field_groups']['basic_event_info']['fields']:
+            if dest_field.get('skip'):
+                continue
+
+            source = dest_field['source'].split('>')
+            assert source[0] == 'eventParameters'
+            source = source[1:]
+            assert source[0] == 'event'
+            source = source[1:]
+
+            source_obj = self
+            for s in source:
+                assert hasattr(source_obj, s)
+                source_obj = getattr(source_obj, s)
+
+            f[dest_field['field']] = source_obj
 
         preferred_origin = self.origins[self.preferredOriginID]
-        f['time'] = preferred_origin.time
-        f['longitude'] = preferred_origin.longitude.value
-        f['latitude'] = preferred_origin.latitude.value
-        f['depth'] = preferred_origin.depth.value if preferred_origin.depth is not None else NULL
-        f['depthType'] = preferred_origin.depthType if preferred_origin.depthType is not None else NULL
-        f['timeFixed'] = preferred_origin.timeFixed if preferred_origin.timeFixed is not None else NULL
-        f['epicenterFixed'] = preferred_origin.epicenterFixed if preferred_origin.epicenterFixed is not None else NULL
-        f[
-            'referenceSystemID'] = preferred_origin.referenceSystemID if preferred_origin.referenceSystemID is not None else NULL
-        f['originMethodID'] = preferred_origin.methodID if preferred_origin.methodID is not None else NULL
-        f['earthModelID'] = preferred_origin.earthModelID if preferred_origin.earthModelID is not None else NULL
-        # compositeTime ??
-        # quality
-        f['originType'] = preferred_origin.type if preferred_origin.type is not None else NULL
-        f['region'] = preferred_origin.region if preferred_origin.region is not None else NULL
-        f[
-            'originEvaluationMode'] = preferred_origin.evaluationMode if preferred_origin.evaluationMode is not None else NULL
-        f[
-            'originEvaluationStatus'] = preferred_origin.evaluationStatus if preferred_origin.evaluationStatus is not None else NULL
-
         if preferred_origin.depth is not None:
             geom = QgsPoint(x=preferred_origin.longitude.value, y=preferred_origin.latitude.value,
                             z=-preferred_origin.depth.value * 1000)
@@ -701,47 +679,32 @@ class Event:
             geom = QgsPoint(x=preferred_origin.longitude.value, y=preferred_origin.latitude.value)
         f.setGeometry(QgsGeometry(geom))
 
-        preferred_magnitude = self.magnitudes[self.preferredMagnitudeID]
-        f['mag'] = preferred_magnitude.mag.value
-        f['magnitudeType'] = preferred_magnitude.type if preferred_magnitude.type is not None else NULL
-        f['magnitudeMethodID'] = preferred_magnitude.methodID if preferred_magnitude.methodID is not None else NULL
-        f['stationCount'] = preferred_magnitude.stationCount if preferred_magnitude.stationCount is not None else NULL
-        f['azimuthalGap'] = preferred_magnitude.azimuthalGap if preferred_magnitude.azimuthalGap is not None else NULL
-        f[
-            'magnitudeEvaluationMode'] = preferred_magnitude.evaluationMode if preferred_magnitude.evaluationMode is not None else NULL
-        f[
-            'magnitudeEvaluationStatus'] = preferred_magnitude.evaluationStatus if preferred_magnitude.evaluationStatus is not None else NULL
-
         return f
 
     def to_origin_features(self):
         features = []
-        f = QgsFeature(Origin.to_fields())
-
         for _, o in self.origins.items():
-            f['publicID'] = o.publicID
-            f['eventID'] = self.publicID
-            f['eventType'] = self.type
+            f = QgsFeature(Origin.to_fields())
+            for dest_field in CONFIG_FIELDS['field_groups']['origin']['fields']:
+                if dest_field.get('skip'):
+                    continue
 
-            f['time'] = o.time
-            f['longitude'] = o.longitude.value
-            f['latitude'] = o.latitude.value
-            f['depth'] = o.depth.value if o.depth is not None else NULL
-            f['depthType'] = o.depthType if o.depthType is not None else NULL
-            f['timeFixed'] = o.timeFixed if o.timeFixed is not None else NULL
-            f['epicenterFixed'] = o.epicenterFixed if o.epicenterFixed is not None else NULL
-            f[
-                'referenceSystemID'] = o.referenceSystemID if o.referenceSystemID is not None else NULL
-            f['originMethodID'] = o.methodID if o.methodID is not None else NULL
-            f['earthModelID'] = o.earthModelID if o.earthModelID is not None else NULL
-            # compositeTime ??
-            # quality
-            f['originType'] = o.type if o.type is not None else NULL
-            f['region'] = o.region if o.region is not None else NULL
-            f[
-                'originEvaluationMode'] = o.evaluationMode if o.evaluationMode is not None else NULL
-            f[
-                'originEvaluationStatus'] = o.evaluationStatus if o.evaluationStatus is not None else NULL
+                source = dest_field['source'].split('>')
+                assert source[0] == 'eventParameters'
+                source = source[1:]
+                assert source[0] == 'event'
+                source = source[1:]
+                assert source[0] == 'origin'
+                source = source[1:]
+
+                source_obj = o
+                for s in source:
+                    assert hasattr(source_obj, s)
+                    source_obj = getattr(source_obj, s)
+                    if source_obj is None:
+                        break
+
+                f[dest_field['field']] = source_obj
 
             if o.depth is not None:
                 geom = QgsPoint(x=o.longitude.value, y=o.latitude.value,
@@ -756,20 +719,27 @@ class Event:
 
     def to_magnitude_features(self):
         features = []
-        f = QgsFeature(Magnitude.to_fields())
-
         for _, o in self.magnitudes.items():
-            f['publicID'] = o.publicID
-            f['eventID'] = self.publicID
-            f['eventType'] = self.type
 
-            f['mag'] = o.mag.value
-            f['magnitudeType'] = o.type if o.type is not None else NULL
-            f['magnitudeMethodID'] = o.methodID if o.methodID is not None else NULL
-            f['stationCount'] = o.stationCount if o.stationCount is not None else NULL
-            f['azimuthalGap'] = o.azimuthalGap if o.azimuthalGap is not None else NULL
-            f['magnitudeEvaluationMode'] = o.evaluationMode if o.evaluationMode is not None else NULL
-            f['magnitudeEvaluationStatus'] = o.evaluationStatus if o.evaluationStatus is not None else NULL
+            f = QgsFeature(Magnitude.to_fields())
+            for dest_field in CONFIG_FIELDS['field_groups']['magnitude']['fields']:
+                if dest_field.get('skip'):
+                    continue
+
+                source = dest_field['source'].split('>')
+                assert source[0] == 'eventParameters'
+                source = source[1:]
+                assert source[0] == 'event'
+                source = source[1:]
+                assert source[0] == 'magnitude'
+                source = source[1:]
+
+                source_obj = o
+                for s in source:
+                    assert hasattr(source_obj, s)
+                    source_obj = getattr(source_obj, s)
+
+                f[dest_field['field']] = source_obj
 
             origin = self.origins[o.originID]
 
