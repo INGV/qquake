@@ -1,885 +1,881 @@
 {
-  "field_groups": [
-    {
-      "basic_event_info": {
-        "label": "basic event infos",
-        "fields": [
-          {
-            "field": "eventid",
-            "source": "eventParameters>event§publicID",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "eventype",
-            "source": "eventParameters>event>type",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "eventtypec",
-            "source": "eventParameters>event>typeCertainty",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "preforigin",
-            "source": "eventParameters>event>preferredOriginID",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "prefmag",
-            "source": "eventParameters>event>preferredMagnitudeID",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "prefmechan",
-            "source": "eventParameters>event>preferredFocalMechanismID",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "eventx",
-            "source": "eventParameters>event>description>text",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "eventxtype",
-            "source": "eventParameters>event>description>type",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "eventcm",
-            "source": "eventParameters>event>comment>text",
-            "description": "",
-            "type": "String",
-            "skip": true
-          },
-          {
-            "field": "eventcmagi",
-            "source": "eventParameters>event>comment>creationInfo>agencyID",
-            "description": "",
-            "skip": true,
-            "type": "String"
-          },
-          {
-            "field": "eventcmagu",
-            "source": "eventParameters>event>comment>creationInfo>agencyURI",
-            "description": "",
-            "skip": true,
-            "type": "String"
-          },
-          {
-            "field": "eventcmau",
-            "source": "eventParameters>event>comment>creationInfo>author",
-            "description": "",
-            "skip": true,
-            "type": "String"
-          },
-          {
-            "field": "eventcmauu",
-            "source": "eventParameters>event>comment>creationInfo>authorURI",
-            "description": "",
-            "skip": true,
-            "type": "String"
-          },
-          {
-            "field": "eventcmtim",
-            "source": "eventParameters>event>comment>creationInfo>creationTime",
-            "description": "",
-            "skip": true,
-            "type": "String"
-          },
-          {
-            "field": "eventcmver",
-            "source": "eventParameters>event>comment>creationInfo>version",
-            "description": "",
-            "skip": true,
-            "type": "String"
-          },
-          {
-            "field": "eventcragi",
-            "source": "eventParameters>event>creationInfo>agencyID",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "eventcragu",
-            "source": "eventParameters>event>creationInfo>agencyURI",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "eventcrau",
-            "source": "eventParameters>event>creationInfo>author",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "eventcrauu",
-            "source": "eventParameters>event>creationInfo>authorURI",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "eventcrtim",
-            "source": "eventParameters>event>creationInfo>creationTime",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "eventcrver",
-            "source": "eventParameters>event>creationInfo>version",
-            "description": "",
-            "type": "String"
-          }
-        ]
-      }
+  "field_groups": {
+    "basic_event_info": {
+      "label": "basic event infos",
+      "fields": [
+        {
+          "field": "eventid",
+          "source": "eventParameters>event>publicID",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "eventype",
+          "source": "eventParameters>event>type",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "eventtypec",
+          "source": "eventParameters>event>typeCertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "preforigin",
+          "source": "eventParameters>event>preferredOriginID",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "prefmag",
+          "source": "eventParameters>event>preferredMagnitudeID",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "prefmechan",
+          "source": "eventParameters>event>preferredFocalMechanismID",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "eventx",
+          "source": "eventParameters>event>description>text",
+          "description": "",
+          "type": "String",
+          "skip": true
+        },
+        {
+          "field": "eventxtype",
+          "source": "eventParameters>event>description>type",
+          "description": "",
+          "type": "String",
+          "skip": true
+        },
+        {
+          "field": "eventcm",
+          "source": "eventParameters>event>comment>text",
+          "description": "",
+          "type": "String",
+          "skip": true
+        },
+        {
+          "field": "eventcmagi",
+          "source": "eventParameters>event>comment>creationInfo>agencyID",
+          "description": "",
+          "skip": true,
+          "type": "String"
+        },
+        {
+          "field": "eventcmagu",
+          "source": "eventParameters>event>comment>creationInfo>agencyURI",
+          "description": "",
+          "skip": true,
+          "type": "String"
+        },
+        {
+          "field": "eventcmau",
+          "source": "eventParameters>event>comment>creationInfo>author",
+          "description": "",
+          "skip": true,
+          "type": "String"
+        },
+        {
+          "field": "eventcmauu",
+          "source": "eventParameters>event>comment>creationInfo>authorURI",
+          "description": "",
+          "skip": true,
+          "type": "String"
+        },
+        {
+          "field": "eventcmtim",
+          "source": "eventParameters>event>comment>creationInfo>creationTime",
+          "description": "",
+          "skip": true,
+          "type": "String"
+        },
+        {
+          "field": "eventcmver",
+          "source": "eventParameters>event>comment>creationInfo>version",
+          "description": "",
+          "skip": true,
+          "type": "String"
+        },
+        {
+          "field": "eventcragi",
+          "source": "eventParameters>event>creationInfo>agencyID",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "eventcragu",
+          "source": "eventParameters>event>creationInfo>agencyURI",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "eventcrau",
+          "source": "eventParameters>event>creationInfo>author",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "eventcrauu",
+          "source": "eventParameters>event>creationInfo>authorURI",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "eventcrtim",
+          "source": "eventParameters>event>creationInfo>creationTime",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "eventcrver",
+          "source": "eventParameters>event>creationInfo>version",
+          "description": "",
+          "type": "String"
+        }
+      ]
     },
-    {
-      "origin": {
-        "label": "origin",
-        "fields": [
-          {
-            "field": "originid",
-            "source": "eventParameters>event>origin§publicID",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "time",
-            "source": "eventParameters>event>origin>time>value",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "timeunc",
-            "source": "eventParameters>event>origin>time>uncertainty",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "timeunclo",
-            "source": "eventParameters>event>origin>time>lowerUncertainty",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "timeuncup",
-            "source": "eventParameters>event>origin>time>upperUncertainty",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "timeconf",
-            "source": "eventParameters>event>origin>time>confidenceLevel",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "year",
-            "source": "eventParameters>event>origin>compositeTime>year>value",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "yearunc",
-            "source": "eventParameters>event>origin>compositeTime>year>uncertainty",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "yearunclo",
-            "source": "eventParameters>event>origin>compositeTime>year>lowerUncertainty",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "yearuncup",
-            "source": "eventParameters>event>origin>compositeTime>year>upperUncertainty",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "yearconf",
-            "source": "eventParameters>event>origin>compositeTime>year>confidenceLevel",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "month",
-            "source": "eventParameters>event>origin>compositeTime>month>value",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "monthunc",
-            "source": "eventParameters>event>origin>compositeTime>month>uncertainty",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "monthunclo",
-            "source": "eventParameters>event>origin>compositeTime>month>lowerUncertainty",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "monthuncup",
-            "source": "eventParameters>event>origin>compositeTime>month>upperUncertainty",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "monthconf",
-            "source": "eventParameters>event>origin>compositeTime>month>confidenceLevel",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "day",
-            "source": "eventParameters>event>origin>compositeTime>day>value",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "dayunc",
-            "source": "eventParameters>event>origin>compositeTime>day>uncertainty",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "dayunclo",
-            "source": "eventParameters>event>origin>compositeTime>day>lowerUncertainty",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "dayuncup",
-            "source": "eventParameters>event>origin>compositeTime>day>upperUncertainty",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "dayconf",
-            "source": "eventParameters>event>origin>compositeTime>day>confidenceLevel",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "hour",
-            "source": "eventParameters>event>origin>compositeTime>hour>value",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "hourunc",
-            "source": "eventParameters>event>origin>compositeTime>hour>uncertainty",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "hourunclo",
-            "source": "eventParameters>event>origin>compositeTime>hour>lowerUncertainty",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "houruncup",
-            "source": "eventParameters>event>origin>compositeTime>hour>upperUncertainty",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "hourconf",
-            "source": "eventParameters>event>origin>compositeTime>hour>confidenceLevel",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "min",
-            "source": "eventParameters>event>origin>compositeTime>minute>value",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "minunc",
-            "source": "eventParameters>event>origin>compositeTime>hour>uncertainty",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "minunclo",
-            "source": "eventParameters>event>origin>compositeTime>hour>lowerUncertainty",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "minuncup",
-            "source": "eventParameters>event>origin>compositeTime>hour>upperUncertainty",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "minconf",
-            "source": "eventParameters>event>origin>compositeTime>hour>confidenceLevel",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "sec",
-            "source": "eventParameters>event>origin>compositeTime>second>value",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "secunc",
-            "source": "eventParameters>event>origin>compositeTime>second>uncertainty",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "secunclo",
-            "source": "eventParameters>event>origin>compositeTime>second>lowerUncertainty",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "secuncup",
-            "source": "eventParameters>event>origin>compositeTime>second>upperUncertainty",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "secconf",
-            "source": "eventParameters>event>origin>compositeTime>second>confidenceLevel",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "region",
-            "source": "eventParameters>event>origin>region",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "lat",
-            "source": "eventParameters>event>origin>latitude>value",
-            "description": "",
-            "type": "Double"
-          },
-          {
-            "field": "latunc",
-            "source": "eventParameters>event>origin>latitude>uncertainty",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "latunclo",
-            "source": "eventParameters>event>origin>latitude>lowerUncertainty",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "latuncup",
-            "source": "eventParameters>event>origin>latitude>upperUncertainty",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "latconf",
-            "source": "eventParameters>event>origin>latitude>confidenceLevel",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "lon",
-            "source": "eventParameters>event>origin>longitude>value",
-            "description": "",
-            "type": "Double"
-          },
-          {
-            "field": "lonunc",
-            "source": "eventParameters>event>origin>longitude>uncertainty",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "lonunclo",
-            "source": "eventParameters>event>origin>longitude>lowerUncertainty",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "lonuncup",
-            "source": "eventParameters>event>origin>longitude>upperUncertainty",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "lonconf",
-            "source": "eventParameters>event>origin>longitude>confidenceLevel",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "depth",
-            "source": "eventParameters>event>origin>depth>value",
-            "description": "",
-            "type": "Double"
-          },
-          {
-            "field": "depthunc",
-            "source": "eventParameters>event>origin>depth>uncertainty",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "depthunclo",
-            "source": "eventParameters>event>origin>depth>lowerUncertainty",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "depthuncup",
-            "source": "eventParameters>event>origin>depth>upperUncertainty",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "depthconf",
-            "source": "eventParameters>event>origin>depth>confidenceLevel",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "depthtype",
-            "source": "eventParameters>event>origin>depthType",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "origmethod",
-            "source": "eventParameters>event>origin>methodID",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "origearthm",
-            "source": "eventParameters>event>origin>earthModelID",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "orighunc",
-            "source": "eventParameters>event>origin>originUncertainty>horizontalUncertainty",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "orighunclo",
-            "source": "eventParameters>event>origin>originUncertainty>minHorizontalUncertainty",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "orighuncup",
-            "source": "eventParameters>event>origin>originUncertainty>maxHorizontalUncertainty",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "origaziunc",
-            "source": "eventParameters>event>origin>originUncertainty>azimuthMaxHorizontalUncertainty",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "origconfel",
-            "source": "eventParameters>event>origin>originUncertainty>confidenceEllipsoid",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "origprefde",
-            "source": "eventParameters>event>origin>originUncertainty>preferredDescription",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "origconflv",
-            "source": "eventParameters>event>origin>originUncertainty>confidenceLevel",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "origphatot",
-            "source": "eventParameters>event>origin>quality>associatedPhaseCount",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "origphause",
-            "source": "eventParameters>event>origin>quality>usedPhaseCount",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "origstatot",
-            "source": "eventParameters>event>origin>quality>associatedStationCount",
-            "description": "",
-            "type": "Int"
-          },
-          {
-            "field": "origstause",
-            "source": "eventParameters>event>origin>quality>usedStationCount",
-            "description": "",
-            "type": "Int"
-          },
-          {
-            "field": "origdeppht",
-            "source": "eventParameters>event>origin>quality>depthPhaseCount",
-            "description": "",
-            "type": "Int"
-          },
-          {
-            "field": "origstderr",
-            "source": "eventParameters>event>origin>quality>standardError",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "origazgap",
-            "source": "eventParameters>event>origin>quality>azimuthalGap",
-            "description": "",
-            "type": "Double"
-          },
-          {
-            "field": "origazgap2",
-            "source": "eventParameters>event>origin>quality>secondaryAzimuthalGap",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "origgrthlv",
-            "source": "eventParameters>event>origin>quality>groundTruthLevel",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "origdismax",
-            "source": "eventParameters>event>origin>quality>maximumDistance",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "origdismin",
-            "source": "eventParameters>event>origin>quality>minimumDistance",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "origdismdn",
-            "source": "eventParameters>event>origin>quality>medianDistance",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "origevalmd",
-            "source": "eventParameters>event>origin>evaluationMode",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "origevalst",
-            "source": "eventParameters>event>origin>evaluationStatus",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "origtx",
-            "source": "eventParameters>event>origin>comment>text",
-            "description": "",
-            "skip": true,
-            "type": "String"
-          },
-          {
-            "field": "origtxagid",
-            "source": "eventParameters>event>origin>comment>creationInfo>agencyID",
-            "description": "",
-            "skip": true,
-            "type": "String"
-          },
-          {
-            "field": "origtxagur",
-            "source": "eventParameters>event>origin>comment>creationInfo>agencyURI",
-            "description": "",
-            "skip": true,
-            "type": "String"
-          },
-          {
-            "field": "origtxaut",
-            "source": "eventParameters>event>origin>comment>creationInfo>author",
-            "description": "",
-            "skip": true,
-            "type": "String"
-          },
-          {
-            "field": "origtxautu",
-            "source": "eventParameters>event>origin>comment>creationInfo>authorURI",
-            "description": "",
-            "skip": true,
-            "type": "String"
-          },
-          {
-            "field": "origtxtime",
-            "source": "eventParameters>event>origin>comment>creationInfo>creationTime",
-            "description": "",
-            "skip": true,
-            "type": "String"
-          },
-          {
-            "field": "origtxver",
-            "source": "eventParameters>event>origin>comment>creationInfo>version",
-            "description": "",
-            "skip": true,
-            "type": "String"
-          },
-          {
-            "field": "origcragid",
-            "source": "eventParameters>event>origin>creationInfo>agencyID",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "origcragur",
-            "source": "eventParameters>event>origin>creationInfo>agencyURI",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "origcrau",
-            "source": "eventParameters>event>origin>creationInfo>author",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "origcrauur",
-            "source": "eventParameters>event>origin>creationInfo>authorURI",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "origcrtime",
-            "source": "eventParameters>event>origin>creationInfo>creationTime",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "origcrvers",
-            "source": "eventParameters>event>origin>creationInfo>version",
-            "description": "",
-            "type": "String"
-          }
-        ]
-      }
+    "origin": {
+      "label": "origin",
+      "fields": [
+        {
+          "field": "originid",
+          "source": "eventParameters>event>origin>publicID",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "time",
+          "source": "eventParameters>event>origin>time>value",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "timeunc",
+          "source": "eventParameters>event>origin>time>uncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "timeunclo",
+          "source": "eventParameters>event>origin>time>lowerUncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "timeuncup",
+          "source": "eventParameters>event>origin>time>upperUncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "timeconf",
+          "source": "eventParameters>event>origin>time>confidenceLevel",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "year",
+          "source": "eventParameters>event>origin>compositeTime>year>value",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "yearunc",
+          "source": "eventParameters>event>origin>compositeTime>year>uncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "yearunclo",
+          "source": "eventParameters>event>origin>compositeTime>year>lowerUncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "yearuncup",
+          "source": "eventParameters>event>origin>compositeTime>year>upperUncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "yearconf",
+          "source": "eventParameters>event>origin>compositeTime>year>confidenceLevel",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "month",
+          "source": "eventParameters>event>origin>compositeTime>month>value",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "monthunc",
+          "source": "eventParameters>event>origin>compositeTime>month>uncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "monthunclo",
+          "source": "eventParameters>event>origin>compositeTime>month>lowerUncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "monthuncup",
+          "source": "eventParameters>event>origin>compositeTime>month>upperUncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "monthconf",
+          "source": "eventParameters>event>origin>compositeTime>month>confidenceLevel",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "day",
+          "source": "eventParameters>event>origin>compositeTime>day>value",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "dayunc",
+          "source": "eventParameters>event>origin>compositeTime>day>uncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "dayunclo",
+          "source": "eventParameters>event>origin>compositeTime>day>lowerUncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "dayuncup",
+          "source": "eventParameters>event>origin>compositeTime>day>upperUncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "dayconf",
+          "source": "eventParameters>event>origin>compositeTime>day>confidenceLevel",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "hour",
+          "source": "eventParameters>event>origin>compositeTime>hour>value",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "hourunc",
+          "source": "eventParameters>event>origin>compositeTime>hour>uncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "hourunclo",
+          "source": "eventParameters>event>origin>compositeTime>hour>lowerUncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "houruncup",
+          "source": "eventParameters>event>origin>compositeTime>hour>upperUncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "hourconf",
+          "source": "eventParameters>event>origin>compositeTime>hour>confidenceLevel",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "min",
+          "source": "eventParameters>event>origin>compositeTime>minute>value",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "minunc",
+          "source": "eventParameters>event>origin>compositeTime>hour>uncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "minunclo",
+          "source": "eventParameters>event>origin>compositeTime>hour>lowerUncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "minuncup",
+          "source": "eventParameters>event>origin>compositeTime>hour>upperUncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "minconf",
+          "source": "eventParameters>event>origin>compositeTime>hour>confidenceLevel",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "sec",
+          "source": "eventParameters>event>origin>compositeTime>second>value",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "secunc",
+          "source": "eventParameters>event>origin>compositeTime>second>uncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "secunclo",
+          "source": "eventParameters>event>origin>compositeTime>second>lowerUncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "secuncup",
+          "source": "eventParameters>event>origin>compositeTime>second>upperUncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "secconf",
+          "source": "eventParameters>event>origin>compositeTime>second>confidenceLevel",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "region",
+          "source": "eventParameters>event>origin>region",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "lat",
+          "source": "eventParameters>event>origin>latitude>value",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field": "latunc",
+          "source": "eventParameters>event>origin>latitude>uncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "latunclo",
+          "source": "eventParameters>event>origin>latitude>lowerUncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "latuncup",
+          "source": "eventParameters>event>origin>latitude>upperUncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "latconf",
+          "source": "eventParameters>event>origin>latitude>confidenceLevel",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "lon",
+          "source": "eventParameters>event>origin>longitude>value",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field": "lonunc",
+          "source": "eventParameters>event>origin>longitude>uncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "lonunclo",
+          "source": "eventParameters>event>origin>longitude>lowerUncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "lonuncup",
+          "source": "eventParameters>event>origin>longitude>upperUncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "lonconf",
+          "source": "eventParameters>event>origin>longitude>confidenceLevel",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "depth",
+          "source": "eventParameters>event>origin>depth>value",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field": "depthunc",
+          "source": "eventParameters>event>origin>depth>uncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "depthunclo",
+          "source": "eventParameters>event>origin>depth>lowerUncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "depthuncup",
+          "source": "eventParameters>event>origin>depth>upperUncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "depthconf",
+          "source": "eventParameters>event>origin>depth>confidenceLevel",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "depthtype",
+          "source": "eventParameters>event>origin>depthType",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "origmethod",
+          "source": "eventParameters>event>origin>methodID",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "origearthm",
+          "source": "eventParameters>event>origin>earthModelID",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "orighunc",
+          "source": "eventParameters>event>origin>originUncertainty>horizontalUncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "orighunclo",
+          "source": "eventParameters>event>origin>originUncertainty>minHorizontalUncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "orighuncup",
+          "source": "eventParameters>event>origin>originUncertainty>maxHorizontalUncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "origaziunc",
+          "source": "eventParameters>event>origin>originUncertainty>azimuthMaxHorizontalUncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "origconfel",
+          "source": "eventParameters>event>origin>originUncertainty>confidenceEllipsoid",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "origprefde",
+          "source": "eventParameters>event>origin>originUncertainty>preferredDescription",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "origconflv",
+          "source": "eventParameters>event>origin>originUncertainty>confidenceLevel",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "origphatot",
+          "source": "eventParameters>event>origin>quality>associatedPhaseCount",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "origphause",
+          "source": "eventParameters>event>origin>quality>usedPhaseCount",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "origstatot",
+          "source": "eventParameters>event>origin>quality>associatedStationCount",
+          "description": "",
+          "type": "Int"
+        },
+        {
+          "field": "origstause",
+          "source": "eventParameters>event>origin>quality>usedStationCount",
+          "description": "",
+          "type": "Int"
+        },
+        {
+          "field": "origdeppht",
+          "source": "eventParameters>event>origin>quality>depthPhaseCount",
+          "description": "",
+          "type": "Int"
+        },
+        {
+          "field": "origstderr",
+          "source": "eventParameters>event>origin>quality>standardError",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "origazgap",
+          "source": "eventParameters>event>origin>quality>azimuthalGap",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field": "origazgap2",
+          "source": "eventParameters>event>origin>quality>secondaryAzimuthalGap",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "origgrthlv",
+          "source": "eventParameters>event>origin>quality>groundTruthLevel",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "origdismax",
+          "source": "eventParameters>event>origin>quality>maximumDistance",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "origdismin",
+          "source": "eventParameters>event>origin>quality>minimumDistance",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "origdismdn",
+          "source": "eventParameters>event>origin>quality>medianDistance",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "origevalmd",
+          "source": "eventParameters>event>origin>evaluationMode",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "origevalst",
+          "source": "eventParameters>event>origin>evaluationStatus",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "origtx",
+          "source": "eventParameters>event>origin>comment>text",
+          "description": "",
+          "skip": true,
+          "type": "String"
+        },
+        {
+          "field": "origtxagid",
+          "source": "eventParameters>event>origin>comment>creationInfo>agencyID",
+          "description": "",
+          "skip": true,
+          "type": "String"
+        },
+        {
+          "field": "origtxagur",
+          "source": "eventParameters>event>origin>comment>creationInfo>agencyURI",
+          "description": "",
+          "skip": true,
+          "type": "String"
+        },
+        {
+          "field": "origtxaut",
+          "source": "eventParameters>event>origin>comment>creationInfo>author",
+          "description": "",
+          "skip": true,
+          "type": "String"
+        },
+        {
+          "field": "origtxautu",
+          "source": "eventParameters>event>origin>comment>creationInfo>authorURI",
+          "description": "",
+          "skip": true,
+          "type": "String"
+        },
+        {
+          "field": "origtxtime",
+          "source": "eventParameters>event>origin>comment>creationInfo>creationTime",
+          "description": "",
+          "skip": true,
+          "type": "String"
+        },
+        {
+          "field": "origtxver",
+          "source": "eventParameters>event>origin>comment>creationInfo>version",
+          "description": "",
+          "skip": true,
+          "type": "String"
+        },
+        {
+          "field": "origcragid",
+          "source": "eventParameters>event>origin>creationInfo>agencyID",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "origcragur",
+          "source": "eventParameters>event>origin>creationInfo>agencyURI",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "origcrau",
+          "source": "eventParameters>event>origin>creationInfo>author",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "origcrauur",
+          "source": "eventParameters>event>origin>creationInfo>authorURI",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "origcrtime",
+          "source": "eventParameters>event>origin>creationInfo>creationTime",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "origcrvers",
+          "source": "eventParameters>event>origin>creationInfo>version",
+          "description": "",
+          "type": "String"
+        }
+      ]
     },
-    {
-      "magnitude": {
-        "label": "magnitude",
-        "fields": [
-          {
-            "field": "magid",
-            "source": "eventParameters>event>magnitude§publicID",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "magorigid",
-            "source": "eventParameters>event>magnitude>originID",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "magmethod",
-            "source": "eventParameters>event>magnitude>methodID",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "magstatmag",
-            "source": "eventParameters>event>magnitude>stationMagnitudeContribution>stationMagnitudeID",
-            "description": "",
-            "skip": true,
-            "type": "String"
-          },
-          {
-            "field": "magstatres",
-            "source": "eventParameters>event>magnitude>stationMagnitudeContribution>residual",
-            "description": "",
-            "skip": true,
-            "type": "String"
-          },
-          {
-            "field": "magstatwei",
-            "source": "eventParameters>event>magnitude>stationMagnitudeContribution>weight",
-            "description": "",
-            "skip": true,
-            "type": "String"
-          },
-          {
-            "field": "mag",
-            "source": "eventParameters>event>magnitude>mag>value",
-            "description": "",
-            "type": "Double"
-          },
-          {
-            "field": "magunc",
-            "source": "eventParameters>event>magnitude>mag>uncertainty",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "magunclo",
-            "source": "eventParameters>event>magnitude>mag>lowerUncertainty",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "magup",
-            "source": "eventParameters>event>magnitude>mag>upperUncertainty",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "magconf",
-            "source": "eventParameters>event>magnitude>mag>confidenceLevel",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "magtype",
-            "source": "eventParameters>event>magnitude>type",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "magstatot",
-            "source": "eventParameters>event>magnitude>stationCount",
-            "description": "",
-            "type": "Int"
-          },
-          {
-            "field": "magazigap",
-            "source": "eventParameters>event>magnitude>azimuthalGap",
-            "description": "",
-            "type": "Double"
-          },
-          {
-            "field": "magevalmod",
-            "source": "eventParameters>event>magnitude>evaluationMode",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "magevalsta",
-            "source": "eventParameters>event>magnitude>evaluationStatus",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "magcmtx",
-            "source": "eventParameters>event>magnitude>comment>text",
-            "description": "",
-            "skip": true,
-            "type": "String"
-          },
-          {
-            "field": "magcmagid",
-            "source": "eventParameters>event>magnitude>comment>creationInfo>agencyID",
-            "description": "",
-            "skip": true,
-            "type": "String"
-          },
-          {
-            "field": "magcmaguri",
-            "source": "eventParameters>event>magnitude>comment>creationInfo>agencyURI",
-            "description": "",
-            "skip": true,
-            "type": "String"
-          },
-          {
-            "field": "magcmau",
-            "source": "eventParameters>event>magnitude>comment>creationInfo>author",
-            "description": "",
-            "skip": true,
-            "type": "String"
-          },
-          {
-            "field": "magcmauuri",
-            "source": "eventParameters>event>magnitude>comment>creationInfo>authorURI",
-            "description": "",
-            "skip": true,
-            "type": "String"
-          },
-          {
-            "field": "magcmtime",
-            "source": "eventParameters>event>magnitude>comment>creationInfo>creationTime",
-            "description": "",
-            "skip": true,
-            "type": "String"
-          },
-          {
-            "field": "magcmver",
-            "source": "eventParameters>event>magnitude>comment>creationInfo>version",
-            "description": "",
-            "skip": true,
-            "type": "String"
-          },
-          {
-            "field": "magcragid",
-            "source": "eventParameters>event>magnitude>creationInfo>agencyID",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "magcraguri",
-            "source": "eventParameters>event>magnitude>creationInfo>agencyURI",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "magcrau",
-            "source": "eventParameters>event>magnitude>creationInfo>author",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "magcrauri",
-            "source": "eventParameters>event>magnitude>creationInfo>authorURI",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "magcrtime",
-            "source": "eventParameters>event>magnitude>creationInfo>creationTime",
-            "description": "",
-            "type": "String"
-          },
-          {
-            "field": "magcrver",
-            "source": "eventParameters>event>magnitude>creationInfo>version",
-            "description": "",
-            "type": "String"
-          }
-        ]
-      }
+    "magnitude": {
+      "label": "magnitude",
+      "fields": [
+        {
+          "field": "magid",
+          "source": "eventParameters>event>magnitude>publicID",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "magorigid",
+          "source": "eventParameters>event>magnitude>originID",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "magmethod",
+          "source": "eventParameters>event>magnitude>methodID",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "magstatmag",
+          "source": "eventParameters>event>magnitude>stationMagnitudeContribution>stationMagnitudeID",
+          "description": "",
+          "skip": true,
+          "type": "String"
+        },
+        {
+          "field": "magstatres",
+          "source": "eventParameters>event>magnitude>stationMagnitudeContribution>residual",
+          "description": "",
+          "skip": true,
+          "type": "String"
+        },
+        {
+          "field": "magstatwei",
+          "source": "eventParameters>event>magnitude>stationMagnitudeContribution>weight",
+          "description": "",
+          "skip": true,
+          "type": "String"
+        },
+        {
+          "field": "mag",
+          "source": "eventParameters>event>magnitude>mag>value",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field": "magunc",
+          "source": "eventParameters>event>magnitude>mag>uncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "magunclo",
+          "source": "eventParameters>event>magnitude>mag>lowerUncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "magup",
+          "source": "eventParameters>event>magnitude>mag>upperUncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "magconf",
+          "source": "eventParameters>event>magnitude>mag>confidenceLevel",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "magtype",
+          "source": "eventParameters>event>magnitude>type",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "magstatot",
+          "source": "eventParameters>event>magnitude>stationCount",
+          "description": "",
+          "type": "Int"
+        },
+        {
+          "field": "magazigap",
+          "source": "eventParameters>event>magnitude>azimuthalGap",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field": "magevalmod",
+          "source": "eventParameters>event>magnitude>evaluationMode",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "magevalsta",
+          "source": "eventParameters>event>magnitude>evaluationStatus",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "magcmtx",
+          "source": "eventParameters>event>magnitude>comment>text",
+          "description": "",
+          "skip": true,
+          "type": "String"
+        },
+        {
+          "field": "magcmagid",
+          "source": "eventParameters>event>magnitude>comment>creationInfo>agencyID",
+          "description": "",
+          "skip": true,
+          "type": "String"
+        },
+        {
+          "field": "magcmaguri",
+          "source": "eventParameters>event>magnitude>comment>creationInfo>agencyURI",
+          "description": "",
+          "skip": true,
+          "type": "String"
+        },
+        {
+          "field": "magcmau",
+          "source": "eventParameters>event>magnitude>comment>creationInfo>author",
+          "description": "",
+          "skip": true,
+          "type": "String"
+        },
+        {
+          "field": "magcmauuri",
+          "source": "eventParameters>event>magnitude>comment>creationInfo>authorURI",
+          "description": "",
+          "skip": true,
+          "type": "String"
+        },
+        {
+          "field": "magcmtime",
+          "source": "eventParameters>event>magnitude>comment>creationInfo>creationTime",
+          "description": "",
+          "skip": true,
+          "type": "String"
+        },
+        {
+          "field": "magcmver",
+          "source": "eventParameters>event>magnitude>comment>creationInfo>version",
+          "description": "",
+          "skip": true,
+          "type": "String"
+        },
+        {
+          "field": "magcragid",
+          "source": "eventParameters>event>magnitude>creationInfo>agencyID",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "magcraguri",
+          "source": "eventParameters>event>magnitude>creationInfo>agencyURI",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "magcrau",
+          "source": "eventParameters>event>magnitude>creationInfo>author",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "magcrauri",
+          "source": "eventParameters>event>magnitude>creationInfo>authorURI",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "magcrtime",
+          "source": "eventParameters>event>magnitude>creationInfo>creationTime",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "magcrver",
+          "source": "eventParameters>event>magnitude>creationInfo>version",
+          "description": "",
+          "type": "String"
+        }
+      ]
     }
-  ],
+  },
   "configversion": 0.1,
   "configlastupdate": "2020-01-30T16:50:27+00:00"
 }
