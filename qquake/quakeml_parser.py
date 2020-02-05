@@ -13,6 +13,9 @@ __copyright__ = 'Copyright 2020, North Road'
 # This will get replaced with a git SHA1 when you do a git archive
 __revision__ = '$Format:%H$'
 
+import json
+import os
+
 from qgis.PyQt.QtCore import QVariant
 from qgis.PyQt.QtXml import QDomDocument
 
@@ -113,6 +116,14 @@ MAGNITUDE_FIELDS = {
     'magnitudeEvaluationMode': QVariant.String,
     'magnitudeEvaluationStatus': QVariant.String,
 }
+
+CONFIG_FIELDS_PATH = os.path.join(
+    os.path.dirname(__file__),
+    'config',
+    'config_fields_fsdnevent.json')
+CONFIG_FIELDS = {}
+with open(CONFIG_FIELDS_PATH, 'r') as f:
+    CONFIG_FIELDS = json.load(f)
 
 
 class ElementParser:
