@@ -151,3 +151,17 @@ zip: dclean
 	# content. You can then upload the zip file on http://plugins.qgis.org
 	rm -f $(PLUGIN_NAME).zip
 	zip -9r $(PLUGIN_NAME).zip $(PLUGIN_NAME) -x *.git* -x *__pycache__* -x *test*
+
+package:
+	# Create a zip package of the plugin named $(PLUGIN_NAME).zip.
+	# This requires use of git (your plugin development directory must be a
+	# git repository).
+	# To use, pass a valid commit or tag as follows:
+	#   make package VERSION=Version_0.3.2
+	@echo
+	@echo "------------------------------------"
+	@echo "Exporting plugin to zip package.	"
+	@echo "------------------------------------"
+	rm -f $(PLUGIN_NAME).zip
+	cd $(PLUGIN_NAME) && git archive --prefix=$(PLUGIN_NAME)/ -o ../$(PLUGIN_NAME).zip $(VERSION)
+	echo "Created package: $(PLUGIN_NAME).zip"
