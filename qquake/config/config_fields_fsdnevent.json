@@ -159,205 +159,205 @@
           "field": "timeunc",
           "source": "eventParameters>event>origin>time>uncertainty",
           "description": "",
-          "type": "String"
+          "type": "Double"
         },
         {
           "field": "timeunclo",
           "source": "eventParameters>event>origin>time>lowerUncertainty",
           "description": "",
-          "type": "String"
+          "type": "Double"
         },
         {
           "field": "timeuncup",
           "source": "eventParameters>event>origin>time>upperUncertainty",
           "description": "",
-          "type": "String"
+          "type": "Double"
         },
         {
           "field": "timeconf",
           "source": "eventParameters>event>origin>time>confidenceLevel",
           "description": "",
-          "type": "String"
+          "type": "Double"
         },
         {
           "field": "year",
           "source": "eventParameters>event>origin>compositeTime>year>value",
           "description": "",
-          "type": "String"
+          "type": "Int"
         },
         {
           "field": "yearunc",
           "source": "eventParameters>event>origin>compositeTime>year>uncertainty",
           "description": "",
-          "type": "String"
+          "type": "Int"
         },
         {
           "field": "yearunclo",
           "source": "eventParameters>event>origin>compositeTime>year>lowerUncertainty",
           "description": "",
-          "type": "String"
+          "type": "Int"
         },
         {
           "field": "yearuncup",
           "source": "eventParameters>event>origin>compositeTime>year>upperUncertainty",
           "description": "",
-          "type": "String"
+          "type": "Int"
         },
         {
           "field": "yearconf",
           "source": "eventParameters>event>origin>compositeTime>year>confidenceLevel",
           "description": "",
-          "type": "String"
+          "type": "Double"
         },
         {
           "field": "month",
           "source": "eventParameters>event>origin>compositeTime>month>value",
           "description": "",
-          "type": "String"
+          "type": "Int"
         },
         {
           "field": "monthunc",
           "source": "eventParameters>event>origin>compositeTime>month>uncertainty",
           "description": "",
-          "type": "String"
+          "type": "Int"
         },
         {
           "field": "monthunclo",
           "source": "eventParameters>event>origin>compositeTime>month>lowerUncertainty",
           "description": "",
-          "type": "String"
+          "type": "Int"
         },
         {
           "field": "monthuncup",
           "source": "eventParameters>event>origin>compositeTime>month>upperUncertainty",
           "description": "",
-          "type": "String"
+          "type": "Int"
         },
         {
           "field": "monthconf",
           "source": "eventParameters>event>origin>compositeTime>month>confidenceLevel",
           "description": "",
-          "type": "String"
+          "type": "Double"
         },
         {
           "field": "day",
           "source": "eventParameters>event>origin>compositeTime>day>value",
           "description": "",
-          "type": "String"
+          "type": "Int"
         },
         {
           "field": "dayunc",
           "source": "eventParameters>event>origin>compositeTime>day>uncertainty",
           "description": "",
-          "type": "String"
+          "type": "Int"
         },
         {
           "field": "dayunclo",
           "source": "eventParameters>event>origin>compositeTime>day>lowerUncertainty",
           "description": "",
-          "type": "String"
+          "type": "Int"
         },
         {
           "field": "dayuncup",
           "source": "eventParameters>event>origin>compositeTime>day>upperUncertainty",
           "description": "",
-          "type": "String"
+          "type": "Int"
         },
         {
           "field": "dayconf",
           "source": "eventParameters>event>origin>compositeTime>day>confidenceLevel",
           "description": "",
-          "type": "String"
+          "type": "Double"
         },
         {
           "field": "hour",
           "source": "eventParameters>event>origin>compositeTime>hour>value",
           "description": "",
-          "type": "String"
+          "type": "Int"
         },
         {
           "field": "hourunc",
           "source": "eventParameters>event>origin>compositeTime>hour>uncertainty",
           "description": "",
-          "type": "String"
+          "type": "Int"
         },
         {
           "field": "hourunclo",
           "source": "eventParameters>event>origin>compositeTime>hour>lowerUncertainty",
           "description": "",
-          "type": "String"
+          "type": "Int"
         },
         {
           "field": "houruncup",
           "source": "eventParameters>event>origin>compositeTime>hour>upperUncertainty",
           "description": "",
-          "type": "String"
+          "type": "Int"
         },
         {
           "field": "hourconf",
           "source": "eventParameters>event>origin>compositeTime>hour>confidenceLevel",
           "description": "",
-          "type": "String"
+          "type": "Double"
         },
         {
           "field": "min",
           "source": "eventParameters>event>origin>compositeTime>minute>value",
           "description": "",
-          "type": "String"
+          "type": "Int"
         },
         {
           "field": "minunc",
           "source": "eventParameters>event>origin>compositeTime>hour>uncertainty",
           "description": "",
-          "type": "String"
+          "type": "Int"
         },
         {
           "field": "minunclo",
           "source": "eventParameters>event>origin>compositeTime>hour>lowerUncertainty",
           "description": "",
-          "type": "String"
+          "type": "Int"
         },
         {
           "field": "minuncup",
           "source": "eventParameters>event>origin>compositeTime>hour>upperUncertainty",
           "description": "",
-          "type": "String"
+          "type": "Int"
         },
         {
           "field": "minconf",
           "source": "eventParameters>event>origin>compositeTime>hour>confidenceLevel",
           "description": "",
-          "type": "String"
+          "type": "Double"
         },
         {
           "field": "sec",
           "source": "eventParameters>event>origin>compositeTime>second>value",
           "description": "",
-          "type": "String"
+          "type": "Double"
         },
         {
           "field": "secunc",
           "source": "eventParameters>event>origin>compositeTime>second>uncertainty",
           "description": "",
-          "type": "String"
+          "type": "Double"
         },
         {
           "field": "secunclo",
           "source": "eventParameters>event>origin>compositeTime>second>lowerUncertainty",
           "description": "",
-          "type": "String"
+          "type": "Double"
         },
         {
           "field": "secuncup",
           "source": "eventParameters>event>origin>compositeTime>second>upperUncertainty",
           "description": "",
-          "type": "String"
+          "type": "Double"
         },
         {
           "field": "secconf",
           "source": "eventParameters>event>origin>compositeTime>second>confidenceLevel",
           "description": "",
-          "type": "String"
+          "type": "Double"
         },
         {
           "field": "region",
@@ -375,25 +375,25 @@
           "field": "latunc",
           "source": "eventParameters>event>origin>latitude>uncertainty",
           "description": "",
-          "type": "String"
+          "type": "Double"
         },
         {
           "field": "latunclo",
           "source": "eventParameters>event>origin>latitude>lowerUncertainty",
           "description": "",
-          "type": "String"
+          "type": "Double"
         },
         {
           "field": "latuncup",
           "source": "eventParameters>event>origin>latitude>upperUncertainty",
           "description": "",
-          "type": "String"
+          "type": "Double"
         },
         {
           "field": "latconf",
           "source": "eventParameters>event>origin>latitude>confidenceLevel",
           "description": "",
-          "type": "String"
+          "type": "Double"
         },
         {
           "field": "lon",
@@ -405,25 +405,25 @@
           "field": "lonunc",
           "source": "eventParameters>event>origin>longitude>uncertainty",
           "description": "",
-          "type": "String"
+          "type": "Double"
         },
         {
           "field": "lonunclo",
           "source": "eventParameters>event>origin>longitude>lowerUncertainty",
           "description": "",
-          "type": "String"
+          "type": "Double"
         },
         {
           "field": "lonuncup",
           "source": "eventParameters>event>origin>longitude>upperUncertainty",
           "description": "",
-          "type": "String"
+          "type": "Double"
         },
         {
           "field": "lonconf",
           "source": "eventParameters>event>origin>longitude>confidenceLevel",
           "description": "",
-          "type": "String"
+          "type": "Double"
         },
         {
           "field": "depth",
@@ -435,25 +435,25 @@
           "field": "depthunc",
           "source": "eventParameters>event>origin>depth>uncertainty",
           "description": "",
-          "type": "String"
+          "type": "Double"
         },
         {
           "field": "depthunclo",
           "source": "eventParameters>event>origin>depth>lowerUncertainty",
           "description": "",
-          "type": "String"
+          "type": "Double"
         },
         {
           "field": "depthuncup",
           "source": "eventParameters>event>origin>depth>upperUncertainty",
           "description": "",
-          "type": "String"
+          "type": "Double"
         },
         {
           "field": "depthconf",
           "source": "eventParameters>event>origin>depth>confidenceLevel",
           "description": "",
-          "type": "String"
+          "type": "Double"
         },
         {
           "field": "depthtype",
@@ -477,25 +477,25 @@
           "field": "orighunc",
           "source": "eventParameters>event>origin>originUncertainty>horizontalUncertainty",
           "description": "",
-          "type": "String"
+          "type": "Double"
         },
         {
           "field": "orighunclo",
           "source": "eventParameters>event>origin>originUncertainty>minHorizontalUncertainty",
           "description": "",
-          "type": "String"
+          "type": "Double"
         },
         {
           "field": "orighuncup",
           "source": "eventParameters>event>origin>originUncertainty>maxHorizontalUncertainty",
           "description": "",
-          "type": "String"
+          "type": "Double"
         },
         {
           "field": "origaziunc",
           "source": "eventParameters>event>origin>originUncertainty>azimuthMaxHorizontalUncertainty",
           "description": "",
-          "type": "String"
+          "type": "Double"
         },
         {
           "field": "origconfel",
@@ -513,19 +513,19 @@
           "field": "origconflv",
           "source": "eventParameters>event>origin>originUncertainty>confidenceLevel",
           "description": "",
-          "type": "String"
+          "type": "Double"
         },
         {
           "field": "origphatot",
           "source": "eventParameters>event>origin>quality>associatedPhaseCount",
           "description": "",
-          "type": "String"
+          "type": "Int"
         },
         {
           "field": "origphause",
           "source": "eventParameters>event>origin>quality>usedPhaseCount",
           "description": "",
-          "type": "String"
+          "type": "Int"
         },
         {
           "field": "origstatot",
@@ -549,7 +549,7 @@
           "field": "origstderr",
           "source": "eventParameters>event>origin>quality>standardError",
           "description": "",
-          "type": "String"
+          "type": "Double"
         },
         {
           "field": "origazgap",
@@ -561,7 +561,7 @@
           "field": "origazgap2",
           "source": "eventParameters>event>origin>quality>secondaryAzimuthalGap",
           "description": "",
-          "type": "String"
+          "type": "Double"
         },
         {
           "field": "origgrthlv",
@@ -573,19 +573,19 @@
           "field": "origdismax",
           "source": "eventParameters>event>origin>quality>maximumDistance",
           "description": "",
-          "type": "String"
+          "type": "Double"
         },
         {
           "field": "origdismin",
           "source": "eventParameters>event>origin>quality>minimumDistance",
           "description": "",
-          "type": "String"
+          "type": "Double"
         },
         {
           "field": "origdismdn",
           "source": "eventParameters>event>origin>quality>medianDistance",
           "description": "",
-          "type": "String"
+          "type": "Double"
         },
         {
           "field": "origevalmd",
@@ -738,25 +738,25 @@
           "field": "magunc",
           "source": "eventParameters>event>magnitude>mag>uncertainty",
           "description": "",
-          "type": "String"
+          "type": "Double"
         },
         {
           "field": "magunclo",
           "source": "eventParameters>event>magnitude>mag>lowerUncertainty",
           "description": "",
-          "type": "String"
+          "type": "Double"
         },
         {
           "field": "magup",
           "source": "eventParameters>event>magnitude>mag>upperUncertainty",
           "description": "",
-          "type": "String"
+          "type": "Double"
         },
         {
           "field": "magconf",
           "source": "eventParameters>event>magnitude>mag>confidenceLevel",
           "description": "",
-          "type": "String"
+          "type": "Double"
         },
         {
           "field": "magtype",
