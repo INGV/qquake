@@ -158,17 +158,27 @@ class ElementParser:
 
     def real_quantity(self, attribute, optional=True):
         child = self.element.elementsByTagName(attribute).at(0).toElement()
-        if optional:
-            return RealQuantity.from_element(child) if not child.isNull() else None
-        else:
-            return RealQuantity.from_element(child)
+        if optional and child.isNull():
+            return None
+
+        # some services include "value" element, but empty for optional RealQuantities
+        value_child = child.elementsByTagName('value').at(0).toElement()
+        if optional and value_child.isNull() or value_child.text() is None or value_child.text() == '':
+            return None
+
+        return RealQuantity.from_element(child)
 
     def int_quantity(self, attribute, optional=True):
         child = self.element.elementsByTagName(attribute).at(0).toElement()
-        if optional:
-            return IntegerQuantity.from_element(child) if not child.isNull() else None
-        else:
-            return IntegerQuantity.from_element(child)
+        if optional and child.isNull():
+            return None
+
+        # some services include "value" element, but empty for optional IntQuantities
+        value_child = child.elementsByTagName('value').at(0).toElement()
+        if optional and value_child.isNull() or value_child.text() is None or value_child.text() == '':
+            return None
+
+        return IntegerQuantity.from_element(child)
 
     def float(self, attribute, optional=True):
         child = self.element.elementsByTagName(attribute).at(0).toElement()
