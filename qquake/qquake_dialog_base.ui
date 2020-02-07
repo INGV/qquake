@@ -22,7 +22,7 @@
     </widget>
    </item>
    <item row="0" column="0">
-    <widget class="QTabWidget" name="tabWidget">
+    <widget class="QTabWidget" name="fdsn_event_list_2">
      <property name="tabPosition">
       <enum>QTabWidget::North</enum>
      </property>
@@ -37,7 +37,7 @@
      </property>
      <widget class="QWidget" name="fdsn_event_tab">
       <attribute name="title">
-       <string>FDSN-Event</string>
+       <string>Earthquakes</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout">
        <item row="6" column="2">
@@ -180,7 +180,7 @@
         </widget>
        </item>
        <item row="5" column="1" colspan="2">
-        <widget class="QgsExtentGroupBox" name="mExtentGroupBox">
+        <widget class="QgsExtentGroupBox" name="fdsn_event_ExtentGroupBox">
          <property name="title">
           <string>Select Extent</string>
          </property>
@@ -202,18 +202,199 @@
      </widget>
      <widget class="QWidget" name="fdsn_station_tab">
       <attribute name="title">
-       <string>FDSN-Station</string>
+       <string>Macroseismic</string>
       </attribute>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="0" column="0" rowspan="5">
+        <widget class="QListWidget" name="fdsn_macro_list">
+         <property name="minimumSize">
+          <size>
+           <width>130</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="baseSize">
+          <size>
+           <width>130</width>
+           <height>0</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLabel" name="fdsn_event_start_date_label_2">
+         <property name="text">
+          <string>Start DateTime</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QDateTimeEdit" name="fdsn_macro_start_date">
+         <property name="maximumDateTime">
+          <datetime>
+           <hour>23</hour>
+           <minute>59</minute>
+           <second>59</second>
+           <year>9999</year>
+           <month>12</month>
+           <day>31</day>
+          </datetime>
+         </property>
+         <property name="displayFormat">
+          <string>yyyy-MM-dd</string>
+         </property>
+         <property name="calendarPopup">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLabel" name="fdsn_event_end_data_label_2">
+         <property name="text">
+          <string>End DateTime</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="QDateTimeEdit" name="fdsn_macro_end_date">
+         <property name="minimumDate">
+          <date>
+           <year>1777</year>
+           <month>9</month>
+           <day>14</day>
+          </date>
+         </property>
+         <property name="displayFormat">
+          <string>yyyy-MM-dd</string>
+         </property>
+         <property name="calendarPopup">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLabel" name="fdsn_event_min_magnitude_label_2">
+         <property name="text">
+          <string>Min Magnitude</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2">
+        <widget class="QDoubleSpinBox" name="fdsn_macro_min_magnitude">
+         <property name="decimals">
+          <number>1</number>
+         </property>
+         <property name="minimum">
+          <double>1.000000000000000</double>
+         </property>
+         <property name="maximum">
+          <double>9.000000000000000</double>
+         </property>
+         <property name="singleStep">
+          <double>0.500000000000000</double>
+         </property>
+         <property name="value">
+          <double>4.000000000000000</double>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLabel" name="fdsn_event_max_magnitude_label_2">
+         <property name="text">
+          <string>Max Magnitude</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="2">
+        <widget class="QDoubleSpinBox" name="fdsn_macro_max_magnitude">
+         <property name="decimals">
+          <number>1</number>
+         </property>
+         <property name="minimum">
+          <double>1.000000000000000</double>
+         </property>
+         <property name="maximum">
+          <double>9.000000000000000</double>
+         </property>
+         <property name="singleStep">
+          <double>0.500000000000000</double>
+         </property>
+         <property name="value">
+          <double>9.000000000000000</double>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1" colspan="2">
+        <widget class="QgsExtentGroupBox" name="fdsn_macro_ExtentGroupBox">
+         <property name="title">
+          <string>Select Extent</string>
+         </property>
+         <property name="checkable">
+          <bool>false</bool>
+         </property>
+         <property name="checked">
+          <bool>false</bool>
+         </property>
+         <property name="collapsed">
+          <bool>false</bool>
+         </property>
+         <property name="saveCollapsedState">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0" colspan="2">
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>Output</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="2">
+        <widget class="QComboBox" name="fdsn_macro_output_combo_box"/>
+       </item>
+       <item row="6" column="0" colspan="3">
+        <widget class="QTextBrowser" name="fdsn_macro_url_text_browser">
+         <property name="frameShape">
+          <enum>QFrame::NoFrame</enum>
+         </property>
+         <property name="openExternalLinks">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
      <widget class="QWidget" name="tab">
       <attribute name="title">
-       <string>Macroseismic</string>
+       <string>Seismic stations</string>
       </attribute>
      </widget>
      <widget class="QWidget" name="tab_2">
       <attribute name="title">
        <string>OGC Data</string>
       </attribute>
+      <layout class="QGridLayout" name="gridLayout_4">
+       <item row="0" column="0">
+        <widget class="QComboBox" name="ogc_combo"/>
+       </item>
+       <item row="1" column="0">
+        <widget class="QListWidget" name="ogc_list"/>
+       </item>
+       <item row="1" column="1">
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>458</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
      </widget>
     </widget>
    </item>
