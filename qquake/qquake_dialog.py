@@ -23,11 +23,17 @@
 """
 
 import os
+import json
 
 from qgis.PyQt import uic
 from qgis.PyQt.QtWidgets import (
     QDialogButtonBox,
     QDialog
+)
+from qgis.PyQt.QtCore import (
+    Qt,
+    QDate,
+    QDateTime
 )
 
 from qgis.core import (
@@ -51,6 +57,14 @@ FORM_CLASS, _ = uic.loadUiType(os.path.join(
 
 PREFERRED='PREFERRED'
 ALL='ALL'
+
+CONFIG_SERVICES_PATH = os.path.join(
+    os.path.dirname(__file__),
+    'config',
+    'config.json')
+
+with open(CONFIG_SERVICES_PATH, 'r') as f:
+    CONFIG_SERVICES = json.load(f)
 
 class QQuakeDialog(QDialog, FORM_CLASS):
 
@@ -78,16 +92,17 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         # connect the date changing to the refreshing function
         self.fdsn_event_start_date.dateChanged.connect(self._refresh_date)
 
-        # fill the FDSN combobox with the dictionary keys
-        self.fdsn_event_ws_combobox.addItems(fdsn_events_capabilities.keys())
+        # fill the FDSN listWidget with the dictionary keys
+        self.fdsn_event_list.addItems(CONFIG_SERVICES['fdsnevent'].keys())
+        self.fdsn_event_list.setCurrentRow(0)
 
         # connect to refreshing function to refresh the UI depending on the WS
         self.refreshWidgets()
 
         # change the UI parameter according to the web service chosen
-        self.fdsn_event_ws_combobox.currentIndexChanged.connect(self.refreshWidgets)
+        self.fdsn_event_list.currentRowChanged.connect(self.refreshWidgets)
 
-        self.fdsn_event_ws_combobox.currentIndexChanged.connect(self._refresh_url)
+        self.fdsn_event_list.currentRowChanged.connect(self._refresh_url)
         self.fdsn_event_start_date.dateChanged.connect(self._refresh_url)
         self.fdsn_event_end_date.dateChanged.connect(self._refresh_url)
         self.fdsn_event_min_magnitude.valueChanged.connect(self._refresh_url)
@@ -106,7 +121,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
 
     def _save_settings(self):
         s = QgsSettings()
-        s.setValue('/plugins/qquake/last_event_service', self.fdsn_event_ws_combobox.currentText())
+        s.setValue('/plugins/qquake/last_event_service', self.fdsn_event_list.currentItem().text())
         s.setValue('/plugins/qquake/last_event_start_date', self.fdsn_event_start_date.dateTime())
         s.setValue('/plugins/qquake/last_event_end_date', self.fdsn_event_end_date.dateTime())
         s.setValue('/plugins/qquake/last_event_min_magnitude',self.fdsn_event_min_magnitude.value())
@@ -122,7 +137,8 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         s = QgsSettings()
         last_service = s.value('/plugins/qquake/last_event_service')
         if last_service is not None:
-            self.fdsn_event_ws_combobox.setCurrentIndex(self.fdsn_event_ws_combobox.findText(last_service))
+            self.fdsn_event_list.setCurrentItem(
+                self.fdsn_event_list.findItems(last_service, Qt.MatchContains)[0])
         last_event_start_date = s.value('/plugins/qquake/last_event_start_date')
         if last_event_start_date is not None:
             self.fdsn_event_start_date.setDateTime(last_event_start_date)
@@ -169,7 +185,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         """
         Returns a quake fetcher corresponding to the current dialog settings
         """
-        return Fetcher(event_service=self.fdsn_event_ws_combobox.currentText(),
+        return Fetcher(event_service=self.fdsn_event_list.currentItem().text(),
                        event_start_date=self.fdsn_event_start_date.dateTime(),
                        event_end_date=self.fdsn_event_end_date.dateTime(),
                        event_min_magnitude=self.fdsn_event_min_magnitude.value(),
@@ -185,27 +201,39 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         Refreshing the FDSN-Event UI depending on the WS chosen
         """
 
-        # set DateTime Widget START according to the combobox choice
-        self.fdsn_event_start_date.setMinimumDate(
-            fdsn_events_capabilities[self.fdsn_event_ws_combobox.currentText()]['mindate']
-        )
-        self.fdsn_event_start_date.setMaximumDate(
-            fdsn_events_capabilities[self.fdsn_event_ws_combobox.currentText()]['maxdate']
-        )
-        self.fdsn_event_start_date.setDate(
-            fdsn_events_capabilities[self.fdsn_event_ws_combobox.currentText()]['defaultdate']
+        datestart = QDateTime.fromString(
+            CONFIG_SERVICES['fdsnevent'][self.fdsn_event_list.currentItem(
+            ).text()]['default']['datestart'],
+            Qt.ISODate
         )
 
-        # set DateTime Widget END according to the combobox choice
-        self.fdsn_event_end_date.setMinimumDate(
-            fdsn_events_capabilities[self.fdsn_event_ws_combobox.currentText()]['mindate']
-        )
-        self.fdsn_event_end_date.setMaximumDate(
-            fdsn_events_capabilities[self.fdsn_event_ws_combobox.currentText()]['maxdate']
-        )
+        # if the dateend is not set in the config.json set the date to NOW
+        try:
+            dateend = QDateTime.fromString(
+                CONFIG_SERVICES['fdsnevent'][self.fdsn_event_list.currentItem(
+                ).text()]['default']['dateend'],
+                Qt.ISODate
+                )
+        except KeyError:
+            dateend = QDate.currentDate()
+
+        # set DateTime Widget START according to the listWidget choice
+        self.fdsn_event_start_date.setMinimumDateTime(datestart)
+        self.fdsn_event_start_date.setMaximumDateTime(dateend)
+        self.fdsn_event_start_date.setDateTime(datestart)
+
+        # set DateTime Widget END according to the listWidget choice
+        self.fdsn_event_end_date.setMinimumDateTime(datestart)
+        self.fdsn_event_end_date.setMaximumDateTime(dateend)
         # just make a week difference from START date
-        self.fdsn_event_end_date.setDate(
-            fdsn_events_capabilities[self.fdsn_event_ws_combobox.currentText()]['defaultdate'].addDays(-7)
+        self.fdsn_event_end_date.setDateTime(datestart.addDays(7))
+
+        self.mExtentGroupBox.setOutputExtentFromUser(
+            QgsRectangle(
+                *CONFIG_SERVICES['boundingboxpredefined'][CONFIG_SERVICES['fdsnevent'][self.fdsn_event_list.currentItem(
+                ).text()]['default']['boundingboxpredefined']]['boundingbox']
+            ),
+            QgsCoordinateReferenceSystem('EPSG:4326')
         )
 
     def _getEventList(self):

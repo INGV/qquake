@@ -13,6 +13,9 @@ __copyright__ = 'Copyright 2020, North Road'
 # This will get replaced with a git SHA1 when you do a git archive
 __revision__ = '$Format:%H$'
 
+import os
+import json
+
 from qgis.PyQt.QtCore import (
     Qt,
     QUrl,
@@ -36,6 +39,13 @@ from qquake.qquake_defs import (
     fdsn_events_capabilities,
 )
 
+CONFIG_SERVICES_PATH = os.path.join(
+    os.path.dirname(__file__),
+    'config',
+    'config.json')
+
+with open(CONFIG_SERVICES_PATH, 'r') as f:
+    CONFIG_SERVICES = json.load(f)
 
 class Fetcher(QObject):
     """
@@ -70,7 +80,7 @@ class Fetcher(QObject):
         """
         Returns the URL request for the query
         """
-        service = fdsn_events_capabilities[self.event_service]['ws']
+        service = CONFIG_SERVICES['fdsnevent'][self.event_service]['endpointurl']
 
         query = []
         # append to the string the parameter of the UI (starttime, endtime, etc)
