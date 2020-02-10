@@ -601,8 +601,8 @@
         "title": "EDSF, European Database of Seismogenic Faults",
         "info": "Basili R., Kastelic V., Demircioglu M. B., Garcia Moreno D., Nemser E. S., Petricca P., Sboras S. P., Besana-Ostman G. M., Cabral J., Camelbeeck T., Caputo R., Danciu L., Domac H., Fonseca J., García-Mayordomo J., Giardini D., Glavatovic B., Gulen L., Ince Y., Pavlides S., Sesetyan K., Tarabusi G., Tiberti M. M., Utkucu M., Valensise G., Vanneste K., Vilanova S., Wössner J. (2013). The European Database of Seismogenic Faults (EDSF) compiled in the framework of the Project SHARE. https://doi.org/10.6092/INGV.IT-SHARE-EDSF",
         "infourl": "http://diss.rm.ingv.it/share-edsf/",
-        "datalicense": "custom",
-        "datalicenseurl": "http://diss.rm.ingv.it/share-edsf/SHARE_WP3.2_Disclaimer.html",
+        "datalicense": "CC BY-SA 4.0",
+        "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
         "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
         "dataproviderurl": "http://www.ingv.it",
         "endpointurl": "http://services.seismofaults.eu/geoserver/EDSF/wfs?",
@@ -617,7 +617,10 @@
           },
           {
             "layername":"EDSF:crustal_fault_sources_top",
-            "style":"default"
+            "style":"default",
+            "style1":"EDSF_avgSR",
+            "style2":"EDSF_faultType",
+            "style3":"EDSF_slipType"
           },
           {
             "layername":"EDSF:subduction_zones",
@@ -629,8 +632,8 @@
           }
           ]
         },
-        "configversion": 0.1,
-        "configlastupdate": "2020-01-31T11:37:27+00:00"
+        "configversion": 0.2,
+        "configlastupdate": "2020-02-10T09:10:00+00:00"
       }
   },
   "wms": {
@@ -689,8 +692,8 @@
         "title": "EDSF, European Database of Seismogenic Faults",
         "info": "Basili R., Kastelic V., Demircioglu M. B., Garcia Moreno D., Nemser E. S., Petricca P., Sboras S. P., Besana-Ostman G. M., Cabral J., Camelbeeck T., Caputo R., Danciu L., Domac H., Fonseca J., García-Mayordomo J., Giardini D., Glavatovic B., Gulen L., Ince Y., Pavlides S., Sesetyan K., Tarabusi G., Tiberti M. M., Utkucu M., Valensise G., Vanneste K., Vilanova S., Wössner J. (2013). The European Database of Seismogenic Faults (EDSF) compiled in the framework of the Project SHARE. https://doi.org/10.6092/INGV.IT-SHARE-EDSF",
         "infourl": "http://diss.rm.ingv.it/share-edsf/",
-        "datalicense": "custom",
-        "datalicenseurl": "http://diss.rm.ingv.it/share-edsf/SHARE_WP3.2_Disclaimer.html",
+        "datalicense": "CC BY-SA 4.0",
+        "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
         "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
         "dataproviderurl": "http://www.ingv.it",
         "endpointurl": "http://services.seismofaults.eu/geoserver/EDSF/wms?",
@@ -699,22 +702,59 @@
         "default": {
           "wmsversion": "1.3.0",
           "layers":[
-          {
-            "layername":"EDSF:EDSF.Crustal_Fault_Sources",
-            "style":"default"
+	  {
+          "layername":"EDSF:EDSF",
+          "style":"default"
           },
           {
-            "layername":"EDSF:EDSF.Subduction_Zones",
-            "style":"default"
+          "layername":"EDSF:EDSF.Crustal_Fault_Sources",
+          "style":"default"
+          },
+          {
+          "layername":"EDSF:EDSF.Subduction_Zones",
+          "style":"default"
+          },
+          {
+          "layername":"EDSF:subduction_zones",
+          "style":"default"         
+          },
+          {
+          "layername":"EDSF:subduction_contours",
+          "style":"default"         
+          },
+          {
+          "layername":"EDSF:crustal_fault_sources_pln",
+          "style":"default"         
+          },
+          {
+          "layername":"EDSF:crustal_fault_sources_top",
+          "style":"default"         
           }
           ]
 
         },
-        "configversion": 0.1,
-        "configlastupdate": "2020-01-31T11:37:27+00:00"
+        "configversion": 0.2,
+        "configlastupdate": "2020-02-10T09:10:00+00:00"
       }
   },
   "styles":{
+      "EDSF": {
+      "EDSF average slip rate": {
+      "url":"https://www.seismofaults.eu/EDSFStyles/EDSF2013_avgSR.qml"
+      },
+      "EDSF fault type": {
+      "url":"https://www.seismofaults.eu/EDSFStyles/EDSF2013_faultType.qml"
+      },
+      "EDSF slip type": {
+      "url":"https://www.seismofaults.eu/EDSFStyles/EDSF2013_slipType.qml"
+      },
+      "EDSF subduction zones": {
+      "url":"https://www.seismofaults.eu/EDSFStyles/EDSF2013_subdZon.qml"
+      },
+      "EDSF subduction contours": {
+      "url":"https://www.seismofaults.eu/EDSFStyles/EDSF2013_subdCnt.qml"
+      }
+      },
       "CPTI": {
       "url":"https://www.emidius.eu/AHEAD/symbols/CPTI15_symbols.qml"
       },
