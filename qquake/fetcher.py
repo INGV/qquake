@@ -47,6 +47,7 @@ CONFIG_SERVICES_PATH = os.path.join(
 with open(CONFIG_SERVICES_PATH, 'r') as f:
     CONFIG_SERVICES = json.load(f)
 
+
 class Fetcher(QObject):
     """
     Fetcher for feeds
@@ -60,7 +61,16 @@ class Fetcher(QObject):
                  event_end_date=None,
                  event_min_magnitude=None,
                  event_max_magnitude=None,
-                 extent=None,
+                 limit_extent_rect=False,
+                 min_latitude=None,
+                 max_latitude=None,
+                 min_longitude=None,
+                 max_longitude=None,
+                 limit_extent_circle=False,
+                 circle_latitude=None,
+                 circle_longitude=None,
+                 circle_min_radius=None,
+                 circle_max_radius=None,
                  limit=1000,
                  parent=None
                  ):
@@ -71,7 +81,17 @@ class Fetcher(QObject):
         self.event_end_date = event_end_date
         self.event_min_magnitude = event_min_magnitude
         self.event_max_magnitude = event_max_magnitude
-        self.extent = extent
+        self.limit_extent_rect = limit_extent_rect
+        self.min_latitude = min_latitude
+        self.max_latitude = max_latitude
+        self.min_longitude = min_longitude
+        self.max_longitude = max_longitude
+        self.limit_extent_circle = limit_extent_circle
+        self.circle_latitude = circle_latitude
+        self.circle_longitude = circle_longitude
+        self.circle_min_radius = circle_min_radius
+        self.circle_max_radius = circle_max_radius
+
         self.limit = limit
 
         self.result = None
@@ -96,13 +116,23 @@ class Fetcher(QObject):
         if self.event_max_magnitude is not None:
             query.append('maxmag={}'.format(self.event_max_magnitude))
 
-        if self.extent is not None:
-            query.append('minlat={ymin}&maxlat={ymax}&minlon={xmin}&maxlon={xmax}'.format(
-                ymin=self.extent.yMinimum(),
-                ymax=self.extent.yMaximum(),
-                xmin=self.extent.xMinimum(),
-                xmax=self.extent.xMaximum()
-            ))
+        if self.limit_extent_rect:
+            if self.min_latitude is not None:
+                query.append('minlatitude={}'.format(self.min_latitude))
+            if self.max_latitude is not None:
+                query.append('maxlatitude={}'.format(self.max_latitude))
+            if self.min_longitude is not None:
+                query.append('minlongitude={}'.format(self.min_longitude))
+            if self.max_longitude is not None:
+                query.append('maxlongitude={}'.format(self.max_longitude))
+        elif self.limit_extent_circle and self.circle_latitude is not None and self.circle_longitude is not None and \
+            (self.circle_min_radius is not None or self.circle_max_radius is not None):
+            query.append('latitude={}'.format(self.circle_latitude))
+            query.append('longitude={}'.format(self.circle_longitude))
+            if self.circle_min_radius is not None:
+                query.append('minradius={}'.format(self.circle_min_radius))
+            if self.circle_max_radius is not None:
+                query.append('maxradius={}'.format(self.circle_max_radius))
 
         if self.limit:
             query.append('limit={}'.format(self.limit))

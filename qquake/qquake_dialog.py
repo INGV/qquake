@@ -40,9 +40,15 @@ from qgis.core import (
     QgsProject,
     QgsRectangle,
     QgsCoordinateReferenceSystem,
-    QgsSettings
+    QgsSettings,
+    QgsCoordinateTransform,
+    QgsCsException
 )
-from qgis.gui import QgsGui
+from qgis.gui import (
+    QgsGui,
+    QgsMapToolExtent,
+    QgsMapToolEmitPoint
+)
 
 from qquake.qquake_defs import (
     fdsn_events_capabilities,
@@ -55,8 +61,8 @@ from qquake.fetcher import Fetcher
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
     os.path.dirname(__file__), 'qquake_dialog_base.ui'))
 
-PREFERRED='PREFERRED'
-ALL='ALL'
+PREFERRED = 'PREFERRED'
+ALL = 'ALL'
 
 CONFIG_SERVICES_PATH = os.path.join(
     os.path.dirname(__file__),
@@ -65,6 +71,7 @@ CONFIG_SERVICES_PATH = os.path.join(
 
 with open(CONFIG_SERVICES_PATH, 'r') as f:
     CONFIG_SERVICES = json.load(f)
+
 
 class QQuakeDialog(QDialog, FORM_CLASS):
 
@@ -79,15 +86,14 @@ class QQuakeDialog(QDialog, FORM_CLASS):
 
         self.url_text_browser.viewport().setAutoFillBackground(False)
         self.button_box.button(QDialogButtonBox.Ok).setText(self.tr('Fetch Data'))
+        self.button_box.rejected.connect(self._save_settings)
 
         self.iface = iface
+        self.previous_map_tool = None
+        self.extent_tool = None
 
-        # QgsExtentGroupBox utilities to se tup in the init
-        self.fdsn_event_ExtentGroupBox.setMapCanvas(self.iface.mapCanvas())
-        self.fdsn_event_ExtentGroupBox.setCurrentExtent(self.iface.mapCanvas().extent(),
-                                              self.iface.mapCanvas().mapSettings().destinationCrs())
-        self.fdsn_event_ExtentGroupBox.setOriginalExtent(QgsRectangle(*MAX_LON_LAT), QgsCoordinateReferenceSystem('EPSG:4326'))
-        self.fdsn_event_ExtentGroupBox.setOutputCrs(QgsCoordinateReferenceSystem('EPSG:4326'))
+        self.set_extent_from_canvas_extent(self.iface.mapCanvas().extent())
+        self.set_center_from_canvas_point(self.iface.mapCanvas().extent().center())
 
         # FDSN Event
         # connect the date changing to the refreshing function
@@ -128,8 +134,37 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.fdsn_event_end_date.dateChanged.connect(self._refresh_url)
         self.fdsn_event_min_magnitude.valueChanged.connect(self._refresh_url)
         self.fdsn_event_max_magnitude.valueChanged.connect(self._refresh_url)
-        self.fdsn_event_ExtentGroupBox.extentChanged.connect(self._refresh_url)
-        self.fdsn_event_ExtentGroupBox.toggled.connect(self._refresh_url)
+        self.lat_min_spinbox.valueChanged.connect(self._refresh_url)
+        self.lat_max_spinbox.valueChanged.connect(self._refresh_url)
+        self.long_min_spinbox.valueChanged.connect(self._refresh_url)
+        self.long_max_spinbox.valueChanged.connect(self._refresh_url)
+        self.lat_min_checkbox.toggled.connect(self._refresh_url)
+        self.lat_max_checkbox.toggled.connect(self._refresh_url)
+        self.long_min_checkbox.toggled.connect(self._refresh_url)
+        self.long_max_checkbox.toggled.connect(self._refresh_url)
+        self.limit_extent_checkbox.toggled.connect(self._refresh_url)
+        self.radio_rectangular_area.toggled.connect(self._refresh_url)
+        self.radio_circular_area.toggled.connect(self._refresh_url)
+        self.circular_lat_spinbox.valueChanged.connect(self._refresh_url)
+        self.circular_long_spinbox.valueChanged.connect(self._refresh_url)
+        self.radius_min_checkbox.toggled.connect(self._refresh_url)
+        self.radius_max_checkbox.toggled.connect(self._refresh_url)
+        self.radius_min_spinbox.valueChanged.connect(self._refresh_url)
+        self.radius_max_spinbox.valueChanged.connect(self._refresh_url)
+
+        self.rect_extent_draw_on_map.clicked.connect(self.draw_rect_on_map)
+        self.circle_center_draw_on_map.clicked.connect(self.draw_center_on_map)
+
+        self.radio_rectangular_area.toggled.connect(self._enable_widgets)
+        self.radio_circular_area.toggled.connect(self._enable_widgets)
+        self.limit_extent_checkbox.toggled.connect(self._enable_widgets)
+        self.lat_min_checkbox.toggled.connect(self._enable_widgets)
+        self.lat_max_checkbox.toggled.connect(self._enable_widgets)
+        self.long_min_checkbox.toggled.connect(self._enable_widgets)
+        self.long_max_checkbox.toggled.connect(self._enable_widgets)
+        self.radius_min_checkbox.toggled.connect(self._enable_widgets)
+        self.radius_max_checkbox.toggled.connect(self._enable_widgets)
+        self._enable_widgets()
 
         self.fdsn_macro_list.currentRowChanged.connect(self._refresh_url)
         self.fdsn_macro_start_date.dateChanged.connect(self._refresh_url)
@@ -148,19 +183,94 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self._restore_settings()
         self._refresh_url()
 
+    def closeEvent(self, e):
+        self._save_settings()
+        super().closeEvent(e)
+
+    def set_extent_from_canvas_extent(self, rect):
+        ct = QgsCoordinateTransform(self.iface.mapCanvas().mapSettings().destinationCrs(),
+                                    QgsCoordinateReferenceSystem('EPSG:4326'), QgsProject.instance())
+        try:
+            rect = ct.transformBoundingBox(rect)
+            self.lat_min_spinbox.setValue(rect.yMinimum())
+            self.lat_max_spinbox.setValue(rect.yMaximum())
+            self.long_min_spinbox.setValue(rect.xMinimum())
+            self.long_max_spinbox.setValue(rect.xMaximum())
+        except QgsCsException:
+            pass
+
+    def set_center_from_canvas_point(self, point):
+        ct = QgsCoordinateTransform(self.iface.mapCanvas().mapSettings().destinationCrs(),
+                                    QgsCoordinateReferenceSystem('EPSG:4326'), QgsProject.instance())
+        try:
+            point = ct.transform(point)
+            self.circular_lat_spinbox.setValue(point.y())
+            self.circular_long_spinbox.setValue(point.x())
+        except QgsCsException:
+            pass
+
+    def _enable_widgets(self):
+        for w in [self.lat_min_checkbox,
+                  self.lat_max_checkbox,
+                  self.long_min_checkbox,
+                  self.long_max_checkbox,
+                  self.lat_min_spinbox,
+                  self.lat_max_spinbox,
+                  self.long_min_spinbox,
+                  self.long_max_spinbox,
+                  self.label_rect_lat,
+                  self.label_rect_long,
+                  self.rect_extent_draw_on_map]:
+            w.setEnabled(self.radio_rectangular_area.isChecked() and self.limit_extent_checkbox.isChecked())
+        self.lat_min_spinbox.setEnabled(self.lat_min_spinbox.isEnabled() and self.lat_min_checkbox.isChecked())
+        self.lat_max_spinbox.setEnabled(self.lat_max_spinbox.isEnabled() and self.lat_max_checkbox.isChecked())
+        self.long_min_spinbox.setEnabled(self.long_min_spinbox.isEnabled() and self.long_min_checkbox.isChecked())
+        self.long_max_spinbox.setEnabled(self.long_max_spinbox.isEnabled() and self.long_max_checkbox.isChecked())
+
+        for w in [self.circular_lat_spinbox,
+                  self.circular_long_spinbox,
+                  self.radius_min_checkbox,
+                  self.radius_min_spinbox,
+                  self.radius_max_checkbox,
+                  self.radius_max_spinbox,
+                  self.label_circ_center,
+                  self.label_circ_radius,
+                  self.label_circ_lat,
+                  self.label_circ_long,
+                  self.circle_center_draw_on_map]:
+            w.setEnabled(self.radio_circular_area.isChecked() and self.limit_extent_checkbox.isChecked())
+        self.radius_min_spinbox.setEnabled(self.radius_min_spinbox.isEnabled() and self.radius_min_checkbox.isChecked())
+        self.radius_max_spinbox.setEnabled(self.radius_max_spinbox.isEnabled() and self.radius_max_checkbox.isChecked())
+
     def _save_settings(self):
         s = QgsSettings()
         # FDSN Event
         s.setValue('/plugins/qquake/fdsn_event_last_event_service', self.fdsn_event_list.currentItem().text())
         s.setValue('/plugins/qquake/fdsn_event_last_event_start_date', self.fdsn_event_start_date.dateTime())
         s.setValue('/plugins/qquake/fdsn_event_last_event_end_date', self.fdsn_event_end_date.dateTime())
-        s.setValue('/plugins/qquake/fdsn_event_last_event_min_magnitude',self.fdsn_event_min_magnitude.value())
+        s.setValue('/plugins/qquake/fdsn_event_last_event_min_magnitude', self.fdsn_event_min_magnitude.value())
         s.setValue('/plugins/qquake/fdsn_event_last_event_max_magnitude', self.fdsn_event_max_magnitude.value())
-        s.setValue('/plugins/qquake/fdsn_event_last_event_extent', '{}|{}|{}|{}'.format(self.fdsn_event_ExtentGroupBox.outputExtent().xMinimum(),
-                                                                             self.fdsn_event_ExtentGroupBox.outputExtent().yMinimum(),
-                                                                             self.fdsn_event_ExtentGroupBox.outputExtent().xMaximum(),
-                                                                             self.fdsn_event_ExtentGroupBox.outputExtent().yMaximum()))
-        s.setValue('/plugins/qquake/fdsn_event_last_event_extent_enabled', self.fdsn_event_ExtentGroupBox.isChecked())
+
+        s.setValue('/plugins/qquake/fdsn_event_last_event_extent_enabled', self.limit_extent_checkbox.isChecked())
+        s.setValue('/plugins/qquake/fdsn_event_last_event_extent_rect', self.radio_rectangular_area.isChecked())
+        s.setValue('/plugins/qquake/fdsn_event_last_event_extent_circle', self.radio_circular_area.isChecked())
+        s.setValue('/plugins/qquake/fdsn_event_last_event_min_lat_checked', self.lat_min_checkbox.isChecked())
+        s.setValue('/plugins/qquake/fdsn_event_last_event_min_lat', self.lat_min_spinbox.value())
+        s.setValue('/plugins/qquake/fdsn_event_last_event_max_lat_checked', self.lat_max_checkbox.isChecked())
+        s.setValue('/plugins/qquake/fdsn_event_last_event_max_lat', self.lat_max_spinbox.value())
+        s.setValue('/plugins/qquake/fdsn_event_last_event_min_long_checked', self.long_min_checkbox.isChecked())
+        s.setValue('/plugins/qquake/fdsn_event_last_event_min_long', self.long_min_spinbox.value())
+        s.setValue('/plugins/qquake/fdsn_event_last_event_max_long_checked', self.long_max_checkbox.isChecked())
+        s.setValue('/plugins/qquake/fdsn_event_last_event_max_long', self.long_max_spinbox.value())
+
+        s.setValue('/plugins/qquake/fdsn_event_last_event_circle_long', self.circular_long_spinbox.value())
+        s.setValue('/plugins/qquake/fdsn_event_last_event_circle_lat', self.circular_lat_spinbox.value())
+        s.setValue('/plugins/qquake/fdsn_event_last_event_circle_radius_min_checked', self.radius_min_checkbox.isChecked())
+        s.setValue('/plugins/qquake/fdsn_event_last_event_circle_radius_max_checked',
+                   self.radius_max_checkbox.isChecked())
+        s.setValue('/plugins/qquake/fdsn_event_last_event_circle_min_radius', self.radius_min_spinbox.value())
+        s.setValue('/plugins/qquake/fdsn_event_last_event_circle_max_radius', self.radius_max_spinbox.value())
+
         s.setValue('/plugins/qquake/fdsn_event_last_output_type', self.output_combo_box.currentData())
 
     def _restore_settings(self):
@@ -181,28 +291,83 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         last_event_max_magnitude = s.value('/plugins/qquake/fdsn_event_last_event_max_magnitude')
         if last_event_max_magnitude is not None:
             self.fdsn_event_max_magnitude.setValue(float(last_event_max_magnitude))
-        last_event_extent = s.value('/plugins/qquake/fdsn_event_last_event_extent')
-        if last_event_extent:
-            parts = last_event_extent.split('|')
-            if len(parts) == 4:
-                r = QgsRectangle()
-                try:
-                    r.setXMinimum(float(parts[0]))
-                    r.setYMinimum(float(parts[1]))
-                    r.setXMaximum(float(parts[2]))
-                    r.setYMaximum(float(parts[3]))
-                    self.fdsn_event_ExtentGroupBox.setOriginalExtent(r, QgsCoordinateReferenceSystem('EPSG:4326'))
-                except:
-                    pass
         last_event_extent_enabled = s.value('/plugins/qquake/fdsn_event_last_event_extent_enabled')
         if last_event_extent_enabled is not None:
-            self.fdsn_event_ExtentGroupBox.setChecked(bool(last_event_extent_enabled))
+            self.limit_extent_checkbox.setChecked(bool(last_event_extent_enabled))
+        last_event_extent_rect = s.value('/plugins/qquake/fdsn_event_last_event_extent_rect')
+        if last_event_extent_rect is not None:
+            self.radio_rectangular_area.setChecked(bool(last_event_extent_rect))
+        last_event_extent_circle = s.value('/plugins/qquake/fdsn_event_last_event_extent_circle')
+        if last_event_extent_circle is not None:
+            self.radio_circular_area.setChecked(bool(last_event_extent_circle))
+        min_lat_checked = s.value('/plugins/qquake/fdsn_event_last_event_min_lat_checked')
+        if min_lat_checked is not None:
+            self.lat_min_checkbox.setChecked(bool(min_lat_checked))
+        max_lat_checked = s.value('/plugins/qquake/fdsn_event_last_event_max_lat_checked')
+        if max_lat_checked is not None:
+            self.lat_max_checkbox.setChecked(bool(max_lat_checked))
+        min_long_checked = s.value('/plugins/qquake/fdsn_event_last_event_min_long_checked')
+        if min_long_checked is not None:
+            self.long_min_checkbox.setChecked(bool(min_long_checked))
+        max_long_checked = s.value('/plugins/qquake/fdsn_event_last_event_max_long_checked')
+        if max_long_checked is not None:
+            self.long_max_checkbox.setChecked(bool(max_long_checked))
+
+        min_radius_checked = s.value('/plugins/qquake/fdsn_event_last_event_circle_radius_min_checked')
+        if min_radius_checked is not None:
+            self.radius_min_checkbox.setChecked(bool(min_radius_checked))
+        max_radius_checked = s.value('/plugins/qquake/fdsn_event_last_event_circle_radius_max_checked')
+        if max_radius_checked is not None:
+            self.radius_max_checkbox.setChecked(bool(max_radius_checked))
+
+        last_event_min_radius = s.value('/plugins/qquake/fdsn_event_last_event_circle_min_radius')
+        if last_event_min_radius is not None:
+            self.radius_min_spinbox.setValue(float(last_event_min_radius))
+        last_event_max_radius = s.value('/plugins/qquake/fdsn_event_last_event_circle_max_radius')
+        if last_event_max_radius is not None:
+            self.radius_max_spinbox.setValue(float(last_event_max_radius))
 
         last_output_type = s.value('/plugins/qquake/fdsn_event_last_output_type')
         if last_output_type is None:
             last_output_type = PREFERRED
         self.output_combo_box.setCurrentIndex(self.output_combo_box.findData(last_output_type))
 
+    def draw_rect_on_map(self):
+        self.previous_map_tool = self.iface.mapCanvas().mapTool()
+        if not self.extent_tool:
+            self.extent_tool = QgsMapToolExtent(self.iface.mapCanvas())
+            self.extent_tool.extentChanged.connect(self.extent_drawn)
+            self.extent_tool.deactivated.connect(self.deactivate_tool)
+        self.iface.mapCanvas().setMapTool(self.extent_tool)
+        self.window().setVisible(False)
+
+    def draw_center_on_map(self):
+        self.previous_map_tool = self.iface.mapCanvas().mapTool()
+        if not self.extent_tool:
+            self.extent_tool = QgsMapToolEmitPoint(self.iface.mapCanvas())
+            self.extent_tool.canvasClicked.connect(self.center_picked)
+            self.extent_tool.deactivated.connect(self.deactivate_tool)
+        self.iface.mapCanvas().setMapTool(self.extent_tool)
+        self.window().setVisible(False)
+
+    def extent_drawn(self, extent):
+        self.set_extent_from_canvas_extent(extent)
+        self.iface.mapCanvas().setMapTool(self.previous_map_tool)
+        self.window().setVisible(True)
+        self.previous_map_tool = None
+        self.extent_tool = None
+
+    def center_picked(self, point, button):
+        self.set_center_from_canvas_point(point)
+        self.iface.mapCanvas().setMapTool(self.previous_map_tool)
+        self.window().setVisible(True)
+        self.previous_map_tool = None
+        self.extent_tool = None
+
+    def deactivate_tool(self):
+        self.window().setVisible(True)
+        self.previous_map_tool = None
+        self.extent_tool = None
 
     def _refresh_date(self):
         """
@@ -224,7 +389,17 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                        event_end_date=self.fdsn_event_end_date.dateTime(),
                        event_min_magnitude=self.fdsn_event_min_magnitude.value(),
                        event_max_magnitude=self.fdsn_event_max_magnitude.value(),
-                       extent=self.fdsn_event_ExtentGroupBox.outputExtent() if self.fdsn_event_ExtentGroupBox.isChecked() else None)
+                       limit_extent_rect=self.limit_extent_checkbox.isChecked() and self.radio_rectangular_area.isChecked(),
+                       min_latitude=self.lat_min_spinbox.value() if self.lat_min_checkbox.isChecked() else None,
+                       max_latitude=self.lat_max_spinbox.value() if self.lat_max_checkbox.isChecked() else None,
+                       min_longitude=self.long_min_spinbox.value() if self.long_min_checkbox.isChecked() else None,
+                       max_longitude=self.long_max_spinbox.value() if self.long_max_checkbox.isChecked() else None,
+                       limit_extent_circle=self.limit_extent_checkbox.isChecked() and self.radio_circular_area.isChecked(),
+                       circle_latitude=self.circular_lat_spinbox.value(),
+                       circle_longitude=self.circular_long_spinbox.value(),
+                       circle_min_radius=self.radius_min_spinbox.value() if self.radius_min_checkbox.isChecked() else None,
+                       circle_max_radius=self.radius_max_spinbox.value() if self.radius_max_checkbox.isChecked() else None,
+                       )
 
     def _refresh_url(self):
         fetcher = self.get_fetcher()
@@ -247,7 +422,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                 CONFIG_SERVICES['fdsnevent'][self.fdsn_event_list.currentItem(
                 ).text()]['default']['dateend'],
                 Qt.ISODate
-                )
+            )
         except KeyError:
             dateend = QDate.currentDate()
 
@@ -262,13 +437,16 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         # just make a week difference from START date
         self.fdsn_event_end_date.setDateTime(datestart.addDays(7))
 
-        self.fdsn_event_ExtentGroupBox.setOutputExtentFromUser(
-            QgsRectangle(
-                *CONFIG_SERVICES['boundingboxpredefined'][CONFIG_SERVICES['fdsnevent'][self.fdsn_event_list.currentItem(
-                ).text()]['default']['boundingboxpredefined']]['boundingbox']
-            ),
-            QgsCoordinateReferenceSystem('EPSG:4326')
-        )
+        box = CONFIG_SERVICES['boundingboxpredefined'][CONFIG_SERVICES['fdsnevent'][self.fdsn_event_list.currentItem(
+        ).text()]['default']['boundingboxpredefined']]['boundingbox']
+        self.long_min_spinbox.setMinimum(box[0])
+        self.long_max_spinbox.setMinimum(box[0])
+        self.lat_min_spinbox.setMinimum(box[1])
+        self.lat_max_spinbox.setMinimum(box[1])
+        self.long_min_spinbox.setMaximum(box[2])
+        self.long_max_spinbox.setMaximum(box[2])
+        self.lat_min_spinbox.setMaximum(box[3])
+        self.lat_max_spinbox.setMaximum(box[3])
 
     def refreshFdsnMacroseismicWidgets(self):
         """
@@ -287,7 +465,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                 CONFIG_SERVICES['macroseismic'][self.fdsn_macro_list.currentItem(
                 ).text()]['default']['dateend'],
                 Qt.ISODate
-                )
+            )
         except KeyError:
             dateend = QDate.currentDate()
 
@@ -304,8 +482,9 @@ class QQuakeDialog(QDialog, FORM_CLASS):
 
         self.fdsn_macro_ExtentGroupBox.setOutputExtentFromUser(
             QgsRectangle(
-                *CONFIG_SERVICES['boundingboxpredefined'][CONFIG_SERVICES['macroseismic'][self.fdsn_macro_list.currentItem(
-                ).text()]['default']['boundingboxpredefined']]['boundingbox']
+                *CONFIG_SERVICES['boundingboxpredefined'][
+                    CONFIG_SERVICES['macroseismic'][self.fdsn_macro_list.currentItem(
+                    ).text()]['default']['boundingboxpredefined']]['boundingbox']
             ),
             QgsCoordinateReferenceSystem('EPSG:4326')
         )
@@ -326,8 +505,6 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         if self.fetcher:
             # TODO - cancel current request
             return
-
-        self._save_settings()
 
         self.fetcher = self.get_fetcher()
         self.fetcher.progress.connect(self.progressBar.setValue)
@@ -352,4 +529,3 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.fetcher = None
 
         QgsProject.instance().addMapLayers(layers)
-
