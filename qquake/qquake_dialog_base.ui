@@ -7,21 +7,14 @@
     <x>0</x>
     <y>0</y>
     <width>840</width>
-    <height>707</height>
+    <height>766</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>QQuake</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout_3">
-   <item row="1" column="0">
-    <widget class="QProgressBar" name="progressBar">
-     <property name="value">
-      <number>0</number>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="0">
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
     <widget class="QTabWidget" name="fdsn_event_list_2">
      <property name="tabPosition">
       <enum>QTabWidget::North</enum>
@@ -40,7 +33,24 @@
        <string>Earthquakes</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout" columnstretch="0,1,1">
-       <item row="0" column="0" rowspan="7">
+       <item row="8" column="0" colspan="3">
+        <layout class="QGridLayout" name="gridLayout_5">
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <item row="0" column="0" colspan="2">
+          <widget class="QTextBrowser" name="url_text_browser">
+           <property name="frameShape">
+            <enum>QFrame::NoFrame</enum>
+           </property>
+           <property name="openExternalLinks">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="0" column="0" rowspan="8">
         <widget class="QListWidget" name="fdsn_event_list">
          <property name="minimumSize">
           <size>
@@ -56,47 +66,7 @@
          </property>
         </widget>
        </item>
-       <item row="4" column="1">
-        <widget class="QLabel" name="fdsn_event_max_magnitude_label">
-         <property name="text">
-          <string>Max Magnitude</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="2">
-        <widget class="QDoubleSpinBox" name="fdsn_event_max_magnitude">
-         <property name="decimals">
-          <number>1</number>
-         </property>
-         <property name="minimum">
-          <double>1.000000000000000</double>
-         </property>
-         <property name="maximum">
-          <double>9.000000000000000</double>
-         </property>
-         <property name="singleStep">
-          <double>0.500000000000000</double>
-         </property>
-         <property name="value">
-          <double>9.000000000000000</double>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QLabel" name="fdsn_event_start_date_label">
-         <property name="text">
-          <string>Start DateTime</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QLabel" name="fdsn_event_end_data_label">
-         <property name="text">
-          <string>End DateTime</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="1" colspan="2">
+       <item row="6" column="1" colspan="2">
         <widget class="QGroupBox" name="limit_extent_checkbox">
          <property name="title">
           <string>Geographical Coverage</string>
@@ -236,7 +206,7 @@
           <item row="9" column="1">
            <widget class="QLabel" name="label_circ_radius">
             <property name="text">
-             <string>Radius (km)</string>
+             <string>Radius</string>
             </property>
            </widget>
           </item>
@@ -342,95 +312,156 @@
          </layout>
         </widget>
        </item>
-       <item row="2" column="2">
-        <widget class="QDateTimeEdit" name="fdsn_event_end_date">
-         <property name="minimumDate">
-          <date>
-           <year>1777</year>
-           <month>9</month>
-           <day>14</day>
-          </date>
+       <item row="1" column="1">
+        <widget class="QGroupBox" name="groupBox">
+         <property name="title">
+          <string>Time Coverage</string>
          </property>
-         <property name="displayFormat">
-          <string>yyyy-MM-dd</string>
-         </property>
-         <property name="calendarPopup">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="2">
-        <widget class="QDoubleSpinBox" name="fdsn_event_min_magnitude">
-         <property name="decimals">
-          <number>1</number>
-         </property>
-         <property name="minimum">
-          <double>1.000000000000000</double>
-         </property>
-         <property name="maximum">
-          <double>9.000000000000000</double>
-         </property>
-         <property name="singleStep">
-          <double>0.500000000000000</double>
-         </property>
-         <property name="value">
-          <double>4.000000000000000</double>
-         </property>
+         <layout class="QGridLayout" name="gridLayout_3" columnstretch="0,1">
+          <item row="0" column="0">
+           <widget class="QCheckBox" name="min_time_check">
+            <property name="text">
+             <string>Start</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QDateTimeEdit" name="fdsn_event_start_date">
+            <property name="maximumDateTime">
+             <datetime>
+              <hour>23</hour>
+              <minute>59</minute>
+              <second>59</second>
+              <year>9999</year>
+              <month>12</month>
+              <day>31</day>
+             </datetime>
+            </property>
+            <property name="displayFormat">
+             <string>yyyy-MM-dd</string>
+            </property>
+            <property name="calendarPopup">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QDateTimeEdit" name="fdsn_event_end_date">
+            <property name="minimumDate">
+             <date>
+              <year>1777</year>
+              <month>9</month>
+              <day>14</day>
+             </date>
+            </property>
+            <property name="displayFormat">
+             <string>yyyy-MM-dd</string>
+            </property>
+            <property name="calendarPopup">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QCheckBox" name="max_time_check">
+            <property name="text">
+             <string>End</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
        <item row="1" column="2">
-        <widget class="QDateTimeEdit" name="fdsn_event_start_date">
-         <property name="maximumDateTime">
-          <datetime>
-           <hour>23</hour>
-           <minute>59</minute>
-           <second>59</second>
-           <year>9999</year>
-           <month>12</month>
-           <day>31</day>
-          </datetime>
+        <widget class="QGroupBox" name="groupBox_2">
+         <property name="title">
+          <string>Magnitude</string>
          </property>
-         <property name="displayFormat">
-          <string>yyyy-MM-dd</string>
-         </property>
-         <property name="calendarPopup">
-          <bool>true</bool>
-         </property>
+         <layout class="QGridLayout" name="gridLayout_7" columnstretch="1,2">
+          <item row="0" column="1">
+           <widget class="QDoubleSpinBox" name="fdsn_event_min_magnitude">
+            <property name="decimals">
+             <number>1</number>
+            </property>
+            <property name="minimum">
+             <double>1.000000000000000</double>
+            </property>
+            <property name="maximum">
+             <double>9.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.500000000000000</double>
+            </property>
+            <property name="value">
+             <double>4.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QCheckBox" name="max_mag_check">
+            <property name="text">
+             <string>Max</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QCheckBox" name="min_mag_check">
+            <property name="text">
+             <string>Min</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QDoubleSpinBox" name="fdsn_event_max_magnitude">
+            <property name="decimals">
+             <number>1</number>
+            </property>
+            <property name="minimum">
+             <double>1.000000000000000</double>
+            </property>
+            <property name="maximum">
+             <double>9.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.500000000000000</double>
+            </property>
+            <property name="value">
+             <double>9.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
-       <item row="3" column="1">
-        <widget class="QLabel" name="fdsn_event_min_magnitude_label">
-         <property name="text">
-          <string>Min Magnitude</string>
+       <item row="7" column="1" colspan="2">
+        <widget class="QGroupBox" name="groupBox_3">
+         <property name="title">
+          <string>Output</string>
          </property>
+         <layout class="QGridLayout" name="gridLayout_8">
+          <item row="1" column="0">
+           <widget class="QCheckBox" name="output_preferred_magnitudes_only_check">
+            <property name="text">
+             <string>Only preferred magnitudes</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QCheckBox" name="output_preferred_origins_only_check">
+            <property name="text">
+             <string>Only preferred origins</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QPushButton" name="output_table_options_button">
+            <property name="text">
+             <string>Output Table Options…</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
-       </item>
-       <item row="7" column="0" colspan="3">
-        <layout class="QGridLayout" name="gridLayout_5" columnminimumwidth="0,0">
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <item row="0" column="0">
-          <widget class="QLabel" name="label">
-           <property name="text">
-            <string>Output</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QComboBox" name="output_combo_box"/>
-         </item>
-         <item row="1" column="0" colspan="2">
-          <widget class="QTextBrowser" name="url_text_browser">
-           <property name="frameShape">
-            <enum>QFrame::NoFrame</enum>
-           </property>
-           <property name="openExternalLinks">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-        </layout>
        </item>
       </layout>
      </widget>
@@ -632,7 +663,14 @@
      </widget>
     </widget>
    </item>
-   <item row="2" column="0">
+   <item>
+    <widget class="QProgressBar" name="progressBar">
+     <property name="value">
+      <number>0</number>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QDialogButtonBox" name="button_box">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
