@@ -84,7 +84,7 @@
         "configversion": 0.1,
         "configlastupdate": "2020-01-31T11:37:27+00:00"
       },
-    "INGV ASMI/CPTI": 
+    "INGV ASMI/CPTI":
       {
         "title": "ASMI, Archivio Storico Macrosismico Italiano (INGV)",
         "info": "Rovida A., Locati M., Antonucci A., Camassi R. (2017). Archivio Storico Macrosismico Italiano (ASMI). Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/ASMI",
@@ -169,7 +169,7 @@
         "configversion": 0.1,
         "configlastupdate": "2020-01-31T11:37:27+00:00"
       },
-    "INGV ONT/ISIDe": 
+    "INGV ONT/ISIDe":
       {
         "title": "ISIDe, Italian Seismological Instrumental and Parametric Database (INGV)",
         "info": "ISIDe Working Group (2007). Italian Seismological Instrumental and Parametric Database (ISIDe). Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/ISIDE",
@@ -596,7 +596,7 @@
         "configversion": 0.1,
         "configlastupdate": "2020-01-31T11:37:27+00:00"
       },
-    "EDSF": 
+    "EDSF":
       {
         "title": "EDSF, European Database of Seismogenic Faults",
         "info": "Basili R., Kastelic V., Demircioglu M. B., Garcia Moreno D., Nemser E. S., Petricca P., Sboras S. P., Besana-Ostman G. M., Cabral J., Camelbeeck T., Caputo R., Danciu L., Domac H., Fonseca J., García-Mayordomo J., Giardini D., Glavatovic B., Gulen L., Ince Y., Pavlides S., Sesetyan K., Tarabusi G., Tiberti M. M., Utkucu M., Valensise G., Vanneste K., Vilanova S., Wössner J. (2013). The European Database of Seismogenic Faults (EDSF) compiled in the framework of the Project SHARE. https://doi.org/10.6092/INGV.IT-SHARE-EDSF",
@@ -716,19 +716,19 @@
           },
           {
           "layername":"EDSF:subduction_zones",
-          "style":"default"         
+          "style":"default"
           },
           {
           "layername":"EDSF:subduction_contours",
-          "style":"default"         
+          "style":"default"
           },
           {
           "layername":"EDSF:crustal_fault_sources_pln",
-          "style":"default"         
+          "style":"default"
           },
           {
           "layername":"EDSF:crustal_fault_sources_top",
-          "style":"default"         
+          "style":"default"
           }
           ]
 

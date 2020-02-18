@@ -28,7 +28,8 @@ import json
 from qgis.PyQt import uic
 from qgis.PyQt.QtWidgets import (
     QDialogButtonBox,
-    QDialog
+    QDialog,
+    QSizePolicy
 )
 from qgis.PyQt.QtCore import (
     Qt,
@@ -37,6 +38,7 @@ from qgis.PyQt.QtCore import (
 )
 
 from qgis.core import (
+    Qgis,
     QgsProject,
     QgsRectangle,
     QgsCoordinateReferenceSystem,
@@ -47,7 +49,8 @@ from qgis.core import (
 from qgis.gui import (
     QgsGui,
     QgsMapToolExtent,
-    QgsMapToolEmitPoint
+    QgsMapToolEmitPoint,
+    QgsMessageBar
 )
 
 from qquake.qquake_defs import (
@@ -56,13 +59,12 @@ from qquake.qquake_defs import (
 )
 
 from qquake.fetcher import Fetcher
+from qquake.output_table_options_dialog import OutputTableOptionsDialog
 
 # This loads your .ui file so that PyQt can populate your plugin with the elements from Qt Designer
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
     os.path.dirname(__file__), 'qquake_dialog_base.ui'))
 
-PREFERRED = 'PREFERRED'
-ALL = 'ALL'
 
 CONFIG_SERVICES_PATH = os.path.join(
     os.path.dirname(__file__),
@@ -81,8 +83,9 @@ class QQuakeDialog(QDialog, FORM_CLASS):
 
         self.setupUi(self)
 
-        self.output_combo_box.addItem(self.tr('Preferred Magnitude/Origin Only'), PREFERRED)
-        self.output_combo_box.addItem(self.tr('All Magnitudes/Origins'), ALL)
+        self.message_bar = QgsMessageBar()
+        self.message_bar.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
+        self.verticalLayout.insertWidget(0, self.message_bar)
 
         self.url_text_browser.viewport().setAutoFillBackground(False)
         self.button_box.button(QDialogButtonBox.Ok).setText(self.tr('Fetch Data'))
@@ -130,9 +133,13 @@ class QQuakeDialog(QDialog, FORM_CLASS):
             self.refreshFdsnMacroseismicWidgets)
 
         self.fdsn_event_list.currentRowChanged.connect(self._refresh_url)
+        self.min_time_check.toggled.connect(self._refresh_url)
         self.fdsn_event_start_date.dateChanged.connect(self._refresh_url)
+        self.max_time_check.toggled.connect(self._refresh_url)
         self.fdsn_event_end_date.dateChanged.connect(self._refresh_url)
+        self.min_mag_check.toggled.connect(self._refresh_url)
         self.fdsn_event_min_magnitude.valueChanged.connect(self._refresh_url)
+        self.max_mag_check.toggled.connect(self._refresh_url)
         self.fdsn_event_max_magnitude.valueChanged.connect(self._refresh_url)
         self.lat_min_spinbox.valueChanged.connect(self._refresh_url)
         self.lat_max_spinbox.valueChanged.connect(self._refresh_url)
@@ -164,6 +171,10 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.long_max_checkbox.toggled.connect(self._enable_widgets)
         self.radius_min_checkbox.toggled.connect(self._enable_widgets)
         self.radius_max_checkbox.toggled.connect(self._enable_widgets)
+        self.min_time_check.toggled.connect(self._enable_widgets)
+        self.max_time_check.toggled.connect(self._enable_widgets)
+        self.min_mag_check.toggled.connect(self._enable_widgets)
+        self.max_mag_check.toggled.connect(self._enable_widgets)
         self._enable_widgets()
 
         self.fdsn_macro_list.currentRowChanged.connect(self._refresh_url)
@@ -177,6 +188,8 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.button_box.accepted.connect(self._getEventList)
 
         self.fetcher = None
+
+        self.output_table_options_button.clicked.connect(self._output_table_options)
 
         QgsGui.enableAutoGeometryRestore(self)
 
@@ -242,6 +255,11 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.radius_min_spinbox.setEnabled(self.radius_min_spinbox.isEnabled() and self.radius_min_checkbox.isChecked())
         self.radius_max_spinbox.setEnabled(self.radius_max_spinbox.isEnabled() and self.radius_max_checkbox.isChecked())
 
+        self.fdsn_event_start_date.setEnabled(self.min_time_check.isChecked())
+        self.fdsn_event_end_date.setEnabled(self.max_time_check.isChecked())
+        self.fdsn_event_min_magnitude.setEnabled(self.min_mag_check.isChecked())
+        self.fdsn_event_max_magnitude.setEnabled(self.max_mag_check.isChecked())
+
     def _save_settings(self):
         s = QgsSettings()
         # FDSN Event
@@ -265,13 +283,21 @@ class QQuakeDialog(QDialog, FORM_CLASS):
 
         s.setValue('/plugins/qquake/fdsn_event_last_event_circle_long', self.circular_long_spinbox.value())
         s.setValue('/plugins/qquake/fdsn_event_last_event_circle_lat', self.circular_lat_spinbox.value())
-        s.setValue('/plugins/qquake/fdsn_event_last_event_circle_radius_min_checked', self.radius_min_checkbox.isChecked())
+        s.setValue('/plugins/qquake/fdsn_event_last_event_circle_radius_min_checked',
+                   self.radius_min_checkbox.isChecked())
         s.setValue('/plugins/qquake/fdsn_event_last_event_circle_radius_max_checked',
                    self.radius_max_checkbox.isChecked())
         s.setValue('/plugins/qquake/fdsn_event_last_event_circle_min_radius', self.radius_min_spinbox.value())
         s.setValue('/plugins/qquake/fdsn_event_last_event_circle_max_radius', self.radius_max_spinbox.value())
 
-        s.setValue('/plugins/qquake/fdsn_event_last_output_type', self.output_combo_box.currentData())
+        s.setValue('/plugins/qquake/fdsn_event_last_event_min_time_checked', self.min_time_check.isChecked())
+        s.setValue('/plugins/qquake/fdsn_event_last_event_max_time_checked', self.max_time_check.isChecked())
+        s.setValue('/plugins/qquake/fdsn_event_last_event_min_mag_checked', self.min_mag_check.isChecked())
+        s.setValue('/plugins/qquake/fdsn_event_last_event_max_mag_checked', self.max_mag_check.isChecked())
+
+        s.setValue('/plugins/qquake/fdsn_event_last_output_preferred_origins_only', self.output_preferred_origins_only_check.isChecked())
+        s.setValue('/plugins/qquake/fdsn_event_last_output_preferred_magnitude_only',
+                   self.output_preferred_magnitudes_only_check.isChecked())
 
     def _restore_settings(self):
         s = QgsSettings()
@@ -327,10 +353,25 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         if last_event_max_radius is not None:
             self.radius_max_spinbox.setValue(float(last_event_max_radius))
 
-        last_output_type = s.value('/plugins/qquake/fdsn_event_last_output_type')
-        if last_output_type is None:
-            last_output_type = PREFERRED
-        self.output_combo_box.setCurrentIndex(self.output_combo_box.findData(last_output_type))
+        min_time_checked = s.value('/plugins/qquake/fdsn_event_last_event_min_time_checked')
+        if min_time_checked is not None:
+            self.min_time_check.setChecked(bool(min_time_checked))
+        max_time_checked = s.value('/plugins/qquake/fdsn_event_last_event_max_time_checked')
+        if max_time_checked is not None:
+            self.max_time_check.setChecked(bool(max_time_checked))
+        min_mag_checked = s.value('/plugins/qquake/fdsn_event_last_event_min_mag_checked')
+        if min_mag_checked is not None:
+            self.min_mag_check.setChecked(bool(min_mag_checked))
+        max_mag_checked = s.value('/plugins/qquake/fdsn_event_last_event_max_mag_checked')
+        if max_mag_checked is not None:
+            self.max_mag_check.setChecked(bool(max_mag_checked))
+
+        preferred_origins_only_checked = s.value('/plugins/qquake/fdsn_event_last_output_preferred_origins_only')
+        if preferred_origins_only_checked is not None:
+            self.output_preferred_origins_only_check.setChecked(bool(preferred_origins_only_checked))
+        preferred_magnitudes_only_checked = s.value('/plugins/qquake/fdsn_event_last_output_preferred_magnitude_only')
+        if preferred_magnitudes_only_checked is not None:
+            self.output_preferred_magnitudes_only_check.setChecked(bool(preferred_magnitudes_only_checked))
 
     def draw_rect_on_map(self):
         self.previous_map_tool = self.iface.mapCanvas().mapTool()
@@ -385,10 +426,10 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         Returns a quake fetcher corresponding to the current dialog settings
         """
         return Fetcher(event_service=self.fdsn_event_list.currentItem().text(),
-                       event_start_date=self.fdsn_event_start_date.dateTime(),
-                       event_end_date=self.fdsn_event_end_date.dateTime(),
-                       event_min_magnitude=self.fdsn_event_min_magnitude.value(),
-                       event_max_magnitude=self.fdsn_event_max_magnitude.value(),
+                       event_start_date=self.fdsn_event_start_date.dateTime() if self.min_time_check.isChecked() else None,
+                       event_end_date=self.fdsn_event_end_date.dateTime() if self.max_time_check.isChecked() else None,
+                       event_min_magnitude=self.fdsn_event_min_magnitude.value() if self.min_mag_check.isChecked() else None,
+                       event_max_magnitude=self.fdsn_event_max_magnitude.value() if self.max_mag_check.isChecked() else None,
                        limit_extent_rect=self.limit_extent_checkbox.isChecked() and self.radio_rectangular_area.isChecked(),
                        min_latitude=self.lat_min_spinbox.value() if self.lat_min_checkbox.isChecked() else None,
                        max_latitude=self.lat_max_spinbox.value() if self.lat_max_checkbox.isChecked() else None,
@@ -430,6 +471,18 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.fdsn_event_start_date.setMinimumDateTime(datestart)
         self.fdsn_event_start_date.setMaximumDateTime(dateend)
         self.fdsn_event_start_date.setDateTime(datestart)
+
+        if datestart.isValid():
+            self.min_time_check.setText(
+                self.tr("Start (from {})").format(datestart.toString('yyyy-MM-dd')))
+        else:
+            self.min_time_check.setText(self.tr("Start"))
+
+        if dateend.isValid():
+            self.max_time_check.setText(
+                self.tr("End (until {})").format(dateend.toString('yyyy-MM-dd')))
+        else:
+            self.max_time_check.setText(self.tr("End"))
 
         # set DateTime Widget END according to the listWidget choice
         self.fdsn_event_end_date.setMinimumDateTime(datestart)
@@ -521,11 +574,37 @@ class QQuakeDialog(QDialog, FORM_CLASS):
 
         layers = []
         layers.append(self.fetcher.create_event_layer())
-        if self.output_combo_box.currentData() == ALL:
+        events_count = layers[0].featureCount()
+        if not self.output_preferred_origins_only_check.isChecked():
             layers.append(self.fetcher.create_origin_layer())
+        if not self.output_preferred_magnitudes_only_check.isChecked():
             layers.append(self.fetcher.create_magnitude_layer())
+
+        max_feature_count = 0
+        for l in layers:
+            max_feature_count = max(max_feature_count, l.featureCount())
+
+        service_limit = self.fetcher.service_config['settings'].get('querylimitmaxentries', None)
+        self.message_bar.clearWidgets()
+        if service_limit is not None and max_feature_count >= service_limit:
+            self.message_bar.pushMessage(self.tr("Query exceeded the service's result limit"), Qgis.Critical, 0)
+        elif max_feature_count > 500:
+            self.message_bar.pushMessage(
+                self.tr("Query returned a large number of results ({})".format(max_feature_count)), Qgis.Warning, 0)
+        elif max_feature_count == 0:
+            self.message_bar.pushMessage(
+                self.tr("Query returned no results - possibly parameters are invalid for this service"), Qgis.Critical, 0)
+        else:
+            self.message_bar.pushMessage(
+                self.tr("Query returned {} events").format(events_count), Qgis.Info, 0)
 
         self.fetcher.deleteLater()
         self.fetcher = None
 
-        QgsProject.instance().addMapLayers(layers)
+        if max_feature_count > 0:
+            QgsProject.instance().addMapLayers(layers)
+
+    def _output_table_options(self):
+        dlg = OutputTableOptionsDialog(self)
+        if dlg.exec_():
+            pass

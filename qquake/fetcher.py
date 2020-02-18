@@ -71,7 +71,6 @@ class Fetcher(QObject):
                  circle_longitude=None,
                  circle_min_radius=None,
                  circle_max_radius=None,
-                 limit=1000,
                  parent=None
                  ):
         super().__init__(parent=parent)
@@ -92,16 +91,14 @@ class Fetcher(QObject):
         self.circle_min_radius = circle_min_radius
         self.circle_max_radius = circle_max_radius
 
-        self.limit = limit
-
         self.result = None
+
+        self.service_config = CONFIG_SERVICES['fdsnevent'][self.event_service]
 
     def generate_url(self, format='text'):
         """
         Returns the URL request for the query
         """
-        service = CONFIG_SERVICES['fdsnevent'][self.event_service]['endpointurl']
-
         query = []
         # append to the string the parameter of the UI (starttime, endtime, etc)
         if self.event_start_date is not None and self.event_start_date.isValid():
@@ -134,12 +131,11 @@ class Fetcher(QObject):
             if self.circle_max_radius is not None:
                 query.append('maxradius={}'.format(self.circle_max_radius))
 
-        if self.limit:
-            query.append('limit={}'.format(self.limit))
+        query.append('limit={}'.format(self.service_config['settings']['querylimitmaxentries']))
 
         query.append('format={}'.format(format))
 
-        return service + '&'.join(query)
+        return self.service_config['endpointurl'] + '&'.join(query)
 
     def fetch_data(self):
         """
