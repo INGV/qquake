@@ -306,7 +306,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
             try:
                 self.fdsn_event_list.setCurrentItem(
                     self.fdsn_event_list.findItems(last_service, Qt.MatchContains)[0])
-            except:
+            except IndexError:
                 pass
         last_event_start_date = s.value('/plugins/qquake/fdsn_event_last_event_start_date')
         if last_event_start_date is not None:
