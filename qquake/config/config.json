@@ -399,7 +399,8 @@
       "boundingbox": [],
       "default": {
         "boundingboxpredefined": "europe",
-        "style": "stations"
+        "style": "stations",
+        "format": "text"
       },
       "settings": {
         "querystartbefore": true,
@@ -437,7 +438,8 @@
       "boundingbox": [],
       "default": {
         "boundingboxpredefined": "italy",
-        "style": "stations"
+        "style": "stations",
+        "format": "text"
       },
       "settings": {
         "querystartbefore": true,
