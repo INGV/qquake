@@ -34,7 +34,7 @@
           "type": "String"
         },
         {
-          "field": "prefmechan",
+          "field": "preffcid",
           "source": "eventParameters>event>preferredFocalMechanismID",
           "description": "",
           "type": "String"
@@ -600,49 +600,49 @@
           "type": "String"
         },
         {
-          "field": "origtx",
+          "field": "origcm",
           "source": "eventParameters>event>origin>comment>text",
           "description": "",
           "skip": true,
           "type": "String"
         },
         {
-          "field": "origtxagid",
+          "field": "origcmagid",
           "source": "eventParameters>event>origin>comment>creationInfo>agencyID",
           "description": "",
           "skip": true,
           "type": "String"
         },
         {
-          "field": "origtxagur",
+          "field": "origcmagur",
           "source": "eventParameters>event>origin>comment>creationInfo>agencyURI",
           "description": "",
           "skip": true,
           "type": "String"
         },
         {
-          "field": "origtxaut",
+          "field": "origcmaut",
           "source": "eventParameters>event>origin>comment>creationInfo>author",
           "description": "",
           "skip": true,
           "type": "String"
         },
         {
-          "field": "origtxautu",
+          "field": "origcmautu",
           "source": "eventParameters>event>origin>comment>creationInfo>authorURI",
           "description": "",
           "skip": true,
           "type": "String"
         },
         {
-          "field": "origtxtime",
+          "field": "origcmtime",
           "source": "eventParameters>event>origin>comment>creationInfo>creationTime",
           "description": "",
           "skip": true,
           "type": "String"
         },
         {
-          "field": "origtxver",
+          "field": "origcmver",
           "source": "eventParameters>event>origin>comment>creationInfo>version",
           "description": "",
           "skip": true,
@@ -747,7 +747,7 @@
           "type": "Double"
         },
         {
-          "field": "magup",
+          "field": "maguncup",
           "source": "eventParameters>event>magnitude>mag>upperUncertainty",
           "description": "",
           "type": "Double"
@@ -789,7 +789,7 @@
           "type": "String"
         },
         {
-          "field": "magcmtx",
+          "field": "magcm",
           "source": "eventParameters>event>magnitude>comment>text",
           "description": "",
           "skip": true,
@@ -874,8 +874,701 @@
           "type": "String"
         }
       ]
+    },
+    "amplitude": {
+      "label": "amplitude",
+      "fields": [
+        {
+          "field": "ampid",
+          "source": "eventParameters>event>amplitude§publicID",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "ampmethod",
+          "source": "eventParameters>event>amplitude>methodID",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "amppickid",
+          "source": "eventParameters>event>amplitude>pickID",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "ampfiltid",
+          "source": "eventParameters>event>amplitude>filterID",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "ampwavnet",
+          "source": "eventParameters>event>amplitude>waveformID§networkCode",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "ampwavstat",
+          "source": "eventParameters>event>amplitude>waveformID§stationCode",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "ampwavchan",
+          "source": "eventParameters>event>amplitude>waveformID§channelCode",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "ampwavloc",
+          "source": "eventParameters>event>amplitude>waveformID§locationCode",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "ampwavid",
+          "source": "eventParameters>event>amplitude>waveformID",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "ampgen",
+          "source": "eventParameters>event>amplitude>genericAmplitude>value",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "ampgenunc",
+          "source": "eventParameters>event>amplitude>genericAmplitude>uncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "ampgenuncl",
+          "source": "eventParameters>event>amplitude>genericAmplitude>lowerUncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "ampgenuncu",
+          "source": "eventParameters>event>amplitude>genericAmplitude>upperUncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "ampgenconf",
+          "source": "eventParameters>event>amplitude>genericAmplitude>confidenceLevel",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "amptype",
+          "source": "eventParameters>event>amplitude>type",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "ampcat",
+          "source": "eventParameters>event>amplitude>category",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "ampunit",
+          "source": "eventParameters>event>amplitude>unit",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "ampper",
+          "source": "eventParameters>event>amplitude>period>value",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "ampperunc",
+          "source": "eventParameters>event>amplitude>period>uncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "ampperlo",
+          "source": "eventParameters>event>amplitude>period>lowerUncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "ampperup",
+          "source": "eventParameters>event>amplitude>period>upperUncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "ampperconf",
+          "source": "eventParameters>event>amplitude>period>confidenceLevel",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "ampsnr",
+          "source": "eventParameters>event>amplitude>snr",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "ampbegin",
+          "source": "eventParameters>event>amplitude>timeWindow>begin",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "ampend",
+          "source": "eventParameters>event>amplitude>timeWindow>end",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "amptimeref",
+          "source": "eventParameters>event>amplitude>timeWindow>reference",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "ampscltm",
+          "source": "eventParameters>event>amplitude>scalingTime>value",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "ampscltmun",
+          "source": "eventParameters>event>amplitude>scalingTime>uncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "ampscltmlo",
+          "source": "eventParameters>event>amplitude>scalingTime>lowerUncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "ampscltmup",
+          "source": "eventParameters>event>amplitude>scalingTime>upperUncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "ampsclconf",
+          "source": "eventParameters>event>amplitude>scalingTime>confidenceLevel",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "ampmaghint",
+          "source": "eventParameters>event>amplitude>magnitudeHint",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "ampevalmod",
+          "source": "eventParameters>event>amplitude>evaluationMode",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "ampevalsta",
+          "source": "eventParameters>event>amplitude>evaluationStatus",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "ampcm",
+          "source": "eventParameters>event>amplitude>comment>text",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "ampcmagid",
+          "source": "eventParameters>event>amplitude>comment>creationInfo>agencyID",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "ampcmaguri",
+          "source": "eventParameters>event>amplitude>comment>creationInfo>agencyURI",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "ampcmau",
+          "source": "eventParameters>event>amplitude>comment>creationInfo>author",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "ampcmauri",
+          "source": "eventParameters>event>amplitude>comment>creationInfo>authorURI",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "ampcmtime",
+          "source": "eventParameters>event>amplitude>comment>creationInfo>creationTime",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "ampcmver",
+          "source": "eventParameters>event>amplitude>comment>creationInfo>version",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "ampcragid",
+          "source": "eventParameters>event>amplitude>creationInfo>agencyID",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "ampcraguri",
+          "source": "eventParameters>event>amplitude>creationInfo>agencyURI",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "ampcrau",
+          "source": "eventParameters>event>amplitude>creationInfo>author",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "ampcrauri",
+          "source": "eventParameters>event>amplitude>creationInfo>authorURI",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "ampcrtime",
+          "source": "eventParameters>event>amplitude>creationInfo>creationTime",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "ampcrver",
+          "source": "eventParameters>event>amplitude>creationInfo>version",
+          "description": "",
+          "type": "String"
+        }
+      ]
+    },
+    "pick": {
+      "label": "pick",
+      "fields": [
+        {
+          "field": "pkid",
+          "source": "eventParameters>event>pick§publicID",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "pkmethod",
+          "source": "eventParameters>event>pick>methodID",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "pkwavnet",
+          "source": "eventParameters>event>pick>waveformID§networkCode",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "pkwavstat",
+          "source": "eventParameters>event>pick>waveformID§stationCode",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "pkwavchan",
+          "source": "eventParameters>event>pick>waveformID§channelCode",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "pkwavloc",
+          "source": "eventParameters>event>pick>waveformID§locationCode",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "pkwavid",
+          "source": "eventParameters>event>pick>waveformID",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "pkfiltid",
+          "source": "eventParameters>event>pick>filterID",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "pkslmethod",
+          "source": "eventParameters>event>pick>slownessMethodID",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "pktime",
+          "source": "eventParameters>event>pick>time>value",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "pktimeunc",
+          "source": "eventParameters>event>pick>time>uncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "pktimelo",
+          "source": "eventParameters>event>pick>time>lowerUncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "pktimeup",
+          "source": "eventParameters>event>pick>time>upperUncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "pktimeconf",
+          "source": "eventParameters>event>pick>time>confidenceLevel",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "pkhslo",
+          "source": "eventParameters>event>pick>horizontalSlowness>value",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "pkhslounc",
+          "source": "eventParameters>event>pick>horizontalSlowness>uncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "pkhslolo",
+          "source": "eventParameters>event>pick>horizontalSlowness>lowerUncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "pkhsloup",
+          "source": "eventParameters>event>pick>horizontalSlowness>upperUncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "pkhconf",
+          "source": "eventParameters>event>pick>horizontalSlowness>confidenceLevel",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "pkbkaz",
+          "source": "eventParameters>event>pick>backazimuth>value",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "pkbkazunc",
+          "source": "eventParameters>event>pick>backazimuth>uncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "pkbkazlo",
+          "source": "eventParameters>event>pick>backazimuth>lowerUncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "pkbkazup",
+          "source": "eventParameters>event>pick>backazimuth>upperUncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "pkbkazconf",
+          "source": "eventParameters>event>pick>backazimuth>confidenceLevel",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "pkonset",
+          "source": "eventParameters>event>pick>onset",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "pkphhint",
+          "source": "eventParameters>event>pick>phaseHint",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "pkpolar",
+          "source": "eventParameters>event>pick>polarity",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "pkevalmod",
+          "source": "eventParameters>event>pick>evaluationMode",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "pkevalsta",
+          "source": "eventParameters>event>pick>evaluationStatus",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "pkcmcm",
+          "source": "eventParameters>event>pick>comment>text",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "pkcmagid",
+          "source": "eventParameters>event>pick>comment>creationInfo>agencyID",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "pkcmaguri",
+          "source": "eventParameters>event>pick>comment>creationInfo>agencyURI",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "pkcmau",
+          "source": "eventParameters>event>pick>comment>creationInfo>author",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "pkcmauri",
+          "source": "eventParameters>event>pick>comment>creationInfo>authorURI",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "pkcmtime",
+          "source": "eventParameters>event>pick>comment>creationInfo>creationTime",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "pkcmver",
+          "source": "eventParameters>event>pick>comment>creationInfo>version",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "pkcragid",
+          "source": "eventParameters>event>pick>creationInfo>agencyID",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "pkcraguri",
+          "source": "eventParameters>event>pick>creationInfo>agencyURI",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "pkcrau",
+          "source": "eventParameters>event>pick>creationInfo>author",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "pkcrauri",
+          "source": "eventParameters>event>pick>creationInfo>authorURI",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "pkcrtime",
+          "source": "eventParameters>event>pick>creationInfo>creationTime",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "pkcrver",
+          "source": "eventParameters>event>pick>creationInfo>version",
+          "description": "",
+          "type": "String"
+        }
+      ]
+    },
+    "station_magnitude": {
+      "label": "station magnitude",
+      "fields": [
+        {
+          "field": "stmid",
+          "source": "eventParameters>event>stationMagnitude§publicID",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "stmorigid",
+          "source": "eventParameters>event>stationMagnitude>originID",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "stm",
+          "source": "eventParameters>event>stationMagnitude>mag>value",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "stmunc",
+          "source": "eventParameters>event>stationMagnitude>mag>uncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "stmunclo",
+          "source": "eventParameters>event>stationMagnitude>mag>lowerUncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "stmuncup",
+          "source": "eventParameters>event>stationMagnitude>mag>upperUncertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "stmconf",
+          "source": "eventParameters>event>stationMagnitude>mag>confidenceLevel",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "stmtype",
+          "source": "eventParameters>event>stationMagnitude>type",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "stmampid",
+          "source": "eventParameters>event>stationMagnitude>amplitudeID",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "stmmethod",
+          "source": "eventParameters>event>stationMagnitude>methodID",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "stmwavid",
+          "source": "eventParameters>event>stationMagnitude>waveformID",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "stmcm",
+          "source": "eventParameters>event>stationMagnitude>comment>text",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "stmcmagid",
+          "source": "eventParameters>event>stationMagnitude>comment>creationInfo>agencyID",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "stmcmaguri",
+          "source": "eventParameters>event>stationMagnitude>comment>creationInfo>agencyURI",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "stmcmau",
+          "source": "eventParameters>event>stationMagnitude>comment>creationInfo>author",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "stmcmauri",
+          "source": "eventParameters>event>stationMagnitude>comment>creationInfo>authorURI",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "stmcmtime",
+          "source": "eventParameters>event>stationMagnitude>comment>creationInfo>creationTime",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "stmcmver",
+          "source": "eventParameters>event>stationMagnitude>comment>creationInfo>version",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "stmcragid",
+          "source": "eventParameters>event>stationMagnitude>creationInfo>agencyID",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "stmcraguri",
+          "source": "eventParameters>event>stationMagnitude>creationInfo>agencyURI",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "stmcrau",
+          "source": "eventParameters>event>stationMagnitude>creationInfo>author",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "stmcrauri",
+          "source": "eventParameters>event>stationMagnitude>creationInfo>authorURI",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "stmcrtime",
+          "source": "eventParameters>event>stationMagnitude>creationInfo>creationTime",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "stmcrver",
+          "source": "eventParameters>event>stationMagnitude>creationInfo>version",
+          "description": "",
+          "type": "String"
+        }
+      ]
     }
   },
-  "configversion": 0.1,
-  "configlastupdate": "2020-01-30T16:50:27+00:00"
+  "configversion": 0.2,
+  "configlastupdate": "2020-02-21T17:50:27+00:00"
 }
