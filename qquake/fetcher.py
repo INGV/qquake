@@ -35,9 +35,6 @@ from qquake.quakeml_parser import (
     Origin,
     Magnitude
 )
-from qquake.qquake_defs import (
-    fdsn_events_capabilities,
-)
 
 CONFIG_SERVICES_PATH = os.path.join(
     os.path.dirname(__file__),
@@ -56,7 +53,8 @@ class Fetcher(QObject):
     progress = pyqtSignal(float)
     finished = pyqtSignal()
 
-    def __init__(self, event_service,
+    def __init__(self, service_type,
+                 event_service,
                  event_start_date=None,
                  event_end_date=None,
                  event_min_magnitude=None,
@@ -71,10 +69,16 @@ class Fetcher(QObject):
                  circle_longitude=None,
                  circle_min_radius=None,
                  circle_max_radius=None,
-                 parent=None
+                 earthquake_number_mdps_greater=None,
+                 earthquake_max_intensity_greater=None,
+                 parent=None,
+                 output_origins=True,
+                 output_magnitudes=True,
+                 output_mdps=True
                  ):
         super().__init__(parent=parent)
 
+        self.service_type = service_type
         self.event_service = event_service
         self.event_start_date = event_start_date
         self.event_end_date = event_end_date
@@ -90,10 +94,16 @@ class Fetcher(QObject):
         self.circle_longitude = circle_longitude
         self.circle_min_radius = circle_min_radius
         self.circle_max_radius = circle_max_radius
+        self.earthquake_number_mdps_greater = earthquake_number_mdps_greater
+        self.earthquake_max_intensity_greater = earthquake_max_intensity_greater
+
+        self.output_origins = output_origins
+        self.output_magnitudes = output_magnitudes
+        self.output_mdps = output_mdps and self.service_type == 'macroseismic'
 
         self.result = None
 
-        self.service_config = CONFIG_SERVICES['fdsnevent'][self.event_service]
+        self.service_config = CONFIG_SERVICES[self.service_type][self.event_service]
 
     def generate_url(self, format='text'):
         """
@@ -123,13 +133,21 @@ class Fetcher(QObject):
             if self.max_longitude is not None:
                 query.append('maxlongitude={}'.format(self.max_longitude))
         elif self.limit_extent_circle and self.circle_latitude is not None and self.circle_longitude is not None and \
-            (self.circle_min_radius is not None or self.circle_max_radius is not None):
+                (self.circle_min_radius is not None or self.circle_max_radius is not None):
             query.append('latitude={}'.format(self.circle_latitude))
             query.append('longitude={}'.format(self.circle_longitude))
             if self.circle_min_radius is not None:
                 query.append('minradius={}'.format(self.circle_min_radius))
             if self.circle_max_radius is not None:
                 query.append('maxradius={}'.format(self.circle_max_radius))
+
+        if self.earthquake_number_mdps_greater is not None:
+            query.append('xxxxxxx={}'.format(self.earthquake_number_mdps_greater))
+            assert False, 'Matteo can you fix the above line?'
+
+        if self.earthquake_max_intensity_greater is not None:
+            query.append('yyyyyy={}'.format(self.earthquake_max_intensity_greater))
+            assert False, 'Matteo can you fix the above line?'
 
         query.append('limit={}'.format(self.service_config['settings']['querylimitmaxentries']))
 
