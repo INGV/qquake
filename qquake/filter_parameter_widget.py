@@ -410,3 +410,9 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
 
     def circle_max_radius(self):
         return self.radius_max_spinbox.value() if self.radius_max_checkbox.isChecked() else None
+
+    def output_preferred_magnitudes_only(self):
+        return self.output_preferred_magnitudes_only_check.isChecked()
+
+    def output_preferred_origins_only(self):
+        return self.output_preferred_origins_only_check.isChecked()

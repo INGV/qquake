@@ -35,9 +35,6 @@ from qquake.quakeml_parser import (
     Origin,
     Magnitude
 )
-from qquake.qquake_defs import (
-    fdsn_events_capabilities,
-)
 
 CONFIG_SERVICES_PATH = os.path.join(
     os.path.dirname(__file__),
@@ -56,7 +53,8 @@ class Fetcher(QObject):
     progress = pyqtSignal(float)
     finished = pyqtSignal()
 
-    def __init__(self, event_service,
+    def __init__(self, service_type,
+                 event_service,
                  event_start_date=None,
                  event_end_date=None,
                  event_min_magnitude=None,
@@ -71,10 +69,13 @@ class Fetcher(QObject):
                  circle_longitude=None,
                  circle_min_radius=None,
                  circle_max_radius=None,
-                 parent=None
+                 parent=None,
+                 output_origins=True,
+                 output_magnitudes=True
                  ):
         super().__init__(parent=parent)
 
+        self.service_type = service_type
         self.event_service = event_service
         self.event_start_date = event_start_date
         self.event_end_date = event_end_date
@@ -90,10 +91,12 @@ class Fetcher(QObject):
         self.circle_longitude = circle_longitude
         self.circle_min_radius = circle_min_radius
         self.circle_max_radius = circle_max_radius
+        self.output_origins = output_origins
+        self.output_magnitudes = output_magnitudes
 
         self.result = None
 
-        self.service_config = CONFIG_SERVICES['fdsnevent'][self.event_service]
+        self.service_config = CONFIG_SERVICES[self.service_type][self.event_service]
 
     def generate_url(self, format='text'):
         """

@@ -60,7 +60,7 @@
         </widget>
        </item>
        <item row="1" column="0" colspan="2">
-        <widget class="QTextBrowser" name="url_text_browser">
+        <widget class="QTextBrowser" name="fsdn_event_url_text_browser">
          <property name="frameShape">
           <enum>QFrame::NoFrame</enum>
          </property>

@@ -86,7 +86,9 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.message_bar.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         self.verticalLayout.insertWidget(0, self.message_bar)
 
-        self.url_text_browser.viewport().setAutoFillBackground(False)
+        self.fsdn_event_url_text_browser.viewport().setAutoFillBackground(False)
+        self.fdsn_macro_url_text_browser.viewport().setAutoFillBackground(False)
+
         self.button_box.button(QDialogButtonBox.Ok).setText(self.tr('Fetch Data'))
         self.button_box.rejected.connect(self._save_settings)
 
@@ -118,9 +120,10 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.fdsn_macro_list.currentRowChanged.connect(
             self.refreshFdsnMacroseismicWidgets)
 
-        self.fsdn_event_filter.changed.connect(self._refresh_url)
-        self.fdsn_event_list.currentRowChanged.connect(self._refresh_url)
-        self.fdsn_macro_list.currentRowChanged.connect(self._refresh_url)
+        self.fsdn_event_filter.changed.connect(lambda: self._refresh_url('fdsnevent'))
+        self.fdsn_event_list.currentRowChanged.connect(lambda: self._refresh_url('fdsnevent'))
+        self.macro_filter.changed.connect(lambda: self._refresh_url('macroseismic'))
+        self.fdsn_macro_list.currentRowChanged.connect(lambda: self._refresh_url('macroseismic'))
 
         self.button_box.accepted.connect(self._getEventList)
 
@@ -129,7 +132,8 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         QgsGui.enableAutoGeometryRestore(self)
 
         self._restore_settings()
-        self._refresh_url()
+        self._refresh_url('fdsnevent')
+        self._refresh_url('macroseismic')
 
     def closeEvent(self, e):
         self._save_settings()
@@ -164,30 +168,51 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.fsdn_event_filter.restore_settings('fsdn_event')
         self.macro_filter.restore_settings('macro')
 
-    def get_fetcher(self):
+    def get_fetcher(self, service_type=None):
         """
         Returns a quake fetcher corresponding to the current dialog settings
         """
-        return Fetcher(event_service=self.fdsn_event_list.currentItem().text(),
-                       event_start_date=self.fsdn_event_filter.start_date(),
-                       event_end_date=self.fsdn_event_filter.end_date(),
-                       event_min_magnitude=self.fsdn_event_filter.min_magnitude(),
-                       event_max_magnitude=self.fsdn_event_filter.max_magnitude(),
-                       limit_extent_rect=self.fsdn_event_filter.extent_rect(),
-                       min_latitude=self.fsdn_event_filter.min_latitude(),
-                       max_latitude=self.fsdn_event_filter.max_latitude(),
-                       min_longitude=self.fsdn_event_filter.min_longitude(),
-                       max_longitude=self.fsdn_event_filter.max_longitude(),
-                       limit_extent_circle=self.fsdn_event_filter.limit_extent_circle(),
-                       circle_latitude=self.fsdn_event_filter.circle_latitude(),
-                       circle_longitude=self.fsdn_event_filter.circle_longitude(),
-                       circle_min_radius=self.fsdn_event_filter.circle_min_radius(),
-                       circle_max_radius=self.fsdn_event_filter.circle_max_radius(),
+
+        if service_type is None:
+            if self.service_tab_widget.currentIndex() == 0:
+                service_type = 'fdsnevent'
+            elif self.service_tab_widget.currentIndex() == 1:
+                service_type = 'macroseismic'
+
+        if service_type == 'fdsnevent':
+             service = self.fdsn_event_list.currentItem().text()
+             filter_widget = self.fsdn_event_filter
+        elif service_type == 'macroseismic':
+             service = self.fdsn_macro_list.currentItem().text()
+             filter_widget = self.macro_filter
+
+        return Fetcher(service_type=service_type,
+                       event_service=service,
+                       event_start_date=filter_widget.start_date(),
+                       event_end_date=filter_widget.end_date(),
+                       event_min_magnitude=filter_widget.min_magnitude(),
+                       event_max_magnitude=filter_widget.max_magnitude(),
+                       limit_extent_rect=filter_widget.extent_rect(),
+                       min_latitude=filter_widget.min_latitude(),
+                       max_latitude=filter_widget.max_latitude(),
+                       min_longitude=filter_widget.min_longitude(),
+                       max_longitude=filter_widget.max_longitude(),
+                       limit_extent_circle=filter_widget.limit_extent_circle(),
+                       circle_latitude=filter_widget.circle_latitude(),
+                       circle_longitude=filter_widget.circle_longitude(),
+                       circle_min_radius=filter_widget.circle_min_radius(),
+                       circle_max_radius=filter_widget.circle_max_radius(),
+                       output_magnitudes=not filter_widget.output_preferred_magnitudes_only(),
+                       output_origins=not filter_widget.output_preferred_origins_only(),
                        )
 
-    def _refresh_url(self):
-        fetcher = self.get_fetcher()
-        self.url_text_browser.setText('<a href="{0}">{0}</a>'.format(fetcher.generate_url()))
+    def _refresh_url(self, service_type):
+        fetcher = self.get_fetcher(service_type)
+
+        if service_type == 'fdsnevent':
+             self.fsdn_event_url_text_browser.setText('<a href="{0}">{0}</a>'.format(fetcher.generate_url()))
+        elif service_type == 'macroseismic':
+             self.fdsn_macro_url_text_browser.setText('<a href="{0}">{0}</a>'.format(fetcher.generate_url()))
 
     def refreshFdsnEventWidgets(self):
         """
@@ -277,9 +302,9 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         layers = []
         layers.append(self.fetcher.create_event_layer())
         events_count = layers[0].featureCount()
-        if not self.output_preferred_origins_only_check.isChecked():
+        if self.fetcher.output_origins:
             layers.append(self.fetcher.create_origin_layer())
-        if not self.output_preferred_magnitudes_only_check.isChecked():
+        if self.fetcher.output_magnitudes:
             layers.append(self.fetcher.create_magnitude_layer())
 
         max_feature_count = 0
