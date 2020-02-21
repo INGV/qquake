@@ -1,229 +1,226 @@
 {
   "fdsnevent": {
-    "AHEAD/SHEEC":
-      {
-        "title": "AHEAD, European Archive of Historical EArthquake Data (pre 1900)",
-        "info": "Albini P., Locati M., Rovida A., Stucchi M. (2013). European Archive of Historical EArthquake Data (AHEAD). Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.6092/INGV.IT-AHEAD",
-        "infourl": "https://doi.org/10.6092/INGV.IT-AHEAD",
-        "help": "https://www.emidius.eu/AHEAD/services/",
-        "datalicense": "custom",
-        "datalicenseurl": "https://www.emidius.eu/AHEAD/introduction.php#copyright",
-        "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
-        "dataproviderurl": "http://www.ingv.it",
-        "endpointurl": "https://www.emidius.eu/fdsnws/event/1/query?",
+    "AHEAD/SHEEC": {
+      "title": "AHEAD, European Archive of Historical EArthquake Data (pre 1900)",
+      "info": "Albini P., Locati M., Rovida A., Stucchi M. (2013). European Archive of Historical EArthquake Data (AHEAD). Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.6092/INGV.IT-AHEAD",
+      "infourl": "https://doi.org/10.6092/INGV.IT-AHEAD",
+      "help": "https://www.emidius.eu/AHEAD/services/",
+      "datalicense": "custom",
+      "datalicenseurl": "https://www.emidius.eu/AHEAD/introduction.php#copyright",
+      "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+      "dataproviderurl": "http://www.ingv.it",
+      "endpointurl": "https://www.emidius.eu/fdsnws/event/1/query?",
+      "datestart": "1000-01-01T01:01:01+00:00",
+      "dateend": "1899-12-31T23:59:59+00:00",
+      "boundingbox": [
+        32,
+        75,
+        -33,
+        32
+      ],
+      "default": {
         "datestart": "1000-01-01T01:01:01+00:00",
         "dateend": "1899-12-31T23:59:59+00:00",
-        "boundingbox": [
-          32,
-          75,
-          -33,
-          32
-        ],
-        "default": {
-          "datestart": "1000-01-01T01:01:01+00:00",
-          "dateend": "1899-12-31T23:59:59+00:00",
-          "boundingboxpredefined": "europe",
-          "style":"CPTI",
-          "fields":[
-            "eventid",
-            "eventcragi",
-            "eventcragu",
-            "eventcrau",
-            "eventcrauu",
-            "originid",
-            "origcragid",
-            "origcragur",
-            "origcrau",
-            "origcrauur",
-            "year",
-            "month",
-            "day",
-            "hour",
-            "min",
-            "sec",
-            "region",
-            "lat",
-            "lon",
-            "magid",
-            "magcragid",
-            "magcraguri",
-            "magcrau",
-            "magcrauri",
-            "mag",
-            "magunc"
-            ]
-        },
-        "settings":{
-          "queryeventid": true,
-          "queryoriginid": false,
-          "querymagnitudeid": false,
-          "queryfocalmechanismid": false,
-          "queryupdatedafter": false,
-          "querycatalog": true,
-          "querycontributor": true,
-          "querycontributorid": true,
-          "queryeventtype": false,
-          "querymagnitudetype": false,
-          "queryincludeallorigins": true,
-          "queryincludeallmagnitudes": true,
-          "queryincludearrivals": false,
-          "queryincludeallstationsmagnitudes": false,
-          "querylimit": true,
-          "querylimitmaxentries": 5000,
-          "querycircular": true,
-          "querycircularradiuskm": true,
-          "querydepth": false,
-          "outputtext": true,
-          "outputxml": true,
-          "outputgeojson": true,
-          "outputjson": true,
-          "outputkml": false,
-          "outputxlsx": false,
-          "httpcodenodata": "204"
-        },
-        "configversion": 0.1,
-        "configlastupdate": "2020-01-31T11:37:27+00:00"
+        "boundingboxpredefined": "europe",
+        "style": "CPTI",
+        "fields": [
+          "eventid",
+          "eventcragi",
+          "eventcragu",
+          "eventcrau",
+          "eventcrauu",
+          "originid",
+          "origcragid",
+          "origcragur",
+          "origcrau",
+          "origcrauur",
+          "year",
+          "month",
+          "day",
+          "hour",
+          "min",
+          "sec",
+          "region",
+          "lat",
+          "lon",
+          "magid",
+          "magcragid",
+          "magcraguri",
+          "magcrau",
+          "magcrauri",
+          "mag",
+          "magunc"
+        ]
       },
-    "INGV ASMI/CPTI":
-      {
-        "title": "ASMI, Archivio Storico Macrosismico Italiano (INGV)",
-        "info": "Rovida A., Locati M., Antonucci A., Camassi R. (2017). Archivio Storico Macrosismico Italiano (ASMI). Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/ASMI",
-        "infourl": "https://doi.org/10.13127/ASMI",
-        "help": "https://emidius.mi.ingv.it/ASMI/services/",
-        "datalicense": "CC BY-SA 4.0",
-        "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
-        "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
-        "dataproviderurl": "http://www.ingv.it",
-        "endpointurl": "https://emidius.mi.ingv.it/fdsnws/event/1/query?",
+      "settings": {
+        "queryeventid": true,
+        "queryoriginid": false,
+        "querymagnitudeid": false,
+        "queryfocalmechanismid": false,
+        "queryupdatedafter": false,
+        "querycatalog": true,
+        "querycontributor": true,
+        "querycontributorid": true,
+        "queryeventtype": false,
+        "querymagnitudetype": false,
+        "queryincludeallorigins": true,
+        "queryincludeallmagnitudes": true,
+        "queryincludearrivals": false,
+        "queryincludeallstationsmagnitudes": false,
+        "querylimit": true,
+        "querylimitmaxentries": 5000,
+        "querycircular": true,
+        "querycircularradiuskm": true,
+        "querydepth": false,
+        "outputtext": true,
+        "outputxml": true,
+        "outputgeojson": true,
+        "outputjson": true,
+        "outputkml": false,
+        "outputxlsx": false,
+        "httpcodenodata": "204"
+      },
+      "configversion": 0.1,
+      "configlastupdate": "2020-01-31T11:37:27+00:00"
+    },
+    "INGV ASMI/CPTI": {
+      "title": "ASMI, Archivio Storico Macrosismico Italiano (INGV)",
+      "info": "Rovida A., Locati M., Antonucci A., Camassi R. (2017). Archivio Storico Macrosismico Italiano (ASMI). Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/ASMI",
+      "infourl": "https://doi.org/10.13127/ASMI",
+      "help": "https://emidius.mi.ingv.it/ASMI/services/",
+      "datalicense": "CC BY-SA 4.0",
+      "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+      "dataproviderurl": "http://www.ingv.it",
+      "endpointurl": "https://emidius.mi.ingv.it/fdsnws/event/1/query?",
+      "datestart": "1000-01-01T01:01:01+00:00",
+      "dateend": "2017-12-31T23:59:59+00:00",
+      "boundingbox": [
+        35,
+        48,
+        5,
+        21
+      ],
+      "default": {
         "datestart": "1000-01-01T01:01:01+00:00",
         "dateend": "2017-12-31T23:59:59+00:00",
-        "boundingbox": [
-          35,
-          48,
-          5,
-          21
-        ],
-        "default": {
-          "datestart": "1000-01-01T01:01:01+00:00",
-          "dateend": "2017-12-31T23:59:59+00:00",
-          "boundingboxpredefined": "italy",
-          "style":"CPTI",
-          "fields":[
-            "eventid",
-            "eventcragi",
-            "eventcragu",
-            "eventcrau",
-            "eventcrauu",
-            "originid",
-            "origcragid",
-            "origcragur",
-            "origcrau",
-            "origcrauur",
-            "year",
-            "month",
-            "day",
-            "hour",
-            "min",
-            "sec",
-            "region",
-            "lat",
-            "lon",
-            "depth",
-            "magid",
-            "magcragid",
-            "magcraguri",
-            "magcrau",
-            "magcrauri",
-            "mag",
-            "magunc"
-            ]
-        },
-        "settings":{
-          "queryeventid": true,
-          "queryoriginid": false,
-          "querymagnitudeid": false,
-          "queryfocalmechanismid": false,
-          "queryupdatedafter": false,
-          "querycatalog": true,
-          "querycontributor": true,
-          "querycontributorid": true,
-          "queryeventtype": false,
-          "querymagnitudetype": false,
-          "queryincludeallorigins": true,
-          "queryincludeallmagnitudes": true,
-          "queryincludearrivals": false,
-          "queryincludeallstationsmagnitudes": false,
-          "querylimit": true,
-          "querylimitmaxentries": 5000,
-          "querycircular": true,
-          "querycircularradiuskm": true,
-          "querydepth": false,
-          "outputtext": true,
-          "outputxml": true,
-          "outputgeojson": true,
-          "outputjson": true,
-          "outputkml": false,
-          "outputxlsx": false,
-          "httpcodenodata": "204"
-        },
-        "configversion": 0.1,
-        "configlastupdate": "2020-01-31T11:37:27+00:00"
+        "boundingboxpredefined": "italy",
+        "style": "CPTI",
+        "fields": [
+          "eventid",
+          "eventcragi",
+          "eventcragu",
+          "eventcrau",
+          "eventcrauu",
+          "originid",
+          "origcragid",
+          "origcragur",
+          "origcrau",
+          "origcrauur",
+          "year",
+          "month",
+          "day",
+          "hour",
+          "min",
+          "sec",
+          "region",
+          "lat",
+          "lon",
+          "depth",
+          "magid",
+          "magcragid",
+          "magcraguri",
+          "magcrau",
+          "magcrauri",
+          "mag",
+          "magunc"
+        ]
       },
-    "INGV ONT/ISIDe":
-      {
-        "title": "ISIDe, Italian Seismological Instrumental and Parametric Database (INGV)",
-        "info": "ISIDe Working Group (2007). Italian Seismological Instrumental and Parametric Database (ISIDe). Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/ISIDE",
-        "infourl": "http://terremoti.ingv.it/",
-        "datalicense": "CC BY 4.0",
-        "datalicenseurl": "https://creativecommons.org/licenses/by/4.0/",
-        "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
-        "dataproviderurl": "http://www.ingv.it",
-        "endpointurl": "http://webservices.ingv.it/fdsnws/event/1/query?",
-        "datestart": "1000-01-01T01:01:01+00:00",
+      "settings": {
+        "queryeventid": true,
+        "queryoriginid": false,
+        "querymagnitudeid": false,
+        "queryfocalmechanismid": false,
+        "queryupdatedafter": false,
+        "querycatalog": true,
+        "querycontributor": true,
+        "querycontributorid": true,
+        "queryeventtype": false,
+        "querymagnitudetype": false,
+        "queryincludeallorigins": true,
+        "queryincludeallmagnitudes": true,
+        "queryincludearrivals": false,
+        "queryincludeallstationsmagnitudes": false,
+        "querylimit": true,
+        "querylimitmaxentries": 5000,
+        "querycircular": true,
+        "querycircularradiuskm": true,
+        "querydepth": false,
+        "outputtext": true,
+        "outputxml": true,
+        "outputgeojson": true,
+        "outputjson": true,
+        "outputkml": false,
+        "outputxlsx": false,
+        "httpcodenodata": "204"
+      },
+      "configversion": 0.1,
+      "configlastupdate": "2020-01-31T11:37:27+00:00"
+    },
+    "INGV ONT/ISIDe": {
+      "title": "ISIDe, Italian Seismological Instrumental and Parametric Database (INGV)",
+      "info": "ISIDe Working Group (2007). Italian Seismological Instrumental and Parametric Database (ISIDe). Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/ISIDE",
+      "infourl": "http://terremoti.ingv.it/",
+      "datalicense": "CC BY 4.0",
+      "datalicenseurl": "https://creativecommons.org/licenses/by/4.0/",
+      "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+      "dataproviderurl": "http://www.ingv.it",
+      "endpointurl": "http://webservices.ingv.it/fdsnws/event/1/query?",
+      "datestart": "1000-01-01T01:01:01+00:00",
+      "dateend": "",
+      "boundingbox": [
+        35,
+        48,
+        6,
+        19
+      ],
+      "default": {
+        "datestart": "1985-01-01T01:01:01+00:00",
         "dateend": "",
-        "boundingbox": [
-          35,
-          48,
-          6,
-          19
-        ],
-        "default": {
-          "datestart": "1985-01-01T01:01:01+00:00",
-          "dateend": "",
-          "boundingboxpredefined": "italy",
-          "style":"CPTI"
-        },
-        "settings":{
-          "queryeventid": false,
-          "queryoriginid": false,
-          "querymagnitudeid": false,
-          "queryfocalmechanismid": false,
-          "queryupdatedafter": false,
-          "querycatalog": false,
-          "querycontributor": false,
-          "querycontributorid": false,
-          "queryeventtype": false,
-          "querymagnitudetype": false,
-          "queryincludeallorigins": false,
-          "queryincludeallmagnitudes": false,
-          "queryincludearrivals": false,
-          "queryincludeallstationsmagnitudes": false,
-          "querylimit": false,
-          "querylimitmaxentries": 15000,
-          "querycircular": false,
-          "querycircularradiuskm": false,
-          "querydepth": false,
-          "outputtext": false,
-          "outputxml": false,
-          "outputgeojson": false,
-          "outputjson": false,
-          "outputkml": false,
-          "outputxlsx": false,
-          "httpcodenodata": "204"
-        },
-        "configversion": 0.1,
-        "configlastupdate": "2020-01-31T11:37:27+00:00"
+        "boundingboxpredefined": "italy",
+        "style": "CPTI"
       },
+      "settings": {
+        "queryeventid": false,
+        "queryoriginid": false,
+        "querymagnitudeid": false,
+        "queryfocalmechanismid": false,
+        "queryupdatedafter": false,
+        "querycatalog": false,
+        "querycontributor": false,
+        "querycontributorid": false,
+        "queryeventtype": false,
+        "querymagnitudetype": false,
+        "queryincludeallorigins": false,
+        "queryincludeallmagnitudes": false,
+        "queryincludearrivals": false,
+        "queryincludeallstationsmagnitudes": false,
+        "querylimit": false,
+        "querylimitmaxentries": 15000,
+        "querycircular": false,
+        "querycircularradiuskm": false,
+        "querydepth": false,
+        "outputtext": false,
+        "outputxml": false,
+        "outputgeojson": false,
+        "outputjson": false,
+        "outputkml": false,
+        "outputxlsx": false,
+        "httpcodenodata": "204"
+      },
+      "configversion": 0.1,
+      "configlastupdate": "2020-01-31T11:37:27+00:00"
+    },
     "ETHZ SED": {
       "title": "",
       "info": "",
@@ -388,385 +385,411 @@
     }
   },
   "fdsnstation": {
-    "EIDA Stations":
-      {
-        "title": "EIDA Stations, European Integrated Data Archive",
-        "info": "EIDA station metadata and instrument specifics in FDSN StationXML format. Metadata can be selected on SEED network, station, location or channel identifiers in addition to spatiotemporal constraints. Metadata can be extracted at multiple levels of detail",
-        "infourl": "https://www.orfeus-eu.org/data/eida/webservices/station/",
-        "datalicense": "CC BY-SA 4.0",
-        "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
-        "dataprovider": "Observatories & Research Facilities for European Seismology (ORFEUS)",
-        "dataproviderurl": "https://www.orfeus-eu.org/",
-        "endpointurl": "http://www.orfeus-eu.org/fdsnws/station/1/query?",
-        "datestart": "",
-        "dateend": "",
-        "boundingbox": [],
-        "default": {
-          "boundingboxpredefined": "europe",
-          "style":"stations"
-        },
-        "settings":{
-          "querystartbefore":true,
-          "querystartafter":true,
-          "queryendbefore":true,
-          "queryendafter":true,
-          "querycircular": true,
-          "querycircularradiuskm": true,
-          "queryincluderestricted": true,
-          "queryincludeavailability": true,
-          "queryupdatedafter": true,
-          "querymatchtimeseries": true,
-          "outputtext": true,
-          "outputxml": true,
-          "outputgeojson": true,
-          "outputjson": true,
-          "outputkml": false,
-          "outputxlsx": false,
-          "httpcodenodata": "204"
-        },
-        "configversion": 0.1,
-        "configlastupdate": "2020-01-31T11:37:27+00:00"
-      }
+    "EIDA Stations": {
+      "title": "EIDA Stations, European Integrated Data Archive",
+      "info": "EIDA station metadata and instrument specifics in FDSN StationXML format. Metadata can be selected on SEED network, station, location or channel identifiers in addition to spatiotemporal constraints. Metadata can be extracted at multiple levels of detail",
+      "infourl": "https://www.orfeus-eu.org/data/eida/webservices/station/",
+      "datalicense": "",
+      "datalicenseurl": "",
+      "dataprovider": "Observatories & Research Facilities for European Seismology (ORFEUS)",
+      "dataproviderurl": "https://www.orfeus-eu.org/",
+      "endpointurl": "http://www.orfeus-eu.org/fdsnws/station/1/query?",
+      "datestart": "",
+      "dateend": "",
+      "boundingbox": [],
+      "default": {
+        "boundingboxpredefined": "europe",
+        "style": "stations"
+      },
+      "settings": {
+        "querystartbefore": true,
+        "querystartafter": true,
+        "queryendbefore": true,
+        "queryendafter": true,
+        "querycircular": true,
+        "querycircularradiuskm": true,
+        "queryincluderestricted": true,
+        "queryincludeavailability": true,
+        "queryupdatedafter": true,
+        "querymatchtimeseries": true,
+        "outputtext": true,
+        "outputxml": true,
+        "outputgeojson": true,
+        "outputjson": true,
+        "outputkml": false,
+        "outputxlsx": false,
+        "httpcodenodata": "204"
+      },
+      "configversion": 0.1,
+      "configlastupdate": "2020-01-31T11:37:27+00:00"
+    },
+    "INGV Stations": {
+      "title": "INGV Stations",
+      "info": "EIDA station metadata and instrument specifics in FDSN StationXML format. Metadata can be selected on SEED network, station, location or channel identifiers in addition to spatiotemporal constraints. Metadata can be extracted at multiple levels of detail",
+      "infourl": "http://webservices.ingv.it/fdsnws/station/1/",
+      "datalicense": "",
+      "datalicenseurl": "",
+      "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+      "dataproviderurl": "https://www.ingv.it",
+      "endpointurl": "http://webservices.ingv.it/fdsnws/station/1/query?",
+      "datestart": "",
+      "dateend": "",
+      "boundingbox": [],
+      "default": {
+        "boundingboxpredefined": "italy",
+        "style": "stations"
+      },
+      "settings": {
+        "querystartbefore": true,
+        "querystartafter": true,
+        "queryendbefore": true,
+        "queryendafter": true,
+        "querycircular": true,
+        "querycircularradiuskm": true,
+        "queryincluderestricted": true,
+        "queryincludeavailability": true,
+        "queryupdatedafter": true,
+        "querymatchtimeseries": true,
+        "outputtext": true,
+        "outputxml": true,
+        "outputgeojson": true,
+        "outputjson": true,
+        "outputkml": false,
+        "outputxlsx": false,
+        "httpcodenodata": "204"
+      },
+      "configversion": 0.1,
+      "configlastupdate": "2020-01-31T11:37:27+00:00"
+    }
   },
   "macroseismic": {
-    "AHEAD":
-      {
-        "title": "AHEAD, European Archive of Historical EArthquake Data (pre 1900)",
-        "info": "Albini P., Locati M., Rovida A., Stucchi M. (2013). European Archive of Historical EArthquake Data (AHEAD). Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.6092/INGV.IT-AHEAD",
-        "infourl": "https://www.emidius.eu/AHEAD",
-        "datalicense": "custom",
-        "datalicenseurl": "https://www.emidius.eu/AHEAD/introduction.php#copyright",
-        "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
-        "dataproviderurl": "http://www.ingv.it",
-        "endpointurl": "https://www.emidius.eu/services/macroseismic/query?",
+    "AHEAD": {
+      "title": "AHEAD, European Archive of Historical EArthquake Data (pre 1900)",
+      "info": "Albini P., Locati M., Rovida A., Stucchi M. (2013). European Archive of Historical EArthquake Data (AHEAD). Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.6092/INGV.IT-AHEAD",
+      "infourl": "https://www.emidius.eu/AHEAD",
+      "datalicense": "custom",
+      "datalicenseurl": "https://www.emidius.eu/AHEAD/introduction.php#copyright",
+      "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+      "dataproviderurl": "http://www.ingv.it",
+      "endpointurl": "https://www.emidius.eu/services/macroseismic/query?",
+      "datestart": "1000-01-01T01:01:01+00:00",
+      "dateend": "1899-12-31T23:59:59+00:00",
+      "boundingbox": [
+        32,
+        75,
+        -33,
+        32
+      ],
+      "default": {
         "datestart": "1000-01-01T01:01:01+00:00",
         "dateend": "1899-12-31T23:59:59+00:00",
-        "boundingbox": [
-          32,
-          75,
-          -33,
-          32
-        ],
-        "default": {
-          "datestart": "1000-01-01T01:01:01+00:00",
-          "dateend": "1899-12-31T23:59:59+00:00",
-          "boundingboxpredefined": "europe",
-          "style":"AHEAD_intensities"
-        },
-        "settings":{
-          "queryeventid": true,
-          "queryoriginid": false,
-          "querymagnitudeid": false,
-          "queryfocalmechanismid": false,
-          "querymdpsetid": true,
-          "queryupdatedafter": false,
-          "querycatalog": true,
-          "querycontributor": true,
-          "querycontributorid": true,
-          "queryeventtype": false,
-          "querymagnitudetype": false,
-          "queryincludeallorigins": true,
-          "queryincludeallmagnitudes": true,
-          "queryincludearrivals": false,
-          "queryincludeallstationsmagnitudes": false,
-          "includemdps": true,
-          "includeallmdpsets": true,
-          "querylimit": true,
-          "querylimitmaxentries": 5000,
-          "querycircular": true,
-          "querycircularradiuskm": true,
-          "querydepth": false,
-          "outputtext": true,
-          "outputxml": true,
-          "outputgeojson": true,
-          "outputjson": true,
-          "outputkml": false,
-          "outputxlsx": false,
-          "httpcodenodata": "204"
-        },
-        "configversion": 0.1,
-        "configlastupdate": "2020-01-31T11:37:27+00:00"
+        "boundingboxpredefined": "europe",
+        "style": "AHEAD_intensities"
       },
-    "ASMI":
-      {
-        "title": "ASMI, Archivio Storico Macrosismico Italiano (INGV)",
-        "info": "Rovida A., Locati M., Antonucci A., Camassi R. (2017). Archivio Storico Macrosismico Italiano (ASMI). Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/ASMI",
-        "infourl": "https://emidius.mi.ingv.it/ASMI",
-        "datalicense": "CC BY-SA 4.0",
-        "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
-        "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
-        "dataproviderurl": "http://www.ingv.it",
-        "endpointurl": "https://emidius.mi.ingv.it/services/macroseismic/query?",
+      "settings": {
+        "queryeventid": true,
+        "queryoriginid": false,
+        "querymagnitudeid": false,
+        "queryfocalmechanismid": false,
+        "querymdpsetid": true,
+        "queryupdatedafter": false,
+        "querycatalog": true,
+        "querycontributor": true,
+        "querycontributorid": true,
+        "queryeventtype": false,
+        "querymagnitudetype": false,
+        "queryincludeallorigins": true,
+        "queryincludeallmagnitudes": true,
+        "queryincludearrivals": false,
+        "queryincludeallstationsmagnitudes": false,
+        "includemdps": true,
+        "includeallmdpsets": true,
+        "querylimit": true,
+        "querylimitmaxentries": 5000,
+        "querycircular": true,
+        "querycircularradiuskm": true,
+        "querydepth": false,
+        "outputtext": true,
+        "outputxml": true,
+        "outputgeojson": true,
+        "outputjson": true,
+        "outputkml": false,
+        "outputxlsx": false,
+        "httpcodenodata": "204"
+      },
+      "configversion": 0.1,
+      "configlastupdate": "2020-01-31T11:37:27+00:00"
+    },
+    "ASMI": {
+      "title": "ASMI, Archivio Storico Macrosismico Italiano (INGV)",
+      "info": "Rovida A., Locati M., Antonucci A., Camassi R. (2017). Archivio Storico Macrosismico Italiano (ASMI). Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/ASMI",
+      "infourl": "https://emidius.mi.ingv.it/ASMI",
+      "datalicense": "CC BY-SA 4.0",
+      "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+      "dataproviderurl": "http://www.ingv.it",
+      "endpointurl": "https://emidius.mi.ingv.it/services/macroseismic/query?",
+      "datestart": "1000-01-01T01:01:01+00:00",
+      "dateend": "2017-12-31T23:59:59+00:00",
+      "boundingbox": [
+        35,
+        48,
+        5,
+        21
+      ],
+      "default": {
         "datestart": "1000-01-01T01:01:01+00:00",
         "dateend": "2017-12-31T23:59:59+00:00",
-        "boundingbox": [
-          35,
-          48,
-          5,
-          21
-        ],
-        "default": {
-          "datestart": "1000-01-01T01:01:01+00:00",
-          "dateend": "2017-12-31T23:59:59+00:00",
-          "boundingboxpredefined": "italy",
-          "style":"AHEAD_intensities"
-        },
-        "settings":{
-          "queryeventid": true,
-          "queryoriginid": false,
-          "querymagnitudeid": false,
-          "queryfocalmechanismid": false,
-          "querymdpsetid": true,
-          "queryupdatedafter": false,
-          "querycatalog": true,
-          "querycontributor": true,
-          "querycontributorid": true,
-          "queryeventtype": false,
-          "querymagnitudetype": false,
-          "queryincludeallorigins": true,
-          "queryincludeallmagnitudes": true,
-          "queryincludearrivals": false,
-          "queryincludeallstationsmagnitudes": false,
-          "includemdps": true,
-          "includeallmdpsets": true,
-          "querylimit": true,
-          "querylimitmaxentries": 5000,
-          "querycircular": true,
-          "querycircularradiuskm": true,
-          "querydepth": false,
-          "outputtext": true,
-          "outputxml": true,
-          "outputgeojson": true,
-          "outputjson": true,
-          "outputkml": false,
-          "outputxlsx": false,
-          "httpcodenodata": "204"
-        },
-        "configversion": 0.1,
-        "configlastupdate": "2020-01-31T11:37:27+00:00"
-      }
+        "boundingboxpredefined": "italy",
+        "style": "AHEAD_intensities"
+      },
+      "settings": {
+        "queryeventid": true,
+        "queryoriginid": false,
+        "querymagnitudeid": false,
+        "queryfocalmechanismid": false,
+        "querymdpsetid": true,
+        "queryupdatedafter": false,
+        "querycatalog": true,
+        "querycontributor": true,
+        "querycontributorid": true,
+        "queryeventtype": false,
+        "querymagnitudetype": false,
+        "queryincludeallorigins": true,
+        "queryincludeallmagnitudes": true,
+        "queryincludearrivals": false,
+        "queryincludeallstationsmagnitudes": false,
+        "includemdps": true,
+        "includeallmdpsets": true,
+        "querylimit": true,
+        "querylimitmaxentries": 5000,
+        "querycircular": true,
+        "querycircularradiuskm": true,
+        "querydepth": false,
+        "outputtext": true,
+        "outputxml": true,
+        "outputgeojson": true,
+        "outputjson": true,
+        "outputkml": false,
+        "outputxlsx": false,
+        "httpcodenodata": "204"
+      },
+      "configversion": 0.1,
+      "configlastupdate": "2020-01-31T11:37:27+00:00"
+    }
   },
   "wfs": {
-    "SHARE":
-      {
-        "title": "SHARE European Earthquake Catalogue (SHEEC) 1000-1899",
-        "info": "Stucchi M., Rovida A., Gómez Capera A. A., Alexandre P., Camelbeeck T., Demircioglu M. B. et al. (2012). SHARE European Earthquake Catalogue (SHEEC) 1000-1899. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.6092/INGV.IT-SHARE-SHEEC.1000-1899",
-        "infourl": "https://www.emidius.eu/SHEEC/sheec_1000_1899.html",
-        "datalicense": "CC BY-SA 4.0",
-        "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
-        "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
-        "dataproviderurl": "http://www.ingv.it",
-        "endpointurl": "https://www.emidius.eu/services/europe/wfs?",
-        "datestart": "1000-01-01T01:01:01+00:00",
-        "dateend": "1899-12-31T23:59:59+00:00",
-        "default": {
-          "wfsversion": "2.0.0",
-          "layers":[
+    "SHARE": {
+      "title": "SHARE European Earthquake Catalogue (SHEEC) 1000-1899",
+      "info": "Stucchi M., Rovida A., Gómez Capera A. A., Alexandre P., Camelbeeck T., Demircioglu M. B. et al. (2012). SHARE European Earthquake Catalogue (SHEEC) 1000-1899. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.6092/INGV.IT-SHARE-SHEEC.1000-1899",
+      "infourl": "https://www.emidius.eu/SHEEC/sheec_1000_1899.html",
+      "datalicense": "CC BY-SA 4.0",
+      "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+      "dataproviderurl": "http://www.ingv.it",
+      "endpointurl": "https://www.emidius.eu/services/europe/wfs?",
+      "datestart": "1000-01-01T01:01:01+00:00",
+      "dateend": "1899-12-31T23:59:59+00:00",
+      "default": {
+        "wfsversion": "2.0.0",
+        "layers": [
           {
-            "layername":"europe:SHEEC_1000_1899",
-            "style":"CPTI"
+            "layername": "europe:SHEEC_1000_1899",
+            "style": "CPTI"
           }
-          ]
-        },
-        "settings":{},
-        "configversion": 0.1,
-        "configlastupdate": "2020-01-31T11:37:27+00:00"
+        ]
       },
-    "CPTI":
-      {
-        "title": "CPTI, Catalogo Parametrico dei Terremoti Italiani (INGV)",
-        "info": "Rovida A., Locati M., Camassi R., Lolli B., Gasperini P. (2019). Catalogo Parametrico dei Terremoti Italiani (CPTI15), versione 2.0 [Data set]. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/CPTI/CPTI15.2",
-        "infourl": "https://emidius.mi.ingv.it/CPTI15-DBMI15",
-        "datalicense": "CC BY-SA 4.0",
-        "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
-        "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
-        "dataproviderurl": "http://www.ingv.it",
-        "endpointurl": "https://emidius.mi.ingv.it/services/italy/wfs?",
-        "datestart": "1000-01-01T01:01:01+00:00",
-        "dateend": "2017-12-31T23:59:59+00:00",
-        "default": {
-          "wfsversion": "2.0.0",
-          "layers":[
+      "settings": {},
+      "configversion": 0.1,
+      "configlastupdate": "2020-01-31T11:37:27+00:00"
+    },
+    "CPTI": {
+      "title": "CPTI, Catalogo Parametrico dei Terremoti Italiani (INGV)",
+      "info": "Rovida A., Locati M., Camassi R., Lolli B., Gasperini P. (2019). Catalogo Parametrico dei Terremoti Italiani (CPTI15), versione 2.0 [Data set]. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/CPTI/CPTI15.2",
+      "infourl": "https://emidius.mi.ingv.it/CPTI15-DBMI15",
+      "datalicense": "CC BY-SA 4.0",
+      "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+      "dataproviderurl": "http://www.ingv.it",
+      "endpointurl": "https://emidius.mi.ingv.it/services/italy/wfs?",
+      "datestart": "1000-01-01T01:01:01+00:00",
+      "dateend": "2017-12-31T23:59:59+00:00",
+      "default": {
+        "wfsversion": "2.0.0",
+        "layers": [
           {
-            "layername":"italy:CPTI15",
-            "style":"CPTI"
+            "layername": "italy:CPTI15",
+            "style": "CPTI"
           }
-          ]
-        },
-        "configversion": 0.1,
-        "configlastupdate": "2020-01-31T11:37:27+00:00"
+        ]
       },
-    "EDSF":
-      {
-        "title": "EDSF, European Database of Seismogenic Faults",
-        "info": "Basili R., Kastelic V., Demircioglu M. B., Garcia Moreno D., Nemser E. S., Petricca P., Sboras S. P., Besana-Ostman G. M., Cabral J., Camelbeeck T., Caputo R., Danciu L., Domac H., Fonseca J., García-Mayordomo J., Giardini D., Glavatovic B., Gulen L., Ince Y., Pavlides S., Sesetyan K., Tarabusi G., Tiberti M. M., Utkucu M., Valensise G., Vanneste K., Vilanova S., Wössner J. (2013). The European Database of Seismogenic Faults (EDSF) compiled in the framework of the Project SHARE. https://doi.org/10.6092/INGV.IT-SHARE-EDSF",
-        "infourl": "http://diss.rm.ingv.it/share-edsf/",
-        "datalicense": "CC BY-SA 4.0",
-        "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
-        "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
-        "dataproviderurl": "http://www.ingv.it",
-        "endpointurl": "http://services.seismofaults.eu/geoserver/EDSF/wfs?",
-        "datestart": "",
-        "dateend": "",
-        "default": {
-          "wfsversion": "2.0.0",
-          "layers":[
+      "configversion": 0.1,
+      "configlastupdate": "2020-01-31T11:37:27+00:00"
+    },
+    "EDSF": {
+      "title": "EDSF, European Database of Seismogenic Faults",
+      "info": "Basili R., Kastelic V., Demircioglu M. B., Garcia Moreno D., Nemser E. S., Petricca P., Sboras S. P., Besana-Ostman G. M., Cabral J., Camelbeeck T., Caputo R., Danciu L., Domac H., Fonseca J., García-Mayordomo J., Giardini D., Glavatovic B., Gulen L., Ince Y., Pavlides S., Sesetyan K., Tarabusi G., Tiberti M. M., Utkucu M., Valensise G., Vanneste K., Vilanova S., Wössner J. (2013). The European Database of Seismogenic Faults (EDSF) compiled in the framework of the Project SHARE. https://doi.org/10.6092/INGV.IT-SHARE-EDSF",
+      "infourl": "http://diss.rm.ingv.it/share-edsf/",
+      "datalicense": "CC BY-SA 4.0",
+      "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+      "dataproviderurl": "http://www.ingv.it",
+      "endpointurl": "http://services.seismofaults.eu/geoserver/EDSF/wfs?",
+      "datestart": "",
+      "dateend": "",
+      "default": {
+        "wfsversion": "2.0.0",
+        "layers": [
           {
-            "layername":"EDSF:crustal_fault_sources_pln",
-            "style":"default"
+            "layername": "EDSF:crustal_fault_sources_pln",
+            "style": "default"
           },
           {
-            "layername":"EDSF:crustal_fault_sources_top",
-            "style":"default",
-            "style1":"EDSF_avgSR",
-            "style2":"EDSF_faultType",
-            "style3":"EDSF_slipType"
+            "layername": "EDSF:crustal_fault_sources_top",
+            "style": "default",
+            "style1": "EDSF_avgSR",
+            "style2": "EDSF_faultType",
+            "style3": "EDSF_slipType"
           },
           {
-            "layername":"EDSF:subduction_zones",
-            "style":"default"
+            "layername": "EDSF:subduction_zones",
+            "style": "default"
           },
           {
-            "layername":"EDSF:subduction_contours",
-            "style":"default"
+            "layername": "EDSF:subduction_contours",
+            "style": "default"
           }
-          ]
-        },
-        "configversion": 0.2,
-        "configlastupdate": "2020-02-10T09:10:00+00:00"
-      }
+        ]
+      },
+      "configversion": 0.2,
+      "configlastupdate": "2020-02-10T09:10:00+00:00"
+    }
   },
   "wms": {
-    "SHARE":
-      {
-        "title": "SHARE European Earthquake Catalogue (SHEEC) 1000-1899",
-        "info": "Stucchi M., Rovida A., Gómez Capera A. A., Alexandre P., Camelbeeck T., Demircioglu M. B. et al. (2012). SHARE European Earthquake Catalogue (SHEEC) 1000-1899. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.6092/INGV.IT-SHARE-SHEEC.1000-1899",
-        "infourl": "https://www.emidius.eu/SHEEC/sheec_1000_1899.html",
-        "datalicense": "CC BY-SA 4.0",
-        "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
-        "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
-        "dataproviderurl": "http://www.ingv.it",
-        "endpointurl": "https://www.emidius.eu/services/europe/wms?",
-        "datestart": "1000-01-01T01:01:01+00:00",
-        "dateend": "1899-12-31T23:59:59+00:00",
-        "default": {
-          "wmsversion": "1.3.0",
-          "layers":[
+    "SHARE": {
+      "title": "SHARE European Earthquake Catalogue (SHEEC) 1000-1899",
+      "info": "Stucchi M., Rovida A., Gómez Capera A. A., Alexandre P., Camelbeeck T., Demircioglu M. B. et al. (2012). SHARE European Earthquake Catalogue (SHEEC) 1000-1899. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.6092/INGV.IT-SHARE-SHEEC.1000-1899",
+      "infourl": "https://www.emidius.eu/SHEEC/sheec_1000_1899.html",
+      "datalicense": "CC BY-SA 4.0",
+      "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+      "dataproviderurl": "http://www.ingv.it",
+      "endpointurl": "https://www.emidius.eu/services/europe/wms?",
+      "datestart": "1000-01-01T01:01:01+00:00",
+      "dateend": "1899-12-31T23:59:59+00:00",
+      "default": {
+        "wmsversion": "1.3.0",
+        "layers": [
           {
-            "layername":"europe:SHEEC_1000_1899",
-            "style":"europe:SHEEC_squares_colors"
+            "layername": "europe:SHEEC_1000_1899",
+            "style": "europe:SHEEC_squares_colors"
           }
-          ]
-
-        },
-        "configversion": 0.1,
-        "configlastupdate": "2020-01-31T11:37:27+00:00"
+        ]
       },
-    "CPTI":
-      {
-        "title": "CPTI, Catalogo Parametrico dei Terremoti Italiani (INGV)",
-        "info": "Rovida A., Locati M., Camassi R., Lolli B., Gasperini P. (2019). Catalogo Parametrico dei Terremoti Italiani (CPTI15), versione 2.0 [Data set]. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/CPTI/CPTI15.2",
-        "infourl": "https://emidius.mi.ingv.it/CPTI15-DBMI15",
-        "datalicense": "CC BY-SA 4.0",
-        "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
-        "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
-        "dataproviderurl": "http://www.ingv.it",
-        "endpointurl": "https://emidius.mi.ingv.it/services/italy/wms?",
-        "datestart": "1000-01-01T01:01:01+00:00",
-        "dateend": "2017-12-31T23:59:59+00:00",
-        "default": {
-          "wmsversion": "1.3.0",
-          "layers":[
+      "configversion": 0.1,
+      "configlastupdate": "2020-01-31T11:37:27+00:00"
+    },
+    "CPTI": {
+      "title": "CPTI, Catalogo Parametrico dei Terremoti Italiani (INGV)",
+      "info": "Rovida A., Locati M., Camassi R., Lolli B., Gasperini P. (2019). Catalogo Parametrico dei Terremoti Italiani (CPTI15), versione 2.0 [Data set]. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/CPTI/CPTI15.2",
+      "infourl": "https://emidius.mi.ingv.it/CPTI15-DBMI15",
+      "datalicense": "CC BY-SA 4.0",
+      "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+      "dataproviderurl": "http://www.ingv.it",
+      "endpointurl": "https://emidius.mi.ingv.it/services/italy/wms?",
+      "datestart": "1000-01-01T01:01:01+00:00",
+      "dateend": "2017-12-31T23:59:59+00:00",
+      "default": {
+        "wmsversion": "1.3.0",
+        "layers": [
           {
-            "layername":"italy:CPTI15",
-            "style":"italy:CPTI15_squares_colors"
+            "layername": "italy:CPTI15",
+            "style": "italy:CPTI15_squares_colors"
           }
-          ]
-
-        },
-        "configversion": 0.1,
-        "configlastupdate": "2019-12-27T11:37:27+00:00"
+        ]
       },
-    "EDSF":
-      {
-        "title": "EDSF, European Database of Seismogenic Faults",
-        "info": "Basili R., Kastelic V., Demircioglu M. B., Garcia Moreno D., Nemser E. S., Petricca P., Sboras S. P., Besana-Ostman G. M., Cabral J., Camelbeeck T., Caputo R., Danciu L., Domac H., Fonseca J., García-Mayordomo J., Giardini D., Glavatovic B., Gulen L., Ince Y., Pavlides S., Sesetyan K., Tarabusi G., Tiberti M. M., Utkucu M., Valensise G., Vanneste K., Vilanova S., Wössner J. (2013). The European Database of Seismogenic Faults (EDSF) compiled in the framework of the Project SHARE. https://doi.org/10.6092/INGV.IT-SHARE-EDSF",
-        "infourl": "http://diss.rm.ingv.it/share-edsf/",
-        "datalicense": "CC BY-SA 4.0",
-        "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
-        "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
-        "dataproviderurl": "http://www.ingv.it",
-        "endpointurl": "http://services.seismofaults.eu/geoserver/EDSF/wms?",
-        "datestart": "",
-        "dateend": "",
-        "default": {
-          "wmsversion": "1.3.0",
-          "layers":[
-	  {
-          "layername":"EDSF:EDSF",
-          "style":"default"
+      "configversion": 0.1,
+      "configlastupdate": "2019-12-27T11:37:27+00:00"
+    },
+    "EDSF": {
+      "title": "EDSF, European Database of Seismogenic Faults",
+      "info": "Basili R., Kastelic V., Demircioglu M. B., Garcia Moreno D., Nemser E. S., Petricca P., Sboras S. P., Besana-Ostman G. M., Cabral J., Camelbeeck T., Caputo R., Danciu L., Domac H., Fonseca J., García-Mayordomo J., Giardini D., Glavatovic B., Gulen L., Ince Y., Pavlides S., Sesetyan K., Tarabusi G., Tiberti M. M., Utkucu M., Valensise G., Vanneste K., Vilanova S., Wössner J. (2013). The European Database of Seismogenic Faults (EDSF) compiled in the framework of the Project SHARE. https://doi.org/10.6092/INGV.IT-SHARE-EDSF",
+      "infourl": "http://diss.rm.ingv.it/share-edsf/",
+      "datalicense": "CC BY-SA 4.0",
+      "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+      "dataproviderurl": "http://www.ingv.it",
+      "endpointurl": "http://services.seismofaults.eu/geoserver/EDSF/wms?",
+      "datestart": "",
+      "dateend": "",
+      "default": {
+        "wmsversion": "1.3.0",
+        "layers": [
+          {
+            "layername": "EDSF:EDSF",
+            "style": "default"
           },
           {
-          "layername":"EDSF:EDSF.Crustal_Fault_Sources",
-          "style":"default"
+            "layername": "EDSF:EDSF.Crustal_Fault_Sources",
+            "style": "default"
           },
           {
-          "layername":"EDSF:EDSF.Subduction_Zones",
-          "style":"default"
+            "layername": "EDSF:EDSF.Subduction_Zones",
+            "style": "default"
           },
           {
-          "layername":"EDSF:subduction_zones",
-          "style":"default"
+            "layername": "EDSF:subduction_zones",
+            "style": "default"
           },
           {
-          "layername":"EDSF:subduction_contours",
-          "style":"default"
+            "layername": "EDSF:subduction_contours",
+            "style": "default"
           },
           {
-          "layername":"EDSF:crustal_fault_sources_pln",
-          "style":"default"
+            "layername": "EDSF:crustal_fault_sources_pln",
+            "style": "default"
           },
           {
-          "layername":"EDSF:crustal_fault_sources_top",
-          "style":"default"
+            "layername": "EDSF:crustal_fault_sources_top",
+            "style": "default"
           }
-          ]
-
-        },
-        "configversion": 0.2,
-        "configlastupdate": "2020-02-10T09:10:00+00:00"
-      }
+        ]
+      },
+      "configversion": 0.2,
+      "configlastupdate": "2020-02-10T09:10:00+00:00"
+    }
   },
-  "styles":{
-      "EDSF": {
+  "styles": {
+    "EDSF": {
       "EDSF average slip rate": {
-      "url":"https://www.seismofaults.eu/EDSFStyles/EDSF2013_avgSR.qml"
+        "url": "https://www.seismofaults.eu/EDSFStyles/EDSF2013_avgSR.qml"
       },
       "EDSF fault type": {
-      "url":"https://www.seismofaults.eu/EDSFStyles/EDSF2013_faultType.qml"
+        "url": "https://www.seismofaults.eu/EDSFStyles/EDSF2013_faultType.qml"
       },
       "EDSF slip type": {
-      "url":"https://www.seismofaults.eu/EDSFStyles/EDSF2013_slipType.qml"
+        "url": "https://www.seismofaults.eu/EDSFStyles/EDSF2013_slipType.qml"
       },
       "EDSF subduction zones": {
-      "url":"https://www.seismofaults.eu/EDSFStyles/EDSF2013_subdZon.qml"
+        "url": "https://www.seismofaults.eu/EDSFStyles/EDSF2013_subdZon.qml"
       },
       "EDSF subduction contours": {
-      "url":"https://www.seismofaults.eu/EDSFStyles/EDSF2013_subdCnt.qml"
-      }
-      },
-      "CPTI": {
-      "url":"https://www.emidius.eu/AHEAD/symbols/CPTI15_symbols.qml"
-      },
-      "AHEAD_intensities": {
-        "url":"https://www.emidius.eu/AHEAD/symbols/AHEAD_intensities.qml"
-      },
-      "stations": {
-      "url":"https://www.emidius.eu/AHEAD/symbols/stations.qml"
+        "url": "https://www.seismofaults.eu/EDSFStyles/EDSF2013_subdCnt.qml"
       }
     },
+    "CPTI": {
+      "url": "https://www.emidius.eu/AHEAD/symbols/CPTI15_symbols.qml"
+    },
+    "AHEAD_intensities": {
+      "url": "https://www.emidius.eu/AHEAD/symbols/AHEAD_intensities.qml"
+    },
+    "stations": {
+      "url": "https://www.emidius.eu/AHEAD/symbols/stations.qml"
+    }
+  },
   "boundingboxpredefined": {
-    "europe":{
+    "europe": {
       "title": "Europe",
       "boundingbox": [
         -33,
@@ -775,7 +798,7 @@
         75
       ]
     },
-    "italy":{
+    "italy": {
       "title": "Italy",
       "boundingbox": [
         5,
@@ -784,7 +807,7 @@
         48
       ]
     },
-    "mediterranean":{
+    "mediterranean": {
       "title": "Mediterranean Sea",
       "boundingbox": [
         -7,
@@ -793,15 +816,14 @@
         48
       ]
     },
-    "world":{
+    "world": {
       "title": "World",
-      "boundingbox" :[
+      "boundingbox": [
         -180,
         -90,
         180,
         90
       ]
     }
-
   }
 }
