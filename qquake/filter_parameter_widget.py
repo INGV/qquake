@@ -119,75 +119,113 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
 
         self.output_table_options_button.clicked.connect(self._output_table_options)
 
-    def restore_settings(self):
+    def restore_settings(self, prefix):
         s = QgsSettings()
-        last_event_start_date = s.value('/plugins/qquake/fdsn_event_last_event_start_date')
+        last_event_start_date = s.value('/plugins/qquake/{}_last_event_start_date'.format(prefix))
         if last_event_start_date is not None:
             self.fdsn_event_start_date.setDateTime(last_event_start_date)
-        last_event_end_date = s.value('/plugins/qquake/fdsn_event_last_event_end_date')
+        last_event_end_date = s.value('/plugins/qquake/{}_last_event_end_date'.format(prefix))
         if last_event_end_date is not None:
             self.fdsn_event_end_date.setDateTime(last_event_end_date)
-        last_event_min_magnitude = s.value('/plugins/qquake/fdsn_event_last_event_min_magnitude')
+        last_event_min_magnitude = s.value('/plugins/qquake/{}_last_event_min_magnitude'.format(prefix))
         if last_event_min_magnitude is not None:
             self.fdsn_event_min_magnitude.setValue(float(last_event_min_magnitude))
-        last_event_max_magnitude = s.value('/plugins/qquake/fdsn_event_last_event_max_magnitude')
+        last_event_max_magnitude = s.value('/plugins/qquake/{}_last_event_max_magnitude'.format(prefix))
         if last_event_max_magnitude is not None:
             self.fdsn_event_max_magnitude.setValue(float(last_event_max_magnitude))
-        last_event_extent_enabled = s.value('/plugins/qquake/fdsn_event_last_event_extent_enabled')
+        last_event_extent_enabled = s.value('/plugins/qquake/{}_last_event_extent_enabled'.format(prefix))
         if last_event_extent_enabled is not None:
             self.limit_extent_checkbox.setChecked(bool(last_event_extent_enabled))
-        last_event_extent_rect = s.value('/plugins/qquake/fdsn_event_last_event_extent_rect')
+        last_event_extent_rect = s.value('/plugins/qquake/{}_last_event_extent_rect'.format(prefix))
         if last_event_extent_rect is not None:
             self.radio_rectangular_area.setChecked(bool(last_event_extent_rect))
-        last_event_extent_circle = s.value('/plugins/qquake/fdsn_event_last_event_extent_circle')
+        last_event_extent_circle = s.value('/plugins/qquake/{}_last_event_extent_circle'.format(prefix))
         if last_event_extent_circle is not None:
             self.radio_circular_area.setChecked(bool(last_event_extent_circle))
-        min_lat_checked = s.value('/plugins/qquake/fdsn_event_last_event_min_lat_checked')
+        min_lat_checked = s.value('/plugins/qquake/{}_last_event_min_lat_checked'.format(prefix))
         if min_lat_checked is not None:
             self.lat_min_checkbox.setChecked(bool(min_lat_checked))
-        max_lat_checked = s.value('/plugins/qquake/fdsn_event_last_event_max_lat_checked')
+        max_lat_checked = s.value('/plugins/qquake/{}_last_event_max_lat_checked'.format(prefix))
         if max_lat_checked is not None:
             self.lat_max_checkbox.setChecked(bool(max_lat_checked))
-        min_long_checked = s.value('/plugins/qquake/fdsn_event_last_event_min_long_checked')
+        min_long_checked = s.value('/plugins/qquake/{}_last_event_min_long_checked'.format(prefix))
         if min_long_checked is not None:
             self.long_min_checkbox.setChecked(bool(min_long_checked))
-        max_long_checked = s.value('/plugins/qquake/fdsn_event_last_event_max_long_checked')
+        max_long_checked = s.value('/plugins/qquake/{}_last_event_max_long_checked'.format(prefix))
         if max_long_checked is not None:
             self.long_max_checkbox.setChecked(bool(max_long_checked))
 
-        min_radius_checked = s.value('/plugins/qquake/fdsn_event_last_event_circle_radius_min_checked')
+        min_radius_checked = s.value('/plugins/qquake/{}_last_event_circle_radius_min_checked'.format(prefix))
         if min_radius_checked is not None:
             self.radius_min_checkbox.setChecked(bool(min_radius_checked))
-        max_radius_checked = s.value('/plugins/qquake/fdsn_event_last_event_circle_radius_max_checked')
+        max_radius_checked = s.value('/plugins/qquake/{}_last_event_circle_radius_max_checked'.format(prefix))
         if max_radius_checked is not None:
             self.radius_max_checkbox.setChecked(bool(max_radius_checked))
 
-        last_event_min_radius = s.value('/plugins/qquake/fdsn_event_last_event_circle_min_radius')
+        last_event_min_radius = s.value('/plugins/qquake/{}_last_event_circle_min_radius'.format(prefix))
         if last_event_min_radius is not None:
             self.radius_min_spinbox.setValue(float(last_event_min_radius))
-        last_event_max_radius = s.value('/plugins/qquake/fdsn_event_last_event_circle_max_radius')
+        last_event_max_radius = s.value('/plugins/qquake/{}_last_event_circle_max_radius'.format(prefix))
         if last_event_max_radius is not None:
             self.radius_max_spinbox.setValue(float(last_event_max_radius))
 
-        min_time_checked = s.value('/plugins/qquake/fdsn_event_last_event_min_time_checked')
+        min_time_checked = s.value('/plugins/qquake/{}_last_event_min_time_checked'.format(prefix))
         if min_time_checked is not None:
             self.min_time_check.setChecked(bool(min_time_checked))
-        max_time_checked = s.value('/plugins/qquake/fdsn_event_last_event_max_time_checked')
+        max_time_checked = s.value('/plugins/qquake/{}_last_event_max_time_checked'.format(prefix))
         if max_time_checked is not None:
             self.max_time_check.setChecked(bool(max_time_checked))
-        min_mag_checked = s.value('/plugins/qquake/fdsn_event_last_event_min_mag_checked')
+        min_mag_checked = s.value('/plugins/qquake/{}_last_event_min_mag_checked'.format(prefix))
         if min_mag_checked is not None:
             self.min_mag_check.setChecked(bool(min_mag_checked))
-        max_mag_checked = s.value('/plugins/qquake/fdsn_event_last_event_max_mag_checked')
+        max_mag_checked = s.value('/plugins/qquake/{}_last_event_max_mag_checked'.format(prefix))
         if max_mag_checked is not None:
             self.max_mag_check.setChecked(bool(max_mag_checked))
 
-        preferred_origins_only_checked = s.value('/plugins/qquake/fdsn_event_last_output_preferred_origins_only')
+        preferred_origins_only_checked = s.value('/plugins/qquake/{}_last_output_preferred_origins_only'.format(prefix))
         if preferred_origins_only_checked is not None:
             self.output_preferred_origins_only_check.setChecked(bool(preferred_origins_only_checked))
-        preferred_magnitudes_only_checked = s.value('/plugins/qquake/fdsn_event_last_output_preferred_magnitude_only')
+        preferred_magnitudes_only_checked = s.value('/plugins/qquake/{}_last_output_preferred_magnitude_only'.format(prefix))
         if preferred_magnitudes_only_checked is not None:
             self.output_preferred_magnitudes_only_check.setChecked(bool(preferred_magnitudes_only_checked))
+
+    def save_settings(self, prefix):
+        s = QgsSettings()
+        s.setValue('/plugins/qquake/{}_last_event_start_date'.format(prefix), self.fdsn_event_start_date.dateTime())
+        s.setValue('/plugins/qquake/{}_last_event_end_date'.format(prefix), self.fdsn_event_end_date.dateTime())
+        s.setValue('/plugins/qquake/{}_last_event_min_magnitude'.format(prefix), self.fdsn_event_min_magnitude.value())
+        s.setValue('/plugins/qquake/{}_last_event_max_magnitude'.format(prefix), self.fdsn_event_max_magnitude.value())
+
+        s.setValue('/plugins/qquake/{}_last_event_extent_enabled'.format(prefix), self.limit_extent_checkbox.isChecked())
+        s.setValue('/plugins/qquake/{}_last_event_extent_rect'.format(prefix), self.radio_rectangular_area.isChecked())
+        s.setValue('/plugins/qquake/{}_last_event_extent_circle'.format(prefix), self.radio_circular_area.isChecked())
+        s.setValue('/plugins/qquake/{}_last_event_min_lat_checked'.format(prefix), self.lat_min_checkbox.isChecked())
+        s.setValue('/plugins/qquake/{}_last_event_min_lat'.format(prefix), self.lat_min_spinbox.value())
+        s.setValue('/plugins/qquake/{}_last_event_max_lat_checked'.format(prefix), self.lat_max_checkbox.isChecked())
+        s.setValue('/plugins/qquake/{}_last_event_max_lat'.format(prefix), self.lat_max_spinbox.value())
+        s.setValue('/plugins/qquake/{}_last_event_min_long_checked'.format(prefix), self.long_min_checkbox.isChecked())
+        s.setValue('/plugins/qquake/{}_last_event_min_long'.format(prefix), self.long_min_spinbox.value())
+        s.setValue('/plugins/qquake/{}_last_event_max_long_checked'.format(prefix), self.long_max_checkbox.isChecked())
+        s.setValue('/plugins/qquake/{}_last_event_max_long'.format(prefix), self.long_max_spinbox.value())
+
+        s.setValue('/plugins/qquake/{}_last_event_circle_long'.format(prefix), self.circular_long_spinbox.value())
+        s.setValue('/plugins/qquake/{}_last_event_circle_lat'.format(prefix), self.circular_lat_spinbox.value())
+        s.setValue('/plugins/qquake/{}_last_event_circle_radius_min_checked'.format(prefix),
+                   self.radius_min_checkbox.isChecked())
+        s.setValue('/plugins/qquake/{}_last_event_circle_radius_max_checked'.format(prefix),
+                   self.radius_max_checkbox.isChecked())
+        s.setValue('/plugins/qquake/{}_last_event_circle_min_radius'.format(prefix), self.radius_min_spinbox.value())
+        s.setValue('/plugins/qquake/{}_last_event_circle_max_radius'.format(prefix), self.radius_max_spinbox.value())
+
+        s.setValue('/plugins/qquake/{}_last_event_min_time_checked'.format(prefix), self.min_time_check.isChecked())
+        s.setValue('/plugins/qquake/{}_last_event_max_time_checked'.format(prefix), self.max_time_check.isChecked())
+        s.setValue('/plugins/qquake/{}_last_event_min_mag_checked'.format(prefix), self.min_mag_check.isChecked())
+        s.setValue('/plugins/qquake/{}_last_event_max_mag_checked'.format(prefix), self.max_mag_check.isChecked())
+
+        s.setValue('/plugins/qquake/{}_last_output_preferred_origins_only'.format(prefix),
+                   self.output_preferred_origins_only_check.isChecked())
+        s.setValue('/plugins/qquake/{}_last_output_preferred_magnitude_only'.format(prefix),
+                   self.output_preferred_magnitudes_only_check.isChecked())
 
     def set_extent_from_canvas_extent(self, rect):
         ct = QgsCoordinateTransform(self.iface.mapCanvas().mapSettings().destinationCrs(),

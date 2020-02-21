@@ -15,12 +15,12 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QTabWidget" name="fdsn_event_list_2">
+    <widget class="QTabWidget" name="service_tab_widget">
      <property name="tabPosition">
       <enum>QTabWidget::North</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <property name="tabsClosable">
       <bool>false</bool>
@@ -71,12 +71,12 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="fdsn_station_tab">
+     <widget class="QWidget" name="fdsn_macro_tab">
       <attribute name="title">
        <string>Macroseismic</string>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout_2">
-       <item row="0" column="0" rowspan="5">
+      <layout class="QGridLayout" name="gridLayout_2" rowstretch="1,0" columnstretch="0,1">
+       <item row="0" column="0">
         <widget class="QListWidget" name="fdsn_macro_list">
          <property name="minimumSize">
           <size>
@@ -93,138 +93,16 @@
         </widget>
        </item>
        <item row="0" column="1">
-        <widget class="QLabel" name="fdsn_event_start_date_label_2">
-         <property name="text">
-          <string>Start DateTime</string>
+        <widget class="QWidget" name="macro_filter_container" native="true">
+         <property name="minimumSize">
+          <size>
+           <width>40</width>
+           <height>0</height>
+          </size>
          </property>
         </widget>
        </item>
-       <item row="0" column="2">
-        <widget class="QDateTimeEdit" name="fdsn_macro_start_date">
-         <property name="maximumDateTime">
-          <datetime>
-           <hour>23</hour>
-           <minute>59</minute>
-           <second>59</second>
-           <year>9999</year>
-           <month>12</month>
-           <day>31</day>
-          </datetime>
-         </property>
-         <property name="displayFormat">
-          <string>yyyy-MM-dd</string>
-         </property>
-         <property name="calendarPopup">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QLabel" name="fdsn_event_end_data_label_2">
-         <property name="text">
-          <string>End DateTime</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="2">
-        <widget class="QDateTimeEdit" name="fdsn_macro_end_date">
-         <property name="minimumDate">
-          <date>
-           <year>1777</year>
-           <month>9</month>
-           <day>14</day>
-          </date>
-         </property>
-         <property name="displayFormat">
-          <string>yyyy-MM-dd</string>
-         </property>
-         <property name="calendarPopup">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QLabel" name="fdsn_event_min_magnitude_label_2">
-         <property name="text">
-          <string>Min Magnitude</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="2">
-        <widget class="QDoubleSpinBox" name="fdsn_macro_min_magnitude">
-         <property name="decimals">
-          <number>1</number>
-         </property>
-         <property name="minimum">
-          <double>1.000000000000000</double>
-         </property>
-         <property name="maximum">
-          <double>9.000000000000000</double>
-         </property>
-         <property name="singleStep">
-          <double>0.500000000000000</double>
-         </property>
-         <property name="value">
-          <double>4.000000000000000</double>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="QLabel" name="fdsn_event_max_magnitude_label_2">
-         <property name="text">
-          <string>Max Magnitude</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="2">
-        <widget class="QDoubleSpinBox" name="fdsn_macro_max_magnitude">
-         <property name="decimals">
-          <number>1</number>
-         </property>
-         <property name="minimum">
-          <double>1.000000000000000</double>
-         </property>
-         <property name="maximum">
-          <double>9.000000000000000</double>
-         </property>
-         <property name="singleStep">
-          <double>0.500000000000000</double>
-         </property>
-         <property name="value">
-          <double>9.000000000000000</double>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="1" colspan="2">
-        <widget class="QgsExtentGroupBox" name="fdsn_macro_ExtentGroupBox">
-         <property name="title">
-          <string>Select Extent</string>
-         </property>
-         <property name="checkable">
-          <bool>false</bool>
-         </property>
-         <property name="checked">
-          <bool>false</bool>
-         </property>
-         <property name="collapsed" stdset="0">
-          <bool>false</bool>
-         </property>
-         <property name="saveCollapsedState" stdset="0">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="0" colspan="2">
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>Output</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="2">
-        <widget class="QComboBox" name="fdsn_macro_output_combo_box"/>
-       </item>
-       <item row="6" column="0" colspan="3">
+       <item row="1" column="0" colspan="2">
         <widget class="QTextBrowser" name="fdsn_macro_url_text_browser">
          <property name="frameShape">
           <enum>QFrame::NoFrame</enum>
@@ -288,20 +166,6 @@
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>QgsCollapsibleGroupBox</class>
-   <extends>QGroupBox</extends>
-   <header>qgscollapsiblegroupbox.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>QgsExtentGroupBox</class>
-   <extends>QgsCollapsibleGroupBox</extends>
-   <header>qgsextentgroupbox.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections>
   <connection>
