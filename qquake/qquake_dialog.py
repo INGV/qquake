@@ -73,6 +73,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.setupUi(self)
 
         self.fsdn_event_filter = FilterParameterWidget(iface)
+        self.fsdn_event_filter.set_show_macroseismic_data_options(False)
         vl = QVBoxLayout()
         vl.addWidget(self.fsdn_event_filter)
         self.fsdn_event_filter_container.setLayout(vl)
@@ -202,6 +203,8 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                        circle_longitude=filter_widget.circle_longitude(),
                        circle_min_radius=filter_widget.circle_min_radius(),
                        circle_max_radius=filter_widget.circle_max_radius(),
+                       earthquake_number_mdps_greater=filter_widget.earthquake_number_mdps_greater(),
+                       earthquake_max_intensity_greater=filter_widget.earthquake_max_intensity_greater(),
                        output_magnitudes=not filter_widget.output_preferred_magnitudes_only(),
                        output_origins=not filter_widget.output_preferred_origins_only(),
                        )
