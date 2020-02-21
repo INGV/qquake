@@ -73,7 +73,8 @@ class Fetcher(QObject):
                  earthquake_max_intensity_greater=None,
                  parent=None,
                  output_origins=True,
-                 output_magnitudes=True
+                 output_magnitudes=True,
+                 output_mdps=True
                  ):
         super().__init__(parent=parent)
 
@@ -98,6 +99,7 @@ class Fetcher(QObject):
 
         self.output_origins = output_origins
         self.output_magnitudes = output_magnitudes
+        self.output_mdps = output_mdps and self.service_type == 'macroseismic'
 
         self.result = None
 

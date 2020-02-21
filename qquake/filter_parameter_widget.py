@@ -127,6 +127,7 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
 
     def set_show_macroseismic_data_options(self, show):
         self.macroseismic_data_group.setVisible(show)
+        self.output_preferred_mdp_only_check.setVisible(show)
 
     def restore_settings(self, prefix):
         s = QgsSettings()
@@ -211,6 +212,10 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
         if preferred_magnitudes_only_checked is not None:
             self.output_preferred_magnitudes_only_check.setChecked(bool(preferred_magnitudes_only_checked))
 
+        v = s.value('/plugins/qquake/{}_last_output_preferred_mdp_only'.format(prefix))
+        if v is not None:
+            self.output_preferred_mdp_only_check.setChecked(bool(v))
+
     def save_settings(self, prefix):
         s = QgsSettings()
         s.setValue('/plugins/qquake/{}_last_event_start_date'.format(prefix), self.fdsn_event_start_date.dateTime())
@@ -255,6 +260,8 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
                    self.output_preferred_origins_only_check.isChecked())
         s.setValue('/plugins/qquake/{}_last_output_preferred_magnitude_only'.format(prefix),
                    self.output_preferred_magnitudes_only_check.isChecked())
+        s.setValue('/plugins/qquake/{}_last_output_preferred_mdp_only'.format(prefix),
+                   self.output_preferred_mdp_only_check.isChecked())
 
     def set_extent_from_canvas_extent(self, rect):
         ct = QgsCoordinateTransform(self.iface.mapCanvas().mapSettings().destinationCrs(),
@@ -454,3 +461,6 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
 
     def output_preferred_origins_only(self):
         return self.output_preferred_origins_only_check.isChecked()
+
+    def output_preferred_mdp_only(self):
+        return self.output_preferred_mdp_only_check.isChecked()

@@ -207,6 +207,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                        earthquake_max_intensity_greater=filter_widget.earthquake_max_intensity_greater(),
                        output_magnitudes=not filter_widget.output_preferred_magnitudes_only(),
                        output_origins=not filter_widget.output_preferred_origins_only(),
+                       output_mdps=not filter_widget.output_preferred_mdp_only(),
                        )
 
     def _refresh_url(self, service_type):
