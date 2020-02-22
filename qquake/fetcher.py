@@ -142,12 +142,12 @@ class Fetcher(QObject):
                 query.append('maxradius={}'.format(self.circle_max_radius))
 
         if self.earthquake_number_mdps_greater is not None:
-            query.append('xxxxxxx={}'.format(self.earthquake_number_mdps_greater))
-            assert False, 'Matteo can you fix the above line?'
+            query.append('minmdps={}'.format(
+                self.earthquake_number_mdps_greater))
 
         if self.earthquake_max_intensity_greater is not None:
-            query.append('yyyyyy={}'.format(self.earthquake_max_intensity_greater))
-            assert False, 'Matteo can you fix the above line?'
+            query.append('maxmdps={}'.format(
+                self.earthquake_max_intensity_greater))
 
         query.append('limit={}'.format(self.service_config['settings']['querylimitmaxentries']))
 
