@@ -1,6 +1,6 @@
 {
   "fdsnevent": {
-    "AHEAD/SHEEC": {
+    "AHEAD-SHEEC": {
       "title": "AHEAD, European Archive of Historical EArthquake Data (pre 1900)",
       "info": "Albini P., Locati M., Rovida A., Stucchi M. (2013). European Archive of Historical EArthquake Data (AHEAD). Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.6092/INGV.IT-AHEAD",
       "infourl": "https://doi.org/10.6092/INGV.IT-AHEAD",
@@ -83,7 +83,7 @@
       "configversion": 0.1,
       "configlastupdate": "2020-01-31T11:37:27+00:00"
     },
-    "INGV ASMI/CPTI": {
+    "INGV ASMI-CPTI": {
       "title": "ASMI, Archivio Storico Macrosismico Italiano (INGV)",
       "info": "Rovida A., Locati M., Antonucci A., Camassi R. (2017). Archivio Storico Macrosismico Italiano (ASMI). Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/ASMI",
       "infourl": "https://doi.org/10.13127/ASMI",
@@ -167,7 +167,7 @@
       "configversion": 0.1,
       "configlastupdate": "2020-01-31T11:37:27+00:00"
     },
-    "INGV ONT/ISIDe": {
+    "INGV ONT-ISIDe": {
       "title": "ISIDe, Italian Seismological Instrumental and Parametric Database (INGV)",
       "info": "ISIDe Working Group (2007). Italian Seismological Instrumental and Parametric Database (ISIDe). Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/ISIDE",
       "infourl": "http://terremoti.ingv.it/",
@@ -185,10 +185,39 @@
         19
       ],
       "default": {
-        "datestart": "1985-01-01T01:01:01+00:00",
+        "datestart": "2020-01-01T01:01:01+00:00",
         "dateend": "",
         "boundingboxpredefined": "italy",
-        "style": "CPTI"
+        "style": "CPTI",
+        "fields": [
+          "eventid",
+          "eventcragi",
+          "eventcragu",
+          "eventcrau",
+          "eventcrauu",
+          "originid",
+          "origcragid",
+          "origcragur",
+          "origcrau",
+          "origcrauur",
+          "year",
+          "month",
+          "day",
+          "hour",
+          "min",
+          "sec",
+          "region",
+          "lat",
+          "lon",
+          "depth",
+          "magid",
+          "magcragid",
+          "magcraguri",
+          "magcrau",
+          "magcrauri",
+          "mag",
+          "magunc"
+        ]
       },
       "settings": {
         "queryeventid": false,
@@ -222,27 +251,56 @@
       "configlastupdate": "2020-01-31T11:37:27+00:00"
     },
     "ETHZ SED": {
-      "title": "",
-      "info": "",
-      "infourl": "",
-      "datalicense": "",
-      "datalicenseurl": "",
-      "dataprovider": "",
-      "dataproviderurl": "",
-      "endpointurl": "",
-      "datestart": "",
+      "title": "Swiss Seismological Service (ETHZ-SED)",
+      "info": "Swiss Seismological Service (ETHZ-SED) FDSN-event",
+      "infourl": "http://www.seismo.ethz.ch/en/research-and-teaching/products-software/fdsn-web-services/",
+      "datalicense": "©2016 ETH Zurich",
+      "datalicenseurl": "http://www.seismo.ethz.ch/en/service/Disclaimer/",
+      "dataprovider": "Swiss Seismological Service (SED) and ETH Zurich",
+      "dataproviderurl": "http://www.seismo.ethz.ch/",
+      "endpointurl": "http://arclink.ethz.ch/fdsnws/event/1/query?",
+      "datestart": "1998-01-01T01:01:01+00:00",
       "dateend": "",
       "boundingbox": [
-        -180,
-        -90,
-        180,
-        90
+        -33,
+        32,
+        32,
+        75
       ],
       "default": {
-        "datestart": "1000-01-01T01:01:01+00:00",
+        "datestart": "2020-01-01T01:01:01+00:00",
         "dateend": "",
-        "boundingboxpredefined": "world",
-        "style": ""
+        "boundingboxpredefined": "switzerland",
+        "style": "CPTI",
+        "fields": [
+          "eventid",
+          "eventcragi",
+          "eventcragu",
+          "eventcrau",
+          "eventcrauu",
+          "originid",
+          "origcragid",
+          "origcragur",
+          "origcrau",
+          "origcrauur",
+          "year",
+          "month",
+          "day",
+          "hour",
+          "min",
+          "sec",
+          "region",
+          "lat",
+          "lon",
+          "depth",
+          "magid",
+          "magcragid",
+          "magcraguri",
+          "magcrau",
+          "magcrauri",
+          "mag",
+          "magunc"
+        ]
       },
       "settings": {
         "queryeventid": true,
@@ -272,19 +330,19 @@
         "outputxlsx": false,
         "httpcodenodata": "204"
       },
-      "configversion": 0.1,
-      "configlastupdate": "2020-01-31T11:37:27+00:00"
+      "configversion": 0.2,
+      "configlastupdate": "2020-02-22T18:50:00+00:00"
     },
     "EMSC-CSEM": {
-      "title": "",
-      "info": "",
-      "infourl": "",
-      "datalicense": "",
-      "datalicenseurl": "",
-      "dataprovider": "",
-      "dataproviderurl": "",
-      "endpointurl": "",
-      "datestart": "",
+      "title": "European-Mediterranean Seismological Centre (EMSC-CSEM)",
+      "info": "European-Mediterranean Seismological Centre (EMSC-CSEM) FDSN-event",
+      "infourl": "http://www.seismicportal.eu/fdsn-wsevent.html",
+      "datalicense": "Copyright © 2018 EMSC",
+      "datalicenseurl": "https://www.emsc-csem.org/",
+      "dataprovider": "European-Mediterranean Seismological Centre (EMSC-CSEM)",
+      "dataproviderurl": "https://www.emsc-csem.org/",
+      "endpointurl": "http://www.seismicportal.eu/fdsnws/event/1/query?",
+      "datestart": "1998-01-01T01:01:01+00:00",
       "dateend": "",
       "boundingbox": [
         -180,
@@ -293,10 +351,39 @@
         90
       ],
       "default": {
-        "datestart": "1998-01-01T01:01:01+00:00",
+        "datestart": "2020-01-01T01:01:01+00:00",
         "dateend": "",
-        "boundingboxpredefined": "world",
-        "style": ""
+        "boundingboxpredefined": "europe",
+        "style": "CPTI",
+        "fields": [
+          "eventid",
+          "eventcragi",
+          "eventcragu",
+          "eventcrau",
+          "eventcrauu",
+          "originid",
+          "origcragid",
+          "origcragur",
+          "origcrau",
+          "origcrauur",
+          "year",
+          "month",
+          "day",
+          "hour",
+          "min",
+          "sec",
+          "region",
+          "lat",
+          "lon",
+          "depth",
+          "magid",
+          "magcragid",
+          "magcraguri",
+          "magcrau",
+          "magcrauri",
+          "mag",
+          "magunc"
+        ]
       },
       "settings": {
         "queryeventid": true,
@@ -326,62 +413,8 @@
         "outputxlsx": false,
         "httpcodenodata": "204"
       },
-      "configversion": 0.1,
-      "configlastupdate": "2020-01-31T11:37:27+00:00"
-    },
-    "ORFEUS ESM": {
-      "title": "",
-      "info": "",
-      "infourl": "",
-      "datalicense": "",
-      "datalicenseurl": "",
-      "dataprovider": "",
-      "dataproviderurl": "",
-      "endpointurl": "",
-      "datestart": "",
-      "dateend": "",
-      "boundingbox": [
-        -180,
-        -90,
-        180,
-        90
-      ],
-      "default": {
-        "datestart": "1950-01-01T01:01:01+00:00",
-        "dateend": "",
-        "boundingboxpredefined": "world",
-        "style": ""
-      },
-      "settings": {
-        "queryeventid": true,
-        "queryoriginid": true,
-        "querymagnitudeid": true,
-        "queryfocalmechanismid": true,
-        "queryupdatedafter": true,
-        "querycatalog": true,
-        "querycontributor": true,
-        "querycontributorid": true,
-        "queryeventtype": true,
-        "querymagnitudetype": true,
-        "queryincludeallorigins": true,
-        "queryincludeallmagnitudes": true,
-        "queryincludearrivals": true,
-        "queryincludeallstationsmagnitudes": true,
-        "querylimit": true,
-        "querylimitmaxentries": 15000,
-        "querycircular": true,
-        "querycircularradiuskm": true,
-        "querydepth": true,
-        "outputtext": true,
-        "outputxml": true,
-        "outputgeojson": true,
-        "outputjson": true,
-        "outputkml": false,
-        "outputxlsx": false,
-        "httpcodenodata": "204"
-      },
-      "configversion": 0.1,
-      "configlastupdate": "2020-01-31T11:37:27+00:00"
+      "configversion": 0.2,
+      "configlastupdate": "2020-02-22T18:50:00+00:00"
     }
   },
   "fdsnstation": {
@@ -394,7 +427,7 @@
       "dataprovider": "Observatories & Research Facilities for European Seismology (ORFEUS)",
       "dataproviderurl": "https://www.orfeus-eu.org/",
       "endpointurl": "http://www.orfeus-eu.org/fdsnws/station/1/query?",
-      "datestart": "",
+      "datestart": "1950-01-01T01:01:01+00:00",
       "dateend": "",
       "boundingbox": [],
       "default": {
@@ -433,7 +466,7 @@
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
       "dataproviderurl": "https://www.ingv.it",
       "endpointurl": "http://webservices.ingv.it/fdsnws/station/1/query?",
-      "datestart": "",
+      "datestart": "1980-01-01T00:00:00+00:00",
       "dateend": "",
       "boundingbox": [],
       "default": {
@@ -506,10 +539,6 @@
         "queryincludeallstationsmagnitudes": false,
         "includemdps": true,
         "includeallmdpsets": true,
-        "queryminintensity": true,
-        "querymaxintensity": true,
-        "queryminmdps": true,
-        "querymaxmdps": true,
         "querylimit": true,
         "querylimitmaxentries": 5000,
         "querycircular": true,
@@ -567,10 +596,6 @@
         "queryincludeallstationsmagnitudes": false,
         "includemdps": true,
         "includeallmdpsets": true,
-        "queryminintensity": true,
-        "querymaxintensity": true,
-        "queryminmdps": true,
-        "querymaxmdps": true,
         "querylimit": true,
         "querylimitmaxentries": 5000,
         "querycircular": true,
@@ -815,6 +840,15 @@
         35,
         21,
         48
+      ]
+    },
+    "switzerland": {
+      "title": "Switzerland",
+      "boundingbox": [
+        5.5,
+        45.4,
+        11,
+        48.3
       ]
     },
     "mediterranean": {
