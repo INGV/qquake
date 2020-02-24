@@ -176,7 +176,7 @@
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
       "dataproviderurl": "http://www.ingv.it",
       "endpointurl": "http://webservices.ingv.it/fdsnws/event/1/query?",
-      "datestart": "1000-01-01T01:01:01+00:00",
+      "datestart": "1985-01-01T01:01:01+00:00",
       "dateend": "",
       "boundingbox": [
         35,
