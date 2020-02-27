@@ -70,7 +70,8 @@ class Fetcher(QObject):
                  parent=None,
                  output_origins=True,
                  output_magnitudes=True,
-                 output_mdps=True
+                 output_mdps=True,
+                 output_fields=None
                  ):
         super().__init__(parent=parent)
 
@@ -96,6 +97,7 @@ class Fetcher(QObject):
         self.output_origins = output_origins and self.service_type in ('fdsnevent', 'macroseismic')
         self.output_magnitudes = output_magnitudes and self.service_type in ('fdsnevent', 'macroseismic')
         self.output_mdps = output_mdps and self.service_type == 'macroseismic'
+        self.output_fields = output_fields
 
         self.result = None
 
@@ -195,7 +197,7 @@ class Fetcher(QObject):
         """
         vl = QgsVectorLayer('PointZ?crs=EPSG:4326', self._generate_layer_name('Events'), 'memory')
 
-        vl.dataProvider().addAttributes(Event.to_fields())
+        vl.dataProvider().addAttributes(Event.to_fields(self.output_fields))
         vl.updateFields()
 
         return vl
@@ -206,7 +208,7 @@ class Fetcher(QObject):
         """
         vl = QgsVectorLayer('PointZ?crs=EPSG:4326', self._generate_layer_name('Origins'), 'memory')
 
-        vl.dataProvider().addAttributes(Origin.to_fields())
+        vl.dataProvider().addAttributes(Origin.to_fields(self.output_fields))
         vl.updateFields()
 
         return vl
@@ -217,7 +219,7 @@ class Fetcher(QObject):
         """
         vl = QgsVectorLayer('PointZ?crs=EPSG:4326', self._generate_layer_name('Magnitudes'), 'memory')
 
-        vl.dataProvider().addAttributes(Magnitude.to_fields())
+        vl.dataProvider().addAttributes(Magnitude.to_fields(self.output_fields))
         vl.updateFields()
 
         return vl
@@ -228,7 +230,7 @@ class Fetcher(QObject):
         """
         vl = QgsVectorLayer('PointZ?crs=EPSG:4326', self._generate_layer_name('Stations'), 'memory')
 
-        vl.dataProvider().addAttributes(Station.to_fields())
+        vl.dataProvider().addAttributes(Station.to_fields(self.output_fields))
         vl.updateFields()
 
         return vl
@@ -241,7 +243,7 @@ class Fetcher(QObject):
 
         features = []
         for e in events:
-            features.append(e.to_feature())
+            features.append(e.to_feature(self.output_fields))
 
         vl.dataProvider().addFeatures(features)
 
@@ -255,7 +257,7 @@ class Fetcher(QObject):
 
         features = []
         for e in events:
-            features.extend(e.to_origin_features())
+            features.extend(e.to_origin_features(self.output_fields))
 
         vl.dataProvider().addFeatures(features)
 
@@ -269,7 +271,7 @@ class Fetcher(QObject):
 
         features = []
         for e in events:
-            features.extend(e.to_magnitude_features())
+            features.extend(e.to_magnitude_features(self.output_fields))
 
         vl.dataProvider().addFeatures(features)
 
@@ -283,7 +285,7 @@ class Fetcher(QObject):
 
         features = []
         for n in networks:
-            features.extend(n.to_station_features())
+            features.extend(n.to_station_features(self.output_fields))
 
         vl.dataProvider().addFeatures(features)
 

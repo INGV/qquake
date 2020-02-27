@@ -32,18 +32,22 @@ from qgis.PyQt.QtGui import QFont
 
 class ModelNode:
 
-    def __init__(self, data, checked=None):
+    def __init__(self, data, checked=None, user_data=None):
         self._data = data
         self._column_count = len(self._data)
         self._children = []
         self._parent = None
         self._row = 0
         self._checked = checked
+        self._user_data = user_data
 
     def data(self, column):
         if 0 <= column < len(self._data):
             return self._data[column]
         return None
+
+    def user_data(self):
+        return self._user_data
 
     def columnCount(self):
         return self._column_count
@@ -142,6 +146,8 @@ class SimpleNodeModel(QAbstractItemModel):
         else:
             if role == Qt.DisplayRole:
                 return node.data(index.column())
+            elif role == Qt.UserRole:
+                return node.user_data()
             elif role == Qt.FontRole and node.show_bold():
                 f = QFont()
                 f.setBold(True)

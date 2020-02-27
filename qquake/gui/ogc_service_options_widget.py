@@ -123,5 +123,4 @@ class OgcServiceWidget(QWidget, FORM_CLASS):
                         continue
                     add_layer(layer_name, style)
 
-
         QgsProject.instance().addMapLayers(layers_to_add)

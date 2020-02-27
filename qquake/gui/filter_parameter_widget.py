@@ -24,7 +24,7 @@
 
 from qgis.PyQt import uic
 from qgis.PyQt.QtWidgets import QWidget
-from qgis.PyQt.QtCore import pyqtSignal, QDateTime
+from qgis.PyQt.QtCore import pyqtSignal
 
 from qgis.core import (
     QgsProject,
@@ -40,7 +40,7 @@ from qgis.gui import (
 
 from qquake.gui.gui_utils import GuiUtils
 from qquake.gui.output_table_options_dialog import OutputTableOptionsDialog
-from qquake.services import PREFINED_BOUNDING_BOXES
+from qquake.services import SERVICES, PREFINED_BOUNDING_BOXES
 
 FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('filter_parameter_widget_base.ui'))
 
@@ -123,7 +123,9 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
         self.radio_predefined_area.toggled.connect(self._use_predefined_area)
 
         self.service_type = None
+        self.service_id = None
         self.set_service_type(service_type)
+        self.output_fields = None
 
     def set_service_type(self, service_type):
         self.service_type = service_type
@@ -135,6 +137,11 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
         self.output_preferred_origins_only_check.setVisible(self.service_type in ('macroseismic', 'fdsnevent'))
         self.output_preferred_magnitudes_only_check.setVisible(self.service_type in ('macroseismic', 'fdsnevent'))
         self.output_preferred_mdp_only_check.setVisible(self.service_type == 'macroseismic')
+
+    def set_service_id(self, service_id):
+        self.service_id = service_id
+        if 'fields' in SERVICES[self.service_type][self.service_id]['default']:
+            self.output_fields = SERVICES[self.service_type][service_id]['default']['fields']
 
     def restore_settings(self, prefix):
         s = QgsSettings()
@@ -466,9 +473,9 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
         self.lat_max_spinbox.setMaximum(box[3])
 
     def _output_table_options(self):
-        dlg = OutputTableOptionsDialog(self.service_type, self)
+        dlg = OutputTableOptionsDialog(self.service_type, self.service_id, self.output_fields, self)
         if dlg.exec_():
-            pass
+            self.output_fields = dlg.selected_fields()
 
     def start_date(self):
         if not self.time_coverage_group.isVisible():
