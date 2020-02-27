@@ -41,6 +41,7 @@ from qquake.gui.simple_node_model import SimpleNodeModel, ModelNode
 FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('ogc_service_widget.ui'))
 CONFIG_PATH = os.path.join(
     os.path.dirname(__file__),
+    '..',
     'config',
     'config.json')
 

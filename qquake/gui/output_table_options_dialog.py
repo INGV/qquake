@@ -43,6 +43,7 @@ FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('output_table_options.u
 
 CONFIG_FIELDS_PATH = os.path.join(
     os.path.dirname(__file__),
+    '..',
     'config',
     'config_fields_fsdnevent.json')
 

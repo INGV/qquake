@@ -42,12 +42,13 @@ from qgis.gui import (
 )
 
 from qquake.gui.gui_utils import GuiUtils
-from qquake.output_table_options_dialog import OutputTableOptionsDialog
+from qquake.gui.output_table_options_dialog import OutputTableOptionsDialog
 
 FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('filter_parameter_widget_base.ui'))
 
 CONFIG_SERVICES_PATH = os.path.join(
     os.path.dirname(__file__),
+    '..',
     'config',
     'config.json')
 

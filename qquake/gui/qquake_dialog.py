@@ -49,14 +49,15 @@ from qgis.gui import (
 )
 
 from qquake.fetcher import Fetcher
-from qquake.filter_parameter_widget import FilterParameterWidget
-from qquake.ogc_service_options_widget import OgcServiceWidget
+from qquake.gui.filter_parameter_widget import FilterParameterWidget
+from qquake.gui.ogc_service_options_widget import OgcServiceWidget
 from qquake.gui.gui_utils import GuiUtils
 
 FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('qquake_dialog_base.ui'))
 
 CONFIG_SERVICES_PATH = os.path.join(
     os.path.dirname(__file__),
+    '..',
     'config',
     'config.json')
 
