@@ -713,14 +713,24 @@
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
       "dataproviderurl": "http://www.ingv.it",
       "endpointurl": "https://www.emidius.eu/services/europe/wms?",
+      "srs": "EPSG:4326",
       "datestart": "1000-01-01T01:01:01+00:00",
       "dateend": "1899-12-31T23:59:59+00:00",
       "default": {
         "wmsversion": "1.3.0",
         "layers": [
           {
-            "layername": "europe:SHEEC_1000_1899",
-            "styles": ["europe:SHEEC_squares_colors"]
+            "layername": "SHEEC_1000_1899",
+            "styles": []
+          },
+          {
+            "layername": "SHEEC_1000_1899",
+            "styles": [
+              "europe:SHEEC_circles_colors",
+              "europe:SHEEC_circles_gray",
+              "europe:SHEEC_squares_colors",
+              "europe:SHEEC_squares_gray"
+            ]
           }
         ]
       },
@@ -736,6 +746,7 @@
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
       "dataproviderurl": "http://www.ingv.it",
       "endpointurl": "https://emidius.mi.ingv.it/services/italy/wms?",
+      "srs": "EPSG:4326",
       "datestart": "1000-01-01T01:01:01+00:00",
       "dateend": "2017-12-31T23:59:59+00:00",
       "default": {
@@ -759,6 +770,7 @@
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
       "dataproviderurl": "http://www.ingv.it",
       "endpointurl": "http://services.seismofaults.eu/geoserver/EDSF/wms?",
+      "srs": "EPSG:4326",
       "datestart": "",
       "dateend": "",
       "default": {
