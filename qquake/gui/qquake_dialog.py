@@ -22,9 +22,6 @@
  ***************************************************************************/
 """
 
-import os
-import json
-
 from qgis.PyQt import uic
 from qgis.PyQt.QtWidgets import (
     QDialogButtonBox,
@@ -51,6 +48,7 @@ from qgis.gui import (
 from qquake.fetcher import Fetcher
 from qquake.gui.filter_parameter_widget import FilterParameterWidget
 from qquake.gui.ogc_service_options_widget import OgcServiceWidget
+from qquake.gui.service_information_widget import ServiceInformationWidget
 from qquake.gui.gui_utils import GuiUtils
 from qquake.services import SERVICES
 
@@ -71,12 +69,22 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         vl.setContentsMargins(0,0,0,0)
         vl.addWidget(self.fsdn_event_filter)
         self.fsdn_event_filter_container.setLayout(vl)
+        self.earthquake_service_info_widget = ServiceInformationWidget(iface)
+        vl = QVBoxLayout()
+        vl.setContentsMargins(0,0,0,0)
+        vl.addWidget(self.earthquake_service_info_widget)
+        self.earthquake_service_info_container.setLayout(vl)
 
         self.macro_filter = FilterParameterWidget(iface)
         vl = QVBoxLayout()
         vl.setContentsMargins(0, 0, 0, 0)
         vl.addWidget(self.macro_filter)
         self.macro_filter_container.setLayout(vl)
+        self.macro_service_info_widget = ServiceInformationWidget(iface)
+        vl = QVBoxLayout()
+        vl.setContentsMargins(0,0,0,0)
+        vl.addWidget(self.macro_service_info_widget)
+        self.macro_service_info_container.setLayout(vl)
 
         self.station_filter = FilterParameterWidget(iface)
         vl = QVBoxLayout()
@@ -89,6 +97,11 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         vl.setContentsMargins(0, 0, 0, 0)
         vl.addWidget(self.ogc_service_widget)
         self.ogc_widget_container.setLayout(vl)
+        self.ogc_service_info_widget = ServiceInformationWidget(iface)
+        vl = QVBoxLayout()
+        vl.setContentsMargins(0,0,0,0)
+        vl.addWidget(self.ogc_service_info_widget)
+        self.ogc_service_info_container.setLayout(vl)
 
         self.message_bar = QgsMessageBar()
         self.message_bar.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)

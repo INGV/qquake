@@ -22,9 +22,6 @@
  ***************************************************************************/
 """
 
-import os
-import json
-
 from qgis.PyQt import uic
 from qgis.PyQt.QtWidgets import QWidget
 from qgis.PyQt.QtCore import QModelIndex, Qt
