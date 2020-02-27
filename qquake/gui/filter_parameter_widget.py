@@ -471,9 +471,14 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
         return self.radius_max_spinbox.value() if self.radius_max_checkbox.isChecked() else None
 
     def earthquake_max_intensity_greater(self):
+        if not self.macroseismic_data_group.isVisible():
+            return None
         return self.earthquake_max_intensity_greater_spin.value() if self.earthquake_max_intensity_greater_check.isChecked() else None
 
     def earthquake_number_mdps_greater(self):
+        if not self.macroseismic_data_group.isVisible():
+            return None
+
         return self.earthquake_number_mdps_greater_spin.value() if self.earthquake_number_mdps_greater_check.isChecked() else None
 
     def output_preferred_magnitudes_only(self):
