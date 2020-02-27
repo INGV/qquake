@@ -83,6 +83,11 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         vl.addWidget(self.macro_filter)
         self.macro_filter_container.setLayout(vl)
 
+        self.station_filter = FilterParameterWidget(iface)
+        vl = QVBoxLayout()
+        vl.addWidget(self.station_filter)
+        self.station_filter_container.setLayout(vl)
+
         self.message_bar = QgsMessageBar()
         self.message_bar.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         self.verticalLayout.insertWidget(0, self.message_bar)
@@ -114,12 +119,15 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         # connect to refreshing function to refresh the UI depending on the WS
         self.refreshFdsnEventWidgets()
         self.refreshFdsnMacroseismicWidgets()
+        self.refreshFdsnStationWidgets()
 
         # change the UI parameter according to the web service chosen
         self.fdsn_event_list.currentRowChanged.connect(
             self.refreshFdsnEventWidgets)
         self.fdsn_macro_list.currentRowChanged.connect(
             self.refreshFdsnMacroseismicWidgets)
+        self.fdsn_station_list.currentRowChanged.connect(
+            self.refreshFdsnStationWidgets)
 
         self.fsdn_event_filter.changed.connect(lambda: self._refresh_url('fdsnevent'))
         self.fdsn_event_list.currentRowChanged.connect(lambda: self._refresh_url('fdsnevent'))
@@ -158,8 +166,11 @@ class QQuakeDialog(QDialog, FORM_CLASS):
 
         last_service = s.value('/plugins/qquake/fdsn_event_last_event_service')
         if last_service is not None:
-            self.fdsn_event_list.setCurrentItem(
-                self.fdsn_event_list.findItems(last_service, Qt.MatchContains)[0])
+            try:
+                self.fdsn_event_list.setCurrentItem(
+                    self.fdsn_event_list.findItems(last_service, Qt.MatchContains)[0])
+            except IndexError:
+                pass
 
         last_service = s.value('/plugins/qquake/macro_last_event_service')
         if last_service is not None:
@@ -272,6 +283,13 @@ class QQuakeDialog(QDialog, FORM_CLASS):
             CONFIG_SERVICES['macroseismic'][self.fdsn_macro_list.currentItem(
             ).text()]['default']['boundingboxpredefined']]['boundingbox']
         self.macro_filter.set_extent_limit(box)
+
+    def refreshFdsnStationWidgets(self):
+        """
+        Refreshing the FDSN-Macroseismic UI depending on the WS chosen
+        """
+        
+        pass
 
     def refreshOgcWidgets(self):
         """
