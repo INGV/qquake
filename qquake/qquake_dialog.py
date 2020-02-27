@@ -51,11 +51,9 @@ from qgis.gui import (
 from qquake.fetcher import Fetcher
 from qquake.filter_parameter_widget import FilterParameterWidget
 from qquake.ogc_service_options_widget import OgcServiceWidget
+from qquake.gui.gui_utils import GuiUtils
 
-
-# This loads your .ui file so that PyQt can populate your plugin with the elements from Qt Designer
-FORM_CLASS, _ = uic.loadUiType(os.path.join(
-    os.path.dirname(__file__), 'qquake_dialog_base.ui'))
+FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('qquake_dialog_base.ui'))
 
 CONFIG_SERVICES_PATH = os.path.join(
     os.path.dirname(__file__),

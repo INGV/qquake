@@ -35,12 +35,10 @@ from qgis.core import (
     QgsRasterLayer
 )
 
+from qquake.gui.gui_utils import GuiUtils
 from qquake.gui.simple_node_model import SimpleNodeModel, ModelNode
 
-# This loads your .ui file so that PyQt can populate your plugin with the elements from Qt Designer
-FORM_CLASS, _ = uic.loadUiType(os.path.join(
-    os.path.dirname(__file__), 'ogc_service_widget.ui'))
-
+FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('ogc_service_widget.ui'))
 CONFIG_PATH = os.path.join(
     os.path.dirname(__file__),
     'config',
