@@ -22,9 +22,6 @@
  ***************************************************************************/
 """
 
-import os
-import json
-
 from qgis.PyQt import uic
 from qgis.PyQt.QtWidgets import QWidget
 from qgis.PyQt.QtCore import pyqtSignal
@@ -43,6 +40,7 @@ from qgis.gui import (
 
 from qquake.gui.gui_utils import GuiUtils
 from qquake.gui.output_table_options_dialog import OutputTableOptionsDialog
+from qquake.services import PREFINED_BOUNDING_BOXES
 
 FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('filter_parameter_widget_base.ui'))
 
@@ -83,6 +81,7 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
         self.limit_extent_checkbox.toggled.connect(self.changed)
         self.radio_rectangular_area.toggled.connect(self.changed)
         self.radio_circular_area.toggled.connect(self.changed)
+        self.radio_predefined_area.toggled.connect(self.changed)
         self.circular_lat_spinbox.valueChanged.connect(self.changed)
         self.circular_long_spinbox.valueChanged.connect(self.changed)
         self.radius_min_checkbox.toggled.connect(self.changed)
@@ -99,6 +98,7 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
 
         self.radio_rectangular_area.toggled.connect(self._enable_widgets)
         self.radio_circular_area.toggled.connect(self._enable_widgets)
+        self.radio_predefined_area.toggled.connect(self._enable_widgets)
         self.limit_extent_checkbox.toggled.connect(self._enable_widgets)
         self.lat_min_checkbox.toggled.connect(self._enable_widgets)
         self.lat_max_checkbox.toggled.connect(self._enable_widgets)
@@ -115,6 +115,9 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
         self._enable_widgets()
 
         self.output_table_options_button.clicked.connect(self._output_table_options)
+        self._populated_predined_areas()
+        self.combo_predefined_area.currentIndexChanged.connect(self._use_predefined_area)
+        self.radio_predefined_area.toggled.connect(self._use_predefined_area)
 
     def set_show_macroseismic_data_options(self, show):
         self.macroseismic_data_group.setVisible(show)
@@ -258,6 +261,25 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
         s.setValue('/plugins/qquake/{}_last_output_preferred_mdp_only'.format(prefix),
                    self.output_preferred_mdp_only_check.isChecked())
 
+    def _populated_predined_areas(self):
+        for id, extent in PREFINED_BOUNDING_BOXES.items():
+            self.combo_predefined_area.addItem(extent['title'], id)
+
+    def _use_predefined_area(self):
+        if not self.radio_predefined_area.isChecked():
+            return
+
+        selected_extent_id = self.combo_predefined_area.currentData()
+        extent = PREFINED_BOUNDING_BOXES[selected_extent_id]['boundingbox']
+        self.lat_min_spinbox.setValue(extent[1])
+        self.lat_max_spinbox.setValue(extent[3])
+        self.long_min_spinbox.setValue(extent[0])
+        self.long_max_spinbox.setValue(extent[2])
+        self.lat_max_checkbox.setChecked(True)
+        self.long_max_checkbox.setChecked(True)
+        self.lat_min_checkbox.setChecked(True)
+        self.long_min_checkbox.setChecked(True)
+
     def set_extent_from_canvas_extent(self, rect):
         ct = QgsCoordinateTransform(self.iface.mapCanvas().mapSettings().destinationCrs(),
                                     QgsCoordinateReferenceSystem('EPSG:4326'), QgsProject.instance())
@@ -297,6 +319,8 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
         self.lat_max_spinbox.setEnabled(self.lat_max_spinbox.isEnabled() and self.lat_max_checkbox.isChecked())
         self.long_min_spinbox.setEnabled(self.long_min_spinbox.isEnabled() and self.long_min_checkbox.isChecked())
         self.long_max_spinbox.setEnabled(self.long_max_spinbox.isEnabled() and self.long_max_checkbox.isChecked())
+
+        self.combo_predefined_area.setEnabled(self.radio_predefined_area.isChecked())
 
         for w in [self.circular_lat_spinbox,
                   self.circular_long_spinbox,
@@ -416,7 +440,8 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
         return self.fdsn_event_max_magnitude.value() if self.max_mag_check.isChecked() else None
 
     def extent_rect(self):
-        return self.limit_extent_checkbox.isChecked() and self.radio_rectangular_area.isChecked()
+        return self.limit_extent_checkbox.isChecked() and (self.radio_rectangular_area.isChecked()
+                                                           or self.radio_predefined_area.isChecked())
 
     def min_latitude(self):
         return self.lat_min_spinbox.value() if self.lat_min_checkbox.isChecked() else None

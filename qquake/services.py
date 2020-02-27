@@ -32,3 +32,5 @@ _CONFIG_SERVICES_PATH = os.path.join(
 
 with open(_CONFIG_SERVICES_PATH, 'r') as f:
     SERVICES = json.load(f)
+
+PREFINED_BOUNDING_BOXES = SERVICES['boundingboxpredefined']
