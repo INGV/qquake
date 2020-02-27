@@ -253,6 +253,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                        output_magnitudes=not filter_widget.output_preferred_magnitudes_only(),
                        output_origins=not filter_widget.output_preferred_origins_only(),
                        output_mdps=not filter_widget.output_preferred_mdp_only(),
+                       output_fields=filter_widget.output_fields
                        )
 
     def _refresh_url(self, service_type):
@@ -295,6 +296,8 @@ class QQuakeDialog(QDialog, FORM_CLASS):
             service_config['default']['boundingboxpredefined']]['boundingbox']
         filter_widget.set_extent_limit(box)
         info_widget.set_service(service_type=service_type, service_name=service_id)
+
+        filter_widget.set_service_id(service_id)
 
     def _refresh_fdsnevent_widgets(self):
         """
@@ -369,11 +372,11 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                 layers.append(self.fetcher.create_origin_layer())
             if self.fetcher.output_magnitudes:
                 layers.append(self.fetcher.create_magnitude_layer())
-    
+
             max_feature_count = 0
             for l in layers:
                 max_feature_count = max(max_feature_count, l.featureCount())
-    
+
             service_limit = self.fetcher.service_config['settings'].get('querylimitmaxentries', None)
             self.message_bar.clearWidgets()
             if service_limit is not None and max_feature_count >= service_limit:

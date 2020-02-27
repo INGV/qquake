@@ -123,7 +123,9 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
         self.radio_predefined_area.toggled.connect(self._use_predefined_area)
 
         self.service_type = None
+        self.service_id = None
         self.set_service_type(service_type)
+        self.output_fields = None
 
     def set_service_type(self, service_type):
         self.service_type = service_type
@@ -135,6 +137,9 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
         self.output_preferred_origins_only_check.setVisible(self.service_type in ('macroseismic', 'fdsnevent'))
         self.output_preferred_magnitudes_only_check.setVisible(self.service_type in ('macroseismic', 'fdsnevent'))
         self.output_preferred_mdp_only_check.setVisible(self.service_type == 'macroseismic')
+
+    def set_service_id(self, service_id):
+        self.service_id = service_id
 
     def restore_settings(self, prefix):
         s = QgsSettings()
@@ -466,9 +471,9 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
         self.lat_max_spinbox.setMaximum(box[3])
 
     def _output_table_options(self):
-        dlg = OutputTableOptionsDialog(self.service_type, self)
+        dlg = OutputTableOptionsDialog(self.service_type, self.service_id, self)
         if dlg.exec_():
-            pass
+            self.output_fields = dlg.selected_fields()
 
     def start_date(self):
         if not self.time_coverage_group.isVisible():

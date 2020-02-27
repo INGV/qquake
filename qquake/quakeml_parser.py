@@ -439,7 +439,7 @@ class Origin:
                       originUncertainty=origin_uncertainty)
 
     @staticmethod
-    def to_fields():
+    def to_fields(selected_fields):
         fields = QgsFields()
         settings = QgsSettings()
         for f in CONFIG_FIELDS['field_groups']['origin']['fields']:
@@ -447,8 +447,11 @@ class Origin:
                 continue
 
             path = f['source']
-            path = path[len('eventParameters>event>'):].replace('>', '_')
-            selected = settings.value('/plugins/qquake/output_field_{}'.format(path), True, bool)
+            if selected_fields:
+                selected = path in selected_fields
+            else:
+                path = path[len('eventParameters>event>'):].replace('>', '_')
+                selected = settings.value('/plugins/qquake/output_field_{}'.format(path), True, bool)
             if not selected:
                 continue
 
@@ -621,7 +624,7 @@ class Magnitude:
                          creationInfo=parser.creation_info('creationInfo'))
 
     @staticmethod
-    def to_fields():
+    def to_fields(selected_fields):
         fields = QgsFields()
         settings = QgsSettings()
         for f in CONFIG_FIELDS['field_groups']['magnitude']['fields']:
@@ -629,8 +632,11 @@ class Magnitude:
                 continue
 
             path = f['source']
-            path = path[len('eventParameters>event>'):].replace('>', '_')
-            selected = settings.value('/plugins/qquake/output_field_{}'.format(path), True, bool)
+            if selected_fields:
+                selected = path in selected_fields
+            else:
+                path = path[len('eventParameters>event>'):].replace('>', '_')
+                selected = settings.value('/plugins/qquake/output_field_{}'.format(path), True, bool)
             if not selected:
                 continue
 
@@ -665,7 +671,7 @@ class Event:
         self.comments = comments
 
     @staticmethod
-    def to_fields():
+    def to_fields(selected_fields=None):
         fields = QgsFields()
         settings = QgsSettings()
         for f in CONFIG_FIELDS['field_groups']['basic_event_info']['fields']:
@@ -673,18 +679,25 @@ class Event:
                 continue
 
             path = f['source']
-            path = path[len('eventParameters>event>'):].replace('>', '_')
-            selected = settings.value('/plugins/qquake/output_field_{}'.format(path), True, bool)
+
+            if selected_fields:
+                # use specified fields
+                selected = path in selected_fields
+            else:
+                # use default settings
+                path = path[len('eventParameters>event>'):].replace('>', '_')
+                selected = settings.value('/plugins/qquake/output_field_{}'.format(path), True, bool)
+
             if not selected:
                 continue
 
             fields.append(QgsField(f['field'], FIELD_TYPE_MAP[f['type']]))
         return fields
 
-    def to_feature(self):
+    def to_feature(self, output_fields):
         settings = QgsSettings()
 
-        f = QgsFeature(self.to_fields())
+        f = QgsFeature(self.to_fields(output_fields))
         for dest_field in CONFIG_FIELDS['field_groups']['basic_event_info']['fields']:
             if dest_field.get('skip'):
                 continue
@@ -695,7 +708,11 @@ class Event:
             assert source[0] == 'event'
             source = source[1:]
 
-            selected = settings.value('/plugins/qquake/output_field_{}'.format('_'.join(source)), True, bool)
+            if output_fields:
+                selected = dest_field['source'] in output_fields
+            else:
+                selected = settings.value('/plugins/qquake/output_field_{}'.format('_'.join(source)), True, bool)
+
             if not selected:
                 continue
 
@@ -721,11 +738,11 @@ class Event:
 
         return f
 
-    def to_origin_features(self):
+    def to_origin_features(self, selected_fields):
         features = []
         settings = QgsSettings()
         for _, o in self.origins.items():
-            f = QgsFeature(Origin.to_fields())
+            f = QgsFeature(Origin.to_fields(selected_fields))
             for dest_field in CONFIG_FIELDS['field_groups']['origin']['fields']:
                 if dest_field.get('skip'):
                     continue
@@ -736,7 +753,10 @@ class Event:
                 assert source[0] == 'event'
                 source = source[1:]
 
-                selected = settings.value('/plugins/qquake/output_field_{}'.format('_'.join(source)), True, bool)
+                if selected_fields:
+                    selected = dest_field['source'] in selected_fields
+                else:
+                    selected = settings.value('/plugins/qquake/output_field_{}'.format('_'.join(source)), True, bool)
                 if not selected:
                     continue
 
@@ -763,12 +783,12 @@ class Event:
 
         return features
 
-    def to_magnitude_features(self):
+    def to_magnitude_features(self, selected_fields):
         features = []
         settings = QgsSettings()
         for _, o in self.magnitudes.items():
 
-            f = QgsFeature(Magnitude.to_fields())
+            f = QgsFeature(Magnitude.to_fields(selected_fields))
             for dest_field in CONFIG_FIELDS['field_groups']['magnitude']['fields']:
                 if dest_field.get('skip'):
                     continue
@@ -779,7 +799,10 @@ class Event:
                 assert source[0] == 'event'
                 source = source[1:]
 
-                selected = settings.value('/plugins/qquake/output_field_{}'.format('_'.join(source)), True, bool)
+                if selected_fields:
+                    selected = dest_field['source'] in selected_fields
+                else:
+                    selected = settings.value('/plugins/qquake/output_field_{}'.format('_'.join(source)), True, bool)
                 if not selected:
                     continue
 
@@ -938,11 +961,11 @@ class Network(BaseNodeType):
             fields.append(QgsField(f['field'], FIELD_TYPE_MAP[f['type']]))
         return fields
 
-    def to_station_features(self):
+    def to_station_features(self, selected_fields):
         features = []
         settings = QgsSettings()
         for o in self.stations:
-            f = QgsFeature(Station.to_fields())
+            f = QgsFeature(Station.to_fields(selected_fields))
             for dest_field in CONFIG_FIELDS['field_groups']['station']['fields']:
                 if dest_field.get('skip'):
                     continue
@@ -958,7 +981,10 @@ class Network(BaseNodeType):
                     source_obj = o
                     source = source[1:]
 
-                selected = settings.value('/plugins/qquake/output_field_{}'.format('_'.join(source)), True, bool)
+                if selected_fields:
+                    selected = dest_field['source'] in selected_fields
+                else:
+                    selected = settings.value('/plugins/qquake/output_field_{}'.format('_'.join(source)), True, bool)
                 if not selected:
                     continue
 
@@ -1033,7 +1059,7 @@ class Station(BaseNodeType):
         self.SelectedNumberChannels = SelectedNumberChannels
 
     @staticmethod
-    def to_fields():
+    def to_fields(selected_fields):
         fields = QgsFields()
         settings = QgsSettings()
         for f in CONFIG_FIELDS['field_groups']['station']['fields']:
@@ -1041,8 +1067,11 @@ class Station(BaseNodeType):
                 continue
 
             path = f['source']
-            path = path[len('FDSNStationXML>Network>'):].replace('>', '_')
-            selected = settings.value('/plugins/qquake/output_field_{}'.format(path), True, bool)
+            if selected_fields:
+                selected = path in selected_fields
+            else:
+                path = path[len('FDSNStationXML>Network>'):].replace('>', '_')
+                selected = settings.value('/plugins/qquake/output_field_{}'.format(path), True, bool)
             if not selected:
                 continue
 

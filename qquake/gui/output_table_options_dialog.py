@@ -37,6 +37,7 @@ from qgis.gui import QgsGui
 
 from qquake.gui.gui_utils import GuiUtils
 from qquake.gui.simple_node_model import SimpleNodeModel, ModelNode
+from qquake.services import SERVICES
 
 FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('output_table_options.ui'))
 
@@ -53,11 +54,12 @@ with open(CONFIG_FIELDS_PATH, 'r') as f:
 
 class OutputTableOptionsDialog(QDialog, FORM_CLASS):
 
-    def __init__(self, service_type, parent=None):
+    def __init__(self, service_type, service_id, parent=None):
         """Constructor."""
         super().__init__(parent)
         self.setupUi(self)
         self.service_type = service_type
+        self.service_id = service_id
 
         self.setWindowTitle(self.tr('Output Table Options'))
 
@@ -85,7 +87,7 @@ class OutputTableOptionsDialog(QDialog, FORM_CLASS):
                 checked = s.value('/plugins/qquake/output_field_{}'.format(path.replace('>', '_')), True, bool)
 
                 parent_node.addChild(
-                    ModelNode(['checked', f['field'], path], checked))
+                    ModelNode(['checked', f['field'], path], checked, user_data=f['source']))
             nodes.append(parent_node)
 
         self.field_model = SimpleNodeModel(nodes, headers=[self.tr('Include'), self.tr('Field Name'),
@@ -101,6 +103,9 @@ class OutputTableOptionsDialog(QDialog, FORM_CLASS):
         self.uncheck_all_button.clicked.connect(lambda: self._check_all(False))
         self.reset_fields_button.setVisible(False)
 
+        if 'fields' in SERVICES[service_type][service_id]['default']:
+            self.set_default_fields(SERVICES[service_type][service_id]['default']['fields'])
+
     def accept(self):
         s = QgsSettings()
         for r in range(self.field_model.rowCount(QModelIndex())):
@@ -112,6 +117,17 @@ class OutputTableOptionsDialog(QDialog, FORM_CLASS):
 
         super().accept()
 
+    def selected_fields(self):
+        fields = []
+        for r in range(self.field_model.rowCount(QModelIndex())):
+            parent = self.field_model.index(r, 0, QModelIndex())
+            for rc in range(self.field_model.rowCount(parent)):
+                path = self.field_model.data(self.field_model.index(rc, 2, parent), Qt.UserRole)
+                checked = self.field_model.data(self.field_model.index(rc, 0, parent), Qt.CheckStateRole)
+                if checked:
+                    fields.append(path)
+        return fields
+
     def reset_fields(self):
         if self.default_fields is None:
             return
@@ -119,7 +135,7 @@ class OutputTableOptionsDialog(QDialog, FORM_CLASS):
         for r in range(self.field_model.rowCount(QModelIndex())):
             parent = self.field_model.index(r, 0, QModelIndex())
             for rc in range(self.field_model.rowCount(parent)):
-                path = self.field_model.data(self.field_model.index(rc, 2, parent), Qt.DisplayRole)
+                path = self.field_model.data(self.field_model.index(rc, 2, parent), Qt.UserRole)
                 self.field_model.setData(self.field_model.index(rc, 0, parent), path in self.default_fields, Qt.CheckStateRole)
 
     def _check_all(self, checked=True):
