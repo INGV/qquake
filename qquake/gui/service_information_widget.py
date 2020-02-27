@@ -38,6 +38,7 @@ class ServiceInformationWidget(QWidget, FORM_CLASS):
         super().__init__(parent)
         self.iface = iface
         self.setupUi(self)
+        self.info_browser.viewport().setAutoFillBackground(False)
 
         self.layer_model = None
         self.service_type = None
@@ -48,3 +49,24 @@ class ServiceInformationWidget(QWidget, FORM_CLASS):
         self.service_type = service_type
         self.service_name = service_name
         self.service_config = SERVICES[service_type][service_name]
+
+        html = """<p><b>Title</b><br>
+        {title}</p>
+        <p><b>Description</b><br>
+        <a href="{infourl}">{info}</a></p>""".format(**self.service_config)
+
+        if self.service_config.get('help'):
+            html += """
+            <p><b>Help</b><br>
+            <a href="{help}">{help}</a></p>
+            """.format(**self.service_config)
+
+        html += """<p><b>Data license</b><br>
+            <a href="{datalicenseurl}">{datalicense}</a></p>
+            """.format(**self.service_config)
+
+        html += """<p><b>Data provider</b><br>
+            <a href="{dataproviderurl}">{dataprovider}</a></p>
+            """.format(**self.service_config)
+
+        self.info_browser.setHtml(html)
