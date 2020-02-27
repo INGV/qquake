@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>561</width>
-    <height>747</height>
+    <height>780</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -477,14 +477,7 @@
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QSpinBox" name="earthquake_max_intensity_greater_spin">
-        <property name="minimum">
-         <number>1</number>
-        </property>
-        <property name="value">
-         <number>6</number>
-        </property>
-       </widget>
+       <widget class="QComboBox" name="earthquake_max_intensity_greater_combo"/>
       </item>
      </layout>
     </widget>
