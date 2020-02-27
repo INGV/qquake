@@ -36,13 +36,7 @@ from qquake.quakeml_parser import (
     Magnitude
 )
 
-CONFIG_SERVICES_PATH = os.path.join(
-    os.path.dirname(__file__),
-    'config',
-    'config.json')
-
-with open(CONFIG_SERVICES_PATH, 'r') as f:
-    CONFIG_SERVICES = json.load(f)
+from qquake.services import SERVICES
 
 
 class Fetcher(QObject):
@@ -103,7 +97,7 @@ class Fetcher(QObject):
 
         self.result = None
 
-        self.service_config = CONFIG_SERVICES[self.service_type][self.event_service]
+        self.service_config = SERVICES[self.service_type][self.event_service]
 
     def generate_url(self, format='text'):
         """

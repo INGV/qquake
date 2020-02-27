@@ -35,19 +35,11 @@ from qgis.core import (
     QgsRasterLayer
 )
 
+from qquake.services import SERVICES
 from qquake.gui.gui_utils import GuiUtils
 from qquake.gui.simple_node_model import SimpleNodeModel, ModelNode
 
 FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('ogc_service_widget.ui'))
-CONFIG_PATH = os.path.join(
-    os.path.dirname(__file__),
-    '..',
-    'config',
-    'config.json')
-
-with open(CONFIG_PATH, 'r') as f:
-    CONFIG = json.load(f)
-
 
 class OgcServiceWidget(QWidget, FORM_CLASS):
 
@@ -67,7 +59,7 @@ class OgcServiceWidget(QWidget, FORM_CLASS):
     def set_service(self, service_name, service_type):
         self.service_type = service_type
         self.service_name = service_name
-        self.service_config = CONFIG[service_type][service_name]
+        self.service_config = SERVICES[service_type][service_name]
         layers = self.service_config['default']['layers']
 
         nodes = []

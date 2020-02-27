@@ -46,15 +46,6 @@ from qquake.gui.output_table_options_dialog import OutputTableOptionsDialog
 
 FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('filter_parameter_widget_base.ui'))
 
-CONFIG_SERVICES_PATH = os.path.join(
-    os.path.dirname(__file__),
-    '..',
-    'config',
-    'config.json')
-
-with open(CONFIG_SERVICES_PATH, 'r') as f:
-    CONFIG_SERVICES = json.load(f)
-
 
 class FilterParameterWidget(QWidget, FORM_CLASS):
     changed = pyqtSignal()
@@ -208,7 +199,8 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
         preferred_origins_only_checked = s.value('/plugins/qquake/{}_last_output_preferred_origins_only'.format(prefix))
         if preferred_origins_only_checked is not None:
             self.output_preferred_origins_only_check.setChecked(bool(preferred_origins_only_checked))
-        preferred_magnitudes_only_checked = s.value('/plugins/qquake/{}_last_output_preferred_magnitude_only'.format(prefix))
+        preferred_magnitudes_only_checked = s.value(
+            '/plugins/qquake/{}_last_output_preferred_magnitude_only'.format(prefix))
         if preferred_magnitudes_only_checked is not None:
             self.output_preferred_magnitudes_only_check.setChecked(bool(preferred_magnitudes_only_checked))
 
@@ -223,7 +215,8 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
         s.setValue('/plugins/qquake/{}_last_event_min_magnitude'.format(prefix), self.fdsn_event_min_magnitude.value())
         s.setValue('/plugins/qquake/{}_last_event_max_magnitude'.format(prefix), self.fdsn_event_max_magnitude.value())
 
-        s.setValue('/plugins/qquake/{}_last_event_extent_enabled'.format(prefix), self.limit_extent_checkbox.isChecked())
+        s.setValue('/plugins/qquake/{}_last_event_extent_enabled'.format(prefix),
+                   self.limit_extent_checkbox.isChecked())
         s.setValue('/plugins/qquake/{}_last_event_extent_rect'.format(prefix), self.radio_rectangular_area.isChecked())
         s.setValue('/plugins/qquake/{}_last_event_extent_circle'.format(prefix), self.radio_circular_area.isChecked())
         s.setValue('/plugins/qquake/{}_last_event_min_lat_checked'.format(prefix), self.lat_min_checkbox.isChecked())
@@ -246,10 +239,12 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
 
         s.setValue('/plugins/qquake/{}_last_event_max_intensity_greater_checked'.format(prefix),
                    self.earthquake_max_intensity_greater_check.isChecked())
-        s.setValue('/plugins/qquake/{}_last_event_max_intensity_greater'.format(prefix), self.earthquake_max_intensity_greater_spin.value())
+        s.setValue('/plugins/qquake/{}_last_event_max_intensity_greater'.format(prefix),
+                   self.earthquake_max_intensity_greater_spin.value())
         s.setValue('/plugins/qquake/{}_last_event_mdps_greater_checked'.format(prefix),
                    self.earthquake_number_mdps_greater_check.isChecked())
-        s.setValue('/plugins/qquake/{}_last_event_mdps_greater'.format(prefix), self.earthquake_number_mdps_greater_spin.value())
+        s.setValue('/plugins/qquake/{}_last_event_mdps_greater'.format(prefix),
+                   self.earthquake_number_mdps_greater_spin.value())
 
         s.setValue('/plugins/qquake/{}_last_event_min_time_checked'.format(prefix), self.min_time_check.isChecked())
         s.setValue('/plugins/qquake/{}_last_event_max_time_checked'.format(prefix), self.max_time_check.isChecked())
