@@ -41,7 +41,6 @@ from qquake.services import SERVICES
 
 FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('output_table_options.ui'))
 
-
 CONFIG_FIELDS_PATH = os.path.join(
     os.path.dirname(__file__),
     '..',
@@ -80,6 +79,9 @@ class OutputTableOptionsDialog(QDialog, FORM_CLASS):
 
             parent_node = ModelNode([settings['label']])
             for f in settings['fields']:
+                if f.get('skip'):
+                    continue
+
                 if f['source'].startswith('eventParameters'):
                     path = f['source'][len('eventParameters>event>'):]
                 else:
@@ -136,7 +138,8 @@ class OutputTableOptionsDialog(QDialog, FORM_CLASS):
             parent = self.field_model.index(r, 0, QModelIndex())
             for rc in range(self.field_model.rowCount(parent)):
                 path = self.field_model.data(self.field_model.index(rc, 2, parent), Qt.UserRole)
-                self.field_model.setData(self.field_model.index(rc, 0, parent), path in self.default_fields, Qt.CheckStateRole)
+                self.field_model.setData(self.field_model.index(rc, 0, parent), path in self.default_fields,
+                                         Qt.CheckStateRole)
 
     def _check_all(self, checked=True):
         for r in range(self.field_model.rowCount(QModelIndex())):

@@ -775,8 +775,10 @@ class Event:
             if o.depth is not None:
                 geom = QgsPoint(x=o.longitude.value, y=o.latitude.value,
                                 z=-o.depth.value * 1000)
-            else:
+            elif o.longitude and o.latitude:
                 geom = QgsPoint(x=o.longitude.value, y=o.latitude.value)
+            else:
+                geom = QgsGeometry()
             f.setGeometry(QgsGeometry(geom))
 
             features.append(f)
