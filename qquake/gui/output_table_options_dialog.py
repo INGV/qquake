@@ -35,14 +35,15 @@ from qgis.PyQt.QtCore import (
 from qgis.core import QgsSettings
 from qgis.gui import QgsGui
 
+from qquake.gui.gui_utils import GuiUtils
 from qquake.gui.simple_node_model import SimpleNodeModel, ModelNode
 
-# This loads your .ui file so that PyQt can populate your plugin with the elements from Qt Designer
-FORM_CLASS, _ = uic.loadUiType(os.path.join(
-    os.path.dirname(__file__), 'output_table_options.ui'))
+FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('output_table_options.ui'))
+
 
 CONFIG_FIELDS_PATH = os.path.join(
     os.path.dirname(__file__),
+    '..',
     'config',
     'config_fields_fsdnevent.json')
 

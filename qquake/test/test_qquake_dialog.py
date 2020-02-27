@@ -16,7 +16,7 @@ import unittest
 
 from qgis.PyQt.QtWidgets import QDialogButtonBox, QDialog
 
-from qquake.qquake_dialog import QQuakeDialog
+from qquake.gui.qquake_dialog import QQuakeDialog
 
 from qquake.test.utilities import get_qgis_app
 

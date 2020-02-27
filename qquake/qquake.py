@@ -25,14 +25,13 @@ import os.path
 from qgis.PyQt.QtCore import (
     QSettings,
     QTranslator,
-    QCoreApplication,
-    Qt
+    QCoreApplication
 )
 from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QAction
 
 # Import the code for the dialog
-from qquake.qquake_dialog import QQuakeDialog
+from qquake.gui.qquake_dialog import QQuakeDialog
 from qquake.gui.gui_utils import GuiUtils
 
 

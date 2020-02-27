@@ -49,21 +49,12 @@ from qgis.gui import (
 )
 
 from qquake.fetcher import Fetcher
-from qquake.filter_parameter_widget import FilterParameterWidget
-from qquake.ogc_service_options_widget import OgcServiceWidget
+from qquake.gui.filter_parameter_widget import FilterParameterWidget
+from qquake.gui.ogc_service_options_widget import OgcServiceWidget
+from qquake.gui.gui_utils import GuiUtils
+from qquake.services import SERVICES
 
-
-# This loads your .ui file so that PyQt can populate your plugin with the elements from Qt Designer
-FORM_CLASS, _ = uic.loadUiType(os.path.join(
-    os.path.dirname(__file__), 'qquake_dialog_base.ui'))
-
-CONFIG_SERVICES_PATH = os.path.join(
-    os.path.dirname(__file__),
-    'config',
-    'config.json')
-
-with open(CONFIG_SERVICES_PATH, 'r') as f:
-    CONFIG_SERVICES = json.load(f)
+FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('qquake_dialog_base.ui'))
 
 
 class QQuakeDialog(QDialog, FORM_CLASS):
@@ -108,11 +99,11 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.iface = iface
 
         # fill the FDSN listWidget with the dictionary keys
-        self.fdsn_event_list.addItems(CONFIG_SERVICES['fdsnevent'].keys())
+        self.fdsn_event_list.addItems(SERVICES['fdsnevent'].keys())
         self.fdsn_event_list.setCurrentRow(0)
 
         # fill the FDSN listWidget with the dictionary keys
-        self.fdsn_macro_list.addItems(CONFIG_SERVICES['macroseismic'].keys())
+        self.fdsn_macro_list.addItems(SERVICES['macroseismic'].keys())
         self.fdsn_macro_list.setCurrentRow(0)
 
         # OGC
@@ -199,11 +190,11 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                 service_type = 'macroseismic'
 
         if service_type == 'fdsnevent':
-             service = self.fdsn_event_list.currentItem().text()
-             filter_widget = self.fsdn_event_filter
+            service = self.fdsn_event_list.currentItem().text()
+            filter_widget = self.fsdn_event_filter
         elif service_type == 'macroseismic':
-             service = self.fdsn_macro_list.currentItem().text()
-             filter_widget = self.macro_filter
+            service = self.fdsn_macro_list.currentItem().text()
+            filter_widget = self.macro_filter
 
         return Fetcher(service_type=service_type,
                        event_service=service,
@@ -232,9 +223,9 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         fetcher = self.get_fetcher(service_type)
 
         if service_type == 'fdsnevent':
-             self.fsdn_event_url_text_browser.setText('<a href="{0}">{0}</a>'.format(fetcher.generate_url()))
+            self.fsdn_event_url_text_browser.setText('<a href="{0}">{0}</a>'.format(fetcher.generate_url()))
         elif service_type == 'macroseismic':
-             self.fdsn_macro_url_text_browser.setText('<a href="{0}">{0}</a>'.format(fetcher.generate_url()))
+            self.fdsn_macro_url_text_browser.setText('<a href="{0}">{0}</a>'.format(fetcher.generate_url()))
 
     def refreshFdsnEventWidgets(self):
         """
@@ -242,7 +233,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         """
 
         datestart = QDateTime.fromString(
-            CONFIG_SERVICES['fdsnevent'][self.fdsn_event_list.currentItem(
+            SERVICES['fdsnevent'][self.fdsn_event_list.currentItem(
             ).text()]['default']['datestart'],
             Qt.ISODate
         )
@@ -250,7 +241,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         # if the dateend is not set in the config.json set the date to NOW
         try:
             dateend = QDateTime.fromString(
-                CONFIG_SERVICES['fdsnevent'][self.fdsn_event_list.currentItem(
+                SERVICES['fdsnevent'][self.fdsn_event_list.currentItem(
                 ).text()]['default']['dateend'],
                 Qt.ISODate
             )
@@ -259,7 +250,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
 
         self.fsdn_event_filter.set_date_range_limits(datestart, dateend)
 
-        box = CONFIG_SERVICES['boundingboxpredefined'][CONFIG_SERVICES['fdsnevent'][self.fdsn_event_list.currentItem(
+        box = SERVICES['boundingboxpredefined'][SERVICES['fdsnevent'][self.fdsn_event_list.currentItem(
         ).text()]['default']['boundingboxpredefined']]['boundingbox']
         self.fsdn_event_filter.set_extent_limit(box)
 
@@ -269,7 +260,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         """
 
         datestart = QDateTime.fromString(
-            CONFIG_SERVICES['macroseismic'][self.fdsn_macro_list.currentItem(
+            SERVICES['macroseismic'][self.fdsn_macro_list.currentItem(
             ).text()]['default']['datestart'],
             Qt.ISODate
         )
@@ -277,7 +268,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         # if the dateend is not set in the config.json set the date to NOW
         try:
             dateend = QDateTime.fromString(
-                CONFIG_SERVICES['macroseismic'][self.fdsn_macro_list.currentItem(
+                SERVICES['macroseismic'][self.fdsn_macro_list.currentItem(
                 ).text()]['default']['dateend'],
                 Qt.ISODate
             )
@@ -286,8 +277,8 @@ class QQuakeDialog(QDialog, FORM_CLASS):
 
         self.macro_filter.set_date_range_limits(datestart, dateend)
 
-        box = CONFIG_SERVICES['boundingboxpredefined'][
-            CONFIG_SERVICES['macroseismic'][self.fdsn_macro_list.currentItem(
+        box = SERVICES['boundingboxpredefined'][
+            SERVICES['macroseismic'][self.fdsn_macro_list.currentItem(
             ).text()]['default']['boundingboxpredefined']]['boundingbox']
         self.macro_filter.set_extent_limit(box)
 
@@ -304,7 +295,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         """
         self.ogc_list.clear()
         ogc_selection = self.ogc_combo.currentData()
-        self.ogc_list.addItems(CONFIG_SERVICES[ogc_selection].keys())
+        self.ogc_list.addItems(SERVICES[ogc_selection].keys())
         self.ogc_list.setCurrentRow(0)
 
     def _ogc_service_changed(self):
