@@ -24,7 +24,7 @@
 
 from qgis.PyQt import uic
 from qgis.PyQt.QtWidgets import QWidget
-from qgis.PyQt.QtCore import pyqtSignal
+from qgis.PyQt.QtCore import pyqtSignal, QDateTime
 
 from qgis.core import (
     QgsProject,
@@ -390,27 +390,57 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
         if self.fdsn_event_start_date.dateTime() > self.fdsn_event_end_date.dateTime():
             self.fdsn_event_end_date.setDate(self.fdsn_event_start_date.date())
 
-    def set_date_range_limits(self, date_start, date_end):
-        self.fdsn_event_start_date.setMinimumDateTime(date_start)
-        self.fdsn_event_start_date.setMaximumDateTime(date_end)
-        self.fdsn_event_start_date.setDateTime(date_start)
+    def set_date_range_limits(self, date_start=None, date_end=None):
+        if date_start:
+            self.fdsn_event_start_date.setMinimumDateTime(date_start)
+        else:
+            self.fdsn_event_start_date.clearMinimumDate()
 
-        if date_start.isValid():
+        if date_end:
+            self.fdsn_event_start_date.setMaximumDateTime(date_end)
+        else:
+            self.fdsn_event_start_date.clearMaximumDate()
+
+        if date_start:
+            self.fdsn_event_start_date.setDateTime(date_start)
+
+        if date_start:
             self.min_time_check.setText(
                 self.tr("Start (from {})").format(date_start.toString('yyyy-MM-dd')))
         else:
             self.min_time_check.setText(self.tr("Start"))
 
-        if date_end.isValid():
+        if date_end:
             self.max_time_check.setText(
                 self.tr("End (until {})").format(date_end.toString('yyyy-MM-dd')))
         else:
             self.max_time_check.setText(self.tr("End"))
 
-        self.fdsn_event_end_date.setMinimumDateTime(date_start)
-        self.fdsn_event_end_date.setMaximumDateTime(date_end)
+        if date_start:
+            self.fdsn_event_end_date.setMinimumDateTime(date_start)
+        else:
+            self.fdsn_event_end_date.clearMinimumDate()
+        if date_end:
+            self.fdsn_event_end_date.setMaximumDateTime(date_end)
+        else:
+            self.fdsn_event_end_date.clearMaximumDate()
+
         # just make a week difference from START date
-        self.fdsn_event_end_date.setDateTime(date_start.addDays(7))
+        if date_start:
+            self.fdsn_event_end_date.setDateTime(date_start.addDays(7))
+
+    def set_current_date_range(self, date_start=None, date_end=None):
+        if date_start is not None:
+            self.fdsn_event_start_date.setDateTime(date_start)
+            self.min_time_check.setChecked(True)
+        else:
+            self.min_time_check.setChecked(False)
+
+        if date_end is not None:
+            self.fdsn_event_end_date.setDateTime(date_end)
+            self.max_time_check.setChecked(True)
+        else:
+            self.max_time_check.setChecked(False)
 
     def set_extent_limit(self, box):
         self.long_min_spinbox.setMinimum(box[0])
