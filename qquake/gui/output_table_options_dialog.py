@@ -53,7 +53,7 @@ with open(CONFIG_FIELDS_PATH, 'r') as f:
 
 class OutputTableOptionsDialog(QDialog, FORM_CLASS):
 
-    def __init__(self, service_type, service_id, parent=None):
+    def __init__(self, service_type, service_id, initial_fields, parent=None):
         """Constructor."""
         super().__init__(parent)
         self.setupUi(self)
@@ -86,7 +86,11 @@ class OutputTableOptionsDialog(QDialog, FORM_CLASS):
                     path = f['source'][len('eventParameters>event>'):]
                 else:
                     path = f['source'][len('FDSNStationXML>Network>'):]
-                checked = s.value('/plugins/qquake/output_field_{}'.format(path.replace('>', '_')), True, bool)
+
+                if initial_fields:
+                    checked = f['source'] in initial_fields
+                else:
+                    checked = s.value('/plugins/qquake/output_field_{}'.format(path.replace('>', '_')), True, bool)
 
                 parent_node.addChild(
                     ModelNode(['checked', f['field'], path], checked, user_data=f['source']))
