@@ -22,9 +22,6 @@
  ***************************************************************************/
 """
 
-import os
-import json
-
 from qgis.PyQt import uic
 from qgis.PyQt.QtWidgets import (
     QDialogButtonBox,
@@ -51,6 +48,7 @@ from qgis.gui import (
 from qquake.fetcher import Fetcher
 from qquake.gui.filter_parameter_widget import FilterParameterWidget
 from qquake.gui.ogc_service_options_widget import OgcServiceWidget
+from qquake.gui.service_information_widget import ServiceInformationWidget
 from qquake.gui.gui_utils import GuiUtils
 from qquake.services import SERVICES
 
@@ -68,23 +66,42 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.fsdn_event_filter = FilterParameterWidget(iface)
         self.fsdn_event_filter.set_show_macroseismic_data_options(False)
         vl = QVBoxLayout()
+        vl.setContentsMargins(0, 0, 0, 0)
         vl.addWidget(self.fsdn_event_filter)
         self.fsdn_event_filter_container.setLayout(vl)
+        self.earthquake_service_info_widget = ServiceInformationWidget(iface)
+        vl = QVBoxLayout()
+        vl.setContentsMargins(0, 0, 0, 0)
+        vl.addWidget(self.earthquake_service_info_widget)
+        self.earthquake_service_info_container.setLayout(vl)
 
         self.macro_filter = FilterParameterWidget(iface)
         vl = QVBoxLayout()
+        vl.setContentsMargins(0, 0, 0, 0)
         vl.addWidget(self.macro_filter)
         self.macro_filter_container.setLayout(vl)
+        self.macro_service_info_widget = ServiceInformationWidget(iface)
+        vl = QVBoxLayout()
+        vl.setContentsMargins(0, 0, 0, 0)
+        vl.addWidget(self.macro_service_info_widget)
+        self.macro_service_info_container.setLayout(vl)
 
         self.station_filter = FilterParameterWidget(iface)
         vl = QVBoxLayout()
+        vl.setContentsMargins(0, 0, 0, 0)
         vl.addWidget(self.station_filter)
         self.station_filter_container.setLayout(vl)
 
         self.ogc_service_widget = OgcServiceWidget(iface)
         vl = QVBoxLayout()
+        vl.setContentsMargins(0, 0, 0, 0)
         vl.addWidget(self.ogc_service_widget)
         self.ogc_widget_container.setLayout(vl)
+        self.ogc_service_info_widget = ServiceInformationWidget(iface)
+        vl = QVBoxLayout()
+        vl.setContentsMargins(0, 0, 0, 0)
+        vl.addWidget(self.ogc_service_info_widget)
+        self.ogc_service_info_container.setLayout(vl)
 
         self.message_bar = QgsMessageBar()
         self.message_bar.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
@@ -115,13 +132,13 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.refreshOgcWidgets()
 
         # connect to refreshing function to refresh the UI depending on the WS
-        self.refreshFdsnEventWidgets()
+        self._refresh_fdsnevent_widgets()
         self.refreshFdsnMacroseismicWidgets()
         self.refreshFdsnStationWidgets()
 
         # change the UI parameter according to the web service chosen
         self.fdsn_event_list.currentRowChanged.connect(
-            self.refreshFdsnEventWidgets)
+            self._refresh_fdsnevent_widgets)
         self.fdsn_macro_list.currentRowChanged.connect(
             self.refreshFdsnMacroseismicWidgets)
         self.fdsn_station_list.currentRowChanged.connect(
@@ -227,60 +244,59 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         elif service_type == 'macroseismic':
             self.fdsn_macro_url_text_browser.setText('<a href="{0}">{0}</a>'.format(fetcher.generate_url()))
 
-    def refreshFdsnEventWidgets(self):
+    def _refresh_fdsnevent_widgets(self):
         """
         Refreshing the FDSN-Event UI depending on the WS chosen
         """
-
-        datestart = QDateTime.fromString(
-            SERVICES['fdsnevent'][self.fdsn_event_list.currentItem(
-            ).text()]['default']['datestart'],
+        service_id = self.fdsn_event_list.currentItem().text()
+        service_config = SERVICES['fdsnevent'][service_id]
+        date_start = QDateTime.fromString(
+            service_config['default']['datestart'],
             Qt.ISODate
         )
 
         # if the dateend is not set in the config.json set the date to NOW
         try:
-            dateend = QDateTime.fromString(
-                SERVICES['fdsnevent'][self.fdsn_event_list.currentItem(
-                ).text()]['default']['dateend'],
+            date_end = QDateTime.fromString(
+                service_config['default']['dateend'],
                 Qt.ISODate
             )
         except KeyError:
-            dateend = QDate.currentDate()
+            date_end = QDate.currentDate()
 
-        self.fsdn_event_filter.set_date_range_limits(datestart, dateend)
+        self.fsdn_event_filter.set_date_range_limits(date_start, date_end)
 
-        box = SERVICES['boundingboxpredefined'][SERVICES['fdsnevent'][self.fdsn_event_list.currentItem(
-        ).text()]['default']['boundingboxpredefined']]['boundingbox']
+        box = SERVICES['boundingboxpredefined'][service_config['default']['boundingboxpredefined']]['boundingbox']
         self.fsdn_event_filter.set_extent_limit(box)
+        self.earthquake_service_info_widget.set_service(service_type='fdsnevent', service_name=service_id)
 
     def refreshFdsnMacroseismicWidgets(self):
         """
         Refreshing the FDSN-Macroseismic UI depending on the WS chosen
         """
+        service_id = self.fdsn_macro_list.currentItem().text()
+        service_config = SERVICES['macroseismic'][service_id]
 
-        datestart = QDateTime.fromString(
-            SERVICES['macroseismic'][self.fdsn_macro_list.currentItem(
-            ).text()]['default']['datestart'],
+        date_start = QDateTime.fromString(
+            service_config['default']['datestart'],
             Qt.ISODate
         )
 
         # if the dateend is not set in the config.json set the date to NOW
         try:
-            dateend = QDateTime.fromString(
-                SERVICES['macroseismic'][self.fdsn_macro_list.currentItem(
-                ).text()]['default']['dateend'],
+            date_end = QDateTime.fromString(
+                service_config['default']['dateend'],
                 Qt.ISODate
             )
         except KeyError:
-            dateend = QDate.currentDate()
+            date_end = QDate.currentDate()
 
-        self.macro_filter.set_date_range_limits(datestart, dateend)
+        self.macro_filter.set_date_range_limits(date_start, date_end)
 
         box = SERVICES['boundingboxpredefined'][
-            SERVICES['macroseismic'][self.fdsn_macro_list.currentItem(
-            ).text()]['default']['boundingboxpredefined']]['boundingbox']
+            service_config['default']['boundingboxpredefined']]['boundingbox']
         self.macro_filter.set_extent_limit(box)
+        self.macro_service_info_widget.set_service(service_type='macroseismic', service_name=service_id)
 
     def refreshFdsnStationWidgets(self):
         """
@@ -304,6 +320,9 @@ class QQuakeDialog(QDialog, FORM_CLASS):
 
         self.ogc_service_widget.set_service(service_type=self.ogc_combo.currentData(),
                                             service_name=self.ogc_list.currentItem().text())
+
+        self.ogc_service_info_widget.set_service(service_type=self.ogc_combo.currentData(),
+                                                 service_name=self.ogc_list.currentItem().text())
 
     def _getEventList(self):
         """
