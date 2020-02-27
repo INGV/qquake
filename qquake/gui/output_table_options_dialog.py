@@ -96,6 +96,8 @@ class OutputTableOptionsDialog(QDialog, FORM_CLASS):
             self.fields_tree_view.setFirstColumnSpanned(r, QModelIndex(), True)
 
         self.reset_fields_button.clicked.connect(self.reset_fields)
+        self.check_all_button.clicked.connect(lambda: self._check_all(True))
+        self.uncheck_all_button.clicked.connect(lambda: self._check_all(False))
 
     def accept(self):
         s = QgsSettings()
@@ -113,3 +115,9 @@ class OutputTableOptionsDialog(QDialog, FORM_CLASS):
             parent = self.field_model.index(r, 0, QModelIndex())
             for rc in range(self.field_model.rowCount(parent)):
                 self.field_model.setData(self.field_model.index(rc, 0, parent), True, Qt.CheckStateRole)
+
+    def _check_all(self, checked=True):
+        for r in range(self.field_model.rowCount(QModelIndex())):
+            parent = self.field_model.index(r, 0, QModelIndex())
+            for rc in range(self.field_model.rowCount(parent)):
+                self.field_model.setData(self.field_model.index(rc, 0, parent), checked, Qt.CheckStateRole)
