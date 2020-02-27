@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>577</width>
-    <height>382</height>
+    <width>899</width>
+    <height>621</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,7 +20,7 @@
       <enum>QTabWidget::North</enum>
      </property>
      <property name="currentIndex">
-      <number>3</number>
+      <number>0</number>
      </property>
      <property name="tabsClosable">
       <bool>false</bool>
@@ -43,11 +43,21 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>535</width>
-            <height>245</height>
+            <width>857</width>
+            <height>484</height>
            </rect>
           </property>
-          <layout class="QGridLayout" name="gridLayout">
+          <layout class="QGridLayout" name="gridLayout" rowstretch="1,0" columnstretch="0,1,0">
+           <item row="1" column="0" colspan="3">
+            <widget class="QTextBrowser" name="fsdn_event_url_text_browser">
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+             <property name="openExternalLinks">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
            <item row="0" column="0">
             <widget class="QListWidget" name="fdsn_event_list">
              <property name="minimumSize">
@@ -65,23 +75,37 @@
             </widget>
            </item>
            <item row="0" column="1">
-            <widget class="QWidget" name="fsdn_event_filter_container" native="true">
-             <property name="minimumSize">
-              <size>
-               <width>40</width>
-               <height>0</height>
-              </size>
+            <widget class="QTabWidget" name="tabWidget_2">
+             <property name="currentIndex">
+              <number>0</number>
              </property>
-            </widget>
-           </item>
-           <item row="1" column="0" colspan="2">
-            <widget class="QTextBrowser" name="fsdn_event_url_text_browser">
-             <property name="frameShape">
-              <enum>QFrame::NoFrame</enum>
-             </property>
-             <property name="openExternalLinks">
-              <bool>true</bool>
-             </property>
+             <widget class="QWidget" name="tab_5">
+              <attribute name="title">
+               <string>Search by Parameters</string>
+              </attribute>
+              <layout class="QVBoxLayout" name="verticalLayout_3">
+               <item>
+                <widget class="QWidget" name="fsdn_event_filter_container" native="true">
+                 <property name="minimumSize">
+                  <size>
+                   <width>40</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+             <widget class="QWidget" name="tab_6">
+              <attribute name="title">
+               <string>Service Information</string>
+              </attribute>
+              <layout class="QVBoxLayout" name="verticalLayout_5">
+               <item>
+                <widget class="QWidget" name="earthquake_service_info_container" native="true"/>
+               </item>
+              </layout>
+             </widget>
             </widget>
            </item>
           </layout>
@@ -105,11 +129,11 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>535</width>
-            <height>245</height>
+            <width>857</width>
+            <height>484</height>
            </rect>
           </property>
-          <layout class="QGridLayout" name="gridLayout_2">
+          <layout class="QGridLayout" name="gridLayout_2" rowstretch="1,0" columnstretch="0,1,0">
            <item row="0" column="0">
             <widget class="QListWidget" name="fdsn_macro_list">
              <property name="minimumSize">
@@ -126,17 +150,7 @@
              </property>
             </widget>
            </item>
-           <item row="0" column="1">
-            <widget class="QWidget" name="macro_filter_container" native="true">
-             <property name="minimumSize">
-              <size>
-               <width>40</width>
-               <height>0</height>
-              </size>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0" colspan="2">
+           <item row="1" column="0" colspan="3">
             <widget class="QTextBrowser" name="fdsn_macro_url_text_browser">
              <property name="frameShape">
               <enum>QFrame::NoFrame</enum>
@@ -144,6 +158,40 @@
              <property name="openExternalLinks">
               <bool>true</bool>
              </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QTabWidget" name="tabWidget">
+             <property name="currentIndex">
+              <number>0</number>
+             </property>
+             <widget class="QWidget" name="tab_3">
+              <attribute name="title">
+               <string>Search by Parameters</string>
+              </attribute>
+              <layout class="QVBoxLayout" name="verticalLayout_2">
+               <item>
+                <widget class="QWidget" name="macro_filter_container" native="true">
+                 <property name="minimumSize">
+                  <size>
+                   <width>40</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+             <widget class="QWidget" name="tab_4">
+              <attribute name="title">
+               <string>Service Information</string>
+              </attribute>
+              <layout class="QVBoxLayout" name="verticalLayout_6">
+               <item>
+                <widget class="QWidget" name="macro_service_info_container" native="true"/>
+               </item>
+              </layout>
+             </widget>
             </widget>
            </item>
           </layout>
@@ -167,8 +215,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>535</width>
-            <height>245</height>
+            <width>857</width>
+            <height>484</height>
            </rect>
           </property>
           <layout class="QGridLayout" name="gridLayout_6">
@@ -202,11 +250,11 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>535</width>
-            <height>245</height>
+            <width>857</width>
+            <height>484</height>
            </rect>
           </property>
-          <layout class="QGridLayout" name="gridLayout_4" columnstretch="0,1">
+          <layout class="QGridLayout" name="gridLayout_4" columnstretch="0,0">
            <item row="0" column="0">
             <widget class="QComboBox" name="ogc_combo"/>
            </item>
@@ -214,7 +262,31 @@
             <widget class="QListWidget" name="ogc_list"/>
            </item>
            <item row="0" column="1" rowspan="2">
-            <widget class="QWidget" name="ogc_widget_container" native="true"/>
+            <widget class="QTabWidget" name="tabWidget_3">
+             <property name="currentIndex">
+              <number>0</number>
+             </property>
+             <widget class="QWidget" name="tab_7">
+              <attribute name="title">
+               <string>Service Configuration</string>
+              </attribute>
+              <layout class="QVBoxLayout" name="verticalLayout_4">
+               <item>
+                <widget class="QWidget" name="ogc_widget_container" native="true"/>
+               </item>
+              </layout>
+             </widget>
+             <widget class="QWidget" name="tab_8">
+              <attribute name="title">
+               <string>Service Information</string>
+              </attribute>
+              <layout class="QVBoxLayout" name="verticalLayout_7">
+               <item>
+                <widget class="QWidget" name="ogc_service_info_container" native="true"/>
+               </item>
+              </layout>
+             </widget>
+            </widget>
            </item>
           </layout>
          </widget>

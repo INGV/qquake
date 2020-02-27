@@ -68,21 +68,25 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.fsdn_event_filter = FilterParameterWidget(iface)
         self.fsdn_event_filter.set_show_macroseismic_data_options(False)
         vl = QVBoxLayout()
+        vl.setContentsMargins(0,0,0,0)
         vl.addWidget(self.fsdn_event_filter)
         self.fsdn_event_filter_container.setLayout(vl)
 
         self.macro_filter = FilterParameterWidget(iface)
         vl = QVBoxLayout()
+        vl.setContentsMargins(0, 0, 0, 0)
         vl.addWidget(self.macro_filter)
         self.macro_filter_container.setLayout(vl)
 
         self.station_filter = FilterParameterWidget(iface)
         vl = QVBoxLayout()
+        vl.setContentsMargins(0, 0, 0, 0)
         vl.addWidget(self.station_filter)
         self.station_filter_container.setLayout(vl)
 
         self.ogc_service_widget = OgcServiceWidget(iface)
         vl = QVBoxLayout()
+        vl.setContentsMargins(0, 0, 0, 0)
         vl.addWidget(self.ogc_service_widget)
         self.ogc_widget_container.setLayout(vl)
 
