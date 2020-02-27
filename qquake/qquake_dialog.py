@@ -50,6 +50,8 @@ from qgis.gui import (
 
 from qquake.fetcher import Fetcher
 from qquake.filter_parameter_widget import FilterParameterWidget
+from qquake.ogc_service_options_widget import OgcServiceWidget
+
 
 # This loads your .ui file so that PyQt can populate your plugin with the elements from Qt Designer
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
@@ -88,6 +90,11 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         vl.addWidget(self.station_filter)
         self.station_filter_container.setLayout(vl)
 
+        self.ogc_service_widget = OgcServiceWidget(iface)
+        vl = QVBoxLayout()
+        vl.addWidget(self.ogc_service_widget)
+        self.ogc_widget_container.setLayout(vl)
+
         self.message_bar = QgsMessageBar()
         self.message_bar.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         self.verticalLayout.insertWidget(0, self.message_bar)
@@ -112,6 +119,8 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.ogc_combo.addItem(self.tr('Web Map Services (WMS)'), 'wms')
         self.ogc_combo.addItem(self.tr('Web Feature Services (WFS)'), 'wfs')
         self.ogc_combo.currentIndexChanged.connect(self.refreshOgcWidgets)
+        self.ogc_list.currentRowChanged.connect(
+            self._ogc_service_changed)
         self.refreshOgcWidgets()
 
         # connect to refreshing function to refresh the UI depending on the WS
@@ -286,7 +295,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         """
         Refreshing the FDSN-Macroseismic UI depending on the WS chosen
         """
-        
+
         pass
 
     def refreshOgcWidgets(self):
@@ -297,6 +306,13 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         ogc_selection = self.ogc_combo.currentData()
         self.ogc_list.addItems(CONFIG_SERVICES[ogc_selection].keys())
         self.ogc_list.setCurrentRow(0)
+
+    def _ogc_service_changed(self):
+        if not self.ogc_list.currentItem():
+            return
+
+        self.ogc_service_widget.set_service(service_type=self.ogc_combo.currentData(),
+                                            service_name=self.ogc_list.currentItem().text())
 
     def _getEventList(self):
         """
