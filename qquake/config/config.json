@@ -625,6 +625,7 @@
       "endpointurl": "https://www.emidius.eu/services/europe/wfs?",
       "datestart": "1000-01-01T01:01:01+00:00",
       "dateend": "1899-12-31T23:59:59+00:00",
+      "srs": "EPSG:4326",
       "default": {
         "wfsversion": "2.0.0",
         "layers": [
@@ -649,6 +650,7 @@
       "endpointurl": "https://emidius.mi.ingv.it/services/italy/wfs?",
       "datestart": "1000-01-01T01:01:01+00:00",
       "dateend": "2017-12-31T23:59:59+00:00",
+      "srs": "EPSG:4326",
       "default": {
         "wfsversion": "2.0.0",
         "layers": [
@@ -669,6 +671,7 @@
       "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
       "dataproviderurl": "http://www.ingv.it",
+      "srs": "EPSG:4326",
       "endpointurl": "http://services.seismofaults.eu/geoserver/EDSF/wfs?",
       "datestart": "",
       "dateend": "",
