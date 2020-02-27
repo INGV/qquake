@@ -48,4 +48,3 @@ class ServiceInformationWidget(QWidget, FORM_CLASS):
         self.service_type = service_type
         self.service_name = service_name
         self.service_config = SERVICES[service_type][service_name]
-        layers = self.service_config['default']['layers']
