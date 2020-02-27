@@ -20,7 +20,7 @@
       <enum>QTabWidget::North</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <property name="tabsClosable">
       <bool>false</bool>
@@ -206,25 +206,15 @@
             <height>245</height>
            </rect>
           </property>
-          <layout class="QGridLayout" name="gridLayout_4">
+          <layout class="QGridLayout" name="gridLayout_4" columnstretch="0,1">
            <item row="0" column="0">
             <widget class="QComboBox" name="ogc_combo"/>
            </item>
-           <item row="0" column="1">
-            <spacer name="horizontalSpacer">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>290</width>
-               <height>17</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
            <item row="1" column="0">
             <widget class="QListWidget" name="ogc_list"/>
+           </item>
+           <item row="0" column="1" rowspan="2">
+            <widget class="QWidget" name="ogc_widget_container" native="true"/>
            </item>
           </layout>
          </widget>

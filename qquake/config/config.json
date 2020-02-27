@@ -625,12 +625,13 @@
       "endpointurl": "https://www.emidius.eu/services/europe/wfs?",
       "datestart": "1000-01-01T01:01:01+00:00",
       "dateend": "1899-12-31T23:59:59+00:00",
+      "srs": "EPSG:4326",
       "default": {
         "wfsversion": "2.0.0",
         "layers": [
           {
             "layername": "europe:SHEEC_1000_1899",
-            "style": "CPTI"
+            "styles": ["CPTI"]
           }
         ]
       },
@@ -649,12 +650,13 @@
       "endpointurl": "https://emidius.mi.ingv.it/services/italy/wfs?",
       "datestart": "1000-01-01T01:01:01+00:00",
       "dateend": "2017-12-31T23:59:59+00:00",
+      "srs": "EPSG:4326",
       "default": {
         "wfsversion": "2.0.0",
         "layers": [
           {
             "layername": "italy:CPTI15",
-            "style": "CPTI"
+            "styles": ["CPTI"]
           }
         ]
       },
@@ -669,6 +671,7 @@
       "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
       "dataproviderurl": "http://www.ingv.it",
+      "srs": "EPSG:4326",
       "endpointurl": "http://services.seismofaults.eu/geoserver/EDSF/wfs?",
       "datestart": "",
       "dateend": "",
@@ -677,22 +680,22 @@
         "layers": [
           {
             "layername": "EDSF:crustal_fault_sources_pln",
-            "style": "default"
+            "styles": ["default"]
           },
           {
             "layername": "EDSF:crustal_fault_sources_top",
-            "style": "default",
-            "style1": "EDSF_avgSR",
-            "style2": "EDSF_faultType",
-            "style3": "EDSF_slipType"
+            "styles": ["default",
+                       "EDSF_avgSR",
+                       "EDSF_faultType",
+                       "EDSF_slipType"]
           },
           {
             "layername": "EDSF:subduction_zones",
-            "style": "default"
+            "styles": ["default"]
           },
           {
             "layername": "EDSF:subduction_contours",
-            "style": "default"
+            "styles": ["default"]
           }
         ]
       },
@@ -710,14 +713,24 @@
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
       "dataproviderurl": "http://www.ingv.it",
       "endpointurl": "https://www.emidius.eu/services/europe/wms?",
+      "srs": "EPSG:4326",
       "datestart": "1000-01-01T01:01:01+00:00",
       "dateend": "1899-12-31T23:59:59+00:00",
       "default": {
         "wmsversion": "1.3.0",
         "layers": [
           {
-            "layername": "europe:SHEEC_1000_1899",
-            "style": "europe:SHEEC_squares_colors"
+            "layername": "SHEEC_1000_1899",
+            "styles": []
+          },
+          {
+            "layername": "SHEEC_1000_1899",
+            "styles": [
+              "europe:SHEEC_circles_colors",
+              "europe:SHEEC_circles_gray",
+              "europe:SHEEC_squares_colors",
+              "europe:SHEEC_squares_gray"
+            ]
           }
         ]
       },
@@ -733,6 +746,7 @@
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
       "dataproviderurl": "http://www.ingv.it",
       "endpointurl": "https://emidius.mi.ingv.it/services/italy/wms?",
+      "srs": "EPSG:4326",
       "datestart": "1000-01-01T01:01:01+00:00",
       "dateend": "2017-12-31T23:59:59+00:00",
       "default": {
@@ -740,7 +754,7 @@
         "layers": [
           {
             "layername": "italy:CPTI15",
-            "style": "italy:CPTI15_squares_colors"
+            "styles": ["italy:CPTI15_squares_colors"]
           }
         ]
       },
@@ -756,6 +770,7 @@
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
       "dataproviderurl": "http://www.ingv.it",
       "endpointurl": "http://services.seismofaults.eu/geoserver/EDSF/wms?",
+      "srs": "EPSG:4326",
       "datestart": "",
       "dateend": "",
       "default": {
@@ -763,31 +778,31 @@
         "layers": [
           {
             "layername": "EDSF:EDSF",
-            "style": "default"
+            "styles": ["default"]
           },
           {
             "layername": "EDSF:EDSF.Crustal_Fault_Sources",
-            "style": "default"
+            "styles": ["default"]
           },
           {
             "layername": "EDSF:EDSF.Subduction_Zones",
-            "style": "default"
+            "styles": ["default"]
           },
           {
             "layername": "EDSF:subduction_zones",
-            "style": "default"
+            "styles": ["default"]
           },
           {
             "layername": "EDSF:subduction_contours",
-            "style": "default"
+            "styles": ["default"]
           },
           {
             "layername": "EDSF:crustal_fault_sources_pln",
-            "style": "default"
+            "styles": ["default"]
           },
           {
             "layername": "EDSF:crustal_fault_sources_top",
-            "style": "default"
+            "styles": ["default"]
           }
         ]
       },

@@ -26,39 +26,16 @@ import os
 import json
 
 from qgis.PyQt import uic
-from qgis.PyQt.QtWidgets import (
-    QDialogButtonBox,
-    QDialog,
-    QSizePolicy
-)
+from qgis.PyQt.QtWidgets import QDialog
 from qgis.PyQt.QtCore import (
-    QAbstractItemModel,
     QModelIndex,
     Qt
 )
 
-from qgis.core import (
-    Qgis,
-    QgsProject,
-    QgsRectangle,
-    QgsCoordinateReferenceSystem,
-    QgsSettings,
-    QgsCoordinateTransform,
-    QgsCsException
-)
-from qgis.gui import (
-    QgsGui,
-    QgsMapToolExtent,
-    QgsMapToolEmitPoint,
-    QgsMessageBar
-)
+from qgis.core import QgsSettings
+from qgis.gui import QgsGui
 
-from qquake.qquake_defs import (
-    fdsn_events_capabilities,
-    MAX_LON_LAT
-)
-
-from qquake.fetcher import Fetcher
+from qquake.gui.simple_node_model import SimpleNodeModel, ModelNode
 
 # This loads your .ui file so that PyQt can populate your plugin with the elements from Qt Designer
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
@@ -71,147 +48,6 @@ CONFIG_FIELDS_PATH = os.path.join(
 
 with open(CONFIG_FIELDS_PATH, 'r') as f:
     CONFIG_FIELDS = json.load(f)
-
-
-class FieldModelNode:
-
-    def __init__(self, data, checked=None):
-        self._data = data
-        self._column_count = len(self._data)
-        self._children = []
-        self._parent = None
-        self._row = 0
-        self._checked = checked
-
-    def data(self, column):
-        if 0 <= column < len(self._data):
-            return self._data[column]
-        return None
-
-    def columnCount(self):
-        return self._column_count
-
-    def childCount(self):
-        return len(self._children)
-
-    def checkable(self):
-        return self._checked is not None
-
-    def checked(self):
-        return self._checked
-
-    def setChecked(self, checked):
-        self._checked = checked
-
-    def child(self, row):
-        if 0 <= row < self.childCount():
-            return self._children[row]
-
-        return None
-
-    def parent(self):
-        return self._parent
-
-    def row(self):
-        return self._row
-
-    def addChild(self, child):
-        child._parent = self
-        child._row = len(self._children)
-        self._children.append(child)
-        self._column_count = max(child.columnCount(), self._column_count)
-
-
-class OutputFieldModel(QAbstractItemModel):
-
-    def __init__(self, nodes):
-        super().__init__()
-        self._root = FieldModelNode([None])
-        for node in nodes:
-            self._root.addChild(node)
-
-    def rowCount(self, index):
-        if index.isValid():
-            return index.internalPointer().childCount()
-        return self._root.childCount()
-
-    def addChild(self, node, _parent):
-        if not _parent or not _parent.isValid():
-            parent = self._root
-        else:
-            parent = _parent.internalPointer()
-        parent.addChild(node)
-
-    def index(self, row, column, _parent=None):
-        if not _parent or not _parent.isValid():
-            parent = self._root
-        else:
-            parent = _parent.internalPointer()
-
-        if not super().hasIndex(row, column, _parent):
-            return QModelIndex()
-
-        child = parent.child(row)
-        if child:
-            return super().createIndex(row, column, child)
-        else:
-            return QModelIndex()
-
-    def parent(self, index):
-        if index.isValid():
-            p = index.internalPointer().parent()
-            if p:
-                return super().createIndex(p.row(), 0, p)
-        return QModelIndex()
-
-    def columnCount(self, index):
-        if index.isValid():
-            return index.internalPointer().columnCount()
-        return self._root.columnCount()
-
-    def data(self, index, role):
-        if not index.isValid():
-            return None
-        node = index.internalPointer()
-
-        if node.checkable() and index.column() == 0:
-            if role == Qt.CheckStateRole:
-                return Qt.Checked if node.checked() else Qt.Unchecked
-            return None
-        else:
-            if role == Qt.DisplayRole:
-                return node.data(index.column())
-        return None
-
-    def setData(self, index, value, role):
-        if not index.isValid():
-            return None
-        node = index.internalPointer()
-
-        if node.checkable() and index.column() == 0:
-            node.setChecked(value)
-            self.dataChanged.emit(index, index, [Qt.CheckStateRole])
-            return True
-
-        return False
-
-    def flags(self, index):
-        f = super().flags(index)
-
-        node = index.internalPointer()
-        if node.checkable() and index.column() == 0:
-            f = f | Qt.ItemIsUserCheckable
-        return f
-
-    def headerData(self, section, orientation, role):
-        if orientation == Qt.Horizontal and role == Qt.DisplayRole:
-            if section == 0:
-                return self.tr('Include')
-            elif section == 1:
-                return self.tr('Field Name')
-            elif section == 2:
-                return self.tr('QuakeML Source')
-        return super().headerData(section, orientation, role)
 
 
 class OutputTableOptionsDialog(QDialog, FORM_CLASS):
@@ -232,17 +68,17 @@ class OutputTableOptionsDialog(QDialog, FORM_CLASS):
 
         nodes = []
         for key, settings in CONFIG_FIELDS['field_groups'].items():
-            parent_node = FieldModelNode([settings['label']])
+            parent_node = ModelNode([settings['label']])
             for f in settings['fields']:
-
                 path = f['source'][len('eventParameters>event>'):]
-                checked = s.value('/plugins/qquake/output_field_{}'.format(path.replace('>','_')),True, bool)
+                checked = s.value('/plugins/qquake/output_field_{}'.format(path.replace('>', '_')), True, bool)
 
                 parent_node.addChild(
-                    FieldModelNode(['checked', f['field'], path], checked))
+                    ModelNode(['checked', f['field'], path], checked))
             nodes.append(parent_node)
 
-        self.field_model = OutputFieldModel(nodes)
+        self.field_model = SimpleNodeModel(nodes, headers=[self.tr('Include'), self.tr('Field Name'),
+                                                           self.tr('QuakeML Source')])
         self.fields_tree_view.setModel(self.field_model)
         self.fields_tree_view.expandAll()
 

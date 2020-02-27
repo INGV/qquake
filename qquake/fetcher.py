@@ -146,7 +146,7 @@ class Fetcher(QObject):
                 self.earthquake_number_mdps_greater))
 
         if self.earthquake_max_intensity_greater is not None:
-            query.append('maxmdps={}'.format(
+            query.append('minintensity={}'.format(
                 self.earthquake_max_intensity_greater))
 
         query.append('limit={}'.format(self.service_config['settings']['querylimitmaxentries']))
