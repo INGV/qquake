@@ -65,6 +65,7 @@ class OutputTableOptionsDialog(QDialog, FORM_CLASS):
         self.button_box.rejected.connect(self.reject)
 
         QgsGui.enableAutoGeometryRestore(self)
+        self.default_fields = None
 
         s = QgsSettings()
 
@@ -98,6 +99,7 @@ class OutputTableOptionsDialog(QDialog, FORM_CLASS):
         self.reset_fields_button.clicked.connect(self.reset_fields)
         self.check_all_button.clicked.connect(lambda: self._check_all(True))
         self.uncheck_all_button.clicked.connect(lambda: self._check_all(False))
+        self.reset_fields_button.setVisible(False)
 
     def accept(self):
         s = QgsSettings()
@@ -111,13 +113,21 @@ class OutputTableOptionsDialog(QDialog, FORM_CLASS):
         super().accept()
 
     def reset_fields(self):
+        if self.default_fields is None:
+            return
+
         for r in range(self.field_model.rowCount(QModelIndex())):
             parent = self.field_model.index(r, 0, QModelIndex())
             for rc in range(self.field_model.rowCount(parent)):
-                self.field_model.setData(self.field_model.index(rc, 0, parent), True, Qt.CheckStateRole)
+                path = self.field_model.data(self.field_model.index(rc, 2, parent), Qt.DisplayRole)
+                self.field_model.setData(self.field_model.index(rc, 0, parent), path in self.default_fields, Qt.CheckStateRole)
 
     def _check_all(self, checked=True):
         for r in range(self.field_model.rowCount(QModelIndex())):
             parent = self.field_model.index(r, 0, QModelIndex())
             for rc in range(self.field_model.rowCount(parent)):
                 self.field_model.setData(self.field_model.index(rc, 0, parent), checked, Qt.CheckStateRole)
+
+    def set_default_fields(self, fields):
+        self.default_fields = fields
+        self.reset_fields_button.setVisible(True)
