@@ -109,12 +109,10 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.fdsn_macro_list.setCurrentRow(0)
 
         # OGC
-        self.ogc_services = {
-            'Web Map Services (WMS)': 'wms',
-            'Web Feature Services (WFS)': 'wfs'
-        }
-        self.ogc_combo.addItems(self.ogc_services)
+        self.ogc_combo.addItem(self.tr('Web Map Services (WMS)'), 'wms')
+        self.ogc_combo.addItem(self.tr('Web Feature Services (WFS)'), 'wfs')
         self.ogc_combo.currentIndexChanged.connect(self.refreshOgcWidgets)
+        self.refreshOgcWidgets()
 
         # connect to refreshing function to refresh the UI depending on the WS
         self.refreshFdsnEventWidgets()
@@ -296,7 +294,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         read the ogc_combo and fill it with the services
         """
         self.ogc_list.clear()
-        ogc_selection = self.ogc_services[self.ogc_combo.currentText()]
+        ogc_selection = self.ogc_combo.currentData()
         self.ogc_list.addItems(CONFIG_SERVICES[ogc_selection].keys())
         self.ogc_list.setCurrentRow(0)
 
