@@ -868,32 +868,40 @@ class BaseNodeType:
     """
     A base node type for derivation from: Network, Station and Channel types.
     """
+
     def __init__(self,
-                 code,
-                 startDate,
-                 endDate,
-                 sourceID,
-                 restrictedStatus,
-                 alternateCode,
-                 historicalCode):
-        self.code = code
-        self.startDate=startDate
-        self.endDate=endDate
-        self.sourceID=sourceID
-        self.restrictedStatus=restrictedStatus
-        self.alternateCode=alternateCode
-        self.historicalCode=historicalCode
+                 Code,
+                 StartDate,
+                 EndDate,
+                 SourceID,
+                 RestrictedStatus,
+                 AlternateCode,
+                 HistoricalCode,
+                 Description=None):
+        self.Code = Code
+        self.StartDate = StartDate
+        self.EndDate = EndDate
+        self.SourceID = SourceID
+        self.RestrictedStatus = RestrictedStatus
+        self.AlternateCode = AlternateCode
+        self.HistoricalCode = HistoricalCode
+        self.Description = Description
 
     @staticmethod
     def _from_element(obj, element):
         parser = ElementParser(element)
-        obj.code = parser.string('code',optional=False, is_attribute=True)
-        obj.startDate = parser.datetime('startDate',optional=False, is_attribute=True)
-        obj.endDate = parser.datetime('endDate',optional=False, is_attribute=True)
-        obj.sourceID = parser.string('sourceID',optional=False, is_attribute=True)
-        obj.restrictedStatus = parser.string('restrictedStatus', is_attribute=True)
-        obj.alternateCode = parser.string('alternateCode', is_attribute=True)
-        obj.historicalCode = parser.string('historicalCode', is_attribute=True)
+        obj.Code = parser.string('code', optional=False, is_attribute=True)
+        obj.StartDate = parser.datetime('startDate', optional=False, is_attribute=True)
+        obj.EndDate = parser.datetime('endDate', optional=False, is_attribute=True)
+        obj.SourceID = parser.string('sourceID', optional=False, is_attribute=True)
+        obj.RestrictedStatus = parser.string('restrictedStatus', is_attribute=True)
+        obj.AlternateCode = parser.string('alternateCode', is_attribute=True)
+        obj.HistoricalCode = parser.string('historicalCode', is_attribute=True)
+        obj.Description = parser.string('Description')
+        # Identifier
+        # Comment
+        # DataAvailability
+
 
 class Network(BaseNodeType):
     """
@@ -902,15 +910,16 @@ class Network(BaseNodeType):
     Description element. The Network can contain 0 or more Stations.
     """
 
-    def __init__(self):
+    def __init__(self,
+                 stations):
         super().__init__(None,
-                 None,
-                 None,
-                 None,
-                 None,
-                 None,
-                 None)
-
+                         None,
+                         None,
+                         None,
+                         None,
+                         None,
+                         None)
+        self.stations = stations
 
     @staticmethod
     def to_fields():
@@ -929,69 +938,30 @@ class Network(BaseNodeType):
             fields.append(QgsField(f['field'], FIELD_TYPE_MAP[f['type']]))
         return fields
 
-    def to_feature(self):
-        settings = QgsSettings()
-
-        f = QgsFeature(self.to_fields())
-        for dest_field in CONFIG_FIELDS['field_groups']['basic_event_info']['fields']:
-            if dest_field.get('skip'):
-                continue
-
-            source = dest_field['source'].split('>')
-            assert source[0] == 'eventParameters'
-            source = source[1:]
-            assert source[0] == 'event'
-            source = source[1:]
-
-            selected = settings.value('/plugins/qquake/output_field_{}'.format('_'.join(source)), True, bool)
-            if not selected:
-                continue
-
-            source_obj = self
-            for s in source:
-                if source_obj is None:
-                    source_obj = NULL
-                    break
-                assert hasattr(source_obj, s)
-                source_obj = getattr(source_obj, s)
-
-            f[dest_field['field']] = source_obj
-
-        preferred_origin = self.origins[self.preferredOriginID]
-        if preferred_origin.latitude is None or preferred_origin.longitude is None:
-            geom = QgsGeometry()
-        elif preferred_origin.depth is not None:
-            geom = QgsPoint(x=preferred_origin.longitude.value, y=preferred_origin.latitude.value,
-                            z=-preferred_origin.depth.value * 1000)
-        else:
-            geom = QgsPoint(x=preferred_origin.longitude.value, y=preferred_origin.latitude.value)
-        f.setGeometry(QgsGeometry(geom))
-
-        return f
-
-    def to_origin_features(self):
+    def to_station_features(self):
         features = []
         settings = QgsSettings()
-        for _, o in self.origins.items():
-            f = QgsFeature(Origin.to_fields())
-            for dest_field in CONFIG_FIELDS['field_groups']['origin']['fields']:
+        for o in self.stations:
+            f = QgsFeature(Station.to_fields())
+            for dest_field in CONFIG_FIELDS['field_groups']['station']['fields']:
                 if dest_field.get('skip'):
                     continue
 
                 source = dest_field['source'].split('>')
-                assert source[0] == 'eventParameters'
+                assert source[0] == 'FDSNStationXML'
                 source = source[1:]
-                assert source[0] == 'event'
+                assert source[0] == 'Network'
                 source = source[1:]
+                source_obj = self
+
+                if source[0] == 'Station':
+                    source_obj = o
+                    source = source[1:]
 
                 selected = settings.value('/plugins/qquake/output_field_{}'.format('_'.join(source)), True, bool)
                 if not selected:
                     continue
 
-                assert source[0] == 'origin'
-                source = source[1:]
-
-                source_obj = o
                 for s in source:
                     assert hasattr(source_obj, s)
                     source_obj = getattr(source_obj, s)
@@ -1000,54 +970,8 @@ class Network(BaseNodeType):
 
                 f[dest_field['field']] = source_obj
 
-            if o.depth is not None:
-                geom = QgsPoint(x=o.longitude.value, y=o.latitude.value,
-                                z=-o.depth.value * 1000)
-            else:
-                geom = QgsPoint(x=o.longitude.value, y=o.latitude.value)
-            f.setGeometry(QgsGeometry(geom))
-
-            features.append(f)
-
-        return features
-
-    def to_magnitude_features(self):
-        features = []
-        settings = QgsSettings()
-        for _, o in self.magnitudes.items():
-
-            f = QgsFeature(Magnitude.to_fields())
-            for dest_field in CONFIG_FIELDS['field_groups']['magnitude']['fields']:
-                if dest_field.get('skip'):
-                    continue
-
-                source = dest_field['source'].split('>')
-                assert source[0] == 'eventParameters'
-                source = source[1:]
-                assert source[0] == 'event'
-                source = source[1:]
-
-                selected = settings.value('/plugins/qquake/output_field_{}'.format('_'.join(source)), True, bool)
-                if not selected:
-                    continue
-
-                assert source[0] == 'magnitude'
-                source = source[1:]
-
-                source_obj = o
-                for s in source:
-                    assert hasattr(source_obj, s)
-                    source_obj = getattr(source_obj, s)
-
-                f[dest_field['field']] = source_obj
-
-            origin = self.origins[o.originID]
-
-            if origin.depth is not None:
-                geom = QgsPoint(x=origin.longitude.value, y=origin.latitude.value,
-                                z=-origin.depth.value * 1000)
-            else:
-                geom = QgsPoint(x=origin.longitude.value, y=origin.latitude.value)
+            geom = QgsPoint(x=o.Longitude, y=o.Latitude,
+                            z=o.Elevation)
             f.setGeometry(QgsGeometry(geom))
 
             features.append(f)
@@ -1056,9 +980,91 @@ class Network(BaseNodeType):
 
     @staticmethod
     def from_element(element):
+        station_nodes = element.elementsByTagName('Station')
+        stations = []
+        for e in range(station_nodes.length()):
+            stations.append(Station.from_element(station_nodes.at(e).toElement()))
+
+        res = Network(stations=stations)
+        BaseNodeType._from_element(res, element)
+        return res
+
+
+class Station(BaseNodeType):
+    """
+    This type represents a Station epoch. It is common to only have a single station epoch with the
+    station's creation and termination dates as the epoch start and end dates.
+    """
+
+    def __init__(self,
+                 Latitude,
+                 Longitude,
+                 Elevation,
+                 # site, - not supported
+                 WaterLevel,
+                 Vault,
+                 Geology,
+                 # equipment -  not supported
+                 # operator - not supported
+                 CreationDate,
+                 TerminationDate,
+                 TotalNumberChannels,
+                 SelectedNumberChannels,
+                 # ExternalReference - not supported
+                 # Channel
+                 ):
+        super().__init__(None,
+                         None,
+                         None,
+                         None,
+                         None,
+                         None,
+                         None)
+        self.Latitude = Latitude
+        self.Longitude = Longitude
+        self.Elevation = Elevation
+        # self.site = site
+        self.WaterLevel = WaterLevel
+        self.Vault = Vault
+        self.Geology = Geology
+        self.CreationDate = CreationDate
+        self.TerminationDate = TerminationDate
+        self.TotalNumberChannels = TotalNumberChannels
+        self.SelectedNumberChannels = SelectedNumberChannels
+
+    @staticmethod
+    def to_fields():
+        fields = QgsFields()
+        settings = QgsSettings()
+        for f in CONFIG_FIELDS['field_groups']['station']['fields']:
+            if f.get('skip'):
+                continue
+
+            path = f['source']
+            path = path[len('FDSNStationXML>Network>'):].replace('>', '_')
+            selected = settings.value('/plugins/qquake/output_field_{}'.format(path), True, bool)
+            if not selected:
+                continue
+
+            fields.append(QgsField(f['field'], FIELD_TYPE_MAP[f['type']]))
+        return fields
+
+    @staticmethod
+    def from_element(element):
         parser = ElementParser(element)
-        res = Network()
-        super()._from_element(res, element)
+        res = Station(
+            Latitude=parser.float('Latitude', optional=False),
+            Longitude=parser.float('Longitude', optional=False),
+            Elevation=parser.float('Elevation', optional=False),
+            WaterLevel=parser.float('WaterLevel'),
+            Vault=parser.string('Vault'),
+            Geology=parser.string('Geology'),
+            CreationDate=parser.datetime('CreationDate'),
+            TerminationDate=parser.datetime('TerminationDate'),
+            TotalNumberChannels=parser.int('TotalNumberChannels'),
+            SelectedNumberChannels=parser.int('SelectedNumberChannels')
+        )
+        BaseNodeType._from_element(res, element)
         return res
 
 
@@ -1071,7 +1077,7 @@ class FDSNStationXMLParser:
     def parse(content):
         doc = QDomDocument()
         doc.setContent(content)
-        network_elements = doc.elementsByTagName('network')
+        network_elements = doc.elementsByTagName('Network')
 
         networks = []
         for e in range(network_elements.length()):

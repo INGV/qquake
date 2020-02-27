@@ -34,7 +34,8 @@ from qquake.quakeml_parser import (
     FDSNStationXMLParser,
     Event,
     Origin,
-    Magnitude
+    Magnitude,
+    Station
 )
 
 from qquake.services import SERVICES
@@ -172,6 +173,8 @@ class Fetcher(QObject):
             self.result = QuakeMlParser.parse(reply.readAll())
         elif self.service_type == 'fdsnstation':
             self.result = FDSNStationXMLParser.parse(reply.readAll())
+        else:
+            assert False
         self.finished.emit()
 
     def _generate_layer_name(self, layer_type):
@@ -219,6 +222,17 @@ class Fetcher(QObject):
 
         return vl
 
+    def _create_empty_stations_layer(self):
+        """
+        Creates an empty layer for stations
+        """
+        vl = QgsVectorLayer('PointZ?crs=EPSG:4326', self._generate_layer_name('Stations'), 'memory')
+
+        vl.dataProvider().addAttributes(Station.to_fields())
+        vl.updateFields()
+
+        return vl
+
     def events_to_layer(self, events):
         """
         Returns a new vector layer containing the reply contents
@@ -261,6 +275,20 @@ class Fetcher(QObject):
 
         return vl
 
+    def stations_to_layer(self, networks):
+        """
+        Returns a new vector layer containing the reply contents
+        """
+        vl = self._create_empty_stations_layer()
+
+        features = []
+        for n in networks:
+            features.extend(n.to_station_features())
+
+        vl.dataProvider().addFeatures(features)
+
+        return vl
+
     def create_event_layer(self):
         return self.events_to_layer(self.result)
 
@@ -269,3 +297,6 @@ class Fetcher(QObject):
 
     def create_magnitude_layer(self):
         return self.magnitudes_to_layer(self.result)
+
+    def create_stations_layer(self):
+        return self.stations_to_layer(self.result)
