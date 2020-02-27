@@ -126,6 +126,12 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
         self.macroseismic_data_group.setVisible(show)
         self.output_preferred_mdp_only_check.setVisible(show)
 
+    def set_show_time_coverage_options(self, show):
+        self.time_coverage_group.setVisible(show)
+
+    def set_show_magnitude_options(self, show):
+        self.magnitude_group.setVisible(show)
+
     def restore_settings(self, prefix):
         s = QgsSettings()
         last_event_start_date = s.value('/plugins/qquake/{}_last_event_start_date'.format(prefix))
@@ -461,15 +467,27 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
             pass
 
     def start_date(self):
+        if not self.time_coverage_group.isVisible():
+            return None
+
         return self.fdsn_event_start_date.dateTime() if self.min_time_check.isChecked() else None
 
     def end_date(self):
+        if not self.time_coverage_group.isVisible():
+            return None
+
         return self.fdsn_event_end_date.dateTime() if self.max_time_check.isChecked() else None
 
     def min_magnitude(self):
+        if not self.magnitude_group.isVisible():
+            return None
+
         return self.fdsn_event_min_magnitude.value() if self.min_mag_check.isChecked() else None
 
     def max_magnitude(self):
+        if not self.magnitude_group.isVisible():
+            return None
+
         return self.fdsn_event_max_magnitude.value() if self.max_mag_check.isChecked() else None
 
     def extent_rect(self):

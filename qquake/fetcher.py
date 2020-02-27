@@ -143,7 +143,8 @@ class Fetcher(QObject):
             query.append('minintensity={}'.format(
                 self.earthquake_max_intensity_greater))
 
-        query.append('limit={}'.format(self.service_config['settings']['querylimitmaxentries']))
+        if 'querylimitmaxentries' in self.service_config['settings']:
+            query.append('limit={}'.format(self.service_config['settings']['querylimitmaxentries']))
 
         query.append('format={}'.format(format))
 
