@@ -23,7 +23,7 @@
       <item row="2" column="3">
        <widget class="QPushButton" name="reset_fields_button">
         <property name="text">
-         <string>Reset</string>
+         <string>Reset to Defaults</string>
         </property>
        </widget>
       </item>
