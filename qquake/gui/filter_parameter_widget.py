@@ -466,7 +466,7 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
         self.lat_max_spinbox.setMaximum(box[3])
 
     def _output_table_options(self):
-        dlg = OutputTableOptionsDialog(self)
+        dlg = OutputTableOptionsDialog(self.service_type, self)
         if dlg.exec_():
             pass
 
