@@ -187,6 +187,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
 
         self.fsdn_event_filter.save_settings('fsdn_event')
         self.macro_filter.save_settings('macro')
+        self.station_filter.save_settings('stations')
 
     def _restore_settings(self):
         s = QgsSettings()
@@ -210,6 +211,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
 
         self.fsdn_event_filter.restore_settings('fsdn_event')
         self.macro_filter.restore_settings('macro')
+        self.station_filter.restore_settings('stations')
 
     def get_fetcher(self, service_type=None):
         """
@@ -364,31 +366,49 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.button_box.button(QDialogButtonBox.Ok).setEnabled(True)
 
         layers = []
-        layers.append(self.fetcher.create_event_layer())
-        events_count = layers[0].featureCount()
-        if self.fetcher.output_origins:
-            layers.append(self.fetcher.create_origin_layer())
-        if self.fetcher.output_magnitudes:
-            layers.append(self.fetcher.create_magnitude_layer())
+        if self.fetcher.service_type in ('fdsnevent', 'macroseismic'):
+            layers.append(self.fetcher.create_event_layer())
+            events_count = layers[0].featureCount()
+            if self.fetcher.output_origins:
+                layers.append(self.fetcher.create_origin_layer())
+            if self.fetcher.output_magnitudes:
+                layers.append(self.fetcher.create_magnitude_layer())
+    
+            max_feature_count = 0
+            for l in layers:
+                max_feature_count = max(max_feature_count, l.featureCount())
+    
+            service_limit = self.fetcher.service_config['settings'].get('querylimitmaxentries', None)
+            self.message_bar.clearWidgets()
+            if service_limit is not None and max_feature_count >= service_limit:
+                self.message_bar.pushMessage(self.tr("Query exceeded the service's result limit"), Qgis.Critical, 0)
+            elif max_feature_count > 500:
+                self.message_bar.pushMessage(
+                    self.tr("Query returned a large number of results ({})".format(max_feature_count)), Qgis.Warning, 0)
+            elif max_feature_count == 0:
+                self.message_bar.pushMessage(
+                    self.tr("Query returned no results - possibly parameters are invalid for this service"), Qgis.Critical,
+                    0)
+            else:
+                self.message_bar.pushMessage(
+                    self.tr("Query returned {} events").format(events_count), Qgis.Info, 0)
+        elif self.fetcher.service_type =='fdsnstation':
+            layers.append(self.fetcher.create_stations_layer())
+            stations_count = layers[0].featureCount()
+            max_feature_count = 0
+            for l in layers:
+                max_feature_count = max(max_feature_count, l.featureCount())
 
-        max_feature_count = 0
-        for l in layers:
-            max_feature_count = max(max_feature_count, l.featureCount())
-
-        service_limit = self.fetcher.service_config['settings'].get('querylimitmaxentries', None)
-        self.message_bar.clearWidgets()
-        if service_limit is not None and max_feature_count >= service_limit:
-            self.message_bar.pushMessage(self.tr("Query exceeded the service's result limit"), Qgis.Critical, 0)
-        elif max_feature_count > 500:
-            self.message_bar.pushMessage(
-                self.tr("Query returned a large number of results ({})".format(max_feature_count)), Qgis.Warning, 0)
-        elif max_feature_count == 0:
-            self.message_bar.pushMessage(
-                self.tr("Query returned no results - possibly parameters are invalid for this service"), Qgis.Critical,
-                0)
+            if max_feature_count == 0:
+                self.message_bar.pushMessage(
+                    self.tr("Query returned no results - possibly parameters are invalid for this service"),
+                    Qgis.Critical,
+                    0)
+            else:
+                self.message_bar.pushMessage(
+                    self.tr("Query returned {} stations").format(stations_count), Qgis.Info, 0)
         else:
-            self.message_bar.pushMessage(
-                self.tr("Query returned {} events").format(events_count), Qgis.Info, 0)
+            assert False
 
         self.fetcher.deleteLater()
         self.fetcher = None

@@ -31,6 +31,7 @@ from qgis.core import (
 
 from qquake.quakeml_parser import (
     QuakeMlParser,
+    FDSNStationXMLParser,
     Event,
     Origin,
     Magnitude
@@ -91,8 +92,8 @@ class Fetcher(QObject):
         self.earthquake_number_mdps_greater = earthquake_number_mdps_greater
         self.earthquake_max_intensity_greater = earthquake_max_intensity_greater
 
-        self.output_origins = output_origins
-        self.output_magnitudes = output_magnitudes
+        self.output_origins = output_origins and self.service_type in ('fdsnevent', 'macroseismic')
+        self.output_magnitudes = output_magnitudes and self.service_type in ('fdsnevent', 'macroseismic')
         self.output_mdps = output_mdps and self.service_type == 'macroseismic'
 
         self.result = None
@@ -167,7 +168,10 @@ class Fetcher(QObject):
             self.progress.emit(float(received) / total * 100)
 
     def _reply_finished(self, reply):
-        self.result = QuakeMlParser.parse(reply.readAll())
+        if self.service_type in ('fdsnevent', 'macroseismic'):
+            self.result = QuakeMlParser.parse(reply.readAll())
+        elif self.service_type == 'fdsnstation':
+            self.result = FDSNStationXMLParser.parse(reply.readAll())
         self.finished.emit()
 
     def _generate_layer_name(self, layer_type):

@@ -98,13 +98,19 @@ class ElementParser:
 
         return child.text()
 
-    def datetime(self, attribute, optional=True):
-        child = self.element.elementsByTagName(attribute).at(0).toElement()
-        if optional and child.isNull():
-            return None
+    def datetime(self, attribute, optional=True, is_attribute=False):
+        if is_attribute:
+            if optional and not self.element.hasAttribute(attribute):
+                return None
+            else:
+                return self.element.attribute(attribute)
+        else:
+            child = self.element.elementsByTagName(attribute).at(0).toElement()
+            if optional and child.isNull():
+                return None
 
-        # TODO - return as QDateTime
-        return child.text()
+            # TODO - return as QDateTime
+            return child.text()
 
     def time_quantity(self, attribute, optional=True):
         child = self.element.elementsByTagName(attribute).at(0).toElement()
@@ -534,10 +540,10 @@ class TimeQuantity:
     def from_element(element):
         parser = ElementParser(element)
         return TimeQuantity(value=parser.datetime('value', optional=False),
-                               uncertainty=parser.float('uncertainty'),
-                               lowerUncertainty=parser.float('lowerUncertainty'),
-                               upperUncertainty=parser.float('upperUncertainty'),
-                               confidenceLevel=parser.float('confidenceLevel'))
+                            uncertainty=parser.float('uncertainty'),
+                            lowerUncertainty=parser.float('lowerUncertainty'),
+                            upperUncertainty=parser.float('upperUncertainty'),
+                            confidenceLevel=parser.float('confidenceLevel'))
 
 
 class CompositeTime:
@@ -856,3 +862,220 @@ class QuakeMlParser:
             events.append(Event.from_element(event_element))
 
         return events
+
+
+class BaseNodeType:
+    """
+    A base node type for derivation from: Network, Station and Channel types.
+    """
+    def __init__(self,
+                 code,
+                 startDate,
+                 endDate,
+                 sourceID,
+                 restrictedStatus,
+                 alternateCode,
+                 historicalCode):
+        self.code = code
+        self.startDate=startDate
+        self.endDate=endDate
+        self.sourceID=sourceID
+        self.restrictedStatus=restrictedStatus
+        self.alternateCode=alternateCode
+        self.historicalCode=historicalCode
+
+    @staticmethod
+    def _from_element(obj, element):
+        parser = ElementParser(element)
+        obj.code = parser.string('code',optional=False, is_attribute=True)
+        obj.startDate = parser.datetime('startDate',optional=False, is_attribute=True)
+        obj.endDate = parser.datetime('endDate',optional=False, is_attribute=True)
+        obj.sourceID = parser.string('sourceID',optional=False, is_attribute=True)
+        obj.restrictedStatus = parser.string('restrictedStatus', is_attribute=True)
+        obj.alternateCode = parser.string('alternateCode', is_attribute=True)
+        obj.historicalCode = parser.string('historicalCode', is_attribute=True)
+
+class Network(BaseNodeType):
+    """
+    This type represents the Network layer, all station metadata is contained within this element.
+    The official name of the network or other descriptive information can be included in the
+    Description element. The Network can contain 0 or more Stations.
+    """
+
+    def __init__(self):
+        super().__init__(None,
+                 None,
+                 None,
+                 None,
+                 None,
+                 None,
+                 None)
+
+
+    @staticmethod
+    def to_fields():
+        fields = QgsFields()
+        settings = QgsSettings()
+        for f in CONFIG_FIELDS['field_groups']['basic_event_info']['fields']:
+            if f.get('skip'):
+                continue
+
+            path = f['source']
+            path = path[len('eventParameters>event>'):].replace('>', '_')
+            selected = settings.value('/plugins/qquake/output_field_{}'.format(path), True, bool)
+            if not selected:
+                continue
+
+            fields.append(QgsField(f['field'], FIELD_TYPE_MAP[f['type']]))
+        return fields
+
+    def to_feature(self):
+        settings = QgsSettings()
+
+        f = QgsFeature(self.to_fields())
+        for dest_field in CONFIG_FIELDS['field_groups']['basic_event_info']['fields']:
+            if dest_field.get('skip'):
+                continue
+
+            source = dest_field['source'].split('>')
+            assert source[0] == 'eventParameters'
+            source = source[1:]
+            assert source[0] == 'event'
+            source = source[1:]
+
+            selected = settings.value('/plugins/qquake/output_field_{}'.format('_'.join(source)), True, bool)
+            if not selected:
+                continue
+
+            source_obj = self
+            for s in source:
+                if source_obj is None:
+                    source_obj = NULL
+                    break
+                assert hasattr(source_obj, s)
+                source_obj = getattr(source_obj, s)
+
+            f[dest_field['field']] = source_obj
+
+        preferred_origin = self.origins[self.preferredOriginID]
+        if preferred_origin.latitude is None or preferred_origin.longitude is None:
+            geom = QgsGeometry()
+        elif preferred_origin.depth is not None:
+            geom = QgsPoint(x=preferred_origin.longitude.value, y=preferred_origin.latitude.value,
+                            z=-preferred_origin.depth.value * 1000)
+        else:
+            geom = QgsPoint(x=preferred_origin.longitude.value, y=preferred_origin.latitude.value)
+        f.setGeometry(QgsGeometry(geom))
+
+        return f
+
+    def to_origin_features(self):
+        features = []
+        settings = QgsSettings()
+        for _, o in self.origins.items():
+            f = QgsFeature(Origin.to_fields())
+            for dest_field in CONFIG_FIELDS['field_groups']['origin']['fields']:
+                if dest_field.get('skip'):
+                    continue
+
+                source = dest_field['source'].split('>')
+                assert source[0] == 'eventParameters'
+                source = source[1:]
+                assert source[0] == 'event'
+                source = source[1:]
+
+                selected = settings.value('/plugins/qquake/output_field_{}'.format('_'.join(source)), True, bool)
+                if not selected:
+                    continue
+
+                assert source[0] == 'origin'
+                source = source[1:]
+
+                source_obj = o
+                for s in source:
+                    assert hasattr(source_obj, s)
+                    source_obj = getattr(source_obj, s)
+                    if source_obj is None:
+                        break
+
+                f[dest_field['field']] = source_obj
+
+            if o.depth is not None:
+                geom = QgsPoint(x=o.longitude.value, y=o.latitude.value,
+                                z=-o.depth.value * 1000)
+            else:
+                geom = QgsPoint(x=o.longitude.value, y=o.latitude.value)
+            f.setGeometry(QgsGeometry(geom))
+
+            features.append(f)
+
+        return features
+
+    def to_magnitude_features(self):
+        features = []
+        settings = QgsSettings()
+        for _, o in self.magnitudes.items():
+
+            f = QgsFeature(Magnitude.to_fields())
+            for dest_field in CONFIG_FIELDS['field_groups']['magnitude']['fields']:
+                if dest_field.get('skip'):
+                    continue
+
+                source = dest_field['source'].split('>')
+                assert source[0] == 'eventParameters'
+                source = source[1:]
+                assert source[0] == 'event'
+                source = source[1:]
+
+                selected = settings.value('/plugins/qquake/output_field_{}'.format('_'.join(source)), True, bool)
+                if not selected:
+                    continue
+
+                assert source[0] == 'magnitude'
+                source = source[1:]
+
+                source_obj = o
+                for s in source:
+                    assert hasattr(source_obj, s)
+                    source_obj = getattr(source_obj, s)
+
+                f[dest_field['field']] = source_obj
+
+            origin = self.origins[o.originID]
+
+            if origin.depth is not None:
+                geom = QgsPoint(x=origin.longitude.value, y=origin.latitude.value,
+                                z=-origin.depth.value * 1000)
+            else:
+                geom = QgsPoint(x=origin.longitude.value, y=origin.latitude.value)
+            f.setGeometry(QgsGeometry(geom))
+
+            features.append(f)
+
+        return features
+
+    @staticmethod
+    def from_element(element):
+        parser = ElementParser(element)
+        res = Network()
+        super()._from_element(res, element)
+        return res
+
+
+class FDSNStationXMLParser:
+    """
+    FDSNStationXML parser
+    """
+
+    @staticmethod
+    def parse(content):
+        doc = QDomDocument()
+        doc.setContent(content)
+        network_elements = doc.elementsByTagName('network')
+
+        networks = []
+        for e in range(network_elements.length()):
+            network_element = network_elements.at(e).toElement()
+            networks.append(Network.from_element(network_element))
+
+        return networks
