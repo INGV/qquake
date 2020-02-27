@@ -63,8 +63,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
 
         self.setupUi(self)
 
-        self.fsdn_event_filter = FilterParameterWidget(iface)
-        self.fsdn_event_filter.set_show_macroseismic_data_options(False)
+        self.fsdn_event_filter = FilterParameterWidget(iface, 'fdsnevent')
         vl = QVBoxLayout()
         vl.setContentsMargins(0, 0, 0, 0)
         vl.addWidget(self.fsdn_event_filter)
@@ -75,7 +74,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         vl.addWidget(self.earthquake_service_info_widget)
         self.earthquake_service_info_container.setLayout(vl)
 
-        self.macro_filter = FilterParameterWidget(iface)
+        self.macro_filter = FilterParameterWidget(iface, 'macroseismic')
         vl = QVBoxLayout()
         vl.setContentsMargins(0, 0, 0, 0)
         vl.addWidget(self.macro_filter)
@@ -86,11 +85,16 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         vl.addWidget(self.macro_service_info_widget)
         self.macro_service_info_container.setLayout(vl)
 
-        self.station_filter = FilterParameterWidget(iface)
+        self.station_filter = FilterParameterWidget(iface, 'fdsnstation')
         vl = QVBoxLayout()
         vl.setContentsMargins(0, 0, 0, 0)
         vl.addWidget(self.station_filter)
         self.station_filter_container.setLayout(vl)
+        self.station_service_info_widget = ServiceInformationWidget(iface)
+        vl = QVBoxLayout()
+        vl.setContentsMargins(0, 0, 0, 0)
+        vl.addWidget(self.station_service_info_widget)
+        self.station_service_info_container.setLayout(vl)
 
         self.ogc_service_widget = OgcServiceWidget(iface)
         vl = QVBoxLayout()
@@ -109,6 +113,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
 
         self.fsdn_event_url_text_browser.viewport().setAutoFillBackground(False)
         self.fdsn_macro_url_text_browser.viewport().setAutoFillBackground(False)
+        self.fdsn_station_url_text_browser.viewport().setAutoFillBackground(False)
 
         self.button_box.button(QDialogButtonBox.Ok).setText(self.tr('Fetch Data'))
         self.button_box.rejected.connect(self._save_settings)
@@ -122,6 +127,10 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         # fill the FDSN listWidget with the dictionary keys
         self.fdsn_macro_list.addItems(SERVICES['macroseismic'].keys())
         self.fdsn_macro_list.setCurrentRow(0)
+
+        # fill the FDSN listWidget with the dictionary keys
+        self.fdsn_station_list.addItems(SERVICES['fdsnstation'].keys())
+        self.fdsn_station_list.setCurrentRow(0)
 
         # OGC
         self.ogc_combo.addItem(self.tr('Web Map Services (WMS)'), 'wms')
@@ -148,6 +157,8 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.fdsn_event_list.currentRowChanged.connect(lambda: self._refresh_url('fdsnevent'))
         self.macro_filter.changed.connect(lambda: self._refresh_url('macroseismic'))
         self.fdsn_macro_list.currentRowChanged.connect(lambda: self._refresh_url('macroseismic'))
+        self.station_filter.changed.connect(lambda: self._refresh_url('fdsnstation'))
+        self.fdsn_station_list.currentRowChanged.connect(lambda: self._refresh_url('fdsnstation'))
 
         self.button_box.accepted.connect(self._getEventList)
 
@@ -158,6 +169,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self._restore_settings()
         self._refresh_url('fdsnevent')
         self._refresh_url('macroseismic')
+        self._refresh_url('fdsnstation')
 
     def closeEvent(self, e):
         self._save_settings()
@@ -171,6 +183,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
 
         self.fsdn_event_filter.save_settings('fsdn_event')
         self.macro_filter.save_settings('macro')
+        self.station_filter.save_settings('stations')
 
     def _restore_settings(self):
         s = QgsSettings()
@@ -194,6 +207,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
 
         self.fsdn_event_filter.restore_settings('fsdn_event')
         self.macro_filter.restore_settings('macro')
+        self.station_filter.restore_settings('stations')
 
     def get_fetcher(self, service_type=None):
         """
@@ -205,6 +219,8 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                 service_type = 'fdsnevent'
             elif self.service_tab_widget.currentIndex() == 1:
                 service_type = 'macroseismic'
+            elif self.service_tab_widget.currentIndex() == 2:
+                service_type = 'fdsnstation'
 
         if service_type == 'fdsnevent':
             service = self.fdsn_event_list.currentItem().text()
@@ -212,6 +228,9 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         elif service_type == 'macroseismic':
             service = self.fdsn_macro_list.currentItem().text()
             filter_widget = self.macro_filter
+        elif service_type == 'fdsnstation':
+            service = self.fdsn_station_list.currentItem().text()
+            filter_widget = self.station_filter
 
         return Fetcher(service_type=service_type,
                        event_service=service,
@@ -243,6 +262,8 @@ class QQuakeDialog(QDialog, FORM_CLASS):
             self.fsdn_event_url_text_browser.setText('<a href="{0}">{0}</a>'.format(fetcher.generate_url()))
         elif service_type == 'macroseismic':
             self.fdsn_macro_url_text_browser.setText('<a href="{0}">{0}</a>'.format(fetcher.generate_url()))
+        elif service_type == 'fdsnstation':
+            self.fdsn_station_url_text_browser.setText('<a href="{0}">{0}</a>'.format(fetcher.generate_url()))
 
     def _update_service_widgets(self, service_type, service_id, filter_widget, info_widget):
         service_config = SERVICES[service_type][service_id]
@@ -254,7 +275,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         default_date_start = QDateTime.fromString(
             service_config['default']['datestart'],
             Qt.ISODate
-        ) if service_config['default']['datestart'] else None
+        ) if service_config['default'].get('datestart') else None
 
         # if the dateend is not set in the config.json set the date to NOW
         date_end = QDateTime.fromString(
@@ -265,7 +286,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         default_date_end = QDateTime.fromString(
             service_config['default']['dateend'],
             Qt.ISODate
-        ) if 'dateend' in service_config['default'] and service_config['default']['dateend'] else None
+        ) if service_config['default'].get('dateend') else None
 
         filter_widget.set_date_range_limits(date_start, date_end)
         filter_widget.set_current_date_range(default_date_start, default_date_end)
@@ -296,8 +317,9 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         """
         Refreshing the FDSN-Macroseismic UI depending on the WS chosen
         """
-
-        pass
+        service_id = self.fdsn_station_list.currentItem().text()
+        self._update_service_widgets(service_type='fdsnstation', service_id=service_id,
+                                     filter_widget=self.station_filter, info_widget=self.station_service_info_widget)
 
     def refreshOgcWidgets(self):
         """
@@ -340,31 +362,49 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.button_box.button(QDialogButtonBox.Ok).setEnabled(True)
 
         layers = []
-        layers.append(self.fetcher.create_event_layer())
-        events_count = layers[0].featureCount()
-        if self.fetcher.output_origins:
-            layers.append(self.fetcher.create_origin_layer())
-        if self.fetcher.output_magnitudes:
-            layers.append(self.fetcher.create_magnitude_layer())
+        if self.fetcher.service_type in ('fdsnevent', 'macroseismic'):
+            layers.append(self.fetcher.create_event_layer())
+            events_count = layers[0].featureCount()
+            if self.fetcher.output_origins:
+                layers.append(self.fetcher.create_origin_layer())
+            if self.fetcher.output_magnitudes:
+                layers.append(self.fetcher.create_magnitude_layer())
+    
+            max_feature_count = 0
+            for l in layers:
+                max_feature_count = max(max_feature_count, l.featureCount())
+    
+            service_limit = self.fetcher.service_config['settings'].get('querylimitmaxentries', None)
+            self.message_bar.clearWidgets()
+            if service_limit is not None and max_feature_count >= service_limit:
+                self.message_bar.pushMessage(self.tr("Query exceeded the service's result limit"), Qgis.Critical, 0)
+            elif max_feature_count > 500:
+                self.message_bar.pushMessage(
+                    self.tr("Query returned a large number of results ({})".format(max_feature_count)), Qgis.Warning, 0)
+            elif max_feature_count == 0:
+                self.message_bar.pushMessage(
+                    self.tr("Query returned no results - possibly parameters are invalid for this service"), Qgis.Critical,
+                    0)
+            else:
+                self.message_bar.pushMessage(
+                    self.tr("Query returned {} events").format(events_count), Qgis.Info, 0)
+        elif self.fetcher.service_type =='fdsnstation':
+            layers.append(self.fetcher.create_stations_layer())
+            stations_count = layers[0].featureCount()
+            max_feature_count = 0
+            for l in layers:
+                max_feature_count = max(max_feature_count, l.featureCount())
 
-        max_feature_count = 0
-        for l in layers:
-            max_feature_count = max(max_feature_count, l.featureCount())
-
-        service_limit = self.fetcher.service_config['settings'].get('querylimitmaxentries', None)
-        self.message_bar.clearWidgets()
-        if service_limit is not None and max_feature_count >= service_limit:
-            self.message_bar.pushMessage(self.tr("Query exceeded the service's result limit"), Qgis.Critical, 0)
-        elif max_feature_count > 500:
-            self.message_bar.pushMessage(
-                self.tr("Query returned a large number of results ({})".format(max_feature_count)), Qgis.Warning, 0)
-        elif max_feature_count == 0:
-            self.message_bar.pushMessage(
-                self.tr("Query returned no results - possibly parameters are invalid for this service"), Qgis.Critical,
-                0)
+            if max_feature_count == 0:
+                self.message_bar.pushMessage(
+                    self.tr("Query returned no results - possibly parameters are invalid for this service"),
+                    Qgis.Critical,
+                    0)
+            else:
+                self.message_bar.pushMessage(
+                    self.tr("Query returned {} stations").format(stations_count), Qgis.Info, 0)
         else:
-            self.message_bar.pushMessage(
-                self.tr("Query returned {} events").format(events_count), Qgis.Info, 0)
+            assert False
 
         self.fetcher.deleteLater()
         self.fetcher = None

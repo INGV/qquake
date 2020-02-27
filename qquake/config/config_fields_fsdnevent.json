@@ -1567,6 +1567,119 @@
           "type": "String"
         }
       ]
+    },
+    "station": {
+      "label": "station",
+      "fields": [
+        {
+          "field": "networkcode",
+          "source": "FDSNStationXML>Network>Code",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "networkstartdate",
+          "source": "FDSNStationXML>Network>StartDate",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "networkenddate",
+          "source": "FDSNStationXML>Network>EndDate",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "networksourceid",
+          "source": "FDSNStationXML>Network>SourceID",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "networkrestrictedstatus",
+          "source": "FDSNStationXML>Network>RestrictedStatus",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "networkalternatecode",
+          "source": "FDSNStationXML>Network>AlternateCode",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "networkhistoricalcode",
+          "source": "FDSNStationXML>Network>HistoricalCode",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "networkdescription",
+          "source": "FDSNStationXML>Network>Description",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "latitude",
+          "source": "FDSNStationXML>Network>Station>Latitude",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field": "longitude",
+          "source": "FDSNStationXML>Network>Station>Longitude",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field": "elevation",
+          "source": "FDSNStationXML>Network>Station>Elevation",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field": "waterlevel",
+          "source": "FDSNStationXML>Network>Station>WaterLevel",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field": "vault",
+          "source": "FDSNStationXML>Network>Station>Vault",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "geology",
+          "source": "FDSNStationXML>Network>Station>Geology",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "creationdate",
+          "source": "FDSNStationXML>Network>Station>CreationDate",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "terminationdate",
+          "source": "FDSNStationXML>Network>Station>TerminationDate",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field": "totalnumberchannels",
+          "source": "FDSNStationXML>Network>Station>TotalNumberChannels",
+          "description": "",
+          "type": "Int"
+        },
+        {
+          "field": "selectednumberchannels",
+          "source": "FDSNStationXML>Network>Station>SelectedNumberChannels",
+          "description": "",
+          "type": "Int"
+        }
+      ]
     }
   },
   "configversion": 0.2,

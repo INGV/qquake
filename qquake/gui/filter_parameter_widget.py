@@ -48,7 +48,7 @@ FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('filter_parameter_widge
 class FilterParameterWidget(QWidget, FORM_CLASS):
     changed = pyqtSignal()
 
-    def __init__(self, iface, parent=None):
+    def __init__(self, iface, service_type, parent=None):
         """Constructor."""
         super().__init__(parent)
 
@@ -122,9 +122,19 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
         self.combo_predefined_area.currentIndexChanged.connect(self._use_predefined_area)
         self.radio_predefined_area.toggled.connect(self._use_predefined_area)
 
-    def set_show_macroseismic_data_options(self, show):
-        self.macroseismic_data_group.setVisible(show)
-        self.output_preferred_mdp_only_check.setVisible(show)
+        self.service_type = None
+        self.set_service_type(service_type)
+
+    def set_service_type(self, service_type):
+        self.service_type = service_type
+
+        self.time_coverage_group.setVisible(self.service_type in ('macroseismic', 'fdsnevent'))
+        self.magnitude_group.setVisible(self.service_type in ('macroseismic', 'fdsnevent'))
+        self.macroseismic_data_group.setVisible(self.service_type == 'macroseismic')
+
+        self.output_preferred_origins_only_check.setVisible(self.service_type in ('macroseismic', 'fdsnevent'))
+        self.output_preferred_magnitudes_only_check.setVisible(self.service_type in ('macroseismic', 'fdsnevent'))
+        self.output_preferred_mdp_only_check.setVisible(self.service_type == 'macroseismic')
 
     def restore_settings(self, prefix):
         s = QgsSettings()
@@ -456,20 +466,32 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
         self.lat_max_spinbox.setMaximum(box[3])
 
     def _output_table_options(self):
-        dlg = OutputTableOptionsDialog(self)
+        dlg = OutputTableOptionsDialog(self.service_type, self)
         if dlg.exec_():
             pass
 
     def start_date(self):
+        if not self.time_coverage_group.isVisible():
+            return None
+
         return self.fdsn_event_start_date.dateTime() if self.min_time_check.isChecked() else None
 
     def end_date(self):
+        if not self.time_coverage_group.isVisible():
+            return None
+
         return self.fdsn_event_end_date.dateTime() if self.max_time_check.isChecked() else None
 
     def min_magnitude(self):
+        if not self.magnitude_group.isVisible():
+            return None
+
         return self.fdsn_event_min_magnitude.value() if self.min_mag_check.isChecked() else None
 
     def max_magnitude(self):
+        if not self.magnitude_group.isVisible():
+            return None
+
         return self.fdsn_event_max_magnitude.value() if self.max_mag_check.isChecked() else None
 
     def extent_rect(self):

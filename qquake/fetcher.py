@@ -31,9 +31,11 @@ from qgis.core import (
 
 from qquake.quakeml_parser import (
     QuakeMlParser,
+    FDSNStationXMLParser,
     Event,
     Origin,
-    Magnitude
+    Magnitude,
+    Station
 )
 
 from qquake.services import SERVICES
@@ -91,8 +93,8 @@ class Fetcher(QObject):
         self.earthquake_number_mdps_greater = earthquake_number_mdps_greater
         self.earthquake_max_intensity_greater = earthquake_max_intensity_greater
 
-        self.output_origins = output_origins
-        self.output_magnitudes = output_magnitudes
+        self.output_origins = output_origins and self.service_type in ('fdsnevent', 'macroseismic')
+        self.output_magnitudes = output_magnitudes and self.service_type in ('fdsnevent', 'macroseismic')
         self.output_mdps = output_mdps and self.service_type == 'macroseismic'
 
         self.result = None
@@ -143,7 +145,8 @@ class Fetcher(QObject):
             query.append('minintensity={}'.format(
                 self.earthquake_max_intensity_greater))
 
-        query.append('limit={}'.format(self.service_config['settings']['querylimitmaxentries']))
+        if 'querylimitmaxentries' in self.service_config['settings']:
+            query.append('limit={}'.format(self.service_config['settings']['querylimitmaxentries']))
 
         query.append('format={}'.format(format))
 
@@ -166,7 +169,12 @@ class Fetcher(QObject):
             self.progress.emit(float(received) / total * 100)
 
     def _reply_finished(self, reply):
-        self.result = QuakeMlParser.parse(reply.readAll())
+        if self.service_type in ('fdsnevent', 'macroseismic'):
+            self.result = QuakeMlParser.parse(reply.readAll())
+        elif self.service_type == 'fdsnstation':
+            self.result = FDSNStationXMLParser.parse(reply.readAll())
+        else:
+            assert False
         self.finished.emit()
 
     def _generate_layer_name(self, layer_type):
@@ -214,6 +222,17 @@ class Fetcher(QObject):
 
         return vl
 
+    def _create_empty_stations_layer(self):
+        """
+        Creates an empty layer for stations
+        """
+        vl = QgsVectorLayer('PointZ?crs=EPSG:4326', self._generate_layer_name('Stations'), 'memory')
+
+        vl.dataProvider().addAttributes(Station.to_fields())
+        vl.updateFields()
+
+        return vl
+
     def events_to_layer(self, events):
         """
         Returns a new vector layer containing the reply contents
@@ -256,6 +275,20 @@ class Fetcher(QObject):
 
         return vl
 
+    def stations_to_layer(self, networks):
+        """
+        Returns a new vector layer containing the reply contents
+        """
+        vl = self._create_empty_stations_layer()
+
+        features = []
+        for n in networks:
+            features.extend(n.to_station_features())
+
+        vl.dataProvider().addFeatures(features)
+
+        return vl
+
     def create_event_layer(self):
         return self.events_to_layer(self.result)
 
@@ -264,3 +297,6 @@ class Fetcher(QObject):
 
     def create_magnitude_layer(self):
         return self.magnitudes_to_layer(self.result)
+
+    def create_stations_layer(self):
+        return self.stations_to_layer(self.result)
