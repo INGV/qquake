@@ -63,8 +63,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
 
         self.setupUi(self)
 
-        self.fsdn_event_filter = FilterParameterWidget(iface)
-        self.fsdn_event_filter.set_show_macroseismic_data_options(False)
+        self.fsdn_event_filter = FilterParameterWidget(iface, 'fdsnevent')
         vl = QVBoxLayout()
         vl.setContentsMargins(0, 0, 0, 0)
         vl.addWidget(self.fsdn_event_filter)
@@ -75,7 +74,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         vl.addWidget(self.earthquake_service_info_widget)
         self.earthquake_service_info_container.setLayout(vl)
 
-        self.macro_filter = FilterParameterWidget(iface)
+        self.macro_filter = FilterParameterWidget(iface, 'macroseismic')
         vl = QVBoxLayout()
         vl.setContentsMargins(0, 0, 0, 0)
         vl.addWidget(self.macro_filter)
@@ -86,10 +85,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         vl.addWidget(self.macro_service_info_widget)
         self.macro_service_info_container.setLayout(vl)
 
-        self.station_filter = FilterParameterWidget(iface)
-        self.station_filter.set_show_macroseismic_data_options(False)
-        self.station_filter.set_show_magnitude_options(False)
-        self.station_filter.set_show_time_coverage_options(False)
+        self.station_filter = FilterParameterWidget(iface, 'fdsnstation')
         vl = QVBoxLayout()
         vl.setContentsMargins(0, 0, 0, 0)
         vl.addWidget(self.station_filter)
