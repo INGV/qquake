@@ -244,59 +244,53 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         elif service_type == 'macroseismic':
             self.fdsn_macro_url_text_browser.setText('<a href="{0}">{0}</a>'.format(fetcher.generate_url()))
 
+    def _update_service_widgets(self, service_type, service_id, filter_widget, info_widget):
+        service_config = SERVICES[service_type][service_id]
+
+        date_start = QDateTime.fromString(
+            service_config['datestart'],
+            Qt.ISODate
+        )
+        default_date_start = QDateTime.fromString(
+            service_config['default']['datestart'],
+            Qt.ISODate
+        ) if service_config['default']['datestart'] else None
+
+        # if the dateend is not set in the config.json set the date to NOW
+        date_end = QDateTime.fromString(
+            service_config['dateend'],
+            Qt.ISODate
+        ) if 'dateend' in service_config and service_config['dateend'] else None
+
+        default_date_end = QDateTime.fromString(
+            service_config['default']['dateend'],
+            Qt.ISODate
+        ) if 'dateend' in service_config['default'] and service_config['default']['dateend'] else None
+
+        filter_widget.set_date_range_limits(date_start, date_end)
+        filter_widget.set_current_date_range(default_date_start, default_date_end)
+
+        box = SERVICES['boundingboxpredefined'][
+            service_config['default']['boundingboxpredefined']]['boundingbox']
+        filter_widget.set_extent_limit(box)
+        info_widget.set_service(service_type=service_type, service_name=service_id)
+
     def _refresh_fdsnevent_widgets(self):
         """
         Refreshing the FDSN-Event UI depending on the WS chosen
         """
         service_id = self.fdsn_event_list.currentItem().text()
-        service_config = SERVICES['fdsnevent'][service_id]
-        date_start = QDateTime.fromString(
-            service_config['default']['datestart'],
-            Qt.ISODate
-        )
-
-        # if the dateend is not set in the config.json set the date to NOW
-        try:
-            date_end = QDateTime.fromString(
-                service_config['default']['dateend'],
-                Qt.ISODate
-            )
-        except KeyError:
-            date_end = QDate.currentDate()
-
-        self.fsdn_event_filter.set_date_range_limits(date_start, date_end)
-
-        box = SERVICES['boundingboxpredefined'][service_config['default']['boundingboxpredefined']]['boundingbox']
-        self.fsdn_event_filter.set_extent_limit(box)
-        self.earthquake_service_info_widget.set_service(service_type='fdsnevent', service_name=service_id)
+        self._update_service_widgets(service_type='fdsnevent', service_id=service_id,
+                                     filter_widget=self.fsdn_event_filter,
+                                     info_widget=self.earthquake_service_info_widget)
 
     def refreshFdsnMacroseismicWidgets(self):
         """
         Refreshing the FDSN-Macroseismic UI depending on the WS chosen
         """
         service_id = self.fdsn_macro_list.currentItem().text()
-        service_config = SERVICES['macroseismic'][service_id]
-
-        date_start = QDateTime.fromString(
-            service_config['default']['datestart'],
-            Qt.ISODate
-        )
-
-        # if the dateend is not set in the config.json set the date to NOW
-        try:
-            date_end = QDateTime.fromString(
-                service_config['default']['dateend'],
-                Qt.ISODate
-            )
-        except KeyError:
-            date_end = QDate.currentDate()
-
-        self.macro_filter.set_date_range_limits(date_start, date_end)
-
-        box = SERVICES['boundingboxpredefined'][
-            service_config['default']['boundingboxpredefined']]['boundingbox']
-        self.macro_filter.set_extent_limit(box)
-        self.macro_service_info_widget.set_service(service_type='macroseismic', service_name=service_id)
+        self._update_service_widgets(service_type='macroseismic', service_id=service_id,
+                                     filter_widget=self.macro_filter, info_widget=self.macro_service_info_widget)
 
     def refreshFdsnStationWidgets(self):
         """
