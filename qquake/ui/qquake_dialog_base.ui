@@ -20,7 +20,7 @@
       <enum>QTabWidget::North</enum>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <property name="tabsClosable">
       <bool>false</bool>
@@ -34,6 +34,28 @@
       </attribute>
       <layout class="QGridLayout" name="gridLayout_3">
        <item row="0" column="0">
+        <widget class="QListWidget" name="fdsn_event_list">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>90</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="baseSize">
+          <size>
+           <width>90</width>
+           <height>0</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
         <widget class="QScrollArea" name="scrollArea">
          <property name="widgetResizable">
           <bool>true</bool>
@@ -43,38 +65,12 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>857</width>
-            <height>484</height>
+            <width>595</width>
+            <height>428</height>
            </rect>
           </property>
-          <layout class="QGridLayout" name="gridLayout" rowstretch="1,0" columnstretch="0,1,0">
-           <item row="1" column="0" colspan="3">
-            <widget class="QTextBrowser" name="fsdn_event_url_text_browser">
-             <property name="frameShape">
-              <enum>QFrame::NoFrame</enum>
-             </property>
-             <property name="openExternalLinks">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
+          <layout class="QGridLayout" name="gridLayout">
            <item row="0" column="0">
-            <widget class="QListWidget" name="fdsn_event_list">
-             <property name="minimumSize">
-              <size>
-               <width>130</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="baseSize">
-              <size>
-               <width>130</width>
-               <height>0</height>
-              </size>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
             <widget class="QTabWidget" name="tabWidget_2">
              <property name="currentIndex">
               <number>0</number>
@@ -112,6 +108,40 @@
          </widget>
         </widget>
        </item>
+       <item row="1" column="0" colspan="2">
+        <widget class="QTextBrowser" name="fsdn_event_url_text_browser">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>50</height>
+          </size>
+         </property>
+         <property name="baseSize">
+          <size>
+           <width>10</width>
+           <height>10</height>
+          </size>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::NoFrame</enum>
+         </property>
+         <property name="openExternalLinks">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="fdsn_macro_tab">
@@ -120,6 +150,28 @@
       </attribute>
       <layout class="QGridLayout" name="gridLayout_5">
        <item row="0" column="0">
+        <widget class="QListWidget" name="fdsn_macro_list">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>130</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="baseSize">
+          <size>
+           <width>130</width>
+           <height>0</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
         <widget class="QScrollArea" name="scrollArea_2">
          <property name="widgetResizable">
           <bool>true</bool>
@@ -129,38 +181,12 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>857</width>
-            <height>484</height>
+            <width>595</width>
+            <height>428</height>
            </rect>
           </property>
-          <layout class="QGridLayout" name="gridLayout_2" rowstretch="1,0" columnstretch="0,1,0">
+          <layout class="QGridLayout" name="gridLayout_2">
            <item row="0" column="0">
-            <widget class="QListWidget" name="fdsn_macro_list">
-             <property name="minimumSize">
-              <size>
-               <width>130</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="baseSize">
-              <size>
-               <width>130</width>
-               <height>0</height>
-              </size>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0" colspan="3">
-            <widget class="QTextBrowser" name="fdsn_macro_url_text_browser">
-             <property name="frameShape">
-              <enum>QFrame::NoFrame</enum>
-             </property>
-             <property name="openExternalLinks">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
             <widget class="QTabWidget" name="tabWidget">
              <property name="currentIndex">
               <number>0</number>
@@ -198,6 +224,22 @@
          </widget>
         </widget>
        </item>
+       <item row="1" column="0" colspan="2">
+        <widget class="QTextBrowser" name="fdsn_macro_url_text_browser">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>50</height>
+          </size>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::NoFrame</enum>
+         </property>
+         <property name="openExternalLinks">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="tab">
@@ -206,6 +248,16 @@
       </attribute>
       <layout class="QGridLayout" name="gridLayout_7">
        <item row="0" column="0">
+        <widget class="QListWidget" name="fdsn_station_list">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
         <widget class="QScrollArea" name="scrollArea_3">
          <property name="widgetResizable">
           <bool>true</bool>
@@ -215,25 +267,12 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>857</width>
-            <height>484</height>
+            <width>595</width>
+            <height>428</height>
            </rect>
           </property>
-          <layout class="QGridLayout" name="gridLayout_6" rowstretch="1,0" columnstretch="0,1,0">
+          <layout class="QGridLayout" name="gridLayout_6">
            <item row="0" column="0">
-            <widget class="QListWidget" name="fdsn_station_list"/>
-           </item>
-           <item row="1" column="0" colspan="3">
-            <widget class="QTextBrowser" name="fdsn_station_url_text_browser">
-             <property name="frameShape">
-              <enum>QFrame::NoFrame</enum>
-             </property>
-             <property name="openExternalLinks">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
             <widget class="QTabWidget" name="tabWidget_4">
              <property name="currentIndex">
               <number>0</number>
@@ -264,6 +303,22 @@
          </widget>
         </widget>
        </item>
+       <item row="1" column="0" colspan="2">
+        <widget class="QTextBrowser" name="fdsn_station_url_text_browser">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>50</height>
+          </size>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::NoFrame</enum>
+         </property>
+         <property name="openExternalLinks">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="tab_2">
@@ -272,6 +327,9 @@
       </attribute>
       <layout class="QGridLayout" name="gridLayout_8">
        <item row="0" column="0">
+        <widget class="QComboBox" name="ogc_combo"/>
+       </item>
+       <item row="0" column="1" rowspan="2">
         <widget class="QScrollArea" name="scrollArea_4">
          <property name="widgetResizable">
           <bool>true</bool>
@@ -281,18 +339,12 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>857</width>
+            <width>595</width>
             <height>484</height>
            </rect>
           </property>
-          <layout class="QGridLayout" name="gridLayout_4" columnstretch="0,0">
+          <layout class="QGridLayout" name="gridLayout_4">
            <item row="0" column="0">
-            <widget class="QComboBox" name="ogc_combo"/>
-           </item>
-           <item row="1" column="0">
-            <widget class="QListWidget" name="ogc_list"/>
-           </item>
-           <item row="0" column="1" rowspan="2">
             <widget class="QTabWidget" name="tabWidget_3">
              <property name="currentIndex">
               <number>0</number>
@@ -321,6 +373,16 @@
            </item>
           </layout>
          </widget>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QListWidget" name="ogc_list">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
         </widget>
        </item>
       </layout>
