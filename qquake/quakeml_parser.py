@@ -785,7 +785,7 @@ class Event:
 
         return features
 
-    def to_magnitude_features(self, selected_fields):
+    def to_magnitude_features(self, selected_fields, origins):
         features = []
         settings = QgsSettings()
         for _, o in self.magnitudes.items():
@@ -818,7 +818,7 @@ class Event:
 
                 f[dest_field['field']] = source_obj
 
-            origin = self.origins[o.originID]
+            origin = origins[o.originID]
 
             if origin.depth is not None:
                 geom = QgsPoint(x=origin.longitude.value, y=origin.latitude.value,
@@ -875,18 +875,71 @@ class QuakeMlParser:
     QuakeML parser
     """
 
-    @staticmethod
-    def parse(content):
+    def __init__(self):
+        self.events = {}
+        self.origins = {}
+        self.magnitudes = {}
+
+    def parse_initial(self, content):
         doc = QDomDocument()
         doc.setContent(content)
         event_elements = doc.elementsByTagName('event')
 
-        events = []
+        self.events = []
+        self.origins = {}
+        self.magnitudes = {}
+
         for e in range(event_elements.length()):
             event_element = event_elements.at(e).toElement()
-            events.append(Event.from_element(event_element))
+            event = Event.from_element(event_element)
+            self.events.append(event)
+            for _, o in event.origins.items():
+                if o not in self.origins:
+                    self.origins[o.publicID]=o
+            for _, m in event.magnitudes.items():
+                if m not in self.magnitudes:
+                    self.magnitudes[m.publicID]=m
 
-        return events
+    def parse_missing_origin(self, content):
+        doc = QDomDocument()
+        doc.setContent(content)
+
+        event_elements = doc.elementsByTagName('event')
+
+        for e in range(event_elements.length()):
+            event_element = event_elements.at(e).toElement()
+            event = Event.from_element(event_element)
+            for _, o in event.origins.items():
+                if o not in self.origins:
+                    self.origins[o.publicID]=o
+            for _, m in event.magnitudes.items():
+                if m not in self.magnitudes:
+                    self.magnitudes[m.publicID]=m
+
+    def scan_for_missing_origins(self):
+        missing_origins = set()
+        for e in self.events:
+            if e.preferredOriginID not in self.origins:
+                missing_origins.add(e.preferredOriginID)
+
+            for _, m in e.magnitudes.items():
+                if m.originID not in self.origins:
+                    missing_origins.add(m.originID)
+
+        return list(missing_origins)
+
+    def create_event_features(self, output_fields):
+        for e in self.events:
+           yield e.to_feature(output_fields)
+
+    def create_origin_features(self, output_fields):
+        for e in self.events:
+           yield e.to_origin_features(output_fields)
+
+    def create_magnitude_features(self, output_fields):
+        for e in self.events:
+            yield e.to_magnitude_features(output_fields, origins=self.origins)
+
 
 
 class BaseNodeType:
