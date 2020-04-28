@@ -354,10 +354,16 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.fetcher = self.get_fetcher()
         self.fetcher.progress.connect(self.progressBar.setValue)
         self.fetcher.finished.connect(self._fetcher_finished)
+        self.fetcher.message.connect(self._fetcher_message)
         self.button_box.button(QDialogButtonBox.Ok).setText(self.tr('Fetching'))
         self.button_box.button(QDialogButtonBox.Ok).setEnabled(False)
 
         self.fetcher.fetch_data()
+
+    def _fetcher_message(self, message):
+        self.message_bar.clearWidgets()
+        self.message_bar.pushMessage(
+            message, Qgis.Warning, 0)
 
     def _fetcher_finished(self):
         self.progressBar.reset()

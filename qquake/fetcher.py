@@ -48,6 +48,7 @@ class Fetcher(QObject):
 
     progress = pyqtSignal(float)
     finished = pyqtSignal()
+    message = pyqtSignal(str)
 
     def __init__(self, service_type,
                  event_service,
@@ -99,9 +100,12 @@ class Fetcher(QObject):
         self.output_mdps = output_mdps and self.service_type == 'macroseismic'
         self.output_fields = output_fields
 
-        self.result = None
+        self.result = QuakeMlParser()
 
         self.service_config = SERVICES[self.service_type][self.event_service]
+
+        self.missing_origins = set()
+        self.is_missing_origin_request = False
 
     def generate_url(self, format='text'):
         """
@@ -159,7 +163,26 @@ class Fetcher(QObject):
         Starts the fetch request
         """
         request = QNetworkRequest(QUrl(self.generate_url(format='xml')))
-        self.result = None
+
+        reply = QgsNetworkAccessManager.instance().get(request)
+
+        reply.finished.connect(lambda r=reply: self._reply_finished(r))
+        reply.downloadProgress.connect(self._reply_progress)
+
+    def fetch_missing(self):
+        # pop first missing origin from front of queue and fetch it
+        self.message.emit(self.tr('Returned XML was incomplete. {} missing origins left to fetch').format(len(self.missing_origins)))
+
+        remaining = list(self.missing_origins)
+        next_origin = remaining[0]
+        self.missing_origins = set(remaining[1:])
+
+        # change smi: prefix to http://
+        next_origin = 'http://' + next_origin[4:]
+
+        self.is_missing_origin_request = True
+
+        request = QNetworkRequest(QUrl(next_origin))
 
         reply = QgsNetworkAccessManager.instance().get(request)
 
@@ -172,12 +195,20 @@ class Fetcher(QObject):
 
     def _reply_finished(self, reply):
         if self.service_type in ('fdsnevent', 'macroseismic'):
-            self.result = QuakeMlParser.parse(reply.readAll())
+            if self.is_missing_origin_request:
+                self.result.parse_missing_origin(reply.readAll())
+            else:
+                self.result.parse_initial(reply.readAll())
+                self.missing_origins = self.missing_origins.union(self.result.scan_for_missing_origins())
         elif self.service_type == 'fdsnstation':
             self.result = FDSNStationXMLParser.parse(reply.readAll())
         else:
             assert False
-        self.finished.emit()
+
+        if self.missing_origins:
+            self.fetch_missing()
+        else:
+            self.finished.emit()
 
     def _generate_layer_name(self, layer_type):
         name = self.event_service
@@ -235,43 +266,43 @@ class Fetcher(QObject):
 
         return vl
 
-    def events_to_layer(self, events):
+    def events_to_layer(self, parser):
         """
         Returns a new vector layer containing the reply contents
         """
         vl = self._create_empty_event_layer()
 
         features = []
-        for e in events:
-            features.append(e.to_feature(self.output_fields))
+        for f in parser.create_event_features(self.output_fields):
+            features.append(f)
 
         vl.dataProvider().addFeatures(features)
 
         return vl
 
-    def origins_to_layer(self, events):
+    def origins_to_layer(self, parser):
         """
         Returns a new vector layer containing the reply contents
         """
         vl = self._create_empty_origin_layer()
 
         features = []
-        for e in events:
-            features.extend(e.to_origin_features(self.output_fields))
+        for f in parser.create_origin_features(self.output_fields):
+            features.extend(f)
 
         vl.dataProvider().addFeatures(features)
 
         return vl
 
-    def magnitudes_to_layer(self, events):
+    def magnitudes_to_layer(self, parser):
         """
         Returns a new vector layer containing the reply contents
         """
         vl = self._create_empty_magnitudes_layer()
 
         features = []
-        for e in events:
-            features.extend(e.to_magnitude_features(self.output_fields))
+        for f in parser.create_magnitude_features(self.output_fields):
+            features.extend(f)
 
         vl.dataProvider().addFeatures(features)
 
