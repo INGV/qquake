@@ -134,10 +134,6 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
         self.magnitude_group.setVisible(self.service_type in ('macroseismic', 'fdsnevent'))
         self.macroseismic_data_group.setVisible(self.service_type == 'macroseismic')
 
-        self.output_preferred_origins_only_check.setVisible(self.service_type in ('macroseismic', 'fdsnevent'))
-        self.output_preferred_magnitudes_only_check.setVisible(self.service_type in ('macroseismic', 'fdsnevent'))
-        self.output_preferred_mdp_only_check.setVisible(self.service_type == 'macroseismic')
-
     def set_service_id(self, service_id):
         self.service_id = service_id
         if 'fields' in SERVICES[self.service_type][self.service_id]['default']:
@@ -157,34 +153,45 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
         last_event_max_magnitude = s.value('/plugins/qquake/{}_last_event_max_magnitude'.format(prefix))
         if last_event_max_magnitude is not None:
             self.fdsn_event_max_magnitude.setValue(float(last_event_max_magnitude))
-        last_event_extent_enabled = s.value('/plugins/qquake/{}_last_event_extent_enabled'.format(prefix))
-        if last_event_extent_enabled is not None:
-            self.limit_extent_checkbox.setChecked(bool(last_event_extent_enabled))
-        last_event_extent_rect = s.value('/plugins/qquake/{}_last_event_extent_rect'.format(prefix))
-        if last_event_extent_rect is not None:
-            self.radio_rectangular_area.setChecked(bool(last_event_extent_rect))
-        last_event_extent_circle = s.value('/plugins/qquake/{}_last_event_extent_circle'.format(prefix))
-        if last_event_extent_circle is not None:
-            self.radio_circular_area.setChecked(bool(last_event_extent_circle))
-        min_lat_checked = s.value('/plugins/qquake/{}_last_event_min_lat_checked'.format(prefix))
-        if min_lat_checked is not None:
-            self.lat_min_checkbox.setChecked(bool(min_lat_checked))
-        max_lat_checked = s.value('/plugins/qquake/{}_last_event_max_lat_checked'.format(prefix))
-        if max_lat_checked is not None:
-            self.lat_max_checkbox.setChecked(bool(max_lat_checked))
-        min_long_checked = s.value('/plugins/qquake/{}_last_event_min_long_checked'.format(prefix))
-        if min_long_checked is not None:
-            self.long_min_checkbox.setChecked(bool(min_long_checked))
-        max_long_checked = s.value('/plugins/qquake/{}_last_event_max_long_checked'.format(prefix))
-        if max_long_checked is not None:
-            self.long_max_checkbox.setChecked(bool(max_long_checked))
+        self.limit_extent_checkbox.setChecked(
+            s.value('/plugins/qquake/{}_last_event_extent_enabled2'.format(prefix), False, bool))
+        self.radio_rectangular_area.setChecked(
+            s.value('/plugins/qquake/{}_last_event_extent_rect2'.format(prefix), False, bool))
+        self.radio_circular_area.setChecked(
+            s.value('/plugins/qquake/{}_last_event_extent_circle2'.format(prefix), False, bool))
+        self.lat_min_checkbox.setChecked(
+            s.value('/plugins/qquake/{}_last_event_min_lat_checked2'.format(prefix), False, bool))
+        self.lat_max_checkbox.setChecked(
+            s.value('/plugins/qquake/{}_last_event_max_lat_checked2'.format(prefix), False, bool))
+        self.long_min_checkbox.setChecked(
+            s.value('/plugins/qquake/{}_last_event_min_long_checked2'.format(prefix), False, bool))
+        self.long_max_checkbox.setChecked(
+            s.value('/plugins/qquake/{}_last_event_max_long_checked2'.format(prefix), False, bool))
 
-        min_radius_checked = s.value('/plugins/qquake/{}_last_event_circle_radius_min_checked'.format(prefix))
-        if min_radius_checked is not None:
-            self.radius_min_checkbox.setChecked(bool(min_radius_checked))
-        max_radius_checked = s.value('/plugins/qquake/{}_last_event_circle_radius_max_checked'.format(prefix))
-        if max_radius_checked is not None:
-            self.radius_max_checkbox.setChecked(bool(max_radius_checked))
+        self.radius_min_checkbox.setChecked(
+            s.value('/plugins/qquake/{}_last_event_circle_radius_min_checked2'.format(prefix), False, bool))
+        self.radius_max_checkbox.setChecked(
+            s.value('/plugins/qquake/{}_last_event_circle_radius_max_checked2'.format(prefix), False, bool))
+
+        last_event_min_lat = s.value('/plugins/qquake/{}_last_event_min_lat'.format(prefix))
+        if last_event_min_lat is not None:
+            self.lat_min_spinbox.setValue(float(last_event_min_lat))
+        last_event_max_lat = s.value('/plugins/qquake/{}_last_event_max_lat'.format(prefix))
+        if last_event_max_lat is not None:
+            self.lat_max_spinbox.setValue(float(last_event_max_lat))
+        last_event_min_long = s.value('/plugins/qquake/{}_last_event_min_long'.format(prefix))
+        if last_event_min_long is not None:
+            self.long_min_spinbox.setValue(float(last_event_min_long))
+        last_event_max_long = s.value('/plugins/qquake/{}_last_event_max_long'.format(prefix))
+        if last_event_max_long is not None:
+            self.long_max_spinbox.setValue(float(last_event_max_long))
+
+        last_event_circle_lat = s.value('/plugins/qquake/{}_last_event_circle_lat'.format(prefix))
+        if last_event_circle_lat is not None:
+            self.circular_lat_spinbox.setValue(float(last_event_circle_lat))
+        last_event_circle_long = s.value('/plugins/qquake/{}_last_event_circle_long'.format(prefix))
+        if last_event_circle_long is not None:
+            self.circular_long_spinbox.setValue(float(last_event_circle_long))
 
         last_event_min_radius = s.value('/plugins/qquake/{}_last_event_circle_min_radius'.format(prefix))
         if last_event_min_radius is not None:
@@ -193,43 +200,26 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
         if last_event_max_radius is not None:
             self.radius_max_spinbox.setValue(float(last_event_max_radius))
 
-        min_time_checked = s.value('/plugins/qquake/{}_last_event_min_time_checked'.format(prefix))
-        if min_time_checked is not None:
-            self.min_time_check.setChecked(bool(min_time_checked))
-        max_time_checked = s.value('/plugins/qquake/{}_last_event_max_time_checked'.format(prefix))
-        if max_time_checked is not None:
-            self.max_time_check.setChecked(bool(max_time_checked))
-        min_mag_checked = s.value('/plugins/qquake/{}_last_event_min_mag_checked'.format(prefix))
-        if min_mag_checked is not None:
-            self.min_mag_check.setChecked(bool(min_mag_checked))
-        max_mag_checked = s.value('/plugins/qquake/{}_last_event_max_mag_checked'.format(prefix))
-        if max_mag_checked is not None:
-            self.max_mag_check.setChecked(bool(max_mag_checked))
-
-        v = s.value('/plugins/qquake/{}_last_event_max_intensity_greater_checked'.format(prefix))
-        if v is not None:
-            self.earthquake_max_intensity_greater_check.setChecked(bool(v))
+        self.min_time_check.setChecked(
+            s.value('/plugins/qquake/{}_last_event_min_time_checked2'.format(prefix), False, bool))
+        self.max_time_check.setChecked(
+            s.value('/plugins/qquake/{}_last_event_max_time_checked2'.format(prefix), False, bool))
+        self.min_mag_check.setChecked(
+            s.value('/plugins/qquake/{}_last_event_min_mag_checked2'.format(prefix), False, bool))
+        self.max_mag_check.setChecked(
+            s.value('/plugins/qquake/{}_last_event_max_mag_checked2'.format(prefix), False, bool))
+        self.earthquake_max_intensity_greater_check.setChecked(
+            s.value('/plugins/qquake/{}_last_event_max_intensity_greater_checked2'.format(prefix), False, bool))
         v = s.value('/plugins/qquake/{}_last_event_max_intensity_greater'.format(prefix))
         if v is not None:
-            self.earthquake_max_intensity_greater_combo.setCurrentIndex(self.earthquake_max_intensity_greater_combo.findData(float(v)))
-        v = s.value('/plugins/qquake/{}_last_event_mdps_greater_checked'.format(prefix))
-        if v is not None:
-            self.earthquake_number_mdps_greater_check.setChecked(bool(v))
+            self.earthquake_max_intensity_greater_combo.setCurrentIndex(
+                self.earthquake_max_intensity_greater_combo.findData(float(v)))
+
+        self.earthquake_number_mdps_greater_check.setChecked(
+            s.value('/plugins/qquake/{}_last_event_mdps_greater_checked2'.format(prefix), False, bool))
         v = s.value('/plugins/qquake/{}_last_event_mdps_greater'.format(prefix))
         if v is not None:
             self.earthquake_number_mdps_greater_spin.setValue(float(v))
-
-        preferred_origins_only_checked = s.value('/plugins/qquake/{}_last_output_preferred_origins_only'.format(prefix))
-        if preferred_origins_only_checked is not None:
-            self.output_preferred_origins_only_check.setChecked(bool(preferred_origins_only_checked))
-        preferred_magnitudes_only_checked = s.value(
-            '/plugins/qquake/{}_last_output_preferred_magnitude_only'.format(prefix))
-        if preferred_magnitudes_only_checked is not None:
-            self.output_preferred_magnitudes_only_check.setChecked(bool(preferred_magnitudes_only_checked))
-
-        v = s.value('/plugins/qquake/{}_last_output_preferred_mdp_only'.format(prefix))
-        if v is not None:
-            self.output_preferred_mdp_only_check.setChecked(bool(v))
 
     def save_settings(self, prefix):
         s = QgsSettings()
@@ -238,48 +228,41 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
         s.setValue('/plugins/qquake/{}_last_event_min_magnitude'.format(prefix), self.fdsn_event_min_magnitude.value())
         s.setValue('/plugins/qquake/{}_last_event_max_magnitude'.format(prefix), self.fdsn_event_max_magnitude.value())
 
-        s.setValue('/plugins/qquake/{}_last_event_extent_enabled'.format(prefix),
+        s.setValue('/plugins/qquake/{}_last_event_extent_enabled2'.format(prefix),
                    self.limit_extent_checkbox.isChecked())
-        s.setValue('/plugins/qquake/{}_last_event_extent_rect'.format(prefix), self.radio_rectangular_area.isChecked())
-        s.setValue('/plugins/qquake/{}_last_event_extent_circle'.format(prefix), self.radio_circular_area.isChecked())
-        s.setValue('/plugins/qquake/{}_last_event_min_lat_checked'.format(prefix), self.lat_min_checkbox.isChecked())
+        s.setValue('/plugins/qquake/{}_last_event_extent_rect2'.format(prefix), self.radio_rectangular_area.isChecked())
+        s.setValue('/plugins/qquake/{}_last_event_extent_circle2'.format(prefix), self.radio_circular_area.isChecked())
+        s.setValue('/plugins/qquake/{}_last_event_min_lat_checked2'.format(prefix), self.lat_min_checkbox.isChecked())
         s.setValue('/plugins/qquake/{}_last_event_min_lat'.format(prefix), self.lat_min_spinbox.value())
-        s.setValue('/plugins/qquake/{}_last_event_max_lat_checked'.format(prefix), self.lat_max_checkbox.isChecked())
+        s.setValue('/plugins/qquake/{}_last_event_max_lat_checked2'.format(prefix), self.lat_max_checkbox.isChecked())
         s.setValue('/plugins/qquake/{}_last_event_max_lat'.format(prefix), self.lat_max_spinbox.value())
-        s.setValue('/plugins/qquake/{}_last_event_min_long_checked'.format(prefix), self.long_min_checkbox.isChecked())
+        s.setValue('/plugins/qquake/{}_last_event_min_long_checked2'.format(prefix), self.long_min_checkbox.isChecked())
         s.setValue('/plugins/qquake/{}_last_event_min_long'.format(prefix), self.long_min_spinbox.value())
-        s.setValue('/plugins/qquake/{}_last_event_max_long_checked'.format(prefix), self.long_max_checkbox.isChecked())
+        s.setValue('/plugins/qquake/{}_last_event_max_long_checked2'.format(prefix), self.long_max_checkbox.isChecked())
         s.setValue('/plugins/qquake/{}_last_event_max_long'.format(prefix), self.long_max_spinbox.value())
 
         s.setValue('/plugins/qquake/{}_last_event_circle_long'.format(prefix), self.circular_long_spinbox.value())
         s.setValue('/plugins/qquake/{}_last_event_circle_lat'.format(prefix), self.circular_lat_spinbox.value())
-        s.setValue('/plugins/qquake/{}_last_event_circle_radius_min_checked'.format(prefix),
+        s.setValue('/plugins/qquake/{}_last_event_circle_radius_min_checked2'.format(prefix),
                    self.radius_min_checkbox.isChecked())
-        s.setValue('/plugins/qquake/{}_last_event_circle_radius_max_checked'.format(prefix),
+        s.setValue('/plugins/qquake/{}_last_event_circle_radius_max_checked2'.format(prefix),
                    self.radius_max_checkbox.isChecked())
         s.setValue('/plugins/qquake/{}_last_event_circle_min_radius'.format(prefix), self.radius_min_spinbox.value())
         s.setValue('/plugins/qquake/{}_last_event_circle_max_radius'.format(prefix), self.radius_max_spinbox.value())
 
-        s.setValue('/plugins/qquake/{}_last_event_max_intensity_greater_checked'.format(prefix),
+        s.setValue('/plugins/qquake/{}_last_event_max_intensity_greater_checked2'.format(prefix),
                    self.earthquake_max_intensity_greater_check.isChecked())
         s.setValue('/plugins/qquake/{}_last_event_max_intensity_greater'.format(prefix),
                    self.earthquake_max_intensity_greater_combo.currentData())
-        s.setValue('/plugins/qquake/{}_last_event_mdps_greater_checked'.format(prefix),
+        s.setValue('/plugins/qquake/{}_last_event_mdps_greater_checked2'.format(prefix),
                    self.earthquake_number_mdps_greater_check.isChecked())
         s.setValue('/plugins/qquake/{}_last_event_mdps_greater'.format(prefix),
                    self.earthquake_number_mdps_greater_spin.value())
 
-        s.setValue('/plugins/qquake/{}_last_event_min_time_checked'.format(prefix), self.min_time_check.isChecked())
-        s.setValue('/plugins/qquake/{}_last_event_max_time_checked'.format(prefix), self.max_time_check.isChecked())
-        s.setValue('/plugins/qquake/{}_last_event_min_mag_checked'.format(prefix), self.min_mag_check.isChecked())
-        s.setValue('/plugins/qquake/{}_last_event_max_mag_checked'.format(prefix), self.max_mag_check.isChecked())
-
-        s.setValue('/plugins/qquake/{}_last_output_preferred_origins_only'.format(prefix),
-                   self.output_preferred_origins_only_check.isChecked())
-        s.setValue('/plugins/qquake/{}_last_output_preferred_magnitude_only'.format(prefix),
-                   self.output_preferred_magnitudes_only_check.isChecked())
-        s.setValue('/plugins/qquake/{}_last_output_preferred_mdp_only'.format(prefix),
-                   self.output_preferred_mdp_only_check.isChecked())
+        s.setValue('/plugins/qquake/{}_last_event_min_time_checked2'.format(prefix), self.min_time_check.isChecked())
+        s.setValue('/plugins/qquake/{}_last_event_max_time_checked2'.format(prefix), self.max_time_check.isChecked())
+        s.setValue('/plugins/qquake/{}_last_event_min_mag_checked2'.format(prefix), self.min_mag_check.isChecked())
+        s.setValue('/plugins/qquake/{}_last_event_max_mag_checked2'.format(prefix), self.max_mag_check.isChecked())
 
     def _populated_predined_areas(self):
         for id, extent in PREFINED_BOUNDING_BOXES.items():
@@ -476,34 +459,35 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
         dlg = OutputTableOptionsDialog(self.service_type, self.service_id, self.output_fields, self)
         if dlg.exec_():
             self.output_fields = dlg.selected_fields()
+            self.changed.emit()
 
     def start_date(self):
-        if not self.time_coverage_group.isVisible():
+        if self.service_type not in ('macroseismic', 'fdsnevent'):
             return None
 
         return self.fdsn_event_start_date.dateTime() if self.min_time_check.isChecked() else None
 
     def end_date(self):
-        if not self.time_coverage_group.isVisible():
+        if self.service_type not in ('macroseismic', 'fdsnevent'):
             return None
 
         return self.fdsn_event_end_date.dateTime() if self.max_time_check.isChecked() else None
 
     def min_magnitude(self):
-        if not self.magnitude_group.isVisible():
+        if self.service_type not in ('macroseismic', 'fdsnevent'):
             return None
 
         return self.fdsn_event_min_magnitude.value() if self.min_mag_check.isChecked() else None
 
     def max_magnitude(self):
-        if not self.magnitude_group.isVisible():
+        if self.service_type not in ('macroseismic', 'fdsnevent'):
             return None
 
         return self.fdsn_event_max_magnitude.value() if self.max_mag_check.isChecked() else None
 
     def extent_rect(self):
-        return self.limit_extent_checkbox.isChecked() and (self.radio_rectangular_area.isChecked()
-                                                           or self.radio_predefined_area.isChecked())
+        return self.limit_extent_checkbox.isChecked() and (self.radio_rectangular_area.isChecked() or
+                                                           self.radio_predefined_area.isChecked())
 
     def min_latitude(self):
         return self.lat_min_spinbox.value() if self.lat_min_checkbox.isChecked() else None
@@ -533,21 +517,12 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
         return self.radius_max_spinbox.value() if self.radius_max_checkbox.isChecked() else None
 
     def earthquake_max_intensity_greater(self):
-        if not self.macroseismic_data_group.isVisible():
+        if self.service_type != 'macroseismic':
             return None
         return self.earthquake_max_intensity_greater_combo.currentData() if self.earthquake_max_intensity_greater_check.isChecked() else None
 
     def earthquake_number_mdps_greater(self):
-        if not self.macroseismic_data_group.isVisible():
+        if self.service_type != 'macroseismic':
             return None
 
         return self.earthquake_number_mdps_greater_spin.value() if self.earthquake_number_mdps_greater_check.isChecked() else None
-
-    def output_preferred_magnitudes_only(self):
-        return self.output_preferred_magnitudes_only_check.isChecked()
-
-    def output_preferred_origins_only(self):
-        return self.output_preferred_origins_only_check.isChecked()
-
-    def output_preferred_mdp_only(self):
-        return self.output_preferred_mdp_only_check.isChecked()

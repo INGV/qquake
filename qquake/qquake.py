@@ -185,8 +185,7 @@ class QQuake:
         """Run method that performs all the real work"""
 
         self.dlg = QQuakeDialog(self.iface)
-        #dlg.setAttribute(Qt.WA_DeleteOnClose)
+        # dlg.setAttribute(Qt.WA_DeleteOnClose)
 
         # show the dialog
         self.dlg.show()
-

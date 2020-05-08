@@ -26,7 +26,8 @@ from qgis.PyQt.QtNetwork import QNetworkRequest
 
 from qgis.core import (
     QgsNetworkAccessManager,
-    QgsVectorLayer
+    QgsVectorLayer,
+    QgsSettings
 )
 
 from qquake.quakeml_parser import (
@@ -95,9 +96,11 @@ class Fetcher(QObject):
         self.earthquake_number_mdps_greater = earthquake_number_mdps_greater
         self.earthquake_max_intensity_greater = earthquake_max_intensity_greater
 
-        self.output_origins = output_origins and self.service_type in ('fdsnevent', 'macroseismic')
-        self.output_magnitudes = output_magnitudes and self.service_type in ('fdsnevent', 'macroseismic')
-        self.output_mdps = output_mdps and self.service_type == 'macroseismic'
+        s = QgsSettings()
+        self.preferred_origins_only = s.value('/plugins/qquake/output_preferred_origins', True, bool)
+        self.preferred_magnitudes_only = s.value('/plugins/qquake/output_preferred_magnitude', True, bool)
+        self.preferred_mdp_only = s.value('/plugins/qquake/output_preferred_mdp', True, bool)
+
         self.output_fields = output_fields
 
         self.result = QuakeMlParser()
@@ -153,6 +156,11 @@ class Fetcher(QObject):
 
         if 'querylimitmaxentries' in self.service_config['settings']:
             query.append('limit={}'.format(self.service_config['settings']['querylimitmaxentries']))
+
+        if not self.preferred_origins_only:
+            query.append('includeallorigins=true')
+        if not self.preferred_magnitudes_only:
+            query.append('includeallmagnitudes=true')
 
         query.append('format={}'.format(format))
 
@@ -210,37 +218,41 @@ class Fetcher(QObject):
         else:
             self.finished.emit()
 
-    def _generate_layer_name(self, layer_type):
+    def _generate_layer_name(self, layer_type=None):
         name = self.event_service
 
         if self.event_min_magnitude is not None and self.event_max_magnitude is not None:
-            name += ' ({} ≤ Magnitude ≤ {})'.format(self.event_min_magnitude, self.event_max_magnitude)
+            name += ' ({:.1f} ≤ Magnitude ≤ {:.1f})'.format(self.event_min_magnitude, self.event_max_magnitude)
         elif self.event_min_magnitude is not None:
-            name += ' ({} ≤ Magnitude)'.format(self.event_min_magnitude)
+            name += ' ({:.1f} ≤ Magnitude)'.format(self.event_min_magnitude)
         elif self.event_max_magnitude is not None:
-            name += ' (Magnitude ≤ {})'.format(self.event_max_magnitude)
+            name += ' (Magnitude ≤ {:.1f})'.format(self.event_max_magnitude)
 
-        return name + ' - {}'.format(layer_type)
+        if layer_type:
+            name += ' - {}'.format(layer_type)
+
+        return name
 
     def _create_empty_event_layer(self):
         """
         Creates an empty layer for earthquake data
         """
-        vl = QgsVectorLayer('PointZ?crs=EPSG:4326', self._generate_layer_name('Events'), 'memory')
+        vl = QgsVectorLayer('PointZ?crs=EPSG:4326', self._generate_layer_name(), 'memory')
 
         vl.dataProvider().addAttributes(Event.to_fields(self.output_fields))
         vl.updateFields()
 
-        return vl
+        try:
+            # QGIS 3.14 - setup temporal handling automatically if time field was selected
+            if vl.fields().lookupField('time') >= 0:
+                temporal_props = vl.temporalProperties()
+                temporal_props.setIsActive(True)
+                temporal_props.setStartField('time')
+                from qgis.core import QgsVectorLayerTemporalProperties
+                temporal_props.setMode(QgsVectorLayerTemporalProperties.ModeFeatureDateTimeInstantFromField)
 
-    def _create_empty_origin_layer(self):
-        """
-        Creates an empty layer for earthquake data
-        """
-        vl = QgsVectorLayer('PointZ?crs=EPSG:4326', self._generate_layer_name('Origins'), 'memory')
-
-        vl.dataProvider().addAttributes(Origin.to_fields(self.output_fields))
-        vl.updateFields()
+        except AttributeError:
+            pass
 
         return vl
 
@@ -266,43 +278,15 @@ class Fetcher(QObject):
 
         return vl
 
-    def events_to_layer(self, parser):
+    def events_to_layer(self, parser, preferred_origin_only, preferred_magnitudes_only):
         """
         Returns a new vector layer containing the reply contents
         """
         vl = self._create_empty_event_layer()
 
         features = []
-        for f in parser.create_event_features(self.output_fields):
+        for f in parser.create_event_features(self.output_fields, preferred_origin_only, preferred_magnitudes_only):
             features.append(f)
-
-        vl.dataProvider().addFeatures(features)
-
-        return vl
-
-    def origins_to_layer(self, parser):
-        """
-        Returns a new vector layer containing the reply contents
-        """
-        vl = self._create_empty_origin_layer()
-
-        features = []
-        for f in parser.create_origin_features(self.output_fields):
-            features.extend(f)
-
-        vl.dataProvider().addFeatures(features)
-
-        return vl
-
-    def magnitudes_to_layer(self, parser):
-        """
-        Returns a new vector layer containing the reply contents
-        """
-        vl = self._create_empty_magnitudes_layer()
-
-        features = []
-        for f in parser.create_magnitude_features(self.output_fields):
-            features.extend(f)
 
         vl.dataProvider().addFeatures(features)
 
@@ -323,13 +307,7 @@ class Fetcher(QObject):
         return vl
 
     def create_event_layer(self):
-        return self.events_to_layer(self.result)
-
-    def create_origin_layer(self):
-        return self.origins_to_layer(self.result)
-
-    def create_magnitude_layer(self):
-        return self.magnitudes_to_layer(self.result)
+        return self.events_to_layer(self.result, self.preferred_origins_only, self.preferred_magnitudes_only)
 
     def create_stations_layer(self):
         return self.stations_to_layer(self.result)

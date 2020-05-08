@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>561</width>
-    <height>780</height>
+    <height>717</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -410,30 +410,9 @@
      </property>
      <layout class="QGridLayout" name="gridLayout_8">
       <item row="0" column="0">
-       <widget class="QCheckBox" name="output_preferred_origins_only_check">
-        <property name="text">
-         <string>Only preferred origins</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QCheckBox" name="output_preferred_magnitudes_only_check">
-        <property name="text">
-         <string>Only preferred magnitudes</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
        <widget class="QPushButton" name="output_table_options_button">
         <property name="text">
          <string>Output Table Options…</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <widget class="QCheckBox" name="output_preferred_mdp_only_check">
-        <property name="text">
-         <string>Only preferred MDP set</string>
         </property>
        </widget>
       </item>

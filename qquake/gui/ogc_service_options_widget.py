@@ -38,6 +38,7 @@ from qquake.gui.simple_node_model import SimpleNodeModel, ModelNode
 
 FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('ogc_service_widget.ui'))
 
+
 class OgcServiceWidget(QWidget, FORM_CLASS):
 
     def __init__(self, iface, parent=None):
