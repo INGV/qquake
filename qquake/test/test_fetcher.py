@@ -36,55 +36,50 @@ class QQuakeFetcherTest(unittest.TestCase):
 
     def test_url(self):
         """Test Fetcher url generation."""
-        fetcher = Fetcher(event_service='AHEAD/SHEEC')
-        self.assertEqual(fetcher.generate_url(), 'https://www.emidius.eu/fdsnws/event/1/query?limit=1000&format=text')
+        fetcher = Fetcher(event_service='AHEAD-SHEEC', service_type='fdsnevent')
+        self.assertEqual(fetcher.generate_url(), 'https://www.emidius.eu/fdsnws/event/1/query?limit=5000&format=text')
 
-        fetcher = Fetcher(event_service='AHEAD/SHEEC', event_start_date=QDateTime(QDate(2000, 5, 8), QTime(12, 0, 5)))
+        fetcher = Fetcher(event_service='AHEAD-SHEEC', service_type='fdsnevent', event_start_date=QDateTime(QDate(2000, 5, 8), QTime(12, 0, 5)))
         self.assertEqual(fetcher.generate_url(),
-                         'https://www.emidius.eu/fdsnws/event/1/query?starttime=2000-05-08T12:00:05&limit=1000&format=text')
+                         'https://www.emidius.eu/fdsnws/event/1/query?starttime=2000-05-08T12:00:05&limit=5000&format=text')
 
-        fetcher = Fetcher(event_service='AHEAD/SHEEC', event_start_date=QDateTime(QDate(2000, 5, 8), QTime(12, 0, 5)),
+        fetcher = Fetcher(event_service='AHEAD-SHEEC', service_type='fdsnevent', event_start_date=QDateTime(QDate(2000, 5, 8), QTime(12, 0, 5)),
                           event_end_date=QDateTime(QDate(2010, 5, 8), QTime(12, 0, 5)))
         self.assertEqual(fetcher.generate_url(),
-                         'https://www.emidius.eu/fdsnws/event/1/query?starttime=2000-05-08T12:00:05&endtime=2010-05-08T12:00:05&limit=1000&format=text')
+                         'https://www.emidius.eu/fdsnws/event/1/query?starttime=2000-05-08T12:00:05&endtime=2010-05-08T12:00:05&limit=5000&format=text')
 
-        fetcher = Fetcher(event_service='AHEAD/SHEEC', event_min_magnitude=7, event_max_magnitude=9)
+        fetcher = Fetcher(event_service='AHEAD-SHEEC', service_type='fdsnevent', event_min_magnitude=7, event_max_magnitude=9)
         self.assertEqual(fetcher.generate_url(),
-                         'https://www.emidius.eu/fdsnws/event/1/query?minmag=7&maxmag=9&limit=1000&format=text')
+                         'https://www.emidius.eu/fdsnws/event/1/query?minmag=7&maxmag=9&limit=5000&format=text')
 
-        fetcher = Fetcher(event_service='AHEAD/SHEEC', extent=QgsRectangle(1, 2, 3, 4))
+        fetcher = Fetcher(event_service='AHEAD-SHEEC', service_type='fdsnevent', limit_extent_rect=True, max_latitude=4, min_latitude=2, min_longitude=1, max_longitude=3)
         self.assertEqual(fetcher.generate_url(),
-                         'https://www.emidius.eu/fdsnws/event/1/query?minlat=2.0&maxlat=4.0&minlon=1.0&maxlon=3.0&limit=1000&format=text')
-
-        fetcher = Fetcher(event_service='AHEAD/SHEEC', limit=1)
-        self.assertEqual(fetcher.generate_url(), 'https://www.emidius.eu/fdsnws/event/1/query?limit=1&format=text')
-
-        fetcher = Fetcher(event_service='AHEAD/SHEEC', limit=None)
-        self.assertEqual(fetcher.generate_url(), 'https://www.emidius.eu/fdsnws/event/1/query?format=text')
+                         'https://www.emidius.eu/fdsnws/event/1/query?minlatitude=2&maxlatitude=4&minlongitude=1&maxlongitude=3&limit=5000&format=text')
 
     def test_name(self):
-        fetcher = Fetcher(event_service='AHEAD/SHEEC')
-        self.assertEqual(fetcher._generate_layer_name('Events'), 'AHEAD/SHEEC - Events')
+        fetcher = Fetcher(event_service='AHEAD-SHEEC', service_type='fdsnevent')
+        self.assertEqual(fetcher._generate_layer_name('Events'), 'AHEAD-SHEEC - Events')
 
-        fetcher = Fetcher(event_service='AHEAD/SHEEC', event_min_magnitude=7, event_max_magnitude=9)
+        fetcher = Fetcher(event_service='AHEAD-SHEEC', service_type='fdsnevent', event_min_magnitude=7, event_max_magnitude=9)
         self.assertEqual(fetcher._generate_layer_name('Events'),
-                         'AHEAD/SHEEC (7 ≤ Magnitude ≤ 9) - Events')
+                         'AHEAD-SHEEC (7.0 ≤ Magnitude ≤ 9.0) - Events')
 
-        fetcher = Fetcher(event_service='AHEAD/SHEEC', event_min_magnitude=7)
+        fetcher = Fetcher(event_service='AHEAD-SHEEC', service_type='fdsnevent', event_min_magnitude=7)
         self.assertEqual(fetcher._generate_layer_name('Events'),
-                         'AHEAD/SHEEC (7 ≤ Magnitude) - Events')
+                         'AHEAD-SHEEC (7.0 ≤ Magnitude) - Events')
 
-        fetcher = Fetcher(event_service='AHEAD/SHEEC', event_max_magnitude=9)
+        fetcher = Fetcher(event_service='AHEAD-SHEEC', service_type='fdsnevent', event_max_magnitude=9)
         self.assertEqual(fetcher._generate_layer_name('Events'),
-                         'AHEAD/SHEEC (Magnitude ≤ 9) - Events')
+                         'AHEAD-SHEEC (Magnitude ≤ 9.0) - Events')
 
     def test_fetch_and_parse(self):
-        fetcher = Fetcher(event_service='INGV ASMI/CPTI', event_start_date=QDateTime(QDate(2013, 1, 1)),
+        fetcher = Fetcher(event_service='INGV ASMI-CPTI', service_type='fdsnevent', event_start_date=QDateTime(QDate(2013, 1, 1)),
                           event_end_date=QDateTime(QDate(2014, 1, 1)))
 
         self.done = False
 
         self.result = None
+
         def parse_reply():
             self.done = True
             self.result = fetcher.result
@@ -96,8 +91,6 @@ class QQuakeFetcherTest(unittest.TestCase):
             QCoreApplication.processEvents()
 
         self.assertTrue(self.result)
-
-
 
 
 if __name__ == "__main__":

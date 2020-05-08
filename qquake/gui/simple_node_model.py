@@ -178,4 +178,3 @@ class SimpleNodeModel(QAbstractItemModel):
         if self.headers and orientation == Qt.Horizontal and role == Qt.DisplayRole:
             return self.headers[section]
         return super().headerData(section, orientation, role)
-

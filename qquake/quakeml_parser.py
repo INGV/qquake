@@ -16,7 +16,7 @@ __revision__ = '$Format:%H$'
 import json
 import os
 
-from qgis.PyQt.QtCore import QVariant
+from qgis.PyQt.QtCore import QVariant, QDate, QDateTime, QTime, Qt
 from qgis.PyQt.QtXml import QDomDocument
 
 from qgis.core import (
@@ -99,18 +99,29 @@ class ElementParser:
         return child.text()
 
     def datetime(self, attribute, optional=True, is_attribute=False):
+        def to_datetime(val):
+            if not val:
+                return NULL
+            if 'T' in val:
+                dt = QDateTime.fromString((val+'000')[:23], 'yyyy-MM-ddThh:mm:ss.zzz')
+                dt.setTimeSpec(Qt.UTC)
+                return dt
+            else:
+                dt = QDateTime(QDate.fromString(val, 'yyyy-MM-dd'), QTime())
+                dt.setTimeSpec(Qt.UTC)
+                return dt
+
         if is_attribute:
             if optional and not self.element.hasAttribute(attribute):
                 return None
             else:
-                return self.element.attribute(attribute)
+                return to_datetime(self.element.attribute(attribute))
         else:
             child = self.element.elementsByTagName(attribute).at(0).toElement()
             if optional and child.isNull():
                 return None
 
-            # TODO - return as QDateTime
-            return child.text()
+            return to_datetime(child.text())
 
     def time_quantity(self, attribute, optional=True):
         child = self.element.elementsByTagName(attribute).at(0).toElement()
@@ -438,26 +449,6 @@ class Origin:
                       creationInfo=parser.creation_info('creationInfo'),
                       originUncertainty=origin_uncertainty)
 
-    @staticmethod
-    def to_fields(selected_fields):
-        fields = QgsFields()
-        settings = QgsSettings()
-        for f in CONFIG_FIELDS['field_groups']['origin']['fields']:
-            if f.get('skip'):
-                continue
-
-            path = f['source']
-            if selected_fields:
-                selected = path in selected_fields
-            else:
-                path = path[len('eventParameters>event>'):].replace('>', '_')
-                selected = settings.value('/plugins/qquake/output_field_{}'.format(path), True, bool)
-            if not selected:
-                continue
-
-            fields.append(QgsField(f['field'], FIELD_TYPE_MAP[f['type']]))
-        return fields
-
 
 class Comment:
 
@@ -623,26 +614,6 @@ class Magnitude:
                          comments=comments,
                          creationInfo=parser.creation_info('creationInfo'))
 
-    @staticmethod
-    def to_fields(selected_fields):
-        fields = QgsFields()
-        settings = QgsSettings()
-        for f in CONFIG_FIELDS['field_groups']['magnitude']['fields']:
-            if f.get('skip'):
-                continue
-
-            path = f['source']
-            if selected_fields:
-                selected = path in selected_fields
-            else:
-                path = path[len('eventParameters>event>'):].replace('>', '_')
-                selected = settings.value('/plugins/qquake/output_field_{}'.format(path), True, bool)
-            if not selected:
-                continue
-
-            fields.append(QgsField(f['field'], FIELD_TYPE_MAP[f['type']]))
-        return fields
-
 
 class Event:
 
@@ -692,9 +663,114 @@ class Event:
                 continue
 
             fields.append(QgsField(f['field'], FIELD_TYPE_MAP[f['type']]))
+
+        for f in CONFIG_FIELDS['field_groups']['origin']['fields']:
+            if f.get('skip'):
+                continue
+
+            path = f['source']
+            if selected_fields:
+                selected = path in selected_fields
+            else:
+                path = path[len('eventParameters>event>'):].replace('>', '_')
+                selected = settings.value('/plugins/qquake/output_field_{}'.format(path), True, bool)
+            if not selected:
+                continue
+
+            fields.append(QgsField(f['field'], FIELD_TYPE_MAP[f['type']]))
+
+        for f in CONFIG_FIELDS['field_groups']['magnitude']['fields']:
+            if f.get('skip'):
+                continue
+
+            path = f['source']
+            if selected_fields:
+                selected = path in selected_fields
+            else:
+                path = path[len('eventParameters>event>'):].replace('>', '_')
+                selected = settings.value('/plugins/qquake/output_field_{}'.format(path), True, bool)
+            if not selected:
+                continue
+
+            fields.append(QgsField(f['field'], FIELD_TYPE_MAP[f['type']]))
+
         return fields
 
-    def to_feature(self, output_fields):
+    @staticmethod
+    def add_origin_attributes(origin, feature, output_fields):
+        settings = QgsSettings()
+
+        for dest_field in CONFIG_FIELDS['field_groups']['origin']['fields']:
+            if dest_field.get('skip'):
+                continue
+
+            source = dest_field['source'].split('>')
+            assert source[0] == 'eventParameters'
+            source = source[1:]
+            assert source[0] == 'event'
+            source = source[1:]
+
+            if output_fields:
+                selected = dest_field['source'] in output_fields
+            else:
+                selected = settings.value('/plugins/qquake/output_field_{}'.format('_'.join(source)), True,
+                                          bool)
+            if not selected:
+                continue
+
+            assert source[0] == 'origin'
+            source = source[1:]
+
+            source_obj = origin
+            for s in source:
+                assert hasattr(source_obj, s)
+                source_obj = getattr(source_obj, s)
+                if source_obj is None:
+                    break
+
+            feature[dest_field['field']] = source_obj
+
+        if origin.depth is not None:
+            geom = QgsPoint(x=origin.longitude.value, y=origin.latitude.value,
+                            z=-origin.depth.value * 1000)
+        elif origin.longitude and origin.latitude:
+            geom = QgsPoint(x=origin.longitude.value, y=origin.latitude.value)
+        else:
+            geom = QgsGeometry()
+        feature.setGeometry(QgsGeometry(geom))
+
+    @staticmethod
+    def add_magnitude_attributes(magnitude, feature, output_fields):
+        settings = QgsSettings()
+
+        for dest_field in CONFIG_FIELDS['field_groups']['magnitude']['fields']:
+            if dest_field.get('skip'):
+                continue
+
+            source = dest_field['source'].split('>')
+            assert source[0] == 'eventParameters'
+            source = source[1:]
+            assert source[0] == 'event'
+            source = source[1:]
+
+            if output_fields:
+                selected = dest_field['source'] in output_fields
+            else:
+                selected = settings.value('/plugins/qquake/output_field_{}'.format('_'.join(source)), True, bool)
+            if not selected:
+                continue
+
+            assert source[0] == 'magnitude'
+            source = source[1:]
+
+            source_obj = magnitude
+            for s in source:
+                assert hasattr(source_obj, s)
+                source_obj = getattr(source_obj, s)
+
+            feature[dest_field['field']] = source_obj
+
+    def to_features(self, output_fields, preferred_origin_only, preferred_magnitudes_only, all_origins):
         settings = QgsSettings()
 
         f = QgsFeature(self.to_fields(output_fields))
@@ -726,110 +802,33 @@ class Event:
 
             f[dest_field['field']] = source_obj
 
-        preferred_origin = self.origins[self.preferredOriginID]
-        if preferred_origin.latitude is None or preferred_origin.longitude is None:
-            geom = QgsGeometry()
-        elif preferred_origin.depth is not None:
-            geom = QgsPoint(x=preferred_origin.longitude.value, y=preferred_origin.latitude.value,
-                            z=-preferred_origin.depth.value * 1000)
-        else:
-            geom = QgsPoint(x=preferred_origin.longitude.value, y=preferred_origin.latitude.value)
-        f.setGeometry(QgsGeometry(geom))
+        origins_handled = set()
+        for _, m in self.magnitudes.items():
 
-        return f
+            if preferred_magnitudes_only and m.publicID != self.preferredMagnitudeID:
+                continue
 
-    def to_origin_features(self, selected_fields):
-        features = []
-        settings = QgsSettings()
+            magnitude_feature = QgsFeature(f)
+            self.add_magnitude_attributes(m, magnitude_feature, output_fields)
+
+            magnitude_origin = all_origins[m.originID]
+            self.add_origin_attributes(magnitude_origin, magnitude_feature, output_fields)
+
+            origins_handled.add(m.originID)
+
+            yield magnitude_feature
+
         for _, o in self.origins.items():
-            f = QgsFeature(Origin.to_fields(selected_fields))
-            for dest_field in CONFIG_FIELDS['field_groups']['origin']['fields']:
-                if dest_field.get('skip'):
-                    continue
+            if preferred_origin_only and o.publicID != self.preferredOriginID:
+                continue
 
-                source = dest_field['source'].split('>')
-                assert source[0] == 'eventParameters'
-                source = source[1:]
-                assert source[0] == 'event'
-                source = source[1:]
+            if o.publicID in origins_handled:
+                continue
 
-                if selected_fields:
-                    selected = dest_field['source'] in selected_fields
-                else:
-                    selected = settings.value('/plugins/qquake/output_field_{}'.format('_'.join(source)), True, bool)
-                if not selected:
-                    continue
+            origin_feature = QgsFeature(f)
+            self.add_origin_attributes(o, origin_feature, output_fields)
 
-                assert source[0] == 'origin'
-                source = source[1:]
-
-                source_obj = o
-                for s in source:
-                    assert hasattr(source_obj, s)
-                    source_obj = getattr(source_obj, s)
-                    if source_obj is None:
-                        break
-
-                f[dest_field['field']] = source_obj
-
-            if o.depth is not None:
-                geom = QgsPoint(x=o.longitude.value, y=o.latitude.value,
-                                z=-o.depth.value * 1000)
-            elif o.longitude and o.latitude:
-                geom = QgsPoint(x=o.longitude.value, y=o.latitude.value)
-            else:
-                geom = QgsGeometry()
-            f.setGeometry(QgsGeometry(geom))
-
-            features.append(f)
-
-        return features
-
-    def to_magnitude_features(self, selected_fields, origins):
-        features = []
-        settings = QgsSettings()
-        for _, o in self.magnitudes.items():
-
-            f = QgsFeature(Magnitude.to_fields(selected_fields))
-            for dest_field in CONFIG_FIELDS['field_groups']['magnitude']['fields']:
-                if dest_field.get('skip'):
-                    continue
-
-                source = dest_field['source'].split('>')
-                assert source[0] == 'eventParameters'
-                source = source[1:]
-                assert source[0] == 'event'
-                source = source[1:]
-
-                if selected_fields:
-                    selected = dest_field['source'] in selected_fields
-                else:
-                    selected = settings.value('/plugins/qquake/output_field_{}'.format('_'.join(source)), True, bool)
-                if not selected:
-                    continue
-
-                assert source[0] == 'magnitude'
-                source = source[1:]
-
-                source_obj = o
-                for s in source:
-                    assert hasattr(source_obj, s)
-                    source_obj = getattr(source_obj, s)
-
-                f[dest_field['field']] = source_obj
-
-            origin = origins[o.originID]
-
-            if origin.depth is not None:
-                geom = QgsPoint(x=origin.longitude.value, y=origin.latitude.value,
-                                z=-origin.depth.value * 1000)
-            else:
-                geom = QgsPoint(x=origin.longitude.value, y=origin.latitude.value)
-            f.setGeometry(QgsGeometry(geom))
-
-            features.append(f)
-
-        return features
+            yield origin_feature
 
     @staticmethod
     def from_element(element):
@@ -895,10 +894,10 @@ class QuakeMlParser:
             self.events.append(event)
             for _, o in event.origins.items():
                 if o not in self.origins:
-                    self.origins[o.publicID]=o
+                    self.origins[o.publicID] = o
             for _, m in event.magnitudes.items():
                 if m not in self.magnitudes:
-                    self.magnitudes[m.publicID]=m
+                    self.magnitudes[m.publicID] = m
 
     def parse_missing_origin(self, content):
         doc = QDomDocument()
@@ -911,10 +910,10 @@ class QuakeMlParser:
             event = Event.from_element(event_element)
             for _, o in event.origins.items():
                 if o not in self.origins:
-                    self.origins[o.publicID]=o
+                    self.origins[o.publicID] = o
             for _, m in event.magnitudes.items():
                 if m not in self.magnitudes:
-                    self.magnitudes[m.publicID]=m
+                    self.magnitudes[m.publicID] = m
 
     def scan_for_missing_origins(self):
         missing_origins = set()
@@ -928,18 +927,11 @@ class QuakeMlParser:
 
         return list(missing_origins)
 
-    def create_event_features(self, output_fields):
+    def create_event_features(self, output_fields, preferred_origin_only, preferred_magnitudes_only):
         for e in self.events:
-           yield e.to_feature(output_fields)
-
-    def create_origin_features(self, output_fields):
-        for e in self.events:
-           yield e.to_origin_features(output_fields)
-
-    def create_magnitude_features(self, output_fields):
-        for e in self.events:
-            yield e.to_magnitude_features(output_fields, origins=self.origins)
-
+            for f in e.to_features(output_fields, preferred_origin_only, preferred_magnitudes_only,
+                                   all_origins=self.origins):
+                yield f
 
 
 class BaseNodeType:

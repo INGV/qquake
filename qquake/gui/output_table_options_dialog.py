@@ -104,6 +104,19 @@ class OutputTableOptionsDialog(QDialog, FORM_CLASS):
         for r in range(self.field_model.rowCount(QModelIndex())):
             self.fields_tree_view.setFirstColumnSpanned(r, QModelIndex(), True)
 
+        self.output_preferred_origins_only_check.setVisible(self.service_type in ('macroseismic', 'fdsnevent'))
+        self.output_preferred_magnitudes_only_check.setVisible(self.service_type in ('macroseismic', 'fdsnevent'))
+        self.output_preferred_mdp_only_check.setVisible(self.service_type == 'macroseismic')
+
+        preferred_origins_only_checked = s.value('/plugins/qquake/output_preferred_origins', True, bool)
+        self.output_preferred_origins_only_check.setChecked(preferred_origins_only_checked)
+        preferred_magnitudes_only_checked = s.value(
+            '/plugins/qquake/output_preferred_magnitude', True, bool)
+        self.output_preferred_magnitudes_only_check.setChecked(preferred_magnitudes_only_checked)
+        preferred_mdp_only_checked = s.value(
+            '/plugins/qquake/output_preferred_mdp', True, bool)
+        self.output_preferred_mdp_only_check.setChecked(preferred_mdp_only_checked)
+
         self.reset_fields_button.clicked.connect(self.reset_fields)
         self.check_all_button.clicked.connect(lambda: self._check_all(True))
         self.uncheck_all_button.clicked.connect(lambda: self._check_all(False))
@@ -120,6 +133,13 @@ class OutputTableOptionsDialog(QDialog, FORM_CLASS):
                 path = self.field_model.data(self.field_model.index(rc, 2, parent), Qt.DisplayRole)
                 checked = self.field_model.data(self.field_model.index(rc, 0, parent), Qt.CheckStateRole)
                 s.setValue('/plugins/qquake/output_field_{}'.format(path.replace('>', '_')), checked)
+
+        s.setValue('/plugins/qquake/output_preferred_origins',
+                   self.output_preferred_origins_only_check.isChecked())
+        s.setValue('/plugins/qquake/output_preferred_magnitude',
+                   self.output_preferred_magnitudes_only_check.isChecked())
+        s.setValue('/plugins/qquake/output_preferred_mdp',
+                   self.output_preferred_mdp_only_check.isChecked())
 
         super().accept()
 
@@ -154,3 +174,12 @@ class OutputTableOptionsDialog(QDialog, FORM_CLASS):
     def set_default_fields(self, fields):
         self.default_fields = fields
         self.reset_fields_button.setVisible(True)
+
+    def output_preferred_magnitudes_only(self):
+        return self.output_preferred_magnitudes_only_check.isChecked()
+
+    def output_preferred_origins_only(self):
+        return self.output_preferred_origins_only_check.isChecked()
+
+    def output_preferred_mdp_only(self):
+        return self.output_preferred_mdp_only_check.isChecked()

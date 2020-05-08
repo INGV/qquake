@@ -250,9 +250,6 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                        circle_max_radius=filter_widget.circle_max_radius(),
                        earthquake_number_mdps_greater=filter_widget.earthquake_number_mdps_greater(),
                        earthquake_max_intensity_greater=filter_widget.earthquake_max_intensity_greater(),
-                       output_magnitudes=not filter_widget.output_preferred_magnitudes_only(),
-                       output_origins=not filter_widget.output_preferred_origins_only(),
-                       output_mdps=not filter_widget.output_preferred_mdp_only(),
                        output_fields=filter_widget.output_fields
                        )
 
@@ -374,10 +371,6 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         if self.fetcher.service_type in ('fdsnevent', 'macroseismic'):
             layers.append(self.fetcher.create_event_layer())
             events_count = layers[0].featureCount()
-            if self.fetcher.output_origins:
-                layers.append(self.fetcher.create_origin_layer())
-            if self.fetcher.output_magnitudes:
-                layers.append(self.fetcher.create_magnitude_layer())
 
             max_feature_count = 0
             for l in layers:
@@ -392,12 +385,13 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                     self.tr("Query returned a large number of results ({})".format(max_feature_count)), Qgis.Warning, 0)
             elif max_feature_count == 0:
                 self.message_bar.pushMessage(
-                    self.tr("Query returned no results - possibly parameters are invalid for this service"), Qgis.Critical,
+                    self.tr("Query returned no results - possibly parameters are invalid for this service"),
+                    Qgis.Critical,
                     0)
             else:
                 self.message_bar.pushMessage(
                     self.tr("Query returned {} events").format(events_count), Qgis.Info, 0)
-        elif self.fetcher.service_type =='fdsnstation':
+        elif self.fetcher.service_type == 'fdsnstation':
             layers.append(self.fetcher.create_stations_layer())
             stations_count = layers[0].featureCount()
             max_feature_count = 0
