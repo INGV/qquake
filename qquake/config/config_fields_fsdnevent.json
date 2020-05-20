@@ -4,136 +4,157 @@
       "label": "basic event infos",
       "fields": [
         {
-          "field": "eventid",
+          "field_short": "eventid",
+          "field_long": "EventID",
           "source": "eventParameters>event>publicID",
           "description": "",
           "type": "String"
         },
         {
-          "field": "eventype",
+          "field_short": "eventype",
+          "field_long": "EvenType",
           "source": "eventParameters>event>type",
           "description": "",
           "type": "String"
         },
         {
-          "field": "eventtypec",
+          "field_short": "eventtypec",
+          "field_long": "EventTypeCert",
           "source": "eventParameters>event>typeCertainty",
           "description": "",
           "type": "String"
         },
         {
-          "field": "preforigin",
+          "field_short": "preforigin",
+          "field_long": "PrefOriginID",
           "source": "eventParameters>event>preferredOriginID",
           "description": "",
           "type": "String"
         },
         {
-          "field": "prefmag",
+          "field_short": "prefmag",
+          "field_long": "PrefMagID",
           "source": "eventParameters>event>preferredMagnitudeID",
           "description": "",
           "type": "String"
         },
         {
-          "field": "preffcid",
+          "field_short": "preffcid",
+          "field_long": "PrefFocMecID",
           "source": "eventParameters>event>preferredFocalMechanismID",
           "description": "",
           "type": "String"
         },
         {
-          "field": "eventx",
+          "field_short": "eventx",
+          "field_long": "EventDescrTxt",
           "source": "eventParameters>event>description>text",
           "description": "",
           "type": "String",
           "skip": true
         },
         {
-          "field": "eventxtype",
+          "field_short": "eventxtype",
+          "field_long": "EventDescrType",
           "source": "eventParameters>event>description>type",
           "description": "",
           "type": "String",
           "skip": true
         },
         {
-          "field": "eventcm",
+          "field_short": "eventcm",
+          "field_long": "EventCommentTxt",
           "source": "eventParameters>event>comment>text",
           "description": "",
           "type": "String",
           "skip": true
         },
         {
-          "field": "eventcmagi",
+          "field_short": "eventcmagi",
+          "field_long": "EventCommentAgencyID",
           "source": "eventParameters>event>comment>creationInfo>agencyID",
           "description": "",
           "skip": true,
           "type": "String"
         },
         {
-          "field": "eventcmagu",
+          "field_short": "eventcmagu",
+          "field_long": "EventCommentAgencyURI",
           "source": "eventParameters>event>comment>creationInfo>agencyURI",
           "description": "",
           "skip": true,
           "type": "String"
         },
         {
-          "field": "eventcmau",
+          "field_short": "eventcmau",
+          "field_long": "EventCommentAuthor",
           "source": "eventParameters>event>comment>creationInfo>author",
           "description": "",
           "skip": true,
           "type": "String"
         },
         {
-          "field": "eventcmauu",
+          "field_short": "eventcmauu",
+          "field_long": "EventCommentAuthorURI",
           "source": "eventParameters>event>comment>creationInfo>authorURI",
           "description": "",
           "skip": true,
           "type": "String"
         },
         {
-          "field": "eventcmtim",
+          "field_short": "eventcmtim",
+          "field_long": "EventCommentTime",
           "source": "eventParameters>event>comment>creationInfo>creationTime",
           "description": "",
           "skip": true,
           "type": "String"
         },
         {
-          "field": "eventcmver",
+          "field_short": "eventcmver",
+          "field_long": "EventCommentVersion",
           "source": "eventParameters>event>comment>creationInfo>version",
           "description": "",
           "skip": true,
           "type": "String"
         },
         {
-          "field": "eventcragi",
+          "field_short": "eventcragi",
+          "field_long": "EventCreationAgencyID",
           "source": "eventParameters>event>creationInfo>agencyID",
           "description": "",
           "type": "String"
         },
         {
-          "field": "eventcragu",
+          "field_short": "eventcragu",
+          "field_long": "EventCreationAgencyURI",
           "source": "eventParameters>event>creationInfo>agencyURI",
           "description": "",
           "type": "String"
         },
         {
-          "field": "eventcrau",
+          "field_short": "eventcrau",
+          "field_long": "EventCreationAuthor",
           "source": "eventParameters>event>creationInfo>author",
           "description": "",
           "type": "String"
         },
         {
-          "field": "eventcrauu",
+          "field_short": "eventcrauu",
+          "field_long": "EventCreationAuthorURI",
           "source": "eventParameters>event>creationInfo>authorURI",
           "description": "",
           "type": "String"
         },
         {
-          "field": "eventcrtim",
+          "field_short": "eventcrtim",
+          "field_long": "EventCreationTime",
           "source": "eventParameters>event>creationInfo>creationTime",
           "description": "",
           "type": "String"
         },
         {
-          "field": "eventcrver",
+          "field_short": "eventcrver",
+          "field_long": "EventCreationVersion",
           "source": "eventParameters>event>creationInfo>version",
           "description": "",
           "type": "String"
@@ -144,542 +165,631 @@
       "label": "origin",
       "fields": [
         {
-          "field": "originid",
+          "field_short": "originid",
+          "field_long": "OriginID",
           "source": "eventParameters>event>origin>publicID",
           "description": "",
           "type": "String"
         },
         {
-          "field": "time",
+          "field_short": "time",
+          "field_long": "Time",
           "source": "eventParameters>event>origin>time>value",
           "description": "",
           "type": "DateTime"
         },
         {
-          "field": "timeunc",
+          "field_short": "timeunc",
+          "field_long": "TimeUnc",
           "source": "eventParameters>event>origin>time>uncertainty",
           "description": "",
           "type": "Double"
         },
         {
-          "field": "timeunclo",
+          "field_short": "timeunclo",
+          "field_long": "TimeUncLow",
           "source": "eventParameters>event>origin>time>lowerUncertainty",
           "description": "",
           "type": "Double"
         },
         {
-          "field": "timeuncup",
+          "field_short": "timeuncup",
+          "field_long": "TimeUncUp",
           "source": "eventParameters>event>origin>time>upperUncertainty",
           "description": "",
           "type": "Double"
         },
         {
-          "field": "timeconf",
+          "field_short": "timeconf",
+          "field_long": "TimeConfidence",
           "source": "eventParameters>event>origin>time>confidenceLevel",
           "description": "",
           "type": "Double"
         },
         {
-          "field": "year",
+          "field_short": "year",
+          "field_long": "Year",
           "source": "eventParameters>event>origin>compositeTime>year>value",
           "description": "",
           "type": "Int"
         },
         {
-          "field": "yearunc",
+          "field_short": "yearunc",
+          "field_long": "YearUnc",
           "source": "eventParameters>event>origin>compositeTime>year>uncertainty",
           "description": "",
           "type": "Int"
         },
         {
-          "field": "yearunclo",
+          "field_short": "yearunclo",
+          "field_long": "YearUncLow",
           "source": "eventParameters>event>origin>compositeTime>year>lowerUncertainty",
           "description": "",
           "type": "Int"
         },
         {
-          "field": "yearuncup",
+          "field_short": "yearuncup",
+          "field_long": "YearUncUp",
           "source": "eventParameters>event>origin>compositeTime>year>upperUncertainty",
           "description": "",
           "type": "Int"
         },
         {
-          "field": "yearconf",
+          "field_short": "yearconf",
+          "field_long": "YearConfidence",
           "source": "eventParameters>event>origin>compositeTime>year>confidenceLevel",
           "description": "",
           "type": "Double"
         },
         {
-          "field": "month",
+          "field_short": "month",
+          "field_long": "Month",
           "source": "eventParameters>event>origin>compositeTime>month>value",
           "description": "",
           "type": "Int"
         },
         {
-          "field": "monthunc",
+          "field_short": "monthunc",
+          "field_long": "MonthUnc",
           "source": "eventParameters>event>origin>compositeTime>month>uncertainty",
           "description": "",
           "type": "Int"
         },
         {
-          "field": "monthunclo",
+          "field_short": "monthunclo",
+          "field_long": "MonthUncLow",
           "source": "eventParameters>event>origin>compositeTime>month>lowerUncertainty",
           "description": "",
           "type": "Int"
         },
         {
-          "field": "monthuncup",
+          "field_short": "monthuncup",
+          "field_long": "MonthUncUp",
           "source": "eventParameters>event>origin>compositeTime>month>upperUncertainty",
           "description": "",
           "type": "Int"
         },
         {
-          "field": "monthconf",
+          "field_short": "monthconf",
+          "field_long": "MonthConfidence",
           "source": "eventParameters>event>origin>compositeTime>month>confidenceLevel",
           "description": "",
           "type": "Double"
         },
         {
-          "field": "day",
+          "field_short": "day",
+          "field_long": "Day",
           "source": "eventParameters>event>origin>compositeTime>day>value",
           "description": "",
           "type": "Int"
         },
         {
-          "field": "dayunc",
+          "field_short": "dayunc",
+          "field_long": "DayUnc",
           "source": "eventParameters>event>origin>compositeTime>day>uncertainty",
           "description": "",
           "type": "Int"
         },
         {
-          "field": "dayunclo",
+          "field_short": "dayunclo",
+          "field_long": "DayUncLow",
           "source": "eventParameters>event>origin>compositeTime>day>lowerUncertainty",
           "description": "",
           "type": "Int"
         },
         {
-          "field": "dayuncup",
+          "field_short": "dayuncup",
+          "field_long": "DayUncUp",
           "source": "eventParameters>event>origin>compositeTime>day>upperUncertainty",
           "description": "",
           "type": "Int"
         },
         {
-          "field": "dayconf",
+          "field_short": "dayconf",
+          "field_long": "DayConfidence",
           "source": "eventParameters>event>origin>compositeTime>day>confidenceLevel",
           "description": "",
           "type": "Double"
         },
         {
-          "field": "hour",
+          "field_short": "hour",
+          "field_long": "Hour",
           "source": "eventParameters>event>origin>compositeTime>hour>value",
           "description": "",
           "type": "Int"
         },
         {
-          "field": "hourunc",
+          "field_short": "hourunc",
+          "field_long": "HourUnc",
           "source": "eventParameters>event>origin>compositeTime>hour>uncertainty",
           "description": "",
           "type": "Int"
         },
         {
-          "field": "hourunclo",
+          "field_short": "hourunclo",
+          "field_long": "HourUncLow",
           "source": "eventParameters>event>origin>compositeTime>hour>lowerUncertainty",
           "description": "",
           "type": "Int"
         },
         {
-          "field": "houruncup",
+          "field_short": "houruncup",
+          "field_long": "HourUncUp",
           "source": "eventParameters>event>origin>compositeTime>hour>upperUncertainty",
           "description": "",
           "type": "Int"
         },
         {
-          "field": "hourconf",
+          "field_short": "hourconf",
+          "field_long": "HourConfidence",
           "source": "eventParameters>event>origin>compositeTime>hour>confidenceLevel",
           "description": "",
           "type": "Double"
         },
         {
-          "field": "min",
+          "field_short": "min",
+          "field_long": "Minute",
           "source": "eventParameters>event>origin>compositeTime>minute>value",
           "description": "",
           "type": "Int"
         },
         {
-          "field": "minunc",
+          "field_short": "minunc",
+          "field_long": "MinuteUnc",
           "source": "eventParameters>event>origin>compositeTime>hour>uncertainty",
           "description": "",
           "type": "Int"
         },
         {
-          "field": "minunclo",
+          "field_short": "minunclo",
+          "field_long": "MinuteUncLow",
           "source": "eventParameters>event>origin>compositeTime>hour>lowerUncertainty",
           "description": "",
           "type": "Int"
         },
         {
-          "field": "minuncup",
+          "field_short": "minuncup",
+          "field_long": "MinuteUncUp",
           "source": "eventParameters>event>origin>compositeTime>hour>upperUncertainty",
           "description": "",
           "type": "Int"
         },
         {
-          "field": "minconf",
+          "field_short": "minconf",
+          "field_long": "MinuteConfidence",
           "source": "eventParameters>event>origin>compositeTime>hour>confidenceLevel",
           "description": "",
           "type": "Double"
         },
         {
-          "field": "sec",
+          "field_short": "sec",
+          "field_long": "Second",
           "source": "eventParameters>event>origin>compositeTime>second>value",
           "description": "",
           "type": "Double"
         },
         {
-          "field": "secunc",
+          "field_short": "secunc",
+          "field_long": "SecondUnc",
           "source": "eventParameters>event>origin>compositeTime>second>uncertainty",
           "description": "",
           "type": "Double"
         },
         {
-          "field": "secunclo",
+          "field_short": "secunclo",
+          "field_long": "SecondUncLow",
           "source": "eventParameters>event>origin>compositeTime>second>lowerUncertainty",
           "description": "",
           "type": "Double"
         },
         {
-          "field": "secuncup",
+          "field_short": "secuncup",
+          "field_long": "SecondUncUp",
           "source": "eventParameters>event>origin>compositeTime>second>upperUncertainty",
           "description": "",
           "type": "Double"
         },
         {
-          "field": "secconf",
+          "field_short": "secconf",
+          "field_long": "SecondConfidence",
           "source": "eventParameters>event>origin>compositeTime>second>confidenceLevel",
           "description": "",
           "type": "Double"
         },
         {
-          "field": "region",
+          "field_short": "region",
+          "field_long": "Region",
           "source": "eventParameters>event>origin>region",
           "description": "",
           "type": "String"
         },
         {
-          "field": "lat",
+          "field_short": "lat",
+          "field_long": "Lat",
           "source": "eventParameters>event>origin>latitude>value",
           "description": "",
           "type": "Double"
         },
         {
-          "field": "latunc",
+          "field_short": "latunc",
+          "field_long": "LatUnc",
           "source": "eventParameters>event>origin>latitude>uncertainty",
           "description": "",
           "type": "Double"
         },
         {
-          "field": "latunclo",
+          "field_short": "latunclo",
+          "field_long": "LatUncLow",
           "source": "eventParameters>event>origin>latitude>lowerUncertainty",
           "description": "",
           "type": "Double"
         },
         {
-          "field": "latuncup",
+          "field_short": "latuncup",
+          "field_long": "LonUncUp",
           "source": "eventParameters>event>origin>latitude>upperUncertainty",
           "description": "",
           "type": "Double"
         },
         {
-          "field": "latconf",
+          "field_short": "latconf",
+          "field_long": "LatConfidence",
           "source": "eventParameters>event>origin>latitude>confidenceLevel",
           "description": "",
           "type": "Double"
         },
         {
-          "field": "lon",
+          "field_short": "lon",
+          "field_long": "Lon",
           "source": "eventParameters>event>origin>longitude>value",
           "description": "",
           "type": "Double"
         },
         {
-          "field": "lonunc",
+          "field_short": "lonunc",
+          "field_long": "LonUnc",
           "source": "eventParameters>event>origin>longitude>uncertainty",
           "description": "",
           "type": "Double"
         },
         {
-          "field": "lonunclo",
+          "field_short": "lonunclo",
+          "field_long": "LonUncLow",
           "source": "eventParameters>event>origin>longitude>lowerUncertainty",
           "description": "",
           "type": "Double"
         },
         {
-          "field": "lonuncup",
+          "field_short": "lonuncup",
+          "field_long": "LonUncUp",
           "source": "eventParameters>event>origin>longitude>upperUncertainty",
           "description": "",
           "type": "Double"
         },
         {
-          "field": "lonconf",
+          "field_short": "lonconf",
+          "field_long": "LonConfidence",
           "source": "eventParameters>event>origin>longitude>confidenceLevel",
           "description": "",
           "type": "Double"
         },
         {
-          "field": "depth",
+          "field_short": "depth",
+          "field_long": "Depth",
           "source": "eventParameters>event>origin>depth>value",
           "description": "",
           "type": "Double"
         },
         {
-          "field": "depthunc",
+          "field_short": "depthunc",
+          "field_long": "DepthUnc",
           "source": "eventParameters>event>origin>depth>uncertainty",
           "description": "",
           "type": "Double"
         },
         {
-          "field": "depthunclo",
+          "field_short": "depthunclo",
+          "field_long": "DepthUncLow",
           "source": "eventParameters>event>origin>depth>lowerUncertainty",
           "description": "",
           "type": "Double"
         },
         {
-          "field": "depthuncup",
+          "field_short": "depthuncup",
+          "field_long": "DepthUncUp",
           "source": "eventParameters>event>origin>depth>upperUncertainty",
           "description": "",
           "type": "Double"
         },
         {
-          "field": "depthconf",
+          "field_short": "depthconf",
+          "field_long": "DepthConfidence",
           "source": "eventParameters>event>origin>depth>confidenceLevel",
           "description": "",
           "type": "Double"
         },
         {
-          "field": "depthtype",
+          "field_short": "depthtype",
+          "field_long": "DepthType",
           "source": "eventParameters>event>origin>depthType",
           "description": "",
           "type": "String"
         },
         {
-          "field": "origmethod",
+          "field_short": "origmethod",
+          "field_long": "OriginMethodID",
           "source": "eventParameters>event>origin>methodID",
           "description": "",
           "type": "String"
         },
         {
-          "field": "origearthm",
+          "field_short": "origearthm",
+          "field_long": "EarthModelID",
           "source": "eventParameters>event>origin>earthModelID",
           "description": "",
           "type": "String"
         },
         {
-          "field": "orighunc",
+          "field_short": "orighunc",
+          "field_long": "HorizontalUnc",
           "source": "eventParameters>event>origin>originUncertainty>horizontalUncertainty",
           "description": "",
           "type": "Double"
         },
         {
-          "field": "orighunclo",
+          "field_short": "orighunclo",
+          "field_long": "HorizontalUncMin",
           "source": "eventParameters>event>origin>originUncertainty>minHorizontalUncertainty",
           "description": "",
           "type": "Double"
         },
         {
-          "field": "orighuncup",
+          "field_short": "orighuncup",
+          "field_long": "HorizontalUncMax",
           "source": "eventParameters>event>origin>originUncertainty>maxHorizontalUncertainty",
           "description": "",
           "type": "Double"
         },
         {
-          "field": "origaziunc",
+          "field_short": "origaziunc",
+          "field_long": "AzimuthHorizontalUnc",
           "source": "eventParameters>event>origin>originUncertainty>azimuthMaxHorizontalUncertainty",
           "description": "",
           "type": "Double"
         },
         {
-          "field": "origconfel",
+          "field_short": "origconfel",
+          "field_long": "ConfidenceEllipsoid",
           "source": "eventParameters>event>origin>originUncertainty>confidenceEllipsoid",
           "description": "",
           "type": "String"
         },
         {
-          "field": "origprefde",
+          "field_short": "origprefde",
+          "field_long": "OriginUncDescription",
           "source": "eventParameters>event>origin>originUncertainty>preferredDescription",
           "description": "",
           "type": "String"
         },
         {
-          "field": "origconflv",
+          "field_short": "origconflv",
+          "field_long": "OriginUncConfidence",
           "source": "eventParameters>event>origin>originUncertainty>confidenceLevel",
           "description": "",
           "type": "Double"
         },
         {
-          "field": "origphatot",
+          "field_short": "origphatot",
+          "field_long": "OriginPhaseCount",
           "source": "eventParameters>event>origin>quality>associatedPhaseCount",
           "description": "",
           "type": "Int"
         },
         {
-          "field": "origphause",
+          "field_short": "origphause",
+          "field_long": "OriginUsedPhaseCount",
           "source": "eventParameters>event>origin>quality>usedPhaseCount",
           "description": "",
           "type": "Int"
         },
         {
-          "field": "origstatot",
+          "field_short": "origstatot",
+          "field_long": "OriginStationCount",
           "source": "eventParameters>event>origin>quality>associatedStationCount",
           "description": "",
           "type": "Int"
         },
         {
-          "field": "origstause",
+          "field_short": "origstause",
+          "field_long": "OriginUsedStationCount",
           "source": "eventParameters>event>origin>quality>usedStationCount",
           "description": "",
           "type": "Int"
         },
         {
-          "field": "origdeppht",
+          "field_short": "origdeppht",
+          "field_long": "DepthPhaseCount",
           "source": "eventParameters>event>origin>quality>depthPhaseCount",
           "description": "",
           "type": "Int"
         },
         {
-          "field": "origstderr",
+          "field_short": "origstderr",
+          "field_long": "OriginStdError",
           "source": "eventParameters>event>origin>quality>standardError",
           "description": "",
           "type": "Double"
         },
         {
-          "field": "origazgap",
+          "field_short": "origazgap",
+          "field_long": "OriginAzimuthGap",
           "source": "eventParameters>event>origin>quality>azimuthalGap",
           "description": "",
           "type": "Double"
         },
         {
-          "field": "origazgap2",
+          "field_short": "origazgap2",
+          "field_long": "OriginAzimuthGap2",
           "source": "eventParameters>event>origin>quality>secondaryAzimuthalGap",
           "description": "",
           "type": "Double"
         },
         {
-          "field": "origgrthlv",
+          "field_short": "origgrthlv",
+          "field_long": "OriginGroundTruthLevel",
           "source": "eventParameters>event>origin>quality>groundTruthLevel",
           "description": "",
           "type": "String"
         },
         {
-          "field": "origdismax",
+          "field_short": "origdismax",
+          "field_long": "OriginMaxDist",
           "source": "eventParameters>event>origin>quality>maximumDistance",
           "description": "",
           "type": "Double"
         },
         {
-          "field": "origdismin",
+          "field_short": "origdismin",
+          "field_long": "OriginMinDist",
           "source": "eventParameters>event>origin>quality>minimumDistance",
           "description": "",
           "type": "Double"
         },
         {
-          "field": "origdismdn",
+          "field_short": "origdismdn",
+          "field_long": "OriginMedDist",
           "source": "eventParameters>event>origin>quality>medianDistance",
           "description": "",
           "type": "Double"
         },
         {
-          "field": "origevalmd",
+          "field_short": "origevalmd",
+          "field_long": "OriginEvalMode",
           "source": "eventParameters>event>origin>evaluationMode",
           "description": "",
           "type": "String"
         },
         {
-          "field": "origevalst",
+          "field_short": "origevalst",
+          "field_long": "OriginEvalStatus",
           "source": "eventParameters>event>origin>evaluationStatus",
           "description": "",
           "type": "String"
         },
         {
-          "field": "origcm",
+          "field_short": "origcm",
+          "field_long": "OriginCommentTxt",
           "source": "eventParameters>event>origin>comment>text",
           "description": "",
           "skip": true,
           "type": "String"
         },
         {
-          "field": "origcmagid",
+          "field_short": "origcmagid",
+          "field_long": "OriginCommentAgencyID",
           "source": "eventParameters>event>origin>comment>creationInfo>agencyID",
           "description": "",
           "skip": true,
           "type": "String"
         },
         {
-          "field": "origcmagur",
+          "field_short": "origcmagur",
+          "field_long": "OriginCommentAgencyURI",
           "source": "eventParameters>event>origin>comment>creationInfo>agencyURI",
           "description": "",
           "skip": true,
           "type": "String"
         },
         {
-          "field": "origcmaut",
+          "field_short": "origcmaut",
+          "field_long": "OriginCommentAuthor",
           "source": "eventParameters>event>origin>comment>creationInfo>author",
           "description": "",
           "skip": true,
           "type": "String"
         },
         {
-          "field": "origcmautu",
+          "field_short": "origcmautu",
+          "field_long": "OriginCommentAuthorURI",
           "source": "eventParameters>event>origin>comment>creationInfo>authorURI",
           "description": "",
           "skip": true,
           "type": "String"
         },
         {
-          "field": "origcmtime",
+          "field_short": "origcmtime",
+          "field_long": "OriginCommentTime",
           "source": "eventParameters>event>origin>comment>creationInfo>creationTime",
           "description": "",
           "skip": true,
           "type": "String"
         },
         {
-          "field": "origcmver",
+          "field_short": "origcmver",
+          "field_long": "OriginCommentVersion",
           "source": "eventParameters>event>origin>comment>creationInfo>version",
           "description": "",
           "skip": true,
           "type": "String"
         },
         {
-          "field": "origcragid",
+          "field_short": "origcragid",
+          "field_long": "OriginCreationAgencyID",
           "source": "eventParameters>event>origin>creationInfo>agencyID",
           "description": "",
           "type": "String"
         },
         {
-          "field": "origcragur",
+          "field_short": "origcragur",
+          "field_long": "OriginCreationAgencyURI",
           "source": "eventParameters>event>origin>creationInfo>agencyURI",
           "description": "",
           "type": "String"
         },
         {
-          "field": "origcrau",
+          "field_short": "origcrau",
+          "field_long": "OriginCreationAuthor",
           "source": "eventParameters>event>origin>creationInfo>author",
           "description": "",
           "type": "String"
         },
         {
-          "field": "origcrauur",
+          "field_short": "origcrauur",
+          "field_long": "OriginCreationAuthorURI",
           "source": "eventParameters>event>origin>creationInfo>authorURI",
           "description": "",
           "type": "String"
         },
         {
-          "field": "origcrtime",
+          "field_short": "origcrtime",
+          "field_long": "OriginCreationTime",
           "source": "eventParameters>event>origin>creationInfo>creationTime",
           "description": "",
           "type": "String"
         },
         {
-          "field": "origcrvers",
+          "field_short": "origcrvers",
+          "field_long": "OriginCreationVersion",
           "source": "eventParameters>event>origin>creationInfo>version",
           "description": "",
           "type": "String"
@@ -690,185 +800,214 @@
       "label": "magnitude",
       "fields": [
         {
-          "field": "magid",
+          "field_short": "magid",
+          "field_long": "MagID",
           "source": "eventParameters>event>magnitude>publicID",
           "description": "",
           "type": "String"
         },
         {
-          "field": "magorigid",
+          "field_short": "magorigid",
+          "field_long": "MagOriginID",
           "source": "eventParameters>event>magnitude>originID",
           "description": "",
           "type": "String"
         },
         {
-          "field": "magmethod",
+          "field_short": "magmethod",
+          "field_long": "MagMethod",
           "source": "eventParameters>event>magnitude>methodID",
           "description": "",
           "type": "String"
         },
         {
-          "field": "magstatmag",
+          "field_short": "magstatmag",
+          "field_long": "StationMagnitudeID",
           "source": "eventParameters>event>magnitude>stationMagnitudeContribution>stationMagnitudeID",
           "description": "",
           "skip": true,
           "type": "String"
         },
         {
-          "field": "magstatres",
+          "field_short": "magstatres",
+          "field_long": "StationMagnitudeResidual",
           "source": "eventParameters>event>magnitude>stationMagnitudeContribution>residual",
           "description": "",
           "skip": true,
           "type": "String"
         },
         {
-          "field": "magstatwei",
+          "field_short": "magstatwei",
+          "field_long": "StationMagnitudeWeight",
           "source": "eventParameters>event>magnitude>stationMagnitudeContribution>weight",
           "description": "",
           "skip": true,
           "type": "String"
         },
         {
-          "field": "mag",
+          "field_short": "mag",
+          "field_long": "Mag",
           "source": "eventParameters>event>magnitude>mag>value",
           "description": "",
           "type": "Double"
         },
         {
-          "field": "magunc",
+          "field_short": "magunc",
+          "field_long": "MagUnc",
           "source": "eventParameters>event>magnitude>mag>uncertainty",
           "description": "",
           "type": "Double"
         },
         {
-          "field": "magunclo",
+          "field_short": "magunclo",
+          "field_long": "MagUncLow",
           "source": "eventParameters>event>magnitude>mag>lowerUncertainty",
           "description": "",
           "type": "Double"
         },
         {
-          "field": "maguncup",
+          "field_short": "maguncup",
+          "field_long": "MagUncUp",
           "source": "eventParameters>event>magnitude>mag>upperUncertainty",
           "description": "",
           "type": "Double"
         },
         {
-          "field": "magconf",
+          "field_short": "magconf",
+          "field_long": "MagConfidence",
           "source": "eventParameters>event>magnitude>mag>confidenceLevel",
           "description": "",
           "type": "Double"
         },
         {
-          "field": "magtype",
+          "field_short": "magtype",
+          "field_long": "MagType",
           "source": "eventParameters>event>magnitude>type",
           "description": "",
           "type": "String"
         },
         {
-          "field": "magstatot",
+          "field_short": "magstatot",
+          "field_long": "MagStationCount",
           "source": "eventParameters>event>magnitude>stationCount",
           "description": "",
           "type": "Int"
         },
         {
-          "field": "magazigap",
+          "field_short": "magazigap",
+          "field_long": "MagAzimuthGap",
           "source": "eventParameters>event>magnitude>azimuthalGap",
           "description": "",
           "type": "Double"
         },
         {
-          "field": "magevalmod",
+          "field_short": "magevalmod",
+          "field_long": "MagEvalMode",
           "source": "eventParameters>event>magnitude>evaluationMode",
           "description": "",
           "type": "String"
         },
         {
-          "field": "magevalsta",
+          "field_short": "magevalsta",
+          "field_long": "MagEvalStatus",
           "source": "eventParameters>event>magnitude>evaluationStatus",
           "description": "",
           "type": "String"
         },
         {
-          "field": "magcm",
+          "field_short": "magcm",
+          "field_long": "MagCommentTxt",
           "source": "eventParameters>event>magnitude>comment>text",
           "description": "",
           "skip": true,
           "type": "String"
         },
         {
-          "field": "magcmagid",
+          "field_short": "magcmagid",
+          "field_long": "MagCommentAgencyID",
           "source": "eventParameters>event>magnitude>comment>creationInfo>agencyID",
           "description": "",
           "skip": true,
           "type": "String"
         },
         {
-          "field": "magcmaguri",
+          "field_short": "magcmaguri",
+          "field_long": "MagCommentAgencyURI",
           "source": "eventParameters>event>magnitude>comment>creationInfo>agencyURI",
           "description": "",
           "skip": true,
           "type": "String"
         },
         {
-          "field": "magcmau",
+          "field_short": "magcmau",
+          "field_long": "MagCommentAuthor",
           "source": "eventParameters>event>magnitude>comment>creationInfo>author",
           "description": "",
           "skip": true,
           "type": "String"
         },
         {
-          "field": "magcmauuri",
+          "field_short": "magcmauuri",
+          "field_long": "MagCommentAuthorURI",
           "source": "eventParameters>event>magnitude>comment>creationInfo>authorURI",
           "description": "",
           "skip": true,
           "type": "String"
         },
         {
-          "field": "magcmtime",
+          "field_short": "magcmtime",
+          "field_long": "MagCommentTime",
           "source": "eventParameters>event>magnitude>comment>creationInfo>creationTime",
           "description": "",
           "skip": true,
           "type": "String"
         },
         {
-          "field": "magcmver",
+          "field_short": "magcmver",
+          "field_long": "MagCommentVersion",
           "source": "eventParameters>event>magnitude>comment>creationInfo>version",
           "description": "",
           "skip": true,
           "type": "String"
         },
         {
-          "field": "magcragid",
+          "field_short": "magcragid",
+          "field_long": "MagCreationAgencyID",
           "source": "eventParameters>event>magnitude>creationInfo>agencyID",
           "description": "",
           "type": "String"
         },
         {
-          "field": "magcraguri",
+          "field_short": "magcraguri",
+          "field_long": "MagCreationAgencyURI",
           "source": "eventParameters>event>magnitude>creationInfo>agencyURI",
           "description": "",
           "type": "String"
         },
         {
-          "field": "magcrau",
+          "field_short": "magcrau",
+          "field_long": "MagCreationAuthor",
           "source": "eventParameters>event>magnitude>creationInfo>author",
           "description": "",
           "type": "String"
         },
         {
-          "field": "magcrauri",
+          "field_short": "magcrauri",
+          "field_long": "MagCreationAuthorURI",
           "source": "eventParameters>event>magnitude>creationInfo>authorURI",
           "description": "",
           "type": "String"
         },
         {
-          "field": "magcrtime",
+          "field_short": "magcrtime",
+          "field_long": "MagCreationTime",
           "source": "eventParameters>event>magnitude>creationInfo>creationTime",
           "description": "",
           "type": "String"
         },
         {
-          "field": "magcrver",
+          "field_short": "magcrver",
+          "field_long": "MagCreationVersion",
           "source": "eventParameters>event>magnitude>creationInfo>version",
           "description": "",
           "type": "String"
@@ -879,283 +1018,330 @@
       "label": "amplitude",
       "fields": [
         {
-          "field": "ampid",
+          "field_short": "ampid",
+          "field_long": "AmplID",
           "source": "eventParameters>event>amplitude§publicID",
           "description": "",
           "type": "String"
         },
         {
-          "field": "ampmethod",
+          "field_short": "ampmethod",
+          "field_long": "AmplMethodID",
           "source": "eventParameters>event>amplitude>methodID",
           "description": "",
           "type": "String"
         },
         {
-          "field": "amppickid",
+          "field_short": "amppickid",
+          "field_long": "AmplPickID",
           "source": "eventParameters>event>amplitude>pickID",
           "description": "",
           "type": "String"
         },
         {
-          "field": "ampfiltid",
+          "field_short": "ampfiltid",
+          "field_long": "AmplFilterID",
           "source": "eventParameters>event>amplitude>filterID",
           "description": "",
           "type": "String"
         },
         {
-          "field": "ampwavnet",
+          "field_short": "ampwavnet",
+          "field_long": "AmplWaveIDNetCode",
           "source": "eventParameters>event>amplitude>waveformID§networkCode",
           "description": "",
           "type": "String"
         },
         {
-          "field": "ampwavstat",
+          "field_short": "ampwavstat",
+          "field_long": "AmplWaveIDStatCode",
           "source": "eventParameters>event>amplitude>waveformID§stationCode",
           "description": "",
           "type": "String"
         },
         {
-          "field": "ampwavchan",
+          "field_short": "ampwavchan",
+          "field_long": "AmplWaveIDChannelCode",
           "source": "eventParameters>event>amplitude>waveformID§channelCode",
           "description": "",
           "type": "String"
         },
         {
-          "field": "ampwavloc",
+          "field_short": "ampwavloc",
+          "field_long": "AmplWaveIDLocCode",
           "source": "eventParameters>event>amplitude>waveformID§locationCode",
           "description": "",
           "type": "String"
         },
         {
-          "field": "ampwavid",
+          "field_short": "ampwavid",
+          "field_long": "AmplWaveID",
           "source": "eventParameters>event>amplitude>waveformID",
           "description": "",
           "type": "String"
         },
         {
-          "field": "ampgen",
+          "field_short": "ampgen",
+          "field_long": "AmplGeneric",
           "source": "eventParameters>event>amplitude>genericAmplitude>value",
           "description": "",
           "type": "String"
         },
         {
-          "field": "ampgenunc",
+          "field_short": "ampgenunc",
+          "field_long": "AmplGenericUnc",
           "source": "eventParameters>event>amplitude>genericAmplitude>uncertainty",
           "description": "",
           "type": "String"
         },
         {
-          "field": "ampgenuncl",
+          "field_short": "ampgenuncl",
+          "field_long": "AmplGenericUncLow",
           "source": "eventParameters>event>amplitude>genericAmplitude>lowerUncertainty",
           "description": "",
           "type": "String"
         },
         {
-          "field": "ampgenuncu",
+          "field_short": "ampgenuncu",
+          "field_long": "AmplGenericUncUp",
           "source": "eventParameters>event>amplitude>genericAmplitude>upperUncertainty",
           "description": "",
           "type": "String"
         },
         {
-          "field": "ampgenconf",
+          "field_short": "ampgenconf",
+          "field_long": "AmplGenericConfidence",
           "source": "eventParameters>event>amplitude>genericAmplitude>confidenceLevel",
           "description": "",
           "type": "String"
         },
         {
-          "field": "amptype",
+          "field_short": "amptype",
+          "field_long": "AmplType",
           "source": "eventParameters>event>amplitude>type",
           "description": "",
           "type": "String"
         },
         {
-          "field": "ampcat",
+          "field_short": "ampcat",
+          "field_long": "AmplCategory",
           "source": "eventParameters>event>amplitude>category",
           "description": "",
           "type": "String"
         },
         {
-          "field": "ampunit",
+          "field_short": "ampunit",
+          "field_long": "AmplUnit",
           "source": "eventParameters>event>amplitude>unit",
           "description": "",
           "type": "String"
         },
         {
-          "field": "ampper",
+          "field_short": "ampper",
+          "field_long": "AmplPeriod",
           "source": "eventParameters>event>amplitude>period>value",
           "description": "",
           "type": "String"
         },
         {
-          "field": "ampperunc",
+          "field_short": "ampperunc",
+          "field_long": "AmplPeriodUnc",
           "source": "eventParameters>event>amplitude>period>uncertainty",
           "description": "",
           "type": "String"
         },
         {
-          "field": "ampperlo",
+          "field_short": "ampperlo",
+          "field_long": "AmplPeriodUncLow",
           "source": "eventParameters>event>amplitude>period>lowerUncertainty",
           "description": "",
           "type": "String"
         },
         {
-          "field": "ampperup",
+          "field_short": "ampperup",
+          "field_long": "AmplPeriodUncUp",
           "source": "eventParameters>event>amplitude>period>upperUncertainty",
           "description": "",
           "type": "String"
         },
         {
-          "field": "ampperconf",
+          "field_short": "ampperconf",
+          "field_long": "AmplPeriodConfidence",
           "source": "eventParameters>event>amplitude>period>confidenceLevel",
           "description": "",
           "type": "String"
         },
         {
-          "field": "ampsnr",
+          "field_short": "ampsnr",
+          "field_long": "AmplSNR",
           "source": "eventParameters>event>amplitude>snr",
           "description": "",
           "type": "String"
         },
         {
-          "field": "ampbegin",
+          "field_short": "ampbegin",
+          "field_long": "AmplTimeBegin",
           "source": "eventParameters>event>amplitude>timeWindow>begin",
           "description": "",
           "type": "String"
         },
         {
-          "field": "ampend",
+          "field_short": "ampend",
+          "field_long": "AmplTimeEnd",
           "source": "eventParameters>event>amplitude>timeWindow>end",
           "description": "",
           "type": "String"
         },
         {
-          "field": "amptimeref",
+          "field_short": "amptimeref",
+          "field_long": "AmplTimeRef",
           "source": "eventParameters>event>amplitude>timeWindow>reference",
           "description": "",
           "type": "String"
         },
         {
-          "field": "ampscltm",
+          "field_short": "ampscltm",
+          "field_long": "AmplScalingTime",
           "source": "eventParameters>event>amplitude>scalingTime>value",
           "description": "",
           "type": "String"
         },
         {
-          "field": "ampscltmun",
+          "field_short": "ampscltmun",
+          "field_long": "AmplScalingTimeUnc",
           "source": "eventParameters>event>amplitude>scalingTime>uncertainty",
           "description": "",
           "type": "String"
         },
         {
-          "field": "ampscltmlo",
+          "field_short": "ampscltmlo",
+          "field_long": "AmplScalingTimeUncLow",
           "source": "eventParameters>event>amplitude>scalingTime>lowerUncertainty",
           "description": "",
           "type": "String"
         },
         {
-          "field": "ampscltmup",
+          "field_short": "ampscltmup",
+          "field_long": "AmplScalingTimeUncUp",
           "source": "eventParameters>event>amplitude>scalingTime>upperUncertainty",
           "description": "",
           "type": "String"
         },
         {
-          "field": "ampsclconf",
+          "field_short": "ampsclconf",
+          "field_long": "AmplScalingConfidence",
           "source": "eventParameters>event>amplitude>scalingTime>confidenceLevel",
           "description": "",
           "type": "String"
         },
         {
-          "field": "ampmaghint",
+          "field_short": "ampmaghint",
+          "field_long": "AmplMahHint",
           "source": "eventParameters>event>amplitude>magnitudeHint",
           "description": "",
           "type": "String"
         },
         {
-          "field": "ampevalmod",
+          "field_short": "ampevalmod",
+          "field_long": "AmplEvalMode",
           "source": "eventParameters>event>amplitude>evaluationMode",
           "description": "",
           "type": "String"
         },
         {
-          "field": "ampevalsta",
+          "field_short": "ampevalsta",
+          "field_long": "AmplEvalStatus",
           "source": "eventParameters>event>amplitude>evaluationStatus",
           "description": "",
           "type": "String"
         },
         {
-          "field": "ampcm",
+          "field_short": "ampcm",
+          "field_long": "AmplCommentTxt",
           "source": "eventParameters>event>amplitude>comment>text",
           "description": "",
           "type": "String"
         },
         {
-          "field": "ampcmagid",
+          "field_short": "ampcmagid",
+          "field_long": "AmplCommentAgencyID",
           "source": "eventParameters>event>amplitude>comment>creationInfo>agencyID",
           "description": "",
           "type": "String"
         },
         {
-          "field": "ampcmaguri",
+          "field_short": "ampcmaguri",
+          "field_long": "AmplCommentAgencyURI",
           "source": "eventParameters>event>amplitude>comment>creationInfo>agencyURI",
           "description": "",
           "type": "String"
         },
         {
-          "field": "ampcmau",
+          "field_short": "ampcmau",
+          "field_long": "AmplCommentAuthor",
           "source": "eventParameters>event>amplitude>comment>creationInfo>author",
           "description": "",
           "type": "String"
         },
         {
-          "field": "ampcmauri",
+          "field_short": "ampcmauri",
+          "field_long": "AmplCommentAuthorURI",
           "source": "eventParameters>event>amplitude>comment>creationInfo>authorURI",
           "description": "",
           "type": "String"
         },
         {
-          "field": "ampcmtime",
+          "field_short": "ampcmtime",
+          "field_long": "AmplCommentTime",
           "source": "eventParameters>event>amplitude>comment>creationInfo>creationTime",
           "description": "",
           "type": "String"
         },
         {
-          "field": "ampcmver",
+          "field_short": "ampcmver",
+          "field_long": "AmplCommentVersion",
           "source": "eventParameters>event>amplitude>comment>creationInfo>version",
           "description": "",
           "type": "String"
         },
         {
-          "field": "ampcragid",
+          "field_short": "ampcragid",
+          "field_long": "AmplCreationAgencyID",
           "source": "eventParameters>event>amplitude>creationInfo>agencyID",
           "description": "",
           "type": "String"
         },
         {
-          "field": "ampcraguri",
+          "field_short": "ampcraguri",
+          "field_long": "AmplCreationAgencyURI",
           "source": "eventParameters>event>amplitude>creationInfo>agencyURI",
           "description": "",
           "type": "String"
         },
         {
-          "field": "ampcrau",
+          "field_short": "ampcrau",
+          "field_long": "AmplCreationAuthor",
           "source": "eventParameters>event>amplitude>creationInfo>author",
           "description": "",
           "type": "String"
         },
         {
-          "field": "ampcrauri",
+          "field_short": "ampcrauri",
+          "field_long": "AmplCreationAuthorURI",
           "source": "eventParameters>event>amplitude>creationInfo>authorURI",
           "description": "",
           "type": "String"
         },
         {
-          "field": "ampcrtime",
+          "field_short": "ampcrtime",
+          "field_long": "AmplCreationTime",
           "source": "eventParameters>event>amplitude>creationInfo>creationTime",
           "description": "",
           "type": "String"
         },
         {
-          "field": "ampcrver",
+          "field_short": "ampcrver",
+          "field_long": "AmplCreationVersion",
           "source": "eventParameters>event>amplitude>creationInfo>version",
           "description": "",
           "type": "String"
@@ -1166,253 +1352,295 @@
       "label": "pick",
       "fields": [
         {
-          "field": "pkid",
+          "field_short": "pkid",
+          "field_long": "PickID",
           "source": "eventParameters>event>pick§publicID",
           "description": "",
           "type": "String"
         },
         {
-          "field": "pkmethod",
+          "field_short": "pkmethod",
+          "field_long": "PickMethodID",
           "source": "eventParameters>event>pick>methodID",
           "description": "",
           "type": "String"
         },
         {
-          "field": "pkwavnet",
+          "field_short": "pkwavnet",
+          "field_long": PickWaveIDNetCode"",
           "source": "eventParameters>event>pick>waveformID§networkCode",
           "description": "",
           "type": "String"
         },
         {
-          "field": "pkwavstat",
+          "field_short": "pkwavstat",
+          "field_long": "PickWaveIDStatCode",
           "source": "eventParameters>event>pick>waveformID§stationCode",
           "description": "",
           "type": "String"
         },
         {
-          "field": "pkwavchan",
+          "field_short": "pkwavchan",
+          "field_long": "PickWaveIDChnCode",
           "source": "eventParameters>event>pick>waveformID§channelCode",
           "description": "",
           "type": "String"
         },
         {
-          "field": "pkwavloc",
+          "field_short": "pkwavloc",
+          "field_long": "PickWaveIDLocCode",
           "source": "eventParameters>event>pick>waveformID§locationCode",
           "description": "",
           "type": "String"
         },
         {
-          "field": "pkwavid",
+          "field_short": "pkwavid",
+          "field_long": "PickWaveID",
           "source": "eventParameters>event>pick>waveformID",
           "description": "",
           "type": "String"
         },
         {
-          "field": "pkfiltid",
+          "field_short": "pkfiltid",
+          "field_long": "PickFilterID",
           "source": "eventParameters>event>pick>filterID",
           "description": "",
           "type": "String"
         },
         {
-          "field": "pkslmethod",
+          "field_short": "pkslmethod",
+          "field_long": "PickSlownessMethodID",
           "source": "eventParameters>event>pick>slownessMethodID",
           "description": "",
           "type": "String"
         },
         {
-          "field": "pktime",
+          "field_short": "pktime",
+          "field_long": "PickTime",
           "source": "eventParameters>event>pick>time>value",
           "description": "",
           "type": "String"
         },
         {
-          "field": "pktimeunc",
+          "field_short": "pktimeunc",
+          "field_long": "PickTimeUnc",
           "source": "eventParameters>event>pick>time>uncertainty",
           "description": "",
           "type": "String"
         },
         {
-          "field": "pktimelo",
+          "field_short": "pktimelo",
+          "field_long": "PickTimeUncLow",
           "source": "eventParameters>event>pick>time>lowerUncertainty",
           "description": "",
           "type": "String"
         },
         {
-          "field": "pktimeup",
+          "field_short": "pktimeup",
+          "field_long": "PickTimeUncUp",
           "source": "eventParameters>event>pick>time>upperUncertainty",
           "description": "",
           "type": "String"
         },
         {
-          "field": "pktimeconf",
+          "field_short": "pktimeconf",
+          "field_long": "PickTimeConfidence",
           "source": "eventParameters>event>pick>time>confidenceLevel",
           "description": "",
           "type": "String"
         },
         {
-          "field": "pkhslo",
+          "field_short": "pkhslo",
+          "field_long": "PickHorizSlowness",
           "source": "eventParameters>event>pick>horizontalSlowness>value",
           "description": "",
           "type": "String"
         },
         {
-          "field": "pkhslounc",
+          "field_short": "pkhslounc",
+          "field_long": "PickHorizSlownessUnc",
           "source": "eventParameters>event>pick>horizontalSlowness>uncertainty",
           "description": "",
           "type": "String"
         },
         {
-          "field": "pkhslolo",
+          "field_short": "pkhslolo",
+          "field_long": "PickHorizSlownessUncLow",
           "source": "eventParameters>event>pick>horizontalSlowness>lowerUncertainty",
           "description": "",
           "type": "String"
         },
         {
-          "field": "pkhsloup",
+          "field_short": "pkhsloup",
+          "field_long": "PickHorizSlownessUncUp",
           "source": "eventParameters>event>pick>horizontalSlowness>upperUncertainty",
           "description": "",
           "type": "String"
         },
         {
-          "field": "pkhconf",
+          "field_short": "pkhconf",
+          "field_long": "PickHorizSlownessConfidence",
           "source": "eventParameters>event>pick>horizontalSlowness>confidenceLevel",
           "description": "",
           "type": "String"
         },
         {
-          "field": "pkbkaz",
+          "field_short": "pkbkaz",
+          "field_long": "PickBackAzimuth",
           "source": "eventParameters>event>pick>backazimuth>value",
           "description": "",
           "type": "String"
         },
         {
-          "field": "pkbkazunc",
+          "field_short": "pkbkazunc",
+          "field_long": "PickBackAzimuthUnc",
           "source": "eventParameters>event>pick>backazimuth>uncertainty",
           "description": "",
           "type": "String"
         },
         {
-          "field": "pkbkazlo",
+          "field_short": "pkbkazlo",
+          "field_long": "PickBackAzimuthUncLow",
           "source": "eventParameters>event>pick>backazimuth>lowerUncertainty",
           "description": "",
           "type": "String"
         },
         {
-          "field": "pkbkazup",
+          "field_short": "pkbkazup",
+          "field_long": "PickBackAzimuthUncUp",
           "source": "eventParameters>event>pick>backazimuth>upperUncertainty",
           "description": "",
           "type": "String"
         },
         {
-          "field": "pkbkazconf",
+          "field_short": "pkbkazconf",
+          "field_long": "PickBackAzimuthConfidence",
           "source": "eventParameters>event>pick>backazimuth>confidenceLevel",
           "description": "",
           "type": "String"
         },
         {
-          "field": "pkonset",
+          "field_short": "pkonset",
+          "field_long": "PickOnset",
           "source": "eventParameters>event>pick>onset",
           "description": "",
           "type": "String"
         },
         {
-          "field": "pkphhint",
+          "field_short": "pkphhint",
+          "field_long": "PickPhaseHint",
           "source": "eventParameters>event>pick>phaseHint",
           "description": "",
           "type": "String"
         },
         {
-          "field": "pkpolar",
+          "field_short": "pkpolar",
+          "field_long": "PickPhasePolarity",
           "source": "eventParameters>event>pick>polarity",
           "description": "",
           "type": "String"
         },
         {
-          "field": "pkevalmod",
+          "field_short": "pkevalmod",
+          "field_long": "PickEvalMode",
           "source": "eventParameters>event>pick>evaluationMode",
           "description": "",
           "type": "String"
         },
         {
-          "field": "pkevalsta",
+          "field_short": "pkevalsta",
+          "field_long": "PickEvalStatus",
           "source": "eventParameters>event>pick>evaluationStatus",
           "description": "",
           "type": "String"
         },
         {
-          "field": "pkcmcm",
+          "field_short": "pkcmcm",
+          "field_long": "PickCommentTxt",
           "source": "eventParameters>event>pick>comment>text",
           "description": "",
           "type": "String"
         },
         {
-          "field": "pkcmagid",
+          "field_short": "pkcmagid",
+          "field_long": "PickCommentAgencyID",
           "source": "eventParameters>event>pick>comment>creationInfo>agencyID",
           "description": "",
           "type": "String"
         },
         {
-          "field": "pkcmaguri",
+          "field_short": "pkcmaguri",
+          "field_long": "PickCommentAgencyURI",
           "source": "eventParameters>event>pick>comment>creationInfo>agencyURI",
           "description": "",
           "type": "String"
         },
         {
-          "field": "pkcmau",
+          "field_short": "pkcmau",
+          "field_long": "PickCommentAuthor",
           "source": "eventParameters>event>pick>comment>creationInfo>author",
           "description": "",
           "type": "String"
         },
         {
-          "field": "pkcmauri",
+          "field_short": "pkcmauri",
+          "field_long": "PickCommentAuthorURI",
           "source": "eventParameters>event>pick>comment>creationInfo>authorURI",
           "description": "",
           "type": "String"
         },
         {
-          "field": "pkcmtime",
+          "field_short": "pkcmtime",
+          "field_long": "PickCommentTime",
           "source": "eventParameters>event>pick>comment>creationInfo>creationTime",
           "description": "",
           "type": "String"
         },
         {
-          "field": "pkcmver",
+          "field_short": "pkcmver",
+          "field_long": "PickCommentVersion",
           "source": "eventParameters>event>pick>comment>creationInfo>version",
           "description": "",
           "type": "String"
         },
         {
-          "field": "pkcragid",
+          "field_short": "pkcragid",
+          "field_long": "PickCreationAgencyID",
           "source": "eventParameters>event>pick>creationInfo>agencyID",
           "description": "",
           "type": "String"
         },
         {
-          "field": "pkcraguri",
+          "field_short": "pkcraguri",
+          "field_long": "PickCreationAgencyURI",
           "source": "eventParameters>event>pick>creationInfo>agencyURI",
           "description": "",
           "type": "String"
         },
         {
-          "field": "pkcrau",
+          "field_short": "pkcrau",
+          "field_long": "PickCreationAuthor",
           "source": "eventParameters>event>pick>creationInfo>author",
           "description": "",
           "type": "String"
         },
         {
-          "field": "pkcrauri",
+          "field_short": "pkcrauri",
+          "field_long": "PickCreationAuthorURI",
           "source": "eventParameters>event>pick>creationInfo>authorURI",
           "description": "",
           "type": "String"
         },
         {
-          "field": "pkcrtime",
+          "field_short": "pkcrtime",
+          "field_long": "PickCreationTime",
           "source": "eventParameters>event>pick>creationInfo>creationTime",
           "description": "",
           "type": "String"
         },
         {
-          "field": "pkcrver",
+          "field_short": "pkcrver",
+          "field_long": "PickCreationVersion",
           "source": "eventParameters>event>pick>creationInfo>version",
           "description": "",
           "type": "String"
@@ -1423,145 +1651,169 @@
       "label": "station magnitude",
       "fields": [
         {
-          "field": "stmid",
+          "field_short": "stmid",
+          "field_long": "StationMagID",
           "source": "eventParameters>event>stationMagnitude§publicID",
           "description": "",
           "type": "String"
         },
         {
-          "field": "stmorigid",
+          "field_short": "stmorigid",
+          "field_long": "StationMagOriginID",
           "source": "eventParameters>event>stationMagnitude>originID",
           "description": "",
           "type": "String"
         },
         {
-          "field": "stm",
+          "field_short": "stm",
+          "field_long": "StationMag",
           "source": "eventParameters>event>stationMagnitude>mag>value",
           "description": "",
           "type": "String"
         },
         {
-          "field": "stmunc",
+          "field_short": "stmunc",
+          "field_long": "StationMagUnc",
           "source": "eventParameters>event>stationMagnitude>mag>uncertainty",
           "description": "",
           "type": "String"
         },
         {
-          "field": "stmunclo",
+          "field_short": "stmunclo",
+          "field_long": "StationMagUncLow",
           "source": "eventParameters>event>stationMagnitude>mag>lowerUncertainty",
           "description": "",
           "type": "String"
         },
         {
-          "field": "stmuncup",
+          "field_short": "stmuncup",
+          "field_long": "StationMagUncUp",
           "source": "eventParameters>event>stationMagnitude>mag>upperUncertainty",
           "description": "",
           "type": "String"
         },
         {
-          "field": "stmconf",
+          "field_short": "stmconf",
+          "field_long": "StationMagConfidence",
           "source": "eventParameters>event>stationMagnitude>mag>confidenceLevel",
           "description": "",
           "type": "String"
         },
         {
-          "field": "stmtype",
+          "field_short": "stmtype",
+          "field_long": "StationMagType",
           "source": "eventParameters>event>stationMagnitude>type",
           "description": "",
           "type": "String"
         },
         {
-          "field": "stmampid",
+          "field_short": "stmampid",
+          "field_long": "StationMagAmplID",
           "source": "eventParameters>event>stationMagnitude>amplitudeID",
           "description": "",
           "type": "String"
         },
         {
-          "field": "stmmethod",
+          "field_short": "stmmethod",
+          "field_long": "StationMagMethodID",
           "source": "eventParameters>event>stationMagnitude>methodID",
           "description": "",
           "type": "String"
         },
         {
-          "field": "stmwavid",
+          "field_short": "stmwavid",
+          "field_long": "StationMagWaveformID",
           "source": "eventParameters>event>stationMagnitude>waveformID",
           "description": "",
           "type": "String"
         },
         {
-          "field": "stmcm",
+          "field_short": "stmcm",
+          "field_long": "StationMagCommentTxt",
           "source": "eventParameters>event>stationMagnitude>comment>text",
           "description": "",
           "type": "String"
         },
         {
-          "field": "stmcmagid",
+          "field_short": "stmcmagid",
+          "field_long": "StationMagCommentAgencyID",
           "source": "eventParameters>event>stationMagnitude>comment>creationInfo>agencyID",
           "description": "",
           "type": "String"
         },
         {
-          "field": "stmcmaguri",
+          "field_short": "stmcmaguri",
+          "field_long": "StationMagCommentAgencyURI",
           "source": "eventParameters>event>stationMagnitude>comment>creationInfo>agencyURI",
           "description": "",
           "type": "String"
         },
         {
-          "field": "stmcmau",
+          "field_short": "stmcmau",
+          "field_long": "StationMagCommentAuthor",
           "source": "eventParameters>event>stationMagnitude>comment>creationInfo>author",
           "description": "",
           "type": "String"
         },
         {
-          "field": "stmcmauri",
+          "field_short": "stmcmauri",
+          "field_long": "StationMagCommentAuthorURI",
           "source": "eventParameters>event>stationMagnitude>comment>creationInfo>authorURI",
           "description": "",
           "type": "String"
         },
         {
-          "field": "stmcmtime",
+          "field_short": "stmcmtime",
+          "field_long": "StationMagCommentTime",
           "source": "eventParameters>event>stationMagnitude>comment>creationInfo>creationTime",
           "description": "",
           "type": "String"
         },
         {
-          "field": "stmcmver",
+          "field_short": "stmcmver",
+          "field_long": "StationMagCommentVersion",
           "source": "eventParameters>event>stationMagnitude>comment>creationInfo>version",
           "description": "",
           "type": "String"
         },
         {
-          "field": "stmcragid",
+          "field_short": "stmcragid",
+          "field_long": "StationMagCreationAgencyID",
           "source": "eventParameters>event>stationMagnitude>creationInfo>agencyID",
           "description": "",
           "type": "String"
         },
         {
-          "field": "stmcraguri",
+          "field_short": "stmcraguri",
+          "field_long": "StationMagCreationAgencyURI",
           "source": "eventParameters>event>stationMagnitude>creationInfo>agencyURI",
           "description": "",
           "type": "String"
         },
         {
-          "field": "stmcrau",
+          "field_short": "stmcrau",
+          "field_long": "StationMagCreationAuthor",
           "source": "eventParameters>event>stationMagnitude>creationInfo>author",
           "description": "",
           "type": "String"
         },
         {
-          "field": "stmcrauri",
+          "field_short": "stmcrauri",
+          "field_long": "StationMagCreationAuthorURI",
           "source": "eventParameters>event>stationMagnitude>creationInfo>authorURI",
           "description": "",
           "type": "String"
         },
         {
-          "field": "stmcrtime",
+          "field_short": "stmcrtime",
+          "field_long": "StationMagCreationTime",
           "source": "eventParameters>event>stationMagnitude>creationInfo>creationTime",
           "description": "",
           "type": "String"
         },
         {
-          "field": "stmcrver",
+          "field_short": "stmcrver",
+          "field_long": "StationMagCreationVersion",
           "source": "eventParameters>event>stationMagnitude>creationInfo>version",
           "description": "",
           "type": "String"
@@ -1572,109 +1824,127 @@
       "label": "station",
       "fields": [
         {
-          "field": "networkcode",
+          "field_short": "netcode",
+          "field_long": "NetCode",
           "source": "FDSNStationXML>Network>Code",
           "description": "",
           "type": "String"
         },
         {
-          "field": "networkstartdate",
+          "field_short": "netstart",
+          "field_long": "NetworkStart",
           "source": "FDSNStationXML>Network>StartDate",
           "description": "",
           "type": "String"
         },
         {
-          "field": "networkenddate",
+          "field_short": "netend",
+          "field_long": "NetworkEnd",
           "source": "FDSNStationXML>Network>EndDate",
           "description": "",
           "type": "String"
         },
         {
-          "field": "networksourceid",
+          "field_short": "netsrcid",
+          "field_long": "NetSourceID",
           "source": "FDSNStationXML>Network>SourceID",
           "description": "",
           "type": "String"
         },
         {
-          "field": "networkrestrictedstatus",
+          "field_short": "netrestric",
+          "field_long": "NetRestricted",
           "source": "FDSNStationXML>Network>RestrictedStatus",
           "description": "",
           "type": "String"
         },
         {
-          "field": "networkalternatecode",
+          "field_short": "netaltcod",
+          "field_long": "NetAltCode",
           "source": "FDSNStationXML>Network>AlternateCode",
           "description": "",
           "type": "String"
         },
         {
-          "field": "networkhistoricalcode",
+          "field_short": "nethistcod",
+          "field_long": "NetworkHistCode",
           "source": "FDSNStationXML>Network>HistoricalCode",
           "description": "",
           "type": "String"
         },
         {
-          "field": "networkdescription",
+          "field_short": "netdescr",
+          "field_long": "NetDescription",
           "source": "FDSNStationXML>Network>Description",
           "description": "",
           "type": "String"
         },
         {
-          "field": "latitude",
+          "field_short": "netstatlat",
+          "field_long": "NetworkStationLat",
           "source": "FDSNStationXML>Network>Station>Latitude",
           "description": "",
           "type": "Double"
         },
         {
-          "field": "longitude",
+          "field_short": "netstatlon",
+          "field_long": "NetworkStationLon",
           "source": "FDSNStationXML>Network>Station>Longitude",
           "description": "",
           "type": "Double"
         },
         {
-          "field": "elevation",
+          "field_short": "elevation",
+          "field_long": "NetworkStationElevation",
           "source": "FDSNStationXML>Network>Station>Elevation",
           "description": "",
           "type": "Double"
         },
         {
-          "field": "waterlevel",
+          "field_short": "waterlevel",
+          "field_long": "NetworkWaterLevel",
           "source": "FDSNStationXML>Network>Station>WaterLevel",
           "description": "",
           "type": "Double"
         },
         {
-          "field": "vault",
+          "field_short": "vault",
+          "field_long": "NetworkStationVault",
           "source": "FDSNStationXML>Network>Station>Vault",
           "description": "",
           "type": "String"
         },
         {
-          "field": "geology",
+          "field_short": "geology",
+          "field_long": "NetworkStationGeology",
           "source": "FDSNStationXML>Network>Station>Geology",
           "description": "",
           "type": "String"
         },
         {
-          "field": "creationdate",
+          "field_short": "netcreatio",
+          "field_long": "NetworkStationCreationDate",
           "source": "FDSNStationXML>Network>Station>CreationDate",
           "description": "",
           "type": "String"
         },
         {
-          "field": "terminationdate",
+          "field_short": "netterm",
+          "field_long": "NetworkStationTerminationDate",
           "source": "FDSNStationXML>Network>Station>TerminationDate",
           "description": "",
           "type": "String"
         },
         {
-          "field": "totalnumberchannels",
+          "field_short": "totnumchan",
+          "field_long": "NetworkStationTotNumChannels",
           "source": "FDSNStationXML>Network>Station>TotalNumberChannels",
           "description": "",
           "type": "Int"
         },
         {
-          "field": "selectednumberchannels",
+          "field_short": "netselnumc",
+          "field_long": "NetworkStationSelNumChannels",
           "source": "FDSNStationXML>Network>Station>SelectedNumberChannels",
           "description": "",
           "type": "Int"
@@ -1682,6 +1952,6 @@
       ]
     }
   },
-  "configversion": 0.2,
-  "configlastupdate": "2020-02-21T17:50:27+00:00"
+  "configversion": 0.3,
+  "configlastupdate": "2020-05-20T17:50:27+00:00"
 }
