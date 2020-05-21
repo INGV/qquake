@@ -1367,7 +1367,7 @@
         },
         {
           "field_short": "pkwavnet",
-          "field_long": PickWaveIDNetCode"",
+          "field_long": "PickWaveIDNetCode",
           "source": "eventParameters>event>pick>waveformID§networkCode",
           "description": "",
           "type": "String"
