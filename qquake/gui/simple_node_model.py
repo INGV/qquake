@@ -46,6 +46,12 @@ class ModelNode:
             return self._data[column]
         return None
 
+    def setData(self, column, value):
+        if 0 <= column < len(self._data):
+            self._data[column] = value
+            return True
+        return False
+
     def user_data(self):
         return self._user_data
 
@@ -163,6 +169,11 @@ class SimpleNodeModel(QAbstractItemModel):
             node.setChecked(value)
             self.dataChanged.emit(index, index, [Qt.CheckStateRole])
             return True
+        elif index.column() == 1:
+            if node.setData(index.column(), value):
+                self.dataChanged.emit(index, index, [Qt.DisplayRole])
+                return True
+            return False
 
         return False
 
