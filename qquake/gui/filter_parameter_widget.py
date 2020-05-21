@@ -155,6 +155,11 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
             self.fdsn_event_max_magnitude.setValue(float(last_event_max_magnitude))
         self.limit_extent_checkbox.setChecked(
             s.value('/plugins/qquake/{}_last_event_extent_enabled2'.format(prefix), False, bool))
+        self.radio_predefined_area.setChecked(
+            s.value('/plugins/qquake/{}_last_event_extent_named'.format(prefix), False, bool))
+        last_area = s.value('/plugins/qquake/{}_last_event_extent_name'.format(prefix), '', str)
+        if last_area:
+            self.combo_predefined_area.setCurrentIndex(self.combo_predefined_area.findData(last_area))
         self.radio_rectangular_area.setChecked(
             s.value('/plugins/qquake/{}_last_event_extent_rect2'.format(prefix), False, bool))
         self.radio_circular_area.setChecked(
@@ -230,6 +235,9 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
 
         s.setValue('/plugins/qquake/{}_last_event_extent_enabled2'.format(prefix),
                    self.limit_extent_checkbox.isChecked())
+        s.setValue('/plugins/qquake/{}_last_event_extent_named'.format(prefix), self.radio_predefined_area.isChecked())
+        s.setValue('/plugins/qquake/{}_last_event_extent_name'.format(prefix), self.combo_predefined_area.currentData())
+
         s.setValue('/plugins/qquake/{}_last_event_extent_rect2'.format(prefix), self.radio_rectangular_area.isChecked())
         s.setValue('/plugins/qquake/{}_last_event_extent_circle2'.format(prefix), self.radio_circular_area.isChecked())
         s.setValue('/plugins/qquake/{}_last_event_min_lat_checked2'.format(prefix), self.lat_min_checkbox.isChecked())
