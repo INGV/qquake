@@ -103,7 +103,7 @@ class ElementParser:
             if not val:
                 return NULL
             if 'T' in val:
-                dt = QDateTime.fromString((val+'000')[:23], 'yyyy-MM-ddThh:mm:ss.zzz')
+                dt = QDateTime.fromString((val + '000')[:23], 'yyyy-MM-ddThh:mm:ss.zzz')
                 dt.setTimeSpec(Qt.UTC)
                 return dt
             else:
@@ -645,6 +645,9 @@ class Event:
     def to_fields(selected_fields=None):
         fields = QgsFields()
         settings = QgsSettings()
+        short_field_names = settings.value('/plugins/qquake/output_short_field_names', True, bool)
+        field_config_key = 'field_short' if short_field_names else 'field_long'
+
         for f in CONFIG_FIELDS['field_groups']['basic_event_info']['fields']:
             if f.get('skip'):
                 continue
@@ -662,7 +665,7 @@ class Event:
             if not selected:
                 continue
 
-            fields.append(QgsField(f['field'], FIELD_TYPE_MAP[f['type']]))
+            fields.append(QgsField(f[field_config_key], FIELD_TYPE_MAP[f['type']]))
 
         for f in CONFIG_FIELDS['field_groups']['origin']['fields']:
             if f.get('skip'):
@@ -677,7 +680,7 @@ class Event:
             if not selected:
                 continue
 
-            fields.append(QgsField(f['field'], FIELD_TYPE_MAP[f['type']]))
+            fields.append(QgsField(f[field_config_key], FIELD_TYPE_MAP[f['type']]))
 
         for f in CONFIG_FIELDS['field_groups']['magnitude']['fields']:
             if f.get('skip'):
@@ -692,13 +695,16 @@ class Event:
             if not selected:
                 continue
 
-            fields.append(QgsField(f['field'], FIELD_TYPE_MAP[f['type']]))
+            fields.append(QgsField(f[field_config_key], FIELD_TYPE_MAP[f['type']]))
 
         return fields
 
     @staticmethod
     def add_origin_attributes(origin, feature, output_fields):
         settings = QgsSettings()
+
+        short_field_names = settings.value('/plugins/qquake/output_short_field_names', True, bool)
+        field_config_key = 'field_short' if short_field_names else 'field_long'
 
         for dest_field in CONFIG_FIELDS['field_groups']['origin']['fields']:
             if dest_field.get('skip'):
@@ -728,7 +734,7 @@ class Event:
                 if source_obj is None:
                     break
 
-            feature[dest_field['field']] = source_obj
+            feature[dest_field[field_config_key]] = source_obj
 
         if origin.depth is not None:
             geom = QgsPoint(x=origin.longitude.value, y=origin.latitude.value,
@@ -742,6 +748,9 @@ class Event:
     @staticmethod
     def add_magnitude_attributes(magnitude, feature, output_fields):
         settings = QgsSettings()
+
+        short_field_names = settings.value('/plugins/qquake/output_short_field_names', True, bool)
+        field_config_key = 'field_short' if short_field_names else 'field_long'
 
         for dest_field in CONFIG_FIELDS['field_groups']['magnitude']['fields']:
             if dest_field.get('skip'):
@@ -768,10 +777,13 @@ class Event:
                 assert hasattr(source_obj, s)
                 source_obj = getattr(source_obj, s)
 
-            feature[dest_field['field']] = source_obj
+            feature[dest_field[field_config_key]] = source_obj
 
     def to_features(self, output_fields, preferred_origin_only, preferred_magnitudes_only, all_origins):
         settings = QgsSettings()
+
+        short_field_names = settings.value('/plugins/qquake/output_short_field_names', True, bool)
+        field_config_key = 'field_short' if short_field_names else 'field_long'
 
         f = QgsFeature(self.to_fields(output_fields))
         for dest_field in CONFIG_FIELDS['field_groups']['basic_event_info']['fields']:
@@ -800,7 +812,7 @@ class Event:
                 assert hasattr(source_obj, s)
                 source_obj = getattr(source_obj, s)
 
-            f[dest_field['field']] = source_obj
+            f[dest_field[field_config_key]] = source_obj
 
         origins_handled = set()
         for _, m in self.magnitudes.items():
@@ -995,6 +1007,10 @@ class Network(BaseNodeType):
     def to_fields():
         fields = QgsFields()
         settings = QgsSettings()
+
+        short_field_names = settings.value('/plugins/qquake/output_short_field_names', True, bool)
+        field_config_key = 'field_short' if short_field_names else 'field_long'
+
         for f in CONFIG_FIELDS['field_groups']['basic_event_info']['fields']:
             if f.get('skip'):
                 continue
@@ -1005,12 +1021,16 @@ class Network(BaseNodeType):
             if not selected:
                 continue
 
-            fields.append(QgsField(f['field'], FIELD_TYPE_MAP[f['type']]))
+            fields.append(QgsField(f[field_config_key], FIELD_TYPE_MAP[f['type']]))
         return fields
 
     def to_station_features(self, selected_fields):
         features = []
         settings = QgsSettings()
+
+        short_field_names = settings.value('/plugins/qquake/output_short_field_names', True, bool)
+        field_config_key = 'field_short' if short_field_names else 'field_long'
+
         for o in self.stations:
             f = QgsFeature(Station.to_fields(selected_fields))
             for dest_field in CONFIG_FIELDS['field_groups']['station']['fields']:
@@ -1041,7 +1061,7 @@ class Network(BaseNodeType):
                     if source_obj is None:
                         break
 
-                f[dest_field['field']] = source_obj
+                f[dest_field[field_config_key]] = source_obj
 
             geom = QgsPoint(x=o.Longitude, y=o.Latitude,
                             z=o.Elevation)
@@ -1109,6 +1129,10 @@ class Station(BaseNodeType):
     def to_fields(selected_fields):
         fields = QgsFields()
         settings = QgsSettings()
+
+        short_field_names = settings.value('/plugins/qquake/output_short_field_names', True, bool)
+        field_config_key = 'field_short' if short_field_names else 'field_long'
+
         for f in CONFIG_FIELDS['field_groups']['station']['fields']:
             if f.get('skip'):
                 continue
@@ -1122,7 +1146,7 @@ class Station(BaseNodeType):
             if not selected:
                 continue
 
-            fields.append(QgsField(f['field'], FIELD_TYPE_MAP[f['type']]))
+            fields.append(QgsField(f[field_config_key], FIELD_TYPE_MAP[f['type']]))
         return fields
 
     @staticmethod

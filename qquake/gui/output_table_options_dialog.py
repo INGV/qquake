@@ -70,6 +70,14 @@ class OutputTableOptionsDialog(QDialog, FORM_CLASS):
 
         s = QgsSettings()
 
+        short_field_names = s.value('/plugins/qquake/output_short_field_names', True, bool)
+        if short_field_names:
+            self.radio_short_fields.setChecked(True)
+        else:
+            self.radio_long_fields.setChecked(True)
+
+        self.radio_short_fields.toggled.connect(self.change_field_names)
+
         nodes = []
         for key, settings in CONFIG_FIELDS['field_groups'].items():
             if self.service_type != 'fdsnstation' and settings['label'] == 'station':
@@ -93,7 +101,7 @@ class OutputTableOptionsDialog(QDialog, FORM_CLASS):
                     checked = s.value('/plugins/qquake/output_field_{}'.format(path.replace('>', '_')), True, bool)
 
                 parent_node.addChild(
-                    ModelNode(['checked', f['field'], path], checked, user_data=f['source']))
+                    ModelNode(['checked', f['field_short' if short_field_names else 'field_long'], path], checked, user_data=f))
             nodes.append(parent_node)
 
         self.field_model = SimpleNodeModel(nodes, headers=[self.tr('Include'), self.tr('Field Name'),
@@ -141,14 +149,29 @@ class OutputTableOptionsDialog(QDialog, FORM_CLASS):
         s.setValue('/plugins/qquake/output_preferred_mdp',
                    self.output_preferred_mdp_only_check.isChecked())
 
+        s.setValue('/plugins/qquake/output_short_field_names',
+                   self.radio_short_fields.isChecked())
+
         super().accept()
+
+    def change_field_names(self):
+        short_field_names = self.radio_short_fields.isChecked()
+
+        for r in range(self.field_model.rowCount(QModelIndex())):
+            parent = self.field_model.index(r, 0, QModelIndex())
+            for rc in range(self.field_model.rowCount(parent)):
+                index = self.field_model.index(rc, 2, parent)
+                data = self.field_model.data(index, Qt.UserRole)
+                new_name = data['field_short' if short_field_names else 'field_long']
+                index = self.field_model.index(rc, 1, parent)
+                self.field_model.setData(index, new_name, Qt.DisplayRole)
 
     def selected_fields(self):
         fields = []
         for r in range(self.field_model.rowCount(QModelIndex())):
             parent = self.field_model.index(r, 0, QModelIndex())
             for rc in range(self.field_model.rowCount(parent)):
-                path = self.field_model.data(self.field_model.index(rc, 2, parent), Qt.UserRole)
+                path = self.field_model.data(self.field_model.index(rc, 2, parent), Qt.UserRole)['source']
                 checked = self.field_model.data(self.field_model.index(rc, 0, parent), Qt.CheckStateRole)
                 if checked:
                     fields.append(path)
@@ -161,7 +184,7 @@ class OutputTableOptionsDialog(QDialog, FORM_CLASS):
         for r in range(self.field_model.rowCount(QModelIndex())):
             parent = self.field_model.index(r, 0, QModelIndex())
             for rc in range(self.field_model.rowCount(parent)):
-                path = self.field_model.data(self.field_model.index(rc, 2, parent), Qt.UserRole)
+                path = self.field_model.data(self.field_model.index(rc, 2, parent), Qt.UserRole)['source']
                 self.field_model.setData(self.field_model.index(rc, 0, parent), path in self.default_fields,
                                          Qt.CheckStateRole)
 
