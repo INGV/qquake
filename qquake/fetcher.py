@@ -69,6 +69,7 @@ class Fetcher(QObject):
                  circle_max_radius=None,
                  earthquake_number_mdps_greater=None,
                  earthquake_max_intensity_greater=None,
+                 event_ids=None,
                  parent=None,
                  output_origins=True,
                  output_magnitudes=True,
@@ -95,6 +96,7 @@ class Fetcher(QObject):
         self.circle_max_radius = circle_max_radius
         self.earthquake_number_mdps_greater = earthquake_number_mdps_greater
         self.earthquake_max_intensity_greater = earthquake_max_intensity_greater
+        self.event_ids = event_ids
 
         s = QgsSettings()
         self.preferred_origins_only = s.value('/plugins/qquake/output_preferred_origins', True, bool)
@@ -154,8 +156,11 @@ class Fetcher(QObject):
             query.append('minintensity={}'.format(
                 self.earthquake_max_intensity_greater))
 
-        if 'querylimitmaxentries' in self.service_config['settings']:
+        if not self.event_ids and 'querylimitmaxentries' in self.service_config['settings']:
             query.append('limit={}'.format(self.service_config['settings']['querylimitmaxentries']))
+
+        if self.event_ids:
+            query.append('eventid={}'.format(self.event_ids[0]))
 
         if not self.preferred_origins_only:
             query.append('includeallorigins=true')
