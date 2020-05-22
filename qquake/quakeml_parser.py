@@ -103,6 +103,8 @@ class ElementParser:
             if not val:
                 return NULL
             if 'T' in val:
+                if '.' not in val:
+                    val += '.000'
                 dt = QDateTime.fromString((val + '000')[:23], 'yyyy-MM-ddThh:mm:ss.zzz')
                 dt.setTimeSpec(Qt.UTC)
                 return dt
@@ -1114,6 +1116,8 @@ class Station(BaseNodeType):
     """
 
     def __init__(self,
+                 StartDate,
+                 EndDate,
                  Latitude,
                  Longitude,
                  Elevation,
@@ -1137,6 +1141,8 @@ class Station(BaseNodeType):
                          None,
                          None,
                          None)
+        self.StartDate = StartDate
+        self.EndDate = EndDate
         self.Latitude = Latitude
         self.Longitude = Longitude
         self.Elevation = Elevation
@@ -1177,6 +1183,8 @@ class Station(BaseNodeType):
     def from_element(element):
         parser = ElementParser(element)
         res = Station(
+            StartDate=parser.datetime('startDate', is_attribute=True, optional=True),
+            EndDate=parser.datetime('endDate', is_attribute=True, optional=True),
             Latitude=parser.float('Latitude', optional=False),
             Longitude=parser.float('Longitude', optional=False),
             Elevation=parser.float('Elevation', optional=False),
