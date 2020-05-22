@@ -130,7 +130,7 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
     def set_service_type(self, service_type):
         self.service_type = service_type
 
-        self.time_coverage_group.setVisible(self.service_type in ('macroseismic', 'fdsnevent'))
+        self.time_coverage_group.setVisible(self.service_type in ('macroseismic', 'fdsnevent', 'fdsnstation'))
         self.magnitude_group.setVisible(self.service_type in ('macroseismic', 'fdsnevent'))
         self.macroseismic_data_group.setVisible(self.service_type == 'macroseismic')
 
@@ -470,13 +470,13 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
             self.changed.emit()
 
     def start_date(self):
-        if self.service_type not in ('macroseismic', 'fdsnevent'):
+        if self.service_type not in ('macroseismic', 'fdsnevent', 'fdsnstation'):
             return None
 
         return self.fdsn_event_start_date.dateTime() if self.min_time_check.isChecked() else None
 
     def end_date(self):
-        if self.service_type not in ('macroseismic', 'fdsnevent'):
+        if self.service_type not in ('macroseismic', 'fdsnevent', 'fdsnstation'):
             return None
 
         return self.fdsn_event_end_date.dateTime() if self.max_time_check.isChecked() else None
