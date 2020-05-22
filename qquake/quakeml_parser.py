@@ -415,6 +415,10 @@ class Origin:
         self.creationInfo = creationInfo
         self.originUncertainty = originUncertainty
 
+        if not self.time or not self.time.is_valid() and self.compositeTime and self.compositeTime.can_convert_to_datetime():
+            # upgrade composite time value to time value
+            self.time = self.compositeTime.to_timequantity()
+
     @staticmethod
     def from_element(element):
         comment_nodes = element.elementsByTagName('comment')
@@ -539,6 +543,9 @@ class TimeQuantity:
                             upperUncertainty=parser.float('upperUncertainty'),
                             confidenceLevel=parser.float('confidenceLevel'))
 
+    def is_valid(self):
+        return self.value and self.value.isValid()
+
 
 class CompositeTime:
 
@@ -565,6 +572,21 @@ class CompositeTime:
                              hour=parser.int_quantity('hour', optional=True),
                              minute=parser.int_quantity('minute', optional=True),
                              second=parser.real_quantity('second', optional=True))
+
+    def can_convert_to_datetime(self):
+        return self.year and self.year.value
+
+    def to_timequantity(self):
+        return TimeQuantity(value=QDateTime(self.year.value,
+                                            self.month and self.month.value or 1,
+                                            self.day and self.day.value or 1,
+                                            self.hour and self.hour.value or 0,
+                                            self.minute and self.minute.value or 0,
+                                            self.second and self.second.value or 0),
+                            uncertainty=None,
+                            lowerUncertainty=None,
+                            upperUncertainty=None,
+                            confidenceLevel=None)
 
 
 class Magnitude:
