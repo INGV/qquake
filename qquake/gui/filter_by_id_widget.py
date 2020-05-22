@@ -24,8 +24,8 @@
 import re
 
 from qgis.PyQt import uic
-from qgis.PyQt.QtWidgets import QWidget
-from qgis.PyQt.QtCore import pyqtSignal
+from qgis.PyQt.QtWidgets import QWidget, QFileDialog
+from qgis.PyQt.QtCore import pyqtSignal, QDir
 
 from qgis.core import (
     QgsSettings
@@ -62,6 +62,7 @@ class FilterByIdWidget(QWidget, FORM_CLASS):
         self.radio_single_event.toggled.connect(self.changed)
         self.edit_event_id.textChanged.connect(self.changed)
         self.event_ids_edit.textChanged.connect(self.changed)
+        self.button_import_from_file.clicked.connect(self.load_from_file)
 
     def set_service_type(self, service_type):
         self.service_type = service_type
@@ -108,4 +109,13 @@ class FilterByIdWidget(QWidget, FORM_CLASS):
 
     @staticmethod
     def parse_multi_input(text):
-        return re.split(r'[,\n]', text)
+        return [l.strip() for l in re.split(r'[,\n]', text) if l.strip()]
+
+    def load_from_file(self):
+        file, _ = QFileDialog.getOpenFileName(self, self.tr('Import Event IDs from File'), QDir.homePath(), 'Text Files (*.*)')
+        if not file:
+            return
+
+        with open(file, 'rt') as f:
+            text = '\n'.join(f.readlines())
+            self.event_ids_edit.setPlainText('\n'.join(self.parse_multi_input(text)))
