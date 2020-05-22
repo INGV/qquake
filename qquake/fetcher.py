@@ -165,6 +165,9 @@ class Fetcher(QObject):
         if not self.preferred_magnitudes_only:
             query.append('includeallmagnitudes=true')
 
+        if self.service_type == 'macroseismic':
+            query.append('includemdps=true')
+
         query.append('format={}'.format(format))
 
         return self.service_config['endpointurl'] + '&'.join(query)

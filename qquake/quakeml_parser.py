@@ -638,6 +638,41 @@ class Magnitude:
                          comments=comments,
                          creationInfo=parser.creation_info('creationInfo'))
 
+class MsPlace:
+
+    def __init__(self,
+                 publicID,
+                 latitude,
+                 longitude):
+        self.publicID = publicID
+        self.latitude = latitude
+        self.longitude = longitude
+
+    @staticmethod
+    def from_element(element):
+        parser = ElementParser(element)
+
+        return MsPlace(publicID=parser.string('publicID', is_attribute=True, optional=False),
+                     latitude=parser.real_quantity('ms:referenceLatitude'),
+                     longitude=parser.real_quantity('ms:referenceLongitude'))
+
+
+class MsMdp:
+
+    def __init__(self,
+                 publicID,
+                 placeReference):
+        self.publicID = publicID
+        self.placeReference = placeReference
+
+    @staticmethod
+    def from_element(element):
+        parser = ElementParser(element)
+
+        return MsMdp(publicID=parser.string('publicID', is_attribute=True, optional=False),
+                      placeReference=parser.resource_reference('ms:placeReference'))
+
+
 
 class Event:
 
@@ -914,11 +949,15 @@ class QuakeMlParser:
         self.events = {}
         self.origins = {}
         self.magnitudes = {}
+        self.macro_places = {}
+        self.mdps = []
 
     def parse_initial(self, content):
         self.events = []
         self.origins = {}
         self.magnitudes = {}
+        self.macro_places = {}
+        self.mdps = []
         self.add_events(content)
 
     def add_events(self, content):
@@ -936,6 +975,18 @@ class QuakeMlParser:
             for _, m in event.magnitudes.items():
                 if m not in self.magnitudes:
                     self.magnitudes[m.publicID] = m
+
+        # macro places first
+        macro_places = doc.elementsByTagName('ms:place')
+        for e in range(macro_places.length()):
+            macro_place = macro_places.at(e).toElement()
+            place = MsPlace.from_element(macro_place)
+            self.macro_places[place.publicID] = place
+
+        macro_mdp = doc.elementsByTagName('ms:mdp')
+        for e in range(macro_mdp.length()):
+            mdp_element = macro_mdp.at(e).toElement()
+            self.mdps.append(MsMdp.from_element(mdp_element))
 
     def parse_missing_origin(self, content):
         doc = QDomDocument()
@@ -970,6 +1021,10 @@ class QuakeMlParser:
             for f in e.to_features(output_fields, preferred_origin_only, preferred_magnitudes_only,
                                    all_origins=self.origins):
                 yield f
+
+        for m in self.mdps:
+            place = self.macro_places[m.placeReference]
+            assert False
 
 
 class BaseNodeType:
