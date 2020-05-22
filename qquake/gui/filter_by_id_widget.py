@@ -21,6 +21,7 @@
  *                                                                         *
  ***************************************************************************/
 """
+import re
 
 from qgis.PyQt import uic
 from qgis.PyQt.QtWidgets import QWidget
@@ -46,6 +47,9 @@ class FilterByIdWidget(QWidget, FORM_CLASS):
 
         self.setupUi(self)
 
+        self.radio_single_event.toggled.connect(self._enable_widgets)
+        self.radio_multiple_events.toggled.connect(self._enable_widgets)
+
         self._enable_widgets()
 
         self.output_table_options_button.clicked.connect(self._output_table_options)
@@ -55,7 +59,9 @@ class FilterByIdWidget(QWidget, FORM_CLASS):
         self.set_service_type(service_type)
         self.output_fields = None
 
+        self.radio_single_event.toggled.connect(self.changed)
         self.edit_event_id.textChanged.connect(self.changed)
+        self.event_ids_edit.textChanged.connect(self.changed)
 
     def set_service_type(self, service_type):
         self.service_type = service_type
@@ -68,15 +74,24 @@ class FilterByIdWidget(QWidget, FORM_CLASS):
     def restore_settings(self, prefix):
         s = QgsSettings()
         self.edit_event_id.setText(s.value('/plugins/qquake/{}_single_event_id'.format(prefix), '', str))
+        if s.value('/plugins/qquake/{}_single_event_checked'.format(prefix), True, bool):
+            self.radio_single_event.setChecked(True)
+        if s.value('/plugins/qquake/{}_multi_event_checked'.format(prefix), True, bool):
+            self.radio_multiple_events.setChecked(True)
 
     def save_settings(self, prefix):
         s = QgsSettings()
         s.setValue('/plugins/qquake/{}_single_event_id'.format(prefix), self.edit_event_id.text())
+        s.setValue('/plugins/qquake/{}_single_event_checked'.format(prefix), self.radio_single_event.isChecked())
+        s.setValue('/plugins/qquake/{}_multi_event_checked'.format(prefix), self.radio_multiple_events.isChecked())
 
     def _enable_widgets(self):
         for w in [self.label_event_id,
                   self.edit_event_id]:
             w.setEnabled(self.radio_single_event.isChecked())
+
+        for w in [self.multi_event_widget]:
+            w.setEnabled(self.radio_multiple_events.isChecked())
 
     def _output_table_options(self):
         dlg = OutputTableOptionsDialog(self.service_type, self.service_id, self.output_fields, self)
@@ -85,4 +100,12 @@ class FilterByIdWidget(QWidget, FORM_CLASS):
             self.changed.emit()
 
     def ids(self):
-        return [self.edit_event_id.text()]
+        if self.radio_multiple_events.isChecked():
+            id_text = self.event_ids_edit.toPlainText()
+            return self.parse_multi_input(id_text)
+        else:
+            return [self.edit_event_id.text()]
+
+    @staticmethod
+    def parse_multi_input(text):
+        return re.split(r'[,\n]', text)

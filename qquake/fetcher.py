@@ -71,9 +71,6 @@ class Fetcher(QObject):
                  earthquake_max_intensity_greater=None,
                  event_ids=None,
                  parent=None,
-                 output_origins=True,
-                 output_magnitudes=True,
-                 output_mdps=True,
                  output_fields=None
                  ):
         super().__init__(parent=parent)
@@ -97,6 +94,7 @@ class Fetcher(QObject):
         self.earthquake_number_mdps_greater = earthquake_number_mdps_greater
         self.earthquake_max_intensity_greater = earthquake_max_intensity_greater
         self.event_ids = event_ids
+        self.pending_event_ids = event_ids
 
         s = QgsSettings()
         self.preferred_origins_only = s.value('/plugins/qquake/output_preferred_origins', True, bool)
@@ -159,8 +157,8 @@ class Fetcher(QObject):
         if not self.event_ids and 'querylimitmaxentries' in self.service_config['settings']:
             query.append('limit={}'.format(self.service_config['settings']['querylimitmaxentries']))
 
-        if self.event_ids:
-            query.append('eventid={}'.format(self.event_ids[0]))
+        if self.pending_event_ids:
+            query.append('eventid={}'.format(self.pending_event_ids[0]))
 
         if not self.preferred_origins_only:
             query.append('includeallorigins=true')
@@ -202,6 +200,11 @@ class Fetcher(QObject):
         reply.finished.connect(lambda r=reply: self._reply_finished(r))
         reply.downloadProgress.connect(self._reply_progress)
 
+    def fetch_next_event_by_id(self):
+        # pop first id from front of queue and fetch it
+        self.message.emit(self.tr('{} events left to fetch').format(len(self.pending_event_ids)))
+        self.fetch_data()
+
     def _reply_progress(self, received, total):
         if total > 0:
             self.progress.emit(float(received) / total * 100)
@@ -211,7 +214,13 @@ class Fetcher(QObject):
             if self.is_missing_origin_request:
                 self.result.parse_missing_origin(reply.readAll())
             else:
-                self.result.parse_initial(reply.readAll())
+                if self.pending_event_ids:
+                    self.pending_event_ids = self.pending_event_ids[1:]
+
+                if self.result.events:
+                    self.result.add_events(reply.readAll())
+                else:
+                    self.result.parse_initial(reply.readAll())
                 self.missing_origins = self.missing_origins.union(self.result.scan_for_missing_origins())
         elif self.service_type == 'fdsnstation':
             self.result = FDSNStationXMLParser.parse(reply.readAll())
@@ -220,6 +229,8 @@ class Fetcher(QObject):
 
         if self.missing_origins:
             self.fetch_missing()
+        elif self.pending_event_ids:
+            self.fetch_next_event_by_id()
         else:
             self.finished.emit()
 

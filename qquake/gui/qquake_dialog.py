@@ -185,14 +185,14 @@ class QQuakeDialog(QDialog, FORM_CLASS):
 
         QgsGui.enableAutoGeometryRestore(self)
 
+        self.fdsn_tab_widget.currentChanged.connect(lambda: self._refresh_url('fdsnevent'))
+        self.macro_tab_widget.currentChanged.connect(lambda: self._refresh_url('macroseismic'))
+        self.fdsnstation_tab_widget.currentChanged.connect(lambda: self._refresh_url('fdsnstation'))
+
         self._restore_settings()
         self._refresh_url('fdsnevent')
         self._refresh_url('macroseismic')
         self._refresh_url('fdsnstation')
-
-        self.fdsn_tab_widget.currentChanged.connect(lambda: self._refresh_url('fdsnevent'))
-        self.macro_tab_widget.currentChanged.connect(lambda: self._refresh_url('macroseismic'))
-        self.fdsnstation_tab_widget.currentChanged.connect(lambda: self._refresh_url('fdsnstation'))
 
     def closeEvent(self, e):
         self._save_settings()
@@ -203,6 +203,10 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         s.setValue('/plugins/qquake/last_tab', self.service_tab_widget.currentIndex())
         s.setValue('/plugins/qquake/fdsn_event_last_event_service', self.fdsn_event_list.currentItem().text())
         s.setValue('/plugins/qquake/macro_last_event_service', self.fdsn_macro_list.currentItem().text())
+
+        s.setValue('/plugins/qquake/fsdnevent_last_tab', self.fdsn_tab_widget.currentIndex())
+        s.setValue('/plugins/qquake/macro_last_tab', self.macro_tab_widget.currentIndex())
+        s.setValue('/plugins/qquake/station_last_tab', self.fdsnstation_tab_widget.currentIndex())
 
         self.fsdn_event_filter.save_settings('fsdn_event')
         self.fsdn_by_id_filter.save_settings('fsdn_event')
@@ -237,6 +241,10 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.macro_by_id_filter.restore_settings('macro')
         self.station_filter.restore_settings('stations')
         self.station_by_id_filter.restore_settings('stations')
+
+        self.fdsn_tab_widget.setCurrentIndex(s.value('/plugins/qquake/fsdnevent_last_tab', 0, int))
+        self.macro_tab_widget.setCurrentIndex(s.value('/plugins/qquake/macro_last_tab', 0, int))
+        self.fdsnstation_tab_widget.setCurrentIndex(s.value('/plugins/qquake/station_last_tab', 0, int))
 
     def get_fetcher(self, service_type=None):
         """
