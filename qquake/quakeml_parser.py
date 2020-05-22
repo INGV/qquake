@@ -892,13 +892,15 @@ class QuakeMlParser:
         self.magnitudes = {}
 
     def parse_initial(self, content):
-        doc = QDomDocument()
-        doc.setContent(content)
-        event_elements = doc.elementsByTagName('event')
-
         self.events = []
         self.origins = {}
         self.magnitudes = {}
+        self.add_events(content)
+
+    def add_events(self, content):
+        doc = QDomDocument()
+        doc.setContent(content)
+        event_elements = doc.elementsByTagName('event')
 
         for e in range(event_elements.length()):
             event_element = event_elements.at(e).toElement()
