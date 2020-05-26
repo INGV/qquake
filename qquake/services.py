@@ -30,6 +30,7 @@ from qgis.core import (
     QgsMessageLog,
     Qgis
 )
+from qgis.PyQt.QtCore import QObject, pyqtSignal
 
 _CONFIG_SERVICES_PATH = os.path.join(
     os.path.dirname(__file__),
@@ -37,7 +38,7 @@ _CONFIG_SERVICES_PATH = os.path.join(
     'config.json')
 
 
-class ServiceManager:
+class ServiceManager(QObject):
     FDSNEVENT = 'fdsnevent'
     FDSNSTATION = 'fdsnstation'
     MACROSEISMIC = 'macroseismic'
@@ -46,7 +47,10 @@ class ServiceManager:
 
     _SERVICE_TYPES = [FDSNEVENT, FDSNSTATION, MACROSEISMIC, WMS, WFS]
 
+    refreshed = pyqtSignal()
+
     def __init__(self):
+        super().__init__()
         self.services = {}
         self.refresh_services()
 
@@ -89,6 +93,8 @@ class ServiceManager:
 
                     self.services[service_type][p.stem] = service
 
+        self.refreshed.emit()
+
     @staticmethod
     def user_service_path():
         return Path(QgsApplication.qgisSettingsDirPath()) / 'QQuake'
@@ -104,6 +110,16 @@ class ServiceManager:
 
     def predefined_bounding_box(self, name):
         return self._predefined_bounding_boxes[name]
+
+    def custom_service_path(self, service_type, service_id):
+        return (self.user_service_path() / service_type / service_id).with_suffix('.json')
+
+    def remove_service(self, service_type, service_id):
+        path = self.custom_service_path(service_type, service_id)
+        if path.exists():
+            path.unlink()
+            self.refresh_services()
+
 
 
 SERVICE_MANAGER = ServiceManager()

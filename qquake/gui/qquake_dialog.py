@@ -29,7 +29,8 @@ from qgis.PyQt.QtWidgets import (
     QSizePolicy,
     QVBoxLayout,
     QMenu,
-    QAction
+    QAction,
+    QMessageBox
 )
 from qgis.PyQt.QtCore import (
     Qt,
@@ -138,25 +139,15 @@ class QQuakeDialog(QDialog, FORM_CLASS):
 
         self.iface = iface
 
-        # fill the FDSN listWidget with the dictionary keys
-        self.fdsn_event_list.addItems(SERVICE_MANAGER.available_services(SERVICE_MANAGER.FDSNEVENT))
-        self.fdsn_event_list.setCurrentRow(0)
-
-        # fill the FDSN listWidget with the dictionary keys
-        self.fdsn_macro_list.addItems(SERVICE_MANAGER.available_services(SERVICE_MANAGER.MACROSEISMIC))
-        self.fdsn_macro_list.setCurrentRow(0)
-
-        # fill the FDSN listWidget with the dictionary keys
-        self.fdsn_station_list.addItems(SERVICE_MANAGER.available_services(SERVICE_MANAGER.FDSNSTATION))
-        self.fdsn_station_list.setCurrentRow(0)
-
         # OGC
         self.ogc_combo.addItem(self.tr('Web Map Services (WMS)'), SERVICE_MANAGER.WMS)
         self.ogc_combo.addItem(self.tr('Web Feature Services (WFS)'), SERVICE_MANAGER.WFS)
         self.ogc_combo.currentIndexChanged.connect(self.refreshOgcWidgets)
         self.ogc_list.currentRowChanged.connect(
             self._ogc_service_changed)
-        self.refreshOgcWidgets()
+
+        self._refresh_services()
+        SERVICE_MANAGER.refreshed.connect(self._refresh_services)
 
         # connect to refreshing function to refresh the UI depending on the WS
         self._refresh_fdsnevent_widgets()
@@ -195,6 +186,10 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self._build_add_service_menu(self.button_macro_new_service, SERVICE_MANAGER.MACROSEISMIC)
         self._build_add_service_menu(self.button_station_new_service, SERVICE_MANAGER.FDSNSTATION)
 
+        self.button_fdsn_remove_service.clicked.connect(lambda: self._remove_service(SERVICE_MANAGER.FDSNEVENT))
+        self.button_macro_remove_service.clicked.connect(lambda: self._remove_service(SERVICE_MANAGER.MACROSEISMIC))
+        self.button_station_remove_service.clicked.connect(lambda: self._remove_service(SERVICE_MANAGER.FDSNSTATION))
+
         self._restore_settings()
         self._refresh_url(SERVICE_MANAGER.FDSNEVENT)
         self._refresh_url(SERVICE_MANAGER.MACROSEISMIC)
@@ -210,6 +205,24 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         menu.addAction(save_action)
         save_action.triggered.connect(lambda: self._save_configuration(service_type))
         widget.setMenu(menu)
+
+    def _refresh_services(self):
+        # fill the FDSN listWidget with the dictionary keys
+        self.fdsn_event_list.clear()
+        self.fdsn_event_list.addItems(SERVICE_MANAGER.available_services(SERVICE_MANAGER.FDSNEVENT))
+        self.fdsn_event_list.setCurrentRow(0)
+
+        # fill the FDSN listWidget with the dictionary keys
+        self.fdsn_macro_list.clear()
+        self.fdsn_macro_list.addItems(SERVICE_MANAGER.available_services(SERVICE_MANAGER.MACROSEISMIC))
+        self.fdsn_macro_list.setCurrentRow(0)
+
+        # fill the FDSN listWidget with the dictionary keys
+        self.fdsn_station_list.clear()
+        self.fdsn_station_list.addItems(SERVICE_MANAGER.available_services(SERVICE_MANAGER.FDSNSTATION))
+        self.fdsn_station_list.setCurrentRow(0)
+
+        self.refreshOgcWidgets()
 
     def _save_configuration(self, service_type):
         pass
@@ -262,6 +275,14 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.macro_tab_widget.setCurrentIndex(s.value('/plugins/qquake/macro_last_tab', 0, int))
         self.fdsnstation_tab_widget.setCurrentIndex(s.value('/plugins/qquake/station_last_tab', 0, int))
 
+    def get_current_service_id(self, service_type):
+        if service_type == SERVICE_MANAGER.FDSNEVENT:
+            return self.fdsn_event_list.currentItem().text() if self.fdsn_event_list.currentItem() else None
+        elif service_type == SERVICE_MANAGER.MACROSEISMIC:
+            return self.fdsn_macro_list.currentItem().text() if self.fdsn_macro_list.currentItem() else None
+        elif service_type == SERVICE_MANAGER.FDSNSTATION:
+            return self.fdsn_station_list.currentItem().text() if self.fdsn_station_list.currentItem() else None
+
     def get_fetcher(self, service_type=None):
         """
         Returns a quake fetcher corresponding to the current dialog settings
@@ -275,20 +296,21 @@ class QQuakeDialog(QDialog, FORM_CLASS):
             elif self.service_tab_widget.currentIndex() == 2:
                 service_type = SERVICE_MANAGER.FDSNSTATION
 
+        service = self.get_current_service_id(service_type)
+        if not service:
+            return None
+
         if service_type == SERVICE_MANAGER.FDSNEVENT:
-            service = self.fdsn_event_list.currentItem().text()
             if self.fdsn_tab_widget.currentIndex() in (0, 2):
                 filter_widget = self.fsdn_event_filter
             else:
                 filter_widget = self.fsdn_by_id_filter
         elif service_type == SERVICE_MANAGER.MACROSEISMIC:
-            service = self.fdsn_macro_list.currentItem().text()
             if self.macro_tab_widget.currentIndex() in (0, 2):
                 filter_widget = self.macro_filter
             else:
                 filter_widget = self.macro_by_id_filter
         elif service_type == SERVICE_MANAGER.FDSNSTATION:
-            service = self.fdsn_station_list.currentItem().text()
             if self.fdsnstation_tab_widget.currentIndex() in (0, 2):
                 filter_widget = self.station_filter
             else:
@@ -326,6 +348,8 @@ class QQuakeDialog(QDialog, FORM_CLASS):
 
     def _refresh_url(self, service_type):
         fetcher = self.get_fetcher(service_type)
+        if not fetcher:
+            return
 
         if service_type == SERVICE_MANAGER.FDSNEVENT:
             self.fsdn_event_url_text_browser.setText('<a href="{0}">{0}</a>'.format(fetcher.generate_url()))
@@ -373,6 +397,9 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         """
         Refreshing the FDSN-Event UI depending on the WS chosen
         """
+        if not self.fdsn_event_list.currentItem():
+            return
+
         service_id = self.fdsn_event_list.currentItem().text()
         self._update_service_widgets(service_type=SERVICE_MANAGER.FDSNEVENT, service_id=service_id,
                                      filter_widget=self.fsdn_event_filter,
@@ -384,6 +411,9 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         """
         Refreshing the FDSN-Macroseismic UI depending on the WS chosen
         """
+        if not self.fdsn_macro_list.currentItem():
+            return
+
         service_id = self.fdsn_macro_list.currentItem().text()
         self._update_service_widgets(service_type=SERVICE_MANAGER.MACROSEISMIC, service_id=service_id,
                                      filter_widget=self.macro_filter,
@@ -395,6 +425,9 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         """
         Refreshing the FDSN-Macroseismic UI depending on the WS chosen
         """
+        if not self.fdsn_station_list.currentItem():
+            return
+
         service_id = self.fdsn_station_list.currentItem().text()
         self._update_service_widgets(service_type=SERVICE_MANAGER.FDSNSTATION, service_id=service_id,
                                      filter_by_id_widget=self.station_by_id_filter,
@@ -419,6 +452,13 @@ class QQuakeDialog(QDialog, FORM_CLASS):
 
         self.ogc_service_info_widget.set_service(service_type=self.ogc_combo.currentData(),
                                                  service_name=self.ogc_list.currentItem().text())
+
+    def _remove_service(self, service_type):
+        service_id = self.get_current_service_id(service_type)
+        if QMessageBox.question(self, self.tr('Remove Service'), self.tr('Are you sure you want to remove "{}"?'.format(service_id))) != QMessageBox.Yes:
+            return
+
+        SERVICE_MANAGER.remove_service(service_type, service_id)
 
     def _getEventList(self):
         """
