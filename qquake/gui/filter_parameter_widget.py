@@ -40,7 +40,7 @@ from qgis.gui import (
 
 from qquake.gui.gui_utils import GuiUtils
 from qquake.gui.output_table_options_dialog import OutputTableOptionsDialog
-from qquake.services import SERVICES, PREFINED_BOUNDING_BOXES
+from qquake.services import SERVICE_MANAGER
 from qquake.fetcher import Fetcher
 
 
@@ -142,8 +142,8 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
 
     def set_service_id(self, service_id):
         self.service_id = service_id
-        if 'fields' in SERVICES[self.service_type][self.service_id]['default']:
-            self.output_fields = SERVICES[self.service_type][service_id]['default']['fields']
+        if 'fields' in SERVICE_MANAGER.service_details(self.service_type, self.service_id)['default']:
+            self.output_fields = SERVICE_MANAGER.service_details(self.service_type, service_id)['default']['fields']
 
     def restore_settings(self, prefix):
         s = QgsSettings()
@@ -287,15 +287,16 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
         s.setValue('/plugins/qquake/{}_last_event_extended_checked'.format(prefix), self.radio_extended_output.isChecked())
 
     def _populated_predined_areas(self):
-        for id, extent in PREFINED_BOUNDING_BOXES.items():
-            self.combo_predefined_area.addItem(extent['title'], id)
+        for name in SERVICE_MANAGER.available_predefined_bounding_boxes():
+            extent = SERVICE_MANAGER.predefined_bounding_box(name)
+            self.combo_predefined_area.addItem(extent['title'], name)
 
     def _use_predefined_area(self):
         if not self.radio_predefined_area.isChecked():
             return
 
         selected_extent_id = self.combo_predefined_area.currentData()
-        extent = PREFINED_BOUNDING_BOXES[selected_extent_id]['boundingbox']
+        extent = SERVICE_MANAGER.predefined_bounding_box(selected_extent_id)['boundingbox']
         self.lat_min_spinbox.setValue(extent[1])
         self.lat_max_spinbox.setValue(extent[3])
         self.long_min_spinbox.setValue(extent[0])

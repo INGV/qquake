@@ -24,13 +24,80 @@
 
 import os
 import json
+from pathlib import Path
+from qgis.core import (
+    QgsApplication,
+    QgsMessageLog,
+    Qgis
+)
+
 
 _CONFIG_SERVICES_PATH = os.path.join(
     os.path.dirname(__file__),
     'config',
     'config.json')
 
-with open(_CONFIG_SERVICES_PATH, 'r') as f:
-    SERVICES = json.load(f)
 
-PREFINED_BOUNDING_BOXES = SERVICES['boundingboxpredefined']
+_SERVICE_TYPES = ['fdsnevent', 'fdsnstation', 'macroseismic', 'wms', 'wfs']
+
+class ServiceManager:
+
+    def __init__(self):
+        self.services = {}
+        self.refresh_services()
+
+    def refresh_services(self):
+        # load the default services
+        with open(_CONFIG_SERVICES_PATH, 'r') as f:
+            default_services = json.load(f)
+
+        self.services = {}
+        for service_type in _SERVICE_TYPES:
+            self.services[service_type] = {}
+            for service_id, service in default_services[service_type].items():
+                service['read_only'] = True
+
+                self.services[service_type][service_id] = service
+
+        self._predefined_bounding_boxes = default_services['boundingboxpredefined']
+
+        # next load user services
+        user_path = self.user_service_path()
+        if not user_path.exists():
+            user_path.mkdir(parents=True)
+
+        for service_type in _SERVICE_TYPES:
+            service_path = user_path / service_type
+            if not service_path.exists():
+                service_path.mkdir(parents=True)
+
+            for p in service_path.glob('**/*.json'):
+                with open(p, 'r') as f:
+                    service = json.load(f)
+                    service['read_only'] = False
+
+                    if p.stem in self.services[service_type]:
+                        # duplicate service, skip it
+                        QgsMessageLog.logMessage('Duplicate service name found, service will not be loaded: {}'.format(p.stem), 'QQuake', Qgis.Warning)
+                        continue
+
+                    self.services[service_type][p.stem] = service
+
+    @staticmethod
+    def user_service_path():
+        return Path(QgsApplication.qgisSettingsDirPath()) / 'QQuake'
+
+    def available_services(self, service_type):
+        return self.services[service_type].keys()
+
+    def service_details(self, service_type, service_id):
+        return self.services[service_type][service_id]
+
+    def available_predefined_bounding_boxes(self):
+        return self._predefined_bounding_boxes.keys()
+
+    def predefined_bounding_box(self, name):
+        return self._predefined_bounding_boxes[name]
+
+
+SERVICE_MANAGER = ServiceManager()
