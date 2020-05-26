@@ -47,6 +47,9 @@ class Fetcher(QObject):
     Fetcher for feeds
     """
 
+    BASIC = 'BASIC'
+    EXTENDED = 'EXTENDED'
+
     progress = pyqtSignal(float)
     finished = pyqtSignal()
     message = pyqtSignal(str)
@@ -71,7 +74,8 @@ class Fetcher(QObject):
                  earthquake_max_intensity_greater=None,
                  event_ids=None,
                  parent=None,
-                 output_fields=None
+                 output_fields=None,
+                 output_type=EXTENDED
                  ):
         super().__init__(parent=parent)
 
@@ -95,6 +99,7 @@ class Fetcher(QObject):
         self.earthquake_max_intensity_greater = earthquake_max_intensity_greater
         self.event_ids = event_ids
         self.pending_event_ids = event_ids
+        self.output_type = output_type
 
         s = QgsSettings()
         self.preferred_origins_only = s.value('/plugins/qquake/output_preferred_origins', True, bool)
@@ -110,10 +115,12 @@ class Fetcher(QObject):
         self.missing_origins = set()
         self.is_missing_origin_request = False
 
-    def generate_url(self, format='text'):
+    def generate_url(self):
         """
         Returns the URL request for the query
         """
+        format = 'text' if self.output_type == Fetcher.BASIC else 'xml'
+
         query = []
         # append to the string the parameter of the UI (starttime, endtime, etc)
         if self.event_start_date is not None and self.event_start_date.isValid():
@@ -176,7 +183,7 @@ class Fetcher(QObject):
         """
         Starts the fetch request
         """
-        request = QNetworkRequest(QUrl(self.generate_url(format='xml')))
+        request = QNetworkRequest(QUrl(self.generate_url()))
 
         reply = QgsNetworkAccessManager.instance().get(request)
 

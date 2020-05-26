@@ -297,7 +297,8 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                            circle_max_radius=filter_widget.circle_max_radius(),
                            earthquake_number_mdps_greater=filter_widget.earthquake_number_mdps_greater(),
                            earthquake_max_intensity_greater=filter_widget.earthquake_max_intensity_greater(),
-                           output_fields=filter_widget.output_fields
+                           output_fields=filter_widget.output_fields,
+                           output_type=filter_widget.output_type()
                            )
         elif isinstance(filter_widget, FilterByIdWidget):
             return Fetcher(service_type=service_type,

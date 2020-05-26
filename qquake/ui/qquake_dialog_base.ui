@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>899</width>
-    <height>621</height>
+    <height>522</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,7 +20,7 @@
       <enum>QTabWidget::North</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <property name="tabsClosable">
       <bool>false</bool>
@@ -66,13 +66,13 @@
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>0</height>
+           <height>80</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>50</height>
+           <height>80</height>
           </size>
          </property>
          <property name="baseSize">
@@ -131,11 +131,11 @@
                    <x>0</x>
                    <y>0</y>
                    <width>575</width>
-                   <height>379</height>
+                   <height>250</height>
                   </rect>
                  </property>
                  <property name="autoFillBackground">
-                  <bool>false</bool>
+                  <bool>true</bool>
                  </property>
                  <layout class="QVBoxLayout" name="verticalLayout_12">
                   <item>
@@ -203,10 +203,16 @@
        </item>
        <item row="1" column="0" colspan="2">
         <widget class="QTextBrowser" name="fdsn_macro_url_text_browser">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>80</height>
+          </size>
+         </property>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>50</height>
+           <height>80</height>
           </size>
          </property>
          <property name="frameShape">
@@ -259,7 +265,7 @@
                    <x>0</x>
                    <y>0</y>
                    <width>575</width>
-                   <height>379</height>
+                   <height>250</height>
                   </rect>
                  </property>
                  <layout class="QVBoxLayout" name="verticalLayout_14">
@@ -316,10 +322,16 @@
        </item>
        <item row="1" column="0" colspan="2">
         <widget class="QTextBrowser" name="fdsn_station_url_text_browser">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>80</height>
+          </size>
+         </property>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>50</height>
+           <height>80</height>
           </size>
          </property>
          <property name="frameShape">
@@ -372,7 +384,7 @@
                    <x>0</x>
                    <y>0</y>
                    <width>575</width>
-                   <height>379</height>
+                   <height>250</height>
                   </rect>
                  </property>
                  <layout class="QVBoxLayout" name="verticalLayout_17">
@@ -431,7 +443,7 @@
             <x>0</x>
             <y>0</y>
             <width>595</width>
-            <height>484</height>
+            <height>385</height>
            </rect>
           </property>
           <layout class="QGridLayout" name="gridLayout_4">
