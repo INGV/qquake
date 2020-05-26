@@ -31,16 +31,20 @@ from qgis.core import (
     Qgis
 )
 
-
 _CONFIG_SERVICES_PATH = os.path.join(
     os.path.dirname(__file__),
     'config',
     'config.json')
 
 
-_SERVICE_TYPES = ['fdsnevent', 'fdsnstation', 'macroseismic', 'wms', 'wfs']
-
 class ServiceManager:
+    FDSNEVENT = 'fdsnevent'
+    FDSNSTATION = 'fdsnstation'
+    MACROSEISMIC = 'macroseismic'
+    WMS = 'wms'
+    WFS = 'wfs'
+
+    _SERVICE_TYPES = [FDSNEVENT, FDSNSTATION, MACROSEISMIC, WMS, WFS]
 
     def __init__(self):
         self.services = {}
@@ -52,7 +56,7 @@ class ServiceManager:
             default_services = json.load(f)
 
         self.services = {}
-        for service_type in _SERVICE_TYPES:
+        for service_type in self._SERVICE_TYPES:
             self.services[service_type] = {}
             for service_id, service in default_services[service_type].items():
                 service['read_only'] = True
@@ -66,7 +70,7 @@ class ServiceManager:
         if not user_path.exists():
             user_path.mkdir(parents=True)
 
-        for service_type in _SERVICE_TYPES:
+        for service_type in self._SERVICE_TYPES:
             service_path = user_path / service_type
             if not service_path.exists():
                 service_path.mkdir(parents=True)
@@ -78,7 +82,9 @@ class ServiceManager:
 
                     if p.stem in self.services[service_type]:
                         # duplicate service, skip it
-                        QgsMessageLog.logMessage('Duplicate service name found, service will not be loaded: {}'.format(p.stem), 'QQuake', Qgis.Warning)
+                        QgsMessageLog.logMessage(
+                            'Duplicate service name found, service will not be loaded: {}'.format(p.stem), 'QQuake',
+                            Qgis.Warning)
                         continue
 
                     self.services[service_type][p.stem] = service

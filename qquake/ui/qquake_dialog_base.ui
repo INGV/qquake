@@ -55,7 +55,7 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="0" colspan="2">
+       <item row="2" column="0" colspan="2">
         <widget class="QTextBrowser" name="fsdn_event_url_text_browser">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
@@ -89,7 +89,41 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="1">
+       <item row="1" column="0">
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QToolButton" name="button_fdsn_new_service">
+           <property name="text">
+            <string>Add Service</string>
+           </property>
+           <property name="popupMode">
+            <enum>QToolButton::InstantPopup</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="button_fdsn_remove_service">
+           <property name="text">
+            <string>Remove Service</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item row="0" column="1" rowspan="2">
         <widget class="QWidget" name="widget" native="true">
          <layout class="QVBoxLayout" name="verticalLayout_11">
           <property name="leftMargin">
@@ -130,7 +164,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>575</width>
+                   <width>404</width>
                    <height>250</height>
                   </rect>
                  </property>
@@ -201,7 +235,7 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="0" colspan="2">
+       <item row="2" column="0" colspan="2">
         <widget class="QTextBrowser" name="fdsn_macro_url_text_browser">
          <property name="minimumSize">
           <size>
@@ -223,7 +257,41 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="1">
+       <item row="1" column="0">
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <widget class="QToolButton" name="button_macro_new_service">
+           <property name="text">
+            <string>Add Service</string>
+           </property>
+           <property name="popupMode">
+            <enum>QToolButton::InstantPopup</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="button_macro_remove_service">
+           <property name="text">
+            <string>Remove Service</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item row="0" column="1" rowspan="2">
         <widget class="QWidget" name="widget_3" native="true">
          <layout class="QVBoxLayout" name="verticalLayout_13">
           <property name="leftMargin">
@@ -264,7 +332,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>575</width>
+                   <width>404</width>
                    <height>250</height>
                   </rect>
                  </property>
@@ -320,7 +388,7 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="0" colspan="2">
+       <item row="2" column="0" colspan="2">
         <widget class="QTextBrowser" name="fdsn_station_url_text_browser">
          <property name="minimumSize">
           <size>
@@ -342,7 +410,41 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="1">
+       <item row="1" column="0">
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <widget class="QToolButton" name="button_station_new_service">
+           <property name="text">
+            <string>Add Service</string>
+           </property>
+           <property name="popupMode">
+            <enum>QToolButton::InstantPopup</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="button_station_remove_service">
+           <property name="text">
+            <string>Remove Service</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item row="0" column="1" rowspan="2">
         <widget class="QWidget" name="widget_4" native="true">
          <layout class="QVBoxLayout" name="verticalLayout_16">
           <property name="leftMargin">
@@ -383,7 +485,7 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>575</width>
+                   <width>404</width>
                    <height>250</height>
                   </rect>
                  </property>

@@ -136,9 +136,9 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
     def set_service_type(self, service_type):
         self.service_type = service_type
 
-        self.time_coverage_group.setVisible(self.service_type in ('macroseismic', 'fdsnevent', 'fdsnstation'))
-        self.magnitude_group.setVisible(self.service_type in ('macroseismic', 'fdsnevent'))
-        self.macroseismic_data_group.setVisible(self.service_type == 'macroseismic')
+        self.time_coverage_group.setVisible(self.service_type in (SERVICE_MANAGER.MACROSEISMIC, SERVICE_MANAGER.FDSNEVENT, SERVICE_MANAGER.FDSNSTATION))
+        self.magnitude_group.setVisible(self.service_type in (SERVICE_MANAGER.MACROSEISMIC, SERVICE_MANAGER.FDSNEVENT))
+        self.macroseismic_data_group.setVisible(self.service_type == SERVICE_MANAGER.MACROSEISMIC)
 
     def set_service_id(self, service_id):
         self.service_id = service_id
@@ -487,25 +487,25 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
             self.changed.emit()
 
     def start_date(self):
-        if self.service_type not in ('macroseismic', 'fdsnevent', 'fdsnstation'):
+        if self.service_type not in (SERVICE_MANAGER.MACROSEISMIC, SERVICE_MANAGER.FDSNEVENT, SERVICE_MANAGER.FDSNSTATION):
             return None
 
         return self.fdsn_event_start_date.dateTime() if self.min_time_check.isChecked() else None
 
     def end_date(self):
-        if self.service_type not in ('macroseismic', 'fdsnevent', 'fdsnstation'):
+        if self.service_type not in (SERVICE_MANAGER.MACROSEISMIC, SERVICE_MANAGER.FDSNEVENT, SERVICE_MANAGER.FDSNSTATION):
             return None
 
         return self.fdsn_event_end_date.dateTime() if self.max_time_check.isChecked() else None
 
     def min_magnitude(self):
-        if self.service_type not in ('macroseismic', 'fdsnevent'):
+        if self.service_type not in (SERVICE_MANAGER.MACROSEISMIC, SERVICE_MANAGER.FDSNEVENT):
             return None
 
         return self.fdsn_event_min_magnitude.value() if self.min_mag_check.isChecked() else None
 
     def max_magnitude(self):
-        if self.service_type not in ('macroseismic', 'fdsnevent'):
+        if self.service_type not in (SERVICE_MANAGER.MACROSEISMIC, SERVICE_MANAGER.FDSNEVENT):
             return None
 
         return self.fdsn_event_max_magnitude.value() if self.max_mag_check.isChecked() else None
@@ -542,12 +542,12 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
         return self.radius_max_spinbox.value() if self.radius_max_checkbox.isChecked() else None
 
     def earthquake_max_intensity_greater(self):
-        if self.service_type != 'macroseismic':
+        if self.service_type != SERVICE_MANAGER.MACROSEISMIC:
             return None
         return self.earthquake_max_intensity_greater_combo.currentData() if self.earthquake_max_intensity_greater_check.isChecked() else None
 
     def earthquake_number_mdps_greater(self):
-        if self.service_type != 'macroseismic':
+        if self.service_type != SERVICE_MANAGER.MACROSEISMIC:
             return None
 
         return self.earthquake_number_mdps_greater_spin.value() if self.earthquake_number_mdps_greater_check.isChecked() else None

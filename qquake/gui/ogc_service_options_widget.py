@@ -84,14 +84,14 @@ class OgcServiceWidget(QWidget, FORM_CLASS):
 
     def _add_selected_layers(self):
         def add_layer(layer_name, style=None):
-            if self.service_type == 'wfs':
+            if self.service_type == SERVICE_MANAGER.WFS:
                 uri = "pagingEnabled='true' restrictToRequestBBOX='1' srsname='{}' typename='{}' url='{}' version='auto'".format(
                     self.service_config['srs'],
                     layer_name,
                     self.service_config['endpointurl'])
                 vl = QgsVectorLayer(uri, layer_name, 'WFS')
                 layers_to_add.append(vl)
-            elif self.service_type == 'wms':
+            elif self.service_type == SERVICE_MANAGER.WMS:
                 if style:
                     uri = "contextualWMSLegend=0&crs={}&dpiMode=7&format=image/png&layers={}&styles={}&url={}".format(
                         self.service_config['srs'],
