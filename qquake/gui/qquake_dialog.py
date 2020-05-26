@@ -428,6 +428,9 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         layers = []
         if self.fetcher.service_type in ('fdsnevent', 'macroseismic'):
             layers.append(self.fetcher.create_event_layer())
+            if self.fetcher.service_type == 'macroseismic':
+                layers.append(self.fetcher.create_mdp_layer())
+
             events_count = layers[0].featureCount()
 
             max_feature_count = 0
