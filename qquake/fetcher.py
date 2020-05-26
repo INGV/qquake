@@ -165,6 +165,9 @@ class Fetcher(QObject):
         if not self.preferred_magnitudes_only:
             query.append('includeallmagnitudes=true')
 
+        if self.service_type == 'macroseismic':
+            query.append('includemdps=true')
+
         query.append('format={}'.format(format))
 
         return self.service_config['endpointurl'] + '&'.join(query)
@@ -221,6 +224,11 @@ class Fetcher(QObject):
                     self.result.add_events(reply.readAll())
                 else:
                     self.result.parse_initial(reply.readAll())
+                    if self.service_type == 'macroseismic' and not self.event_ids:
+                        # for a macroseismic parameter based search, we have to then go and fetch events
+                        # one by one in order to get all the mdp location information required
+                        self.pending_event_ids = [e.publicID for e in self.result.events]
+
                 self.missing_origins = self.missing_origins.union(self.result.scan_for_missing_origins())
         elif self.service_type == 'fdsnstation':
             self.result = FDSNStationXMLParser.parse(reply.readAll())
@@ -272,6 +280,17 @@ class Fetcher(QObject):
 
         return vl
 
+    def _create_empty_mdp_layer(self):
+        """
+        Creates an empty layer for mdp
+        """
+        vl = QgsVectorLayer('Point?crs=EPSG:4326', self._generate_layer_name(layer_type='mdp'), 'memory')
+
+        vl.dataProvider().addAttributes(QuakeMlParser.create_mdp_fields())
+        vl.updateFields()
+
+        return vl
+
     def _create_empty_magnitudes_layer(self):
         """
         Creates an empty layer for earthquake data
@@ -308,6 +327,20 @@ class Fetcher(QObject):
 
         return vl
 
+    def mdpset_to_layer(self, parser):
+        """
+        Returns a new vector layer containing the reply contents
+        """
+        vl = self._create_empty_mdp_layer()
+
+        features = []
+        for f in parser.create_mdp_features():
+            features.append(f)
+
+        vl.dataProvider().addFeatures(features)
+
+        return vl
+
     def stations_to_layer(self, networks):
         """
         Returns a new vector layer containing the reply contents
@@ -324,6 +357,9 @@ class Fetcher(QObject):
 
     def create_event_layer(self):
         return self.events_to_layer(self.result, self.preferred_origins_only, self.preferred_magnitudes_only)
+
+    def create_mdp_layer(self):
+        return self.mdpset_to_layer(self.result)
 
     def create_stations_layer(self):
         return self.stations_to_layer(self.result)

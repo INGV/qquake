@@ -226,6 +226,20 @@ class ElementParser:
 
         return ConfidenceEllipsoid.from_element(child)
 
+    def ms_expected_intensity(self, attribute, optional=True):
+        child = self.element.elementsByTagName(attribute).at(0).toElement()
+        if optional and child.isNull():
+            return None
+
+        return MsExpectedItensity.from_element(child)
+
+    def ms_intensity(self, attribute, optional=True):
+        child = self.element.elementsByTagName(attribute).at(0).toElement()
+        if optional and child.isNull():
+            return None
+
+        return MsIntensity.from_element(child)
+
 
 class CreationInfo:
 
@@ -639,6 +653,81 @@ class Magnitude:
                          creationInfo=parser.creation_info('creationInfo'))
 
 
+class MsPlace:
+
+    def __init__(self,
+                 publicID,
+                 name,
+                 latitude,
+                 longitude):
+        self.publicID = publicID
+        self.name = name
+        self.latitude = latitude
+        self.longitude = longitude
+
+    @staticmethod
+    def from_element(element):
+        parser = ElementParser(element)
+
+        return MsPlace(publicID=parser.string('publicID', is_attribute=True, optional=False),
+                       name=parser.string('ms:name', is_attribute=False, optional=True),
+                       latitude=parser.real_quantity('ms:referenceLatitude'),
+                       longitude=parser.real_quantity('ms:referenceLongitude'))
+
+
+class MsExpectedItensity:
+
+    def __init__(self,
+                 msclass):
+        self.msclass = msclass
+
+    @staticmethod
+    def from_element(element):
+        parser = ElementParser(element)
+
+        return MsExpectedItensity(msclass=parser.string('ms:class', is_attribute=False, optional=False))
+
+
+class MsIntensity:
+
+    def __init__(self,
+                 macroseismicScale,
+                 expectedIntensity):
+        self.macroseismicScale = macroseismicScale
+        self.expectedIntensity = expectedIntensity
+
+    @staticmethod
+    def from_element(element):
+        parser = ElementParser(element)
+
+        return MsIntensity(macroseismicScale=parser.string('ms:macroseismicScale', is_attribute=False, optional=False),
+                           expectedIntensity=parser.ms_expected_intensity('ms:expectedIntensity'))
+
+class MsMdp:
+
+    def __init__(self,
+                 publicID,
+                 reportReference,
+                 eventReference,
+                 placeReference,
+                 intensity):
+        self.publicID = publicID
+        self.reportReference = reportReference
+        self.eventReference = eventReference
+        self.placeReference = placeReference
+        self.intensity = intensity
+
+    @staticmethod
+    def from_element(element):
+        parser = ElementParser(element)
+
+        return MsMdp(publicID=parser.string('publicID', is_attribute=True, optional=False),
+                     reportReference=parser.resource_reference('ms:reportReference'),
+                     eventReference=parser.resource_reference('ms:eventReference'),
+                     placeReference=parser.resource_reference('ms:placeReference'),
+                     intensity=parser.ms_intensity('ms:intensity'))
+
+
 class Event:
 
     def __init__(self,
@@ -914,11 +1003,15 @@ class QuakeMlParser:
         self.events = {}
         self.origins = {}
         self.magnitudes = {}
+        self.macro_places = {}
+        self.mdps = {}
 
     def parse_initial(self, content):
         self.events = []
         self.origins = {}
         self.magnitudes = {}
+        self.macro_places = {}
+        self.mdps = {}
         self.add_events(content)
 
     def add_events(self, content):
@@ -936,6 +1029,19 @@ class QuakeMlParser:
             for _, m in event.magnitudes.items():
                 if m not in self.magnitudes:
                     self.magnitudes[m.publicID] = m
+
+        # macro places first
+        macro_places = doc.elementsByTagName('ms:place')
+        for e in range(macro_places.length()):
+            macro_place = macro_places.at(e).toElement()
+            place = MsPlace.from_element(macro_place)
+            self.macro_places[place.publicID] = place
+
+        macro_mdp = doc.elementsByTagName('ms:mdp')
+        for e in range(macro_mdp.length()):
+            mdp_element = macro_mdp.at(e).toElement()
+            mdp = MsMdp.from_element(mdp_element)
+            self.mdps[mdp.publicID] = mdp
 
     def parse_missing_origin(self, content):
         doc = QDomDocument()
@@ -970,6 +1076,40 @@ class QuakeMlParser:
             for f in e.to_features(output_fields, preferred_origin_only, preferred_magnitudes_only,
                                    all_origins=self.origins):
                 yield f
+
+    @staticmethod
+    def create_mdp_fields():
+        f = QgsFields()
+        f.append(QgsField('publicID', QVariant.String))
+        f.append(QgsField('reportReference', QVariant.String))
+        f.append(QgsField('eventReference', QVariant.String))
+        f.append(QgsField('placeReference', QVariant.String))
+        f.append(QgsField('placeName', QVariant.String))
+        f.append(QgsField('macroseismicScale', QVariant.String))
+        f.append(QgsField('expectedIntensity', QVariant.String))
+        return f
+
+    def create_mdp_features(self):
+        fields = self.create_mdp_fields()
+        for _, m in self.mdps.items():
+            if m.placeReference in self.macro_places:
+                place = self.macro_places[m.placeReference]
+            else:
+                place = None
+
+            f = QgsFeature(fields)
+            f['publicID'] = m.publicID
+            f['reportReference']=m.reportReference
+            f['eventReference'] = m.eventReference
+            f['placeReference'] = m.placeReference
+            f['placeName'] = place.name if place else NULL
+            f['macroseismicScale'] = m.intensity.macroseismicScale
+            f['expectedIntensity'] = m.intensity.expectedIntensity.msclass
+            if place and place.longitude and place.latitude:
+                geom = QgsPoint(x=place.longitude.value, y=place.latitude.value)
+                f.setGeometry(QgsGeometry(geom))
+
+            yield f
 
 
 class BaseNodeType:
