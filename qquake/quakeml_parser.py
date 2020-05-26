@@ -1071,6 +1071,10 @@ class QuakeMlParser:
 
         return list(missing_origins)
 
+    @staticmethod
+    def to_event_fields(selected_fields):
+        return Event.to_fields(selected_fields)
+
     def create_event_features(self, output_fields, preferred_origin_only, preferred_magnitudes_only):
         for e in self.events:
             for f in e.to_features(output_fields, preferred_origin_only, preferred_magnitudes_only,

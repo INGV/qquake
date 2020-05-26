@@ -38,6 +38,7 @@ from qquake.quakeml_parser import (
     Magnitude,
     Station
 )
+from qquake.basic_text_parser import BasicTextParser
 
 from qquake.services import SERVICES
 
@@ -108,7 +109,10 @@ class Fetcher(QObject):
 
         self.output_fields = output_fields
 
-        self.result = QuakeMlParser()
+        if self.output_type == self.EXTENDED:
+            self.result = QuakeMlParser()
+        else:
+            self.result = BasicTextParser()
 
         self.service_config = SERVICES[self.service_type][self.event_service]
 
@@ -220,33 +224,39 @@ class Fetcher(QObject):
             self.progress.emit(float(received) / total * 100)
 
     def _reply_finished(self, reply):
-        if self.service_type in ('fdsnevent', 'macroseismic'):
-            if self.is_missing_origin_request:
-                self.result.parse_missing_origin(reply.readAll())
-            else:
-                if self.pending_event_ids:
-                    self.pending_event_ids = self.pending_event_ids[1:]
-
-                if self.result.events:
-                    self.result.add_events(reply.readAll())
+        if self.output_type == self.EXTENDED:
+            if self.service_type in ('fdsnevent', 'macroseismic'):
+                if self.is_missing_origin_request:
+                    self.result.parse_missing_origin(reply.readAll())
                 else:
-                    self.result.parse_initial(reply.readAll())
-                    if self.service_type == 'macroseismic' and not self.event_ids:
-                        # for a macroseismic parameter based search, we have to then go and fetch events
-                        # one by one in order to get all the mdp location information required
-                        self.pending_event_ids = [e.publicID for e in self.result.events]
+                    if self.pending_event_ids:
+                        self.pending_event_ids = self.pending_event_ids[1:]
 
-                self.missing_origins = self.missing_origins.union(self.result.scan_for_missing_origins())
-        elif self.service_type == 'fdsnstation':
-            self.result = FDSNStationXMLParser.parse(reply.readAll())
-        else:
-            assert False
+                    if self.result.events:
+                        self.result.add_events(reply.readAll())
+                    else:
+                        self.result.parse_initial(reply.readAll())
+                        if self.service_type == 'macroseismic' and not self.event_ids:
+                            # for a macroseismic parameter based search, we have to then go and fetch events
+                            # one by one in order to get all the mdp location information required
+                            self.pending_event_ids = [e.publicID for e in self.result.events]
 
-        if self.missing_origins:
-            self.fetch_missing()
-        elif self.pending_event_ids:
-            self.fetch_next_event_by_id()
+                    self.missing_origins = self.missing_origins.union(self.result.scan_for_missing_origins())
+            elif self.service_type == 'fdsnstation':
+                self.result = FDSNStationXMLParser.parse(reply.readAll())
+            else:
+                assert False
+
+            if self.missing_origins:
+                self.fetch_missing()
+            elif self.pending_event_ids:
+                self.fetch_next_event_by_id()
+            else:
+                self.finished.emit()
+
         else:
+            # basic output types
+            self.result.parse(reply.readAll())
             self.finished.emit()
 
     def _generate_layer_name(self, layer_type=None):
@@ -270,7 +280,7 @@ class Fetcher(QObject):
         """
         vl = QgsVectorLayer('PointZ?crs=EPSG:4326', self._generate_layer_name(), 'memory')
 
-        vl.dataProvider().addAttributes(Event.to_fields(self.output_fields))
+        vl.dataProvider().addAttributes(self.result.to_event_fields(self.output_fields))
         vl.updateFields()
 
         try:
@@ -366,6 +376,9 @@ class Fetcher(QObject):
         return self.events_to_layer(self.result, self.preferred_origins_only, self.preferred_magnitudes_only)
 
     def create_mdp_layer(self):
+        if not hasattr(self.result, 'create_mdp_features'):
+            return None
+
         return self.mdpset_to_layer(self.result)
 
     def create_stations_layer(self):
