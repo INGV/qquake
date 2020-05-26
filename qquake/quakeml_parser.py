@@ -1004,14 +1004,14 @@ class QuakeMlParser:
         self.origins = {}
         self.magnitudes = {}
         self.macro_places = {}
-        self.mdps = []
+        self.mdps = {}
 
     def parse_initial(self, content):
         self.events = []
         self.origins = {}
         self.magnitudes = {}
         self.macro_places = {}
-        self.mdps = []
+        self.mdps = {}
         self.add_events(content)
 
     def add_events(self, content):
@@ -1040,7 +1040,8 @@ class QuakeMlParser:
         macro_mdp = doc.elementsByTagName('ms:mdp')
         for e in range(macro_mdp.length()):
             mdp_element = macro_mdp.at(e).toElement()
-            self.mdps.append(MsMdp.from_element(mdp_element))
+            mdp = MsMdp.from_element(mdp_element)
+            self.mdps[mdp.publicID] = mdp
 
     def parse_missing_origin(self, content):
         doc = QDomDocument()
@@ -1090,7 +1091,7 @@ class QuakeMlParser:
 
     def create_mdp_features(self):
         fields = self.create_mdp_fields()
-        for m in self.mdps:
+        for _, m in self.mdps.items():
             if m.placeReference in self.macro_places:
                 place = self.macro_places[m.placeReference]
             else:

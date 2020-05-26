@@ -224,6 +224,11 @@ class Fetcher(QObject):
                     self.result.add_events(reply.readAll())
                 else:
                     self.result.parse_initial(reply.readAll())
+                    if self.service_type == 'macroseismic' and not self.event_ids:
+                        # for a macroseismic parameter based search, we have to then go and fetch events
+                        # one by one in order to get all the mdp location information required
+                        self.pending_event_ids = [e.publicID for e in self.result.events]
+
                 self.missing_origins = self.missing_origins.union(self.result.scan_for_missing_origins())
         elif self.service_type == 'fdsnstation':
             self.result = FDSNStationXMLParser.parse(reply.readAll())
