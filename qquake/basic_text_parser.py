@@ -63,7 +63,14 @@ class BasicTextParser:
     def parse(self, content):
         lines = content.data().decode().split('\n')
         self.parser_header_line(lines[0])
-        for e in lines[1:]:
+        self._add_events(lines[1:])
+
+    def add_events(self, content):
+        lines = content.data().decode().split('\n')
+        self._add_events(lines[1:])
+
+    def _add_events(self, lines):
+        for e in lines:
             if not e:
                 continue
 

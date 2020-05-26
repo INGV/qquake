@@ -256,8 +256,18 @@ class Fetcher(QObject):
 
         else:
             # basic output types
-            self.result.parse(reply.readAll())
-            self.finished.emit()
+            if self.pending_event_ids:
+                self.pending_event_ids = self.pending_event_ids[1:]
+
+            if self.result.events:
+                self.result.add_events(reply.readAll())
+            else:
+                self.result.parse(reply.readAll())
+
+            if self.pending_event_ids:
+                self.fetch_next_event_by_id()
+            else:
+                self.finished.emit()
 
     def _generate_layer_name(self, layer_type=None):
         name = self.event_service
