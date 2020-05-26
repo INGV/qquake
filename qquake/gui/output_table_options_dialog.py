@@ -80,9 +80,9 @@ class OutputTableOptionsDialog(QDialog, FORM_CLASS):
 
         nodes = []
         for key, settings in CONFIG_FIELDS['field_groups'].items():
-            if self.service_type != 'fdsnstation' and settings['label'] == 'station':
+            if self.service_type != SERVICE_MANAGER.FDSNSTATION and settings['label'] == 'station':
                 continue
-            elif self.service_type == 'fdsnstation' and settings['label'] != 'station':
+            elif self.service_type == SERVICE_MANAGER.FDSNSTATION and settings['label'] != 'station':
                 continue
 
             parent_node = ModelNode([settings['label']])
@@ -112,9 +112,9 @@ class OutputTableOptionsDialog(QDialog, FORM_CLASS):
         for r in range(self.field_model.rowCount(QModelIndex())):
             self.fields_tree_view.setFirstColumnSpanned(r, QModelIndex(), True)
 
-        self.output_preferred_origins_only_check.setVisible(self.service_type in ('macroseismic', 'fdsnevent'))
-        self.output_preferred_magnitudes_only_check.setVisible(self.service_type in ('macroseismic', 'fdsnevent'))
-        self.output_preferred_mdp_only_check.setVisible(self.service_type == 'macroseismic')
+        self.output_preferred_origins_only_check.setVisible(self.service_type in (SERVICE_MANAGER.MACROSEISMIC, SERVICE_MANAGER.FDSNEVENT))
+        self.output_preferred_magnitudes_only_check.setVisible(self.service_type in (SERVICE_MANAGER.MACROSEISMIC, SERVICE_MANAGER.FDSNEVENT))
+        self.output_preferred_mdp_only_check.setVisible(self.service_type == SERVICE_MANAGER.MACROSEISMIC)
 
         preferred_origins_only_checked = s.value('/plugins/qquake/output_preferred_origins', True, bool)
         self.output_preferred_origins_only_check.setChecked(preferred_origins_only_checked)

@@ -30,7 +30,7 @@ from qgis.core import (
     QgsMessageLog,
     Qgis
 )
-
+from qgis.PyQt.QtCore import QObject, pyqtSignal
 
 _CONFIG_SERVICES_PATH = os.path.join(
     os.path.dirname(__file__),
@@ -38,11 +38,19 @@ _CONFIG_SERVICES_PATH = os.path.join(
     'config.json')
 
 
-_SERVICE_TYPES = ['fdsnevent', 'fdsnstation', 'macroseismic', 'wms', 'wfs']
+class ServiceManager(QObject):
+    FDSNEVENT = 'fdsnevent'
+    FDSNSTATION = 'fdsnstation'
+    MACROSEISMIC = 'macroseismic'
+    WMS = 'wms'
+    WFS = 'wfs'
 
-class ServiceManager:
+    _SERVICE_TYPES = [FDSNEVENT, FDSNSTATION, MACROSEISMIC, WMS, WFS]
+
+    refreshed = pyqtSignal()
 
     def __init__(self):
+        super().__init__()
         self.services = {}
         self.refresh_services()
 
@@ -52,7 +60,7 @@ class ServiceManager:
             default_services = json.load(f)
 
         self.services = {}
-        for service_type in _SERVICE_TYPES:
+        for service_type in self._SERVICE_TYPES:
             self.services[service_type] = {}
             for service_id, service in default_services[service_type].items():
                 service['read_only'] = True
@@ -66,7 +74,7 @@ class ServiceManager:
         if not user_path.exists():
             user_path.mkdir(parents=True)
 
-        for service_type in _SERVICE_TYPES:
+        for service_type in self._SERVICE_TYPES:
             service_path = user_path / service_type
             if not service_path.exists():
                 service_path.mkdir(parents=True)
@@ -78,10 +86,14 @@ class ServiceManager:
 
                     if p.stem in self.services[service_type]:
                         # duplicate service, skip it
-                        QgsMessageLog.logMessage('Duplicate service name found, service will not be loaded: {}'.format(p.stem), 'QQuake', Qgis.Warning)
+                        QgsMessageLog.logMessage(
+                            'Duplicate service name found, service will not be loaded: {}'.format(p.stem), 'QQuake',
+                            Qgis.Warning)
                         continue
 
                     self.services[service_type][p.stem] = service
+
+        self.refreshed.emit()
 
     @staticmethod
     def user_service_path():
@@ -98,6 +110,16 @@ class ServiceManager:
 
     def predefined_bounding_box(self, name):
         return self._predefined_bounding_boxes[name]
+
+    def custom_service_path(self, service_type, service_id):
+        return (self.user_service_path() / service_type / service_id).with_suffix('.json')
+
+    def remove_service(self, service_type, service_id):
+        path = self.custom_service_path(service_type, service_id)
+        if path.exists():
+            path.unlink()
+            self.refresh_services()
+
 
 
 SERVICE_MANAGER = ServiceManager()

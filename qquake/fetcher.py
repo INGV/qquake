@@ -176,7 +176,7 @@ class Fetcher(QObject):
         if not self.preferred_magnitudes_only:
             query.append('includeallmagnitudes=true')
 
-        if self.service_type == 'macroseismic':
+        if self.service_type == SERVICE_MANAGER.MACROSEISMIC:
             query.append('includemdps=true')
 
         query.append('format={}'.format(format))
@@ -225,7 +225,7 @@ class Fetcher(QObject):
 
     def _reply_finished(self, reply):
         if self.output_type == self.EXTENDED:
-            if self.service_type in ('fdsnevent', 'macroseismic'):
+            if self.service_type in (SERVICE_MANAGER.FDSNEVENT, SERVICE_MANAGER.MACROSEISMIC):
                 if self.is_missing_origin_request:
                     self.result.parse_missing_origin(reply.readAll())
                 else:
@@ -236,13 +236,13 @@ class Fetcher(QObject):
                         self.result.add_events(reply.readAll())
                     else:
                         self.result.parse_initial(reply.readAll())
-                        if self.service_type == 'macroseismic' and not self.event_ids:
+                        if self.service_type == SERVICE_MANAGER.MACROSEISMIC and not self.event_ids:
                             # for a macroseismic parameter based search, we have to then go and fetch events
                             # one by one in order to get all the mdp location information required
                             self.pending_event_ids = [e.publicID for e in self.result.events]
 
                     self.missing_origins = self.missing_origins.union(self.result.scan_for_missing_origins())
-            elif self.service_type == 'fdsnstation':
+            elif self.service_type == SERVICE_MANAGER.FDSNSTATION:
                 self.result = FDSNStationXMLParser.parse(reply.readAll())
             else:
                 assert False
