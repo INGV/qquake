@@ -41,6 +41,8 @@ from qgis.gui import (
 from qquake.gui.gui_utils import GuiUtils
 from qquake.gui.output_table_options_dialog import OutputTableOptionsDialog
 from qquake.services import SERVICES, PREFINED_BOUNDING_BOXES
+from qquake.fetcher import Fetcher
+
 
 FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('filter_parameter_widget_base.ui'))
 
@@ -95,6 +97,8 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
         self.earthquake_max_intensity_greater_combo.currentIndexChanged.connect(self.changed)
         self.earthquake_number_mdps_greater_check.toggled.connect(self.changed)
         self.earthquake_number_mdps_greater_spin.valueChanged.connect(self.changed)
+        self.radio_basic_output.toggled.connect(self.changed)
+        self.radio_extended_output.toggled.connect(self.changed)
 
         self.rect_extent_draw_on_map.clicked.connect(self.draw_rect_on_map)
         self.circle_center_draw_on_map.clicked.connect(self.draw_center_on_map)
@@ -113,6 +117,8 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
         self.max_time_check.toggled.connect(self._enable_widgets)
         self.min_mag_check.toggled.connect(self._enable_widgets)
         self.max_mag_check.toggled.connect(self._enable_widgets)
+        self.radio_basic_output.toggled.connect(self._enable_widgets)
+        self.radio_extended_output.toggled.connect(self._enable_widgets)
         self.earthquake_max_intensity_greater_check.toggled.connect(self._enable_widgets)
         self.earthquake_number_mdps_greater_check.toggled.connect(self._enable_widgets)
         self._enable_widgets()
@@ -226,6 +232,11 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
         if v is not None:
             self.earthquake_number_mdps_greater_spin.setValue(float(v))
 
+        self.radio_basic_output.setChecked(
+            s.value('/plugins/qquake/{}_last_event_basic_checked'.format(prefix), True, bool))
+        self.radio_extended_output.setChecked(
+            s.value('/plugins/qquake/{}_last_event_extended_checked'.format(prefix), False, bool))
+
     def save_settings(self, prefix):
         s = QgsSettings()
         s.setValue('/plugins/qquake/{}_last_event_start_date'.format(prefix), self.fdsn_event_start_date.dateTime())
@@ -271,6 +282,9 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
         s.setValue('/plugins/qquake/{}_last_event_max_time_checked2'.format(prefix), self.max_time_check.isChecked())
         s.setValue('/plugins/qquake/{}_last_event_min_mag_checked2'.format(prefix), self.min_mag_check.isChecked())
         s.setValue('/plugins/qquake/{}_last_event_max_mag_checked2'.format(prefix), self.max_mag_check.isChecked())
+
+        s.setValue('/plugins/qquake/{}_last_event_basic_checked'.format(prefix), self.radio_basic_output.isChecked())
+        s.setValue('/plugins/qquake/{}_last_event_extended_checked'.format(prefix), self.radio_extended_output.isChecked())
 
     def _populated_predined_areas(self):
         for id, extent in PREFINED_BOUNDING_BOXES.items():
@@ -355,6 +369,8 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
 
         self.earthquake_max_intensity_greater_combo.setEnabled(self.earthquake_max_intensity_greater_check.isChecked())
         self.earthquake_number_mdps_greater_spin.setEnabled(self.earthquake_number_mdps_greater_check.isChecked())
+
+        self.output_table_options_button.setEnabled(self.radio_extended_output.isChecked())
 
     def draw_rect_on_map(self):
         self.previous_map_tool = self.iface.mapCanvas().mapTool()
@@ -534,3 +550,6 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
             return None
 
         return self.earthquake_number_mdps_greater_spin.value() if self.earthquake_number_mdps_greater_check.isChecked() else None
+
+    def output_type(self):
+        return Fetcher.BASIC if self.radio_basic_output.isChecked() else Fetcher.EXTENDED

@@ -34,6 +34,7 @@ from qgis.core import (
 from qquake.gui.gui_utils import GuiUtils
 from qquake.gui.output_table_options_dialog import OutputTableOptionsDialog
 from qquake.services import SERVICES
+from qquake.fetcher import Fetcher
 
 FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('filter_by_id_widget_base.ui'))
 
@@ -49,6 +50,8 @@ class FilterByIdWidget(QWidget, FORM_CLASS):
 
         self.radio_single_event.toggled.connect(self._enable_widgets)
         self.radio_multiple_events.toggled.connect(self._enable_widgets)
+        self.radio_basic_output.toggled.connect(self._enable_widgets)
+        self.radio_extended_output.toggled.connect(self._enable_widgets)
 
         self._enable_widgets()
 
@@ -62,6 +65,8 @@ class FilterByIdWidget(QWidget, FORM_CLASS):
         self.radio_single_event.toggled.connect(self.changed)
         self.edit_event_id.textChanged.connect(self.changed)
         self.event_ids_edit.textChanged.connect(self.changed)
+        self.radio_basic_output.toggled.connect(self.changed)
+        self.radio_extended_output.toggled.connect(self.changed)
         self.button_import_from_file.clicked.connect(self.load_from_file)
 
     def set_service_type(self, service_type):
@@ -79,12 +84,18 @@ class FilterByIdWidget(QWidget, FORM_CLASS):
             self.radio_single_event.setChecked(True)
         if s.value('/plugins/qquake/{}_multi_event_checked'.format(prefix), True, bool):
             self.radio_multiple_events.setChecked(True)
+        self.radio_basic_output.setChecked(
+            s.value('/plugins/qquake/{}_single_event_basic_checked'.format(prefix), True, bool))
+        self.radio_extended_output.setChecked(
+            s.value('/plugins/qquake/{}_single_event_extended_checked'.format(prefix), False, bool))
 
     def save_settings(self, prefix):
         s = QgsSettings()
         s.setValue('/plugins/qquake/{}_single_event_id'.format(prefix), self.edit_event_id.text())
         s.setValue('/plugins/qquake/{}_single_event_checked'.format(prefix), self.radio_single_event.isChecked())
         s.setValue('/plugins/qquake/{}_multi_event_checked'.format(prefix), self.radio_multiple_events.isChecked())
+        s.setValue('/plugins/qquake/{}_single_event_basic_checked'.format(prefix), self.radio_basic_output.isChecked())
+        s.setValue('/plugins/qquake/{}_single_event_extended_checked'.format(prefix), self.radio_extended_output.isChecked())
 
     def _enable_widgets(self):
         for w in [self.label_event_id,
@@ -93,6 +104,8 @@ class FilterByIdWidget(QWidget, FORM_CLASS):
 
         for w in [self.multi_event_widget]:
             w.setEnabled(self.radio_multiple_events.isChecked())
+
+        self.output_table_options_button.setEnabled(self.radio_extended_output.isChecked())
 
     def _output_table_options(self):
         dlg = OutputTableOptionsDialog(self.service_type, self.service_id, self.output_fields, self)
@@ -119,3 +132,6 @@ class FilterByIdWidget(QWidget, FORM_CLASS):
         with open(file, 'rt') as f:
             text = '\n'.join(f.readlines())
             self.event_ids_edit.setPlainText('\n'.join(self.parse_multi_input(text)))
+
+    def output_type(self):
+        return Fetcher.BASIC if self.radio_basic_output.isChecked() else Fetcher.EXTENDED

@@ -409,10 +409,27 @@
       <string>Output</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_8">
-      <item row="0" column="0">
+      <item row="1" column="0">
+       <widget class="QRadioButton" name="radio_extended_output">
+        <property name="text">
+         <string>Extended (user customizable)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
        <widget class="QPushButton" name="output_table_options_button">
         <property name="text">
          <string>Output Table Options…</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0" colspan="2">
+       <widget class="QRadioButton" name="radio_basic_output">
+        <property name="text">
+         <string>Basic (default FDSN text format)</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
         </property>
        </widget>
       </item>

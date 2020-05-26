@@ -297,13 +297,15 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                            circle_max_radius=filter_widget.circle_max_radius(),
                            earthquake_number_mdps_greater=filter_widget.earthquake_number_mdps_greater(),
                            earthquake_max_intensity_greater=filter_widget.earthquake_max_intensity_greater(),
-                           output_fields=filter_widget.output_fields
+                           output_fields=filter_widget.output_fields,
+                           output_type=filter_widget.output_type()
                            )
         elif isinstance(filter_widget, FilterByIdWidget):
             return Fetcher(service_type=service_type,
                            event_service=service,
                            event_ids=filter_widget.ids(),
-                           output_fields=filter_widget.output_fields
+                           output_fields=filter_widget.output_fields,
+                           output_type=filter_widget.output_type()
                            )
 
     def _refresh_url(self, service_type):
@@ -429,7 +431,9 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         if self.fetcher.service_type in ('fdsnevent', 'macroseismic'):
             layers.append(self.fetcher.create_event_layer())
             if self.fetcher.service_type == 'macroseismic':
-                layers.append(self.fetcher.create_mdp_layer())
+                l = self.fetcher.create_mdp_layer()
+                if l:
+                    layers.append(l)
 
             events_count = layers[0].featureCount()
 
