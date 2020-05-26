@@ -25,7 +25,7 @@
 from qgis.PyQt import uic
 from qgis.PyQt.QtWidgets import QWidget
 
-from qquake.services import SERVICES
+from qquake.services import SERVICE_MANAGER
 from qquake.gui.gui_utils import GuiUtils
 
 FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('service_information_widget.ui'))
@@ -48,7 +48,7 @@ class ServiceInformationWidget(QWidget, FORM_CLASS):
     def set_service(self, service_name, service_type):
         self.service_type = service_type
         self.service_name = service_name
-        self.service_config = SERVICES[service_type][service_name]
+        self.service_config = SERVICE_MANAGER.service_details(service_type, service_name)
 
         html = """<p><b>Title</b><br>
         {title}</p>

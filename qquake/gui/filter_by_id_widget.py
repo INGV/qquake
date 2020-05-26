@@ -33,7 +33,7 @@ from qgis.core import (
 
 from qquake.gui.gui_utils import GuiUtils
 from qquake.gui.output_table_options_dialog import OutputTableOptionsDialog
-from qquake.services import SERVICES
+from qquake.services import SERVICE_MANAGER
 from qquake.fetcher import Fetcher
 
 FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('filter_by_id_widget_base.ui'))
@@ -74,8 +74,8 @@ class FilterByIdWidget(QWidget, FORM_CLASS):
 
     def set_service_id(self, service_id):
         self.service_id = service_id
-        if 'fields' in SERVICES[self.service_type][self.service_id]['default']:
-            self.output_fields = SERVICES[self.service_type][service_id]['default']['fields']
+        if 'fields' in SERVICE_MANAGER.service_details(self.service_type, self.service_id)['default']:
+            self.output_fields = SERVICE_MANAGER.service_details(self.service_type, service_id)['default']['fields']
 
     def restore_settings(self, prefix):
         s = QgsSettings()

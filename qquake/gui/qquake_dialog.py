@@ -51,7 +51,7 @@ from qquake.gui.filter_by_id_widget import FilterByIdWidget
 from qquake.gui.ogc_service_options_widget import OgcServiceWidget
 from qquake.gui.service_information_widget import ServiceInformationWidget
 from qquake.gui.gui_utils import GuiUtils
-from qquake.services import SERVICES
+from qquake.services import SERVICE_MANAGER
 
 FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('qquake_dialog_base.ui'))
 
@@ -137,15 +137,15 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.iface = iface
 
         # fill the FDSN listWidget with the dictionary keys
-        self.fdsn_event_list.addItems(SERVICES['fdsnevent'].keys())
+        self.fdsn_event_list.addItems(SERVICE_MANAGER.available_services('fdsnevent'))
         self.fdsn_event_list.setCurrentRow(0)
 
         # fill the FDSN listWidget with the dictionary keys
-        self.fdsn_macro_list.addItems(SERVICES['macroseismic'].keys())
+        self.fdsn_macro_list.addItems(SERVICE_MANAGER.available_services('macroseismic'))
         self.fdsn_macro_list.setCurrentRow(0)
 
         # fill the FDSN listWidget with the dictionary keys
-        self.fdsn_station_list.addItems(SERVICES['fdsnstation'].keys())
+        self.fdsn_station_list.addItems(SERVICE_MANAGER.available_services('fdsnstation'))
         self.fdsn_station_list.setCurrentRow(0)
 
         # OGC
@@ -319,7 +319,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
             self.fdsn_station_url_text_browser.setText('<a href="{0}">{0}</a>'.format(fetcher.generate_url()))
 
     def _update_service_widgets(self, service_type, service_id, filter_widget, filter_by_id_widget, info_widget):
-        service_config = SERVICES[service_type][service_id]
+        service_config = SERVICE_MANAGER.service_details(service_type, service_id)
 
         date_start = QDateTime.fromString(
             service_config['datestart'],
@@ -344,8 +344,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         filter_widget.set_date_range_limits(date_start, date_end)
         filter_widget.set_current_date_range(default_date_start, default_date_end)
 
-        box = SERVICES['boundingboxpredefined'][
-            service_config['default']['boundingboxpredefined']]['boundingbox']
+        box = SERVICE_MANAGER.predefined_bounding_box(service_config['default']['boundingboxpredefined'])['boundingbox']
         filter_widget.set_extent_limit(box)
         info_widget.set_service(service_type=service_type, service_name=service_id)
 
@@ -387,7 +386,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         """
         self.ogc_list.clear()
         ogc_selection = self.ogc_combo.currentData()
-        self.ogc_list.addItems(SERVICES[ogc_selection].keys())
+        self.ogc_list.addItems(SERVICE_MANAGER.available_services(ogc_selection))
         self.ogc_list.setCurrentRow(0)
 
     def _ogc_service_changed(self):

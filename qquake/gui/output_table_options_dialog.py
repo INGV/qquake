@@ -37,7 +37,7 @@ from qgis.gui import QgsGui
 
 from qquake.gui.gui_utils import GuiUtils
 from qquake.gui.simple_node_model import SimpleNodeModel, ModelNode
-from qquake.services import SERVICES
+from qquake.services import SERVICE_MANAGER
 
 FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('output_table_options.ui'))
 
@@ -130,8 +130,8 @@ class OutputTableOptionsDialog(QDialog, FORM_CLASS):
         self.uncheck_all_button.clicked.connect(lambda: self._check_all(False))
         self.reset_fields_button.setVisible(False)
 
-        if 'fields' in SERVICES[service_type][service_id]['default']:
-            self.set_default_fields(SERVICES[service_type][service_id]['default']['fields'])
+        if 'fields' in SERVICE_MANAGER.service_details(service_type, service_id)['default']:
+            self.set_default_fields(SERVICE_MANAGER.service_details(service_type, service_id)['default']['fields'])
 
     def accept(self):
         s = QgsSettings()

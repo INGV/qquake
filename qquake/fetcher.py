@@ -40,7 +40,7 @@ from qquake.quakeml_parser import (
 )
 from qquake.basic_text_parser import BasicTextParser
 
-from qquake.services import SERVICES
+from qquake.services import SERVICE_MANAGER
 
 
 class Fetcher(QObject):
@@ -114,7 +114,7 @@ class Fetcher(QObject):
         else:
             self.result = BasicTextParser()
 
-        self.service_config = SERVICES[self.service_type][self.event_service]
+        self.service_config = SERVICE_MANAGER.service_details(self.service_type, self.event_service)
 
         self.missing_origins = set()
         self.is_missing_origin_request = False
