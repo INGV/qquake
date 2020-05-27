@@ -229,6 +229,7 @@ class Fetcher(QObject):
             if self.service_type in (SERVICE_MANAGER.FDSNEVENT, SERVICE_MANAGER.MACROSEISMIC):
                 if self.is_missing_origin_request:
                     self.result.parse_missing_origin(reply.readAll())
+                    self.is_missing_origin_request = False
                 else:
                     if self.pending_event_ids:
                         self.pending_event_ids = self.pending_event_ids[1:]
