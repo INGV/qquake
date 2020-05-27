@@ -87,10 +87,17 @@ class BasicTextParser:
 
             self.events.append(dict(zip(self.headers, e.split('|'))))
 
+    @staticmethod
+    def get_field_type(name):
+        for k, v in EVENT_FIELD_TYPE.items():
+            if k.lower() == name.lower():
+                return v
+        return None
+
     def to_event_fields(self, selected_fields=None):
         fields = QgsFields()
         for f in self.headers:
-            fields.append(QgsField(f, EVENT_FIELD_TYPE[f]))
+            fields.append(QgsField(f, self.get_field_type(f)))
 
         return fields
 
