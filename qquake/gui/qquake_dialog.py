@@ -511,6 +511,10 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         """
         read the event URL and convert the response in a list
         """
+        if self.get_current_service_type() is None:
+            self.ogc_service_widget.add_selected_layers()
+            return
+
         if self.fetcher:
             # TODO - cancel current request
             return

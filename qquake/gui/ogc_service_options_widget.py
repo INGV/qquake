@@ -52,7 +52,7 @@ class OgcServiceWidget(QWidget, FORM_CLASS):
         self.service_name = None
         self.service_config = None
 
-        self.add_layers_button.clicked.connect(self._add_selected_layers)
+        self.add_layers_button.clicked.connect(self.add_selected_layers)
 
     def set_service(self, service_name, service_type):
         self.service_type = service_type
@@ -82,7 +82,7 @@ class OgcServiceWidget(QWidget, FORM_CLASS):
 
             self.layers_tree_view.setFirstColumnSpanned(r, QModelIndex(), True)
 
-    def _add_selected_layers(self):
+    def add_selected_layers(self):
         def add_layer(layer_name, style=None):
             if self.service_type == SERVICE_MANAGER.WFS:
                 uri = "pagingEnabled='true' restrictToRequestBBOX='1' srsname='{}' typename='{}' url='{}' version='auto'".format(
