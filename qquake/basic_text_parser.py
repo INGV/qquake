@@ -45,6 +45,17 @@ EVENT_FIELD_TYPE = {
     'EventLocationName': QVariant.String
 }
 
+STATION_FIELD_TYPE = {
+    'Network': QVariant.String,
+    'Station': QVariant.String,
+    'Latitude': QVariant.Double,
+    'Longitude': QVariant.Double,
+    'Elevation': QVariant.Double,
+    'SiteName': QVariant.String,
+    'StartTime': QVariant.DateTime,
+    'EndTime': QVariant.DateTime
+}
+
 
 class BasicTextParser:
     """
@@ -99,3 +110,55 @@ class BasicTextParser:
 
         for e in self.events:
             yield self.to_event_feature(e, fields)
+
+
+class BasicStationParser:
+
+    def __init__(self):
+        self.headers = []
+        self.stations = []
+
+    def parser_header_line(self, line):
+        assert line[0] == '#'
+        line = line[1:]
+        self.headers = line.split('|')
+
+    def parse(self, content):
+        lines = content.data().decode().split('\n')
+        self.parser_header_line(lines[0])
+        self._add_stations(lines[1:])
+
+    def add_stations(self, content):
+        lines = content.data().decode().split('\n')
+        self._add_stations(lines[1:])
+
+    def _add_stations(self, lines):
+        for e in lines:
+            if not e:
+                continue
+
+            self.stations.append(dict(zip(self.headers, e.split('|'))))
+
+    def to_station_fields(self, selected_fields=None):
+        fields = QgsFields()
+        for f in self.headers:
+            fields.append(QgsField(f, STATION_FIELD_TYPE[f]))
+
+        return fields
+
+    def to_station_feature(self, station, fields):
+        f = QgsFeature(fields)
+        for k, v in station.items():
+            f[k] = v
+
+        if station.get('Latitude') and station.get('Longitude'):
+            geom = QgsPoint(x=float(station['Longitude']), y=float(station['Latitude']))
+            f.setGeometry(QgsGeometry(geom))
+
+        return f
+
+    def create_station_features(self):
+        fields = self.to_station_fields()
+
+        for e in self.stations:
+            yield self.to_station_feature(e, fields)
