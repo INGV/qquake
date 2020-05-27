@@ -107,7 +107,7 @@
           "source": "eventParameters>event>comment>creationInfo>creationTime",
           "description": "",
           "skip": true,
-          "type": "String"
+          "type": "DateTime"
         },
         {
           "field_short": "eventcmver",
@@ -150,7 +150,7 @@
           "field_long": "EventCreationTime",
           "source": "eventParameters>event>creationInfo>creationTime",
           "description": "",
-          "type": "String"
+          "type": "DateTime"
         },
         {
           "field_short": "eventcrver",
@@ -356,28 +356,28 @@
         {
           "field_short": "minunc",
           "field_long": "MinuteUnc",
-          "source": "eventParameters>event>origin>compositeTime>hour>uncertainty",
+          "source": "eventParameters>event>origin>compositeTime>minute>uncertainty",
           "description": "",
           "type": "Int"
         },
         {
           "field_short": "minunclo",
           "field_long": "MinuteUncLow",
-          "source": "eventParameters>event>origin>compositeTime>hour>lowerUncertainty",
+          "source": "eventParameters>event>origin>compositeTime>minute>lowerUncertainty",
           "description": "",
           "type": "Int"
         },
         {
           "field_short": "minuncup",
           "field_long": "MinuteUncUp",
-          "source": "eventParameters>event>origin>compositeTime>hour>upperUncertainty",
+          "source": "eventParameters>event>origin>compositeTime>minute>upperUncertainty",
           "description": "",
           "type": "Int"
         },
         {
           "field_short": "minconf",
           "field_long": "MinuteConfidence",
-          "source": "eventParameters>event>origin>compositeTime>hour>confidenceLevel",
+          "source": "eventParameters>event>origin>compositeTime>minute>confidenceLevel",
           "description": "",
           "type": "Double"
         },
@@ -446,7 +446,7 @@
         },
         {
           "field_short": "latuncup",
-          "field_long": "LonUncUp",
+          "field_long": "LatUncUp",
           "source": "eventParameters>event>origin>latitude>upperUncertainty",
           "description": "",
           "type": "Double"
@@ -742,7 +742,7 @@
           "source": "eventParameters>event>origin>comment>creationInfo>creationTime",
           "description": "",
           "skip": true,
-          "type": "String"
+          "type": "DateTime"
         },
         {
           "field_short": "origcmver",
@@ -785,7 +785,7 @@
           "field_long": "OriginCreationTime",
           "source": "eventParameters>event>origin>creationInfo>creationTime",
           "description": "",
-          "type": "String"
+          "type": "DateTime"
         },
         {
           "field_short": "origcrvers",
@@ -960,7 +960,7 @@
           "source": "eventParameters>event>magnitude>comment>creationInfo>creationTime",
           "description": "",
           "skip": true,
-          "type": "String"
+          "type": "DateTime"
         },
         {
           "field_short": "magcmver",
@@ -1003,7 +1003,7 @@
           "field_long": "MagCreationTime",
           "source": "eventParameters>event>magnitude>creationInfo>creationTime",
           "description": "",
-          "type": "String"
+          "type": "DateTime"
         },
         {
           "field_short": "magcrver",
@@ -1295,7 +1295,7 @@
           "field_long": "AmplCommentTime",
           "source": "eventParameters>event>amplitude>comment>creationInfo>creationTime",
           "description": "",
-          "type": "String"
+          "type": "DateTime"
         },
         {
           "field_short": "ampcmver",
@@ -1337,7 +1337,7 @@
           "field_long": "AmplCreationTime",
           "source": "eventParameters>event>amplitude>creationInfo>creationTime",
           "description": "",
-          "type": "String"
+          "type": "DateTime"
         },
         {
           "field_short": "ampcrver",
@@ -1594,7 +1594,7 @@
           "field_long": "PickCommentTime",
           "source": "eventParameters>event>pick>comment>creationInfo>creationTime",
           "description": "",
-          "type": "String"
+          "type": "DateTime"
         },
         {
           "field_short": "pkcmver",
@@ -1636,7 +1636,7 @@
           "field_long": "PickCreationTime",
           "source": "eventParameters>event>pick>creationInfo>creationTime",
           "description": "",
-          "type": "String"
+          "type": "DateTime"
         },
         {
           "field_short": "pkcrver",
@@ -1767,7 +1767,7 @@
           "field_long": "StationMagCommentTime",
           "source": "eventParameters>event>stationMagnitude>comment>creationInfo>creationTime",
           "description": "",
-          "type": "String"
+          "type": "DateTime"
         },
         {
           "field_short": "stmcmver",
@@ -1809,7 +1809,7 @@
           "field_long": "StationMagCreationTime",
           "source": "eventParameters>event>stationMagnitude>creationInfo>creationTime",
           "description": "",
-          "type": "String"
+          "type": "DateTime"
         },
         {
           "field_short": "stmcrver",
