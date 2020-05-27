@@ -286,8 +286,9 @@ class Fetcher(QObject):
         elif self.event_max_magnitude is not None:
             name += ' (Magnitude ≤ {:.1f})'.format(self.event_max_magnitude)
 
-        if len(self.event_ids) == 1:
-            name += ' [' + self.event_ids[0] + ']'
+        if self.event_ids:
+            if len(self.event_ids) == 1:
+                name += ' [' + self.event_ids[0] + ']'
 
         if layer_type:
             name += ' - {}'.format(layer_type)
