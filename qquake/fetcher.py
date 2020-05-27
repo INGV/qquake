@@ -38,7 +38,7 @@ from qquake.quakeml_parser import (
     Magnitude,
     Station
 )
-from qquake.basic_text_parser import BasicTextParser
+from qquake.basic_text_parser import BasicTextParser, BasicStationParser
 
 from qquake.services import SERVICE_MANAGER
 
@@ -256,18 +256,23 @@ class Fetcher(QObject):
 
         else:
             # basic output types
-            if self.pending_event_ids:
-                self.pending_event_ids = self.pending_event_ids[1:]
-
-            if self.result.events:
-                self.result.add_events(reply.readAll())
-            else:
+            if self.service_type == SERVICE_MANAGER.FDSNSTATION:
+                self.result = BasicStationParser()
                 self.result.parse(reply.readAll())
-
-            if self.pending_event_ids:
-                self.fetch_next_event_by_id()
-            else:
                 self.finished.emit()
+            else:
+                if self.pending_event_ids:
+                    self.pending_event_ids = self.pending_event_ids[1:]
+
+                if self.result.events:
+                    self.result.add_events(reply.readAll())
+                else:
+                    self.result.parse(reply.readAll())
+
+                if self.pending_event_ids:
+                    self.fetch_next_event_by_id()
+                else:
+                    self.finished.emit()
 
     def _generate_layer_name(self, layer_type=None):
         name = self.event_service
@@ -335,7 +340,10 @@ class Fetcher(QObject):
         """
         vl = QgsVectorLayer('PointZ?crs=EPSG:4326', self._generate_layer_name('Stations'), 'memory')
 
-        vl.dataProvider().addAttributes(Station.to_fields(self.output_fields))
+        if self.output_type == Fetcher.BASIC:
+            vl.dataProvider().addAttributes(self.result.to_station_fields())
+        else:
+            vl.dataProvider().addAttributes(Station.to_fields(self.output_fields))
         vl.updateFields()
 
         return vl
@@ -375,8 +383,12 @@ class Fetcher(QObject):
         vl = self._create_empty_stations_layer()
 
         features = []
-        for n in networks:
-            features.extend(n.to_station_features(self.output_fields))
+        if self.output_type == Fetcher.BASIC:
+            for f in self.result.create_station_features():
+                features.append(f)
+        else:
+            for n in networks:
+                features.extend(n.to_station_features(self.output_fields))
 
         vl.dataProvider().addFeatures(features)
 
