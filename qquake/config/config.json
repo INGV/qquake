@@ -624,7 +624,9 @@
         "layers": [
           {
             "layername": "europe:SHEEC_1000_1899",
-            "styles": ["CPTI"]
+            "styles": [
+              "CPTI"
+            ]
           }
         ]
       },
@@ -649,7 +651,9 @@
         "layers": [
           {
             "layername": "italy:CPTI15",
-            "styles": ["CPTI"]
+            "styles": [
+              "CPTI"
+            ]
           }
         ]
       },
@@ -673,22 +677,30 @@
         "layers": [
           {
             "layername": "EDSF:crustal_fault_sources_pln",
-            "styles": ["default"]
+            "styles": [
+              "default"
+            ]
           },
           {
             "layername": "EDSF:crustal_fault_sources_top",
-            "styles": ["default",
-                       "EDSF_avgSR",
-                       "EDSF_faultType",
-                       "EDSF_slipType"]
+            "styles": [
+              "default",
+              "EDSF_avgSR",
+              "EDSF_faultType",
+              "EDSF_slipType"
+            ]
           },
           {
             "layername": "EDSF:subduction_zones",
-            "styles": ["default"]
+            "styles": [
+              "EDSF subduction zones"
+            ]
           },
           {
             "layername": "EDSF:subduction_contours",
-            "styles": ["default"]
+            "styles": [
+              "EDSF subduction contours"
+            ]
           }
         ]
       },
@@ -747,7 +759,9 @@
         "layers": [
           {
             "layername": "italy:CPTI15",
-            "styles": ["italy:CPTI15_squares_colors"]
+            "styles": [
+              "italy:CPTI15_squares_colors"
+            ]
           }
         ]
       },
@@ -771,31 +785,45 @@
         "layers": [
           {
             "layername": "EDSF:EDSF",
-            "styles": ["default"]
+            "styles": [
+              "default"
+            ]
           },
           {
             "layername": "EDSF:EDSF.Crustal_Fault_Sources",
-            "styles": ["default"]
+            "styles": [
+              "default"
+            ]
           },
           {
             "layername": "EDSF:EDSF.Subduction_Zones",
-            "styles": ["default"]
+            "styles": [
+              "default"
+            ]
           },
           {
             "layername": "EDSF:subduction_zones",
-            "styles": ["default"]
+            "styles": [
+              "default"
+            ]
           },
           {
             "layername": "EDSF:subduction_contours",
-            "styles": ["default"]
+            "styles": [
+              "default"
+            ]
           },
           {
             "layername": "EDSF:crustal_fault_sources_pln",
-            "styles": ["default"]
+            "styles": [
+              "default"
+            ]
           },
           {
             "layername": "EDSF:crustal_fault_sources_top",
-            "styles": ["default"]
+            "styles": [
+              "default"
+            ]
           }
         ]
       },
@@ -804,22 +832,20 @@
     }
   },
   "styles": {
-    "EDSF": {
-      "EDSF average slip rate": {
-        "url": "https://www.seismofaults.eu/EDSFStyles/EDSF2013_avgSR.qml"
-      },
-      "EDSF fault type": {
-        "url": "https://www.seismofaults.eu/EDSFStyles/EDSF2013_faultType.qml"
-      },
-      "EDSF slip type": {
-        "url": "https://www.seismofaults.eu/EDSFStyles/EDSF2013_slipType.qml"
-      },
-      "EDSF subduction zones": {
-        "url": "https://www.seismofaults.eu/EDSFStyles/EDSF2013_subdZon.qml"
-      },
-      "EDSF subduction contours": {
-        "url": "https://www.seismofaults.eu/EDSFStyles/EDSF2013_subdCnt.qml"
-      }
+    "EDSF average slip rate": {
+      "url": "https://www.seismofaults.eu/EDSFStyles/EDSF2013_avgSR.qml"
+    },
+    "EDSF fault type": {
+      "url": "https://www.seismofaults.eu/EDSFStyles/EDSF2013_faultType.qml"
+    },
+    "EDSF slip type": {
+      "url": "https://www.seismofaults.eu/EDSFStyles/EDSF2013_slipType.qml"
+    },
+    "EDSF subduction zones": {
+      "url": "https://www.seismofaults.eu/EDSFStyles/EDSF2013_subdZon.qml"
+    },
+    "EDSF subduction contours": {
+      "url": "https://www.seismofaults.eu/EDSFStyles/EDSF2013_subdCnt.qml"
     },
     "CPTI": {
       "url": "https://www.emidius.eu/AHEAD/symbols/CPTI15_symbols.qml"
