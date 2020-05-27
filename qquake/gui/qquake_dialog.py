@@ -22,6 +22,7 @@
  ***************************************************************************/
 """
 
+from pathlib import Path
 from qgis.PyQt import uic
 from qgis.PyQt.QtWidgets import (
     QDialogButtonBox,
@@ -30,12 +31,14 @@ from qgis.PyQt.QtWidgets import (
     QVBoxLayout,
     QMenu,
     QAction,
-    QMessageBox
+    QMessageBox,
+    QInputDialog
 )
 from qgis.PyQt.QtCore import (
     Qt,
     QDate,
-    QDateTime
+    QDateTime,
+    QDir
 )
 
 from qgis.core import (
@@ -225,7 +228,12 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.refreshOgcWidgets()
 
     def _save_configuration(self, service_type):
-        pass
+        name, ok = QInputDialog.getText(self, self.tr('Save Service Configuration'), self.tr('Save the current service configuration as'))
+        if not name or not ok:
+            return
+
+        filter_widget = self.get_service_filter_widget(service_type)
+        SERVICE_MANAGER.save_service(service_type, name, filter_widget.to_service_definition())
 
     def _save_settings(self):
         s = QgsSettings()
@@ -283,38 +291,47 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         elif service_type == SERVICE_MANAGER.FDSNSTATION:
             return self.fdsn_station_list.currentItem().text() if self.fdsn_station_list.currentItem() else None
 
+    def get_current_service_type(self):
+        if self.service_tab_widget.currentIndex() == 0:
+            service_type = SERVICE_MANAGER.FDSNEVENT
+        elif self.service_tab_widget.currentIndex() == 1:
+            service_type = SERVICE_MANAGER.MACROSEISMIC
+        elif self.service_tab_widget.currentIndex() == 2:
+            service_type = SERVICE_MANAGER.FDSNSTATION
+        else:
+            service_type = None
+        return service_type
+
+    def get_service_filter_widget(self, service_type):
+        if service_type == SERVICE_MANAGER.FDSNEVENT:
+            if self.fdsn_tab_widget.currentIndex() in (0, 2):
+                return self.fsdn_event_filter
+            else:
+                return self.fsdn_by_id_filter
+        elif service_type == SERVICE_MANAGER.MACROSEISMIC:
+            if self.macro_tab_widget.currentIndex() in (0, 2):
+                return self.macro_filter
+            else:
+                return self.macro_by_id_filter
+        elif service_type == SERVICE_MANAGER.FDSNSTATION:
+            if self.fdsnstation_tab_widget.currentIndex() in (0, 2):
+                return self.station_filter
+            else:
+                return self.station_by_id_filter
+
     def get_fetcher(self, service_type=None):
         """
         Returns a quake fetcher corresponding to the current dialog settings
         """
 
         if service_type is None:
-            if self.service_tab_widget.currentIndex() == 0:
-                service_type = SERVICE_MANAGER.FDSNEVENT
-            elif self.service_tab_widget.currentIndex() == 1:
-                service_type = SERVICE_MANAGER.MACROSEISMIC
-            elif self.service_tab_widget.currentIndex() == 2:
-                service_type = SERVICE_MANAGER.FDSNSTATION
+            service_type = self.get_current_service_type()
 
         service = self.get_current_service_id(service_type)
         if not service:
             return None
 
-        if service_type == SERVICE_MANAGER.FDSNEVENT:
-            if self.fdsn_tab_widget.currentIndex() in (0, 2):
-                filter_widget = self.fsdn_event_filter
-            else:
-                filter_widget = self.fsdn_by_id_filter
-        elif service_type == SERVICE_MANAGER.MACROSEISMIC:
-            if self.macro_tab_widget.currentIndex() in (0, 2):
-                filter_widget = self.macro_filter
-            else:
-                filter_widget = self.macro_by_id_filter
-        elif service_type == SERVICE_MANAGER.FDSNSTATION:
-            if self.fdsnstation_tab_widget.currentIndex() in (0, 2):
-                filter_widget = self.station_filter
-            else:
-                filter_widget = self.station_by_id_filter
+        filter_widget = self.get_service_filter_widget(service_type)
 
         if isinstance(filter_widget, FilterParameterWidget):
             return Fetcher(service_type=service_type,
@@ -384,8 +401,38 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         filter_widget.set_date_range_limits(date_start, date_end)
         filter_widget.set_current_date_range(default_date_start, default_date_end)
 
-        box = SERVICE_MANAGER.predefined_bounding_box(service_config['default']['boundingboxpredefined'])['boundingbox']
-        filter_widget.set_extent_limit(box)
+        if service_config['default'].get('boundingboxpredefined'):
+            filter_widget.set_predefined_bounding_box(service_config['default'].get('boundingboxpredefined'))
+        if service_config['default'].get('minimumlatitude'):
+            filter_widget.set_min_latitude(service_config['default'].get('minimumlatitude'))
+        if service_config['default'].get('maximumlatitude'):
+            filter_widget.set_max_latitude(service_config['default'].get('maximumlatitude'))
+        if service_config['default'].get('minimumlongitude'):
+            filter_widget.set_min_longitude(service_config['default'].get('minimumlongitude'))
+        if service_config['default'].get('maximumlongitude'):
+            filter_widget.set_max_longitude(service_config['default'].get('maximumlongitude'))
+        if service_config['default'].get('circlelatitude'):
+            filter_widget.set_circle_latitude(service_config['default'].get('circlelatitude'))
+        if service_config['default'].get('circlelongitude'):
+            filter_widget.set_circle_longitude(service_config['default'].get('circlelongitude'))
+        if service_config['default'].get('minimumcircleradius'):
+            filter_widget.set_min_circle_radius(service_config['default'].get('minimumcircleradius'))
+        if service_config['default'].get('maximumcircleradius'):
+            filter_widget.set_max_circle_radius(service_config['default'].get('maximumcircleradius'))
+        if service_config['default'].get('minimummagnitude'):
+            filter_widget.set_min_magnitude(service_config['default'].get('minimummagnitude'))
+        if service_config['default'].get('maximummagnitude'):
+            filter_widget.set_max_magnitude(service_config['default'].get('maximummagnitude'))
+        if service_config['default'].get('macromaxintensitygreater'):
+            filter_widget.set_max_intensity_greater(service_config['default'].get('macromaxintensitygreater'))
+        if service_config['default'].get('macromdpsgreaterthan'):
+            filter_widget.set_mdps_greater_than(service_config['default'].get('macromdpsgreaterthan'))
+
+
+        if service_config['default'].get('boundingboxpredefined'):
+            box = SERVICE_MANAGER.predefined_bounding_box(service_config['default']['boundingboxpredefined'])['boundingbox']
+            filter_widget.set_extent_limit(box)
+
         info_widget.set_service(service_type=service_type, service_name=service_id)
 
         filter_widget.set_service_id(service_id)
