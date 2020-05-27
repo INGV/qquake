@@ -1,53 +1,1067 @@
 {
   "field_groups": {
-    "macro_basic_event_info": {
-      "label": "macroseismic basic event infos",
+    "basic_event_info": {
+      "label": "basic event infos",
       "fields": [
         {
           "field_short": "eventid",
-          "field_long": "macroEventID",
-          "source": "macroseismicParameters>macroseismicEvent§publicID",
+          "field_long": "EventID",
+          "source": "eventParameters>event§publicID",
           "description": "",
           "type": "String"
         },
         {
+          "field_short": "eventype",
+          "field_long": "EvenType",
+          "source": "eventParameters>event>type",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "eventtypec",
+          "field_long": "EventTypeCert",
+          "source": "eventParameters>event>typeCertainty",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "preforigin",
+          "field_long": "PrefOriginID",
+          "source": "eventParameters>event>preferredOriginID",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "prefmag",
+          "field_long": "PrefMagID",
+          "source": "eventParameters>event>preferredMagnitudeID",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "preffcid",
+          "field_long": "PrefFocMecID",
+          "source": "eventParameters>event>preferredFocalMechanismID",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "eventx",
+          "field_long": "EventDescrTxt",
+          "source": "eventParameters>event>description>text",
+          "description": "",
+          "type": "String",
+          "skip": true
+        },
+        {
+          "field_short": "eventxtype",
+          "field_long": "EventDescrType",
+          "source": "eventParameters>event>description>type",
+          "description": "",
+          "type": "String",
+          "skip": true
+        },
+        {
+          "field_short": "eventcm",
+          "field_long": "EventCommentTxt",
+          "source": "eventParameters>event>comment>text",
+          "description": "",
+          "type": "String",
+          "skip": true
+        },
+        {
+          "field_short": "eventcmagi",
+          "field_long": "EventCommentAgencyID",
+          "source": "eventParameters>event>comment>creationInfo>agencyID",
+          "description": "",
+          "skip": true,
+          "type": "String"
+        },
+        {
+          "field_short": "eventcmagu",
+          "field_long": "EventCommentAgencyURI",
+          "source": "eventParameters>event>comment>creationInfo>agencyURI",
+          "description": "",
+          "skip": true,
+          "type": "String"
+        },
+        {
+          "field_short": "eventcmau",
+          "field_long": "EventCommentAuthor",
+          "source": "eventParameters>event>comment>creationInfo>author",
+          "description": "",
+          "skip": true,
+          "type": "String"
+        },
+        {
+          "field_short": "eventcmauu",
+          "field_long": "EventCommentAuthorURI",
+          "source": "eventParameters>event>comment>creationInfo>authorURI",
+          "description": "",
+          "skip": true,
+          "type": "String"
+        },
+        {
+          "field_short": "eventcmtim",
+          "field_long": "EventCommentTime",
+          "source": "eventParameters>event>comment>creationInfo>creationTime",
+          "description": "",
+          "skip": true,
+          "type": "DateTime"
+        },
+        {
+          "field_short": "eventcmver",
+          "field_long": "EventCommentVersion",
+          "source": "eventParameters>event>comment>creationInfo>version",
+          "description": "",
+          "skip": true,
+          "type": "String"
+        },
+        {
           "field_short": "eventcragi",
-          "field_long": "macroEventCreationAgencyID",
-          "source": "macroseismicParameters>macroseismicEvent>creationInfo>agencyID",
+          "field_long": "EventCreationAgencyID",
+          "source": "eventParameters>event>creationInfo>agencyID",
           "description": "",
           "type": "String"
         },
         {
           "field_short": "eventcragu",
-          "field_long": "macroEventCreationAgencyURI",
-          "source": "macroseismicParameters>macroseismicEvent>creationInfo>agencyURI",
+          "field_long": "EventCreationAgencyURI",
+          "source": "eventParameters>event>creationInfo>agencyURI",
           "description": "",
           "type": "String"
         },
         {
           "field_short": "eventcrau",
-          "field_long": "macroEventCreationAuthor",
-          "source": "macroseismicParameters>macroseismicEvent>creationInfo>author",
+          "field_long": "EventCreationAuthor",
+          "source": "eventParameters>event>creationInfo>author",
           "description": "",
           "type": "String"
         },
         {
           "field_short": "eventcrauu",
-          "field_long": "macroEventCreationAuthorURI",
-          "source": "macroseismicParameters>macroseismicEvent>creationInfo>authorURI",
+          "field_long": "EventCreationAuthorURI",
+          "source": "eventParameters>event>creationInfo>authorURI",
           "description": "",
           "type": "String"
         },
         {
           "field_short": "eventcrtim",
-          "field_long": "macroEventCreationTime",
-          "source": "macroseismicParameters>macroseismicEvent>creationInfo>creationTime",
+          "field_long": "EventCreationTime",
+          "source": "eventParameters>event>creationInfo>creationTime",
+          "description": "",
+          "type": "DateTime"
+        },
+        {
+          "field_short": "eventcrver",
+          "field_long": "EventCreationVersion",
+          "source": "eventParameters>event>creationInfo>version",
+          "description": "",
+          "type": "String"
+        }
+      ]
+    },
+    "origin": {
+      "label": "origin",
+      "fields": [
+        {
+          "field_short": "originid",
+          "field_long": "OriginID",
+          "source": "eventParameters>event>origin§publicID",
           "description": "",
           "type": "String"
         },
         {
-          "field_short": "eventcrver",
-          "field_long": "macroEventCreationVersion",
+          "field_short": "time",
+          "field_long": "Time",
+          "source": "eventParameters>event>origin>time>value",
+          "description": "",
+          "type": "DateTime"
+        },
+        {
+          "field_short": "timeunc",
+          "field_long": "TimeUnc",
+          "source": "eventParameters>event>origin>time>uncertainty",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "timeunclo",
+          "field_long": "TimeUncLow",
+          "source": "eventParameters>event>origin>time>lowerUncertainty",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "timeuncup",
+          "field_long": "TimeUncUp",
+          "source": "eventParameters>event>origin>time>upperUncertainty",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "timeconf",
+          "field_long": "TimeConfidence",
+          "source": "eventParameters>event>origin>time>confidenceLevel",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "year",
+          "field_long": "Year",
+          "source": "eventParameters>event>origin>compositeTime>year>value",
+          "description": "",
+          "type": "Int"
+        },
+        {
+          "field_short": "yearunc",
+          "field_long": "YearUnc",
+          "source": "eventParameters>event>origin>compositeTime>year>uncertainty",
+          "description": "",
+          "type": "Int"
+        },
+        {
+          "field_short": "yearunclo",
+          "field_long": "YearUncLow",
+          "source": "eventParameters>event>origin>compositeTime>year>lowerUncertainty",
+          "description": "",
+          "type": "Int"
+        },
+        {
+          "field_short": "yearuncup",
+          "field_long": "YearUncUp",
+          "source": "eventParameters>event>origin>compositeTime>year>upperUncertainty",
+          "description": "",
+          "type": "Int"
+        },
+        {
+          "field_short": "yearconf",
+          "field_long": "YearConfidence",
+          "source": "eventParameters>event>origin>compositeTime>year>confidenceLevel",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "month",
+          "field_long": "Month",
+          "source": "eventParameters>event>origin>compositeTime>month>value",
+          "description": "",
+          "type": "Int"
+        },
+        {
+          "field_short": "monthunc",
+          "field_long": "MonthUnc",
+          "source": "eventParameters>event>origin>compositeTime>month>uncertainty",
+          "description": "",
+          "type": "Int"
+        },
+        {
+          "field_short": "monthunclo",
+          "field_long": "MonthUncLow",
+          "source": "eventParameters>event>origin>compositeTime>month>lowerUncertainty",
+          "description": "",
+          "type": "Int"
+        },
+        {
+          "field_short": "monthuncup",
+          "field_long": "MonthUncUp",
+          "source": "eventParameters>event>origin>compositeTime>month>upperUncertainty",
+          "description": "",
+          "type": "Int"
+        },
+        {
+          "field_short": "monthconf",
+          "field_long": "MonthConfidence",
+          "source": "eventParameters>event>origin>compositeTime>month>confidenceLevel",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "day",
+          "field_long": "Day",
+          "source": "eventParameters>event>origin>compositeTime>day>value",
+          "description": "",
+          "type": "Int"
+        },
+        {
+          "field_short": "dayunc",
+          "field_long": "DayUnc",
+          "source": "eventParameters>event>origin>compositeTime>day>uncertainty",
+          "description": "",
+          "type": "Int"
+        },
+        {
+          "field_short": "dayunclo",
+          "field_long": "DayUncLow",
+          "source": "eventParameters>event>origin>compositeTime>day>lowerUncertainty",
+          "description": "",
+          "type": "Int"
+        },
+        {
+          "field_short": "dayuncup",
+          "field_long": "DayUncUp",
+          "source": "eventParameters>event>origin>compositeTime>day>upperUncertainty",
+          "description": "",
+          "type": "Int"
+        },
+        {
+          "field_short": "dayconf",
+          "field_long": "DayConfidence",
+          "source": "eventParameters>event>origin>compositeTime>day>confidenceLevel",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "hour",
+          "field_long": "Hour",
+          "source": "eventParameters>event>origin>compositeTime>hour>value",
+          "description": "",
+          "type": "Int"
+        },
+        {
+          "field_short": "hourunc",
+          "field_long": "HourUnc",
+          "source": "eventParameters>event>origin>compositeTime>hour>uncertainty",
+          "description": "",
+          "type": "Int"
+        },
+        {
+          "field_short": "hourunclo",
+          "field_long": "HourUncLow",
+          "source": "eventParameters>event>origin>compositeTime>hour>lowerUncertainty",
+          "description": "",
+          "type": "Int"
+        },
+        {
+          "field_short": "houruncup",
+          "field_long": "HourUncUp",
+          "source": "eventParameters>event>origin>compositeTime>hour>upperUncertainty",
+          "description": "",
+          "type": "Int"
+        },
+        {
+          "field_short": "hourconf",
+          "field_long": "HourConfidence",
+          "source": "eventParameters>event>origin>compositeTime>hour>confidenceLevel",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "min",
+          "field_long": "Minute",
+          "source": "eventParameters>event>origin>compositeTime>minute>value",
+          "description": "",
+          "type": "Int"
+        },
+        {
+          "field_short": "minunc",
+          "field_long": "MinuteUnc",
+          "source": "eventParameters>event>origin>compositeTime>minute>uncertainty",
+          "description": "",
+          "type": "Int"
+        },
+        {
+          "field_short": "minunclo",
+          "field_long": "MinuteUncLow",
+          "source": "eventParameters>event>origin>compositeTime>minute>lowerUncertainty",
+          "description": "",
+          "type": "Int"
+        },
+        {
+          "field_short": "minuncup",
+          "field_long": "MinuteUncUp",
+          "source": "eventParameters>event>origin>compositeTime>minute>upperUncertainty",
+          "description": "",
+          "type": "Int"
+        },
+        {
+          "field_short": "minconf",
+          "field_long": "MinuteConfidence",
+          "source": "eventParameters>event>origin>compositeTime>minute>confidenceLevel",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "sec",
+          "field_long": "Second",
+          "source": "eventParameters>event>origin>compositeTime>second>value",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "secunc",
+          "field_long": "SecondUnc",
+          "source": "eventParameters>event>origin>compositeTime>second>uncertainty",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "secunclo",
+          "field_long": "SecondUncLow",
+          "source": "eventParameters>event>origin>compositeTime>second>lowerUncertainty",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "secuncup",
+          "field_long": "SecondUncUp",
+          "source": "eventParameters>event>origin>compositeTime>second>upperUncertainty",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "secconf",
+          "field_long": "SecondConfidence",
+          "source": "eventParameters>event>origin>compositeTime>second>confidenceLevel",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "region",
+          "field_long": "Region",
+          "source": "eventParameters>event>origin>region",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "lat",
+          "field_long": "Lat",
+          "source": "eventParameters>event>origin>latitude>value",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "latunc",
+          "field_long": "LatUnc",
+          "source": "eventParameters>event>origin>latitude>uncertainty",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "latunclo",
+          "field_long": "LatUncLow",
+          "source": "eventParameters>event>origin>latitude>lowerUncertainty",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "latuncup",
+          "field_long": "LatUncUp",
+          "source": "eventParameters>event>origin>latitude>upperUncertainty",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "latconf",
+          "field_long": "LatConfidence",
+          "source": "eventParameters>event>origin>latitude>confidenceLevel",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "lon",
+          "field_long": "Lon",
+          "source": "eventParameters>event>origin>longitude>value",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "lonunc",
+          "field_long": "LonUnc",
+          "source": "eventParameters>event>origin>longitude>uncertainty",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "lonunclo",
+          "field_long": "LonUncLow",
+          "source": "eventParameters>event>origin>longitude>lowerUncertainty",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "lonuncup",
+          "field_long": "LonUncUp",
+          "source": "eventParameters>event>origin>longitude>upperUncertainty",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "lonconf",
+          "field_long": "LonConfidence",
+          "source": "eventParameters>event>origin>longitude>confidenceLevel",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "depth",
+          "field_long": "Depth",
+          "source": "eventParameters>event>origin>depth>value",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "depthunc",
+          "field_long": "DepthUnc",
+          "source": "eventParameters>event>origin>depth>uncertainty",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "depthunclo",
+          "field_long": "DepthUncLow",
+          "source": "eventParameters>event>origin>depth>lowerUncertainty",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "depthuncup",
+          "field_long": "DepthUncUp",
+          "source": "eventParameters>event>origin>depth>upperUncertainty",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "depthconf",
+          "field_long": "DepthConfidence",
+          "source": "eventParameters>event>origin>depth>confidenceLevel",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "depthtype",
+          "field_long": "DepthType",
+          "source": "eventParameters>event>origin>depthType",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "origmethod",
+          "field_long": "OriginMethodID",
+          "source": "eventParameters>event>origin>methodID",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "origearthm",
+          "field_long": "EarthModelID",
+          "source": "eventParameters>event>origin>earthModelID",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "orighunc",
+          "field_long": "HorizontalUnc",
+          "source": "eventParameters>event>origin>originUncertainty>horizontalUncertainty",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "orighunclo",
+          "field_long": "HorizontalUncMin",
+          "source": "eventParameters>event>origin>originUncertainty>minHorizontalUncertainty",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "orighuncup",
+          "field_long": "HorizontalUncMax",
+          "source": "eventParameters>event>origin>originUncertainty>maxHorizontalUncertainty",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "origaziunc",
+          "field_long": "AzimuthHorizontalUnc",
+          "source": "eventParameters>event>origin>originUncertainty>azimuthMaxHorizontalUncertainty",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "origconfel",
+          "field_long": "ConfidenceEllipsoid",
+          "source": "eventParameters>event>origin>originUncertainty>confidenceEllipsoid",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "origprefde",
+          "field_long": "OriginUncDescription",
+          "source": "eventParameters>event>origin>originUncertainty>preferredDescription",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "origconflv",
+          "field_long": "OriginUncConfidence",
+          "source": "eventParameters>event>origin>originUncertainty>confidenceLevel",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "origphatot",
+          "field_long": "OriginPhaseCount",
+          "source": "eventParameters>event>origin>quality>associatedPhaseCount",
+          "description": "",
+          "type": "Int"
+        },
+        {
+          "field_short": "origphause",
+          "field_long": "OriginUsedPhaseCount",
+          "source": "eventParameters>event>origin>quality>usedPhaseCount",
+          "description": "",
+          "type": "Int"
+        },
+        {
+          "field_short": "origstatot",
+          "field_long": "OriginStationCount",
+          "source": "eventParameters>event>origin>quality>associatedStationCount",
+          "description": "",
+          "type": "Int"
+        },
+        {
+          "field_short": "origstause",
+          "field_long": "OriginUsedStationCount",
+          "source": "eventParameters>event>origin>quality>usedStationCount",
+          "description": "",
+          "type": "Int"
+        },
+        {
+          "field_short": "origdeppht",
+          "field_long": "DepthPhaseCount",
+          "source": "eventParameters>event>origin>quality>depthPhaseCount",
+          "description": "",
+          "type": "Int"
+        },
+        {
+          "field_short": "origstderr",
+          "field_long": "OriginStdError",
+          "source": "eventParameters>event>origin>quality>standardError",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "origazgap",
+          "field_long": "OriginAzimuthGap",
+          "source": "eventParameters>event>origin>quality>azimuthalGap",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "origazgap2",
+          "field_long": "OriginAzimuthGap2",
+          "source": "eventParameters>event>origin>quality>secondaryAzimuthalGap",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "origgrthlv",
+          "field_long": "OriginGroundTruthLevel",
+          "source": "eventParameters>event>origin>quality>groundTruthLevel",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "origdismax",
+          "field_long": "OriginMaxDist",
+          "source": "eventParameters>event>origin>quality>maximumDistance",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "origdismin",
+          "field_long": "OriginMinDist",
+          "source": "eventParameters>event>origin>quality>minimumDistance",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "origdismdn",
+          "field_long": "OriginMedDist",
+          "source": "eventParameters>event>origin>quality>medianDistance",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "origevalmd",
+          "field_long": "OriginEvalMode",
+          "source": "eventParameters>event>origin>evaluationMode",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "origevalst",
+          "field_long": "OriginEvalStatus",
+          "source": "eventParameters>event>origin>evaluationStatus",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "origcm",
+          "field_long": "OriginCommentTxt",
+          "source": "eventParameters>event>origin>comment>text",
+          "description": "",
+          "skip": true,
+          "type": "String"
+        },
+        {
+          "field_short": "origcmagid",
+          "field_long": "OriginCommentAgencyID",
+          "source": "eventParameters>event>origin>comment>creationInfo>agencyID",
+          "description": "",
+          "skip": true,
+          "type": "String"
+        },
+        {
+          "field_short": "origcmagur",
+          "field_long": "OriginCommentAgencyURI",
+          "source": "eventParameters>event>origin>comment>creationInfo>agencyURI",
+          "description": "",
+          "skip": true,
+          "type": "String"
+        },
+        {
+          "field_short": "origcmaut",
+          "field_long": "OriginCommentAuthor",
+          "source": "eventParameters>event>origin>comment>creationInfo>author",
+          "description": "",
+          "skip": true,
+          "type": "String"
+        },
+        {
+          "field_short": "origcmautu",
+          "field_long": "OriginCommentAuthorURI",
+          "source": "eventParameters>event>origin>comment>creationInfo>authorURI",
+          "description": "",
+          "skip": true,
+          "type": "String"
+        },
+        {
+          "field_short": "origcmtime",
+          "field_long": "OriginCommentTime",
+          "source": "eventParameters>event>origin>comment>creationInfo>creationTime",
+          "description": "",
+          "skip": true,
+          "type": "DateTime"
+        },
+        {
+          "field_short": "origcmver",
+          "field_long": "OriginCommentVersion",
+          "source": "eventParameters>event>origin>comment>creationInfo>version",
+          "description": "",
+          "skip": true,
+          "type": "String"
+        },
+        {
+          "field_short": "origcragid",
+          "field_long": "OriginCreationAgencyID",
+          "source": "eventParameters>event>origin>creationInfo>agencyID",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "origcragur",
+          "field_long": "OriginCreationAgencyURI",
+          "source": "eventParameters>event>origin>creationInfo>agencyURI",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "origcrau",
+          "field_long": "OriginCreationAuthor",
+          "source": "eventParameters>event>origin>creationInfo>author",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "origcrauur",
+          "field_long": "OriginCreationAuthorURI",
+          "source": "eventParameters>event>origin>creationInfo>authorURI",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "origcrtime",
+          "field_long": "OriginCreationTime",
+          "source": "eventParameters>event>origin>creationInfo>creationTime",
+          "description": "",
+          "type": "DateTime"
+        },
+        {
+          "field_short": "origcrvers",
+          "field_long": "OriginCreationVersion",
+          "source": "eventParameters>event>origin>creationInfo>version",
+          "description": "",
+          "type": "String"
+        }
+      ]
+    },
+    "magnitude": {
+      "label": "magnitude",
+      "fields": [
+        {
+          "field_short": "magid",
+          "field_long": "MagID",
+          "source": "eventParameters>event>magnitude§publicID",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "magorigid",
+          "field_long": "MagOriginID",
+          "source": "eventParameters>event>magnitude>originID",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "magmethod",
+          "field_long": "MagMethod",
+          "source": "eventParameters>event>magnitude>methodID",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "magstatmag",
+          "field_long": "StationMagnitudeID",
+          "source": "eventParameters>event>magnitude>stationMagnitudeContribution>stationMagnitudeID",
+          "description": "",
+          "skip": true,
+          "type": "String"
+        },
+        {
+          "field_short": "magstatres",
+          "field_long": "StationMagnitudeResidual",
+          "source": "eventParameters>event>magnitude>stationMagnitudeContribution>residual",
+          "description": "",
+          "skip": true,
+          "type": "String"
+        },
+        {
+          "field_short": "magstatwei",
+          "field_long": "StationMagnitudeWeight",
+          "source": "eventParameters>event>magnitude>stationMagnitudeContribution>weight",
+          "description": "",
+          "skip": true,
+          "type": "String"
+        },
+        {
+          "field_short": "mag",
+          "field_long": "Mag",
+          "source": "eventParameters>event>magnitude>mag>value",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "magunc",
+          "field_long": "MagUnc",
+          "source": "eventParameters>event>magnitude>mag>uncertainty",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "magunclo",
+          "field_long": "MagUncLow",
+          "source": "eventParameters>event>magnitude>mag>lowerUncertainty",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "maguncup",
+          "field_long": "MagUncUp",
+          "source": "eventParameters>event>magnitude>mag>upperUncertainty",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "magconf",
+          "field_long": "MagConfidence",
+          "source": "eventParameters>event>magnitude>mag>confidenceLevel",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "magtype",
+          "field_long": "MagType",
+          "source": "eventParameters>event>magnitude>type",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "magstatot",
+          "field_long": "MagStationCount",
+          "source": "eventParameters>event>magnitude>stationCount",
+          "description": "",
+          "type": "Int"
+        },
+        {
+          "field_short": "magazigap",
+          "field_long": "MagAzimuthGap",
+          "source": "eventParameters>event>magnitude>azimuthalGap",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "magevalmod",
+          "field_long": "MagEvalMode",
+          "source": "eventParameters>event>magnitude>evaluationMode",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "magevalsta",
+          "field_long": "MagEvalStatus",
+          "source": "eventParameters>event>magnitude>evaluationStatus",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "magcm",
+          "field_long": "MagCommentTxt",
+          "source": "eventParameters>event>magnitude>comment>text",
+          "description": "",
+          "skip": true,
+          "type": "String"
+        },
+        {
+          "field_short": "magcmagid",
+          "field_long": "MagCommentAgencyID",
+          "source": "eventParameters>event>magnitude>comment>creationInfo>agencyID",
+          "description": "",
+          "skip": true,
+          "type": "String"
+        },
+        {
+          "field_short": "magcmaguri",
+          "field_long": "MagCommentAgencyURI",
+          "source": "eventParameters>event>magnitude>comment>creationInfo>agencyURI",
+          "description": "",
+          "skip": true,
+          "type": "String"
+        },
+        {
+          "field_short": "magcmau",
+          "field_long": "MagCommentAuthor",
+          "source": "eventParameters>event>magnitude>comment>creationInfo>author",
+          "description": "",
+          "skip": true,
+          "type": "String"
+        },
+        {
+          "field_short": "magcmauuri",
+          "field_long": "MagCommentAuthorURI",
+          "source": "eventParameters>event>magnitude>comment>creationInfo>authorURI",
+          "description": "",
+          "skip": true,
+          "type": "String"
+        },
+        {
+          "field_short": "magcmtime",
+          "field_long": "MagCommentTime",
+          "source": "eventParameters>event>magnitude>comment>creationInfo>creationTime",
+          "description": "",
+          "skip": true,
+          "type": "DateTime"
+        },
+        {
+          "field_short": "magcmver",
+          "field_long": "MagCommentVersion",
+          "source": "eventParameters>event>magnitude>comment>creationInfo>version",
+          "description": "",
+          "skip": true,
+          "type": "String"
+        },
+        {
+          "field_short": "magcragid",
+          "field_long": "MagCreationAgencyID",
+          "source": "eventParameters>event>magnitude>creationInfo>agencyID",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "magcraguri",
+          "field_long": "MagCreationAgencyURI",
+          "source": "eventParameters>event>magnitude>creationInfo>agencyURI",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "magcrau",
+          "field_long": "MagCreationAuthor",
+          "source": "eventParameters>event>magnitude>creationInfo>author",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "magcrauri",
+          "field_long": "MagCreationAuthorURI",
+          "source": "eventParameters>event>magnitude>creationInfo>authorURI",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "magcrtime",
+          "field_long": "MagCreationTime",
+          "source": "eventParameters>event>magnitude>creationInfo>creationTime",
+          "description": "",
+          "type": "DateTime"
+        },
+        {
+          "field_short": "magcrver",
+          "field_long": "MagCreationVersion",
+          "source": "eventParameters>event>magnitude>creationInfo>version",
+          "description": "",
+          "type": "String"
+        }
+      ]
+    },
+    "macro_basic_event_info": {
+      "label": "macroseismic basic event infos",
+      "fields": [
+        {
+          "field_short": "mevntid",
+          "field_long": "MacroEventID",
+          "source": "macroseismicParameters>macroseismicEvent§publicID",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "mevntcragi",
+          "field_long": "MacroEventCreationAgencyID",
+          "source": "macroseismicParameters>macroseismicEvent>creationInfo>agencyID",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "mevntcragu",
+          "field_long": "MacroEventCreationAgencyURI",
+          "source": "macroseismicParameters>macroseismicEvent>creationInfo>agencyURI",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "mevntcrau",
+          "field_long": "MacroEventCreationAuthor",
+          "source": "macroseismicParameters>macroseismicEvent>creationInfo>author",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "mevntcrauu",
+          "field_long": "MacroEventCreationAuthorURI",
+          "source": "macroseismicParameters>macroseismicEvent>creationInfo>authorURI",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "mevntcrtim",
+          "field_long": "MacroEventCreationTime",
+          "source": "macroseismicParameters>macroseismicEvent>creationInfo>creationTime",
+          "description": "",
+          "type": "DateTime"
+        },
+        {
+          "field_short": "mevntcrver",
+          "field_long": "MacroEventCreationVersion",
           "source": "macroseismicParameters>macroseismicEvent>creationInfo>version",
           "description": "",
           "type": "String"
@@ -58,92 +1072,92 @@
       "label": "origin",
       "fields": [
         {
-          "field_short": "originid",
-          "field_long": "macroOriginID",
+          "field_short": "morgid",
+          "field_long": "MacroOriginID",
           "source": "macroseismicParameters>macroseismicOrigin§publicID",
           "description": "",
           "type": "String"
         },
         {
-          "field_short": "",
-          "field_long": "originReference",
+          "field_short": "morgref",
+          "field_long": "MacroOriginReference",
           "source": "macroseismicParameters>macroseismicOrigin>originReference",
           "description": "",
           "type": "String"
         },
         {
-          "field_short": "",
-          "field_long": "macroOriginDefiningMDPSet",
+          "field_short": "morgset",
+          "field_long": "MacroOriginDefiningMDPSet",
           "source": "macroseismicParameters>macroseismicOrigin>definingMDPSet",
           "description": "",
           "type": "String"
         },
         {
-          "field_short": "",
-          "field_long": "macroOriginContributingMDPCount",
+          "field_short": "morgmdps",
+          "field_long": "MacroOriginContributingMDPCount",
           "source": "macroseismicParameters>macroseismicOrigin>contributingMDPCount",
           "description": "",
           "type": "Int"
         },
         {
-          "field_short": "",
-          "field_long": "epicentralIntensityScale",
+          "field_short": "morgeiscl",
+          "field_long": "MacroOriginEpicentralIntensityScale",
           "source": "macroseismicParameters>macroseismicOrigin>epicentralIntensity>macroseismicScale",
           "description": "",
           "type": "String"
         },
         {
-          "field_short": "",
-          "field_long": "epicentralIntensity",
+          "field_short": "morgeicl",
+          "field_long": "MacroOriginEpicentralIntensity",
           "source": "macroseismicParameters>macroseismicOrigin>epicentralIntensity>expectedIntensity>class",
           "description": "",
           "type": "String"
         },
         {
-          "field_short": "",
-          "field_long": "literatureSourceOriginReference",
+          "field_short": "morgltsrc",
+          "field_long": "MacroOriginLiteratureSourceOriginReference",
           "source": "macroseismicParameters>macroseismicOrigin>literatureSourceOriginReference",
           "description": "",
           "type": "String"
         },
         {
-          "field_short": "origcragid",
-          "field_long": "macroOriginCreationAgencyID",
+          "field_short": "morgcragid",
+          "field_long": "MacroOriginCreationAgencyID",
           "source": "macroseismicParameters>macroseismicOrigin>creationInfo>agencyID",
           "description": "",
           "type": "String"
         },
         {
-          "field_short": "origcragur",
-          "field_long": "macroOriginCreationAgencyURI",
+          "field_short": "morgcragur",
+          "field_long": "MacroOriginCreationAgencyURI",
           "source": "macroseismicParameters>macroseismicOrigin>creationInfo>agencyURI",
           "description": "",
           "type": "String"
         },
         {
-          "field_short": "origcrau",
-          "field_long": "macroOriginCreationAuthor",
+          "field_short": "morgcrau",
+          "field_long": "MacroOriginCreationAuthor",
           "source": "macroseismicParameters>macroseismicOrigin>creationInfo>author",
           "description": "",
           "type": "String"
         },
         {
-          "field_short": "origcrauur",
-          "field_long": "macroOriginCreationAuthorURI",
+          "field_short": "morgcrauur",
+          "field_long": "MacroOriginCreationAuthorURI",
           "source": "macroseismicParameters>macroseismicOrigin>creationInfo>authorURI",
           "description": "",
           "type": "String"
         },
         {
-          "field_short": "origcrtime",
-          "field_long": "macroOriginCreationTime",
+          "field_short": "morgcrtime",
+          "field_long": "MacroOriginCreationTime",
           "source": "macroseismicParameters>macroseismicOrigin>creationInfo>creationTime",
           "description": "",
-          "type": "String"
+          "type": "DateTime"
         },
         {
-          "field_short": "origcrvers",
-          "field_long": "macroOriginCreationVersion",
+          "field_short": "morgcrvers",
+          "field_long": "MacroOriginCreationVersion",
           "source": "macroseismicParameters>macroseismicOrigin>creationInfo>version",
           "description": "",
           "type": "String"
@@ -154,78 +1168,78 @@
       "label": "magnitude",
       "fields": [
         {
-          "field_short": "magid",
-          "field_long": "macroMagID",
+          "field_short": "mmagid",
+          "field_long": "MacroMagID",
           "source": "macroseismicParameters>macroseismicMagnitude§publicID",
           "description": "",
           "type": "String"
         },
         {
-          "field_short": "",
-          "field_long": "magReference",
+          "field_short": "mmagref",
+          "field_long": "MacroMagReference",
           "source": "macroseismicParameters>macroseismicMagnitude>magnitudeReference",
           "description": "",
           "type": "String"
         },
         {
-          "field_short": "",
-          "field_long": "definingMDPSet",
+          "field_short": "mmagdefset",
+          "field_long": "MacroMagDefiningMDPSet",
           "source": "macroseismicParameters>macroseismicMagnitude>definingMDPSet",
           "description": "",
           "type": "String"
         },
         {
-          "field_short": "",
-          "field_long": "contributingMDPCount",
+          "field_short": "mmagmdps",
+          "field_long": "MacroMagContributingMDPCount",
           "source": "macroseismicParameters>macroseismicMagnitude>contributingMDPCount",
           "description": "",
-          "type": "String"
+          "type": "Int"
         },
         {
-          "field_short": "",
-          "field_long": "literatureSourceMagnitudeReference",
+          "field_short": "mmagltref",
+          "field_long": "MacroMagLiteratureSourceMagnitudeReference",
           "source": "macroseismicParameters>macroseismicMagnitude>literatureSourceMagnitudeReference",
           "description": "",
           "type": "String"
         },
         {
-          "field_short": "magcragid",
-          "field_long": "MagCreationAgencyID",
+          "field_short": "mmagcragid",
+          "field_long": "MacroMagCreationAgencyID",
           "source": "macroseismicParameters>macroseismicMagnitude>creationInfo>agencyID",
           "description": "",
           "type": "String"
         },
         {
-          "field_short": "magcraguri",
-          "field_long": "MagCreationAgencyURI",
+          "field_short": "mmagcraguri",
+          "field_long": "MacroMagCreationAgencyURI",
           "source": "macroseismicParameters>macroseismicMagnitude>creationInfo>agencyURI",
           "description": "",
           "type": "String"
         },
         {
-          "field_short": "magcrau",
-          "field_long": "MagCreationAuthor",
+          "field_short": "mmagcrau",
+          "field_long": "MacroMagCreationAuthor",
           "source": "macroseismicParameters>macroseismicMagnitude>creationInfo>author",
           "description": "",
           "type": "String"
         },
         {
-          "field_short": "magcrauri",
-          "field_long": "MagCreationAuthorURI",
+          "field_short": "mmagcrauri",
+          "field_long": "MacroMagCreationAuthorURI",
           "source": "macroseismicParameters>macroseismicMagnitude>creationInfo>authorURI",
           "description": "",
           "type": "String"
         },
         {
-          "field_short": "magcrtime",
-          "field_long": "MagCreationTime",
+          "field_short": "mmagcrtime",
+          "field_long": "MacroMagCreationTime",
           "source": "macroseismicParameters>macroseismicMagnitude>creationInfo>creationTime",
           "description": "",
-          "type": "String"
+          "type": "DateTime"
         },
         {
-          "field_short": "magcrver",
-          "field_long": "MagCreationVersion",
+          "field_short": "mmagcrver",
+          "field_long": "MacroMagCreationVersion",
           "source": "macroseismicParameters>macroseismicMagnitude>creationInfo>version",
           "description": "",
           "type": "String"
@@ -237,103 +1251,103 @@
       "fields": [
         {
           "field_short": "msetid",
-          "field_long": "mdpSetID",
+          "field_long": "MDPsetID",
           "source": "macroseismicParameters>mdpSet§publicID",
           "description": "",
           "type": "String"
         },
         {
-          "field_short": "msetint",
-          "field_long": "mdpSetMaxIntScale",
+          "field_short": "msetintsc",
+          "field_long": "MDPsetMaxIntScale",
           "source": "macroseismicParameters>mdpSet>maximumIntensity>macroseismicScale",
           "description": "",
           "type": "String"
         },
-		{
-          "field_short": "msetint",
-          "field_long": "mdpSetMaxIntExpectedClass",
+        {
+          "field_short": "msetintcl",
+          "field_long": "MDPsetMaxIntExpectedClass",
           "source": "macroseismicParameters>mdpSet>maximumIntensity>expectedIntensity>class",
           "description": "",
           "type": "String"
         },
-		{
-          "field_short": "msetint",
-          "field_long": "mdpSetMaxIntExpectedNum",
+        {
+          "field_short": "msetintnum",
+          "field_long": "MDPsetMaxIntExpectedNum",
           "source": "macroseismicParameters>mdpSet>maximumIntensity>expectedIntensity>numeric",
           "description": "",
-          "type": "String"
+          "type": "Double"
         },
-		{
-          "field_short": "msetint",
-          "field_long": "mdpSetMaxIntExpectedTxt",
+        {
+          "field_short": "msetinttxt",
+          "field_long": "MDPsetMaxIntExpectedTxt",
           "source": "macroseismicParameters>mdpSet>maximumIntensity>expectedIntensity>text",
           "description": "",
           "type": "String"
         },
-		{
-          "field_short": "msetint",
-          "field_long": "mdpSetMaxIntMinCredibleClass",
+        {
+          "field_short": "msetmnicl",
+          "field_long": "MDPsetMaxIntMinCredibleClass",
           "source": "macroseismicParameters>mdpSet>maximumIntensity>minimalCredibleIntensity>expectedIntensity>class",
           "description": "",
           "type": "String"
         },
-		{
-          "field_short": "msetint",
-          "field_long": "mdpSetMaxIntMinCredibleNum",
+        {
+          "field_short": "msetmninum",
+          "field_long": "MDPsetMaxIntMinCredibleNum",
           "source": "macroseismicParameters>mdpSet>maximumIntensity>minimalCredibleIntensity>expectedIntensity>numeric",
           "description": "",
-          "type": "String"
+          "type": "Double"
         },
-		{
-          "field_short": "msetint",
-          "field_long": "mdpSetMaxIntMinCredibleTxt",
+        {
+          "field_short": "msetmnitxt",
+          "field_long": "MDPsetMaxIntMinCredibleTxt",
           "source": "macroseismicParameters>mdpSet>maximumIntensity>minimalCredibleIntensity>expectedIntensity>text",
           "description": "",
           "type": "String"
         },
-		{
-          "field_short": "msetint",
-          "field_long": "mdpSetMaxIntMaxCredibleClass",
+        {
+          "field_short": "msetmxicl",
+          "field_long": "MDPsetMaxIntMaxCredibleClass",
           "source": "macroseismicParameters>mdpSet>maximumIntensity>maximalCredibleIntensity>expectedIntensity>class",
           "description": "",
           "type": "String"
         },
-		{
-          "field_short": "msetint",
-          "field_long": "mdpSetMaxIntMaxCredibleNum",
+        {
+          "field_short": "msetmxinum",
+          "field_long": "MDPsetMaxIntMaxCredibleNum",
           "source": "macroseismicParameters>mdpSet>maximumIntensity>maximalCredibleIntensity>expectedIntensity>numeric",
           "description": "",
-          "type": "String"
+          "type": "Double"
         },
-		{
-          "field_short": "msetint",
-          "field_long": "mdpSetMaxIntMaxCredibleTxt",
+        {
+          "field_short": "msetmxitxt",
+          "field_long": "MDPsetMaxIntMaxCredibleTxt",
           "source": "macroseismicParameters>mdpSet>maximumIntensity>maximalCredibleIntensity>expectedIntensity>text",
           "description": "",
           "type": "String"
         },
-		{
+        {
           "field_short": "msetcount",
-          "field_long": "mdpSetCount",
+          "field_long": "MDPsetCount",
           "source": "macroseismicParameters>mdpSet>mdpCount",
           "description": "",
-          "type": "String"
+          "type": "Int"
         },
-		{
+        {
           "field_short": "msetref",
           "field_long": "literatureSourceMDPSetReference",
           "source": "macroseismicParameters>mdpSet>literatureSourceMDPSetReference",
           "description": "",
           "type": "String"
         },
-		{
+        {
           "field_short": "msetmethod",
-          "field_long": "mdpSetMethodID",
+          "field_long": "MDPsetMethodID",
           "source": "macroseismicParameters>mdpSet>methodID",
           "description": "",
           "type": "String"
         },
-		{
+        {
           "field_short": "msetrelset",
           "field_long": "relatedMDPSet",
           "source": "macroseismicParameters>mdpSet>relatedMDPSet",
@@ -342,91 +1356,91 @@
         },
         {
           "field_short": "msetcm",
-          "field_long": "mdpSetCommentTxt",
+          "field_long": "MDPsetCommentTxt",
           "source": "macroseismicParameters>mdpSet>comment>text",
           "description": "",
           "type": "String"
         },
         {
           "field_short": "msetcmagid",
-          "field_long": "mdpSetCommentAgencyID",
+          "field_long": "MDPsetCommentAgencyID",
           "source": "macroseismicParameters>mdpSet>comment>creationInfo>agencyID",
           "description": "",
           "type": "String"
         },
         {
           "field_short": "msetcmagur",
-          "field_long": "mdpSetCommentAgencyURI",
+          "field_long": "MDPsetCommentAgencyURI",
           "source": "macroseismicParameters>mdpSet>comment>creationInfo>agencyURI",
           "description": "",
           "type": "String"
         },
         {
           "field_short": "msetcmaut",
-          "field_long": "mdpSetCommentAuthor",
+          "field_long": "MDPsetCommentAuthor",
           "source": "macroseismicParameters>mdpSet>comment>creationInfo>author",
           "description": "",
           "type": "String"
         },
         {
           "field_short": "msetcmautu",
-          "field_long": "mdpSetCommentAuthorURI",
+          "field_long": "MDPsetCommentAuthorURI",
           "source": "macroseismicParameters>mdpSet>comment>creationInfo>authorURI",
           "description": "",
           "type": "String"
         },
         {
           "field_short": "msetcmtime",
-          "field_long": "mdpSetCommentTime",
+          "field_long": "MDPsetCommentTime",
           "source": "macroseismicParameters>mdpSet>comment>creationInfo>creationTime",
           "description": "",
-          "type": "String"
+          "type": "DateTime"
         },
         {
           "field_short": "msetcmver",
-          "field_long": "mdpSetCommentVersion",
+          "field_long": "MDPsetCommentVersion",
           "source": "macroseismicParameters>mdpSet>comment>creationInfo>version",
           "description": "",
           "type": "String"
         },
         {
           "field_short": "msetcragid",
-          "field_long": "mdpSetCreationAgencyID",
+          "field_long": "MDPsetCreationAgencyID",
           "source": "macroseismicParameters>mdpSet>creationInfo>agencyID",
           "description": "",
           "type": "String"
         },
         {
           "field_short": "msetcraguri",
-          "field_long": "mdpSetCreationAgencyURI",
+          "field_long": "MDPsetCreationAgencyURI",
           "source": "macroseismicParameters>mdpSet>creationInfo>agencyURI",
           "description": "",
           "type": "String"
         },
         {
           "field_short": "msetcrau",
-          "field_long": "mdpSetCreationAuthor",
+          "field_long": "MDPsetCreationAuthor",
           "source": "macroseismicParameters>mdpSet>creationInfo>author",
           "description": "",
           "type": "String"
         },
         {
           "field_short": "msetcrauri",
-          "field_long": "mdpSetCreationAuthorURI",
+          "field_long": "MDPsetCreationAuthorURI",
           "source": "macroseismicParameters>mdpSet>creationInfo>authorURI",
           "description": "",
           "type": "String"
         },
         {
           "field_short": "msetcrtime",
-          "field_long": "mdpSetCreationTime",
+          "field_long": "MDPsetCreationTime",
           "source": "macroseismicParameters>mdpSet>creationInfo>creationTime",
           "description": "",
-          "type": "String"
+          "type": "DateTime"
         },
         {
           "field_short": "msetcrver",
-          "field_long": "mdpSetCreationVersion",
+          "field_long": "MDPsetCreationVersion",
           "source": "macroseismicParameters>mdpSet>creationInfo>version",
           "description": "",
           "type": "String"
@@ -437,190 +1451,218 @@
       "label": "MDP",
       "fields": [
         {
-          "field_short": "mdpID",
-          "field_long": "",
+          "field_short": "mdpid",
+          "field_long": "MDPID",
           "source": "macroseismicParameters>mdp§publicID",
           "description": "",
           "type": "String"
         },
         {
-          "field_short": "mdpID",
-          "field_long": "",
+          "field_short": "mdpref",
+          "field_long": "MDPLiterSrc",
           "source": "macroseismicParameters>mdp>literatureSourceMDPReference",
           "description": "",
           "type": "String"
         },
         {
-          "field_short": "mdpID",
-          "field_long": "",
-          "source": "macroseismicParameters>mdp>reportedTime",
+          "field_short": "mdprpttime",
+          "field_long": "MDPReportedTime",
+          "source": "macroseismicParameters>mdp>reportedTime>value",
           "description": "",
-          "type": "String"
+          "type": "DateTime"
         },
         {
-          "field_short": "mdpID",
-          "field_long": "",
+          "field_short": "mdprpttime",
+          "field_long": "MDPReportedTime",
+          "source": "macroseismicParameters>mdp>reportedTime>uncertainty",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "mdprpttime",
+          "field_long": "MDPReportedTime",
+          "source": "macroseismicParameters>mdp>reportedTime>lowerUncertainty",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "mdprpttime",
+          "field_long": "MDPReportedTime",
+          "source": "macroseismicParameters>mdp>reportedTime>upperUncertainty",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "mdprpttime",
+          "field_long": "MDPReportedTime",
+          "source": "macroseismicParameters>mdp>reportedTime>confidenceLevel",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "mdprptref",
+          "field_long": "MDPReportReference",
           "source": "macroseismicParameters>mdp>reportReference",
           "description": "",
           "type": "String"
         },
         {
-          "field_short": "mdpID",
-          "field_long": "",
+          "field_short": "mdpevref",
+          "field_long": "MDPEventReference",
           "source": "macroseismicParameters>mdp>eventReference",
           "description": "",
           "type": "String"
         },
         {
-          "field_short": "mdpID",
-          "field_long": "",
+          "field_short": "mdpscale",
+          "field_long": "MDPScale",
           "source": "macroseismicParameters>mdp>intensity>macroseismicScale",
           "description": "",
           "type": "String"
         },
         {
-          "field_short": "mdpID",
-          "field_long": "",
+          "field_short": "mdpexintcl",
+          "field_long": "MDPExpectedIntensityClass",
           "source": "macroseismicParameters>mdp>intensity>expectedIntensity>class",
           "description": "",
           "type": "String"
         },
         {
-          "field_short": "mdpID",
-          "field_long": "",
+          "field_short": "mdpexinttx",
+          "field_long": "MDPExpectedIntensityTxt",
           "source": "macroseismicParameters>mdp>intensity>expectedIntensity>text",
           "description": "",
           "type": "String"
         },
         {
-          "field_short": "mdpID",
-          "field_long": "",
+          "field_short": "mdpexintnm",
+          "field_long": "MDPExpectedIntensityNum",
           "source": "macroseismicParameters>mdp>intensity>expectedIntensity>numeric",
           "description": "",
-          "type": "String"
+          "type": "Double"
         },
         {
-          "field_short": "mdpID",
-          "field_long": "",
+          "field_short": "mdpmethod",
+          "field_long": "MDPMethodID",
           "source": "macroseismicParameters>mdp>methodID",
           "description": "",
           "type": "String"
         },
         {
-          "field_short": "mdpID",
-          "field_long": "",
+          "field_short": "mdpquality",
+          "field_long": "MDPQuality",
           "source": "macroseismicParameters>mdp>quality",
           "description": "",
           "type": "String"
         },
         {
-          "field_short": "mdpID",
-          "field_long": "",
+          "field_short": "mdpevalmod",
+          "field_long": "MDPEvaluationMode",
           "source": "macroseismicParameters>mdp>evaluationMode",
           "description": "",
           "type": "String"
         },
         {
-          "field_short": "mdpID",
-          "field_long": "",
+          "field_short": "mdpevalsta",
+          "field_long": "MDPEvaluationStatus",
           "source": "macroseismicParameters>mdp>evaluationStatus",
           "description": "",
           "type": "String"
         },
         {
-          "field_short": "mdpID",
-          "field_long": "",
+          "field_short": "mdprelmdp",
+          "field_long": "MDPRelatedMDP",
           "source": "macroseismicParameters>mdp>relatedMDP",
           "description": "",
           "type": "String"
         },
         {
-          "field_short": "",
-          "field_long": "mdpCommentTxt",
+          "field_short": "mdpcm",
+          "field_long": "MDPCommentTxt",
           "source": "macroseismicParameters>mdp>comment>text",
           "description": "",
           "type": "String"
         },
         {
           "field_short": "mdpcmagid",
-          "field_long": "mdpCommentAgencyID",
+          "field_long": "MDPCommentAgencyID",
           "source": "macroseismicParameters>mdp>comment>creationInfo>agencyID",
           "description": "",
           "type": "String"
         },
         {
           "field_short": "mdpcmagur",
-          "field_long": "mdpCommentAgencyURI",
+          "field_long": "MDPCommentAgencyURI",
           "source": "macroseismicParameters>mdp>comment>creationInfo>agencyURI",
           "description": "",
           "type": "String"
         },
         {
           "field_short": "mdpcmaut",
-          "field_long": "mdpCommentAuthor",
+          "field_long": "MDPCommentAuthor",
           "source": "macroseismicParameters>mdp>comment>creationInfo>author",
           "description": "",
           "type": "String"
         },
         {
           "field_short": "mdpcmautu",
-          "field_long": "mdpCommentAuthorURI",
+          "field_long": "MDPCommentAuthorURI",
           "source": "macroseismicParameters>mdp>comment>creationInfo>authorURI",
           "description": "",
           "type": "String"
         },
         {
           "field_short": "mdpcmtime",
-          "field_long": "mdpCommentTime",
+          "field_long": "MDPCommentTime",
           "source": "macroseismicParameters>mdp>comment>creationInfo>creationTime",
           "description": "",
-          "type": "String"
+          "type": "DateTime"
         },
         {
           "field_short": "mdpcmver",
-          "field_long": "mdpCommentVersion",
+          "field_long": "MDPCommentVersion",
           "source": "macroseismicParameters>mdp>comment>creationInfo>version",
           "description": "",
           "type": "String"
         },
         {
           "field_short": "mdpcragid",
-          "field_long": "mdpCreationAgencyID",
+          "field_long": "MDPCreationAgencyID",
           "source": "macroseismicParameters>mdp>creationInfo>agencyID",
           "description": "",
           "type": "String"
         },
         {
           "field_short": "mdpcraguri",
-          "field_long": "mdpCreationAgencyURI",
+          "field_long": "MDPCreationAgencyURI",
           "source": "macroseismicParameters>mdp>creationInfo>agencyURI",
           "description": "",
           "type": "String"
         },
         {
           "field_short": "mdpcrau",
-          "field_long": "mdpCreationAuthor",
+          "field_long": "MDPCreationAuthor",
           "source": "macroseismicParameters>mdp>creationInfo>author",
           "description": "",
           "type": "String"
         },
         {
           "field_short": "mdpcrauri",
-          "field_long": "mdpCreationAuthorURI",
+          "field_long": "MDPCreationAuthorURI",
           "source": "macroseismicParameters>mdp>creationInfo>authorURI",
           "description": "",
           "type": "String"
         },
         {
           "field_short": "mdpcrtime",
-          "field_long": "mdpCreationTime",
+          "field_long": "MDPCreationTime",
           "source": "macroseismicParameters>mdp>creationInfo>creationTime",
           "description": "",
-          "type": "String"
+          "type": "DateTime"
         },
         {
           "field_short": "mdpcrver",
-          "field_long": "mdpCreationVersion",
+          "field_long": "MDPCreationVersion",
           "source": "macroseismicParameters>mdp>creationInfo>version",
           "description": "",
           "type": "String"
@@ -628,334 +1670,334 @@
       ]
     },
     "place": {
-      "label": "MDP",
+      "label": "place",
       "fields": [
         {
           "field_short": "placeID",
-          "field_long": "placeID",
+          "field_long": "PlaceID",
           "source": "macroseismicParameters>place§publicID",
           "description": "",
           "type": "String"
         },
         {
           "field_short": "pltype",
-          "field_long": "placeType",
+          "field_long": "PlaceType",
           "source": "macroseismicParameters>place>type",
           "description": "",
           "type": "String"
         },
         {
           "field_short": "plnamet",
-          "field_long": "placeNamePrefType",
+          "field_long": "PlaceNamePrefType",
           "source": "macroseismicParameters>place>preferredName>type",
           "description": "",
           "type": "String"
         },
         {
           "field_short": "plnamep",
-          "field_long": "placeNamePref",
+          "field_long": "PlaceNamePref",
           "source": "macroseismicParameters>place>preferredName>name",
           "description": "",
           "type": "String"
         },
         {
           "field_short": "plstart",
-          "field_long": "placeEpochStart",
+          "field_long": "PlaceEpochStart",
           "source": "macroseismicParameters>place>epoch>startTime",
           "description": "",
-          "type": "String"
+          "type": "DateTime"
         },
         {
           "field_short": "plend",
-          "field_long": "placeEpochEnd",
+          "field_long": "PlaceEpochEnd",
           "source": "macroseismicParameters>place>epoch>endTime",
           "description": "",
-          "type": "String"
+          "type": "DateTime"
         },
         {
           "field_short": "pllat",
-          "field_long": "placeLat",
+          "field_long": "PlaceLat",
           "source": "macroseismicParameters>place>referenceLatitude>value",
           "description": "",
-          "type": "String"
+          "type": "Double"
         },
         {
-          "field_short": "latunc",
-          "field_long": "placeLatUnc",
+          "field_short": "pllatunc",
+          "field_long": "PlaceLatUnc",
           "source": "macroseismicParameters>place>referenceLatitude>uncertainty",
           "description": "",
           "type": "Double"
         },
         {
-          "field_short": "latunclo",
-          "field_long": "placeLatUncLow",
+          "field_short": "pllatunclo",
+          "field_long": "PlaceLatUncLow",
           "source": "macroseismicParameters>place>referenceLatitude>lowerUncertainty",
           "description": "",
           "type": "Double"
         },
         {
-          "field_short": "latuncup",
-          "field_long": "placeLatUncUp",
+          "field_short": "pllatuncup",
+          "field_long": "PlaceLatUncUp",
           "source": "macroseismicParameters>place>referenceLatitude>upperUncertainty",
           "description": "",
           "type": "Double"
         },
         {
-          "field_short": "latconf",
-          "field_long": "placeLatConfidence",
+          "field_short": "pllatconf",
+          "field_long": "PlaceLatConfidence",
           "source": "macroseismicParameters>place>referenceLatitude>confidenceLevel",
           "description": "",
           "type": "Double"
         },
         {
           "field_short": "pllon",
-          "field_long": "placeLon",
+          "field_long": "PlaceLon",
           "source": "macroseismicParameters>place>referenceLongitude>value",
           "description": "",
-          "type": "String"
+          "type": "Double"
         },
         {
-          "field_short": "lonunc",
-          "field_long": "placeLonUnc",
+          "field_short": "pllonunc",
+          "field_long": "PlaceLonUnc",
           "source": "macroseismicParameters>place>referenceLongitude>uncertainty",
           "description": "",
           "type": "Double"
         },
         {
-          "field_short": "lonunclo",
-          "field_long": "placeLonUncLow",
+          "field_short": "pllonunclo",
+          "field_long": "PlaceLonUncLow",
           "source": "macroseismicParameters>place>referenceLongitude>lowerUncertainty",
           "description": "",
           "type": "Double"
         },
         {
-          "field_short": "lonuncup",
-          "field_long": "placeLonUncUp",
+          "field_short": "pllonuncup",
+          "field_long": "PlaceLonUncUp",
           "source": "macroseismicParameters>place>referenceLongitude>upperUncertainty",
           "description": "",
           "type": "Double"
         },
         {
-          "field_short": "lonconf",
-          "field_long": "placeLonConfidence",
+          "field_short": "pllonconf",
+          "field_long": "PlaceLonConfidence",
           "source": "macroseismicParameters>place>referenceLongitude>confidenceLevel",
           "description": "",
           "type": "Double"
         },
         {
           "field_short": "plhorunc",
-          "field_long": "placeHorizUnc",
+          "field_long": "PlaceHorizUnc",
           "source": "macroseismicParameters>place>horizontalUncertainty",
           "description": "",
-          "type": "String"
+          "type": "Double"
         },
         {
           "field_short": "plgeom",
-          "field_long": "placeGeometry",
+          "field_long": "PlaceGeometry",
           "source": "macroseismicParameters>place>geometry",
           "description": "",
           "type": "String"
         },
         {
           "field_short": "plextgaz",
-          "field_long": "placeExtGazetteer",
+          "field_long": "PlaceExtGazetteer",
           "source": "macroseismicParameters>place>externalGazetteer",
           "description": "",
           "type": "String"
         },
         {
           "field_short": "plaltitud",
-          "field_long": "placeAltitude",
+          "field_long": "PlaceAltitude",
           "source": "macroseismicParameters>place>altitude",
           "description": "",
-          "type": "String"
+          "type": "Double"
         },
         {
           "field_short": "plzipcode",
-          "field_long": "placeZipCode",
+          "field_long": "PlaceZipCode",
           "source": "macroseismicParameters>place>zipCode",
           "description": "",
           "type": "String"
         },
         {
           "field_short": "plcountry",
-          "field_long": "placeCountry",
+          "field_long": "PlaceCountry",
           "source": "macroseismicParameters>place>isoCountryCode",
           "description": "",
           "type": "String"
         },
         {
           "field_short": "plsrclit",
-          "field_long": "placeLiterSrc",
+          "field_long": "PlaceLiterSrc",
           "source": "macroseismicParameters>place>literatureSourcePlaceReference",
           "description": "",
           "type": "String"
         },
         {
-          "field_short": "plstm",
-          "field_long": "placeSiteMorph",
+          "field_short": "plstm01",
+          "field_long": "PlaceSiteMorphBasinFlagLiterSrc",
           "source": "macroseismicParameters>place>siteMorphology>basinFlagLiteratureSource",
           "description": "",
           "skip": true,
           "type": "String"
         },
         {
-          "field_short": "plstm",
-          "field_long": "placeSiteMorph",
+          "field_short": "plstm02",
+          "field_long": "PlaceSiteMorphBedrockDepth",
           "source": "macroseismicParameters>place>siteMorphology>bedrockDepth",
           "description": "",
           "skip": true,
           "type": "String"
         },
         {
-          "field_short": "plstm",
-          "field_long": "placeSiteMorph",
+          "field_short": "plstm03",
+          "field_long": "PlaceSiteMorphBedrockDepthLiterSrc",
           "source": "macroseismicParameters>place>siteMorphology>bedrockDepthLiteratureSource",
           "description": "",
           "skip": true,
           "type": "String"
         },
         {
-          "field_short": "plstm",
-          "field_long": "placeSiteMorph",
+          "field_short": "plstm04",
+          "field_long": "PlaceSiteMorphGeolSurfaceAge",
           "source": "macroseismicParameters>place>siteMorphology>geologicalSurfaceAge",
           "description": "",
           "skip": true,
           "type": "String"
         },
         {
-          "field_short": "plstm",
-          "field_long": "placeSiteMorph",
+          "field_short": "plstm05",
+          "field_long": "PlaceSiteMorphGeolUnit",
           "source": "macroseismicParameters>place>siteMorphology>geologicalUnit",
           "description": "",
           "skip": true,
           "type": "String"
         },
         {
-          "field_short": "plstm",
-          "field_long": "placeSiteMorph",
+          "field_short": "plstm06",
+          "field_long": "PlaceSiteMorphGroundwaterDepth",
           "source": "macroseismicParameters>place>siteMorphology>groundwaterDepth",
           "description": "",
           "skip": true,
           "type": "String"
         },
         {
-          "field_short": "plstm",
-          "field_long": "placeSiteMorph",
+          "field_short": "plstm07",
+          "field_long": "PlaceSiteMorphGroundwaterDepthLiterSrc",
           "source": "macroseismicParameters>place>siteMorphology>groundwaterDepthLiteratureSource",
           "description": "",
           "skip": true,
           "type": "String"
         },
         {
-          "field_short": "plstm",
-          "field_long": "placeSiteMorph",
+          "field_short": "plstm08",
+          "field_long": "PlaceSiteMorph",
           "source": "macroseismicParameters>place>siteMorphology>morphology",
           "description": "",
           "skip": true,
           "type": "String"
         },
         {
-          "field_short": "plstm",
-          "field_long": "placeSiteMorph",
+          "field_short": "plstm09",
+          "field_long": "PlaceSiteMorphLiterSrc",
           "source": "macroseismicParameters>place>siteMorphology>morphologyLiteratureSource",
           "description": "",
           "skip": true,
           "type": "String"
         },
         {
-          "field_short": "plstm",
-          "field_long": "placeSiteMorph",
+          "field_short": "plstm10",
+          "field_long": "PlaceSiteMorphRefBorehole",
           "source": "macroseismicParameters>place>siteMorphology>referenceBorehole",
           "description": "",
           "skip": true,
           "type": "String"
         },
         {
-          "field_short": "plstm",
-          "field_long": "placeSiteMorph",
+          "field_short": "plstm11",
+          "field_long": "PlaceSiteMorphSedimeBasinName",
           "source": "macroseismicParameters>place>siteMorphology>sedimentaryBasinName",
           "description": "",
           "skip": true,
           "type": "String"
         },
         {
-          "field_short": "plstm",
-          "field_long": "placeSiteMorph",
+          "field_short": "plstm12",
+          "field_long": "PlaceSiteMorphSiteClassDescr",
           "source": "macroseismicParameters>place>siteMorphology>siteClassDescription",
           "description": "",
           "skip": true,
           "type": "String"
         },
         {
-          "field_short": "plstm",
-          "field_long": "placeSiteMorph",
+          "field_short": "plstm13",
+          "field_long": "PlaceSiteMorphSiteClassEC8",
           "source": "macroseismicParameters>place>siteMorphology>siteClassEC8",
           "description": "",
           "skip": true,
           "type": "String"
         },
         {
-          "field_short": "plstm",
-          "field_long": "placeSiteMorph",
+          "field_short": "plstm14",
+          "field_long": "PlaceSiteMorphSiteClassEC8LiterSrc",
           "source": "macroseismicParameters>place>siteMorphology>siteClassEC8LiteratureSource",
           "description": "",
           "skip": true,
           "type": "String"
         },
         {
-          "field_short": "plstm",
-          "field_long": "placeSiteMorph",
+          "field_short": "plstm15",
+          "field_long": "PlaceSiteMorphsiteClassSIA261Src",
           "source": "macroseismicParameters>place>siteMorphology>siteClassSIA261Source",
           "description": "",
           "skip": true,
           "type": "String"
         },
         {
-          "field_short": "plstm",
-          "field_long": "placeSiteMorph",
+          "field_short": "plstm16",
+          "field_long": "PlaceSiteMorphSurfaceLayerGranularity",
           "source": "macroseismicParameters>place>siteMorphology>SurfaceLayerGranularity",
           "description": "",
           "type": "String"
         },
         {
           "field_short": "plcragid",
-          "field_long": "placeCreationAgencyID",
+          "field_long": "PlaceCreationAgencyID",
           "source": "macroseismicParameters>place>creationInfo>agencyID",
           "description": "",
           "type": "String"
         },
         {
           "field_short": "plcraguri",
-          "field_long": "placeCreationAgencyURI",
+          "field_long": "PlaceCreationAgencyURI",
           "source": "macroseismicParameters>place>creationInfo>agencyURI",
           "description": "",
           "type": "String"
         },
         {
           "field_short": "mplcrau",
-          "field_long": "placeCreationAuthor",
+          "field_long": "PlaceCreationAuthor",
           "source": "macroseismicParameters>place>creationInfo>author",
           "description": "",
           "type": "String"
         },
         {
           "field_short": "plcrauri",
-          "field_long": "placeCreationAuthorURI",
-          "source": "macroseismicParameters>mdp>creationInfo>authorURI",
+          "field_long": "PlaceCreationAuthorURI",
+          "source": "macroseismicParameters>place>creationInfo>authorURI",
           "description": "",
           "type": "String"
         },
         {
           "field_short": "plcrtime",
-          "field_long": "placeCreationTime",
+          "field_long": "PlaceCreationTime",
           "source": "macroseismicParameters>place>creationInfo>creationTime",
           "description": "",
-          "type": "String"
+          "type": "DateTime"
         },
         {
           "field_short": "plcrver",
-          "field_long": "placeCreationVersion",
+          "field_long": "PlaceCreationVersion",
           "source": "macroseismicParameters>place>creationInfo>version",
           "description": "",
           "type": "String"
@@ -963,6 +2005,6 @@
       ]
     }
   },
-  "configversion": 0.1,
-  "configlastupdate": "2020-05-26T19:50:27+00:00"
+  "configversion": 0.2,
+  "configlastupdate": "2020-05-27T12:30:27+00:00"
 }
