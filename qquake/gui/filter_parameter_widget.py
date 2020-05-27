@@ -22,9 +22,10 @@
  ***************************************************************************/
 """
 
+from copy import deepcopy
 from qgis.PyQt import uic
 from qgis.PyQt.QtWidgets import QWidget
-from qgis.PyQt.QtCore import pyqtSignal
+from qgis.PyQt.QtCore import pyqtSignal, Qt
 
 from qgis.core import (
     QgsProject,
@@ -42,7 +43,6 @@ from qquake.gui.gui_utils import GuiUtils
 from qquake.gui.output_table_options_dialog import OutputTableOptionsDialog
 from qquake.services import SERVICE_MANAGER
 from qquake.fetcher import Fetcher
-
 
 FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('filter_parameter_widget_base.ui'))
 
@@ -136,7 +136,8 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
     def set_service_type(self, service_type):
         self.service_type = service_type
 
-        self.time_coverage_group.setVisible(self.service_type in (SERVICE_MANAGER.MACROSEISMIC, SERVICE_MANAGER.FDSNEVENT, SERVICE_MANAGER.FDSNSTATION))
+        self.time_coverage_group.setVisible(
+            self.service_type in (SERVICE_MANAGER.MACROSEISMIC, SERVICE_MANAGER.FDSNEVENT, SERVICE_MANAGER.FDSNSTATION))
         self.magnitude_group.setVisible(self.service_type in (SERVICE_MANAGER.MACROSEISMIC, SERVICE_MANAGER.FDSNEVENT))
         self.macroseismic_data_group.setVisible(self.service_type == SERVICE_MANAGER.MACROSEISMIC)
 
@@ -284,7 +285,8 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
         s.setValue('/plugins/qquake/{}_last_event_max_mag_checked2'.format(prefix), self.max_mag_check.isChecked())
 
         s.setValue('/plugins/qquake/{}_last_event_basic_checked'.format(prefix), self.radio_basic_output.isChecked())
-        s.setValue('/plugins/qquake/{}_last_event_extended_checked'.format(prefix), self.radio_extended_output.isChecked())
+        s.setValue('/plugins/qquake/{}_last_event_extended_checked'.format(prefix),
+                   self.radio_extended_output.isChecked())
 
     def _populated_predined_areas(self):
         for name in SERVICE_MANAGER.available_predefined_bounding_boxes():
@@ -470,6 +472,62 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
         else:
             self.max_time_check.setChecked(False)
 
+    def set_predefined_bounding_box(self, box):
+        self.radio_predefined_area.setChecked(True)
+        self.combo_predefined_area.setCurrentIndex(self.combo_predefined_area.findData(box))
+
+    def set_min_latitude(self, lat):
+        self.radio_rectangular_area.setChecked(True)
+        self.lat_min_spinbox.setValue(float(lat))
+
+    def set_max_latitude(self, lat):
+        self.radio_rectangular_area.setChecked(True)
+        self.lat_max_spinbox.setValue(float(lat))
+
+    def set_min_longitude(self, lat):
+        self.radio_rectangular_area.setChecked(True)
+        self.long_min_spinbox.setValue(float(lat))
+
+    def set_max_longitude(self, lat):
+        self.radio_rectangular_area.setChecked(True)
+        self.long_max_spinbox.setValue(float(lat))
+
+    def set_circle_longitude(self, lat):
+        self.radio_circular_area.setChecked(True)
+        self.circular_long_spinbox.setValue(float(lat))
+
+    def set_circle_latitude(self, lat):
+        self.radio_circular_area.setChecked(True)
+        self.circular_lat_spinbox.setValue(float(lat))
+
+    def set_min_circle_radius(self, radius):
+        self.radius_min_checkbox.setChecked(True)
+        self.radius_min_spinbox.setValue(float(radius))
+
+    def set_max_circle_radius(self, radius):
+        self.radius_max_checkbox.setChecked(True)
+        self.radius_max_spinbox.setValue(float(radius))
+
+    def set_min_magnitude(self, mag):
+        self.min_mag_check.setChecked(mag is not None)
+        if mag is not None:
+            self.fdsn_event_min_magnitude.setValue(float(mag))
+
+    def set_max_magnitude(self, mag):
+        self.max_mag_check.setChecked(mag is not None)
+        if mag is not None:
+            self.fdsn_event_max_magnitude.setValue(float(mag))
+
+    def set_max_intensity_greater(self, intensity):
+        self.earthquake_max_intensity_greater_check.setChecked(intensity is not None)
+        if intensity is not None:
+            self.earthquake_max_intensity_greater_combo.setCurrentIndex(self.earthquake_max_intensity_greater_combo.findData(float(intensity)))
+
+    def set_mdps_greater_than(self, mdps):
+        self.earthquake_number_mdps_greater_check.setChecked(mdps is not None)
+        if mdps is not None:
+            self.earthquake_number_mdps_greater_spin.setValue(float(mdps))
+
     def set_extent_limit(self, box):
         self.long_min_spinbox.setMinimum(box[0])
         self.long_max_spinbox.setMinimum(box[0])
@@ -487,13 +545,15 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
             self.changed.emit()
 
     def start_date(self):
-        if self.service_type not in (SERVICE_MANAGER.MACROSEISMIC, SERVICE_MANAGER.FDSNEVENT, SERVICE_MANAGER.FDSNSTATION):
+        if self.service_type not in (
+        SERVICE_MANAGER.MACROSEISMIC, SERVICE_MANAGER.FDSNEVENT, SERVICE_MANAGER.FDSNSTATION):
             return None
 
         return self.fdsn_event_start_date.dateTime() if self.min_time_check.isChecked() else None
 
     def end_date(self):
-        if self.service_type not in (SERVICE_MANAGER.MACROSEISMIC, SERVICE_MANAGER.FDSNEVENT, SERVICE_MANAGER.FDSNSTATION):
+        if self.service_type not in (
+        SERVICE_MANAGER.MACROSEISMIC, SERVICE_MANAGER.FDSNEVENT, SERVICE_MANAGER.FDSNSTATION):
             return None
 
         return self.fdsn_event_end_date.dateTime() if self.max_time_check.isChecked() else None
@@ -554,3 +614,32 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
 
     def output_type(self):
         return Fetcher.BASIC if self.radio_basic_output.isChecked() else Fetcher.EXTENDED
+
+    def to_service_definition(self):
+        base_config = deepcopy(SERVICE_MANAGER.service_details(self.service_type, self.service_id))
+
+        defaults = base_config.get('default', {})
+
+        for k, v in {'datestart': self.start_date().toString(Qt.ISODate) if self.start_date() else None,
+                     'dateend': self.end_date().toString(Qt.ISODate) if self.end_date() else None,
+                     'boundingboxpredefined': self.combo_predefined_area.currentData() if self.radio_predefined_area.isChecked() else None,
+                     'minimumlatitude': self.min_latitude() if self.radio_rectangular_area.isChecked() else None,
+                     'maximumlatitude': self.max_latitude() if self.radio_rectangular_area.isChecked() else None,
+                     'minimumlongitude': self.min_longitude() if self.radio_rectangular_area.isChecked() else None,
+                     'maximumlongitude': self.max_longitude() if self.radio_rectangular_area.isChecked() else None,
+                     'circlelatitude': self.circle_latitude() if self.radio_circular_area.isChecked() else None,
+                     'circlelongitude': self.circle_longitude() if self.radio_circular_area.isChecked() else None,
+                     'minimumcircleradius': self.circle_min_radius() if self.radio_circular_area.isChecked() else None,
+                     'maximumcircleradius': self.circle_max_radius() if self.radio_circular_area.isChecked() else None,
+                     'minimummagnitude': self.min_magnitude(),
+                     'maximummagnitude': self.max_magnitude(),
+                     'macromaxintensitygreater': self.earthquake_max_intensity_greater(),
+                     'macromdpsgreaterthan': self.earthquake_number_mdps_greater()
+                     }.items():
+            if v:
+                defaults[k] = v
+            elif k in defaults:
+                del defaults[k]
+
+        base_config['default'] = defaults
+        return base_config

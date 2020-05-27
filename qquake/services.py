@@ -81,7 +81,10 @@ class ServiceManager(QObject):
 
             for p in service_path.glob('**/*.json'):
                 with open(p, 'r') as f:
-                    service = json.load(f)
+                    try:
+                        service = json.load(f)
+                    except json.JSONDecodeError:
+                        continue
                     service['read_only'] = False
 
                     if p.stem in self.services[service_type]:
@@ -120,6 +123,14 @@ class ServiceManager(QObject):
             path.unlink()
             self.refresh_services()
 
+    def save_service(self, service_type, service_id, configuration):
+        path = self.custom_service_path(service_type, service_id)
+        if path.exists():
+            path.unlink()
+
+        with open(path, 'wt') as f:
+            f.write(json.dumps(configuration))
+        self.refresh_services()
 
 
 SERVICE_MANAGER = ServiceManager()
