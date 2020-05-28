@@ -72,7 +72,10 @@ class BasicTextParser:
         self.headers = line.split('|')
 
     def parse(self, content):
+        if not content:
+            return
         lines = content.data().decode().split('\n')
+
         self.parser_header_line(lines[0])
         self._add_events(lines[1:])
 
@@ -131,6 +134,9 @@ class BasicStationParser:
         self.headers = line.split('|')
 
     def parse(self, content):
+        if not content:
+            return
+
         lines = content.data().decode().split('\n')
         self.parser_header_line(lines[0])
         self._add_stations(lines[1:])
