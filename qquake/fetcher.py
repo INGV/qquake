@@ -18,16 +18,19 @@ import json
 
 from qgis.PyQt.QtCore import (
     Qt,
+    QDir,
     QUrl,
     QObject,
-    pyqtSignal
+    pyqtSignal,
+    QTemporaryFile
 )
 from qgis.PyQt.QtNetwork import QNetworkRequest
 
 from qgis.core import (
     QgsNetworkAccessManager,
     QgsVectorLayer,
-    QgsSettings
+    QgsSettings,
+    QgsBlockingNetworkRequest
 )
 
 from qquake.quakeml_parser import (
@@ -380,7 +383,27 @@ class Fetcher(QObject):
 
         vl.dataProvider().addFeatures(features)
 
+        if self.service_config.get('styleurl'):
+            self.fetch_and_apply_style(vl, self.service_config.get('styleurl'))
+
         return vl
+
+    def fetch_and_apply_style(self, layer, url):
+        request = QgsBlockingNetworkRequest()
+        if request.get(QNetworkRequest(QUrl(url))) != QgsBlockingNetworkRequest.NoError:
+            self.message.emit(self.tr('Error while fetching QML style'))
+        else:
+            reply = request.reply().content()
+            tmp_file = QTemporaryFile('{}/XXXXXX.qml'.format(QDir.tempPath()))
+            tmp_file.open()
+            tmp_file_name = tmp_file.fileName()
+            tmp_file.close()
+            with open(tmp_file_name, 'wt') as f:
+                f.write(reply.data().decode())
+
+            layer.loadNamedStyle(tmp_file_name)
+
+            layer.triggerRepaint()
 
     def mdpset_to_layer(self, parser):
         """
@@ -411,6 +434,9 @@ class Fetcher(QObject):
                 features.extend(n.to_station_features(self.output_fields))
 
         vl.dataProvider().addFeatures(features)
+
+        if self.service_config.get('styleurl'):
+            self.fetch_and_apply_style(vl, self.service_config.get('styleurl'))
 
         return vl
 
