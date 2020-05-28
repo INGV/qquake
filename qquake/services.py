@@ -24,6 +24,7 @@
 
 import os
 import json
+from copy import deepcopy
 from pathlib import Path
 from qgis.core import (
     QgsApplication,
@@ -80,23 +81,31 @@ class ServiceManager(QObject):
                 service_path.mkdir(parents=True)
 
             for p in service_path.glob('**/*.json'):
-                with open(p, 'r') as f:
-                    try:
-                        service = json.load(f)
-                    except json.JSONDecodeError:
-                        continue
-                    service['read_only'] = False
+                service = self.create_from_file(p)
+                if not service:
+                    continue
 
-                    if p.stem in self.services[service_type]:
-                        # duplicate service, skip it
-                        QgsMessageLog.logMessage(
-                            'Duplicate service name found, service will not be loaded: {}'.format(p.stem), 'QQuake',
-                            Qgis.Warning)
-                        continue
+                service['read_only'] = False
 
-                    self.services[service_type][p.stem] = service
+                if p.stem in self.services[service_type]:
+                    # duplicate service, skip it
+                    QgsMessageLog.logMessage(
+                        'Duplicate service name found, service will not be loaded: {}'.format(p.stem), 'QQuake',
+                        Qgis.Warning)
+                    continue
+
+                self.services[service_type][p.stem] = service
 
         self.refreshed.emit()
+
+    def create_from_file(self, path):
+        with open(path, 'r') as f:
+            try:
+                service = json.load(f)
+            except json.JSONDecodeError:
+                return None
+
+        return service
 
     @staticmethod
     def user_service_path():
@@ -123,13 +132,50 @@ class ServiceManager(QObject):
             path.unlink()
             self.refresh_services()
 
+    def export_service(self, service_type, service_id, path):
+        config = deepcopy(self.service_details(service_type, service_id))
+        config['servicetype'] = service_type
+        config['serviceid'] = service_id
+
+        with open(path, 'wt') as f:
+            f.write(json.dumps(config, indent=4))
+        return True
+
+    def import_service(self, path):
+        service = self.create_from_file(path)
+        if not service:
+            return False, 'Error reading service definition'
+
+        service['read_only'] = False
+
+        if 'serviceid' in service:
+            service_id = service['serviceid']
+        else:
+            service_id = Path(path).stem
+
+        if not 'servicetype' in service:
+            return False, 'Incomplete service definition'
+
+        service_type = service['servicetype']
+
+        if service_id in self.services[service_type]:
+            # duplicate service, skip it
+            QgsMessageLog.logMessage(
+                'Duplicate service name found, service will not be loaded: {}'.format(service_id), 'QQuake',
+                Qgis.Warning)
+            return False, 'A duplicate service name was found'
+
+        self.save_service(service_type, service_id, service)
+
+        return True, ''
+
     def save_service(self, service_type, service_id, configuration):
         path = self.custom_service_path(service_type, service_id)
         if path.exists():
             path.unlink()
 
         with open(path, 'wt') as f:
-            f.write(json.dumps(configuration))
+            f.write(json.dumps(configuration, indent=4))
         self.refresh_services()
 
 
