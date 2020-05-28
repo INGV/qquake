@@ -32,7 +32,8 @@ from qgis.PyQt.QtWidgets import (
     QMenu,
     QAction,
     QMessageBox,
-    QInputDialog
+    QInputDialog,
+    QFileDialog
 )
 from qgis.PyQt.QtCore import (
     Qt,
@@ -44,7 +45,8 @@ from qgis.PyQt.QtCore import (
 from qgis.core import (
     Qgis,
     QgsProject,
-    QgsSettings
+    QgsSettings,
+    QgsFileUtils
 )
 from qgis.gui import (
     QgsGui,
@@ -192,6 +194,10 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.button_fdsn_remove_service.clicked.connect(lambda: self._remove_service(SERVICE_MANAGER.FDSNEVENT))
         self.button_macro_remove_service.clicked.connect(lambda: self._remove_service(SERVICE_MANAGER.MACROSEISMIC))
         self.button_station_remove_service.clicked.connect(lambda: self._remove_service(SERVICE_MANAGER.FDSNSTATION))
+
+        self.button_fdsn_export_service.clicked.connect(lambda: self._export_service(SERVICE_MANAGER.FDSNEVENT))
+        self.button_macro_export_service.clicked.connect(lambda: self._export_service(SERVICE_MANAGER.MACROSEISMIC))
+        self.button_station_export_service.clicked.connect(lambda: self._export_service(SERVICE_MANAGER.FDSNSTATION))
 
         self._restore_settings()
         self._refresh_url(SERVICE_MANAGER.FDSNEVENT)
@@ -506,6 +512,21 @@ class QQuakeDialog(QDialog, FORM_CLASS):
             return
 
         SERVICE_MANAGER.remove_service(service_type, service_id)
+
+    def _export_service(self, service_type):
+        service_id = self.get_current_service_id(service_type)
+        file, _ = QFileDialog.getSaveFileName(self, self.tr('Export Service'), QDir.homePath(), 'JSON Files (*.json)')
+        if not file:
+            return
+
+        file = QgsFileUtils.ensureFileNameHasExtension(file,['json'])
+
+        if SERVICE_MANAGER.export_service(service_type, service_id, file):
+            self.message_bar.pushMessage(
+                self.tr("Service exported"), Qgis.Success, 5)
+        else:
+            self.message_bar.pushMessage(
+                self.tr("An error occurred while exporting service"), Qgis.Critical, 5)
 
     def _getEventList(self):
         """

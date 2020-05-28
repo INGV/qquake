@@ -24,6 +24,7 @@
 
 import os
 import json
+from copy import deepcopy
 from pathlib import Path
 from qgis.core import (
     QgsApplication,
@@ -123,13 +124,22 @@ class ServiceManager(QObject):
             path.unlink()
             self.refresh_services()
 
+    def export_service(self, service_type, service_id, path):
+        config = deepcopy(self.service_details(service_type, service_id))
+        config['servicetype'] = service_type
+        config['serviceid'] = service_id
+
+        with open(path, 'wt') as f:
+            f.write(json.dumps(config, indent=4))
+        return True
+
     def save_service(self, service_type, service_id, configuration):
         path = self.custom_service_path(service_type, service_id)
         if path.exists():
             path.unlink()
 
         with open(path, 'wt') as f:
-            f.write(json.dumps(configuration))
+            f.write(json.dumps(configuration, indent=4))
         self.refresh_services()
 
 
