@@ -74,6 +74,9 @@ class Fetcher(QObject):
                  earthquake_number_mdps_greater=None,
                  earthquake_max_intensity_greater=None,
                  event_ids=None,
+                 network_codes=None,
+                 station_codes=None,
+                 locations=None,
                  parent=None,
                  output_fields=None,
                  output_type=EXTENDED
@@ -99,6 +102,9 @@ class Fetcher(QObject):
         self.earthquake_number_mdps_greater = earthquake_number_mdps_greater
         self.earthquake_max_intensity_greater = earthquake_max_intensity_greater
         self.event_ids = event_ids
+        self.network_codes = network_codes
+        self.station_codes = station_codes
+        self.locations = locations
         self.pending_event_ids = event_ids
         self.output_type = output_type
 
@@ -170,6 +176,15 @@ class Fetcher(QObject):
 
         if self.pending_event_ids:
             query.append('eventid={}'.format(self.pending_event_ids[0]))
+
+        if self.station_codes:
+            query.append('station={}'.format(self.station_codes))
+
+        if self.network_codes:
+            query.append('network={}'.format(self.network_codes))
+
+        if self.locations:
+            query.append('location={}'.format(self.locations))
 
         if self.output_type == Fetcher.EXTENDED:
             if not self.preferred_origins_only:
