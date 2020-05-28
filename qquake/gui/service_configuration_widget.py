@@ -25,30 +25,24 @@
 from copy import deepcopy
 from qgis.PyQt import uic
 from qgis.PyQt.QtWidgets import QWidget, QDialog, QVBoxLayout, QDialogButtonBox
-from qgis.PyQt.QtCore import QDateTime, Qt
+from qgis.PyQt.QtCore import QDateTime, Qt, pyqtSignal
 
 from qgis.core import (
-    QgsProject,
-    QgsCoordinateReferenceSystem,
-    QgsCoordinateTransform,
-    QgsCsException,
-    QgsSettings
+    Qgis,
 )
 from qgis.gui import (
     QgsGui,
-    QgsMapToolExtent,
-    QgsMapToolEmitPoint,
 )
 
 from qquake.gui.gui_utils import GuiUtils
-from qquake.gui.output_table_options_dialog import OutputTableOptionsDialog
 from qquake.services import SERVICE_MANAGER
-from qquake.fetcher import Fetcher
 
 FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('service_configuration_widget_base.ui'))
 
 
 class ServiceConfigurationWidget(QWidget, FORM_CLASS):
+
+    validChanged = pyqtSignal(bool)
 
     def __init__(self, iface, service_type, service_id, parent=None):
         """Constructor."""
@@ -67,6 +61,29 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
         else:
             config = {}
         self.set_state_from_config(config)
+
+        self.title_edit.textChanged.connect(self._changed)
+        self.web_service_url_edit.textChanged.connect(self._changed)
+        self._changed()
+
+    def _changed(self):
+        res, reason = self.is_valid()
+        if not res:
+            self.message_bar.clearWidgets()
+            self.message_bar.pushMessage('', reason, Qgis.Warning, 0)
+            self.validChanged.emit(False)
+        else:
+            self.message_bar.clearWidgets()
+            self.validChanged.emit(True)
+
+    def is_valid(self):
+        if not self.title_edit.text():
+            return False, self.tr('A title must be entered')
+
+        if not self.web_service_url_edit.text():
+            return False, self.tr('The web service URL must be entered')
+
+        return True, None
 
     def set_state_from_config(self, config):
         self.title_edit.setText(config.get('title'))
@@ -160,6 +177,11 @@ class ServiceConfigurationDialog(QDialog):
         self.button_box.rejected.connect(self.reject)
         layout.addWidget(self.button_box)
         self.setLayout(layout)
+        self.config_widget.validChanged.connect(self.valid_changed)
+        self.valid_changed(self.config_widget.is_valid()[0])
+
+    def valid_changed(self, is_valid):
+        self.button_box.button(QDialogButtonBox.Ok).setEnabled(is_valid)
 
     def accept(self):
         self.config_widget.save_changes()
