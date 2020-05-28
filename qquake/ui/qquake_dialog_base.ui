@@ -20,7 +20,7 @@
       <enum>QTabWidget::North</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <property name="tabsClosable">
       <bool>false</bool>
@@ -70,7 +70,17 @@
              <item>
               <widget class="QToolButton" name="button_fdsn_new_service">
                <property name="text">
-                <string>Add Service</string>
+                <string>Add</string>
+               </property>
+               <property name="popupMode">
+                <enum>QToolButton::InstantPopup</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="button_fdsn_edit_service">
+               <property name="text">
+                <string>Edit</string>
                </property>
                <property name="popupMode">
                 <enum>QToolButton::InstantPopup</enum>
@@ -80,14 +90,14 @@
              <item>
               <widget class="QToolButton" name="button_fdsn_remove_service">
                <property name="text">
-                <string>Remove Service</string>
+                <string>Remove</string>
                </property>
               </widget>
              </item>
              <item>
               <widget class="QToolButton" name="button_fdsn_export_service">
                <property name="text">
-                <string>Export Service</string>
+                <string>Export</string>
                </property>
                <property name="popupMode">
                 <enum>QToolButton::InstantPopup</enum>
@@ -296,7 +306,7 @@
              <item>
               <widget class="QToolButton" name="button_macro_new_service">
                <property name="text">
-                <string>Add Service</string>
+                <string>Add</string>
                </property>
                <property name="popupMode">
                 <enum>QToolButton::InstantPopup</enum>
@@ -304,16 +314,23 @@
               </widget>
              </item>
              <item>
+              <widget class="QToolButton" name="button_macro_edit_service">
+               <property name="text">
+                <string>Edit</string>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="QToolButton" name="button_macro_remove_service">
                <property name="text">
-                <string>Remove Service</string>
+                <string>Remove</string>
                </property>
               </widget>
              </item>
              <item>
               <widget class="QToolButton" name="button_macro_export_service">
                <property name="text">
-                <string>Export Service</string>
+                <string>Export</string>
                </property>
               </widget>
              </item>
@@ -363,40 +380,36 @@
               <attribute name="title">
                <string>Search by Parameters</string>
               </attribute>
-              <widget class="QScrollArea" name="scrollArea_2">
-               <property name="geometry">
-                <rect>
-                 <x>9</x>
-                 <y>9</y>
-                 <width>18</width>
-                 <height>28</height>
-                </rect>
-               </property>
-               <property name="frameShape">
-                <enum>QFrame::NoFrame</enum>
-               </property>
-               <property name="frameShadow">
-                <enum>QFrame::Plain</enum>
-               </property>
-               <property name="widgetResizable">
-                <bool>true</bool>
-               </property>
-               <widget class="QWidget" name="scrollAreaWidgetContents">
-                <property name="geometry">
-                 <rect>
-                  <x>0</x>
-                  <y>0</y>
-                  <width>18</width>
-                  <height>28</height>
-                 </rect>
-                </property>
-                <layout class="QVBoxLayout" name="verticalLayout_14">
-                 <item>
-                  <widget class="QWidget" name="macro_filter_container" native="true"/>
-                 </item>
-                </layout>
-               </widget>
-              </widget>
+              <layout class="QVBoxLayout" name="verticalLayout_40">
+               <item>
+                <widget class="QScrollArea" name="scrollArea_2">
+                 <property name="frameShape">
+                  <enum>QFrame::NoFrame</enum>
+                 </property>
+                 <property name="frameShadow">
+                  <enum>QFrame::Plain</enum>
+                 </property>
+                 <property name="widgetResizable">
+                  <bool>true</bool>
+                 </property>
+                 <widget class="QWidget" name="scrollAreaWidgetContents">
+                  <property name="geometry">
+                   <rect>
+                    <x>0</x>
+                    <y>0</y>
+                    <width>585</width>
+                    <height>240</height>
+                   </rect>
+                  </property>
+                  <layout class="QVBoxLayout" name="verticalLayout_14">
+                   <item>
+                    <widget class="QWidget" name="macro_filter_container" native="true"/>
+                   </item>
+                  </layout>
+                 </widget>
+                </widget>
+               </item>
+              </layout>
              </widget>
              <widget class="QWidget" name="tab_12">
               <attribute name="title">
@@ -478,7 +491,7 @@
              <item>
               <widget class="QToolButton" name="button_station_new_service">
                <property name="text">
-                <string>Add Service</string>
+                <string>Add</string>
                </property>
                <property name="popupMode">
                 <enum>QToolButton::InstantPopup</enum>
@@ -486,16 +499,23 @@
               </widget>
              </item>
              <item>
+              <widget class="QToolButton" name="button_station_edit_service">
+               <property name="text">
+                <string>Edit</string>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="QToolButton" name="button_station_remove_service">
                <property name="text">
-                <string>Remove Service</string>
+                <string>Remove</string>
                </property>
               </widget>
              </item>
              <item>
               <widget class="QToolButton" name="button_station_export_service">
                <property name="text">
-                <string>Export Service</string>
+                <string>Export</string>
                </property>
               </widget>
              </item>
