@@ -62,7 +62,10 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
         self.start_date_edit.setDisplayFormat("yyyy-MM-dd HH:mm:ss")
         self.end_date_edit.setDisplayFormat("yyyy-MM-dd HH:mm:ss")
 
-        config = SERVICE_MANAGER.service_details(service_type, service_id)
+        if service_id in SERVICE_MANAGER.available_services(service_type):
+            config = SERVICE_MANAGER.service_details(service_type, service_id)
+        else:
+            config = {}
         self.set_state_from_config(config)
 
     def set_state_from_config(self, config):
@@ -87,13 +90,25 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
             self.end_date_edit.clear()
 
         extent = config.get('boundingbox')
-        self.min_lat_spin.setValue(extent[1])
-        self.max_lat_spin.setValue(extent[3])
-        self.min_long_spin.setValue(extent[0])
-        self.max_long_spin.setValue(extent[2])
+        if extent:
+            self.min_lat_spin.setValue(extent[1])
+            self.max_lat_spin.setValue(extent[3])
+            self.min_long_spin.setValue(extent[0])
+            self.max_long_spin.setValue(extent[2])
+        else:
+            self.min_lat_spin.setValue(-90)
+            self.max_lat_spin.setValue(90)
+            self.min_long_spin.setValue(-180)
+            self.max_long_spin.setValue(180)
 
     def get_config(self):
-        config = deepcopy(SERVICE_MANAGER.service_details(self.service_type, self.service_id))
+        if self.service_id in SERVICE_MANAGER.available_services(self.service_type):
+            config = deepcopy(SERVICE_MANAGER.service_details(self.service_type, self.service_id))
+        else:
+            config = {
+                'default':{},
+                'settings':{}
+            }
 
         config['title'] = self.title_edit.text()
         config['info'] = self.info_edit.text()

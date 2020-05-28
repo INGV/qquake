@@ -50,7 +50,8 @@ from qgis.core import (
 )
 from qgis.gui import (
     QgsGui,
-    QgsMessageBar
+    QgsMessageBar,
+    QgsNewNameDialog
 )
 
 from qquake.fetcher import Fetcher
@@ -218,13 +219,17 @@ class QQuakeDialog(QDialog, FORM_CLASS):
 
     def _build_add_service_menu(self, widget, service_type):
         menu = QMenu()
-        save_action = QAction(self.tr('Save Current Configuration…'), parent=menu)
+        save_action = QAction(self.tr('Save Current Configuration As…'), parent=menu)
         menu.addAction(save_action)
         save_action.triggered.connect(lambda: self._save_configuration(service_type))
 
         import_action = QAction(self.tr('Import from File…'), parent=menu)
         menu.addAction(import_action)
         import_action.triggered.connect(self._import_configuration)
+
+        create_new_action = QAction(self.tr('Create New Service…'), parent=menu)
+        menu.addAction(create_new_action)
+        create_new_action.triggered.connect(lambda: self._create_configuration(service_type))
 
         widget.setMenu(menu)
 
@@ -535,10 +540,20 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         service_id = self.get_current_service_id(service_type)
 
         config_dialog = ServiceConfigurationDialog(self.iface, service_type, service_id, self)
-        if config_dialog.exec_():
-            pass
+        config_dialog.exec_()
 
+    def _create_configuration(self, service_type):
+        dlg = QgsNewNameDialog('','',[],existing=SERVICE_MANAGER.available_services(service_type))
+        dlg.setHintString(self.tr('Create a new service configuration named'))
+        dlg.setWindowTitle(self.tr('New Service Configuration'))
+        dlg.setOverwriteEnabled(False)
+        dlg.setConflictingNameWarning(self.tr('A configuration with this name already exists'))
+        if not dlg.exec_():
+            return
 
+        name = dlg.name()
+        config_dialog = ServiceConfigurationDialog(self.iface, service_type, name, self)
+        config_dialog.exec_()
 
     def _export_service(self, service_type):
         service_id = self.get_current_service_id(service_type)
