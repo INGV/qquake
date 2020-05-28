@@ -213,6 +213,11 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         save_action = QAction(self.tr('Save Current Configuration…'), parent=menu)
         menu.addAction(save_action)
         save_action.triggered.connect(lambda: self._save_configuration(service_type))
+
+        import_action = QAction(self.tr('Import from File…'), parent=menu)
+        menu.addAction(import_action)
+        import_action.triggered.connect(self._import_configuration)
+
         widget.setMenu(menu)
 
     def _refresh_services(self):
@@ -515,7 +520,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
 
     def _export_service(self, service_type):
         service_id = self.get_current_service_id(service_type)
-        file, _ = QFileDialog.getSaveFileName(self, self.tr('Export Service'), QDir.homePath(), 'JSON Files (*.json)')
+        file, _ = QFileDialog.getSaveFileName(self, self.tr('Export Service'), QDir.homePath() + '/{}.json'.format(service_id) , 'JSON Files (*.json)')
         if not file:
             return
 
@@ -527,6 +532,19 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         else:
             self.message_bar.pushMessage(
                 self.tr("An error occurred while exporting service"), Qgis.Critical, 5)
+
+    def _import_configuration(self):
+        file, _ = QFileDialog.getOpenFileName(self, self.tr('Import Service'), QDir.homePath(), 'JSON Files (*.json)')
+        if not file:
+            return
+
+        res, err =SERVICE_MANAGER.import_service(file)
+        if res:
+            self.message_bar.pushMessage(
+                self.tr("Service imported"), Qgis.Success, 5)
+        else:
+            self.message_bar.pushMessage(
+                err, Qgis.Critical, 5)
 
     def _getEventList(self):
         """
