@@ -57,6 +57,7 @@ from qgis.gui import (
 from qquake.fetcher import Fetcher
 from qquake.gui.filter_parameter_widget import FilterParameterWidget
 from qquake.gui.filter_by_id_widget import FilterByIdWidget
+from qquake.gui.filter_station_by_id_widget import FilterStationByIdWidget
 from qquake.gui.ogc_service_options_widget import OgcServiceWidget
 from qquake.gui.service_information_widget import ServiceInformationWidget
 from qquake.gui.service_configuration_widget import ServiceConfigurationDialog
@@ -114,7 +115,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         vl.setContentsMargins(0, 0, 0, 0)
         vl.addWidget(self.station_filter)
         self.station_filter_container.setLayout(vl)
-        self.station_by_id_filter = FilterByIdWidget(iface, SERVICE_MANAGER.FDSNSTATION)
+        self.station_by_id_filter = FilterStationByIdWidget(iface, SERVICE_MANAGER.FDSNSTATION)
         vl = QVBoxLayout()
         vl.setContentsMargins(0, 0, 0, 0)
         vl.addWidget(self.station_by_id_filter)
@@ -383,6 +384,15 @@ class QQuakeDialog(QDialog, FORM_CLASS):
             return Fetcher(service_type=service_type,
                            event_service=service,
                            event_ids=filter_widget.ids(),
+                           output_fields=filter_widget.output_fields,
+                           output_type=filter_widget.output_type()
+                           )
+        elif isinstance(filter_widget, FilterStationByIdWidget):
+            return Fetcher(service_type=service_type,
+                           event_service=service,
+                           network_codes=filter_widget.network_codes(),
+                           station_codes=filter_widget.station_codes(),
+                           locations=filter_widget.locations(),
                            output_fields=filter_widget.output_fields,
                            output_type=filter_widget.output_type()
                            )
