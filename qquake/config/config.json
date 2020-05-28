@@ -26,14 +26,10 @@
         "fields": [
           "eventParameters>event>publicID",
           "eventParameters>event>creationInfo>agencyID",
-          "eventParameters>event>creationInfo>agencyURI",
           "eventParameters>event>creationInfo>author",
-          "eventParameters>event>creationInfo>authorURI",
           "eventParameters>event>origin>publicID",
           "eventParameters>event>origin>creationInfo>agencyID",
-          "eventParameters>event>origin>creationInfo>agencyURI",
           "eventParameters>event>origin>creationInfo>author",
-          "eventParameters>event>origin>creationInfo>authorURI",
           "eventParameters>event>origin>time>value",
           "eventParameters>event>origin>compositeTime>year>value",
           "eventParameters>event>origin>compositeTime>month>value",
@@ -46,9 +42,7 @@
           "eventParameters>event>origin>longitude>value",
           "eventParameters>event>magnitude>publicID",
           "eventParameters>event>magnitude>creationInfo>agencyID",
-          "eventParameters>event>magnitude>creationInfo>agencyURI",
           "eventParameters>event>magnitude>creationInfo>author",
-          "eventParameters>event>magnitude>creationInfo>authorURI",
           "eventParameters>event>magnitude>mag>value",
           "eventParameters>event>magnitude>mag>uncertainty"
         ]
@@ -110,14 +104,10 @@
         "fields": [
           "eventParameters>event>publicID",
           "eventParameters>event>creationInfo>agencyID",
-          "eventParameters>event>creationInfo>agencyURI",
           "eventParameters>event>creationInfo>author",
-          "eventParameters>event>creationInfo>authorURI",
           "eventParameters>event>origin>publicID",
           "eventParameters>event>origin>creationInfo>agencyID",
-          "eventParameters>event>origin>creationInfo>agencyURI",
           "eventParameters>event>origin>creationInfo>author",
-          "eventParameters>event>origin>creationInfo>authorURI",
           "eventParameters>event>origin>time>value",
           "eventParameters>event>origin>compositeTime>year>value",
           "eventParameters>event>origin>compositeTime>month>value",
@@ -131,9 +121,7 @@
           "eventParameters>event>origin>depth>value",
           "eventParameters>event>magnitude>publicID",
           "eventParameters>event>magnitude>creationInfo>agencyID",
-          "eventParameters>event>magnitude>creationInfo>agencyURI",
           "eventParameters>event>magnitude>creationInfo>author",
-          "eventParameters>event>magnitude>creationInfo>authorURI",
           "eventParameters>event>magnitude>mag>value",
           "eventParameters>event>magnitude>mag>uncertainty"
         ]
@@ -194,14 +182,10 @@
         "fields": [
           "eventParameters>event>publicID",
           "eventParameters>event>creationInfo>agencyID",
-          "eventParameters>event>creationInfo>agencyURI",
           "eventParameters>event>creationInfo>author",
-          "eventParameters>event>creationInfo>authorURI",
           "eventParameters>event>origin>publicID",
           "eventParameters>event>origin>creationInfo>agencyID",
-          "eventParameters>event>origin>creationInfo>agencyURI",
           "eventParameters>event>origin>creationInfo>author",
-          "eventParameters>event>origin>creationInfo>authorURI",
           "eventParameters>event>origin>time>value",
           "eventParameters>event>origin>region",
           "eventParameters>event>origin>latitude>value",
@@ -209,9 +193,7 @@
           "eventParameters>event>origin>depth>value",
           "eventParameters>event>magnitude>publicID",
           "eventParameters>event>magnitude>creationInfo>agencyID",
-          "eventParameters>event>magnitude>creationInfo>agencyURI",
           "eventParameters>event>magnitude>creationInfo>author",
-          "eventParameters>event>magnitude>creationInfo>authorURI",
           "eventParameters>event>magnitude>mag>value",
           "eventParameters>event>magnitude>mag>uncertainty"
         ]
@@ -272,14 +254,10 @@
         "fields": [
           "eventParameters>event>publicID",
           "eventParameters>event>creationInfo>agencyID",
-          "eventParameters>event>creationInfo>agencyURI",
           "eventParameters>event>creationInfo>author",
-          "eventParameters>event>creationInfo>authorURI",
           "eventParameters>event>origin>publicID",
           "eventParameters>event>origin>creationInfo>agencyID",
-          "eventParameters>event>origin>creationInfo>agencyURI",
           "eventParameters>event>origin>creationInfo>author",
-          "eventParameters>event>origin>creationInfo>authorURI",
           "eventParameters>event>origin>time>value",
           "eventParameters>event>origin>compositeTime>year>value",
           "eventParameters>event>origin>compositeTime>month>value",
@@ -293,9 +271,7 @@
           "eventParameters>event>origin>depth>value",
           "eventParameters>event>magnitude>publicID",
           "eventParameters>event>magnitude>creationInfo>agencyID",
-          "eventParameters>event>magnitude>creationInfo>agencyURI",
           "eventParameters>event>magnitude>creationInfo>author",
-          "eventParameters>event>magnitude>creationInfo>authorURI",
           "eventParameters>event>magnitude>mag>value",
           "eventParameters>event>magnitude>mag>uncertainty"
         ]
@@ -356,14 +332,10 @@
         "fields": [
           "eventParameters>event>publicID",
           "eventParameters>event>creationInfo>agencyID",
-          "eventParameters>event>creationInfo>agencyURI",
           "eventParameters>event>creationInfo>author",
-          "eventParameters>event>creationInfo>authorURI",
           "eventParameters>event>origin>publicID",
           "eventParameters>event>origin>creationInfo>agencyID",
-          "eventParameters>event>origin>creationInfo>agencyURI",
           "eventParameters>event>origin>creationInfo>author",
-          "eventParameters>event>origin>creationInfo>authorURI",
           "eventParameters>event>origin>time>value",
           "eventParameters>event>origin>region",
           "eventParameters>event>origin>latitude>value",
@@ -371,9 +343,7 @@
           "eventParameters>event>origin>depth>value",
           "eventParameters>event>magnitude>publicID",
           "eventParameters>event>magnitude>creationInfo>agencyID",
-          "eventParameters>event>magnitude>creationInfo>agencyURI",
           "eventParameters>event>magnitude>creationInfo>author",
-          "eventParameters>event>magnitude>creationInfo>authorURI",
           "eventParameters>event>magnitude>mag>value",
           "eventParameters>event>magnitude>mag>uncertainty"
         ]
@@ -512,7 +482,40 @@
         "datestart": "1000-01-01T01:01:01+00:00",
         "dateend": "1899-12-31T23:59:59+00:00",
         "boundingboxpredefined": "europe",
-        "style": "AHEAD_intensities"
+        "style": "AHEAD_intensities",
+        "fields": [
+          "eventParameters>event>publicID",
+          "eventParameters>event>creationInfo>agencyID",
+          "eventParameters>event>creationInfo>author",
+          "eventParameters>event>origin>publicID",
+          "eventParameters>event>origin>creationInfo>agencyID",
+          "eventParameters>event>origin>creationInfo>author",
+          "eventParameters>event>origin>time>value",
+          "eventParameters>event>origin>compositeTime>year>value",
+          "eventParameters>event>origin>compositeTime>month>value",
+          "eventParameters>event>origin>compositeTime>day>value",
+          "eventParameters>event>origin>compositeTime>hour>value",
+          "eventParameters>event>origin>compositeTime>minute>value",
+          "eventParameters>event>origin>compositeTime>second>value",
+          "eventParameters>event>origin>region",
+          "macroseismicParameters>mdpSet§publicID",
+		  "macroseismicParameters>mdpSet>literatureSourceMDPSetReference",
+		  "macroseismicParameters>mdpSet>creationInfo>author",
+		  "macroseismicParameters>mdpSet>creationInfo>creationTime",
+		  "macroseismicParameters>mdpSet>maximumIntensity>macroseismicScale",
+		  "macroseismicParameters>mdpSet>maximumIntensity>expectedIntensity>class",
+		  "macroseismicParameters>mdpSet>mdpCount",
+		  "macroseismicParameters>mdp§publicID",
+		  "macroseismicParameters>place§publicID",
+		  "macroseismicParameters>place>preferredName>name",
+		  "macroseismicParameters>place>referenceLatitude>value",
+		  "macroseismicParameters>place>referenceLongitude>value",
+		  "macroseismicParameters>place>altitude",
+		  "macroseismicParameters>place>isoCountryCode",
+		  "macroseismicParameters>place>type",
+		  "macroseismicParameters>mdp>intensity>macroseismicScale",
+		  "macroseismicParameters>mdp>intensity>expectedIntensity>class"
+        ]
       },
       "settings": {
         "queryeventid": true,
@@ -569,7 +572,40 @@
         "datestart": "1000-01-01T01:01:01+00:00",
         "dateend": "2017-12-31T23:59:59+00:00",
         "boundingboxpredefined": "italy",
-        "style": "AHEAD_intensities"
+        "style": "AHEAD_intensities",
+        "fields": [
+          "eventParameters>event>publicID",
+          "eventParameters>event>creationInfo>agencyID",
+          "eventParameters>event>creationInfo>author",
+          "eventParameters>event>origin>publicID",
+          "eventParameters>event>origin>creationInfo>agencyID",
+          "eventParameters>event>origin>creationInfo>author",
+          "eventParameters>event>origin>time>value",
+          "eventParameters>event>origin>compositeTime>year>value",
+          "eventParameters>event>origin>compositeTime>month>value",
+          "eventParameters>event>origin>compositeTime>day>value",
+          "eventParameters>event>origin>compositeTime>hour>value",
+          "eventParameters>event>origin>compositeTime>minute>value",
+          "eventParameters>event>origin>compositeTime>second>value",
+          "eventParameters>event>origin>region",
+          "macroseismicParameters>mdpSet§publicID",
+		  "macroseismicParameters>mdpSet>literatureSourceMDPSetReference",
+		  "macroseismicParameters>mdpSet>creationInfo>author",
+		  "macroseismicParameters>mdpSet>creationInfo>creationTime",
+		  "macroseismicParameters>mdpSet>maximumIntensity>macroseismicScale",
+		  "macroseismicParameters>mdpSet>maximumIntensity>expectedIntensity>class",
+		  "macroseismicParameters>mdpSet>mdpCount",
+		  "macroseismicParameters>mdp§publicID",
+		  "macroseismicParameters>place§publicID",
+		  "macroseismicParameters>place>preferredName>name",
+		  "macroseismicParameters>place>referenceLatitude>value",
+		  "macroseismicParameters>place>referenceLongitude>value",
+		  "macroseismicParameters>place>altitude",
+		  "macroseismicParameters>place>isoCountryCode",
+		  "macroseismicParameters>place>type",
+		  "macroseismicParameters>mdp>intensity>macroseismicScale",
+		  "macroseismicParameters>mdp>intensity>expectedIntensity>class"
+        ]
       },
       "settings": {
         "queryeventid": true,
@@ -678,34 +714,31 @@
           {
             "layername": "EDSF:crustal_fault_sources_pln",
             "styles": [
-              "default"
+              "EDSF_CF_pln"
             ]
           },
           {
             "layername": "EDSF:crustal_fault_sources_top",
             "styles": [
-              "default",
-              "EDSF_avgSR",
-              "EDSF_faultType",
-              "EDSF_slipType"
-            ]
+              "EDSF_CF_top"
+              ]
           },
           {
             "layername": "EDSF:subduction_zones",
             "styles": [
-              "EDSF subduction zones"
+              "EDSF_SUBD_zon"
             ]
           },
           {
             "layername": "EDSF:subduction_contours",
             "styles": [
-              "EDSF subduction contours"
+              "EDSF_SUBD_cnt"
             ]
           }
         ]
       },
       "configversion": 0.2,
-      "configlastupdate": "2020-02-10T09:10:00+00:00"
+      "configlastupdate": "2020-05-27T11:10:00+00:00"
     }
   },
   "wms": {
@@ -724,10 +757,6 @@
       "default": {
         "wmsversion": "1.3.0",
         "layers": [
-          {
-            "layername": "SHEEC_1000_1899",
-            "styles": []
-          },
           {
             "layername": "SHEEC_1000_1899",
             "styles": [
@@ -832,20 +861,17 @@
     }
   },
   "styles": {
-    "EDSF average slip rate": {
-      "url": "https://www.seismofaults.eu/EDSFStyles/EDSF2013_avgSR.qml"
+    "EDSF_CF_top": {
+      "url": "https://www.seismofaults.eu/EDSFStyles/EDSF_CF_top.qml"
     },
-    "EDSF fault type": {
-      "url": "https://www.seismofaults.eu/EDSFStyles/EDSF2013_faultType.qml"
+    "EDSF_CF_pln": {
+      "url": "https://www.seismofaults.eu/EDSFStyles/EDSF_CF_pln.qml"
     },
-    "EDSF slip type": {
-      "url": "https://www.seismofaults.eu/EDSFStyles/EDSF2013_slipType.qml"
+    "EDSF_SUBD_zon": {
+      "url": "https://www.seismofaults.eu/EDSFStyles/EDSF_SUBD_zon.qml"
     },
-    "EDSF subduction zones": {
-      "url": "https://www.seismofaults.eu/EDSFStyles/EDSF2013_subdZon.qml"
-    },
-    "EDSF subduction contours": {
-      "url": "https://www.seismofaults.eu/EDSFStyles/EDSF2013_subdCnt.qml"
+    "EDSF_SUBD_cnt": {
+      "url": "https://www.seismofaults.eu/EDSFStyles/EDSF_SUBD_cnt.qml"
     },
     "CPTI": {
       "url": "https://www.emidius.eu/AHEAD/symbols/CPTI15_symbols.qml"
