@@ -95,6 +95,7 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
         self.data_provider_edit.setText(config.get('dataprovider'))
         self.data_provider_url_edit.setText(config.get('dataproviderurl'))
         self.web_service_url_edit.setText(config.get('endpointurl'))
+        self.qml_style_url_edit.setText(config.get('styleurl'))
 
         if config.get('datestart'):
             self.start_date_edit.setDateTime(QDateTime.fromString(config.get('datestart'), Qt.ISODate))
@@ -136,6 +137,7 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
         config['dataprovider'] = self.data_provider_edit.text()
         config['dataproviderurl'] = self.data_provider_url_edit.text()
         config['endpointurl'] = self.web_service_url_edit.text()
+        config['styleurl'] = self.qml_style_url_edit.text()
 
         if self.start_date_edit.dateTime().isValid():
             config['datestart'] = self.start_date_edit.dateTime().toString(Qt.ISODate)
