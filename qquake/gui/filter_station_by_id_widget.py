@@ -78,10 +78,31 @@ class FilterStationByIdWidget(QWidget, FORM_CLASS):
 
     def set_service_id(self, service_id):
         self.service_id = service_id
-        if 'fields' in SERVICE_MANAGER.service_details(self.service_type, self.service_id)['default']:
-            self.output_fields = SERVICE_MANAGER.service_details(self.service_type, service_id)['default']['fields']
+
+        service_config = SERVICE_MANAGER.service_details(self.service_type, self.service_id)
+        if 'fields' in service_config['default']:
+            self.output_fields = service_config['default']['fields']
+
+        if not service_config['settings'].get('outputtext', False):
+            if self.radio_basic_output.isChecked():
+                self.radio_extended_output.setChecked(True)
+            self.radio_basic_output.setEnabled(False)
+        else:
+            self.radio_basic_output.setEnabled(True)
+
+        if not service_config['settings'].get('outputxml', False):
+            if self.radio_extended_output.isChecked():
+                self.radio_basic_output.setChecked(True)
+            self.radio_extended_output.setEnabled(False)
+        else:
+            self.radio_extended_output.setEnabled(True)
 
     def restore_settings(self, prefix):
+        if self.service_id:
+            service_config = SERVICE_MANAGER.service_details(self.service_type, self.service_id)
+        else:
+            service_config = None
+
         s = QgsSettings()
         self.edit_network_code.setText(s.value('/plugins/qquake/{}_network_code'.format(prefix), '', str))
         self.edit_station_code.setText(s.value('/plugins/qquake/{}_station_code'.format(prefix), '', str))
@@ -94,10 +115,13 @@ class FilterStationByIdWidget(QWidget, FORM_CLASS):
         if s.value('/plugins/qquake/{}_location_code_checked'.format(prefix), True, bool):
             self.radio_location_code.setChecked(True)
 
-        self.radio_basic_output.setChecked(
-            s.value('/plugins/qquake/{}_single_event_basic_checked'.format(prefix), True, bool))
-        self.radio_extended_output.setChecked(
-            s.value('/plugins/qquake/{}_single_event_extended_checked'.format(prefix), False, bool))
+        if not service_config or service_config['settings'].get('outputtext', False):
+            self.radio_basic_output.setChecked(
+                s.value('/plugins/qquake/{}_single_event_basic_checked'.format(prefix), True, bool))
+
+        if not service_config or service_config['settings'].get('outputxml', False):
+            self.radio_extended_output.setChecked(
+                s.value('/plugins/qquake/{}_single_event_extended_checked'.format(prefix), False, bool))
 
     def save_settings(self, prefix):
         s = QgsSettings()

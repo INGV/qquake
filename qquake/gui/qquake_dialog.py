@@ -185,6 +185,8 @@ class QQuakeDialog(QDialog, FORM_CLASS):
 
         self.button_box.accepted.connect(self._getEventList)
 
+        self.service_tab_widget.currentChanged.connect(lambda: self._refresh_url(None))
+
         self.fetcher = None
 
         QgsGui.enableAutoGeometryRestore(self)
@@ -358,6 +360,8 @@ class QQuakeDialog(QDialog, FORM_CLASS):
 
         filter_widget = self.get_service_filter_widget(service_type)
 
+        service_config = SERVICE_MANAGER.service_details(service_type, service)
+
         if isinstance(filter_widget, FilterParameterWidget):
             return Fetcher(service_type=service_type,
                            event_service=service,
@@ -381,6 +385,9 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                            output_type=filter_widget.output_type()
                            )
         elif isinstance(filter_widget, FilterByIdWidget):
+            if not service_config['settings'].get('queryeventid'):
+                return None
+
             return Fetcher(service_type=service_type,
                            event_service=service,
                            event_ids=filter_widget.ids(),
@@ -397,10 +404,19 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                            output_type=filter_widget.output_type()
                            )
 
-    def _refresh_url(self, service_type):
+    def _refresh_url(self, service_type=None):
+        if not service_type:
+            service_type = self.get_current_service_type()
+            if service_type not in (SERVICE_MANAGER.FDSNEVENT, SERVICE_MANAGER.MACROSEISMIC, SERVICE_MANAGER.FDSNSTATION):
+                self.button_box.button(QDialogButtonBox.Ok).setEnabled(True)
+                return
+
         fetcher = self.get_fetcher(service_type)
         if not fetcher:
+            self.button_box.button(QDialogButtonBox.Ok).setEnabled(False)
             return
+
+        self.button_box.button(QDialogButtonBox.Ok).setEnabled(True)
 
         if service_type == SERVICE_MANAGER.FDSNEVENT:
             self.fsdn_event_url_text_browser.setText('<a href="{0}">{0}</a>'.format(fetcher.generate_url()))
@@ -410,7 +426,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
             self.fdsn_station_url_text_browser.setText('<a href="{0}">{0}</a>'.format(fetcher.generate_url()))
 
     def _update_service_widgets(self, service_type, service_id, filter_widget, filter_by_id_widget, info_widget,
-                                remove_service_button, edit_service_button):
+                                remove_service_button, edit_service_button, tab_widget):
         service_config = SERVICE_MANAGER.service_details(service_type, service_id)
 
         date_start = QDateTime.fromString(
@@ -463,6 +479,8 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         if service_config['default'].get('macromdpsgreaterthan'):
             filter_widget.set_mdps_greater_than(service_config['default'].get('macromdpsgreaterthan'))
 
+        if service_type in [SERVICE_MANAGER.FDSNEVENT, SERVICE_MANAGER.MACROSEISMIC]:
+            tab_widget.widget(1).setEnabled(service_config['settings'].get('queryeventid', False))
 
         if service_config['default'].get('boundingboxpredefined'):
             box = SERVICE_MANAGER.predefined_bounding_box(service_config['default']['boundingboxpredefined'])['boundingbox']
@@ -489,7 +507,8 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                                      filter_by_id_widget=self.fsdn_by_id_filter,
                                      info_widget=self.earthquake_service_info_widget,
                                      remove_service_button=self.button_fdsn_remove_service,
-                                     edit_service_button=self.button_fdsn_edit_service)
+                                     edit_service_button=self.button_fdsn_edit_service,
+                                     tab_widget=self.fdsn_tab_widget)
 
     def refreshFdsnMacroseismicWidgets(self):
         """
@@ -504,7 +523,8 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                                      filter_by_id_widget=self.macro_by_id_filter,
                                      info_widget=self.macro_service_info_widget,
                                      remove_service_button=self.button_macro_remove_service,
-                                     edit_service_button=self.button_macro_edit_service)
+                                     edit_service_button=self.button_macro_edit_service,
+                                     tab_widget=self.macro_tab_widget)
 
     def refreshFdsnStationWidgets(self):
         """
@@ -518,7 +538,8 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                                      filter_by_id_widget=self.station_by_id_filter,
                                      filter_widget=self.station_filter, info_widget=self.station_service_info_widget,
                                      remove_service_button=self.button_station_remove_service,
-                                     edit_service_button=self.button_station_edit_service)
+                                     edit_service_button=self.button_station_edit_service,
+                                     tab_widget=self.fdsnstation_tab_widget)
 
     def refreshOgcWidgets(self):
         """

@@ -24,7 +24,14 @@
 
 from copy import deepcopy
 from qgis.PyQt import uic
-from qgis.PyQt.QtWidgets import QWidget, QDialog, QVBoxLayout, QDialogButtonBox
+from qgis.PyQt.QtWidgets import (
+    QWidget,
+    QDialog,
+    QVBoxLayout,
+    QDialogButtonBox,
+    QCheckBox,
+    QSpinBox
+)
 from qgis.PyQt.QtCore import QDateTime, Qt, pyqtSignal
 
 from qgis.core import (
@@ -41,6 +48,33 @@ FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('service_configuration_
 
 
 class ServiceConfigurationWidget(QWidget, FORM_CLASS):
+    WIDGET_MAP = {
+        'queryeventid': 'check_filter_by_eventid',
+        'queryoriginid': 'check_filter_by_originid',
+        'querymagnitudeid': 'check_filter_by_magnitudeid',
+        'queryfocalmechanismid': 'check_filter_by_focalmechanismid',
+        'queryupdatedafter': 'check_filter_data_updated_after',
+        'querycatalog': 'check_filter_by_catalog',
+        'querycontributor': 'check_filter_by_contributor',
+        'querycontributorid': 'check_filter_by_contributorid',
+        'queryeventtype': 'check_filter_by_event_type',
+        'querymagnitudetype': 'check_filter_by_magnitude_type',
+        'queryincludeallorigins': 'check_can_include_all_origins',
+        'queryincludeallmagnitudes': 'check_can_include_all_magnitudes',
+        'queryincludearrivals': 'check_can_include_arrivals',
+        'queryincludeallstationsmagnitudes': 'check_can_include_all_stations_magnitudes',
+        'querylimit': 'check_has_limit_of_entries',
+        'querylimitmaxentries': 'spin_has_limit_of_entries',
+        'querycircular': 'check_can_filter_using_circular_area',
+        'querycircularradiuskm': 'check_radius_of_circular_area_is_specified_in_km',
+        'querydepth': 'check_can_filter_by_depth',
+        'outputtext': 'check_can_output_text',
+        'outputxml': 'check_can_output_xml',
+        'outputgeojson': 'check_can_output_geojson',
+        'outputjson': 'check_can_output_json',
+        'outputkml': 'check_can_output_kml',
+        'outputxlsx': 'check_can_output_microsoft_xlsx'
+    }
 
     validChanged = pyqtSignal(bool)
 
@@ -64,9 +98,26 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
 
         self.title_edit.textChanged.connect(self._changed)
         self.web_service_url_edit.textChanged.connect(self._changed)
+
+        self.combo_http_code_nodata.addItem('204', '204')
+
+        for _, w in self.WIDGET_MAP.items():
+            widget = getattr(self, w)
+            if isinstance(widget, QCheckBox):
+                widget.toggled.connect(self._changed)
+            elif isinstance(widget, QSpinBox):
+                widget.valueChanged.connect(self._changed)
+        self.check_http_code_nodata.toggled.connect(self._changed)
+        self.combo_http_code_nodata.currentIndexChanged.connect(self._changed)
+
         self._changed()
 
     def _changed(self):
+
+        self.combo_http_code_nodata.setEnabled(self.check_http_code_nodata.isChecked())
+        self.spin_has_limit_of_entries.setEnabled(self.check_has_limit_of_entries.isChecked())
+        self.check_radius_of_circular_area_is_specified_in_km.setEnabled(self.check_can_filter_using_circular_area.isChecked())
+
         res, reason = self.is_valid()
         if not res:
             self.message_bar.clearWidgets()
@@ -119,13 +170,24 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
             self.min_long_spin.setValue(-180)
             self.max_long_spin.setValue(180)
 
+        for key, w in self.WIDGET_MAP.items():
+            widget = getattr(self, w)
+            if isinstance(widget, QCheckBox):
+                widget.setChecked(config['settings'].get(key, False))
+            elif isinstance(widget, QSpinBox):
+                if key in config['settings']:
+                    widget.setValue(int(config['settings'].get(key)))
+
+        self.check_http_code_nodata.setChecked('httpcodenodata' in config['settings'])
+        self.combo_http_code_nodata.setCurrentIndex(self.combo_http_code_nodata.findData(config['settings'].get('httpcodenodata', '204')))
+
     def get_config(self):
         if self.service_id in SERVICE_MANAGER.available_services(self.service_type):
             config = deepcopy(SERVICE_MANAGER.service_details(self.service_type, self.service_id))
         else:
             config = {
-                'default':{},
-                'settings':{}
+                'default': {},
+                'settings': {}
             }
 
         config['title'] = self.title_edit.text()
@@ -154,6 +216,20 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
                         self.max_long_spin.value(),
                         self.max_lat_spin.value()]
         config['boundingbox'] = bounding_box
+
+        settings = {}
+        for key, w in self.WIDGET_MAP.items():
+            widget = getattr(self, w)
+            if isinstance(widget, QCheckBox):
+                settings[key] = widget.isChecked()
+            elif isinstance(widget, QSpinBox):
+                settings[key] = widget.value()
+
+        if self.check_http_code_nodata.isChecked():
+            settings['httpcodenodata'] = self.combo_http_code_nodata.currentData()
+
+        config['settings'] = settings
+
         return config
 
     def save_changes(self):
