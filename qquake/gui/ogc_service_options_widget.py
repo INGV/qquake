@@ -99,6 +99,7 @@ class OgcServiceWidget(QWidget, FORM_CLASS):
                         style,
                         self.service_config['endpointurl']
                     )
+                    layer_name += ' ({})'.format(style)
                 else:
                     uri = "contextualWMSLegend=0&crs={}&dpiMode=7&format=image/png&layers={}&styles&url={}".format(
                         self.service_config['srs'],
