@@ -156,6 +156,20 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
         else:
             self.radio_circular_area.setEnabled(True)
 
+        if not service_config['settings'].get('outputtext', False):
+            if self.radio_basic_output.isChecked():
+                self.radio_extended_output.setChecked(True)
+            self.radio_basic_output.setEnabled(False)
+        else:
+            self.radio_basic_output.setEnabled(True)
+
+        if not service_config['settings'].get('outputxml', False):
+            if self.radio_extended_output.isChecked():
+                self.radio_basic_output.setChecked(True)
+            self.radio_extended_output.setEnabled(False)
+        else:
+            self.radio_extended_output.setEnabled(True)
+
     def restore_settings(self, prefix):
         s = QgsSettings()
 
@@ -251,10 +265,13 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
         if v is not None:
             self.earthquake_number_mdps_greater_spin.setValue(float(v))
 
-        self.radio_basic_output.setChecked(
-            s.value('/plugins/qquake/{}_last_event_basic_checked'.format(prefix), True, bool))
-        self.radio_extended_output.setChecked(
-            s.value('/plugins/qquake/{}_last_event_extended_checked'.format(prefix), False, bool))
+        if not service_config or service_config['settings'].get('outputtext', False):
+            self.radio_basic_output.setChecked(
+                s.value('/plugins/qquake/{}_last_event_basic_checked'.format(prefix), True, bool))
+
+        if not service_config or service_config['settings'].get('outputxml', False):
+            self.radio_extended_output.setChecked(
+                s.value('/plugins/qquake/{}_last_event_extended_checked'.format(prefix), False, bool))
 
     def save_settings(self, prefix):
         s = QgsSettings()
