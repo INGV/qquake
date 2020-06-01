@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>512</width>
-    <height>653</height>
+    <width>565</width>
+    <height>676</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -41,9 +41,9 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>0</y>
-        <width>512</width>
-        <height>637</height>
+        <y>-427</y>
+        <width>551</width>
+        <height>1087</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout">
@@ -54,7 +54,7 @@
         <number>0</number>
        </property>
        <property name="bottomMargin">
-        <number>0</number>
+        <number>9</number>
        </property>
        <item row="1" column="0">
         <widget class="QGroupBox" name="groupBox_2">
@@ -62,10 +62,17 @@
           <string>Bounding Box</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_3">
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_12">
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_14">
             <property name="text">
-             <string>Minimum latitude</string>
+             <string>Minimum longitude</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_15">
+            <property name="text">
+             <string>Maximum longitude</string>
             </property>
            </widget>
           </item>
@@ -79,27 +86,13 @@
             </property>
            </widget>
           </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_13">
-            <property name="text">
-             <string>Maximum latitude</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QDoubleSpinBox" name="max_lat_spin">
+          <item row="3" column="1">
+           <widget class="QDoubleSpinBox" name="max_long_spin">
             <property name="minimum">
-             <double>-90.000000000000000</double>
+             <double>-180.000000000000000</double>
             </property>
             <property name="maximum">
-             <double>90.000000000000000</double>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_14">
-            <property name="text">
-             <string>Minimum longitude</string>
+             <double>180.000000000000000</double>
             </property>
            </widget>
           </item>
@@ -113,20 +106,27 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="label_15">
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_13">
             <property name="text">
-             <string>Maximum longitude</string>
+             <string>Maximum latitude</string>
             </property>
            </widget>
           </item>
-          <item row="3" column="1">
-           <widget class="QDoubleSpinBox" name="max_long_spin">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_12">
+            <property name="text">
+             <string>Minimum latitude</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QDoubleSpinBox" name="max_lat_spin">
             <property name="minimum">
-             <double>-180.000000000000000</double>
+             <double>-90.000000000000000</double>
             </property>
             <property name="maximum">
-             <double>180.000000000000000</double>
+             <double>90.000000000000000</double>
             </property>
            </widget>
           </item>
@@ -258,6 +258,253 @@
           </item>
           <item row="12" column="1">
            <widget class="QLineEdit" name="qml_style_url_edit"/>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QGroupBox" name="groupBox_3">
+         <property name="title">
+          <string>Service Capabilities</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_5">
+          <item row="0" column="0">
+           <widget class="QCheckBox" name="check_filter_by_eventid">
+            <property name="text">
+             <string>Filter by EventID</string>
+            </property>
+           </widget>
+          </item>
+          <item row="11" column="0">
+           <widget class="QCheckBox" name="check_can_include_all_magnitudes">
+            <property name="text">
+             <string>Can include all magnitudes</string>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="0">
+           <widget class="QCheckBox" name="check_can_include_all_origins">
+            <property name="text">
+             <string>Can include all origins</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="0">
+           <widget class="QCheckBox" name="check_filter_by_event_type">
+            <property name="text">
+             <string>Filter by event type</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QCheckBox" name="check_filter_by_focalmechanismid">
+            <property name="text">
+             <string>Filter by FocalMechanismID</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QCheckBox" name="check_filter_by_magnitudeid">
+            <property name="text">
+             <string>Filter by MagnitudeID</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QCheckBox" name="check_filter_by_originid">
+            <property name="text">
+             <string>Filter by OriginID</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="0">
+           <widget class="QCheckBox" name="check_filter_by_contributorid">
+            <property name="text">
+             <string>Filter by ContributorID</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0">
+           <widget class="QCheckBox" name="check_filter_by_contributor">
+            <property name="text">
+             <string>Filter by Contributor</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QCheckBox" name="check_filter_data_updated_after">
+            <property name="text">
+             <string>Filter data updated after</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QCheckBox" name="check_filter_by_catalog">
+            <property name="text">
+             <string>Filter by Catalog</string>
+            </property>
+           </widget>
+          </item>
+          <item row="12" column="0">
+           <widget class="QCheckBox" name="check_can_include_arrivals">
+            <property name="text">
+             <string>Can include arrivals</string>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="0">
+           <widget class="QCheckBox" name="check_filter_by_magnitude_type">
+            <property name="text">
+             <string>Filter by magnitude type</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QCheckBox" name="check_can_include_all_stations_magnitudes">
+            <property name="text">
+             <string>Can include all stations magnitudes</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QCheckBox" name="check_has_limit_of_entries">
+              <property name="text">
+               <string>Has limit of</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="spin_has_limit_of_entries">
+              <property name="minimumSize">
+               <size>
+                <width>110</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximum">
+               <number>999999999</number>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_17">
+              <property name="text">
+               <string>entries</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item row="2" column="1">
+           <widget class="QCheckBox" name="check_can_filter_using_circular_area">
+            <property name="text">
+             <string>Can filter using a circular area</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QCheckBox" name="check_radius_of_circular_area_is_specified_in_km">
+            <property name="text">
+             <string>Radius of circular area is specified in km</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QCheckBox" name="check_can_filter_by_depth">
+            <property name="text">
+             <string>Can filter by depth</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="QCheckBox" name="check_can_output_text">
+            <property name="text">
+             <string>Can output text</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="1">
+           <widget class="QCheckBox" name="check_can_output_xml">
+            <property name="text">
+             <string>Can output XML</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="1">
+           <widget class="QCheckBox" name="check_can_output_geojson">
+            <property name="text">
+             <string>Can output GeoJSON</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="1">
+           <widget class="QCheckBox" name="check_can_output_json">
+            <property name="text">
+             <string>Can output JSON</string>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="1">
+           <widget class="QCheckBox" name="check_can_output_kml">
+            <property name="text">
+             <string>Can output KML</string>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="1">
+           <widget class="QCheckBox" name="check_can_output_microsoft_xlsx">
+            <property name="text">
+             <string>Can output Microsoft XLSX</string>
+            </property>
+           </widget>
+          </item>
+          <item row="11" column="1">
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QCheckBox" name="check_http_code_nodata">
+              <property name="text">
+               <string>HTTP code no data</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="combo_http_code_nodata"/>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
           </item>
          </layout>
         </widget>
