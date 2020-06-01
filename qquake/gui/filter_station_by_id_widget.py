@@ -48,10 +48,6 @@ class FilterStationByIdWidget(QWidget, FORM_CLASS):
 
         self.setupUi(self)
 
-        self.radio_network_code.toggled.connect(self._enable_widgets)
-        self.radio_station_code.toggled.connect(self._enable_widgets)
-        self.radio_location_code.toggled.connect(self._enable_widgets)
-
         self.radio_basic_output.toggled.connect(self._enable_widgets)
         self.radio_extended_output.toggled.connect(self._enable_widgets)
 
@@ -64,11 +60,8 @@ class FilterStationByIdWidget(QWidget, FORM_CLASS):
         self.set_service_type(service_type)
         self.output_fields = None
 
-        self.radio_network_code.toggled.connect(self.changed)
         self.edit_network_code.textChanged.connect(self.changed)
-        self.radio_station_code.toggled.connect(self.changed)
         self.edit_station_code.textChanged.connect(self.changed)
-        self.radio_location_code.toggled.connect(self.changed)
         self.edit_location_code.textChanged.connect(self.changed)
         self.radio_basic_output.toggled.connect(self.changed)
         self.radio_extended_output.toggled.connect(self.changed)
@@ -108,13 +101,6 @@ class FilterStationByIdWidget(QWidget, FORM_CLASS):
         self.edit_station_code.setText(s.value('/plugins/qquake/{}_station_code'.format(prefix), '', str))
         self.edit_location_code.setText(s.value('/plugins/qquake/{}_location_code'.format(prefix), '', str))
 
-        if s.value('/plugins/qquake/{}_network_code_checked'.format(prefix), True, bool):
-            self.radio_network_code.setChecked(True)
-        if s.value('/plugins/qquake/{}_station_code_checked'.format(prefix), True, bool):
-            self.radio_station_code.setChecked(True)
-        if s.value('/plugins/qquake/{}_location_code_checked'.format(prefix), True, bool):
-            self.radio_location_code.setChecked(True)
-
         if not service_config or service_config['settings'].get('outputtext', False):
             self.radio_basic_output.setChecked(
                 s.value('/plugins/qquake/{}_single_event_basic_checked'.format(prefix), True, bool))
@@ -129,18 +115,10 @@ class FilterStationByIdWidget(QWidget, FORM_CLASS):
         s.setValue('/plugins/qquake/{}_station_code'.format(prefix), self.edit_station_code.text())
         s.setValue('/plugins/qquake/{}_location_code'.format(prefix), self.edit_location_code.text())
 
-        s.setValue('/plugins/qquake/{}_network_code_checked'.format(prefix), self.radio_network_code.isChecked())
-        s.setValue('/plugins/qquake/{}_station_code_checked'.format(prefix), self.radio_station_code.isChecked())
-        s.setValue('/plugins/qquake/{}_location_code_checked'.format(prefix), self.radio_location_code.isChecked())
-
         s.setValue('/plugins/qquake/{}_single_event_basic_checked'.format(prefix), self.radio_basic_output.isChecked())
         s.setValue('/plugins/qquake/{}_single_event_extended_checked'.format(prefix), self.radio_extended_output.isChecked())
 
     def _enable_widgets(self):
-        self.edit_network_code.setEnabled(self.radio_network_code.isChecked())
-        self.edit_station_code.setEnabled(self.radio_station_code.isChecked())
-        self.edit_location_code.setEnabled(self.radio_location_code.isChecked())
-
         self.output_table_options_button.setEnabled(self.radio_extended_output.isChecked())
 
     def _output_table_options(self):
@@ -150,22 +128,13 @@ class FilterStationByIdWidget(QWidget, FORM_CLASS):
             self.changed.emit()
 
     def network_codes(self):
-        if self.radio_network_code.isChecked():
-            return self.edit_network_code.text().strip()
-        else:
-            return None
+        return self.edit_network_code.text().strip() or None
 
     def station_codes(self):
-        if self.radio_station_code.isChecked():
-            return self.edit_station_code.text().strip()
-        else:
-            return None
+        return self.edit_station_code.text().strip() or None
 
     def locations(self):
-        if self.radio_location_code.isChecked():
-            return self.edit_location_code.text().strip()
-        else:
-            return None
+        return self.edit_location_code.text().strip() or None
 
     def output_type(self):
         return Fetcher.BASIC if self.radio_basic_output.isChecked() else Fetcher.EXTENDED
