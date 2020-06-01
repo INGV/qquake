@@ -69,7 +69,7 @@ class BasicTextParser:
     def parser_header_line(self, line):
         assert line[0] == '#'
         line = line[1:]
-        self.headers = line.split('|')
+        self.headers = [h.strip() for h in line.split('|')]
 
     def parse(self, content):
         if not content:
@@ -131,7 +131,7 @@ class BasicStationParser:
     def parser_header_line(self, line):
         assert line[0] == '#'
         line = line[1:]
-        self.headers = line.split('|')
+        self.headers = [h.strip() for h in line.split('|')]
 
     def parse(self, content):
         if not content:
