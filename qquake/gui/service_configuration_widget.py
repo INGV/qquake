@@ -173,9 +173,10 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
         for key, w in self.WIDGET_MAP.items():
             widget = getattr(self, w)
             if isinstance(widget, QCheckBox):
-                widget.setChecked(config['settings'].get(key))
+                widget.setChecked(config['settings'].get(key, False))
             elif isinstance(widget, QSpinBox):
-                widget.setValue(int(config['settings'].get(key)))
+                if key in config['settings']:
+                    widget.setValue(int(config['settings'].get(key)))
 
         self.check_http_code_nodata.setChecked('httpcodenodata' in config['settings'])
         self.combo_http_code_nodata.setCurrentIndex(self.combo_http_code_nodata.findData(config['settings'].get('httpcodenodata', '204')))
