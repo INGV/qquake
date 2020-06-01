@@ -60,6 +60,8 @@ class OutputTableOptionsDialog(QDialog, FORM_CLASS):
         self.service_type = service_type
         self.service_id = service_id
 
+        service_config = SERVICE_MANAGER.service_details(service_type, service_id)
+
         self.setWindowTitle(self.tr('Output Table Options'))
 
         self.button_box.accepted.connect(self.accept)
@@ -113,7 +115,11 @@ class OutputTableOptionsDialog(QDialog, FORM_CLASS):
             self.fields_tree_view.setFirstColumnSpanned(r, QModelIndex(), True)
 
         self.output_preferred_origins_only_check.setVisible(self.service_type in (SERVICE_MANAGER.MACROSEISMIC, SERVICE_MANAGER.FDSNEVENT))
+        self.output_preferred_origins_only_check.setEnabled(service_config['settings'].get('queryincludeallorigins'))
+
         self.output_preferred_magnitudes_only_check.setVisible(self.service_type in (SERVICE_MANAGER.MACROSEISMIC, SERVICE_MANAGER.FDSNEVENT))
+        self.output_preferred_magnitudes_only_check.setEnabled(service_config['settings'].get('queryincludeallmagnitudes'))
+
         self.output_preferred_mdp_only_check.setVisible(self.service_type == SERVICE_MANAGER.MACROSEISMIC)
 
         preferred_origins_only_checked = s.value('/plugins/qquake/output_preferred_origins', True, bool)

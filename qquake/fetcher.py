@@ -111,9 +111,11 @@ class Fetcher(QObject):
         self.pending_event_ids = event_ids
         self.output_type = output_type
 
+        self.service_config = SERVICE_MANAGER.service_details(self.service_type, self.event_service)
+
         s = QgsSettings()
-        self.preferred_origins_only = s.value('/plugins/qquake/output_preferred_origins', True, bool)
-        self.preferred_magnitudes_only = s.value('/plugins/qquake/output_preferred_magnitude', True, bool)
+        self.preferred_origins_only = s.value('/plugins/qquake/output_preferred_origins', True, bool) or not self.service_config['settings'].get('queryincludeallorigins', False)
+        self.preferred_magnitudes_only = s.value('/plugins/qquake/output_preferred_magnitude', True, bool) or not self.service_config['settings'].get('queryincludeallmagnitudes', False)
         self.preferred_mdp_only = s.value('/plugins/qquake/output_preferred_mdp', True, bool)
 
         self.output_fields = output_fields
@@ -123,7 +125,6 @@ class Fetcher(QObject):
         else:
             self.result = BasicTextParser()
 
-        self.service_config = SERVICE_MANAGER.service_details(self.service_type, self.event_service)
 
         self.missing_origins = set()
         self.is_missing_origin_request = False
