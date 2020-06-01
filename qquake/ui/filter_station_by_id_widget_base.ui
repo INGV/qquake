@@ -17,19 +17,6 @@
    <item row="1" column="2">
     <widget class="QLineEdit" name="edit_station_code"/>
    </item>
-   <item row="1" column="0" colspan="2">
-    <widget class="QRadioButton" name="radio_station_code">
-     <property name="text">
-      <string>Station code</string>
-     </property>
-     <property name="checked">
-      <bool>false</bool>
-     </property>
-     <attribute name="buttonGroup">
-      <string notr="true">buttonGroup</string>
-     </attribute>
-    </widget>
-   </item>
    <item row="2" column="2">
     <widget class="QLineEdit" name="edit_location_code"/>
    </item>
@@ -46,23 +33,13 @@
      </property>
     </spacer>
    </item>
-   <item row="0" column="0" colspan="2">
-    <widget class="QRadioButton" name="radio_network_code">
-     <property name="text">
-      <string>Network code</string>
-     </property>
-     <property name="checked">
-      <bool>true</bool>
-     </property>
-     <attribute name="buttonGroup">
-      <string notr="true">buttonGroup</string>
-     </attribute>
-    </widget>
-   </item>
    <item row="4" column="2">
     <widget class="QLabel" name="label">
      <property name="text">
-      <string>Multiple IDs can be separated by a comma (&quot;,&quot;)</string>
+      <string>Multiple IDs can be separated by a comma (&quot;,&quot;). Wildcard characters (*) are also supported.</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
@@ -99,17 +76,25 @@
    <item row="0" column="2">
     <widget class="QLineEdit" name="edit_network_code"/>
    </item>
+   <item row="0" column="0" colspan="2">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Network code</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="2">
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>Station code</string>
+     </property>
+    </widget>
+   </item>
    <item row="2" column="0" colspan="2">
-    <widget class="QRadioButton" name="radio_location_code">
+    <widget class="QLabel" name="label_4">
      <property name="text">
       <string>Location</string>
      </property>
-     <property name="checked">
-      <bool>false</bool>
-     </property>
-     <attribute name="buttonGroup">
-      <string notr="true">buttonGroup</string>
-     </attribute>
     </widget>
    </item>
   </layout>
