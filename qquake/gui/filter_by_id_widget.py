@@ -74,8 +74,9 @@ class FilterByIdWidget(QWidget, FORM_CLASS):
 
     def set_service_id(self, service_id):
         self.service_id = service_id
-        if 'fields' in SERVICE_MANAGER.service_details(self.service_type, self.service_id)['default']:
-            self.output_fields = SERVICE_MANAGER.service_details(self.service_type, service_id)['default']['fields']
+        config = SERVICE_MANAGER.service_details(self.service_type, self.service_id)
+        if 'fields' in config['default']:
+            self.output_fields = config['default']['fields']
 
     def restore_settings(self, prefix):
         s = QgsSettings()
