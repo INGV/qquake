@@ -115,10 +115,10 @@ class OutputTableOptionsDialog(QDialog, FORM_CLASS):
             self.fields_tree_view.setFirstColumnSpanned(r, QModelIndex(), True)
 
         self.output_preferred_origins_only_check.setVisible(self.service_type in (SERVICE_MANAGER.MACROSEISMIC, SERVICE_MANAGER.FDSNEVENT))
-        self.output_preferred_origins_only_check.setEnabled(service_config['settings'].get('queryincludeallorigins'))
+        self.output_preferred_origins_only_check.setEnabled(service_config['settings'].get('queryincludeallorigins', False))
 
         self.output_preferred_magnitudes_only_check.setVisible(self.service_type in (SERVICE_MANAGER.MACROSEISMIC, SERVICE_MANAGER.FDSNEVENT))
-        self.output_preferred_magnitudes_only_check.setEnabled(service_config['settings'].get('queryincludeallmagnitudes'))
+        self.output_preferred_magnitudes_only_check.setEnabled(service_config['settings'].get('queryincludeallmagnitudes', False))
 
         self.output_preferred_mdp_only_check.setVisible(self.service_type == SERVICE_MANAGER.MACROSEISMIC)
 
