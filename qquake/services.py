@@ -63,6 +63,8 @@ class ServiceManager(QObject):
         FDSNSTATION: load_field_config('config_fields_station.json')
     }
 
+    PRESET_STYLES = {}
+
     refreshed = pyqtSignal()
 
     def __init__(self):
@@ -82,6 +84,9 @@ class ServiceManager(QObject):
                 service['read_only'] = True
 
                 self.services[service_type][service_id] = service
+
+        for name, style in default_services['styles'].items():
+            self.PRESET_STYLES[name] = style.get('url')
 
         self._predefined_bounding_boxes = default_services['boundingboxpredefined']
 
