@@ -39,6 +39,15 @@ _CONFIG_SERVICES_PATH = os.path.join(
     'config.json')
 
 
+def load_field_config(filename):
+    path = os.path.join(
+        os.path.dirname(__file__),
+        'config', filename)
+
+    with open(path, 'r') as f:
+        return json.load(f)
+
+
 class ServiceManager(QObject):
     FDSNEVENT = 'fdsnevent'
     FDSNSTATION = 'fdsnstation'
@@ -47,6 +56,12 @@ class ServiceManager(QObject):
     WFS = 'wfs'
 
     _SERVICE_TYPES = [FDSNEVENT, FDSNSTATION, MACROSEISMIC, WMS, WFS]
+
+    _CONFIG_FIELDS = {
+        FDSNEVENT: load_field_config('config_fields_fsdnevent.json'),
+        MACROSEISMIC: load_field_config('config_fields_macroseismic.json'),
+        FDSNSTATION: load_field_config('config_fields_station.json')
+    }
 
     refreshed = pyqtSignal()
 
@@ -177,6 +192,9 @@ class ServiceManager(QObject):
         with open(path, 'wt') as f:
             f.write(json.dumps(configuration, indent=4))
         self.refresh_services()
+
+    def get_field_config(self, service_type):
+        return self._CONFIG_FIELDS[service_type]
 
 
 SERVICE_MANAGER = ServiceManager()

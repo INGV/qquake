@@ -21,10 +21,6 @@
  *                                                                         *
  ***************************************************************************/
 """
-
-import os
-import json
-
 from qgis.PyQt import uic
 from qgis.PyQt.QtWidgets import QDialog
 from qgis.PyQt.QtCore import (
@@ -40,15 +36,6 @@ from qquake.gui.simple_node_model import SimpleNodeModel, ModelNode
 from qquake.services import SERVICE_MANAGER
 
 FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('output_table_options.ui'))
-
-CONFIG_FIELDS_PATH = os.path.join(
-    os.path.dirname(__file__),
-    '..',
-    'config',
-    'config_fields_fsdnevent.json')
-
-with open(CONFIG_FIELDS_PATH, 'r') as f:
-    CONFIG_FIELDS = json.load(f)
 
 
 class OutputTableOptionsDialog(QDialog, FORM_CLASS):
@@ -81,7 +68,7 @@ class OutputTableOptionsDialog(QDialog, FORM_CLASS):
         self.radio_short_fields.toggled.connect(self.change_field_names)
 
         nodes = []
-        for key, settings in CONFIG_FIELDS['field_groups'].items():
+        for key, settings in SERVICE_MANAGER.get_field_config(self.service_type)['field_groups'].items():
             if self.service_type != SERVICE_MANAGER.FDSNSTATION and settings['label'] == 'station':
                 continue
             elif self.service_type == SERVICE_MANAGER.FDSNSTATION and settings['label'] != 'station':
@@ -103,7 +90,8 @@ class OutputTableOptionsDialog(QDialog, FORM_CLASS):
                     checked = s.value('/plugins/qquake/output_field_{}'.format(path.replace('>', '_')), True, bool)
 
                 parent_node.addChild(
-                    ModelNode(['checked', f['field_short' if short_field_names else 'field_long'], path], checked, user_data=f))
+                    ModelNode(['checked', f['field_short' if short_field_names else 'field_long'], path], checked,
+                              user_data=f))
             nodes.append(parent_node)
 
         self.field_model = SimpleNodeModel(nodes, headers=[self.tr('Include'), self.tr('Field Name'),
@@ -114,11 +102,15 @@ class OutputTableOptionsDialog(QDialog, FORM_CLASS):
         for r in range(self.field_model.rowCount(QModelIndex())):
             self.fields_tree_view.setFirstColumnSpanned(r, QModelIndex(), True)
 
-        self.output_preferred_origins_only_check.setVisible(self.service_type in (SERVICE_MANAGER.MACROSEISMIC, SERVICE_MANAGER.FDSNEVENT))
-        self.output_preferred_origins_only_check.setEnabled(service_config['settings'].get('queryincludeallorigins', False))
+        self.output_preferred_origins_only_check.setVisible(
+            self.service_type in (SERVICE_MANAGER.MACROSEISMIC, SERVICE_MANAGER.FDSNEVENT))
+        self.output_preferred_origins_only_check.setEnabled(
+            service_config['settings'].get('queryincludeallorigins', False))
 
-        self.output_preferred_magnitudes_only_check.setVisible(self.service_type in (SERVICE_MANAGER.MACROSEISMIC, SERVICE_MANAGER.FDSNEVENT))
-        self.output_preferred_magnitudes_only_check.setEnabled(service_config['settings'].get('queryincludeallmagnitudes', False))
+        self.output_preferred_magnitudes_only_check.setVisible(
+            self.service_type in (SERVICE_MANAGER.MACROSEISMIC, SERVICE_MANAGER.FDSNEVENT))
+        self.output_preferred_magnitudes_only_check.setEnabled(
+            service_config['settings'].get('queryincludeallmagnitudes', False))
 
         self.output_preferred_mdp_only_check.setVisible(self.service_type == SERVICE_MANAGER.MACROSEISMIC)
 

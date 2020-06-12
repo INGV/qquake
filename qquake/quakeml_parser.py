@@ -29,6 +29,8 @@ from qgis.core import (
     NULL
 )
 
+from qquake.services import SERVICE_MANAGER
+
 ORIGIN_DEPTH_TYPES = {
     'FROM_LOCATION': "from location",
     'FROM_MOMENT_TENSOR_INVERSION': "from moment tensor inversion",
@@ -849,10 +851,10 @@ class Event:
 
             feature[dest_field[field_config_key]] = source_obj
 
-        if origin.depth is not None:
+        if origin.depth is not None and origin.longitude is not None and origin.latitude is not None:
             geom = QgsPoint(x=origin.longitude.value, y=origin.latitude.value,
                             z=-origin.depth.value * 1000)
-        elif origin.longitude and origin.latitude:
+        elif origin.longitude is not None and origin.latitude is not None:
             geom = QgsPoint(x=origin.longitude.value, y=origin.latitude.value)
         else:
             geom = QgsGeometry()
@@ -889,6 +891,9 @@ class Event:
             for s in source:
                 assert hasattr(source_obj, s)
                 source_obj = getattr(source_obj, s)
+                if source_obj is None:
+                    source_obj = NULL
+                    break
 
             feature[dest_field[field_config_key]] = source_obj
 
@@ -1173,27 +1178,6 @@ class Network(BaseNodeType):
                          None)
         self.stations = stations
 
-    @staticmethod
-    def to_fields():
-        fields = QgsFields()
-        settings = QgsSettings()
-
-        short_field_names = settings.value('/plugins/qquake/output_short_field_names', True, bool)
-        field_config_key = 'field_short' if short_field_names else 'field_long'
-
-        for f in CONFIG_FIELDS['field_groups']['basic_event_info']['fields']:
-            if f.get('skip'):
-                continue
-
-            path = f['source']
-            path = path[len('eventParameters>event>'):].replace('>', '_')
-            selected = settings.value('/plugins/qquake/output_field_{}'.format(path), True, bool)
-            if not selected:
-                continue
-
-            fields.append(QgsField(f[field_config_key], FIELD_TYPE_MAP[f['type']]))
-        return fields
-
     def to_station_features(self, selected_fields):
         features = []
         settings = QgsSettings()
@@ -1203,7 +1187,7 @@ class Network(BaseNodeType):
 
         for o in self.stations:
             f = QgsFeature(Station.to_fields(selected_fields))
-            for dest_field in CONFIG_FIELDS['field_groups']['station']['fields']:
+            for dest_field in SERVICE_MANAGER.get_field_config(SERVICE_MANAGER.FDSNSTATION)['field_groups']['station']['fields']:
                 if dest_field.get('skip'):
                     continue
 
@@ -1307,7 +1291,7 @@ class Station(BaseNodeType):
         short_field_names = settings.value('/plugins/qquake/output_short_field_names', True, bool)
         field_config_key = 'field_short' if short_field_names else 'field_long'
 
-        for f in CONFIG_FIELDS['field_groups']['station']['fields']:
+        for f in SERVICE_MANAGER.get_field_config(SERVICE_MANAGER.FDSNSTATION)['field_groups']['station']['fields']:
             if f.get('skip'):
                 continue
 

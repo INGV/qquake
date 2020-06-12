@@ -1,0 +1,137 @@
+{
+  "field_groups": {
+    "station": {
+      "label": "station",
+      "fields": [
+        {
+          "field_short": "netcode",
+          "field_long": "NetCode",
+          "source": "FDSNStationXML>Network>Code",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "netstart",
+          "field_long": "NetworkStart",
+          "source": "FDSNStationXML>Network>StartDate",
+          "description": "",
+          "type": "DateTime"
+        },
+        {
+          "field_short": "netend",
+          "field_long": "NetworkEnd",
+          "source": "FDSNStationXML>Network>EndDate",
+          "description": "",
+          "type": "DateTime"
+        },
+        {
+          "field_short": "netsrcid",
+          "field_long": "NetSourceID",
+          "source": "FDSNStationXML>Network>SourceID",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "netrestric",
+          "field_long": "NetRestricted",
+          "source": "FDSNStationXML>Network>RestrictedStatus",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "netaltcod",
+          "field_long": "NetAltCode",
+          "source": "FDSNStationXML>Network>AlternateCode",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "nethistcod",
+          "field_long": "NetworkHistCode",
+          "source": "FDSNStationXML>Network>HistoricalCode",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "netdescr",
+          "field_long": "NetDescription",
+          "source": "FDSNStationXML>Network>Description",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "netstatlat",
+          "field_long": "NetworkStationLat",
+          "source": "FDSNStationXML>Network>Station>Latitude",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "netstatlon",
+          "field_long": "NetworkStationLon",
+          "source": "FDSNStationXML>Network>Station>Longitude",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "elevation",
+          "field_long": "NetworkStationElevation",
+          "source": "FDSNStationXML>Network>Station>Elevation",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "waterlevel",
+          "field_long": "NetworkWaterLevel",
+          "source": "FDSNStationXML>Network>Station>WaterLevel",
+          "description": "",
+          "type": "Double"
+        },
+        {
+          "field_short": "vault",
+          "field_long": "NetworkStationVault",
+          "source": "FDSNStationXML>Network>Station>Vault",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "geology",
+          "field_long": "NetworkStationGeology",
+          "source": "FDSNStationXML>Network>Station>Geology",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "netcreatio",
+          "field_long": "NetworkStationCreationDate",
+          "source": "FDSNStationXML>Network>Station>CreationDate",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "netterm",
+          "field_long": "NetworkStationTerminationDate",
+          "source": "FDSNStationXML>Network>Station>TerminationDate",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "totnumchan",
+          "field_long": "NetworkStationTotNumChannels",
+          "source": "FDSNStationXML>Network>Station>TotalNumberChannels",
+          "description": "",
+          "type": "Int"
+        },
+        {
+          "field_short": "netselnumc",
+          "field_long": "NetworkStationSelNumChannels",
+          "source": "FDSNStationXML>Network>Station>SelectedNumberChannels",
+          "description": "",
+          "type": "Int"
+        }
+      ]
+    }
+  },
+  "configversion": 0.3,
+  "configlastupdate": "2020-05-20T17:50:27+00:00"
+}
