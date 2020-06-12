@@ -849,10 +849,10 @@ class Event:
 
             feature[dest_field[field_config_key]] = source_obj
 
-        if origin.depth is not None:
+        if origin.depth is not None and origin.longitude is not None and origin.latitude is not None:
             geom = QgsPoint(x=origin.longitude.value, y=origin.latitude.value,
                             z=-origin.depth.value * 1000)
-        elif origin.longitude and origin.latitude:
+        elif origin.longitude is not None and origin.latitude is not None:
             geom = QgsPoint(x=origin.longitude.value, y=origin.latitude.value)
         else:
             geom = QgsGeometry()
@@ -889,6 +889,9 @@ class Event:
             for s in source:
                 assert hasattr(source_obj, s)
                 source_obj = getattr(source_obj, s)
+                if source_obj is None:
+                    source_obj = NULL
+                    break
 
             feature[dest_field[field_config_key]] = source_obj
 
