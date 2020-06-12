@@ -386,7 +386,10 @@ class Fetcher(QObject):
 
         if self.service_config.get('styleurl'):
             self.fetch_and_apply_style(vl, self.service_config.get('styleurl'))
-
+        elif self.service_config.get('default', {}).get('style'):
+            style_url = SERVICE_MANAGER.PRESET_STYLES[self.service_config.get('default', {}).get('style')]
+            self.fetch_and_apply_style(vl, style_url)
+            
         return vl
 
     def fetch_and_apply_style(self, layer, url):
