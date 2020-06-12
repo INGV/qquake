@@ -571,7 +571,16 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         service_id = self.get_current_service_id(service_type)
 
         config_dialog = ServiceConfigurationDialog(self.iface, service_type, service_id, self)
-        config_dialog.exec_()
+        if config_dialog.exec_():
+            self.set_current_service(service_type, service_id)
+
+    def set_current_service(self, service_type, service_id):
+        if service_type == SERVICE_MANAGER.FDSNEVENT:
+            self.fdsn_event_list.setCurrentItem(self.fdsn_event_list.findItems(service_id, Qt.MatchContains)[0])
+        elif service_type == SERVICE_MANAGER.MACROSEISMIC:
+            self.fdsn_macro_list.setCurrentItem(self.fdsn_macro_list.findItems(service_id, Qt.MatchContains)[0])
+        elif service_type == SERVICE_MANAGER.FDSNSTATION:
+            self.fdsn_station_list.setCurrentItem(self.fdsn_station_list.findItems(service_id, Qt.MatchContains)[0])
 
     def _create_configuration(self, service_type):
         dlg = QgsNewNameDialog('','',[],existing=SERVICE_MANAGER.available_services(service_type))
