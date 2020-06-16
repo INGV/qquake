@@ -774,7 +774,7 @@ class Event:
                 selected = path in selected_fields
             else:
                 # use default settings
-                path = path[len('eventParameters>event>'):].replace('>', '_')
+                path = path[len('eventParameters>event>'):].replace('§', '>').replace('>', '_')
                 selected = settings.value('/plugins/qquake/output_field_{}'.format(path), True, bool)
 
             if not selected:
@@ -790,7 +790,7 @@ class Event:
             if selected_fields:
                 selected = path in selected_fields
             else:
-                path = path[len('eventParameters>event>'):].replace('>', '_')
+                path = path[len('eventParameters>event>'):].replace('§', '>').replace('>', '_')
                 selected = settings.value('/plugins/qquake/output_field_{}'.format(path), True, bool)
             if not selected:
                 continue
@@ -805,7 +805,7 @@ class Event:
             if selected_fields:
                 selected = path in selected_fields
             else:
-                path = path[len('eventParameters>event>'):].replace('>', '_')
+                path = path[len('eventParameters>event>'):].replace('§', '>').replace('>', '_')
                 selected = settings.value('/plugins/qquake/output_field_{}'.format(path), True, bool)
             if not selected:
                 continue
@@ -825,7 +825,7 @@ class Event:
             if dest_field.get('skip'):
                 continue
 
-            source = dest_field['source'].split('>')
+            source = dest_field['source'].replace('§', '>').split('>')
             assert source[0] == 'eventParameters'
             source = source[1:]
             assert source[0] == 'event'
@@ -871,7 +871,7 @@ class Event:
             if dest_field.get('skip'):
                 continue
 
-            source = dest_field['source'].split('>')
+            source = dest_field['source'].replace('§', '>').split('>')
             assert source[0] == 'eventParameters'
             source = source[1:]
             assert source[0] == 'event'
@@ -908,7 +908,7 @@ class Event:
             if dest_field.get('skip'):
                 continue
 
-            source = dest_field['source'].split('>')
+            source = dest_field['source'].replace('§', '>').split('>')
             assert source[0] == 'eventParameters'
             source = source[1:]
             assert source[0] == 'event'
@@ -1191,7 +1191,7 @@ class Network(BaseNodeType):
                 if dest_field.get('skip'):
                     continue
 
-                source = dest_field['source'].split('>')
+                source = dest_field['source'].replace('§', '>').split('>')
                 assert source[0] == 'FDSNStationXML'
                 source = source[1:]
                 assert source[0] == 'Network'
@@ -1299,7 +1299,7 @@ class Station(BaseNodeType):
             if selected_fields:
                 selected = path in selected_fields
             else:
-                path = path[len('FDSNStationXML>Network>'):].replace('>', '_')
+                path = path[len('FDSNStationXML>Network>'):].replace('§', '>').replace('>', '_')
                 selected = settings.value('/plugins/qquake/output_field_{}'.format(path), True, bool)
             if not selected:
                 continue
