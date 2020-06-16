@@ -207,9 +207,10 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.button_macro_remove_service.clicked.connect(lambda: self._remove_service(SERVICE_MANAGER.MACROSEISMIC))
         self.button_station_remove_service.clicked.connect(lambda: self._remove_service(SERVICE_MANAGER.FDSNSTATION))
 
-        self.button_fdsn_export_service.clicked.connect(lambda: self._export_service(SERVICE_MANAGER.FDSNEVENT))
-        self.button_macro_export_service.clicked.connect(lambda: self._export_service(SERVICE_MANAGER.MACROSEISMIC))
-        self.button_station_export_service.clicked.connect(lambda: self._export_service(SERVICE_MANAGER.FDSNSTATION))
+        self.button_fdsn_export_service.clicked.connect(self._export_service)
+        self.button_macro_export_service.clicked.connect(self._export_service)
+        self.button_station_export_service.clicked.connect(self._export_service)
+        self.button_ogc_export_service.clicked.connect(self._export_service)
 
         self._restore_settings()
         self._refresh_url(SERVICE_MANAGER.FDSNEVENT)
@@ -317,6 +318,8 @@ class QQuakeDialog(QDialog, FORM_CLASS):
             return self.fdsn_macro_list.currentItem().text() if self.fdsn_macro_list.currentItem() else None
         elif service_type == SERVICE_MANAGER.FDSNSTATION:
             return self.fdsn_station_list.currentItem().text() if self.fdsn_station_list.currentItem() else None
+        elif service_type in (SERVICE_MANAGER.WMS, SERVICE_MANAGER.WFS):
+            return self.ogc_list.currentItem().text() if self.ogc_list.currentItem() else None
 
     def get_current_service_type(self):
         if self.service_tab_widget.currentIndex() == 0:
@@ -325,6 +328,8 @@ class QQuakeDialog(QDialog, FORM_CLASS):
             service_type = SERVICE_MANAGER.MACROSEISMIC
         elif self.service_tab_widget.currentIndex() == 2:
             service_type = SERVICE_MANAGER.FDSNSTATION
+        elif self.service_tab_widget.currentIndex() == 3:
+            return self.ogc_combo.currentData()
         else:
             service_type = None
         return service_type
@@ -595,7 +600,8 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         config_dialog = ServiceConfigurationDialog(self.iface, service_type, name, self)
         config_dialog.exec_()
 
-    def _export_service(self, service_type):
+    def _export_service(self):
+        service_type = self.get_current_service_type()
         service_id = self.get_current_service_id(service_type)
         file, _ = QFileDialog.getSaveFileName(self, self.tr('Export Service'), QDir.homePath() + '/{}.json'.format(service_id) , 'JSON Files (*.json)')
         if not file:
