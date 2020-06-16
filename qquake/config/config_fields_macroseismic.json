@@ -1109,7 +1109,7 @@
         {
           "field_short": "morgeicl",
           "field_long": "MacroOriginEpicentralIntensity",
-          "source": "macroseismicParameters>macroseismicOrigin>epicentralIntensity>expectedIntensity>class",
+          "source": "macroseismicParameters>macroseismicOrigin>epicentralIntensity>expectedIntensity>msclass",
           "description": "",
           "type": "String"
         },
@@ -1266,7 +1266,7 @@
         {
           "field_short": "msetintcl",
           "field_long": "MDPsetMaxIntExpectedClass",
-          "source": "macroseismicParameters>mdpSet>maximumIntensity>expectedIntensity>class",
+          "source": "macroseismicParameters>mdpSet>maximumIntensity>expectedIntensity>msclass",
           "description": "",
           "type": "String"
         },
@@ -1287,7 +1287,7 @@
         {
           "field_short": "msetmnicl",
           "field_long": "MDPsetMaxIntMinCredibleClass",
-          "source": "macroseismicParameters>mdpSet>maximumIntensity>minimalCredibleIntensity>expectedIntensity>class",
+          "source": "macroseismicParameters>mdpSet>maximumIntensity>minimalCredibleIntensity>expectedIntensity>msclass",
           "description": "",
           "type": "String"
         },
@@ -1308,7 +1308,7 @@
         {
           "field_short": "msetmxicl",
           "field_long": "MDPsetMaxIntMaxCredibleClass",
-          "source": "macroseismicParameters>mdpSet>maximumIntensity>maximalCredibleIntensity>expectedIntensity>class",
+          "source": "macroseismicParameters>mdpSet>maximumIntensity>maximalCredibleIntensity>expectedIntensity>msclass",
           "description": "",
           "type": "String"
         },
@@ -1523,7 +1523,7 @@
         {
           "field_short": "mdpexintcl",
           "field_long": "MDPExpectedIntensityClass",
-          "source": "macroseismicParameters>mdp>intensity>expectedIntensity>class",
+          "source": "macroseismicParameters>mdp>intensity>expectedIntensity>msclass",
           "description": "",
           "type": "String"
         },
