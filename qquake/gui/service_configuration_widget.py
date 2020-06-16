@@ -22,6 +22,7 @@
  ***************************************************************************/
 """
 
+import json
 from copy import deepcopy
 from qgis.PyQt import uic
 from qgis.PyQt.QtWidgets import (
@@ -118,6 +119,9 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
             for w in [self.group_capabilities, self.group_bounding_box]:
                 w.setEnabled(False)
                 w.hide()
+        else:
+            self.group_ogc_layers.setEnabled(False)
+            self.group_ogc_layers.hide()
 
         self._changed()
 
@@ -191,6 +195,9 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
         self.check_http_code_nodata.setChecked('httpcodenodata' in config.get('settings', {}))
         self.combo_http_code_nodata.setCurrentIndex(self.combo_http_code_nodata.findData(config.get('settings', {}).get('httpcodenodata', '204')))
 
+        if self.group_ogc_layers.isEnabled():
+            self.ogc_layers_edit.setText(json.dumps(config.get('default',{}).get('layers',[]), indent=4))
+
     def get_config(self):
         if self.service_id in SERVICE_MANAGER.available_services(self.service_type):
             config = deepcopy(SERVICE_MANAGER.service_details(self.service_type, self.service_id))
@@ -242,6 +249,9 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
                 settings['httpcodenodata'] = self.combo_http_code_nodata.currentData()
 
             config['settings'] = settings
+
+        if self.group_ogc_layers.isEnabled():
+            config['default']['layers'] = json.loads(self.ogc_layers_edit.text())
 
         return config
 
