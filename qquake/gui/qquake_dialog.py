@@ -195,9 +195,9 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.macro_tab_widget.currentChanged.connect(lambda: self._refresh_url(SERVICE_MANAGER.MACROSEISMIC))
         self.fdsnstation_tab_widget.currentChanged.connect(lambda: self._refresh_url(SERVICE_MANAGER.FDSNSTATION))
 
-        self._build_add_service_menu(self.button_fdsn_new_service, SERVICE_MANAGER.FDSNEVENT)
-        self._build_add_service_menu(self.button_macro_new_service, SERVICE_MANAGER.MACROSEISMIC)
-        self._build_add_service_menu(self.button_station_new_service, SERVICE_MANAGER.FDSNSTATION)
+        for b in [self.button_fdsn_new_service, self.button_macro_new_service,
+                  self.button_station_new_service, self.button_ogc_new_service]:
+            self._build_add_service_menu(b)
 
         self.button_fdsn_edit_service.clicked.connect(lambda: self._edit_service(SERVICE_MANAGER.FDSNEVENT))
         self.button_macro_edit_service.clicked.connect(lambda: self._edit_service(SERVICE_MANAGER.MACROSEISMIC))
@@ -207,10 +207,9 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.button_macro_remove_service.clicked.connect(lambda: self._remove_service(SERVICE_MANAGER.MACROSEISMIC))
         self.button_station_remove_service.clicked.connect(lambda: self._remove_service(SERVICE_MANAGER.FDSNSTATION))
 
-        self.button_fdsn_export_service.clicked.connect(self._export_service)
-        self.button_macro_export_service.clicked.connect(self._export_service)
-        self.button_station_export_service.clicked.connect(self._export_service)
-        self.button_ogc_export_service.clicked.connect(self._export_service)
+        for b in [self.button_fdsn_export_service, self.button_macro_export_service,
+                  self.button_station_export_service, self.button_ogc_export_service]:
+            b.clicked.connect(self._export_service)
 
         self._restore_settings()
         self._refresh_url(SERVICE_MANAGER.FDSNEVENT)
@@ -221,11 +220,11 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self._save_settings()
         super().closeEvent(e)
 
-    def _build_add_service_menu(self, widget, service_type):
+    def _build_add_service_menu(self, widget):
         menu = QMenu()
         save_action = QAction(self.tr('Save Current Configuration As…'), parent=menu)
         menu.addAction(save_action)
-        save_action.triggered.connect(lambda: self._save_configuration(service_type))
+        save_action.triggered.connect(self._save_configuration)
 
         import_action = QAction(self.tr('Import from File…'), parent=menu)
         menu.addAction(import_action)
@@ -233,7 +232,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
 
         create_new_action = QAction(self.tr('Create New Service…'), parent=menu)
         menu.addAction(create_new_action)
-        create_new_action.triggered.connect(lambda: self._create_configuration(service_type))
+        create_new_action.triggered.connect(self._create_configuration)
 
         widget.setMenu(menu)
 
@@ -255,8 +254,10 @@ class QQuakeDialog(QDialog, FORM_CLASS):
 
         self.refreshOgcWidgets()
 
-    def _save_configuration(self, service_type):
-        name, ok = QInputDialog.getText(self, self.tr('Save Service Configuration'), self.tr('Save the current service configuration as'))
+    def _save_configuration(self):
+        service_type = self.get_current_service_type()
+        name, ok = QInputDialog.getText(self, self.tr('Save Service Configuration'),
+                                        self.tr('Save the current service configuration as'))
         if not name or not ok:
             return
 
@@ -350,6 +351,8 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                 return self.station_filter
             else:
                 return self.station_by_id_filter
+        elif service_type in (SERVICE_MANAGER.WMS, SERVICE_MANAGER.WFS):
+            return self.ogc_service_widget
 
     def get_fetcher(self, service_type=None):
         """
@@ -412,7 +415,8 @@ class QQuakeDialog(QDialog, FORM_CLASS):
     def _refresh_url(self, service_type=None):
         if not service_type:
             service_type = self.get_current_service_type()
-            if service_type not in (SERVICE_MANAGER.FDSNEVENT, SERVICE_MANAGER.MACROSEISMIC, SERVICE_MANAGER.FDSNSTATION):
+            if service_type not in (
+                    SERVICE_MANAGER.FDSNEVENT, SERVICE_MANAGER.MACROSEISMIC, SERVICE_MANAGER.FDSNSTATION):
                 self.button_box.button(QDialogButtonBox.Ok).setEnabled(True)
                 return
 
@@ -488,10 +492,11 @@ class QQuakeDialog(QDialog, FORM_CLASS):
             tab_widget.widget(1).setEnabled(service_config['settings'].get('queryeventid', False))
 
         if service_config['default'].get('boundingboxpredefined'):
-            box = SERVICE_MANAGER.predefined_bounding_box(service_config['default']['boundingboxpredefined'])['boundingbox']
+            box = SERVICE_MANAGER.predefined_bounding_box(service_config['default']['boundingboxpredefined'])[
+                'boundingbox']
             filter_widget.set_extent_limit(box)
 
-        info_widget.set_service(service_type=service_type, service_name=service_id)
+        info_widget.set_service(service_type=service_type, service_id=service_id)
 
         filter_widget.set_service_id(service_id)
         filter_by_id_widget.set_service_id(service_id)
@@ -560,14 +565,15 @@ class QQuakeDialog(QDialog, FORM_CLASS):
             return
 
         self.ogc_service_widget.set_service(service_type=self.ogc_combo.currentData(),
-                                            service_name=self.ogc_list.currentItem().text())
+                                            service_id=self.ogc_list.currentItem().text())
 
         self.ogc_service_info_widget.set_service(service_type=self.ogc_combo.currentData(),
-                                                 service_name=self.ogc_list.currentItem().text())
+                                                 service_id=self.ogc_list.currentItem().text())
 
     def _remove_service(self, service_type):
         service_id = self.get_current_service_id(service_type)
-        if QMessageBox.question(self, self.tr('Remove Service'), self.tr('Are you sure you want to remove "{}"?'.format(service_id))) != QMessageBox.Yes:
+        if QMessageBox.question(self, self.tr('Remove Service'),
+                                self.tr('Are you sure you want to remove "{}"?'.format(service_id))) != QMessageBox.Yes:
             return
 
         SERVICE_MANAGER.remove_service(service_type, service_id)
@@ -587,8 +593,9 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         elif service_type == SERVICE_MANAGER.FDSNSTATION:
             self.fdsn_station_list.setCurrentItem(self.fdsn_station_list.findItems(service_id, Qt.MatchContains)[0])
 
-    def _create_configuration(self, service_type):
-        dlg = QgsNewNameDialog('','',[],existing=SERVICE_MANAGER.available_services(service_type))
+    def _create_configuration(self):
+        service_type = self.get_current_service_type()
+        dlg = QgsNewNameDialog('', '', [], existing=SERVICE_MANAGER.available_services(service_type))
         dlg.setHintString(self.tr('Create a new service configuration named'))
         dlg.setWindowTitle(self.tr('New Service Configuration'))
         dlg.setOverwriteEnabled(False)
@@ -603,11 +610,12 @@ class QQuakeDialog(QDialog, FORM_CLASS):
     def _export_service(self):
         service_type = self.get_current_service_type()
         service_id = self.get_current_service_id(service_type)
-        file, _ = QFileDialog.getSaveFileName(self, self.tr('Export Service'), QDir.homePath() + '/{}.json'.format(service_id) , 'JSON Files (*.json)')
+        file, _ = QFileDialog.getSaveFileName(self, self.tr('Export Service'),
+                                              QDir.homePath() + '/{}.json'.format(service_id), 'JSON Files (*.json)')
         if not file:
             return
 
-        file = QgsFileUtils.ensureFileNameHasExtension(file,['json'])
+        file = QgsFileUtils.ensureFileNameHasExtension(file, ['json'])
 
         if SERVICE_MANAGER.export_service(service_type, service_id, file):
             self.message_bar.pushMessage(
@@ -621,7 +629,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         if not file:
             return
 
-        res, err =SERVICE_MANAGER.import_service(file)
+        res, err = SERVICE_MANAGER.import_service(file)
         if res:
             self.message_bar.pushMessage(
                 self.tr("Service imported"), Qgis.Success, 5)
@@ -633,7 +641,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         """
         read the event URL and convert the response in a list
         """
-        if self.get_current_service_type() is None:
+        if self.get_current_service_type() in (SERVICE_MANAGER.WMS, SERVICE_MANAGER.WFS):
             self.ogc_service_widget.add_selected_layers()
             return
 
