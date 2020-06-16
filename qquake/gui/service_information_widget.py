@@ -42,13 +42,13 @@ class ServiceInformationWidget(QWidget, FORM_CLASS):
 
         self.layer_model = None
         self.service_type = None
-        self.service_name = None
+        self.service_id = None
         self.service_config = None
 
-    def set_service(self, service_name, service_type):
+    def set_service(self, service_id, service_type):
         self.service_type = service_type
-        self.service_name = service_name
-        self.service_config = SERVICE_MANAGER.service_details(service_type, service_name)
+        self.service_id = service_id
+        self.service_config = SERVICE_MANAGER.service_details(service_type, service_id)
 
         html = """<p><b>Title</b><br>
         {title}</p>

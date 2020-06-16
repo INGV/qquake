@@ -21,6 +21,7 @@
  *                                                                         *
  ***************************************************************************/
 """
+from copy import deepcopy
 
 from qgis.PyQt import uic
 from qgis.PyQt.QtWidgets import QWidget
@@ -49,23 +50,24 @@ class OgcServiceWidget(QWidget, FORM_CLASS):
 
         self.layer_model = None
         self.service_type = None
-        self.service_name = None
+        self.service_id = None
         self.service_config = None
 
         self.add_layers_button.clicked.connect(self.add_selected_layers)
 
-    def set_service(self, service_name, service_type):
+    def set_service(self, service_id, service_type):
         self.service_type = service_type
-        self.service_name = service_name
-        self.service_config = SERVICE_MANAGER.service_details(service_type, service_name)
+        self.service_id = service_id
+        self.service_config = SERVICE_MANAGER.service_details(service_type, service_id)
         layers = self.service_config['default']['layers']
 
         nodes = []
         for l in layers:
             if l['styles']:
                 parent_node = ModelNode([l['layername']])
+                checked_styles = l.get('checked_styles', None)
                 for style in l['styles']:
-                    checked = True
+                    checked = True if checked_styles is None else style in checked_styles
                     parent_node.addChild(
                         ModelNode(['checked', style], checked))
             else:
@@ -126,3 +128,32 @@ class OgcServiceWidget(QWidget, FORM_CLASS):
                     add_layer(layer_name, style)
 
         QgsProject.instance().addMapLayers(layers_to_add)
+
+    def is_style_selected(self, layer, style):
+        for r in range(self.layer_model.rowCount(QModelIndex())):
+            parent = self.layer_model.index(r, 0, QModelIndex())
+
+            if self.layer_model.flags(parent) & Qt.ItemIsUserCheckable:
+                continue
+            else:
+                if self.layer_model.data(parent, Qt.DisplayRole) == layer:
+                    for rc in range(self.layer_model.rowCount(parent)):
+                        row_style = self.layer_model.data(self.layer_model.index(rc, 1, parent), Qt.DisplayRole)
+                        if style == row_style:
+                            return self.layer_model.data(self.layer_model.index(rc, 0, parent), Qt.CheckStateRole)
+        return False
+
+    def to_service_definition(self):
+        base_config = deepcopy(SERVICE_MANAGER.service_details(self.service_type, self.service_id))
+
+        defaults = base_config.get('default', {})
+
+        for layer in defaults.get('layers', []):
+            selected_styles = []
+            for style in layer.get('styles', []):
+                if self.is_style_selected(layer.get('layername'), style):
+                    selected_styles.append(style)
+            layer['checked_styles'] = selected_styles
+
+        base_config['default'] = defaults
+        return base_config

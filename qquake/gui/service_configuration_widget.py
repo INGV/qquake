@@ -22,6 +22,7 @@
  ***************************************************************************/
 """
 
+import json
 from copy import deepcopy
 from qgis.PyQt import uic
 from qgis.PyQt.QtWidgets import (
@@ -114,6 +115,14 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
         self.check_http_code_nodata.toggled.connect(self._changed)
         self.combo_http_code_nodata.currentIndexChanged.connect(self._changed)
 
+        if self.service_type in (SERVICE_MANAGER.WMS, SERVICE_MANAGER.WFS):
+            for w in [self.group_capabilities, self.group_bounding_box]:
+                w.setEnabled(False)
+                w.hide()
+        else:
+            self.group_ogc_layers.setEnabled(False)
+            self.group_ogc_layers.hide()
+
         self._changed()
 
     def _changed(self):
@@ -186,6 +195,9 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
         self.check_http_code_nodata.setChecked('httpcodenodata' in config.get('settings', {}))
         self.combo_http_code_nodata.setCurrentIndex(self.combo_http_code_nodata.findData(config.get('settings', {}).get('httpcodenodata', '204')))
 
+        if self.group_ogc_layers.isEnabled():
+            self.ogc_layers_edit.setText(json.dumps(config.get('default',{}).get('layers',[]), indent=4))
+
     def get_config(self):
         if self.service_id in SERVICE_MANAGER.available_services(self.service_type):
             config = deepcopy(SERVICE_MANAGER.service_details(self.service_type, self.service_id))
@@ -217,24 +229,29 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
         else:
             config['dateend'] = ''
 
-        bounding_box = [self.min_long_spin.value(),
-                        self.min_lat_spin.value(),
-                        self.max_long_spin.value(),
-                        self.max_lat_spin.value()]
-        config['boundingbox'] = bounding_box
+        if self.group_bounding_box.isEnabled():
+            bounding_box = [self.min_long_spin.value(),
+                            self.min_lat_spin.value(),
+                            self.max_long_spin.value(),
+                            self.max_lat_spin.value()]
+            config['boundingbox'] = bounding_box
 
-        settings = {}
-        for key, w in self.WIDGET_MAP.items():
-            widget = getattr(self, w)
-            if isinstance(widget, QCheckBox):
-                settings[key] = widget.isChecked()
-            elif isinstance(widget, QSpinBox):
-                settings[key] = widget.value()
+        if self.group_capabilities.isEnabled():
+            settings = {}
+            for key, w in self.WIDGET_MAP.items():
+                widget = getattr(self, w)
+                if isinstance(widget, QCheckBox):
+                    settings[key] = widget.isChecked()
+                elif isinstance(widget, QSpinBox):
+                    settings[key] = widget.value()
 
-        if self.check_http_code_nodata.isChecked():
-            settings['httpcodenodata'] = self.combo_http_code_nodata.currentData()
+            if self.check_http_code_nodata.isChecked():
+                settings['httpcodenodata'] = self.combo_http_code_nodata.currentData()
 
-        config['settings'] = settings
+            config['settings'] = settings
+
+        if self.group_ogc_layers.isEnabled():
+            config['default']['layers'] = json.loads(self.ogc_layers_edit.text())
 
         return config
 
