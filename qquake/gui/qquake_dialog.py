@@ -199,9 +199,9 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                   self.button_station_new_service, self.button_ogc_new_service]:
             self._build_add_service_menu(b)
 
-        self.button_fdsn_edit_service.clicked.connect(lambda: self._edit_service(SERVICE_MANAGER.FDSNEVENT))
-        self.button_macro_edit_service.clicked.connect(lambda: self._edit_service(SERVICE_MANAGER.MACROSEISMIC))
-        self.button_station_edit_service.clicked.connect(lambda: self._edit_service(SERVICE_MANAGER.FDSNSTATION))
+        for b in [self.button_fdsn_edit_service, self.button_macro_edit_service,
+                  self.button_station_edit_service, self.button_ogc_edit_service]:
+            b.clicked.connect(self._edit_service)
 
         for b in [self.button_fdsn_remove_service, self.button_macro_remove_service,
                   self.button_station_remove_service, self.button_ogc_remove_service]:
@@ -587,7 +587,8 @@ class QQuakeDialog(QDialog, FORM_CLASS):
 
         SERVICE_MANAGER.remove_service(service_type, service_id)
 
-    def _edit_service(self, service_type):
+    def _edit_service(self):
+        service_type = self.get_current_service_type()
         service_id = self.get_current_service_id(service_type)
 
         config_dialog = ServiceConfigurationDialog(self.iface, service_type, service_id, self)
@@ -601,6 +602,11 @@ class QQuakeDialog(QDialog, FORM_CLASS):
             self.fdsn_macro_list.setCurrentItem(self.fdsn_macro_list.findItems(service_id, Qt.MatchContains)[0])
         elif service_type == SERVICE_MANAGER.FDSNSTATION:
             self.fdsn_station_list.setCurrentItem(self.fdsn_station_list.findItems(service_id, Qt.MatchContains)[0])
+        elif service_type in (SERVICE_MANAGER.WMS, SERVICE_MANAGER.WFS):
+            self.ogc_combo.setCurrentIndex(self.ogc_combo.findData(service_type))
+            items = self.ogc_list.findItems(service_id, Qt.MatchExactly)
+            if len(items) > 0:
+                self.ogc_list.setCurrentItem(items[0])
 
     def _create_configuration(self):
         service_type = self.get_current_service_type()

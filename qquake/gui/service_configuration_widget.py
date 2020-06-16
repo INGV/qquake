@@ -114,6 +114,11 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
         self.check_http_code_nodata.toggled.connect(self._changed)
         self.combo_http_code_nodata.currentIndexChanged.connect(self._changed)
 
+        if self.service_type in (SERVICE_MANAGER.WMS, SERVICE_MANAGER.WFS):
+            for w in [self.group_capabilities, self.group_bounding_box]:
+                w.setEnabled(False)
+                w.hide()
+
         self._changed()
 
     def _changed(self):
@@ -217,24 +222,26 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
         else:
             config['dateend'] = ''
 
-        bounding_box = [self.min_long_spin.value(),
-                        self.min_lat_spin.value(),
-                        self.max_long_spin.value(),
-                        self.max_lat_spin.value()]
-        config['boundingbox'] = bounding_box
+        if self.group_bounding_box.isEnabled():
+            bounding_box = [self.min_long_spin.value(),
+                            self.min_lat_spin.value(),
+                            self.max_long_spin.value(),
+                            self.max_lat_spin.value()]
+            config['boundingbox'] = bounding_box
 
-        settings = {}
-        for key, w in self.WIDGET_MAP.items():
-            widget = getattr(self, w)
-            if isinstance(widget, QCheckBox):
-                settings[key] = widget.isChecked()
-            elif isinstance(widget, QSpinBox):
-                settings[key] = widget.value()
+        if self.group_capabilities.isEnabled():
+            settings = {}
+            for key, w in self.WIDGET_MAP.items():
+                widget = getattr(self, w)
+                if isinstance(widget, QCheckBox):
+                    settings[key] = widget.isChecked()
+                elif isinstance(widget, QSpinBox):
+                    settings[key] = widget.value()
 
-        if self.check_http_code_nodata.isChecked():
-            settings['httpcodenodata'] = self.combo_http_code_nodata.currentData()
+            if self.check_http_code_nodata.isChecked():
+                settings['httpcodenodata'] = self.combo_http_code_nodata.currentData()
 
-        config['settings'] = settings
+            config['settings'] = settings
 
         return config
 
