@@ -75,6 +75,95 @@ FIELD_TYPE_MAP = {
 }
 
 
+def get_service_fields(service_type, selected_fields):
+    fields = QgsFields()
+    settings = QgsSettings()
+    short_field_names = settings.value('/plugins/qquake/output_short_field_names', True, bool)
+    field_config_key = 'field_short' if short_field_names else 'field_long'
+
+    field_config = SERVICE_MANAGER.get_field_config(service_type)
+    for f in field_config['field_groups'].get('basic_event_info', {}).get('fields', []):
+        if f.get('skip'):
+            continue
+
+        path = f['source']
+
+        if selected_fields:
+            # use specified fields
+            selected = path in selected_fields
+        else:
+            # use default settings
+            path = path[len('eventParameters>event>'):].replace('§', '>').replace('>', '_')
+            selected = settings.value('/plugins/qquake/output_field_{}'.format(path), True, bool)
+
+        if not selected:
+            continue
+
+        fields.append(QgsField(f[field_config_key], FIELD_TYPE_MAP[f['type']]))
+
+    for f in field_config['field_groups'].get('origin', {}).get('fields',[]):
+        if f.get('skip'):
+            continue
+
+        path = f['source']
+        if selected_fields:
+            selected = path in selected_fields
+        else:
+            path = path[len('eventParameters>event>'):].replace('§', '>').replace('>', '_')
+            selected = settings.value('/plugins/qquake/output_field_{}'.format(path), True, bool)
+        if not selected:
+            continue
+
+        fields.append(QgsField(f[field_config_key], FIELD_TYPE_MAP[f['type']]))
+
+    for f in field_config['field_groups'].get('magnitude', {}).get('fields', []):
+        if f.get('skip'):
+            continue
+
+        path = f['source']
+        if selected_fields:
+            selected = path in selected_fields
+        else:
+            path = path[len('eventParameters>event>'):].replace('§', '>').replace('>', '_')
+            selected = settings.value('/plugins/qquake/output_field_{}'.format(path), True, bool)
+        if not selected:
+            continue
+
+        fields.append(QgsField(f[field_config_key], FIELD_TYPE_MAP[f['type']]))
+
+    for f in field_config['field_groups'].get('mdp', {}).get('fields', []):
+        if f.get('skip'):
+            continue
+
+        path = f['source']
+        if selected_fields:
+            selected = path in selected_fields
+        else:
+            path = path[len('macroseismicParameters>'):].replace('§', '>').replace('>', '_')
+            selected = settings.value('/plugins/qquake/output_field_{}'.format(path), True, bool)
+        if not selected:
+            continue
+
+        fields.append(QgsField(f[field_config_key], FIELD_TYPE_MAP[f['type']]))
+
+    for f in field_config['field_groups'].get('place', {}).get('fields', []):
+        if f.get('skip'):
+            continue
+
+        path = f['source']
+        if selected_fields:
+            selected = path in selected_fields
+        else:
+            path = path[len('macroseismicParameters>'):].replace('§', '>').replace('>', '_')
+            selected = settings.value('/plugins/qquake/output_field_{}'.format(path), True, bool)
+        if not selected:
+            continue
+
+        fields.append(QgsField(f[field_config_key], FIELD_TYPE_MAP[f['type']]))
+
+    return fields
+
+
 class ElementParser:
 
     def __init__(self, element):
@@ -241,6 +330,13 @@ class ElementParser:
             return None
 
         return MsIntensity.from_element(child)
+
+    def ms_placename(self, attribute, optional=True):
+        child = self.element.elementsByTagName(attribute).at(0).toElement()
+        if optional and child.isNull():
+            return None
+
+        return MsPlaceName.from_element(child)
 
 
 class CreationInfo:
@@ -659,22 +755,31 @@ class MsPlace:
 
     def __init__(self,
                  publicID,
-                 name,
-                 latitude,
-                 longitude):
+                 preferredName,
+                 referenceLatitude,
+                 referenceLongitude,
+                 type,
+                 altitude,
+                 isoCountryCode):
         self.publicID = publicID
-        self.name = name
-        self.latitude = latitude
-        self.longitude = longitude
+        self.preferredName = preferredName
+        self.referenceLatitude = referenceLatitude
+        self.referenceLongitude = referenceLongitude
+        self.type = type
+        self.altitude = altitude
+        self.isoCountryCode =isoCountryCode
 
     @staticmethod
     def from_element(element):
         parser = ElementParser(element)
 
         return MsPlace(publicID=parser.string('publicID', is_attribute=True, optional=False),
-                       name=parser.string('ms:name', is_attribute=False, optional=True),
-                       latitude=parser.real_quantity('ms:referenceLatitude'),
-                       longitude=parser.real_quantity('ms:referenceLongitude'))
+                       preferredName=parser.ms_placename('ms:preferredName', optional=True),
+                       referenceLatitude=parser.real_quantity('ms:referenceLatitude'),
+                       referenceLongitude=parser.real_quantity('ms:referenceLongitude'),
+                       type=parser.string('ms:type', optional=True),
+                       altitude = parser.float('ms:altitude', optional=True),
+                       isoCountryCode = parser.string('ms:isoCountryCode', optional=True))
 
 
 class MsExpectedItensity:
@@ -704,6 +809,32 @@ class MsIntensity:
 
         return MsIntensity(macroseismicScale=parser.string('ms:macroseismicScale', is_attribute=False, optional=False),
                            expectedIntensity=parser.ms_expected_intensity('ms:expectedIntensity'))
+
+
+class MsPlaceName:
+
+    def __init__(self,
+                 name,
+                 type,
+                 alternateType,
+                 language,
+                 epoch):
+        self.name = name
+        self.type = type
+        self.alternateType = alternateType
+        self.language = language
+        self.epoch = epoch
+
+    @staticmethod
+    def from_element(element):
+        parser = ElementParser(element)
+
+        return MsPlaceName(name=parser.string('ms:name', is_attribute=False, optional=False),
+                           type=parser.string('ms:type', is_attribute=False, optional=True),
+                           alternateType=parser.string('ms:alternateType', is_attribute=False, optional=True),
+                           language=parser.string('ms:language', is_attribute=False, optional=True),
+                           epoch=parser.string('ms:epoch', is_attribute=False, optional=True))
+
 
 class MsMdp:
 
@@ -758,61 +889,7 @@ class Event:
 
     @staticmethod
     def to_fields(selected_fields=None):
-        fields = QgsFields()
-        settings = QgsSettings()
-        short_field_names = settings.value('/plugins/qquake/output_short_field_names', True, bool)
-        field_config_key = 'field_short' if short_field_names else 'field_long'
-
-        for f in CONFIG_FIELDS['field_groups']['basic_event_info']['fields']:
-            if f.get('skip'):
-                continue
-
-            path = f['source']
-
-            if selected_fields:
-                # use specified fields
-                selected = path in selected_fields
-            else:
-                # use default settings
-                path = path[len('eventParameters>event>'):].replace('§', '>').replace('>', '_')
-                selected = settings.value('/plugins/qquake/output_field_{}'.format(path), True, bool)
-
-            if not selected:
-                continue
-
-            fields.append(QgsField(f[field_config_key], FIELD_TYPE_MAP[f['type']]))
-
-        for f in CONFIG_FIELDS['field_groups']['origin']['fields']:
-            if f.get('skip'):
-                continue
-
-            path = f['source']
-            if selected_fields:
-                selected = path in selected_fields
-            else:
-                path = path[len('eventParameters>event>'):].replace('§', '>').replace('>', '_')
-                selected = settings.value('/plugins/qquake/output_field_{}'.format(path), True, bool)
-            if not selected:
-                continue
-
-            fields.append(QgsField(f[field_config_key], FIELD_TYPE_MAP[f['type']]))
-
-        for f in CONFIG_FIELDS['field_groups']['magnitude']['fields']:
-            if f.get('skip'):
-                continue
-
-            path = f['source']
-            if selected_fields:
-                selected = path in selected_fields
-            else:
-                path = path[len('eventParameters>event>'):].replace('§', '>').replace('>', '_')
-                selected = settings.value('/plugins/qquake/output_field_{}'.format(path), True, bool)
-            if not selected:
-                continue
-
-            fields.append(QgsField(f[field_config_key], FIELD_TYPE_MAP[f['type']]))
-
-        return fields
+        return get_service_fields(SERVICE_MANAGER.FDSNEVENT, selected_fields)
 
     @staticmethod
     def add_origin_attributes(origin, feature, output_fields):
@@ -1087,19 +1164,17 @@ class QuakeMlParser:
                 yield f
 
     @staticmethod
-    def create_mdp_fields():
-        f = QgsFields()
-        f.append(QgsField('publicID', QVariant.String))
-        f.append(QgsField('reportReference', QVariant.String))
-        f.append(QgsField('eventReference', QVariant.String))
-        f.append(QgsField('placeReference', QVariant.String))
-        f.append(QgsField('placeName', QVariant.String))
-        f.append(QgsField('macroseismicScale', QVariant.String))
-        f.append(QgsField('expectedIntensity', QVariant.String))
-        return f
+    def create_mdp_fields(selected_fields):
+        return get_service_fields(SERVICE_MANAGER.MACROSEISMIC, selected_fields)
 
-    def create_mdp_features(self):
-        fields = self.create_mdp_fields()
+    def create_mdp_features(self, selected_fields):
+        settings = QgsSettings()
+
+        short_field_names = settings.value('/plugins/qquake/output_short_field_names', True, bool)
+        field_config_key = 'field_short' if short_field_names else 'field_long'
+        field_config = SERVICE_MANAGER.get_field_config(SERVICE_MANAGER.MACROSEISMIC)
+
+        fields = self.create_mdp_fields(selected_fields)
         for _, m in self.mdps.items():
             if m.placeReference in self.macro_places:
                 place = self.macro_places[m.placeReference]
@@ -1107,15 +1182,92 @@ class QuakeMlParser:
                 place = None
 
             f = QgsFeature(fields)
-            f['publicID'] = m.publicID
-            f['reportReference']=m.reportReference
-            f['eventReference'] = m.eventReference
-            f['placeReference'] = m.placeReference
-            f['placeName'] = place.name if place else NULL
-            f['macroseismicScale'] = m.intensity.macroseismicScale
-            f['expectedIntensity'] = m.intensity.expectedIntensity.msclass
-            if place and place.longitude and place.latitude:
-                geom = QgsPoint(x=place.longitude.value, y=place.latitude.value)
+            for dest_field in field_config['field_groups']['basic_event_info']['fields']:
+                if dest_field.get('skip'):
+                    continue
+
+                source = dest_field['source'].replace('§', '>').split('>')
+                assert source[0] == 'eventParameters'
+                source = source[1:]
+                assert source[0] == 'event'
+                source = source[1:]
+
+                if selected_fields:
+                    selected = dest_field['source'] in selected_fields
+                else:
+                    selected = settings.value('/plugins/qquake/output_field_{}'.format('_'.join(source)), True, bool)
+
+                if not selected:
+                    continue
+
+                source_obj = [e for e in self.events if e.publicID == m.eventReference][0]
+                for s in source:
+                    if source_obj is None:
+                        source_obj = NULL
+                        break
+                    assert hasattr(source_obj, s)
+                    source_obj = getattr(source_obj, s)
+
+                f[dest_field[field_config_key]] = source_obj
+
+            for dest_field in field_config['field_groups'].get('mdp', {}).get('fields', []):
+                if dest_field.get('skip'):
+                    continue
+
+                source = dest_field['source'].replace('§', '>').split('>')
+                assert source[0] == 'macroseismicParameters'
+                source = source[1:]
+                assert source[0] == 'mdp'
+                source = source[1:]
+
+                if selected_fields:
+                    selected = dest_field['source'] in selected_fields
+                else:
+                    selected = settings.value('/plugins/qquake/output_field_{}'.format('_'.join(source)), True, bool)
+
+                if not selected:
+                    continue
+
+                source_obj = m
+                for s in source:
+                    if source_obj is None:
+                        source_obj = NULL
+                        break
+                    assert hasattr(source_obj, s)
+                    source_obj = getattr(source_obj, s)
+
+                f[dest_field[field_config_key]] = source_obj
+
+            for dest_field in field_config['field_groups'].get('place', {}).get('fields', []):
+                if dest_field.get('skip'):
+                    continue
+
+                source = dest_field['source'].replace('§', '>').split('>')
+                assert source[0] == 'macroseismicParameters'
+                source = source[1:]
+                assert source[0] == 'place'
+                source = source[1:]
+
+                if selected_fields:
+                    selected = dest_field['source'] in selected_fields
+                else:
+                    selected = settings.value('/plugins/qquake/output_field_{}'.format('_'.join(source)), True, bool)
+
+                if not selected:
+                    continue
+
+                source_obj = place
+                for s in source:
+                    if source_obj is None:
+                        source_obj = NULL
+                        break
+                    assert hasattr(source_obj, s)
+                    source_obj = getattr(source_obj, s)
+
+                f[dest_field[field_config_key]] = source_obj
+
+            if place and place.referenceLongitude and place.referenceLatitude:
+                geom = QgsPoint(x=place.referenceLongitude.value, y=place.referenceLatitude.value)
                 f.setGeometry(QgsGeometry(geom))
 
             yield f
@@ -1187,7 +1339,8 @@ class Network(BaseNodeType):
 
         for o in self.stations:
             f = QgsFeature(Station.to_fields(selected_fields))
-            for dest_field in SERVICE_MANAGER.get_field_config(SERVICE_MANAGER.FDSNSTATION)['field_groups']['station']['fields']:
+            for dest_field in SERVICE_MANAGER.get_field_config(SERVICE_MANAGER.FDSNSTATION)['field_groups']['station'][
+                'fields']:
                 if dest_field.get('skip'):
                     continue
 

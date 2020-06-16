@@ -164,14 +164,14 @@ class BasicTextParser:
         for e in self.events:
             yield self.to_event_feature(e, fields)
 
-    def create_mdp_fields(self):
+    def create_mdp_fields(self, selected_fields):
         fields = QgsFields()
         for f in self.mdp_headers:
             fields.append(QgsField(f, self.get_mdp_field_type(f)))
 
         return fields
 
-    def create_mdp_features(self):
+    def create_mdp_features(self, selected_fields):
         fields = self.create_mdp_fields()
 
         for e in self.mdp:

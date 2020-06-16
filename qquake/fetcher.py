@@ -363,7 +363,7 @@ class Fetcher(QObject):
         """
         vl = QgsVectorLayer('Point?crs=EPSG:4326', self._generate_layer_name(layer_type='mdp'), 'memory')
 
-        vl.dataProvider().addAttributes(self.result.create_mdp_fields())
+        vl.dataProvider().addAttributes(self.result.create_mdp_fields(self.output_fields))
         vl.updateFields()
 
         return vl
@@ -437,7 +437,7 @@ class Fetcher(QObject):
         vl = self._create_empty_mdp_layer()
 
         features = []
-        for f in parser.create_mdp_features():
+        for f in parser.create_mdp_features(self.output_fields):
             features.append(f)
 
         vl.dataProvider().addFeatures(features)

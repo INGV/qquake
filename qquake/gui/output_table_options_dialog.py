@@ -81,6 +81,8 @@ class OutputTableOptionsDialog(QDialog, FORM_CLASS):
 
                 if f['source'].startswith('eventParameters'):
                     path = f['source'][len('eventParameters>event>'):]
+                elif f['source'].startswith('macroseismicParameters'):
+                    path = f['source'][len('macroseismicParameters>'):]
                 else:
                     path = f['source'][len('FDSNStationXML>Network>'):]
 
