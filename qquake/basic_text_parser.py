@@ -45,6 +45,24 @@ EVENT_FIELD_TYPE = {
     'EventLocationName': QVariant.String
 }
 
+MDP_FIELD_TYPE = {
+    'EventID': QVariant.String,
+    'MDPsetID': QVariant.String,
+    'Time': QVariant.DateTime,
+    'Region': QVariant.String,
+    'MDPcount': QVariant.Int,
+    'maximumIntensity': QVariant.String,
+    'macroseismicScale': QVariant.String,
+    'MDPID': QVariant.String,
+    'PlaceID': QVariant.String,
+    'PlaceName': QVariant.String,
+    'ReferenceLatitude': QVariant.Double,
+    'ReferenceLongitude': QVariant.Double,
+    'ExpectedIntensity': QVariant.String,
+    'Quality': QVariant.String,
+    'ReportCount': QVariant.String
+}
+
 STATION_FIELD_TYPE = {
     'Network': QVariant.String,
     'Station': QVariant.String,
@@ -64,7 +82,9 @@ class BasicTextParser:
 
     def __init__(self):
         self.headers = []
+        self.mdp_headers = []
         self.events = []
+        self.mdp = []
 
     def parser_header_line(self, line):
         assert line[0] == '#'
@@ -90,9 +110,32 @@ class BasicTextParser:
 
             self.events.append(dict(zip(self.headers, e.split('|'))))
 
+    def add_mdp(self, content):
+        if not content:
+            return
+
+        lines = content.data().decode().split('\n')
+        if not len(lines):
+            return
+
+        assert lines[0][0] == '#'
+        self.mdp_headers = [h.strip() for h in lines[0][1:].split('|')]
+        for e in lines[1:]:
+            if not e:
+                continue
+
+            self.mdp.append(dict(zip(self.mdp_headers, e.split('|'))))
+
     @staticmethod
     def get_field_type(name):
         for k, v in EVENT_FIELD_TYPE.items():
+            if k.lower() == name.lower():
+                return v
+        return None
+
+    @staticmethod
+    def get_mdp_field_type(name):
+        for k, v in MDP_FIELD_TYPE.items():
             if k.lower() == name.lower():
                 return v
         return None
@@ -120,6 +163,30 @@ class BasicTextParser:
 
         for e in self.events:
             yield self.to_event_feature(e, fields)
+
+    def create_mdp_fields(self):
+        fields = QgsFields()
+        for f in self.mdp_headers:
+            fields.append(QgsField(f, self.get_mdp_field_type(f)))
+
+        return fields
+
+    def create_mdp_features(self):
+        fields = self.create_mdp_fields()
+
+        for e in self.mdp:
+            yield self.to_mdp_feature(e, fields)
+
+    def to_mdp_feature(self, event, fields):
+        f = QgsFeature(fields)
+        for k, v in event.items():
+            f[k] = v
+
+        if event.get('ReferenceLatitude') and event.get('ReferenceLongitude'):
+            geom = QgsPoint(x=float(event['ReferenceLongitude']), y=float(event['ReferenceLatitude']))
+            f.setGeometry(QgsGeometry(geom))
+
+        return f
 
 
 class BasicStationParser:
