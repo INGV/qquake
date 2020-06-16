@@ -123,13 +123,33 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
             self.group_ogc_layers.setEnabled(False)
             self.group_ogc_layers.hide()
 
+        if self.service_type == SERVICE_MANAGER.FDSNSTATION:
+            for w in [self.check_filter_by_eventid,
+                      self.check_filter_by_originid,
+                      self.check_filter_by_magnitudeid,
+                      self.check_filter_by_focalmechanismid,
+                      self.check_filter_by_catalog,
+                      self.check_filter_by_contributor,
+                      self.check_filter_by_contributorid,
+                      self.check_filter_by_event_type,
+                      self.check_filter_by_magnitude_type,
+                      self.check_can_include_all_origins,
+                      self.check_can_include_all_magnitudes,
+                      self.check_can_include_arrivals,
+                      self.check_can_include_all_stations_magnitudes,
+                      self.check_has_limit_of_entries,
+                      self.spin_has_limit_of_entries,
+                      self.check_can_filter_by_depth]:
+                w.setEnabled(False)
+
         self._changed()
 
     def _changed(self):
 
         self.combo_http_code_nodata.setEnabled(self.check_http_code_nodata.isChecked())
         self.spin_has_limit_of_entries.setEnabled(self.check_has_limit_of_entries.isChecked())
-        self.check_radius_of_circular_area_is_specified_in_km.setEnabled(self.check_can_filter_using_circular_area.isChecked())
+        self.check_radius_of_circular_area_is_specified_in_km.setEnabled(
+            self.check_can_filter_using_circular_area.isChecked())
 
         res, reason = self.is_valid()
         if not res:
@@ -160,7 +180,8 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
         self.data_provider_url_edit.setText(config.get('dataproviderurl'))
         self.web_service_url_edit.setText(config.get('endpointurl'))
         self.qml_style_url_edit.setText(config.get('styleurl'))
-        self.qml_style_name_combo.setCurrentIndex(self.qml_style_name_combo.findText(config.get('default', {}).get('style')))
+        self.qml_style_name_combo.setCurrentIndex(
+            self.qml_style_name_combo.findText(config.get('default', {}).get('style')))
 
         if config.get('datestart'):
             self.start_date_edit.setDateTime(QDateTime.fromString(config.get('datestart'), Qt.ISODate))
@@ -193,10 +214,11 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
                     widget.setValue(int(config.get('settings', {}).get(key)))
 
         self.check_http_code_nodata.setChecked('httpcodenodata' in config.get('settings', {}))
-        self.combo_http_code_nodata.setCurrentIndex(self.combo_http_code_nodata.findData(config.get('settings', {}).get('httpcodenodata', '204')))
+        self.combo_http_code_nodata.setCurrentIndex(
+            self.combo_http_code_nodata.findData(config.get('settings', {}).get('httpcodenodata', '204')))
 
         if self.group_ogc_layers.isEnabled():
-            self.ogc_layers_edit.setText(json.dumps(config.get('default',{}).get('layers',[]), indent=4))
+            self.ogc_layers_edit.setText(json.dumps(config.get('default', {}).get('layers', []), indent=4))
 
     def get_config(self):
         if self.service_id in SERVICE_MANAGER.available_services(self.service_type):
@@ -240,6 +262,9 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
             settings = {}
             for key, w in self.WIDGET_MAP.items():
                 widget = getattr(self, w)
+                if not widget.isEnabled():
+                    continue
+                    
                 if isinstance(widget, QCheckBox):
                     settings[key] = widget.isChecked()
                 elif isinstance(widget, QSpinBox):
