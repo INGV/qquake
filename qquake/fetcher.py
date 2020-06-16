@@ -125,15 +125,19 @@ class Fetcher(QObject):
         else:
             self.result = BasicTextParser()
 
-
         self.missing_origins = set()
         self.is_missing_origin_request = False
+        self.require_mdp_basic_text_request = self.output_type == self.BASIC and self.service_type == SERVICE_MANAGER.MACROSEISMIC
+        self.is_mdp_basic_text_request = False
 
     def generate_url(self):
         """
         Returns the URL request for the query
         """
-        format = 'text' if self.output_type == Fetcher.BASIC else 'xml'
+        if self.is_mdp_basic_text_request:
+            format = 'textmacro'
+        else:
+            format = 'text' if self.output_type == Fetcher.BASIC else 'xml'
 
         query = []
         # append to the string the parameter of the UI (starttime, endtime, etc)
@@ -239,6 +243,16 @@ class Fetcher(QObject):
         self.message.emit(self.tr('{} events left to fetch').format(len(self.pending_event_ids)))
         self.fetch_data()
 
+    def fetch_basic_mdp(self):
+        self.require_mdp_basic_text_request = False
+        self.is_mdp_basic_text_request = True
+        self.message.emit(self.tr('Fetching MDPs'))
+
+        request = QNetworkRequest(QUrl(self.generate_url()))
+        reply = QgsNetworkAccessManager.instance().get(request)
+        reply.finished.connect(lambda r=reply: self._reply_finished(r))
+        reply.downloadProgress.connect(self._reply_progress)
+
     def _reply_progress(self, received, total):
         if total > 0:
             self.progress.emit(float(received) / total * 100)
@@ -285,15 +299,22 @@ class Fetcher(QObject):
                 if self.pending_event_ids:
                     self.pending_event_ids = self.pending_event_ids[1:]
 
-                if self.result.events:
-                    self.result.add_events(reply.readAll())
-                else:
-                    self.result.parse(reply.readAll())
+                if not self.is_mdp_basic_text_request:
+                    if self.result.events:
+                        self.result.add_events(reply.readAll())
+                    else:
+                        self.result.parse(reply.readAll())
 
                 if self.pending_event_ids:
                     self.fetch_next_event_by_id()
                 else:
-                    self.finished.emit()
+                    if self.require_mdp_basic_text_request:
+                        self.fetch_basic_mdp()
+                    else:
+                        if self.is_mdp_basic_text_request:
+                            self.result.add_mdp(reply.readAll())
+
+                        self.finished.emit()
 
     def _generate_layer_name(self, layer_type=None):
         name = self.event_service
@@ -342,7 +363,7 @@ class Fetcher(QObject):
         """
         vl = QgsVectorLayer('Point?crs=EPSG:4326', self._generate_layer_name(layer_type='mdp'), 'memory')
 
-        vl.dataProvider().addAttributes(QuakeMlParser.create_mdp_fields())
+        vl.dataProvider().addAttributes(self.result.create_mdp_fields())
         vl.updateFields()
 
         return vl
@@ -389,7 +410,7 @@ class Fetcher(QObject):
         elif self.service_config.get('default', {}).get('style'):
             style_url = SERVICE_MANAGER.PRESET_STYLES[self.service_config.get('default', {}).get('style')]
             self.fetch_and_apply_style(vl, style_url)
-            
+
         return vl
 
     def fetch_and_apply_style(self, layer, url):
