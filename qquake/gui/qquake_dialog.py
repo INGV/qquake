@@ -203,9 +203,9 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.button_macro_edit_service.clicked.connect(lambda: self._edit_service(SERVICE_MANAGER.MACROSEISMIC))
         self.button_station_edit_service.clicked.connect(lambda: self._edit_service(SERVICE_MANAGER.FDSNSTATION))
 
-        self.button_fdsn_remove_service.clicked.connect(lambda: self._remove_service(SERVICE_MANAGER.FDSNEVENT))
-        self.button_macro_remove_service.clicked.connect(lambda: self._remove_service(SERVICE_MANAGER.MACROSEISMIC))
-        self.button_station_remove_service.clicked.connect(lambda: self._remove_service(SERVICE_MANAGER.FDSNSTATION))
+        for b in [self.button_fdsn_remove_service, self.button_macro_remove_service,
+                  self.button_station_remove_service, self.button_ogc_remove_service]:
+            b.clicked.connect(self._remove_service)
 
         for b in [self.button_fdsn_export_service, self.button_macro_export_service,
                   self.button_station_export_service, self.button_ogc_export_service]:
@@ -560,6 +560,10 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.ogc_list.addItems(SERVICE_MANAGER.available_services(ogc_selection))
         self.ogc_list.setCurrentRow(0)
 
+        service_config = SERVICE_MANAGER.service_details(ogc_selection, self.get_current_service_id(ogc_selection))
+        self.button_ogc_edit_service.setEnabled(not service_config['read_only'])
+        self.button_ogc_remove_service.setEnabled(not service_config['read_only'])
+
     def _ogc_service_changed(self):
         if not self.ogc_list.currentItem():
             return
@@ -570,7 +574,12 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.ogc_service_info_widget.set_service(service_type=self.ogc_combo.currentData(),
                                                  service_id=self.ogc_list.currentItem().text())
 
-    def _remove_service(self, service_type):
+        service_config = SERVICE_MANAGER.service_details(self.ogc_combo.currentData(), self.ogc_list.currentItem().text())
+        self.button_ogc_edit_service.setEnabled(not service_config['read_only'])
+        self.button_ogc_remove_service.setEnabled(not service_config['read_only'])
+
+    def _remove_service(self):
+        service_type = self.get_current_service_type()
         service_id = self.get_current_service_id(service_type)
         if QMessageBox.question(self, self.tr('Remove Service'),
                                 self.tr('Are you sure you want to remove "{}"?'.format(service_id))) != QMessageBox.Yes:
