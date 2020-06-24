@@ -4,51 +4,86 @@
       "label": "station",
       "fields": [
         {
+          "field_short": "source",
+          "field_long": "Source",
+          "source": "FDSNStationXML>Source",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "sender",
+          "field_long": "Sender",
+          "source": "FDSNStationXML>Sender",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "module",
+          "field_long": "Module",
+          "source": "FDSNStationXML>Module",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "moduleuri",
+          "field_long": "ModuleURI",
+          "source": "FDSNStationXML>ModuleURI",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "created",
+          "field_long": "Created",
+          "source": "FDSNStationXML>Created",
+          "description": "",
+          "type": "String"
+        },
+        {
           "field_short": "netcode",
           "field_long": "NetCode",
-          "source": "FDSNStationXML>Network>Code",
+          "source": "FDSNStationXML>Network§code",
           "description": "",
           "type": "String"
         },
         {
           "field_short": "netstart",
           "field_long": "NetworkStart",
-          "source": "FDSNStationXML>Network>StartDate",
+          "source": "FDSNStationXML>Network§startDate",
           "description": "",
           "type": "DateTime"
         },
         {
           "field_short": "netend",
           "field_long": "NetworkEnd",
-          "source": "FDSNStationXML>Network>EndDate",
+          "source": "FDSNStationXML>Network§endDate",
           "description": "",
           "type": "DateTime"
         },
         {
           "field_short": "netsrcid",
           "field_long": "NetSourceID",
-          "source": "FDSNStationXML>Network>SourceID",
+          "source": "FDSNStationXML>Network§sourceID",
           "description": "",
           "type": "String"
         },
         {
-          "field_short": "netrestric",
-          "field_long": "NetRestricted",
-          "source": "FDSNStationXML>Network>RestrictedStatus",
+          "field_short": "netrestr",
+          "field_long": "NetRestrictedStatus",
+          "source": "FDSNStationXML>Network§restrictedStatus",
           "description": "",
           "type": "String"
         },
         {
           "field_short": "netaltcod",
           "field_long": "NetAltCode",
-          "source": "FDSNStationXML>Network>AlternateCode",
+          "source": "FDSNStationXML>Network§alternateCode",
           "description": "",
           "type": "String"
         },
         {
           "field_short": "nethistcod",
           "field_long": "NetworkHistCode",
-          "source": "FDSNStationXML>Network>HistoricalCode",
+          "source": "FDSNStationXML>Network§historicalCode",
           "description": "",
           "type": "String"
         },
@@ -60,78 +95,204 @@
           "type": "String"
         },
         {
-          "field_short": "netstatlat",
-          "field_long": "NetworkStationLat",
+          "field_short": "netid",
+          "field_long": "NetIdentifier",
+          "source": "FDSNStationXML>Network>Identifier",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "netcomm",
+          "field_long": "NetComment",
+          "source": "FDSNStationXML>Network>Comment>Value",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "netavexsta",
+          "field_long": "NetAvailExtStart",
+          "source": "FDSNStationXML>Network>DataAvailability>Extent§start",
+          "description": "",
+          "type": "DateTime"
+        },
+        {
+          "field_short": "netavexend",
+          "field_long": "NetAvailExtEnd",
+          "source": "FDSNStationXML>Network>DataAvailability>Extent§end",
+          "description": "",
+          "type": "DateTime"
+        },
+        {
+          "field_short": "netagency",
+          "field_long": "NetOperatAgency",
+          "source": "FDSNStationXML>Network>Operator>Agency",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "netagency",
+          "field_long": "NetOperatAgency",
+          "source": "FDSNStationXML>Network>SelectedNumberStationsy",
+          "description": "",
+          "type": "Int"
+        },
+        {
+          "field_short": "stcode",
+          "field_long": "StationCode",
+          "source": "FDSNStationXML>Network>Station§code",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "ststart",
+          "field_long": "StationworkStart",
+          "source": "FDSNStationXML>Network>Station§startDate",
+          "description": "",
+          "type": "DateTime"
+        },
+        {
+          "field_short": "stend",
+          "field_long": "StationworkEnd",
+          "source": "FDSNStationXML>Network>Station§endDate",
+          "description": "",
+          "type": "DateTime"
+        },
+        {
+          "field_short": "stsrcid",
+          "field_long": "StationSourceID",
+          "source": "FDSNStationXML>Network>Station§sourceID",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "strestr",
+          "field_long": "StationRestrictedStatus",
+          "source": "FDSNStationXML>Network>Station§restrictedStatus",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "staltcod",
+          "field_long": "StationAltCode",
+          "source": "FDSNStationXML>Network>Station§alternateCode",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "sthistcod",
+          "field_long": "StationHistCode",
+          "source": "FDSNStationXML>Network>Station§historicalCode",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "stlat",
+          "field_long": "StationLat",
           "source": "FDSNStationXML>Network>Station>Latitude",
           "description": "",
           "type": "Double"
         },
         {
-          "field_short": "netstatlon",
-          "field_long": "NetworkStationLon",
+          "field_short": "stlon",
+          "field_long": "StationLon",
           "source": "FDSNStationXML>Network>Station>Longitude",
           "description": "",
           "type": "Double"
         },
         {
-          "field_short": "elevation",
-          "field_long": "NetworkStationElevation",
+          "field_short": "stelev",
+          "field_long": "StationElevation",
           "source": "FDSNStationXML>Network>Station>Elevation",
           "description": "",
           "type": "Double"
         },
         {
-          "field_short": "waterlevel",
-          "field_long": "NetworkWaterLevel",
+          "field_short": "stsitename",
+          "field_long": "StationSiteName",
+          "source": "FDSNStationXML>Network>Station>Site>Name",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "stwtrlev",
+          "field_long": "StationWaterLevel",
           "source": "FDSNStationXML>Network>Station>WaterLevel",
           "description": "",
           "type": "Double"
         },
         {
-          "field_short": "vault",
-          "field_long": "NetworkStationVault",
+          "field_short": "stvault",
+          "field_long": "StationVault",
           "source": "FDSNStationXML>Network>Station>Vault",
           "description": "",
           "type": "String"
         },
         {
-          "field_short": "geology",
-          "field_long": "NetworkStationGeology",
+          "field_short": "stgeol",
+          "field_long": "StationGeology",
           "source": "FDSNStationXML>Network>Station>Geology",
           "description": "",
           "type": "String"
         },
         {
-          "field_short": "netcreatio",
-          "field_long": "NetworkStationCreationDate",
+          "field_short": "stequip",
+          "field_long": "StationEquipment",
+          "source": "FDSNStationXML>Network>Station>Equipment",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "stagency",
+          "field_long": "StationEquipment",
+          "source": "FDSNStationXML>Network>Station>Operator>Agency",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "stcreatio",
+          "field_long": "StationCreationDate",
           "source": "FDSNStationXML>Network>Station>CreationDate",
           "description": "",
           "type": "String"
         },
         {
-          "field_short": "netterm",
-          "field_long": "NetworkStationTerminationDate",
+          "field_short": "stterm",
+          "field_long": "StationTerminationDate",
           "source": "FDSNStationXML>Network>Station>TerminationDate",
           "description": "",
           "type": "String"
         },
         {
-          "field_short": "totnumchan",
-          "field_long": "NetworkStationTotNumChannels",
+          "field_short": "sttotchan",
+          "field_long": "StationTotNumChannels",
           "source": "FDSNStationXML>Network>Station>TotalNumberChannels",
           "description": "",
           "type": "Int"
         },
         {
-          "field_short": "netselnumc",
-          "field_long": "NetworkStationSelNumChannels",
+          "field_short": "stselnumc",
+          "field_long": "StationSelNumChannels",
           "source": "FDSNStationXML>Network>Station>SelectedNumberChannels",
           "description": "",
           "type": "Int"
+        },
+        {
+          "field_short": "strefuri",
+          "field_long": "StationExtRefURI",
+          "source": "FDSNStationXML>Network>Station>ExternalReference>URI",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "strefdescr",
+          "field_long": "StationExtRefDescription",
+          "source": "FDSNStationXML>Network>Station>ExternalReference>Description",
+          "description": "",
+          "type": "String"
         }
       ]
     }
   },
-  "configversion": 0.3,
-  "configlastupdate": "2020-05-20T17:50:27+00:00"
+  "configversion": 0.4,
+  "configlastupdate": "2020-06-24T20:21:32+00:00"
 }
