@@ -1,7 +1,7 @@
 {
   "field_groups": {
     "general": {
-      "label": "station",
+      "label": "general",
       "fields": [
         {
           "field_short": "source",
