@@ -65,7 +65,7 @@ class ServiceInformationWidget(QWidget, FORM_CLASS):
             <a href="{datalicenseurl}">{datalicense}</a></p>
             """.format(**self.service_config)
 
-        html += """<p><b>Data provider</b><br>
+        html += """<p><b>Service managed by</b><br>
             <a href="{dataproviderurl}">{dataprovider}</a></p>
             """.format(**self.service_config)
 
