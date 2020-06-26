@@ -126,7 +126,7 @@
       <item row="5" column="2" colspan="2">
        <widget class="QPushButton" name="rect_extent_draw_on_map">
         <property name="text">
-         <string>Draw on Map</string>
+         <string>Draw the bounding box on the map</string>
         </property>
        </widget>
       </item>
@@ -176,7 +176,7 @@
       <item row="9" column="2" colspan="2">
        <widget class="QPushButton" name="circle_center_draw_on_map">
         <property name="text">
-         <string>Select from Map</string>
+         <string>Draw the circular area on the map</string>
         </property>
        </widget>
       </item>
