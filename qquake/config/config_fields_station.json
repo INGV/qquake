@@ -1,6 +1,6 @@
 {
   "field_groups": {
-    "station": {
+    "general": {
       "label": "station",
       "fields": [
         {
@@ -37,7 +37,12 @@
           "source": "FDSNStationXML>Created",
           "description": "",
           "type": "String"
-        },
+        }
+      ]
+    },
+    "network": {
+      "label": "network",
+      "fields": [
         {
           "field_short": "netcode",
           "field_long": "NetCode",
@@ -142,7 +147,12 @@
           "source": "FDSNStationXML>Network>SelectedNumberStations",
           "description": "",
           "type": "Int"
-        },
+        }
+      ]
+    },
+    "station": {
+      "label": "station",
+      "fields": [
         {
           "field_short": "stcode",
           "field_long": "StationCode",
@@ -300,6 +310,6 @@
       ]
     }
   },
-  "configversion": 0.4,
-  "configlastupdate": "2020-06-24T20:21:32+00:00"
+  "configversion": 0.5,
+  "configlastupdate": "2020-06-26T19:50:21+00:00"
 }
