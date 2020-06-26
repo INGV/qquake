@@ -130,9 +130,16 @@
           "type": "String"
         },
         {
-          "field_short": "netagency",
-          "field_long": "NetOperatAgency",
-          "source": "FDSNStationXML>Network>SelectedNumberStationsy",
+          "field_short": "nettotstat",
+          "field_long": "NetTotNumStations",
+          "source": "FDSNStationXML>Network>TotalNumberStations",
+          "description": "",
+          "type": "Int"
+        },
+        {
+          "field_short": "netselstat",
+          "field_long": "NetSelNumStations",
+          "source": "FDSNStationXML>Network>SelectedNumberStations",
           "description": "",
           "type": "Int"
         },
