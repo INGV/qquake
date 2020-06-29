@@ -27,6 +27,7 @@ from qgis.PyQt.QtCore import (
 from qgis.PyQt.QtNetwork import QNetworkRequest
 
 from qgis.core import (
+    Qgis,
     QgsNetworkAccessManager,
     QgsVectorLayer,
     QgsSettings,
@@ -56,7 +57,7 @@ class Fetcher(QObject):
 
     progress = pyqtSignal(float)
     finished = pyqtSignal()
-    message = pyqtSignal(str)
+    message = pyqtSignal(str, Qgis.MessageLevel)
 
     def __init__(self, service_type,
                  event_service,
@@ -220,7 +221,7 @@ class Fetcher(QObject):
 
     def fetch_missing(self):
         # pop first missing origin from front of queue and fetch it
-        self.message.emit(self.tr('Returned XML was incomplete. {} missing origins left to fetch').format(len(self.missing_origins)))
+        self.message.emit(self.tr('Returned XML was incomplete. {} missing origins left to fetch').format(len(self.missing_origins)), Qgis.Warning)
 
         remaining = list(self.missing_origins)
         next_origin = remaining[0]
@@ -240,13 +241,13 @@ class Fetcher(QObject):
 
     def fetch_next_event_by_id(self):
         # pop first id from front of queue and fetch it
-        self.message.emit(self.tr('{} events left to fetch').format(len(self.pending_event_ids)))
+        self.message.emit(self.tr('{} events left to fetch').format(len(self.pending_event_ids)), Qgis.Info)
         self.fetch_data()
 
     def fetch_basic_mdp(self):
         self.require_mdp_basic_text_request = False
         self.is_mdp_basic_text_request = True
-        self.message.emit(self.tr('Fetching MDPs'))
+        self.message.emit(self.tr('Fetching MDPs'), Qgis.Info)
 
         request = QNetworkRequest(QUrl(self.generate_url()))
         reply = QgsNetworkAccessManager.instance().get(request)
@@ -416,7 +417,7 @@ class Fetcher(QObject):
     def fetch_and_apply_style(self, layer, url):
         request = QgsBlockingNetworkRequest()
         if request.get(QNetworkRequest(QUrl(url))) != QgsBlockingNetworkRequest.NoError:
-            self.message.emit(self.tr('Error while fetching QML style'))
+            self.message.emit(self.tr('Error while fetching QML style'), Qgis.Warning)
         else:
             reply = request.reply().content()
             tmp_file = QTemporaryFile('{}/XXXXXX.qml'.format(QDir.tempPath()))

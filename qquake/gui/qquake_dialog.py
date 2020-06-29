@@ -683,10 +683,10 @@ class QQuakeDialog(QDialog, FORM_CLASS):
 
         self.fetcher.fetch_data()
 
-    def _fetcher_message(self, message):
+    def _fetcher_message(self, message, level):
         self.message_bar.clearWidgets()
         self.message_bar.pushMessage(
-            message, Qgis.Warning, 0)
+            message, level, 0)
 
     def _fetcher_finished(self):
         self.progressBar.reset()
@@ -721,7 +721,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                     0)
             else:
                 self.message_bar.pushMessage(
-                    self.tr("Query returned {} events").format(events_count), Qgis.Info, 0)
+                    self.tr("Query returned {} records").format(max_feature_count), Qgis.Success, 0)
         elif self.fetcher.service_type == SERVICE_MANAGER.FDSNSTATION:
             layers.append(self.fetcher.create_stations_layer())
             stations_count = layers[0].featureCount()
