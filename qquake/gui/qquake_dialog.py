@@ -263,6 +263,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
 
         filter_widget = self.get_service_filter_widget(service_type)
         SERVICE_MANAGER.save_service(service_type, name, filter_widget.to_service_definition())
+        self.set_current_service(service_type, name)
 
     def _save_settings(self):
         s = QgsSettings()
@@ -630,7 +631,8 @@ class QQuakeDialog(QDialog, FORM_CLASS):
 
         name = dlg.name()
         config_dialog = ServiceConfigurationDialog(self.iface, service_type, name, self)
-        config_dialog.exec_()
+        if config_dialog.exec_():
+            self.set_current_service(service_type, name)
 
     def _export_service(self):
         service_type = self.get_current_service_type()
