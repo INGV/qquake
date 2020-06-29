@@ -101,7 +101,7 @@ def get_service_fields(service_type, selected_fields):
 
         fields.append(QgsField(f[field_config_key], FIELD_TYPE_MAP[f['type']]))
 
-    for f in field_config['field_groups'].get('origin', {}).get('fields',[]):
+    for f in field_config['field_groups'].get('origin', {}).get('fields', []):
         if f.get('skip'):
             continue
 
@@ -338,6 +338,48 @@ class ElementParser:
 
         return MsPlaceName.from_element(child)
 
+    def site(self, attribute, optional=True):
+        child = self.element.elementsByTagName(attribute).at(0).toElement()
+        if optional and child.isNull():
+            return None
+
+        return Site.from_element(child)
+
+    def equipment(self, attribute, optional=True):
+        child = self.element.elementsByTagName(attribute).at(0).toElement()
+        if optional and child.isNull():
+            return None
+
+        return Equipment.from_element(child)
+
+    def operator(self, attribute, optional=True):
+        child = self.element.elementsByTagName(attribute).at(0).toElement()
+        if optional and child.isNull():
+            return None
+
+        return Operator.from_element(child)
+
+    def person(self, attribute, optional=True):
+        child = self.element.elementsByTagName(attribute).at(0).toElement()
+        if optional and child.isNull():
+            return None
+
+        return Person.from_element(child)
+
+    def phone_number(self, attribute, optional=True):
+        child = self.element.elementsByTagName(attribute).at(0).toElement()
+        if optional and child.isNull():
+            return None
+
+        return PhoneNumber.from_element(child)
+
+    def external_reference(self, attribute, optional=True):
+        child = self.element.elementsByTagName(attribute).at(0).toElement()
+        if optional and child.isNull():
+            return None
+
+        return ExternalReference.from_element(child)
+
 
 class CreationInfo:
 
@@ -483,6 +525,119 @@ class EventDescription:
     def from_element(element):
         parser = ElementParser(element)
         return EventDescription(text=parser.string('text'), type=parser.string('type'))
+
+
+class Site:
+
+    def __init__(self, Name, Description, Town, County, Region, Country):
+        self.Name = Name
+        self.Description = Description
+        self.Town = Town
+        self.County = County
+        self.Region = Region
+        self.Country = Country
+
+    @staticmethod
+    def from_element(element):
+        parser = ElementParser(element)
+        return Site(Name=parser.string('Name'),
+                    Description=parser.string('Description', optional=True),
+                    Town=parser.string('Town', optional=True),
+                    County=parser.string('County', optional=True),
+                    Region=parser.string('Region', optional=True),
+                    Country=parser.string('Country', optional=True))
+
+
+class Equipment:
+
+    def __init__(self, Type, Description, Manufacturer, Vendor, Model, SerialNumber, InstallationDate, RemovalDate,
+                 CalibrationDate, resourceId):
+        self.Type = Type
+        self.Description = Description
+        self.Manufacturer = Manufacturer
+        self.Vendor = Vendor
+        self.Model = Model
+        self.SerialNumber = SerialNumber
+        self.InstallationDate = InstallationDate
+        self.RemovalDate = RemovalDate
+        self.CalibrationDate = CalibrationDate
+        self.resourceId = resourceId
+
+    @staticmethod
+    def from_element(element):
+        parser = ElementParser(element)
+        return Equipment(Type=parser.string('Type', optional=True),
+                         Description=parser.string('Description', optional=True),
+                         Manufacturer=parser.string('Manufacturer', optional=True),
+                         Vendor=parser.string('Vendor', optional=True),
+                         Model=parser.string('Model', optional=True),
+                         SerialNumber=parser.string('SerialNumber', optional=True),
+                         InstallationDate=parser.datetime('InstallationDate', optional=True),
+                         RemovalDate=parser.datetime('RemovalDate', optional=True),
+                         CalibrationDate=parser.datetime('CalibrationDate', optional=True),
+                         resourceId=parser.string('resourceId', optional=True, is_attribute=True))
+
+
+class Operator:
+
+    def __init__(self, Agency, Contact, Website):
+        self.Agency = Agency
+        self.Contact = Contact
+        self.Website = Website
+
+    @staticmethod
+    def from_element(element):
+        parser = ElementParser(element)
+        return Operator(Agency=parser.string('Agency'),
+                        Contact=parser.person('Contact', optional=True),
+                        Website=parser.string('Website', optional=True))
+
+
+class Person:
+
+    def __init__(self, Name, Agency, Email, Phone):
+        self.Name = Name
+        self.Agency = Agency
+        self.Email = Email
+        self.Phone = Phone
+
+    @staticmethod
+    def from_element(element):
+        parser = ElementParser(element)
+        return Person(Name=parser.string('Name', optional=True),
+                      Agency=parser.string('Agency', optional=True),
+                      Email=parser.string('Email', optional=True),
+                      Phone=parser.phone_number('Phone', optional=True))
+
+
+class PhoneNumber:
+
+    def __init__(self, CountryCode, AreaCode, PhoneNumber, Description):
+        self.CountryCode = CountryCode
+        self.AreaCode = AreaCode
+        self.PhoneNumber = PhoneNumber
+        self.Description = Description
+
+    @staticmethod
+    def from_element(element):
+        parser = ElementParser(element)
+        return PhoneNumber(CountryCode=parser.int('CountryCode', optional=True),
+                           AreaCode=parser.int('AreaCode'),
+                           PhoneNumber=parser.string('PhoneNumber'),
+                           Description=parser.string('Description', optional=True, is_attribute=True))
+
+
+class ExternalReference:
+
+    def __init__(self, URI, Description):
+        self.URI = URI
+        self.Description = Description
+
+    @staticmethod
+    def from_element(element):
+        parser = ElementParser(element)
+        return ExternalReference(URI=parser.string('URI'),
+                                 Description=parser.string('Description'))
 
 
 class Origin:
@@ -767,7 +922,7 @@ class MsPlace:
         self.referenceLongitude = referenceLongitude
         self.type = type
         self.altitude = altitude
-        self.isoCountryCode =isoCountryCode
+        self.isoCountryCode = isoCountryCode
 
     @staticmethod
     def from_element(element):
@@ -778,8 +933,8 @@ class MsPlace:
                        referenceLatitude=parser.real_quantity('ms:referenceLatitude'),
                        referenceLongitude=parser.real_quantity('ms:referenceLongitude'),
                        type=parser.string('ms:type', optional=True),
-                       altitude = parser.float('ms:altitude', optional=True),
-                       isoCountryCode = parser.string('ms:isoCountryCode', optional=True))
+                       altitude=parser.float('ms:altitude', optional=True),
+                       isoCountryCode=parser.string('ms:isoCountryCode', optional=True))
 
 
 class MsExpectedItensity:
@@ -1402,17 +1557,17 @@ class Station(BaseNodeType):
                  Latitude,
                  Longitude,
                  Elevation,
-                 # site, - not supported
+                 Site,
                  WaterLevel,
                  Vault,
                  Geology,
-                 # equipment -  not supported
-                 # operator - not supported
+                 Equipment,
+                 Operator,
                  CreationDate,
                  TerminationDate,
                  TotalNumberChannels,
                  SelectedNumberChannels,
-                 # ExternalReference - not supported
+                 ExternalReference
                  # Channel
                  ):
         super().__init__(None,
@@ -1427,7 +1582,7 @@ class Station(BaseNodeType):
         self.Latitude = Latitude
         self.Longitude = Longitude
         self.Elevation = Elevation
-        # self.site = site
+        self.Site = Site
         self.WaterLevel = WaterLevel
         self.Vault = Vault
         self.Geology = Geology
@@ -1435,6 +1590,9 @@ class Station(BaseNodeType):
         self.TerminationDate = TerminationDate
         self.TotalNumberChannels = TotalNumberChannels
         self.SelectedNumberChannels = SelectedNumberChannels
+        self.Equipment = Equipment
+        self.Operator = Operator
+        self.ExternalReference = ExternalReference
 
     @staticmethod
     def to_fields(selected_fields):
@@ -1469,13 +1627,17 @@ class Station(BaseNodeType):
             Latitude=parser.float('Latitude', optional=False),
             Longitude=parser.float('Longitude', optional=False),
             Elevation=parser.float('Elevation', optional=False),
+            Site=parser.site('Site', optional=False),
+            Equipment=parser.equipment('Equipment', optional=True),
             WaterLevel=parser.float('WaterLevel'),
             Vault=parser.string('Vault'),
             Geology=parser.string('Geology'),
             CreationDate=parser.datetime('CreationDate'),
             TerminationDate=parser.datetime('TerminationDate'),
             TotalNumberChannels=parser.int('TotalNumberChannels'),
-            SelectedNumberChannels=parser.int('SelectedNumberChannels')
+            SelectedNumberChannels=parser.int('SelectedNumberChannels'),
+            Operator=parser.operator('Operator', optional=True),
+            ExternalReference=parser.external_reference('ExternalReference', optional=True)
         )
         BaseNodeType._from_element(res, element)
         return res
