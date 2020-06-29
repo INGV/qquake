@@ -683,10 +683,10 @@ class QQuakeDialog(QDialog, FORM_CLASS):
 
         self.fetcher.fetch_data()
 
-    def _fetcher_message(self, message):
+    def _fetcher_message(self, message, level):
         self.message_bar.clearWidgets()
         self.message_bar.pushMessage(
-            message, Qgis.Warning, 0)
+            message, level, 0)
 
     def _fetcher_finished(self):
         self.progressBar.reset()
