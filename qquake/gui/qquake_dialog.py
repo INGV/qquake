@@ -425,7 +425,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
             self.button_box.button(QDialogButtonBox.Ok).setEnabled(False)
             return
 
-        self.button_box.button(QDialogButtonBox.Ok).setEnabled(True)
+        self._valid_changed()
 
         if service_type == SERVICE_MANAGER.FDSNEVENT:
             self.fsdn_event_url_text_browser.setText('<a href="{0}">{0}</a>'.format(fetcher.generate_url()))
@@ -433,6 +433,16 @@ class QQuakeDialog(QDialog, FORM_CLASS):
             self.fdsn_macro_url_text_browser.setText('<a href="{0}">{0}</a>'.format(fetcher.generate_url()))
         elif service_type == SERVICE_MANAGER.FDSNSTATION:
             self.fdsn_station_url_text_browser.setText('<a href="{0}">{0}</a>'.format(fetcher.generate_url()))
+
+    def _valid_changed(self):
+        service_type = self.get_current_service_type()
+        if service_type not in (
+                SERVICE_MANAGER.FDSNEVENT, SERVICE_MANAGER.MACROSEISMIC, SERVICE_MANAGER.FDSNSTATION):
+            self.button_box.button(QDialogButtonBox.Ok).setEnabled(True)
+            return
+
+        filter_widget = self.get_service_filter_widget(service_type)
+        self.button_box.button(QDialogButtonBox.Ok).setEnabled(filter_widget.is_valid())
 
     def _update_service_widgets(self, service_type, service_id, filter_widget, filter_by_id_widget, info_widget,
                                 remove_service_button, edit_service_button, tab_widget):

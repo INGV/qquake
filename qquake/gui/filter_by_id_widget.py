@@ -69,6 +69,13 @@ class FilterByIdWidget(QWidget, FORM_CLASS):
         self.radio_extended_output.toggled.connect(self.changed)
         self.button_import_from_file.clicked.connect(self.load_from_file)
 
+    def is_valid(self):
+        if self.radio_single_event.isChecked():
+            return bool(self.edit_event_id.text())
+        elif self.radio_multiple_events.isChecked():
+            return bool(self.event_ids_edit.toPlainText())
+        return False
+
     def set_service_type(self, service_type):
         self.service_type = service_type
 
