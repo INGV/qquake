@@ -88,6 +88,16 @@
               </widget>
              </item>
              <item>
+              <widget class="QToolButton" name="button_fdsn_rename_service">
+               <property name="text">
+                <string>Rename</string>
+               </property>
+               <property name="popupMode">
+                <enum>QToolButton::InstantPopup</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="QToolButton" name="button_fdsn_remove_service">
                <property name="text">
                 <string>Remove</string>
@@ -321,6 +331,13 @@
               </widget>
              </item>
              <item>
+              <widget class="QToolButton" name="button_macro_rename_service">
+               <property name="text">
+                <string>Rename</string>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="QToolButton" name="button_macro_remove_service">
                <property name="text">
                 <string>Remove</string>
@@ -397,7 +414,7 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>585</width>
+                    <width>578</width>
                     <height>240</height>
                    </rect>
                   </property>
@@ -502,6 +519,13 @@
               <widget class="QToolButton" name="button_station_edit_service">
                <property name="text">
                 <string>Edit</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="button_station_rename_service">
+               <property name="text">
+                <string>Rename</string>
                </property>
               </widget>
              </item>
@@ -693,6 +717,13 @@
               <widget class="QToolButton" name="button_ogc_edit_service">
                <property name="text">
                 <string>Edit</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="button_ogc_rename_service">
+               <property name="text">
+                <string>Rename</string>
                </property>
               </widget>
              </item>
