@@ -88,7 +88,7 @@
           <item row="3" column="0">
            <widget class="QLabel" name="label_3">
             <property name="text">
-             <string>URL with information about the data</string>
+             <string>Description URL</string>
             </property>
            </widget>
           </item>
@@ -135,7 +135,7 @@
           <item row="1" column="0">
            <widget class="QLabel" name="label_2">
             <property name="text">
-             <string>Info</string>
+             <string>Description</string>
             </property>
            </widget>
           </item>
