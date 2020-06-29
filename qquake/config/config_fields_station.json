@@ -46,49 +46,49 @@
         {
           "field_short": "netcode",
           "field_long": "NetCode",
-          "source": "FDSNStationXML>Network§code",
+          "source": "FDSNStationXML>Network§Code",
           "description": "",
           "type": "String"
         },
         {
           "field_short": "netstart",
           "field_long": "NetworkStart",
-          "source": "FDSNStationXML>Network§startDate",
+          "source": "FDSNStationXML>Network§StartDate",
           "description": "",
           "type": "DateTime"
         },
         {
           "field_short": "netend",
           "field_long": "NetworkEnd",
-          "source": "FDSNStationXML>Network§endDate",
+          "source": "FDSNStationXML>Network§EndDate",
           "description": "",
           "type": "DateTime"
         },
         {
           "field_short": "netsrcid",
           "field_long": "NetSourceID",
-          "source": "FDSNStationXML>Network§sourceID",
+          "source": "FDSNStationXML>Network§SourceID",
           "description": "",
           "type": "String"
         },
         {
           "field_short": "netrestr",
           "field_long": "NetRestrictedStatus",
-          "source": "FDSNStationXML>Network§restrictedStatus",
+          "source": "FDSNStationXML>Network§RestrictedStatus",
           "description": "",
           "type": "String"
         },
         {
           "field_short": "netaltcod",
           "field_long": "NetAltCode",
-          "source": "FDSNStationXML>Network§alternateCode",
+          "source": "FDSNStationXML>Network§AlternateCode",
           "description": "",
           "type": "String"
         },
         {
           "field_short": "nethistcod",
           "field_long": "NetworkHistCode",
-          "source": "FDSNStationXML>Network§historicalCode",
+          "source": "FDSNStationXML>Network§HistoricalCode",
           "description": "",
           "type": "String"
         },
@@ -116,14 +116,14 @@
         {
           "field_short": "netavexsta",
           "field_long": "NetAvailExtStart",
-          "source": "FDSNStationXML>Network>DataAvailability>Extent§start",
+          "source": "FDSNStationXML>Network>DataAvailability>Extent§Start",
           "description": "",
           "type": "DateTime"
         },
         {
           "field_short": "netavexend",
           "field_long": "NetAvailExtEnd",
-          "source": "FDSNStationXML>Network>DataAvailability>Extent§end",
+          "source": "FDSNStationXML>Network>DataAvailability>Extent§End",
           "description": "",
           "type": "DateTime"
         },
@@ -156,49 +156,49 @@
         {
           "field_short": "stcode",
           "field_long": "StationCode",
-          "source": "FDSNStationXML>Network>Station§code",
+          "source": "FDSNStationXML>Network>Station§Code",
           "description": "",
           "type": "String"
         },
         {
           "field_short": "ststart",
           "field_long": "StationworkStart",
-          "source": "FDSNStationXML>Network>Station§startDate",
+          "source": "FDSNStationXML>Network>Station§StartDate",
           "description": "",
           "type": "DateTime"
         },
         {
           "field_short": "stend",
           "field_long": "StationworkEnd",
-          "source": "FDSNStationXML>Network>Station§endDate",
+          "source": "FDSNStationXML>Network>Station§EndDate",
           "description": "",
           "type": "DateTime"
         },
         {
           "field_short": "stsrcid",
           "field_long": "StationSourceID",
-          "source": "FDSNStationXML>Network>Station§sourceID",
+          "source": "FDSNStationXML>Network>Station§SourceID",
           "description": "",
           "type": "String"
         },
         {
           "field_short": "strestr",
           "field_long": "StationRestrictedStatus",
-          "source": "FDSNStationXML>Network>Station§restrictedStatus",
+          "source": "FDSNStationXML>Network>Station§RestrictedStatus",
           "description": "",
           "type": "String"
         },
         {
           "field_short": "staltcod",
           "field_long": "StationAltCode",
-          "source": "FDSNStationXML>Network>Station§alternateCode",
+          "source": "FDSNStationXML>Network>Station§AlternateCode",
           "description": "",
           "type": "String"
         },
         {
           "field_short": "sthistcod",
           "field_long": "StationHistCode",
-          "source": "FDSNStationXML>Network>Station§historicalCode",
+          "source": "FDSNStationXML>Network>Station§HistoricalCode",
           "description": "",
           "type": "String"
         },
