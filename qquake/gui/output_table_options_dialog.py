@@ -97,7 +97,7 @@ class OutputTableOptionsDialog(QDialog, FORM_CLASS):
             nodes.append(parent_node)
 
         self.field_model = SimpleNodeModel(nodes, headers=[self.tr('Include'), self.tr('Field Name'),
-                                                           self.tr('QuakeML Source')])
+                                                           self.tr('StationML Source') if service_type == SERVICE_MANAGER.FDSNSTATION else self.tr('QuakeML Source')])
         self.fields_tree_view.setModel(self.field_model)
         self.fields_tree_view.expandAll()
 
