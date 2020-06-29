@@ -66,6 +66,9 @@ class FilterStationByIdWidget(QWidget, FORM_CLASS):
         self.radio_basic_output.toggled.connect(self.changed)
         self.radio_extended_output.toggled.connect(self.changed)
 
+    def is_valid(self):
+        return bool(self.edit_network_code.text() or self.edit_station_code.text() or self.edit_location_code.text())
+
     def set_service_type(self, service_type):
         self.service_type = service_type
 

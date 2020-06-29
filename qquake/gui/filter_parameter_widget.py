@@ -133,6 +133,9 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
         self.set_service_type(service_type)
         self.output_fields = None
 
+    def is_valid(self):
+        return True
+
     def set_service_type(self, service_type):
         self.service_type = service_type
 
