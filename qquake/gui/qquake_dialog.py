@@ -223,6 +223,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
     def _build_add_service_menu(self, widget):
         menu = QMenu()
         save_action = QAction(self.tr('Save Current Configuration As…'), parent=menu)
+        save_action.setObjectName('save_action')
         menu.addAction(save_action)
         save_action.triggered.connect(self._save_configuration)
 
@@ -234,7 +235,16 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         menu.addAction(create_new_action)
         create_new_action.triggered.connect(self._create_configuration)
 
+        menu.aboutToShow.connect(lambda: self._menu_about_to_show(menu))
         widget.setMenu(menu)
+
+    def _menu_about_to_show(self, menu):
+        save_current_action = menu.findChild(QAction, 'save_action')
+
+        service_type = self.get_current_service_type()
+        filter_widget = self.get_service_filter_widget(service_type)
+
+        save_current_action.setEnabled(hasattr(filter_widget, 'to_service_definition'))
 
     def _refresh_services(self):
         # fill the FDSN listWidget with the dictionary keys
