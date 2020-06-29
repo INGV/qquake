@@ -721,7 +721,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                     0)
             else:
                 self.message_bar.pushMessage(
-                    self.tr("Query returned {} events").format(events_count), Qgis.Info, 0)
+                    self.tr("Query returned {} records").format(max_feature_count), Qgis.Info, 0)
         elif self.fetcher.service_type == SERVICE_MANAGER.FDSNSTATION:
             layers.append(self.fetcher.create_stations_layer())
             stations_count = layers[0].featureCount()
