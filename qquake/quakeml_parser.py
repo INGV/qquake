@@ -940,14 +940,14 @@ class MsPlace:
 class MsExpectedItensity:
 
     def __init__(self,
-                 msclass):
-        self.msclass = msclass
+                 _class):
+        self._class = _class
 
     @staticmethod
     def from_element(element):
         parser = ElementParser(element)
 
-        return MsExpectedItensity(msclass=parser.string('ms:class', is_attribute=False, optional=False))
+        return MsExpectedItensity(_class=parser.string('ms:class', is_attribute=False, optional=False))
 
 
 class MsIntensity:
@@ -1388,6 +1388,11 @@ class QuakeMlParser:
                     if source_obj is None:
                         source_obj = NULL
                         break
+
+                    if s == 'class':
+                        # reserved keyword, can't use!
+                        s = '_class'
+
                     assert hasattr(source_obj, s)
                     source_obj = getattr(source_obj, s)
 

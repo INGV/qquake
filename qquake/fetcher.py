@@ -241,7 +241,7 @@ class Fetcher(QObject):
 
     def fetch_next_event_by_id(self):
         # pop first id from front of queue and fetch it
-        self.message.emit(self.tr('{} events left to fetch').format(len(self.pending_event_ids)))
+        self.message.emit(self.tr('{} events left to fetch').format(len(self.pending_event_ids)), Qgis.Info)
         self.fetch_data()
 
     def fetch_basic_mdp(self):
