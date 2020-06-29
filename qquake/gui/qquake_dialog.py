@@ -203,6 +203,10 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                   self.button_station_edit_service, self.button_ogc_edit_service]:
             b.clicked.connect(self._edit_service)
 
+        for b in [self.button_fdsn_rename_service, self.button_macro_rename_service,
+                  self.button_station_rename_service, self.button_ogc_rename_service]:
+            b.clicked.connect(self._rename_service)
+
         for b in [self.button_fdsn_remove_service, self.button_macro_remove_service,
                   self.button_station_remove_service, self.button_ogc_remove_service]:
             b.clicked.connect(self._remove_service)
@@ -456,7 +460,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.button_box.button(QDialogButtonBox.Ok).setEnabled(filter_widget.is_valid())
 
     def _update_service_widgets(self, service_type, service_id, filter_widget, filter_by_id_widget, info_widget,
-                                remove_service_button, edit_service_button, tab_widget):
+                                remove_service_button, edit_service_button, rename_service_button, tab_widget):
         service_config = SERVICE_MANAGER.service_details(service_type, service_id)
 
         date_start = QDateTime.fromString(
@@ -524,6 +528,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
 
         remove_service_button.setEnabled(not service_config['read_only'])
         edit_service_button.setEnabled(not service_config['read_only'])
+        rename_service_button.setEnabled(not service_config['read_only'])
 
     def _refresh_fdsnevent_widgets(self):
         """
@@ -539,6 +544,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                                      info_widget=self.earthquake_service_info_widget,
                                      remove_service_button=self.button_fdsn_remove_service,
                                      edit_service_button=self.button_fdsn_edit_service,
+                                     rename_service_button=self.button_fdsn_rename_service,
                                      tab_widget=self.fdsn_tab_widget)
 
     def refreshFdsnMacroseismicWidgets(self):
@@ -555,6 +561,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                                      info_widget=self.macro_service_info_widget,
                                      remove_service_button=self.button_macro_remove_service,
                                      edit_service_button=self.button_macro_edit_service,
+                                     rename_service_button=self.button_macro_rename_service,
                                      tab_widget=self.macro_tab_widget)
 
     def refreshFdsnStationWidgets(self):
@@ -570,6 +577,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                                      filter_widget=self.station_filter, info_widget=self.station_service_info_widget,
                                      remove_service_button=self.button_station_remove_service,
                                      edit_service_button=self.button_station_edit_service,
+                                     rename_service_button=self.button_station_rename_service,
                                      tab_widget=self.fdsnstation_tab_widget)
 
     def refreshOgcWidgets(self):
@@ -583,6 +591,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
 
         service_config = SERVICE_MANAGER.service_details(ogc_selection, self.get_current_service_id(ogc_selection))
         self.button_ogc_edit_service.setEnabled(not service_config['read_only'])
+        self.button_ogc_rename_service.setEnabled(not service_config['read_only'])
         self.button_ogc_remove_service.setEnabled(not service_config['read_only'])
 
     def _ogc_service_changed(self):
@@ -597,6 +606,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
 
         service_config = SERVICE_MANAGER.service_details(self.ogc_combo.currentData(), self.ogc_list.currentItem().text())
         self.button_ogc_edit_service.setEnabled(not service_config['read_only'])
+        self.button_ogc_rename_service.setEnabled(not service_config['read_only'])
         self.button_ogc_remove_service.setEnabled(not service_config['read_only'])
 
     def _remove_service(self):
@@ -615,6 +625,22 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         config_dialog = ServiceConfigurationDialog(self.iface, service_type, service_id, self)
         if config_dialog.exec_():
             self.set_current_service(service_type, service_id)
+
+    def _rename_service(self):
+        service_type = self.get_current_service_type()
+        service_id = self.get_current_service_id(service_type)
+
+        dlg = QgsNewNameDialog(service_id, service_id, [], existing=SERVICE_MANAGER.available_services(service_type))
+        dlg.setHintString(self.tr('Rename service configuration to'))
+        dlg.setWindowTitle(self.tr('Rename Service Configuration'))
+        dlg.setOverwriteEnabled(False)
+        dlg.setConflictingNameWarning(self.tr('A configuration with this name already exists'))
+        if not dlg.exec_():
+            return
+
+        new_name = dlg.name()
+        SERVICE_MANAGER.rename_service(service_type, service_id, new_name)
+        self.set_current_service(service_type, new_name)
 
     def set_current_service(self, service_type, service_id):
         if service_type == SERVICE_MANAGER.FDSNEVENT:

@@ -152,6 +152,12 @@ class ServiceManager(QObject):
             path.unlink()
             self.refresh_services()
 
+    def rename_service(self, service_type, service_id, new_name):
+        path = self.custom_service_path(service_type, service_id)
+        if path.exists():
+            path.rename(self.custom_service_path(service_type, new_name))
+            self.refresh_services()
+
     def export_service(self, service_type, service_id, path):
         config = deepcopy(self.service_details(service_type, service_id))
         config['servicetype'] = service_type
