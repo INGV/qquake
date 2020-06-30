@@ -1069,7 +1069,7 @@
       ]
     },
     "macro_origin": {
-      "label": "origin",
+      "label": "macroseismic origin",
       "fields": [
         {
           "field_short": "morgid",
@@ -1165,7 +1165,7 @@
       ]
     },
     "macro_magnitude": {
-      "label": "magnitude",
+      "label": "macroseismic magnitude",
       "fields": [
         {
           "field_short": "mmagid",
