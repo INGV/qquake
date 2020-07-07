@@ -1214,7 +1214,7 @@
         "datestart": "1000-01-01T01:01:01+00:00",
         "dateend": "1899-12-31T23:59:59+00:00",
         "boundingboxpredefined": "europe",
-        "style": "AHEAD_intensities",
+        "mdp_style": "AHEAD_intensities",
         "fields": [
           "eventParameters>event§publicID",
           "eventParameters>event>creationInfo>agencyID",
@@ -1304,7 +1304,7 @@
         "datestart": "1000-01-01T01:01:01+00:00",
         "dateend": "2017-12-31T23:59:59+00:00",
         "boundingboxpredefined": "italy",
-        "style": "AHEAD_intensities",
+        "mdp_style": "AHEAD_intensities",
         "fields": [
           "eventParameters>event§publicID",
           "eventParameters>event>creationInfo>agencyID",

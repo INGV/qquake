@@ -445,6 +445,12 @@ class Fetcher(QObject):
         ok, _ = vl.dataProvider().addFeatures(features)
         assert ok
 
+        if self.service_config.get('mdpstyleurl'):
+            self.fetch_and_apply_style(vl, self.service_config.get('mdpstyleurl'))
+        elif self.service_config.get('default', {}).get('mdp_style'):
+            style_url = SERVICE_MANAGER.PRESET_STYLES[self.service_config.get('default', {}).get('mdp_style')]
+            self.fetch_and_apply_style(vl, style_url)
+
         return vl
 
     def stations_to_layer(self, networks):

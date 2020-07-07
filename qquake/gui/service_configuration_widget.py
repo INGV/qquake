@@ -86,8 +86,10 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
         self.setupUi(self)
 
         self.qml_style_name_combo.addItem('')
+        self.qml_style_name_combo_mdp.addItem('')
         for name in SERVICE_MANAGER.PRESET_STYLES.keys():
             self.qml_style_name_combo.addItem(name)
+            self.qml_style_name_combo_mdp.addItem(name)
 
         self.service_type = service_type
         self.service_id = service_id
@@ -183,6 +185,10 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
         self.qml_style_name_combo.setCurrentIndex(
             self.qml_style_name_combo.findText(config.get('default', {}).get('style')))
 
+        self.qml_style_url_edit_mdp.setText(config.get('mdpstyleurl'))
+        self.qml_style_name_combo_mdp.setCurrentIndex(
+            self.qml_style_name_combo.findText(config.get('default', {}).get('mdp_style')))
+
         if config.get('datestart'):
             self.start_date_edit.setDateTime(QDateTime.fromString(config.get('datestart'), Qt.ISODate))
         else:
@@ -241,6 +247,9 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
         config['styleurl'] = self.qml_style_url_edit.text()
         config['default']['style'] = self.qml_style_name_combo.currentText()
 
+        config['mdpstyleurl'] = self.qml_style_url_edit_mdp.text()
+        config['default']['mdp_style'] = self.qml_style_name_combo_mdp.currentText()
+
         if self.start_date_edit.dateTime().isValid():
             config['datestart'] = self.start_date_edit.dateTime().toString(Qt.ISODate)
         else:
@@ -264,7 +273,7 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
                 widget = getattr(self, w)
                 if not widget.isEnabled():
                     continue
-                    
+
                 if isinstance(widget, QCheckBox):
                     settings[key] = widget.isChecked()
                 elif isinstance(widget, QSpinBox):

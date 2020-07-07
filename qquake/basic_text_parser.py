@@ -209,7 +209,7 @@ class BasicTextParser:
                     v = int(v)
             except:
                 v = NULL
-                
+
             f[k] = v
 
         if event.get('ReferenceLatitude') and event.get('ReferenceLongitude'):
