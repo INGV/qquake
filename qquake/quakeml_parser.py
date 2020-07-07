@@ -81,12 +81,16 @@ def get_service_fields(service_type, selected_fields):
     short_field_names = settings.value('/plugins/qquake/output_short_field_names', True, bool)
     field_config_key = 'field_short' if short_field_names else 'field_long'
 
+    include_quake_details_in_mdp = settings.value('/plugins/qquake/include_quake_details_in_mdp', True, bool)
+
     field_config = SERVICE_MANAGER.get_field_config(service_type)
     for f in field_config['field_groups'].get('basic_event_info', {}).get('fields', []):
         if f.get('skip'):
             continue
 
         path = f['source']
+        if service_type == SERVICE_MANAGER.MACROSEISMIC and not include_quake_details_in_mdp and '>event' in path and path != 'eventParameters>event§publicID':
+            continue
 
         if selected_fields:
             # use specified fields
@@ -106,6 +110,9 @@ def get_service_fields(service_type, selected_fields):
             continue
 
         path = f['source']
+        if service_type == SERVICE_MANAGER.MACROSEISMIC and not include_quake_details_in_mdp:
+            continue
+
         if selected_fields:
             selected = path in selected_fields
         else:
@@ -118,6 +125,9 @@ def get_service_fields(service_type, selected_fields):
 
     for f in field_config['field_groups'].get('magnitude', {}).get('fields', []):
         if f.get('skip'):
+            continue
+
+        if service_type == SERVICE_MANAGER.MACROSEISMIC and not include_quake_details_in_mdp:
             continue
 
         path = f['source']
@@ -1329,6 +1339,8 @@ class QuakeMlParser:
         field_config_key = 'field_short' if short_field_names else 'field_long'
         field_config = SERVICE_MANAGER.get_field_config(SERVICE_MANAGER.MACROSEISMIC)
 
+        include_quake_details_in_mdp = settings.value('/plugins/qquake/include_quake_details_in_mdp', True, bool)
+
         fields = self.create_mdp_fields(selected_fields)
         for _, m in self.mdps.items():
             if m.placeReference in self.macro_places:
@@ -1341,7 +1353,11 @@ class QuakeMlParser:
                 if dest_field.get('skip'):
                     continue
 
+                if not include_quake_details_in_mdp and '>event>' in dest_field['source'] and dest_field['source'] != 'eventParameters>event§publicID':
+                    continue
+
                 source = dest_field['source'].replace('§', '>').split('>')
+
                 assert source[0] == 'eventParameters'
                 source = source[1:]
                 assert source[0] == 'event'
@@ -1365,67 +1381,69 @@ class QuakeMlParser:
 
                 f[dest_field[field_config_key]] = source_obj
 
-            for dest_field in field_config['field_groups']['origin']['fields']:
-                if dest_field.get('skip'):
-                    continue
+            if include_quake_details_in_mdp:
+                for dest_field in field_config['field_groups']['origin']['fields']:
+                    if dest_field.get('skip'):
+                        continue
 
-                source = dest_field['source'].replace('§', '>').split('>')
-                assert source[0] == 'eventParameters'
-                source = source[1:]
-                assert source[0] == 'event'
-                source = source[1:]
-                assert source[0] == 'origin'
-                source = source[1:]
+                    source = dest_field['source'].replace('§', '>').split('>')
+                    assert source[0] == 'eventParameters'
+                    source = source[1:]
+                    assert source[0] == 'event'
+                    source = source[1:]
+                    assert source[0] == 'origin'
+                    source = source[1:]
 
-                if selected_fields:
-                    selected = dest_field['source'] in selected_fields
-                else:
-                    selected = settings.value('/plugins/qquake/output_field_{}'.format('_'.join(source)), True, bool)
+                    if selected_fields:
+                        selected = dest_field['source'] in selected_fields
+                    else:
+                        selected = settings.value('/plugins/qquake/output_field_{}'.format('_'.join(source)), True, bool)
 
-                if not selected:
-                    continue
+                    if not selected:
+                        continue
 
-                event = [e for e in self.events if e.publicID == m.eventReference][0]
-                source_obj = self.origins[event.preferredOriginID]
-                for s in source:
-                    if source_obj is None:
-                        source_obj = NULL
-                        break
-                    assert hasattr(source_obj, s)
-                    source_obj = getattr(source_obj, s)
+                    event = [e for e in self.events if e.publicID == m.eventReference][0]
+                    source_obj = self.origins[event.preferredOriginID]
+                    for s in source:
+                        if source_obj is None:
+                            source_obj = NULL
+                            break
+                        assert hasattr(source_obj, s)
+                        source_obj = getattr(source_obj, s)
 
-                f[dest_field[field_config_key]] = source_obj
+                    f[dest_field[field_config_key]] = source_obj
 
-            for dest_field in field_config['field_groups']['magnitude']['fields']:
-                if dest_field.get('skip'):
-                    continue
+            if include_quake_details_in_mdp:
+                for dest_field in field_config['field_groups']['magnitude']['fields']:
+                    if dest_field.get('skip'):
+                        continue
 
-                source = dest_field['source'].replace('§', '>').split('>')
-                assert source[0] == 'eventParameters'
-                source = source[1:]
-                assert source[0] == 'event'
-                source = source[1:]
-                assert source[0] == 'magnitude'
-                source = source[1:]
+                    source = dest_field['source'].replace('§', '>').split('>')
+                    assert source[0] == 'eventParameters'
+                    source = source[1:]
+                    assert source[0] == 'event'
+                    source = source[1:]
+                    assert source[0] == 'magnitude'
+                    source = source[1:]
 
-                if selected_fields:
-                    selected = dest_field['source'] in selected_fields
-                else:
-                    selected = settings.value('/plugins/qquake/output_field_{}'.format('_'.join(source)), True, bool)
+                    if selected_fields:
+                        selected = dest_field['source'] in selected_fields
+                    else:
+                        selected = settings.value('/plugins/qquake/output_field_{}'.format('_'.join(source)), True, bool)
 
-                if not selected:
-                    continue
+                    if not selected:
+                        continue
 
-                event = [e for e in self.events if e.publicID == m.eventReference][0]
-                source_obj = self.magnitudes[event.preferredMagnitudeID]
-                for s in source:
-                    if source_obj is None:
-                        source_obj = NULL
-                        break
-                    assert hasattr(source_obj, s)
-                    source_obj = getattr(source_obj, s)
+                    event = [e for e in self.events if e.publicID == m.eventReference][0]
+                    source_obj = self.magnitudes[event.preferredMagnitudeID]
+                    for s in source:
+                        if source_obj is None:
+                            source_obj = NULL
+                            break
+                        assert hasattr(source_obj, s)
+                        source_obj = getattr(source_obj, s)
 
-                f[dest_field[field_config_key]] = source_obj
+                    f[dest_field[field_config_key]] = source_obj
 
             for dest_field in field_config['field_groups'].get('mdp', {}).get('fields', []):
                 if dest_field.get('skip'):

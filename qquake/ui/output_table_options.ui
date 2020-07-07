@@ -97,14 +97,7 @@
       <string>Output Table Fields</string>
      </property>
      <layout class="QGridLayout" name="gridLayout">
-      <item row="2" column="3">
-       <widget class="QPushButton" name="reset_fields_button">
-        <property name="text">
-         <string>Reset to Defaults</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
+      <item row="3" column="0">
        <spacer name="horizontalSpacer">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -117,20 +110,37 @@
         </property>
        </spacer>
       </item>
-      <item row="0" column="0" colspan="4">
+      <item row="3" column="1">
+       <widget class="QPushButton" name="check_all_button">
+        <property name="text">
+         <string>Check All</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" colspan="4">
        <widget class="QTreeView" name="fields_tree_view"/>
       </item>
-      <item row="2" column="2">
+      <item row="3" column="3">
+       <widget class="QPushButton" name="reset_fields_button">
+        <property name="text">
+         <string>Reset to Defaults</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="2">
        <widget class="QPushButton" name="uncheck_all_button">
         <property name="text">
          <string>Uncheck All</string>
         </property>
        </widget>
       </item>
-      <item row="2" column="1">
-       <widget class="QPushButton" name="check_all_button">
+      <item row="0" column="0" colspan="4">
+       <widget class="QCheckBox" name="check_include_event_params_in_mdp">
         <property name="text">
-         <string>Check All</string>
+         <string>Include earthquake parameters in MDP layer</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
