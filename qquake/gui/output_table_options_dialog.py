@@ -114,6 +114,10 @@ class OutputTableOptionsDialog(QDialog, FORM_CLASS):
         self.output_preferred_magnitudes_only_check.setEnabled(
             service_config['settings'].get('queryincludeallmagnitudes', False))
 
+        self.check_include_event_params_in_mdp.setVisible(
+            self.service_type == SERVICE_MANAGER.MACROSEISMIC)
+        self.check_include_event_params_in_mdp.setEnabled(self.service_type == SERVICE_MANAGER.MACROSEISMIC)
+
         self.output_preferred_mdp_only_check.setVisible(self.service_type == SERVICE_MANAGER.MACROSEISMIC)
 
         preferred_origins_only_checked = s.value('/plugins/qquake/output_preferred_origins', True, bool)
@@ -124,6 +128,9 @@ class OutputTableOptionsDialog(QDialog, FORM_CLASS):
         preferred_mdp_only_checked = s.value(
             '/plugins/qquake/output_preferred_mdp', True, bool)
         self.output_preferred_mdp_only_check.setChecked(preferred_mdp_only_checked)
+
+        include_quake_details_in_mdp = s.value('/plugins/qquake/include_quake_details_in_mdp', True, bool)
+        self.check_include_event_params_in_mdp.setChecked(include_quake_details_in_mdp)
 
         self.reset_fields_button.clicked.connect(self.reset_fields)
         self.check_all_button.clicked.connect(lambda: self._check_all(True))
@@ -151,6 +158,9 @@ class OutputTableOptionsDialog(QDialog, FORM_CLASS):
 
         s.setValue('/plugins/qquake/output_short_field_names',
                    self.radio_short_fields.isChecked())
+
+        if self.check_include_event_params_in_mdp.isEnabled():
+            s.setValue('/plugins/qquake/include_quake_details_in_mdp', self.check_include_event_params_in_mdp.isChecked())
 
         super().accept()
 
