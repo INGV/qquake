@@ -731,6 +731,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.button_box.button(QDialogButtonBox.Ok).setText(self.tr('Fetch Data'))
         self.button_box.button(QDialogButtonBox.Ok).setEnabled(True)
 
+        found_results = False
         layers = []
         if self.fetcher.service_type in (SERVICE_MANAGER.FDSNEVENT, SERVICE_MANAGER.MACROSEISMIC):
             layers.append(self.fetcher.create_event_layer())
@@ -740,34 +741,29 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                     layers.append(l)
 
             events_count = layers[0].featureCount()
-
-            max_feature_count = 0
-            for l in layers:
-                max_feature_count = max(max_feature_count, l.featureCount())
+            found_results = bool(events_count)
 
             service_limit = self.fetcher.service_config['settings'].get('querylimitmaxentries', None)
             self.message_bar.clearWidgets()
-            if service_limit is not None and max_feature_count >= service_limit:
+            if service_limit is not None and events_count >= service_limit:
                 self.message_bar.pushMessage(self.tr("Query exceeded the service's result limit"), Qgis.Critical, 0)
-            elif max_feature_count > 500:
+            elif events_count > 500:
                 self.message_bar.pushMessage(
-                    self.tr("Query returned a large number of results ({})".format(max_feature_count)), Qgis.Warning, 0)
-            elif max_feature_count == 0:
+                    self.tr("Query returned a large number of results ({})".format(events_count)), Qgis.Warning, 0)
+            elif events_count == 0:
                 self.message_bar.pushMessage(
                     self.tr("Query returned no results - possibly parameters are invalid for this service"),
                     Qgis.Critical,
                     0)
             else:
                 self.message_bar.pushMessage(
-                    self.tr("Query returned {} records").format(max_feature_count), Qgis.Success, 0)
+                    self.tr("Query returned {} records").format(events_count), Qgis.Success, 0)
         elif self.fetcher.service_type == SERVICE_MANAGER.FDSNSTATION:
             layers.append(self.fetcher.create_stations_layer())
             stations_count = layers[0].featureCount()
-            max_feature_count = 0
-            for l in layers:
-                max_feature_count = max(max_feature_count, l.featureCount())
+            found_results = bool(stations_count)
 
-            if max_feature_count == 0:
+            if stations_count == 0:
                 self.message_bar.pushMessage(
                     self.tr("Query returned no results - possibly parameters are invalid for this service"),
                     Qgis.Critical,
@@ -781,5 +777,5 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.fetcher.deleteLater()
         self.fetcher = None
 
-        if max_feature_count > 0:
+        if found_results:
             QgsProject.instance().addMapLayers(layers)

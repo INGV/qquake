@@ -150,6 +150,21 @@ class BasicTextParser:
     def to_event_feature(self, event, fields):
         f = QgsFeature(fields)
         for k, v in event.items():
+            try:
+                if fields[fields.lookupField(k)].type() == QVariant.DateTime:
+                    v = v.replace('--','00')
+                    v = QDateTime.fromString(v, Qt.ISODate)
+                elif fields[fields.lookupField(k)].type() == QVariant.Date:
+                    v = QDate.fromString(v, Qt.ISODate)
+                elif fields[fields.lookupField(k)].type() == QVariant.Time:
+                    v = QTime.fromString(v, Qt.ISODate)
+                elif fields[fields.lookupField(k)].type() == QVariant.Double:
+                    v = float(v)
+                elif fields[fields.lookupField(k)].type() == QVariant.Int:
+                    v = int(v)
+            except:
+                v = NULL
+
             f[k] = v
 
         if event.get('Latitude') and event.get('Longitude'):
@@ -180,6 +195,21 @@ class BasicTextParser:
     def to_mdp_feature(self, event, fields):
         f = QgsFeature(fields)
         for k, v in event.items():
+            try:
+                if fields[fields.lookupField(k)].type() == QVariant.DateTime:
+                    v = v.replace('--','00')
+                    v = QDateTime.fromString(v, Qt.ISODate)
+                elif fields[fields.lookupField(k)].type() == QVariant.Date:
+                    v = QDate.fromString(v, Qt.ISODate)
+                elif fields[fields.lookupField(k)].type() == QVariant.Time:
+                    v = QTime.fromString(v, Qt.ISODate)
+                elif fields[fields.lookupField(k)].type() == QVariant.Double:
+                    v = float(v)
+                elif fields[fields.lookupField(k)].type() == QVariant.Int:
+                    v = int(v)
+            except:
+                v = NULL
+                
             f[k] = v
 
         if event.get('ReferenceLatitude') and event.get('ReferenceLongitude'):
@@ -229,6 +259,21 @@ class BasicStationParser:
     def to_station_feature(self, station, fields):
         f = QgsFeature(fields)
         for k, v in station.items():
+            try:
+                if fields[fields.lookupField(k)].type() == QVariant.DateTime:
+                    v = v.replace('--','00')
+                    v = QDateTime.fromString(v, Qt.ISODate)
+                elif fields[fields.lookupField(k)].type() == QVariant.Date:
+                    v = QDate.fromString(v, Qt.ISODate)
+                elif fields[fields.lookupField(k)].type() == QVariant.Time:
+                    v = QTime.fromString(v, Qt.ISODate)
+                elif fields[fields.lookupField(k)].type() == QVariant.Double:
+                    v = float(v)
+                elif fields[fields.lookupField(k)].type() == QVariant.Int:
+                    v = int(v)
+            except:
+                v = NULL
+
             f[k] = v
 
         if station.get('Latitude') and station.get('Longitude'):
