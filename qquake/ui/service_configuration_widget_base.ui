@@ -41,9 +41,9 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-812</y>
+        <y>0</y>
         <width>551</width>
-        <height>1472</height>
+        <height>1538</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout">
@@ -62,22 +62,6 @@
           <string>Basic Information</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_2">
-          <item row="10" column="1">
-           <widget class="QgsDateTimeEdit" name="start_date_edit"/>
-          </item>
-          <item row="11" column="0">
-           <widget class="QLabel" name="label_11">
-            <property name="text">
-             <string>Ending date</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="1">
-           <widget class="QLineEdit" name="webservice_manual_url_edit"/>
-          </item>
-          <item row="8" column="1">
-           <widget class="QLineEdit" name="data_provider_url_edit"/>
-          </item>
           <item row="9" column="0">
            <widget class="QLabel" name="label_9">
             <property name="text">
@@ -85,12 +69,8 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="label_3">
-            <property name="text">
-             <string>Description URL</string>
-            </property>
-           </widget>
+          <item row="13" column="1">
+           <widget class="QComboBox" name="qml_style_name_combo"/>
           </item>
           <item row="6" column="0">
            <widget class="QLabel" name="label_6">
@@ -99,50 +79,23 @@
             </property>
            </widget>
           </item>
-          <item row="7" column="0">
-           <widget class="QLabel" name="label_7">
-            <property name="text">
-             <string>Service managed by</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="1">
-           <widget class="QLineEdit" name="data_license_url_edit"/>
-          </item>
-          <item row="1" column="1">
-           <widget class="QLineEdit" name="info_edit"/>
+          <item row="7" column="1">
+           <widget class="QLineEdit" name="data_provider_edit"/>
           </item>
           <item row="12" column="0">
            <widget class="QLabel" name="label_16">
             <property name="text">
-             <string>QML style URL</string>
+             <string>QML style URL (events/stations)</string>
             </property>
            </widget>
           </item>
-          <item row="4" column="0">
-           <widget class="QLabel" name="label_4">
+          <item row="9" column="1">
+           <widget class="QLineEdit" name="web_service_url_edit"/>
+          </item>
+          <item row="11" column="0">
+           <widget class="QLabel" name="label_11">
             <property name="text">
-             <string>URL with web service user manual</string>
-            </property>
-           </widget>
-          </item>
-          <item row="11" column="1">
-           <widget class="QgsDateTimeEdit" name="end_date_edit"/>
-          </item>
-          <item row="3" column="1">
-           <widget class="QLineEdit" name="info_url_edit"/>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_2">
-            <property name="text">
-             <string>Description</string>
-            </property>
-           </widget>
-          </item>
-          <item row="13" column="0">
-           <widget class="QLabel" name="label_18">
-            <property name="text">
-             <string>Preset style name</string>
+             <string>Ending date</string>
             </property>
            </widget>
           </item>
@@ -153,28 +106,21 @@
             </property>
            </widget>
           </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string>Description URL</string>
+            </property>
+           </widget>
+          </item>
           <item row="5" column="1">
            <widget class="QLineEdit" name="data_license_edit"/>
           </item>
-          <item row="8" column="0">
-           <widget class="QLabel" name="label_8">
-            <property name="text">
-             <string>Service managed by URL</string>
-            </property>
-           </widget>
+          <item row="3" column="1">
+           <widget class="QLineEdit" name="info_url_edit"/>
           </item>
-          <item row="10" column="0">
-           <widget class="QLabel" name="label_10">
-            <property name="text">
-             <string>Starting date</string>
-            </property>
-           </widget>
-          </item>
-          <item row="9" column="1">
-           <widget class="QLineEdit" name="web_service_url_edit"/>
-          </item>
-          <item row="12" column="1">
-           <widget class="QLineEdit" name="qml_style_url_edit"/>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="info_edit"/>
           </item>
           <item row="0" column="1">
            <widget class="QLineEdit" name="title_edit"/>
@@ -186,11 +132,85 @@
             </property>
            </widget>
           </item>
-          <item row="7" column="1">
-           <widget class="QLineEdit" name="data_provider_edit"/>
+          <item row="10" column="1">
+           <widget class="QgsDateTimeEdit" name="start_date_edit"/>
           </item>
-          <item row="13" column="1">
-           <widget class="QComboBox" name="qml_style_name_combo"/>
+          <item row="8" column="1">
+           <widget class="QLineEdit" name="data_provider_url_edit"/>
+          </item>
+          <item row="4" column="1">
+           <widget class="QLineEdit" name="webservice_manual_url_edit"/>
+          </item>
+          <item row="8" column="0">
+           <widget class="QLabel" name="label_8">
+            <property name="text">
+             <string>Service managed by URL</string>
+            </property>
+           </widget>
+          </item>
+          <item row="15" column="0">
+           <widget class="QLabel" name="label_20">
+            <property name="text">
+             <string>Preset style name (mdps)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="0">
+           <widget class="QLabel" name="label_7">
+            <property name="text">
+             <string>Service managed by</string>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="0">
+           <widget class="QLabel" name="label_10">
+            <property name="text">
+             <string>Starting date</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>Description</string>
+            </property>
+           </widget>
+          </item>
+          <item row="14" column="1">
+           <widget class="QLineEdit" name="qml_style_url_edit_mdp"/>
+          </item>
+          <item row="6" column="1">
+           <widget class="QLineEdit" name="data_license_url_edit"/>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_4">
+            <property name="text">
+             <string>URL with web service user manual</string>
+            </property>
+           </widget>
+          </item>
+          <item row="11" column="1">
+           <widget class="QgsDateTimeEdit" name="end_date_edit"/>
+          </item>
+          <item row="12" column="1">
+           <widget class="QLineEdit" name="qml_style_url_edit"/>
+          </item>
+          <item row="13" column="0">
+           <widget class="QLabel" name="label_18">
+            <property name="text">
+             <string>Preset style name (events/stations)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="14" column="0">
+           <widget class="QLabel" name="label_19">
+            <property name="text">
+             <string>QML style URL (mdps)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="15" column="1">
+           <widget class="QComboBox" name="qml_style_name_combo_mdp"/>
           </item>
          </layout>
         </widget>
