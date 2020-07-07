@@ -404,7 +404,8 @@ class Fetcher(QObject):
         for f in parser.create_event_features(self.output_fields, preferred_origin_only, preferred_magnitudes_only):
             features.append(f)
 
-        vl.dataProvider().addFeatures(features)
+        ok, _ = vl.dataProvider().addFeatures(features)
+        assert ok
 
         if self.service_config.get('styleurl'):
             self.fetch_and_apply_style(vl, self.service_config.get('styleurl'))
@@ -441,7 +442,8 @@ class Fetcher(QObject):
         for f in parser.create_mdp_features(self.output_fields):
             features.append(f)
 
-        vl.dataProvider().addFeatures(features)
+        ok, _ = vl.dataProvider().addFeatures(features)
+        assert ok
 
         return vl
 
@@ -459,7 +461,8 @@ class Fetcher(QObject):
             for n in networks:
                 features.extend(n.to_station_features(self.output_fields))
 
-        vl.dataProvider().addFeatures(features)
+        ok, _ = vl.dataProvider().addFeatures(features)
+        assert ok
 
         if self.service_config.get('styleurl'):
             self.fetch_and_apply_style(vl, self.service_config.get('styleurl'))
