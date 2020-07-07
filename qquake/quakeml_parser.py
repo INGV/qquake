@@ -1365,6 +1365,68 @@ class QuakeMlParser:
 
                 f[dest_field[field_config_key]] = source_obj
 
+            for dest_field in field_config['field_groups']['origin']['fields']:
+                if dest_field.get('skip'):
+                    continue
+
+                source = dest_field['source'].replace('§', '>').split('>')
+                assert source[0] == 'eventParameters'
+                source = source[1:]
+                assert source[0] == 'event'
+                source = source[1:]
+                assert source[0] == 'origin'
+                source = source[1:]
+
+                if selected_fields:
+                    selected = dest_field['source'] in selected_fields
+                else:
+                    selected = settings.value('/plugins/qquake/output_field_{}'.format('_'.join(source)), True, bool)
+
+                if not selected:
+                    continue
+
+                event = [e for e in self.events if e.publicID == m.eventReference][0]
+                source_obj = self.origins[event.preferredOriginID]
+                for s in source:
+                    if source_obj is None:
+                        source_obj = NULL
+                        break
+                    assert hasattr(source_obj, s)
+                    source_obj = getattr(source_obj, s)
+
+                f[dest_field[field_config_key]] = source_obj
+
+            for dest_field in field_config['field_groups']['magnitude']['fields']:
+                if dest_field.get('skip'):
+                    continue
+
+                source = dest_field['source'].replace('§', '>').split('>')
+                assert source[0] == 'eventParameters'
+                source = source[1:]
+                assert source[0] == 'event'
+                source = source[1:]
+                assert source[0] == 'magnitude'
+                source = source[1:]
+
+                if selected_fields:
+                    selected = dest_field['source'] in selected_fields
+                else:
+                    selected = settings.value('/plugins/qquake/output_field_{}'.format('_'.join(source)), True, bool)
+
+                if not selected:
+                    continue
+
+                event = [e for e in self.events if e.publicID == m.eventReference][0]
+                source_obj = self.magnitudes[event.preferredMagnitudeID]
+                for s in source:
+                    if source_obj is None:
+                        source_obj = NULL
+                        break
+                    assert hasattr(source_obj, s)
+                    source_obj = getattr(source_obj, s)
+
+                f[dest_field[field_config_key]] = source_obj
+
             for dest_field in field_config['field_groups'].get('mdp', {}).get('fields', []):
                 if dest_field.get('skip'):
                     continue
