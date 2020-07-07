@@ -6,7 +6,7 @@
         {
           "field_short": "eventid",
           "field_long": "EventID",
-          "source": "eventParameters>event>publicID",
+          "source": "eventParameters>event§publicID",
           "description": "",
           "type": "String"
         },
@@ -167,7 +167,7 @@
         {
           "field_short": "originid",
           "field_long": "OriginID",
-          "source": "eventParameters>event>origin>publicID",
+          "source": "eventParameters>event>origin§publicID",
           "description": "",
           "type": "String"
         },
@@ -802,7 +802,7 @@
         {
           "field_short": "magid",
           "field_long": "MagID",
-          "source": "eventParameters>event>magnitude>publicID",
+          "source": "eventParameters>event>magnitude§publicID",
           "description": "",
           "type": "String"
         },
