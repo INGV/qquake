@@ -50,8 +50,7 @@
           "field_long": "EventDescrTxt",
           "source": "eventParameters>event>description>text",
           "description": "",
-          "type": "String",
-          "skip": true
+          "type": "String"
         },
         {
           "field_short": "eventxtype",
