@@ -235,12 +235,12 @@
     "EMSC-CSEM": {
       "title": "European-Mediterranean Seismological Centre (EMSC-CSEM)",
       "info": "European-Mediterranean Seismological Centre (EMSC-CSEM) FDSN-event",
-      "infourl": "http://www.seismicportal.eu/fdsn-wsevent.html",
+      "infourl": "https://www.seismicportal.eu/fdsn-wsevent.html",
       "datalicense": "Copyright © 2018 EMSC",
       "datalicenseurl": "https://www.emsc-csem.org/",
       "dataprovider": "European-Mediterranean Seismological Centre (EMSC-CSEM)",
       "dataproviderurl": "https://www.emsc-csem.org/",
-      "endpointurl": "http://www.seismicportal.eu/fdsnws/event/1/query?",
+      "endpointurl": "https://www.seismicportal.eu/fdsnws/event/1/query?",
       "datestart": "1998-01-01T01:01:01+00:00",
       "dateend": "",
       "boundingbox": [
