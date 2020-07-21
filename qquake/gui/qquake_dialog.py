@@ -415,6 +415,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
             return Fetcher(service_type=service_type,
                            event_service=service,
                            event_ids=filter_widget.ids(),
+                           contributor_id=filter_widget.contributor_id(),
                            output_fields=filter_widget.output_fields,
                            output_type=filter_widget.output_type()
                            )

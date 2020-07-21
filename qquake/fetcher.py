@@ -82,6 +82,7 @@ class Fetcher(QObject):
                  earthquake_number_mdps_greater=None,
                  earthquake_max_intensity_greater=None,
                  event_ids=None,
+                 contributor_id=None,
                  network_codes=None,
                  station_codes=None,
                  locations=None,
@@ -111,6 +112,7 @@ class Fetcher(QObject):
         self.earthquake_number_mdps_greater = earthquake_number_mdps_greater
         self.earthquake_max_intensity_greater = earthquake_max_intensity_greater
         self.event_ids = event_ids
+        self.contributor_id = contributor_id
         self.network_codes = network_codes
         self.station_codes = station_codes
         self.locations = locations
@@ -121,9 +123,9 @@ class Fetcher(QObject):
 
         s = QgsSettings()
         self.preferred_origins_only = s.value('/plugins/qquake/output_preferred_origins', True, bool) or not \
-        self.service_config['settings'].get('queryincludeallorigins', False)
+            self.service_config['settings'].get('queryincludeallorigins', False)
         self.preferred_magnitudes_only = s.value('/plugins/qquake/output_preferred_magnitude', True, bool) or not \
-        self.service_config['settings'].get('queryincludeallmagnitudes', False)
+            self.service_config['settings'].get('queryincludeallmagnitudes', False)
         self.preferred_mdp_only = s.value('/plugins/qquake/output_preferred_mdp', True, bool)
 
         self.output_fields = output_fields
@@ -207,6 +209,9 @@ class Fetcher(QObject):
 
         if self.locations:
             query.append('location={}'.format(self.locations))
+
+        if self.contributor_id:
+            query.append('contributor={}'.format(self.contributor_id))
 
         if self.output_type == Fetcher.EXTENDED:
             if not self.preferred_origins_only:
@@ -428,7 +433,8 @@ class Fetcher(QObject):
 
         if self.service_config.get('styleurl'):
             self.fetch_and_apply_style(vl, self.service_config.get('styleurl'))
-        elif self.service_config.get('default', {}).get('style',{}) and self.service_config['default']['style'].get('events'):
+        elif isinstance(self.service_config.get('default', {}).get('style', {}), dict) and \
+                self.service_config['default']['style'].get('events'):
             style = self.service_config['default']['style']['events']
 
             style_ref = style.get('style')
@@ -437,7 +443,8 @@ class Fetcher(QObject):
                 if isinstance(self.result, BasicTextParser):
                     style_attr = style.get('classified_attribute_text')
                 else:
-                    style_attr = self.result.remap_attribute_name(SERVICE_MANAGER.FDSNEVENT, style.get('classified_attribute_xml'))
+                    style_attr = self.result.remap_attribute_name(SERVICE_MANAGER.FDSNEVENT,
+                                                                  style.get('classified_attribute_xml'))
 
                 self.fetch_and_apply_style(vl, style_url, style_attr)
 
@@ -480,7 +487,8 @@ class Fetcher(QObject):
 
         if self.service_config.get('mdpstyleurl'):
             self.fetch_and_apply_style(vl, self.service_config.get('mdpstyleurl'))
-        elif self.service_config.get('default', {}).get('style', {}) and self.service_config['default']['style'].get('mdp'):
+        elif isinstance(self.service_config.get('default', {}).get('style', {}), dict) and \
+                self.service_config['default']['style'].get('mdp'):
             style = self.service_config['default']['style']['mdp']
 
             style_ref = style.get('style')
@@ -489,7 +497,8 @@ class Fetcher(QObject):
                 if isinstance(self.result, BasicTextParser):
                     style_attr = style.get('classified_attribute_text')
                 else:
-                    style_attr = self.result.remap_attribute_name(SERVICE_MANAGER.MACROSEISMIC, style.get('classified_attribute_xml'))
+                    style_attr = self.result.remap_attribute_name(SERVICE_MANAGER.MACROSEISMIC,
+                                                                  style.get('classified_attribute_xml'))
 
                 self.fetch_and_apply_style(vl, style_url, style_attr)
 
@@ -515,7 +524,8 @@ class Fetcher(QObject):
         if self.service_config.get('styleurl'):
             self.fetch_and_apply_style(vl, self.service_config.get('styleurl'))
 
-        elif self.service_config.get('default', {}).get('style',{}) and self.service_config['default']['style'].get('stations'):
+        elif isinstance(self.service_config.get('default', {}).get('style', {}), dict) and \
+                self.service_config['default']['style'].get('stations'):
             style = self.service_config['default']['style']['stations']
 
             style_ref = style.get('style')

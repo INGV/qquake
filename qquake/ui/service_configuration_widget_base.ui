@@ -280,7 +280,7 @@
           <item row="6" column="0">
            <widget class="QCheckBox" name="check_filter_by_contributor">
             <property name="text">
-             <string>Filter by Contributor</string>
+             <string>Query Contributors</string>
             </property>
            </widget>
           </item>
