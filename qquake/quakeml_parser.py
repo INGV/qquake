@@ -206,6 +206,8 @@ class ElementParser:
             if 'T' in val:
                 if '.' not in val:
                     val += '.000'
+                if val[-1].upper() == 'Z':
+                    val = val[:-1]
                 dt = QDateTime.fromString((val + '000')[:23], 'yyyy-MM-ddThh:mm:ss.zzz')
                 dt.setTimeSpec(Qt.UTC)
                 return dt
@@ -1032,7 +1034,7 @@ class Event:
                  publicID,
                  type,
                  typeCertainty,
-                 descriptions,
+                 description,
                  preferredOriginID,
                  preferredMagnitudeID,
                  preferredFocalMechanismID,
@@ -1043,7 +1045,10 @@ class Event:
         self.publicID = publicID
         self.type = type
         self.typeCertainty = typeCertainty
-        self.descriptions = descriptions
+
+        # One to many join
+        self.description = description
+
         self.preferredOriginID = preferredOriginID
         self.preferredMagnitudeID = preferredMagnitudeID
         self.preferredFocalMechanismID = preferredFocalMechanismID
@@ -1171,6 +1176,9 @@ class Event:
                     break
                 assert hasattr(source_obj, s)
                 source_obj = getattr(source_obj, s)
+                if isinstance(source_obj, list):
+                    # hack to handle 1:many joins for now -- discard all but first
+                    source_obj = source_obj[0]
 
             f[dest_field[field_config_key]] = source_obj
 
@@ -1231,7 +1239,7 @@ class Event:
         return Event(publicID=parser.string('publicID', is_attribute=True, optional=False),
                      type=parser.string('type'),
                      typeCertainty=parser.string('typeCertainty'),
-                     descriptions=descriptions,
+                     description=descriptions,
                      preferredOriginID=parser.resource_reference('preferredOriginID'),
                      preferredMagnitudeID=parser.resource_reference('preferredMagnitudeID'),
                      preferredFocalMechanismID=parser.resource_reference('preferredFocalMechanismID'),

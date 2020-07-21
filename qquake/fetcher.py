@@ -115,8 +115,10 @@ class Fetcher(QObject):
         self.service_config = SERVICE_MANAGER.service_details(self.service_type, self.event_service)
 
         s = QgsSettings()
-        self.preferred_origins_only = s.value('/plugins/qquake/output_preferred_origins', True, bool) or not self.service_config['settings'].get('queryincludeallorigins', False)
-        self.preferred_magnitudes_only = s.value('/plugins/qquake/output_preferred_magnitude', True, bool) or not self.service_config['settings'].get('queryincludeallmagnitudes', False)
+        self.preferred_origins_only = s.value('/plugins/qquake/output_preferred_origins', True, bool) or not \
+        self.service_config['settings'].get('queryincludeallorigins', False)
+        self.preferred_magnitudes_only = s.value('/plugins/qquake/output_preferred_magnitude', True, bool) or not \
+        self.service_config['settings'].get('queryincludeallmagnitudes', False)
         self.preferred_mdp_only = s.value('/plugins/qquake/output_preferred_mdp', True, bool)
 
         self.output_fields = output_fields
@@ -213,6 +215,7 @@ class Fetcher(QObject):
         Starts the fetch request
         """
         request = QNetworkRequest(QUrl(self.generate_url()))
+        request.setAttribute(QNetworkRequest.FollowRedirectsAttribute, True)
 
         reply = QgsNetworkAccessManager.instance().get(request)
 
@@ -221,7 +224,9 @@ class Fetcher(QObject):
 
     def fetch_missing(self):
         # pop first missing origin from front of queue and fetch it
-        self.message.emit(self.tr('Returned XML was incomplete. {} missing origins left to fetch').format(len(self.missing_origins)), Qgis.Warning)
+        self.message.emit(
+            self.tr('Returned XML was incomplete. {} missing origins left to fetch').format(len(self.missing_origins)),
+            Qgis.Warning)
 
         remaining = list(self.missing_origins)
         next_origin = remaining[0]
@@ -233,6 +238,7 @@ class Fetcher(QObject):
         self.is_missing_origin_request = True
 
         request = QNetworkRequest(QUrl(next_origin))
+        request.setAttribute(QNetworkRequest.FollowRedirectsAttribute, True)
 
         reply = QgsNetworkAccessManager.instance().get(request)
 
@@ -250,6 +256,8 @@ class Fetcher(QObject):
         self.message.emit(self.tr('Fetching MDPs'), Qgis.Info)
 
         request = QNetworkRequest(QUrl(self.generate_url()))
+        request.setAttribute(QNetworkRequest.FollowRedirectsAttribute, True)
+        
         reply = QgsNetworkAccessManager.instance().get(request)
         reply.finished.connect(lambda r=reply: self._reply_finished(r))
         reply.downloadProgress.connect(self._reply_progress)
