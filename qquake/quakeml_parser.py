@@ -206,6 +206,8 @@ class ElementParser:
             if 'T' in val:
                 if '.' not in val:
                     val += '.000'
+                if val[-1].upper() == 'Z':
+                    val = val[:-1]
                 dt = QDateTime.fromString((val + '000')[:23], 'yyyy-MM-ddThh:mm:ss.zzz')
                 dt.setTimeSpec(Qt.UTC)
                 return dt
