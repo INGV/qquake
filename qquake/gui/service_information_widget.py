@@ -69,4 +69,21 @@ class ServiceInformationWidget(QWidget, FORM_CLASS):
             <a href="{dataproviderurl}">{dataprovider}</a></p>
             """.format(**self.service_config)
 
+        capabilities = []
+
+        if service_type in (SERVICE_MANAGER.MACROSEISMIC, SERVICE_MANAGER.FDSNSTATION, SERVICE_MANAGER.FDSNEVENT):
+            if self.service_config['settings'].get('querylimitmaxentries'):
+                capabilities.append('Maximum entries returned: {}'.format(self.service_config['settings'].get('querylimitmaxentries')))
+            if self.service_config.get('datestart'):
+                capabilities.append(
+                    'Earliest date: {}'.format(self.service_config['datestart']))
+            if self.service_config.get('dateend'):
+                capabilities.append(
+                    'Latest date: {}'.format(self.service_config['dateend']))
+
+        if capabilities:
+            html += """<p><b>Capabilities</b>"""
+            html += ''.join(['<li>{}</li>'.format(c) for c in capabilities])
+            html += """</p>"""
+
         self.info_browser.setHtml(html)
