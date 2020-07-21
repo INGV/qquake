@@ -14,54 +14,37 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="6" column="0" colspan="3">
-    <widget class="QGroupBox" name="groupBox_4">
-     <property name="title">
-      <string>Output</string>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_8">
-      <item row="1" column="0">
-       <widget class="QRadioButton" name="radio_extended_output">
-        <property name="text">
-         <string>Extended (user customizable)</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QPushButton" name="output_table_options_button">
-        <property name="text">
-         <string>Output Table Options…</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0" colspan="2">
-       <widget class="QRadioButton" name="radio_basic_output">
-        <property name="text">
-         <string>Basic (default FDSN text format)</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="5" column="0">
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
    <item row="1" column="1">
     <widget class="QLabel" name="label_event_id">
      <property name="text">
       <string>Event ID</string>
      </property>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="3">
+    <widget class="QRadioButton" name="radio_multiple_events">
+     <property name="text">
+      <string>Multiple events</string>
+     </property>
+     <property name="checked">
+      <bool>false</bool>
+     </property>
+     <attribute name="buttonGroup">
+      <string notr="true">buttonGroup</string>
+     </attribute>
+    </widget>
+   </item>
+   <item row="1" column="2">
+    <widget class="QLineEdit" name="edit_event_id"/>
+   </item>
+   <item row="4" column="0" colspan="3">
+    <widget class="QRadioButton" name="radio_contributor">
+     <property name="text">
+      <string>Contributor</string>
+     </property>
+     <attribute name="buttonGroup">
+      <string notr="true">buttonGroup</string>
+     </attribute>
     </widget>
    </item>
    <item row="0" column="0" colspan="3">
@@ -135,6 +118,36 @@
      </layout>
     </widget>
    </item>
+   <item row="7" column="0" colspan="3">
+    <widget class="QGroupBox" name="groupBox_4">
+     <property name="title">
+      <string>Output</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_8">
+      <item row="1" column="0">
+       <widget class="QRadioButton" name="radio_extended_output">
+        <property name="text">
+         <string>Extended (user customizable)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QPushButton" name="output_table_options_button">
+        <property name="text">
+         <string>Output Table Options…</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0" colspan="2">
+       <widget class="QRadioButton" name="radio_basic_output">
+        <property name="text">
+         <string>Basic (default FDSN text format)</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
    <item row="3" column="0">
     <spacer name="horizontalSpacer">
      <property name="orientation">
@@ -151,21 +164,28 @@
      </property>
     </spacer>
    </item>
-   <item row="2" column="0" colspan="3">
-    <widget class="QRadioButton" name="radio_multiple_events">
+   <item row="6" column="0">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="5" column="1">
+    <widget class="QLabel" name="label_contributor_id">
      <property name="text">
-      <string>Multiple events</string>
+      <string>Contributor ID</string>
      </property>
-     <property name="checked">
-      <bool>false</bool>
-     </property>
-     <attribute name="buttonGroup">
-      <string notr="true">buttonGroup</string>
-     </attribute>
     </widget>
    </item>
-   <item row="1" column="2">
-    <widget class="QLineEdit" name="edit_event_id"/>
+   <item row="5" column="2">
+    <widget class="QLineEdit" name="edit_contributor_id"/>
    </item>
   </layout>
  </widget>
