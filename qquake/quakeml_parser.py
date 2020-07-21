@@ -186,14 +186,14 @@ class ElementParser:
             else:
                 return self.element.attribute(attribute)
         else:
-            child = self.element.elementsByTagName(attribute).at(0).toElement()
+            child = self.element.firstChildElement(attribute)
             if optional and child.isNull():
                 return None
 
             return child.text()
 
     def resource_reference(self, attribute, optional=True):
-        child = self.element.elementsByTagName(attribute).at(0).toElement()
+        child = self.element.firstChildElement(attribute)
         if optional and child.isNull():
             return None
 
@@ -222,171 +222,171 @@ class ElementParser:
             else:
                 return to_datetime(self.element.attribute(attribute))
         else:
-            child = self.element.elementsByTagName(attribute).at(0).toElement()
+            child = self.element.firstChildElement(attribute)
             if optional and child.isNull():
                 return None
 
             return to_datetime(child.text())
 
     def time_quantity(self, attribute, optional=True):
-        child = self.element.elementsByTagName(attribute).at(0).toElement()
+        child = self.element.firstChildElement(attribute)
         if optional and child.isNull():
             return None
 
         return TimeQuantity.from_element(child)
 
     def real_quantity(self, attribute, optional=True):
-        child = self.element.elementsByTagName(attribute).at(0).toElement()
+        child = self.element.firstChildElement(attribute)
         if optional and child.isNull():
             return None
 
         # some services include "value" element, but empty for optional RealQuantities
-        value_child = child.elementsByTagName('value').at(0).toElement()
+        value_child = child.firstChildElement('value')
         if optional and value_child.isNull() or value_child.text() is None or value_child.text() == '':
             return None
 
         return RealQuantity.from_element(child)
 
     def int_quantity(self, attribute, optional=True):
-        child = self.element.elementsByTagName(attribute).at(0).toElement()
+        child = self.element.firstChildElement(attribute)
         if optional and child.isNull():
             return None
 
         # some services include "value" element, but empty for optional IntQuantities
-        value_child = child.elementsByTagName('value').at(0).toElement()
+        value_child = child.firstChildElement('value')
         if optional and value_child.isNull() or value_child.text() is None or value_child.text() == '':
             return None
 
         return IntegerQuantity.from_element(child)
 
     def float(self, attribute, optional=True):
-        child = self.element.elementsByTagName(attribute).at(0).toElement()
+        child = self.element.firstChildElement(attribute)
         if optional:
             return float(child.text()) if not child.isNull() else None
         else:
             return float(child.text())
 
     def int(self, attribute, optional=True):
-        child = self.element.elementsByTagName(attribute).at(0).toElement()
+        child = self.element.firstChildElement(attribute)
         if optional:
             return int(child.text()) if not child.isNull() else None
         else:
             return int(child.text())
 
     def boolean(self, attribute, optional=True):
-        child = self.element.elementsByTagName(attribute).at(0).toElement()
+        child = self.element.firstChildElement(attribute)
         if optional:
             return bool(child.text()) if not child.isNull() else None
         else:
             return bool(child.text())
 
     def creation_info(self, attribute, optional=True):
-        child = self.element.elementsByTagName(attribute).at(0).toElement()
+        child = self.element.firstChildElement(attribute)
         if optional and child.isNull():
             return None
 
         return CreationInfo.from_element(child)
 
     def composite_time(self, attribute, optional=True):
-        child = self.element.elementsByTagName(attribute).at(0).toElement()
+        child = self.element.firstChildElement(attribute)
         if optional and child.isNull():
             return None
 
         return CompositeTime.from_element(child)
 
     def origin_depth_type(self, attribute, optional=True):
-        child = self.element.elementsByTagName(attribute).at(0).toElement()
+        child = self.element.firstChildElement(attribute)
         if optional and child.isNull():
             return None
 
         return child.text()
 
     def origin_type(self, attribute, optional=True):
-        child = self.element.elementsByTagName(attribute).at(0).toElement()
+        child = self.element.firstChildElement(attribute)
         if optional and child.isNull():
             return None
 
         return child.text()
 
     def origin_quality(self, attribute, optional=True):
-        child = self.element.elementsByTagName(attribute).at(0).toElement()
+        child = self.element.firstChildElement(attribute)
         if optional and child.isNull():
             return None
 
         return OriginQuality.from_element(child)
 
     def origin_uncertainty_description(self, attribute, optional=True):
-        child = self.element.elementsByTagName(attribute).at(0).toElement()
+        child = self.element.firstChildElement(attribute)
         if optional and child.isNull():
             return None
 
         return child.text()
 
     def confidence_ellipsoid(self, attribute, optional=True):
-        child = self.element.elementsByTagName(attribute).at(0).toElement()
+        child = self.element.firstChildElement(attribute)
         if optional and child.isNull():
             return None
 
         return ConfidenceEllipsoid.from_element(child)
 
     def ms_expected_intensity(self, attribute, optional=True):
-        child = self.element.elementsByTagName(attribute).at(0).toElement()
+        child = self.element.firstChildElement(attribute)
         if optional and child.isNull():
             return None
 
         return MsExpectedItensity.from_element(child)
 
     def ms_intensity(self, attribute, optional=True):
-        child = self.element.elementsByTagName(attribute).at(0).toElement()
+        child = self.element.firstChildElement(attribute)
         if optional and child.isNull():
             return None
 
         return MsIntensity.from_element(child)
 
     def ms_placename(self, attribute, optional=True):
-        child = self.element.elementsByTagName(attribute).at(0).toElement()
+        child = self.element.firstChildElement(attribute)
         if optional and child.isNull():
             return None
 
         return MsPlaceName.from_element(child)
 
     def site(self, attribute, optional=True):
-        child = self.element.elementsByTagName(attribute).at(0).toElement()
+        child = self.element.firstChildElement(attribute)
         if optional and child.isNull():
             return None
 
         return Site.from_element(child)
 
     def equipment(self, attribute, optional=True):
-        child = self.element.elementsByTagName(attribute).at(0).toElement()
+        child = self.element.firstChildElement(attribute)
         if optional and child.isNull():
             return None
 
         return Equipment.from_element(child)
 
     def operator(self, attribute, optional=True):
-        child = self.element.elementsByTagName(attribute).at(0).toElement()
+        child = self.element.firstChildElement(attribute)
         if optional and child.isNull():
             return None
 
         return Operator.from_element(child)
 
     def person(self, attribute, optional=True):
-        child = self.element.elementsByTagName(attribute).at(0).toElement()
+        child = self.element.firstChildElement(attribute)
         if optional and child.isNull():
             return None
 
         return Person.from_element(child)
 
     def phone_number(self, attribute, optional=True):
-        child = self.element.elementsByTagName(attribute).at(0).toElement()
+        child = self.element.firstChildElement(attribute)
         if optional and child.isNull():
             return None
 
         return PhoneNumber.from_element(child)
 
     def external_reference(self, attribute, optional=True):
-        child = self.element.elementsByTagName(attribute).at(0).toElement()
+        child = self.element.firstChildElement(attribute)
         if optional and child.isNull():
             return None
 
