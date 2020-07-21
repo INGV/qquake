@@ -87,9 +87,11 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
 
         self.qml_style_name_combo.addItem('')
         self.qml_style_name_combo_mdp.addItem('')
-        for name in SERVICE_MANAGER.PRESET_STYLES.keys():
-            self.qml_style_name_combo.addItem(name)
-            self.qml_style_name_combo_mdp.addItem(name)
+        for name, props in SERVICE_MANAGER.PRESET_STYLES.items():
+            if props['type'] in ('events', 'stations'):
+                self.qml_style_name_combo.addItem(name)
+            elif props['type'] == 'macroseismic':
+                self.qml_style_name_combo_mdp.addItem(name)
 
         self.service_type = service_type
         self.service_id = service_id

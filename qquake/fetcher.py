@@ -428,12 +428,12 @@ class Fetcher(QObject):
 
         if self.service_config.get('styleurl'):
             self.fetch_and_apply_style(vl, self.service_config.get('styleurl'))
-        elif self.service_config.get('default', {}).get('style',{}).get('events'):
+        elif self.service_config.get('default', {}).get('style',{}) and self.service_config['default']['style'].get('events'):
             style = self.service_config['default']['style']['events']
 
             style_ref = style.get('style')
             if style_ref:
-                style_url = SERVICE_MANAGER.PRESET_STYLES[style_ref]
+                style_url = SERVICE_MANAGER.PRESET_STYLES[style_ref]['url']
                 if isinstance(self.result, BasicTextParser):
                     style_attr = style.get('classified_attribute_text')
                 else:
@@ -480,12 +480,12 @@ class Fetcher(QObject):
 
         if self.service_config.get('mdpstyleurl'):
             self.fetch_and_apply_style(vl, self.service_config.get('mdpstyleurl'))
-        elif self.service_config.get('default', {}).get('style', {}).get('mdp'):
+        elif self.service_config.get('default', {}).get('style', {}) and self.service_config['default']['style'].get('mdp'):
             style = self.service_config['default']['style']['mdp']
 
             style_ref = style.get('style')
             if style_ref:
-                style_url = SERVICE_MANAGER.PRESET_STYLES[style_ref]
+                style_url = SERVICE_MANAGER.PRESET_STYLES[style_ref]['url']
                 if isinstance(self.result, BasicTextParser):
                     style_attr = style.get('classified_attribute_text')
                 else:
@@ -515,12 +515,12 @@ class Fetcher(QObject):
         if self.service_config.get('styleurl'):
             self.fetch_and_apply_style(vl, self.service_config.get('styleurl'))
 
-        elif self.service_config.get('default', {}).get('style',{}).get('stations'):
+        elif self.service_config.get('default', {}).get('style',{}) and self.service_config['default']['style'].get('stations'):
             style = self.service_config['default']['style']['stations']
 
             style_ref = style.get('style')
             if style_ref:
-                style_url = SERVICE_MANAGER.PRESET_STYLES[style_ref]
+                style_url = SERVICE_MANAGER.PRESET_STYLES[style_ref]['url']
                 if isinstance(self.result, BasicTextParser):
                     style_attr = style.get('classified_attribute_text')
                 else:

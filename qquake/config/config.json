@@ -1695,25 +1695,32 @@
   },
   "styles": {
     "EDSF_CF_top": {
-      "url": "https://www.seismofaults.eu/EDSFStyles/EDSF_CF_top.qml"
+      "url": "https://www.seismofaults.eu/EDSFStyles/EDSF_CF_top.qml",
+      "type": "events"
     },
     "EDSF_CF_pln": {
-      "url": "https://www.seismofaults.eu/EDSFStyles/EDSF_CF_pln.qml"
+      "url": "https://www.seismofaults.eu/EDSFStyles/EDSF_CF_pln.qml",
+      "type": "events"
     },
     "EDSF_SUBD_zon": {
-      "url": "https://www.seismofaults.eu/EDSFStyles/EDSF_SUBD_zon.qml"
+      "url": "https://www.seismofaults.eu/EDSFStyles/EDSF_SUBD_zon.qml",
+      "type": "events"
     },
     "EDSF_SUBD_cnt": {
-      "url": "https://www.seismofaults.eu/EDSFStyles/EDSF_SUBD_cnt.qml"
+      "url": "https://www.seismofaults.eu/EDSFStyles/EDSF_SUBD_cnt.qml",
+      "type": "events"
     },
     "CPTI": {
-      "url": "https://www.emidius.eu/AHEAD/symbols/CPTI15_symbols.qml"
+      "url": "https://www.emidius.eu/AHEAD/symbols/CPTI15_symbols.qml",
+      "type": "events"
     },
     "AHEAD_intensities": {
-      "url": "https://www.emidius.eu/AHEAD/symbols/AHEAD_intensities.qml"
+      "url": "https://www.emidius.eu/AHEAD/symbols/AHEAD_intensities.qml",
+      "type": "macroseismic"
     },
     "stations": {
-      "url": "https://www.emidius.eu/AHEAD/symbols/stations.qml"
+      "url": "https://www.emidius.eu/AHEAD/symbols/stations.qml",
+      "type": "stations"
     }
   },
   "boundingboxpredefined": {
