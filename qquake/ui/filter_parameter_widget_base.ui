@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>561</width>
-    <height>717</height>
+    <height>748</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -102,10 +102,52 @@
       <bool>false</bool>
      </property>
      <layout class="QGridLayout" name="gridLayout_6" columnstretch="0,0,0,0">
-      <item row="7" column="1">
-       <widget class="QLabel" name="label_circ_center">
+      <item row="2" column="2">
+       <widget class="QCheckBox" name="lat_max_checkbox">
         <property name="text">
-         <string>Center</string>
+         <string>Max</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="3">
+       <widget class="QDoubleSpinBox" name="long_max_spinbox">
+        <property name="decimals">
+         <number>3</number>
+        </property>
+        <property name="minimum">
+         <double>-180.000000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>180.000000000000000</double>
+        </property>
+        <property name="singleStep">
+         <double>1.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="3">
+       <widget class="QDoubleSpinBox" name="lat_max_spinbox">
+        <property name="decimals">
+         <number>3</number>
+        </property>
+        <property name="minimum">
+         <double>-90.000000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>90.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="3">
+       <widget class="QDoubleSpinBox" name="lat_min_spinbox">
+        <property name="decimals">
+         <number>3</number>
+        </property>
+        <property name="minimum">
+         <double>-90.000000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>90.000000000000000</double>
         </property>
        </widget>
       </item>
@@ -116,10 +158,17 @@
         </property>
        </widget>
       </item>
-      <item row="4" column="2">
-       <widget class="QCheckBox" name="long_max_checkbox">
+      <item row="3" column="1">
+       <widget class="QLabel" name="label_rect_long">
         <property name="text">
-         <string>Max</string>
+         <string>Longitude</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="2">
+       <widget class="QLabel" name="label_circ_lat">
+        <property name="text">
+         <string>Latitude</string>
         </property>
        </widget>
       </item>
@@ -143,97 +192,6 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="1">
-       <widget class="QLabel" name="label_rect_long">
-        <property name="text">
-         <string>Longitude</string>
-        </property>
-       </widget>
-      </item>
-      <item row="10" column="1">
-       <widget class="QLabel" name="label_circ_radius">
-        <property name="text">
-         <string>Radius</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="3">
-       <widget class="QDoubleSpinBox" name="long_min_spinbox">
-        <property name="decimals">
-         <number>3</number>
-        </property>
-        <property name="minimum">
-         <double>-180.000000000000000</double>
-        </property>
-        <property name="maximum">
-         <double>180.000000000000000</double>
-        </property>
-        <property name="singleStep">
-         <double>1.000000000000000</double>
-        </property>
-       </widget>
-      </item>
-      <item row="9" column="2" colspan="2">
-       <widget class="QPushButton" name="circle_center_draw_on_map">
-        <property name="text">
-         <string>Draw the circular area on the map</string>
-        </property>
-       </widget>
-      </item>
-      <item row="11" column="2">
-       <widget class="QCheckBox" name="radius_max_checkbox">
-        <property name="text">
-         <string>Max</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="3">
-       <widget class="QDoubleSpinBox" name="long_max_spinbox">
-        <property name="decimals">
-         <number>3</number>
-        </property>
-        <property name="minimum">
-         <double>-180.000000000000000</double>
-        </property>
-        <property name="maximum">
-         <double>180.000000000000000</double>
-        </property>
-        <property name="singleStep">
-         <double>1.000000000000000</double>
-        </property>
-       </widget>
-      </item>
-      <item row="10" column="2">
-       <widget class="QCheckBox" name="radius_min_checkbox">
-        <property name="text">
-         <string>Min</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="2">
-       <widget class="QCheckBox" name="long_min_checkbox">
-        <property name="text">
-         <string>Min</string>
-        </property>
-       </widget>
-      </item>
-      <item row="8" column="2">
-       <widget class="QLabel" name="label_circ_long">
-        <property name="text">
-         <string>Longitude</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QRadioButton" name="radio_rectangular_area">
-        <property name="text">
-         <string>Rectangular area</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
       <item row="8" column="3">
        <widget class="QDoubleSpinBox" name="circular_long_spinbox">
         <property name="decimals">
@@ -247,6 +205,13 @@
         </property>
         <property name="singleStep">
          <double>1.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="2">
+       <widget class="QCheckBox" name="long_min_checkbox">
+        <property name="text">
+         <string>Min</string>
         </property>
        </widget>
       </item>
@@ -276,57 +241,10 @@
         </property>
        </widget>
       </item>
-      <item row="7" column="2">
-       <widget class="QLabel" name="label_circ_lat">
+      <item row="7" column="1">
+       <widget class="QLabel" name="label_circ_center">
         <property name="text">
-         <string>Latitude</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QLabel" name="label_rect_lat">
-        <property name="text">
-         <string>Latitude</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="2">
-       <widget class="QCheckBox" name="lat_max_checkbox">
-        <property name="text">
-         <string>Max</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="3">
-       <widget class="QDoubleSpinBox" name="lat_min_spinbox">
-        <property name="decimals">
-         <number>3</number>
-        </property>
-        <property name="minimum">
-         <double>-90.000000000000000</double>
-        </property>
-        <property name="maximum">
-         <double>90.000000000000000</double>
-        </property>
-       </widget>
-      </item>
-      <item row="7" column="0">
-       <widget class="QRadioButton" name="radio_circular_area">
-        <property name="text">
-         <string>Circular area</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="3">
-       <widget class="QDoubleSpinBox" name="lat_max_spinbox">
-        <property name="decimals">
-         <number>3</number>
-        </property>
-        <property name="minimum">
-         <double>-90.000000000000000</double>
-        </property>
-        <property name="maximum">
-         <double>90.000000000000000</double>
+         <string>Center</string>
         </property>
        </widget>
       </item>
@@ -337,8 +255,93 @@
         </property>
        </widget>
       </item>
+      <item row="1" column="1">
+       <widget class="QLabel" name="label_rect_lat">
+        <property name="text">
+         <string>Latitude</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="2">
+       <widget class="QLabel" name="label_circ_long">
+        <property name="text">
+         <string>Longitude</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="2">
+       <widget class="QCheckBox" name="long_max_checkbox">
+        <property name="text">
+         <string>Max</string>
+        </property>
+       </widget>
+      </item>
+      <item row="11" column="2">
+       <widget class="QCheckBox" name="radius_max_checkbox">
+        <property name="text">
+         <string>Max</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QRadioButton" name="radio_rectangular_area">
+        <property name="text">
+         <string>Rectangular area</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="10" column="2">
+       <widget class="QCheckBox" name="radius_min_checkbox">
+        <property name="text">
+         <string>Min</string>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="2" colspan="2">
+       <widget class="QPushButton" name="circle_center_draw_on_map">
+        <property name="text">
+         <string>Draw the circular area on the map</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="3">
+       <widget class="QDoubleSpinBox" name="long_min_spinbox">
+        <property name="decimals">
+         <number>3</number>
+        </property>
+        <property name="minimum">
+         <double>-180.000000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>180.000000000000000</double>
+        </property>
+        <property name="singleStep">
+         <double>1.000000000000000</double>
+        </property>
+       </widget>
+      </item>
       <item row="0" column="1" colspan="3">
        <widget class="QComboBox" name="combo_predefined_area"/>
+      </item>
+      <item row="10" column="1">
+       <widget class="QLabel" name="label_circ_radius">
+        <property name="text">
+         <string>Radius</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="0">
+       <widget class="QRadioButton" name="radio_circular_area">
+        <property name="text">
+         <string>Circular area</string>
+        </property>
+       </widget>
+      </item>
+      <item row="12" column="2" colspan="2">
+       <widget class="QComboBox" name="radius_unit_combobox"/>
       </item>
      </layout>
     </widget>

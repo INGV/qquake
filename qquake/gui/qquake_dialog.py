@@ -402,6 +402,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                            circle_longitude=filter_widget.circle_longitude(),
                            circle_min_radius=filter_widget.circle_min_radius(),
                            circle_max_radius=filter_widget.circle_max_radius(),
+                           circle_radius_unit=filter_widget.circle_radius_unit(),
                            earthquake_number_mdps_greater=filter_widget.earthquake_number_mdps_greater(),
                            earthquake_max_intensity_greater=filter_widget.earthquake_max_intensity_greater(),
                            output_fields=filter_widget.output_fields,

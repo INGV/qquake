@@ -31,7 +31,8 @@ from qgis.core import (
     QgsNetworkAccessManager,
     QgsVectorLayer,
     QgsSettings,
-    QgsBlockingNetworkRequest
+    QgsBlockingNetworkRequest,
+    QgsUnitTypes
 )
 
 from qquake.quakeml_parser import (
@@ -75,6 +76,7 @@ class Fetcher(QObject):
                  circle_longitude=None,
                  circle_min_radius=None,
                  circle_max_radius=None,
+                 circle_radius_unit=QgsUnitTypes.DistanceDegrees,
                  earthquake_number_mdps_greater=None,
                  earthquake_max_intensity_greater=None,
                  event_ids=None,
@@ -103,6 +105,7 @@ class Fetcher(QObject):
         self.circle_longitude = circle_longitude
         self.circle_min_radius = circle_min_radius
         self.circle_max_radius = circle_max_radius
+        self.circle_radius_unit = circle_radius_unit
         self.earthquake_number_mdps_greater = earthquake_number_mdps_greater
         self.earthquake_max_intensity_greater = earthquake_max_intensity_greater
         self.event_ids = event_ids
@@ -169,10 +172,16 @@ class Fetcher(QObject):
                 (self.circle_min_radius is not None or self.circle_max_radius is not None):
             query.append('latitude={}'.format(self.circle_latitude))
             query.append('longitude={}'.format(self.circle_longitude))
-            if self.circle_min_radius is not None:
-                query.append('minradius={}'.format(self.circle_min_radius))
-            if self.circle_max_radius is not None:
-                query.append('maxradius={}'.format(self.circle_max_radius))
+            if self.circle_radius_unit == QgsUnitTypes.DistanceDegrees:
+                if self.circle_min_radius is not None:
+                    query.append('minradius={}'.format(self.circle_min_radius))
+                if self.circle_max_radius is not None:
+                    query.append('maxradius={}'.format(self.circle_max_radius))
+            elif self.circle_radius_unit == QgsUnitTypes.DistanceKilometers:
+                if self.circle_min_radius is not None:
+                    query.append('minradiuskm={}'.format(self.circle_min_radius))
+                if self.circle_max_radius is not None:
+                    query.append('maxradiuskm={}'.format(self.circle_max_radius))
 
         if self.earthquake_number_mdps_greater is not None:
             query.append('minmdps={}'.format(
@@ -257,7 +266,7 @@ class Fetcher(QObject):
 
         request = QNetworkRequest(QUrl(self.generate_url()))
         request.setAttribute(QNetworkRequest.FollowRedirectsAttribute, True)
-        
+
         reply = QgsNetworkAccessManager.instance().get(request)
         reply.finished.connect(lambda r=reply: self._reply_finished(r))
         reply.downloadProgress.connect(self._reply_progress)

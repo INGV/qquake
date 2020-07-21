@@ -32,7 +32,8 @@ from qgis.core import (
     QgsCoordinateReferenceSystem,
     QgsCoordinateTransform,
     QgsCsException,
-    QgsSettings
+    QgsSettings,
+    QgsUnitTypes
 )
 from qgis.gui import (
     QgsMapToolExtent,
@@ -93,6 +94,7 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
         self.radius_max_checkbox.toggled.connect(self.changed)
         self.radius_min_spinbox.valueChanged.connect(self.changed)
         self.radius_max_spinbox.valueChanged.connect(self.changed)
+        self.radius_unit_combobox.currentIndexChanged.connect(self.changed)
         self.earthquake_max_intensity_greater_check.toggled.connect(self.changed)
         self.earthquake_max_intensity_greater_combo.currentIndexChanged.connect(self.changed)
         self.earthquake_number_mdps_greater_check.toggled.connect(self.changed)
@@ -159,6 +161,12 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
         else:
             self.radio_circular_area.setEnabled(True)
 
+        self.radius_unit_combobox.clear()
+        self.radius_unit_combobox.addItem(self.tr('Degrees'), QgsUnitTypes.DistanceDegrees)
+        if service_config['settings'].get('querycircularradiuskm', False):
+            self.radius_unit_combobox.insertItem(0, self.tr('Kilometers'), QgsUnitTypes.DistanceKilometers)
+        self.radius_unit_combobox.setCurrentIndex(0)
+
         if not service_config['settings'].get('outputtext', False):
             if self.radio_basic_output.isChecked():
                 self.radio_extended_output.setChecked(True)
@@ -219,6 +227,9 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
             s.value('/plugins/qquake/{}_last_event_circle_radius_min_checked2'.format(prefix), False, bool))
         self.radius_max_checkbox.setChecked(
             s.value('/plugins/qquake/{}_last_event_circle_radius_max_checked2'.format(prefix), False, bool))
+
+        self.radius_unit_combobox.setCurrentIndex(
+            max(0, self.radius_unit_combobox.findData(s.value('/plugins/qquake/{}_last_event_circle_unit'.format(prefix), int(QgsUnitTypes.DistanceKilometers), int))))
 
         last_event_min_lat = s.value('/plugins/qquake/{}_last_event_min_lat'.format(prefix))
         if last_event_min_lat is not None:
@@ -307,6 +318,7 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
                    self.radius_max_checkbox.isChecked())
         s.setValue('/plugins/qquake/{}_last_event_circle_min_radius'.format(prefix), self.radius_min_spinbox.value())
         s.setValue('/plugins/qquake/{}_last_event_circle_max_radius'.format(prefix), self.radius_max_spinbox.value())
+        s.setValue('/plugins/qquake/{}_last_event_circle_unit'.format(prefix), int(self.radius_unit_combobox.currentData()))
 
         s.setValue('/plugins/qquake/{}_last_event_max_intensity_greater_checked2'.format(prefix),
                    self.earthquake_max_intensity_greater_check.isChecked())
@@ -398,7 +410,8 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
                   self.label_circ_radius,
                   self.label_circ_lat,
                   self.label_circ_long,
-                  self.circle_center_draw_on_map]:
+                  self.circle_center_draw_on_map,
+                  self.radius_unit_combobox]:
             w.setEnabled(self.radio_circular_area.isChecked() and self.limit_extent_checkbox.isChecked())
         self.radius_min_spinbox.setEnabled(self.radius_min_spinbox.isEnabled() and self.radius_min_checkbox.isChecked())
         self.radius_max_spinbox.setEnabled(self.radius_max_spinbox.isEnabled() and self.radius_max_checkbox.isChecked())
@@ -638,6 +651,9 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
 
     def circle_max_radius(self):
         return self.radius_max_spinbox.value() if self.radius_max_checkbox.isChecked() else None
+
+    def circle_radius_unit(self):
+        return self.radius_unit_combobox.currentData()
 
     def earthquake_max_intensity_greater(self):
         if self.service_type != SERVICE_MANAGER.MACROSEISMIC:

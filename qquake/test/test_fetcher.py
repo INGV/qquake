@@ -25,6 +25,7 @@ from qgis.PyQt.QtCore import (
 from qgis.core import QgsRectangle
 
 from qquake.fetcher import Fetcher
+from qquake.services import SERVICE_MANAGER
 
 from qquake.test.utilities import get_qgis_app
 
@@ -37,24 +38,24 @@ class QQuakeFetcherTest(unittest.TestCase):
     def test_url(self):
         """Test Fetcher url generation."""
         fetcher = Fetcher(event_service='AHEAD-SHEEC', service_type=SERVICE_MANAGER.FDSNEVENT)
-        self.assertEqual(fetcher.generate_url(), 'https://www.emidius.eu/fdsnws/event/1/query?limit=5000&format=text')
+        self.assertEqual(fetcher.generate_url(), 'https://www.emidius.eu/fdsnws/event/1/query?limit=5000&format=xml')
 
         fetcher = Fetcher(event_service='AHEAD-SHEEC', service_type=SERVICE_MANAGER.FDSNEVENT, event_start_date=QDateTime(QDate(2000, 5, 8), QTime(12, 0, 5)))
         self.assertEqual(fetcher.generate_url(),
-                         'https://www.emidius.eu/fdsnws/event/1/query?starttime=2000-05-08T12:00:05&limit=5000&format=text')
+                         'https://www.emidius.eu/fdsnws/event/1/query?starttime=2000-05-08T12:00:05&limit=5000&format=xml')
 
         fetcher = Fetcher(event_service='AHEAD-SHEEC', service_type=SERVICE_MANAGER.FDSNEVENT, event_start_date=QDateTime(QDate(2000, 5, 8), QTime(12, 0, 5)),
                           event_end_date=QDateTime(QDate(2010, 5, 8), QTime(12, 0, 5)))
         self.assertEqual(fetcher.generate_url(),
-                         'https://www.emidius.eu/fdsnws/event/1/query?starttime=2000-05-08T12:00:05&endtime=2010-05-08T12:00:05&limit=5000&format=text')
+                         'https://www.emidius.eu/fdsnws/event/1/query?starttime=2000-05-08T12:00:05&endtime=2010-05-08T12:00:05&limit=5000&format=xml')
 
         fetcher = Fetcher(event_service='AHEAD-SHEEC', service_type=SERVICE_MANAGER.FDSNEVENT, event_min_magnitude=7, event_max_magnitude=9)
         self.assertEqual(fetcher.generate_url(),
-                         'https://www.emidius.eu/fdsnws/event/1/query?minmag=7&maxmag=9&limit=5000&format=text')
+                         'https://www.emidius.eu/fdsnws/event/1/query?minmag=7&maxmag=9&limit=5000&format=xml')
 
         fetcher = Fetcher(event_service='AHEAD-SHEEC', service_type=SERVICE_MANAGER.FDSNEVENT, limit_extent_rect=True, max_latitude=4, min_latitude=2, min_longitude=1, max_longitude=3)
         self.assertEqual(fetcher.generate_url(),
-                         'https://www.emidius.eu/fdsnws/event/1/query?minlatitude=2&maxlatitude=4&minlongitude=1&maxlongitude=3&limit=5000&format=text')
+                         'https://www.emidius.eu/fdsnws/event/1/query?minlatitude=2&maxlatitude=4&minlongitude=1&maxlongitude=3&limit=5000&format=xml')
 
     def test_name(self):
         fetcher = Fetcher(event_service='AHEAD-SHEEC', service_type=SERVICE_MANAGER.FDSNEVENT)
