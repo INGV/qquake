@@ -32,7 +32,9 @@ from qgis.core import (
     QgsVectorLayer,
     QgsSettings,
     QgsBlockingNetworkRequest,
-    QgsUnitTypes
+    QgsUnitTypes,
+    QgsGraduatedSymbolRenderer,
+    QgsCategorizedSymbolRenderer
 )
 
 from qquake.quakeml_parser import (
@@ -426,13 +428,22 @@ class Fetcher(QObject):
 
         if self.service_config.get('styleurl'):
             self.fetch_and_apply_style(vl, self.service_config.get('styleurl'))
-        elif self.service_config.get('default', {}).get('style'):
-            style_url = SERVICE_MANAGER.PRESET_STYLES[self.service_config.get('default', {}).get('style')]
-            self.fetch_and_apply_style(vl, style_url)
+        elif self.service_config.get('default', {}).get('style',{}) and self.service_config['default']['style'].get('events'):
+            style = self.service_config['default']['style']['events']
+
+            style_ref = style.get('style')
+            if style_ref:
+                style_url = SERVICE_MANAGER.PRESET_STYLES[style_ref]['url']
+                if isinstance(self.result, BasicTextParser):
+                    style_attr = style.get('classified_attribute_text')
+                else:
+                    style_attr = self.result.remap_attribute_name(SERVICE_MANAGER.FDSNEVENT, style.get('classified_attribute_xml'))
+
+                self.fetch_and_apply_style(vl, style_url, style_attr)
 
         return vl
 
-    def fetch_and_apply_style(self, layer, url):
+    def fetch_and_apply_style(self, layer, url, style_attr=''):
         request = QgsBlockingNetworkRequest()
         if request.get(QNetworkRequest(QUrl(url))) != QgsBlockingNetworkRequest.NoError:
             self.message.emit(self.tr('Error while fetching QML style'), Qgis.Warning)
@@ -447,6 +458,11 @@ class Fetcher(QObject):
 
             layer.loadNamedStyle(tmp_file_name)
 
+            if style_attr:
+                if isinstance(layer.renderer(), QgsGraduatedSymbolRenderer):
+                    layer.renderer().setClassAttribute(style_attr)
+                elif isinstance(layer.renderer(), QgsCategorizedSymbolRenderer):
+                    layer.renderer().setClassAttribute(style_attr)
             layer.triggerRepaint()
 
     def mdpset_to_layer(self, parser):
@@ -464,9 +480,18 @@ class Fetcher(QObject):
 
         if self.service_config.get('mdpstyleurl'):
             self.fetch_and_apply_style(vl, self.service_config.get('mdpstyleurl'))
-        elif self.service_config.get('default', {}).get('mdp_style'):
-            style_url = SERVICE_MANAGER.PRESET_STYLES[self.service_config.get('default', {}).get('mdp_style')]
-            self.fetch_and_apply_style(vl, style_url)
+        elif self.service_config.get('default', {}).get('style', {}) and self.service_config['default']['style'].get('mdp'):
+            style = self.service_config['default']['style']['mdp']
+
+            style_ref = style.get('style')
+            if style_ref:
+                style_url = SERVICE_MANAGER.PRESET_STYLES[style_ref]['url']
+                if isinstance(self.result, BasicTextParser):
+                    style_attr = style.get('classified_attribute_text')
+                else:
+                    style_attr = self.result.remap_attribute_name(SERVICE_MANAGER.MACROSEISMIC, style.get('classified_attribute_xml'))
+
+                self.fetch_and_apply_style(vl, style_url, style_attr)
 
         return vl
 
@@ -489,6 +514,19 @@ class Fetcher(QObject):
 
         if self.service_config.get('styleurl'):
             self.fetch_and_apply_style(vl, self.service_config.get('styleurl'))
+
+        elif self.service_config.get('default', {}).get('style',{}) and self.service_config['default']['style'].get('stations'):
+            style = self.service_config['default']['style']['stations']
+
+            style_ref = style.get('style')
+            if style_ref:
+                style_url = SERVICE_MANAGER.PRESET_STYLES[style_ref]['url']
+                if isinstance(self.result, BasicTextParser):
+                    style_attr = style.get('classified_attribute_text')
+                else:
+                    style_attr = FDSNStationXMLParser.remap_attribute_name(style.get('classified_attribute_xml'))
+
+                self.fetch_and_apply_style(vl, style_url, style_attr)
 
         return vl
 

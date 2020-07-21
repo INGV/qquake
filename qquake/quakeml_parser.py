@@ -1269,6 +1269,12 @@ class QuakeMlParser:
         self.mdps = {}
         self.add_events(content)
 
+    def remap_attribute_name(self, service_type, attribute):
+        if not attribute:
+            return attribute
+
+        return get_service_fields(service_type, [attribute]).at(0).name()
+
     def add_events(self, content):
         doc = QDomDocument()
         doc.setContent(content)
@@ -1753,3 +1759,9 @@ class FDSNStationXMLParser:
             networks.append(Network.from_element(network_element))
 
         return networks
+
+    @staticmethod
+    def remap_attribute_name(attribute):
+        if not attribute:
+            return attribute
+        return get_service_fields(SERVICE_MANAGER.FDSNSTATION, [attribute]).at(0).name()

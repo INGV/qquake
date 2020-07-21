@@ -86,7 +86,7 @@ class ServiceManager(QObject):
                 self.services[service_type][service_id] = service
 
         for name, style in default_services['styles'].items():
-            self.PRESET_STYLES[name] = style.get('url')
+            self.PRESET_STYLES[name] = style
 
         self._predefined_bounding_boxes = default_services['boundingboxpredefined']
 

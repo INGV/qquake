@@ -22,7 +22,13 @@
         "datestart": "1000-01-01T01:01:01+00:00",
         "dateend": "1899-12-31T23:59:59+00:00",
         "boundingboxpredefined": "europe",
-        "style": "CPTI",
+        "style": {
+          "events": {
+            "style": "CPTI",
+            "classified_attribute_text": "Magnitude",
+            "classified_attribute_xml": "eventParameters>event>magnitude>mag>value"
+          }
+        },
         "format": "text",
         "fields": [
           "eventParameters>event§publicID",
@@ -101,7 +107,13 @@
         "datestart": "1000-01-01T01:01:01+00:00",
         "dateend": "2017-12-31T23:59:59+00:00",
         "boundingboxpredefined": "italy",
-        "style": "CPTI",
+        "style": {
+          "events": {
+            "style": "CPTI",
+            "classified_attribute_text": "Magnitude",
+            "classified_attribute_xml": "eventParameters>event>magnitude>mag>value"
+          }
+        },
         "format": "text",
         "fields": [
           "eventParameters>event§publicID",
@@ -180,7 +192,13 @@
         "datestart": "2020-01-01T01:01:01+00:00",
         "dateend": "",
         "boundingboxpredefined": "italy",
-        "style": "CPTI",
+        "style": {
+          "events": {
+            "style": "CPTI",
+            "classified_attribute_text": "Magnitude",
+            "classified_attribute_xml": "eventParameters>event>magnitude>mag>value"
+          }
+        },
         "format": "text",
         "fields": [
           "eventParameters>event§publicID",
@@ -253,7 +271,13 @@
         "datestart": "2020-01-01T01:01:01+00:00",
         "dateend": "",
         "boundingboxpredefined": "europe",
-        "style": "CPTI",
+        "style": {
+          "events": {
+            "style": "CPTI",
+            "classified_attribute_text": "Magnitude",
+            "classified_attribute_xml": "eventParameters>event>magnitude>mag>value"
+          }
+        },
         "format": "text",
         "fields": [
           "eventParameters>event§publicID",
@@ -326,7 +350,11 @@
       ],
       "default": {
         "boundingboxpredefined": "world",
-        "style": "stations",
+        "style": {
+          "stations": {
+            "style": "stations"
+          }
+        },
         "format": "text",
         "fields": [
           "FDSNStationXML>Network§Code",
@@ -394,7 +422,11 @@
       ],
       "default": {
         "boundingboxpredefined": "world",
-        "style": "stations",
+        "style": {
+          "stations": {
+            "style": "stations"
+          }
+        },
         "format": "text",
         "fields": [
           "FDSNStationXML>Network§Code",
@@ -462,7 +494,11 @@
       ],
       "default": {
         "boundingboxpredefined": "world",
-        "style": "stations",
+        "style": {
+          "stations": {
+            "style": "stations"
+          }
+        },
         "format": "text",
         "fields": [
           "FDSNStationXML>Network§Code",
@@ -530,7 +566,11 @@
       ],
       "default": {
         "boundingboxpredefined": "italy",
-        "style": "stations",
+        "style": {
+          "stations": {
+            "style": "stations"
+          }
+        },
         "format": "text",
         "fields": [
           "FDSNStationXML>Network§Code",
@@ -598,7 +638,11 @@
       ],
       "default": {
         "boundingboxpredefined": "switzerland",
-        "style": "stations",
+        "style": {
+          "stations": {
+            "style": "stations"
+          }
+        },
         "format": "text",
         "fields": [
           "FDSNStationXML>Network§Code",
@@ -666,7 +710,11 @@
       ],
       "default": {
         "boundingboxpredefined": "europe",
-        "style": "stations",
+        "style": {
+          "stations": {
+            "style": "stations"
+          }
+        },
         "format": "text",
         "fields": [
           "FDSNStationXML>Network§Code",
@@ -734,7 +782,11 @@
       ],
       "default": {
         "boundingboxpredefined": "europe",
-        "style": "stations",
+        "style": {
+          "stations": {
+            "style": "stations"
+          }
+        },
         "format": "text",
         "fields": [
           "FDSNStationXML>Network§Code",
@@ -802,7 +854,11 @@
       ],
       "default": {
         "boundingboxpredefined": "world",
-        "style": "stations",
+        "style": {
+          "stations": {
+            "style": "stations"
+          }
+        },
         "format": "text",
         "fields": [
           "FDSNStationXML>Network§Code",
@@ -870,7 +926,11 @@
       ],
       "default": {
         "boundingboxpredefined": "europe",
-        "style": "stations",
+        "style": {
+          "stations": {
+            "style": "stations"
+          }
+        },
         "format": "text",
         "fields": [
           "FDSNStationXML>Network§Code",
@@ -938,7 +998,11 @@
       ],
       "default": {
         "boundingboxpredefined": "europe",
-        "style": "stations",
+        "style": {
+          "stations": {
+            "style": "stations"
+          }
+        },
         "format": "text",
         "fields": [
           "FDSNStationXML>Network§Code",
@@ -1006,7 +1070,11 @@
       ],
       "default": {
         "boundingboxpredefined": "europe",
-        "style": "stations",
+        "style": {
+          "stations": {
+            "style": "stations"
+          }
+        },
         "format": "text",
         "fields": [
           "FDSNStationXML>Network§Code",
@@ -1074,7 +1142,11 @@
       ],
       "default": {
         "boundingboxpredefined": "europe",
-        "style": "stations",
+        "style": {
+          "stations": {
+            "style": "stations"
+          }
+        },
         "format": "text",
         "fields": [
           "FDSNStationXML>Network§Code",
@@ -1142,7 +1214,11 @@
       ],
       "default": {
         "boundingboxpredefined": "world",
-        "style": "stations",
+        "style": {
+          "stations": {
+            "style": "stations"
+          }
+        },
         "format": "text",
         "fields": [
           "FDSNStationXML>Network§Code",
@@ -1214,7 +1290,13 @@
         "datestart": "1000-01-01T01:01:01+00:00",
         "dateend": "1899-12-31T23:59:59+00:00",
         "boundingboxpredefined": "europe",
-        "mdp_style": "AHEAD_intensities",
+        "style": {
+          "mdp": {
+            "style": "AHEAD_intensities",
+            "classified_attribute_text": "",
+            "classified_attribute_xml": ""
+          }
+        },
         "fields": [
           "eventParameters>event§publicID",
           "eventParameters>event>creationInfo>agencyID",
@@ -1308,7 +1390,18 @@
         "datestart": "1000-01-01T01:01:01+00:00",
         "dateend": "2017-12-31T23:59:59+00:00",
         "boundingboxpredefined": "italy",
-        "mdp_style": "AHEAD_intensities",
+        "style": {
+          "mdp": {
+            "style": "AHEAD_intensities",
+            "classified_attribute_text": "",
+            "classified_attribute_xml": ""
+          },
+            "events": {
+            "style": "CPTI",
+            "classified_attribute_text": "Magnitude",
+            "classified_attribute_xml": "eventParameters>event>magnitude>mag>value"
+          }
+        },
         "fields": [
           "eventParameters>event§publicID",
           "eventParameters>event>creationInfo>agencyID",
@@ -1602,25 +1695,32 @@
   },
   "styles": {
     "EDSF_CF_top": {
-      "url": "https://www.seismofaults.eu/EDSFStyles/EDSF_CF_top.qml"
+      "url": "https://www.seismofaults.eu/EDSFStyles/EDSF_CF_top.qml",
+      "type": "events"
     },
     "EDSF_CF_pln": {
-      "url": "https://www.seismofaults.eu/EDSFStyles/EDSF_CF_pln.qml"
+      "url": "https://www.seismofaults.eu/EDSFStyles/EDSF_CF_pln.qml",
+      "type": "events"
     },
     "EDSF_SUBD_zon": {
-      "url": "https://www.seismofaults.eu/EDSFStyles/EDSF_SUBD_zon.qml"
+      "url": "https://www.seismofaults.eu/EDSFStyles/EDSF_SUBD_zon.qml",
+      "type": "events"
     },
     "EDSF_SUBD_cnt": {
-      "url": "https://www.seismofaults.eu/EDSFStyles/EDSF_SUBD_cnt.qml"
+      "url": "https://www.seismofaults.eu/EDSFStyles/EDSF_SUBD_cnt.qml",
+      "type": "events"
     },
     "CPTI": {
-      "url": "https://www.emidius.eu/AHEAD/symbols/CPTI15_symbols.qml"
+      "url": "https://www.emidius.eu/AHEAD/symbols/CPTI15_symbols.qml",
+      "type": "events"
     },
     "AHEAD_intensities": {
-      "url": "https://www.emidius.eu/AHEAD/symbols/AHEAD_intensities.qml"
+      "url": "https://www.emidius.eu/AHEAD/symbols/AHEAD_intensities.qml",
+      "type": "macroseismic"
     },
     "stations": {
-      "url": "https://www.emidius.eu/AHEAD/symbols/stations.qml"
+      "url": "https://www.emidius.eu/AHEAD/symbols/stations.qml",
+      "type": "stations"
     }
   },
   "boundingboxpredefined": {
