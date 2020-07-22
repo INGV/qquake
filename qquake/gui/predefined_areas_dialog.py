@@ -49,25 +49,48 @@ class PredefinedAreasWidget(QDialog, FORM_CLASS):
             extent = SERVICE_MANAGER.predefined_bounding_box(name)
             item = QListWidgetItem(extent['title'])
             item.setData(Qt.UserRole, name)
-            item.setData(Qt.UserRole+1, True)  # read only
+            item.setData(Qt.UserRole + 1, extent.get('read_only', False))
+            item.setData(Qt.UserRole + 2, extent.get('title', ''))
+            item.setData(Qt.UserRole + 3, extent.get('boundingbox', [0, 0, 0, 0])[0])
+            item.setData(Qt.UserRole + 4, extent.get('boundingbox', [0, 0, 0, 0])[1])
+            item.setData(Qt.UserRole + 5, extent.get('boundingbox', [0, 0, 0, 0])[2])
+            item.setData(Qt.UserRole + 6, extent.get('boundingbox', [0, 0, 0, 0])[3])
             self.region_list.addItem(item)
 
         self.region_list.currentItemChanged.connect(self._item_changed)
 
+        self.button_add.clicked.connect(self._add_item)
+        self.button_remove.clicked.connect(self._remove_item)
+
     def _item_changed(self, current, previous):
-        name = current.data(Qt.UserRole)
-        extent = SERVICE_MANAGER.predefined_bounding_box(name)
+        self.edit_label.setText(current.data(Qt.UserRole+2))
+        self.spin_min_long.setValue(current.data(Qt.UserRole+3))
+        self.spin_max_long.setValue(current.data(Qt.UserRole+5))
+        self.spin_min_lat.setValue(current.data(Qt.UserRole+4))
+        self.spin_max_lat.setValue(current.data(Qt.UserRole+6))
 
-        self.edit_label.setText(extent['title'])
-        self.spin_min_long.setValue(extent['boundingbox'][0])
-        self.spin_max_long.setValue(extent['boundingbox'][2])
-        self.spin_min_lat.setValue(extent['boundingbox'][1])
-        self.spin_max_lat.setValue(extent['boundingbox'][3])
-
-        read_only = current.data(Qt.UserRole+1)
+        read_only = current.data(Qt.UserRole + 1)
         for w in [self.edit_label, self.spin_min_long, self.spin_max_long, self.spin_min_lat, self.spin_max_lat]:
             w.setEnabled(not read_only)
-        
+        self.button_remove.setEnabled(not read_only)
+
+    def _add_item(self):
+        item = QListWidgetItem('New Area')
+        item.setData(Qt.UserRole, None)
+        item.setData(Qt.UserRole + 1, False)
+        item.setData(Qt.UserRole + 2, 'New Area')
+        item.setData(Qt.UserRole + 3, 0)
+        item.setData(Qt.UserRole + 4, 0)
+        item.setData(Qt.UserRole + 5, 0)
+        item.setData(Qt.UserRole + 6, 0)
+        self.region_list.addItem(item)
+        self.region_list.setCurrentItem(item)
+
+    def _remove_item(self):
+        item = self.region_list.currentItem()
+
+        self.region_list.takeItem(self.region_list.row(item))
+
 
 class PredefinedAreasDialog(QDialog):
 
