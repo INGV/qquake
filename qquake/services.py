@@ -66,11 +66,13 @@ class ServiceManager(QObject):
     PRESET_STYLES = {}
 
     refreshed = pyqtSignal()
+    areasChanged = pyqtSignal()
 
     def __init__(self):
         super().__init__()
         self.services = {}
         self.refresh_services()
+        self._load_predefined_areas()
 
     def refresh_services(self):
         # load the default services
@@ -89,6 +91,8 @@ class ServiceManager(QObject):
             self.PRESET_STYLES[name] = style
 
         self._predefined_bounding_boxes = default_services['boundingboxpredefined']
+        for k, v in self._predefined_bounding_boxes.items():
+            v['read_only'] = True
 
         # next load user services
         user_path = self.user_service_path()
@@ -116,6 +120,7 @@ class ServiceManager(QObject):
 
                 self.services[service_type][p.stem] = service
 
+        self._load_predefined_areas()
         self.refreshed.emit()
 
     def create_from_file(self, path):
@@ -142,6 +147,48 @@ class ServiceManager(QObject):
 
     def predefined_bounding_box(self, name):
         return self._predefined_bounding_boxes[name]
+
+    def _load_predefined_areas(self):
+        path = self.user_service_path() / 'predefined_areas.json'
+        try:
+            with open(path, 'rt') as f:
+                try:
+                    areas = json.load(f)
+                except json.JSONDecodeError:
+                    return None
+
+                new_areas = {k: v for k, v in self._predefined_bounding_boxes.items() if v.get('read_only')}
+
+                for k, v in areas.items():
+                    new_areas[k] = v
+
+                self._predefined_bounding_boxes = new_areas
+                self.areasChanged.emit()
+        except FileNotFoundError:
+            pass
+
+    def _save_predefined_areas(self):
+        areas_to_save = {k: v for k, v in self._predefined_bounding_boxes.items() if not v.get('read_only')}
+        path = self.user_service_path() / 'predefined_areas.json'
+        with open(path, 'wt') as f:
+            f.write(json.dumps(areas_to_save, indent=4))
+
+    def add_predefined_bounding_box(self, name, configuration):
+        self._predefined_bounding_boxes[name] = configuration
+        self._save_predefined_areas()
+        self.areasChanged.emit()
+
+    def remove_predefined_bounding_box(self, name) -> bool:
+        if name not in self._predefined_bounding_boxes:
+            return False
+
+        if self._predefined_bounding_boxes[name].get('read_only', False):
+            return False
+
+        del self._predefined_bounding_boxes[name]
+        self._save_predefined_areas()
+        self.areasChanged.emit()
+        return True
 
     def custom_service_path(self, service_type, service_id):
         return (self.user_service_path() / service_type / service_id).with_suffix('.json')
