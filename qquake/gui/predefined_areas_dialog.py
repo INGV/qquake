@@ -120,6 +120,28 @@ class PredefinedAreasWidget(QDialog, FORM_CLASS):
         item = self.region_list.currentItem()
         self.region_list.takeItem(self.region_list.row(item))
 
+    def save_areas(self):
+        previous = list(SERVICE_MANAGER.available_predefined_bounding_boxes())
+        for p in previous:
+            if SERVICE_MANAGER.predefined_bounding_box(p).get('read_only'):
+                continue
+
+            SERVICE_MANAGER.remove_predefined_bounding_box(p)
+
+        for i in range(self.region_list.count()):
+            item = self.region_list.item(i)
+            if item.data(Qt.UserRole+1):
+                # read only
+                continue
+
+            title = item.data(Qt.UserRole+2)
+            bounding_box = [item.data(Qt.UserRole+3),
+                            item.data(Qt.UserRole + 4),
+                            item.data(Qt.UserRole + 5),
+                            item.data(Qt.UserRole + 6)]
+
+            SERVICE_MANAGER.add_predefined_bounding_box(title, {'title':title, 'boundingbox': bounding_box})
+
 
 class PredefinedAreasDialog(QDialog):
 
@@ -139,3 +161,7 @@ class PredefinedAreasDialog(QDialog):
         self.button_box.rejected.connect(self.reject)
         l.addWidget(self.button_box)
         self.setLayout(l)
+
+    def accept(self):
+        self.widget.save_areas()
+        super().accept()

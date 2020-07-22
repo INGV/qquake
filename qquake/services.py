@@ -120,6 +120,7 @@ class ServiceManager(QObject):
 
                 self.services[service_type][p.stem] = service
 
+        self._load_predefined_areas()
         self.refreshed.emit()
 
     def create_from_file(self, path):
