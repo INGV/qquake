@@ -29,8 +29,14 @@ from qgis.PyQt.QtWidgets import (
     QDialogButtonBox,
     QListWidgetItem
 )
-
-from qgis.gui import QgsGui
+from qgis.utils import iface
+from qgis.core import (
+    QgsCoordinateTransform,
+    QgsProject,
+    QgsCoordinateReferenceSystem,
+    QgsCsException
+)
+from qgis.gui import QgsGui, QgsMapToolExtent
 
 from qquake.gui.gui_utils import GuiUtils
 from qquake.services import SERVICE_MANAGER
@@ -45,6 +51,9 @@ class PredefinedAreasWidget(QDialog, FORM_CLASS):
         super().__init__(parent)
         self.setupUi(self)
         self.blocked = False
+
+        self.previous_map_tool = None
+        self.extent_tool = None
 
         for name in SERVICE_MANAGER.available_predefined_bounding_boxes():
             extent = SERVICE_MANAGER.predefined_bounding_box(name)
@@ -69,6 +78,8 @@ class PredefinedAreasWidget(QDialog, FORM_CLASS):
         self.spin_min_lat.valueChanged.connect(self._update_item)
         self.spin_max_lat.valueChanged.connect(self._update_item)
 
+        self.button_draw_on_map.clicked.connect(self.draw_rect_on_map)
+
     def _update_item(self):
         if self.blocked:
             return
@@ -79,7 +90,7 @@ class PredefinedAreasWidget(QDialog, FORM_CLASS):
             return
 
         self.blocked = True
-        current.setData(Qt.UserRole+2, self.edit_label.text())
+        current.setData(Qt.UserRole + 2, self.edit_label.text())
         current.setText(self.edit_label.text())
         current.setData(Qt.UserRole + 3, self.spin_min_long.value())
         current.setData(Qt.UserRole + 5, self.spin_max_long.value())
@@ -92,14 +103,14 @@ class PredefinedAreasWidget(QDialog, FORM_CLASS):
             return
 
         self.blocked = True
-        self.edit_label.setText(current.data(Qt.UserRole+2))
-        self.spin_min_long.setValue(current.data(Qt.UserRole+3))
-        self.spin_max_long.setValue(current.data(Qt.UserRole+5))
-        self.spin_min_lat.setValue(current.data(Qt.UserRole+4))
-        self.spin_max_lat.setValue(current.data(Qt.UserRole+6))
+        self.edit_label.setText(current.data(Qt.UserRole + 2))
+        self.spin_min_long.setValue(current.data(Qt.UserRole + 3))
+        self.spin_max_long.setValue(current.data(Qt.UserRole + 5))
+        self.spin_min_lat.setValue(current.data(Qt.UserRole + 4))
+        self.spin_max_lat.setValue(current.data(Qt.UserRole + 6))
 
         read_only = current.data(Qt.UserRole + 1)
-        for w in [self.edit_label, self.spin_min_long, self.spin_max_long, self.spin_min_lat, self.spin_max_lat]:
+        for w in [self.edit_label, self.spin_min_long, self.spin_max_long, self.spin_min_lat, self.spin_max_lat, self.button_draw_on_map]:
             w.setEnabled(not read_only)
         self.button_remove.setEnabled(not read_only)
         self.blocked = False
@@ -130,17 +141,50 @@ class PredefinedAreasWidget(QDialog, FORM_CLASS):
 
         for i in range(self.region_list.count()):
             item = self.region_list.item(i)
-            if item.data(Qt.UserRole+1):
+            if item.data(Qt.UserRole + 1):
                 # read only
                 continue
 
-            title = item.data(Qt.UserRole+2)
-            bounding_box = [item.data(Qt.UserRole+3),
+            title = item.data(Qt.UserRole + 2)
+            bounding_box = [item.data(Qt.UserRole + 3),
                             item.data(Qt.UserRole + 4),
                             item.data(Qt.UserRole + 5),
                             item.data(Qt.UserRole + 6)]
 
-            SERVICE_MANAGER.add_predefined_bounding_box(title, {'title':title, 'boundingbox': bounding_box})
+            SERVICE_MANAGER.add_predefined_bounding_box(title, {'title': title, 'boundingbox': bounding_box})
+
+    def draw_rect_on_map(self):
+        self.previous_map_tool = iface.mapCanvas().mapTool()
+        if not self.extent_tool:
+            self.extent_tool = QgsMapToolExtent(iface.mapCanvas())
+            self.extent_tool.extentChanged.connect(self.extent_drawn)
+            self.extent_tool.deactivated.connect(self.deactivate_tool)
+        iface.mapCanvas().setMapTool(self.extent_tool)
+        self.window().setVisible(False)
+
+    def extent_drawn(self, extent):
+        self.set_extent_from_canvas_extent(extent)
+        iface.mapCanvas().setMapTool(self.previous_map_tool)
+        self.window().setVisible(True)
+        self.previous_map_tool = None
+        self.extent_tool = None
+
+    def deactivate_tool(self):
+        self.window().setVisible(True)
+        self.previous_map_tool = None
+        self.extent_tool = None
+
+    def set_extent_from_canvas_extent(self, rect):
+        ct = QgsCoordinateTransform(iface.mapCanvas().mapSettings().destinationCrs(),
+                                    QgsCoordinateReferenceSystem('EPSG:4326'), QgsProject.instance())
+        try:
+            rect = ct.transformBoundingBox(rect)
+            self.spin_min_lat.setValue(rect.yMinimum())
+            self.spin_max_lat.setValue(rect.yMaximum())
+            self.spin_min_long.setValue(rect.xMinimum())
+            self.spin_max_long.setValue(rect.xMaximum())
+        except QgsCsException:
+            pass
 
 
 class PredefinedAreasDialog(QDialog):

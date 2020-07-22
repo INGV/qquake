@@ -359,7 +359,7 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
         selected_extent_id = self.combo_predefined_area.currentData()
         if selected_extent_id not in SERVICE_MANAGER.available_predefined_bounding_boxes():
             return
-        
+
         extent = SERVICE_MANAGER.predefined_bounding_box(selected_extent_id)['boundingbox']
         self.lat_min_spinbox.setValue(extent[1])
         self.lat_max_spinbox.setValue(extent[3])
