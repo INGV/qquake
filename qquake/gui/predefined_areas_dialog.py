@@ -44,6 +44,7 @@ class PredefinedAreasWidget(QDialog, FORM_CLASS):
         """Constructor."""
         super().__init__(parent)
         self.setupUi(self)
+        self.blocked = False
 
         for name in SERVICE_MANAGER.available_predefined_bounding_boxes():
             extent = SERVICE_MANAGER.predefined_bounding_box(name)
@@ -62,7 +63,35 @@ class PredefinedAreasWidget(QDialog, FORM_CLASS):
         self.button_add.clicked.connect(self._add_item)
         self.button_remove.clicked.connect(self._remove_item)
 
+        self.edit_label.textEdited.connect(self._update_item)
+        self.spin_min_long.valueChanged.connect(self._update_item)
+        self.spin_max_long.valueChanged.connect(self._update_item)
+        self.spin_min_lat.valueChanged.connect(self._update_item)
+        self.spin_max_lat.valueChanged.connect(self._update_item)
+
+    def _update_item(self):
+        if self.blocked:
+            return
+
+        current = self.region_list.currentItem()
+        read_only = current.data(Qt.UserRole + 1)
+        if read_only:
+            return
+
+        self.blocked = True
+        current.setData(Qt.UserRole+2, self.edit_label.text())
+        current.setText(self.edit_label.text())
+        current.setData(Qt.UserRole + 3, self.spin_min_long.value())
+        current.setData(Qt.UserRole + 5, self.spin_max_long.value())
+        current.setData(Qt.UserRole + 4, self.spin_min_lat.value())
+        current.setData(Qt.UserRole + 6, self.spin_max_lat.value())
+        self.blocked = False
+
     def _item_changed(self, current, previous):
+        if self.blocked:
+            return
+
+        self.blocked = True
         self.edit_label.setText(current.data(Qt.UserRole+2))
         self.spin_min_long.setValue(current.data(Qt.UserRole+3))
         self.spin_max_long.setValue(current.data(Qt.UserRole+5))
@@ -73,6 +102,7 @@ class PredefinedAreasWidget(QDialog, FORM_CLASS):
         for w in [self.edit_label, self.spin_min_long, self.spin_max_long, self.spin_min_lat, self.spin_max_lat]:
             w.setEnabled(not read_only)
         self.button_remove.setEnabled(not read_only)
+        self.blocked = False
 
     def _add_item(self):
         item = QListWidgetItem('New Area')
@@ -88,7 +118,6 @@ class PredefinedAreasWidget(QDialog, FORM_CLASS):
 
     def _remove_item(self):
         item = self.region_list.currentItem()
-
         self.region_list.takeItem(self.region_list.row(item))
 
 
