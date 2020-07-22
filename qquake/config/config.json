@@ -1372,8 +1372,13 @@
         "style": {
           "mdp": {
             "style": "AHEAD_intensities",
-            "classified_attribute_text": "",
-            "classified_attribute_xml": ""
+            "classified_attribute_text": "ExpectedIntensity",
+            "classified_attribute_xml": "macroseismicParameters>mdp>intensity>expectedIntensity>class"
+          },
+          "events": {
+            "style": "CPTI",
+            "classified_attribute_text": "Magnitude",
+            "classified_attribute_xml": "eventParameters>event>magnitude>mag>value"
           }
         },
         "fields": [
@@ -1472,10 +1477,10 @@
         "style": {
           "mdp": {
             "style": "AHEAD_intensities",
-            "classified_attribute_text": "",
-            "classified_attribute_xml": ""
+            "classified_attribute_text": "ExpectedIntensity",
+            "classified_attribute_xml": "macroseismicParameters>mdp>intensity>expectedIntensity>class"
           },
-            "events": {
+          "events": {
             "style": "CPTI",
             "classified_attribute_text": "Magnitude",
             "classified_attribute_xml": "eventParameters>event>magnitude>mag>value"
