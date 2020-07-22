@@ -42,6 +42,7 @@ from qgis.gui import (
 
 from qquake.gui.gui_utils import GuiUtils
 from qquake.gui.output_table_options_dialog import OutputTableOptionsDialog
+from qquake.gui.predefined_areas_dialog import PredefinedAreasDialog
 from qquake.services import SERVICE_MANAGER
 from qquake.fetcher import Fetcher
 
@@ -63,6 +64,7 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
         self.iface = iface
         self.previous_map_tool = None
         self.extent_tool = None
+        self.customize_areas_dialog = None
 
         self.set_extent_from_canvas_extent(self.iface.mapCanvas().extent())
         self.set_center_from_canvas_point(self.iface.mapCanvas().extent().center())
@@ -126,9 +128,11 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
         self._enable_widgets()
 
         self.output_table_options_button.clicked.connect(self._output_table_options)
-        self._populated_predined_areas()
+        self._populated_predefined_areas()
         self.combo_predefined_area.currentIndexChanged.connect(self._use_predefined_area)
         self.radio_predefined_area.toggled.connect(self._use_predefined_area)
+
+        self.button_customize_areas.clicked.connect(self._customize_areas)
 
         self.service_type = None
         self.service_id = None
@@ -229,7 +233,9 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
             s.value('/plugins/qquake/{}_last_event_circle_radius_max_checked2'.format(prefix), False, bool))
 
         self.radius_unit_combobox.setCurrentIndex(
-            max(0, self.radius_unit_combobox.findData(s.value('/plugins/qquake/{}_last_event_circle_unit'.format(prefix), int(QgsUnitTypes.DistanceKilometers), int))))
+            max(0, self.radius_unit_combobox.findData(
+                s.value('/plugins/qquake/{}_last_event_circle_unit'.format(prefix),
+                        int(QgsUnitTypes.DistanceKilometers), int))))
 
         last_event_min_lat = s.value('/plugins/qquake/{}_last_event_min_lat'.format(prefix))
         if last_event_min_lat is not None:
@@ -318,7 +324,8 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
                    self.radius_max_checkbox.isChecked())
         s.setValue('/plugins/qquake/{}_last_event_circle_min_radius'.format(prefix), self.radius_min_spinbox.value())
         s.setValue('/plugins/qquake/{}_last_event_circle_max_radius'.format(prefix), self.radius_max_spinbox.value())
-        s.setValue('/plugins/qquake/{}_last_event_circle_unit'.format(prefix), int(self.radius_unit_combobox.currentData()))
+        s.setValue('/plugins/qquake/{}_last_event_circle_unit'.format(prefix),
+                   int(self.radius_unit_combobox.currentData()))
 
         s.setValue('/plugins/qquake/{}_last_event_max_intensity_greater_checked2'.format(prefix),
                    self.earthquake_max_intensity_greater_check.isChecked())
@@ -338,7 +345,7 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
         s.setValue('/plugins/qquake/{}_last_event_extended_checked'.format(prefix),
                    self.radio_extended_output.isChecked())
 
-    def _populated_predined_areas(self):
+    def _populated_predefined_areas(self):
         for name in SERVICE_MANAGER.available_predefined_bounding_boxes():
             extent = SERVICE_MANAGER.predefined_bounding_box(name)
             self.combo_predefined_area.addItem(extent['title'], name)
@@ -572,7 +579,8 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
     def set_max_intensity_greater(self, intensity):
         self.earthquake_max_intensity_greater_check.setChecked(intensity is not None)
         if intensity is not None:
-            self.earthquake_max_intensity_greater_combo.setCurrentIndex(self.earthquake_max_intensity_greater_combo.findData(float(intensity)))
+            self.earthquake_max_intensity_greater_combo.setCurrentIndex(
+                self.earthquake_max_intensity_greater_combo.findData(float(intensity)))
 
     def set_mdps_greater_than(self, mdps):
         self.earthquake_number_mdps_greater_check.setChecked(mdps is not None)
@@ -597,14 +605,14 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
 
     def start_date(self):
         if self.service_type not in (
-        SERVICE_MANAGER.MACROSEISMIC, SERVICE_MANAGER.FDSNEVENT, SERVICE_MANAGER.FDSNSTATION):
+                SERVICE_MANAGER.MACROSEISMIC, SERVICE_MANAGER.FDSNEVENT, SERVICE_MANAGER.FDSNSTATION):
             return None
 
         return self.fdsn_event_start_date.dateTime() if self.min_time_check.isChecked() else None
 
     def end_date(self):
         if self.service_type not in (
-        SERVICE_MANAGER.MACROSEISMIC, SERVICE_MANAGER.FDSNEVENT, SERVICE_MANAGER.FDSNSTATION):
+                SERVICE_MANAGER.MACROSEISMIC, SERVICE_MANAGER.FDSNEVENT, SERVICE_MANAGER.FDSNSTATION):
             return None
 
         return self.fdsn_event_end_date.dateTime() if self.max_time_check.isChecked() else None
@@ -697,3 +705,21 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
 
         base_config['default'] = defaults
         return base_config
+
+    def _customize_areas(self):
+        if self.customize_areas_dialog:
+            self.customize_areas_dialog.show()
+            return
+
+        self.customize_areas_dialog = PredefinedAreasDialog(self)
+        self.customize_areas_dialog.setAttribute(Qt.WA_DeleteOnClose, True)
+        self.customize_areas_dialog.show()
+
+        def accepted():
+            self.customize_areas_dialog = None
+
+        def rejected():
+            self.customize_areas_dialog = None
+
+        self.customize_areas_dialog.accepted.connect(accepted)
+        self.customize_areas_dialog.rejected.connect(rejected)
