@@ -129,6 +129,7 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
 
         self.output_table_options_button.clicked.connect(self._output_table_options)
         self._populated_predefined_areas()
+        SERVICE_MANAGER.areasChanged.connect(self._populated_predefined_areas)
         self.combo_predefined_area.currentIndexChanged.connect(self._use_predefined_area)
         self.radio_predefined_area.toggled.connect(self._use_predefined_area)
 
@@ -346,6 +347,7 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
                    self.radio_extended_output.isChecked())
 
     def _populated_predefined_areas(self):
+        self.combo_predefined_area.clear()
         for name in SERVICE_MANAGER.available_predefined_bounding_boxes():
             extent = SERVICE_MANAGER.predefined_bounding_box(name)
             self.combo_predefined_area.addItem(extent['title'], name)
@@ -355,6 +357,9 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
             return
 
         selected_extent_id = self.combo_predefined_area.currentData()
+        if selected_extent_id not in SERVICE_MANAGER.available_predefined_bounding_boxes():
+            return
+        
         extent = SERVICE_MANAGER.predefined_bounding_box(selected_extent_id)['boundingbox']
         self.lat_min_spinbox.setValue(extent[1])
         self.lat_max_spinbox.setValue(extent[3])
