@@ -16,6 +16,8 @@ __revision__ = '$Format:%H$'
 import json
 import os
 
+from typing import List
+
 from qgis.PyQt.QtCore import QVariant, QDate, QDateTime, QTime, Qt
 from qgis.PyQt.QtXml import QDomDocument
 
@@ -88,6 +90,9 @@ def get_service_fields(service_type, selected_fields):
         if f.get('skip'):
             continue
 
+        if f.get('one_to_many'):
+            continue
+
         path = f['source']
         if service_type == SERVICE_MANAGER.MACROSEISMIC and not include_quake_details_in_mdp and '>event' in path and path != 'eventParameters>event§publicID':
             continue
@@ -109,6 +114,9 @@ def get_service_fields(service_type, selected_fields):
         if f.get('skip'):
             continue
 
+        if f.get('one_to_many'):
+            continue
+
         path = f['source']
         if service_type == SERVICE_MANAGER.MACROSEISMIC and not include_quake_details_in_mdp:
             continue
@@ -125,6 +133,9 @@ def get_service_fields(service_type, selected_fields):
 
     for f in field_config['field_groups'].get('magnitude', {}).get('fields', []):
         if f.get('skip'):
+            continue
+
+        if f.get('one_to_many'):
             continue
 
         if service_type == SERVICE_MANAGER.MACROSEISMIC and not include_quake_details_in_mdp:
@@ -145,6 +156,9 @@ def get_service_fields(service_type, selected_fields):
         if f.get('skip'):
             continue
 
+        if f.get('one_to_many'):
+            continue
+
         path = f['source']
         if selected_fields:
             selected = path in selected_fields
@@ -158,6 +172,9 @@ def get_service_fields(service_type, selected_fields):
 
     for f in field_config['field_groups'].get('place', {}).get('fields', []):
         if f.get('skip'):
+            continue
+
+        if f.get('one_to_many'):
             continue
 
         path = f['source']
@@ -294,6 +311,13 @@ class ElementParser:
 
         return CompositeTime.from_element(child)
 
+    def epoch(self, attribute, optional=True):
+        child = self.element.firstChildElement(attribute)
+        if optional and child.isNull():
+            return None
+
+        return Epoch.from_element(child)
+
     def origin_depth_type(self, attribute, optional=True):
         child = self.element.firstChildElement(attribute)
         if optional and child.isNull():
@@ -329,12 +353,12 @@ class ElementParser:
 
         return ConfidenceEllipsoid.from_element(child)
 
-    def ms_expected_intensity(self, attribute, optional=True):
+    def ms_intensity_value_type(self, attribute, optional=True):
         child = self.element.firstChildElement(attribute)
         if optional and child.isNull():
             return None
 
-        return MsExpectedItensity.from_element(child)
+        return MsItensityValueType.from_element(child)
 
     def ms_intensity(self, attribute, optional=True):
         child = self.element.firstChildElement(attribute)
@@ -827,6 +851,20 @@ class TimeQuantity:
     def is_valid(self):
         return self.value and self.value.isValid()
 
+class Epoch:
+
+    def __init__(self,
+                 startTime,
+                 endTime):
+        self.startTime = startTime
+        self.endTime = endTime
+
+    @staticmethod
+    def from_element(element):
+        parser = ElementParser(element)
+        return Epoch(startTime=parser.datetime('startTime', optional=True),
+                     endTime=parser.datetime('endTime', optional=True))
+
 
 class CompositeTime:
 
@@ -918,48 +956,104 @@ class Magnitude:
                          creationInfo=parser.creation_info('creationInfo'))
 
 
+class MsParameters:
+    """
+    MacroseismicParameters
+    """
+
+    def __init__(self,
+                 publicID):
+        self.publicID = publicID
+
+    @staticmethod
+    def from_element(element):
+        parser = ElementParser(element)
+
+        return MsParameters(publicID=parser.string('publicID', is_attribute=True, optional=False))
+
+
 class MsPlace:
 
     def __init__(self,
                  publicID,
+                 name: List,
                  preferredName,
                  referenceLatitude,
                  referenceLongitude,
+                 horizontalUncertainty,
+                 geometry,
+                 externalGazetteer,
                  type,
+                 zipCode,
                  altitude,
-                 isoCountryCode):
+                 isoCountryCode,
+                 literatureSource,
+                 siteMorphology,
+                 creationInfo,
+                 epoch):
         self.publicID = publicID
+        self.name = name # one to many
         self.preferredName = preferredName
         self.referenceLatitude = referenceLatitude
         self.referenceLongitude = referenceLongitude
+        self.horizontalUncertainty = horizontalUncertainty
+        self.geometry = geometry
+        self.externalGazetteer = externalGazetteer
         self.type = type
+        self.zipCode = zipCode
         self.altitude = altitude
         self.isoCountryCode = isoCountryCode
+        self.literatureSource = literatureSource
+        self.siteMorphology = siteMorphology
+        self.creationInfo = creationInfo
+        self.epoch = epoch
 
     @staticmethod
     def from_element(element):
         parser = ElementParser(element)
+
+        names = []
+        place_name_node = element.firstChildElement('ms:name')
+        while not place_name_node.isNull():
+            names.append(MsPlaceName.from_element(place_name_node))
+            place_name_node = place_name_node.nextSiblingElement('ms:name')
 
         return MsPlace(publicID=parser.string('publicID', is_attribute=True, optional=False),
                        preferredName=parser.ms_placename('ms:preferredName', optional=True),
+                       name=names,
                        referenceLatitude=parser.real_quantity('ms:referenceLatitude'),
                        referenceLongitude=parser.real_quantity('ms:referenceLongitude'),
+                       horizontalUncertainty=parser.float('ms:horizontalUncertainty', optional=True),
+                       geometry=parser.string('ms:geometry', optional=True),
+                       externalGazetteer=parser.string('ms:externalGazetteer', optional=True),
                        type=parser.string('ms:type', optional=True),
+                       zipCode=parser.string('ms:zipCode', optional=True),
                        altitude=parser.float('ms:altitude', optional=True),
-                       isoCountryCode=parser.string('ms:isoCountryCode', optional=True))
+                       isoCountryCode=parser.string('ms:isoCountryCode', optional=True),
+                       literatureSource=parser.string('ms:literatureSource', optional=True),
+                       siteMorphology=parser.string('ms:siteMorphology', optional=True),
+                       creationInfo=parser.creation_info('ms:creationInfo', optional=True),
+                       epoch=parser.epoch('ms:epoch', optional=True))
 
 
-class MsExpectedItensity:
+class MsItensityValueType:
 
     def __init__(self,
-                 _class):
+                 _class,
+                 numeric,
+                 text):
         self._class = _class
+        self.numeric=numeric
+        self.text=text
 
     @staticmethod
     def from_element(element):
         parser = ElementParser(element)
 
-        return MsExpectedItensity(_class=parser.string('ms:class', is_attribute=False, optional=False))
+        return MsItensityValueType(_class=parser.string('ms:class', is_attribute=False, optional=True),
+                                   numeric=parser.float('ms:numeric', optional=True),
+                                   text=parser.string('ms:text', is_attribute=False, optional=True),
+                                   )
 
 
 class MsIntensity:
@@ -975,7 +1069,7 @@ class MsIntensity:
         parser = ElementParser(element)
 
         return MsIntensity(macroseismicScale=parser.string('ms:macroseismicScale', is_attribute=False, optional=False),
-                           expectedIntensity=parser.ms_expected_intensity('ms:expectedIntensity'))
+                           expectedIntensity=parser.ms_intensity_value_type('ms:expectedIntensity'))
 
 
 class MsPlaceName:
@@ -1010,22 +1104,64 @@ class MsMdp:
                  reportReference,
                  eventReference,
                  placeReference,
-                 intensity):
+                 comment: List,
+                 reportCount,
+                 reportedTime,
+                 methodID,
+                 quality,
+                 intensity,
+                 evaluationMode,
+                 evaluationStatus,
+                 literatureSource,
+                 creationInfo,
+                 relatedMDP: List):
         self.publicID = publicID
         self.reportReference = reportReference
         self.eventReference = eventReference
         self.placeReference = placeReference
         self.intensity = intensity
+        self.comment = comment # one to many
+        self.reportCount = reportCount
+        self.reportedTime = reportedTime
+        self.methodID = methodID
+        self.quality = quality
+        self.evaluationMode = evaluationMode
+        self.evaluationStatus = evaluationStatus
+        self.literatureSource = literatureSource
+        self.creationInfo = creationInfo
+        self.relatedMDP = relatedMDP
 
     @staticmethod
     def from_element(element):
         parser = ElementParser(element)
 
+        comments = []
+        comment_node = element.firstChildElement('ms:comment')
+        while not comment_node.isNull():
+            comments.append(Comment.from_element(comment_node))
+            comment_node = comment_node.nextSiblingElement('ms:comment')
+
+        related = []
+        related_node = element.firstChildElement('ms:relatedMDP')
+        while not related_node.isNull():
+            related.append(related_node.text())
+            related_node = related_node.nextSiblingElement('ms:relatedMDP')
+
         return MsMdp(publicID=parser.string('publicID', is_attribute=True, optional=False),
                      reportReference=parser.resource_reference('ms:reportReference'),
                      eventReference=parser.resource_reference('ms:eventReference'),
                      placeReference=parser.resource_reference('ms:placeReference'),
-                     intensity=parser.ms_intensity('ms:intensity'))
+                     comment=comments,
+                     reportCount=parser.int('ms:reportCount', optional=True),
+                     reportedTime=parser.time_quantity('ms:reportedTime', optional=True),
+                     methodID=parser.resource_reference('ms:methodID', optional=True),
+                     quality=parser.string('ms:quality', optional=True),
+                     evaluationMode=parser.string('ms:evaluationMode', optional=True),
+                     evaluationStatus=parser.string('ms:evaluationStatus', optional=True),
+                     literatureSource=parser.string('ms:literatureSource', optional=True),
+                     creationInfo=parser.creation_info('ms:creationInfo', optional=True),
+                     intensity=parser.ms_intensity('ms:intensity'),
+                     relatedMDP=related)
 
 
 class Event:
@@ -1070,6 +1206,9 @@ class Event:
 
         for dest_field in CONFIG_FIELDS['field_groups']['origin']['fields']:
             if dest_field.get('skip'):
+                continue
+
+            if dest_field.get('one_to_many'):
                 continue
 
             source = dest_field['source'].replace('§', '>').split('>')
@@ -1118,6 +1257,9 @@ class Event:
             if dest_field.get('skip'):
                 continue
 
+            if dest_field.get('one_to_many'):
+                continue
+
             source = dest_field['source'].replace('§', '>').split('>')
             assert source[0] == 'eventParameters'
             source = source[1:]
@@ -1153,6 +1295,9 @@ class Event:
         f = QgsFeature(self.to_fields(output_fields))
         for dest_field in CONFIG_FIELDS['field_groups']['basic_event_info']['fields']:
             if dest_field.get('skip'):
+                continue
+
+            if dest_field.get('one_to_many'):
                 continue
 
             source = dest_field['source'].replace('§', '>').split('>')
@@ -1367,6 +1512,9 @@ class QuakeMlParser:
                 if dest_field.get('skip'):
                     continue
 
+                if dest_field.get('one_to_many'):
+                    continue
+
                 if not include_quake_details_in_mdp and '>event>' in dest_field['source'] and dest_field['source'] != 'eventParameters>event§publicID':
                     continue
 
@@ -1398,6 +1546,9 @@ class QuakeMlParser:
             if include_quake_details_in_mdp:
                 for dest_field in field_config['field_groups']['origin']['fields']:
                     if dest_field.get('skip'):
+                        continue
+
+                    if dest_field.get('one_to_many'):
                         continue
 
                     source = dest_field['source'].replace('§', '>').split('>')
@@ -1432,6 +1583,9 @@ class QuakeMlParser:
                     if dest_field.get('skip'):
                         continue
 
+                    if dest_field.get('one_to_many'):
+                        continue
+
                     source = dest_field['source'].replace('§', '>').split('>')
                     assert source[0] == 'eventParameters'
                     source = source[1:]
@@ -1461,6 +1615,9 @@ class QuakeMlParser:
 
             for dest_field in field_config['field_groups'].get('mdp', {}).get('fields', []):
                 if dest_field.get('skip'):
+                    continue
+
+                if dest_field.get('one_to_many'):
                     continue
 
                 source = dest_field['source'].replace('§', '>').split('>')
@@ -1494,6 +1651,9 @@ class QuakeMlParser:
 
             for dest_field in field_config['field_groups'].get('place', {}).get('fields', []):
                 if dest_field.get('skip'):
+                    continue
+
+                if dest_field.get('one_to_many'):
                     continue
 
                 source = dest_field['source'].replace('§', '>').split('>')
@@ -1596,6 +1756,9 @@ class Network(BaseNodeType):
             for dest_field in SERVICE_MANAGER.get_field_config(SERVICE_MANAGER.FDSNSTATION)['field_groups']['station'][
                 'fields']:
                 if dest_field.get('skip'):
+                    continue
+
+                if dest_field.get('one_to_many'):
                     continue
 
                 source = dest_field['source'].replace('§', '>').split('>')
@@ -1703,6 +1866,9 @@ class Station(BaseNodeType):
 
         for f in SERVICE_MANAGER.get_field_config(SERVICE_MANAGER.FDSNSTATION)['field_groups']['station']['fields']:
             if f.get('skip'):
+                continue
+
+            if f.get('one_to_many'):
                 continue
 
             path = f['source']
