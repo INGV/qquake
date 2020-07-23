@@ -45,13 +45,13 @@ class QQuakeServiceManagerTest(unittest.TestCase):
         self.assertTrue(extent['read_only'])
 
         spy = QSignalSpy(SERVICE_MANAGER.areasChanged)
-        SERVICE_MANAGER.add_predefined_bounding_box('mine', {'title': 'Mine', 'boundingbox': [1,2,3,4]})
+        SERVICE_MANAGER.add_predefined_bounding_box('mine', {'title': 'Mine', 'boundingbox': [1, 2, 3, 4]})
         self.assertEqual(len(spy), 1)
 
         self.assertIn('mine', SERVICE_MANAGER.available_predefined_bounding_boxes())
         self.assertEqual(SERVICE_MANAGER.predefined_bounding_box('mine')['title'], 'Mine')
 
-        SERVICE_MANAGER.add_predefined_bounding_box('mine', {'title': 'Mine2', 'boundingbox': [1,2,3,4]})
+        SERVICE_MANAGER.add_predefined_bounding_box('mine', {'title': 'Mine2', 'boundingbox': [1, 2, 3, 4]})
         self.assertEqual(len(spy), 2)
         self.assertIn('mine', SERVICE_MANAGER.available_predefined_bounding_boxes())
         self.assertEqual(SERVICE_MANAGER.predefined_bounding_box('mine')['title'], 'Mine2')
@@ -69,8 +69,10 @@ class QQuakeServiceManagerTest(unittest.TestCase):
         self.assertNotIn('mine', SERVICE_MANAGER.available_predefined_bounding_boxes())
 
     def testGetContributorEndpoint(self):
-        self.assertEqual(SERVICE_MANAGER.get_contributor_endpoint(SERVICE_MANAGER.FDSNEVENT, 'AHEAD-SHEEC'), 'https://www.emidius.eu/fdsnws/event/1/contributors')
-        self.assertEqual(SERVICE_MANAGER.get_contributor_endpoint(SERVICE_MANAGER.MACROSEISMIC, 'INGV ASMI-DBMI'), 'https://emidius.mi.ingv.it/services/macroseismic/contributors')
+        self.assertEqual(SERVICE_MANAGER.get_contributor_endpoint(SERVICE_MANAGER.FDSNEVENT, 'AHEAD-SHEEC'),
+                         'https://www.emidius.eu/fdsnws/event/1/contributors')
+        self.assertEqual(SERVICE_MANAGER.get_contributor_endpoint(SERVICE_MANAGER.MACROSEISMIC, 'INGV ASMI-DBMI'),
+                         'https://emidius.mi.ingv.it/services/macroseismic/contributors')
         self.assertIsNone(SERVICE_MANAGER.get_contributor_endpoint(SERVICE_MANAGER.FDSNSTATION, 'EIDA node ODC'))
 
 

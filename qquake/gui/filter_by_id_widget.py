@@ -38,7 +38,6 @@ from qgis.PyQt.QtCore import (
 )
 from qgis.PyQt.QtNetwork import QNetworkRequest
 
-
 from qquake.gui.gui_utils import GuiUtils
 from qquake.gui.output_table_options_dialog import OutputTableOptionsDialog
 from qquake.services import SERVICE_MANAGER
@@ -165,7 +164,8 @@ class FilterByIdWidget(QWidget, FORM_CLASS):
         s.setValue('/plugins/qquake/{}_contributor_checked'.format(prefix), self.radio_contributor.isChecked())
         s.setValue('/plugins/qquake/{}_contributor_id'.format(prefix), self.edit_contributor_id.currentText())
         s.setValue('/plugins/qquake/{}_single_event_basic_checked'.format(prefix), self.radio_basic_output.isChecked())
-        s.setValue('/plugins/qquake/{}_single_event_extended_checked'.format(prefix), self.radio_extended_output.isChecked())
+        s.setValue('/plugins/qquake/{}_single_event_extended_checked'.format(prefix),
+                   self.radio_extended_output.isChecked())
 
     def _enable_widgets(self):
         for w in [self.label_event_id,
@@ -208,7 +208,8 @@ class FilterByIdWidget(QWidget, FORM_CLASS):
         return [l.strip() for l in re.split(r'[,\n]', text) if l.strip()]
 
     def load_from_file(self):
-        file, _ = QFileDialog.getOpenFileName(self, self.tr('Import Event IDs from File'), QDir.homePath(), 'Text Files (*.*)')
+        file, _ = QFileDialog.getOpenFileName(self, self.tr('Import Event IDs from File'), QDir.homePath(),
+                                              'Text Files (*.*)')
         if not file:
             return
 
@@ -247,4 +248,3 @@ class FilterByIdWidget(QWidget, FORM_CLASS):
         for e in range(contributor_elements.length()):
             contributor_element = contributor_elements.at(e).toElement()
             self.edit_contributor_id.addItem(contributor_element.text())
-

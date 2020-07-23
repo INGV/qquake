@@ -606,7 +606,8 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.ogc_service_info_widget.set_service(service_type=self.ogc_combo.currentData(),
                                                  service_id=self.ogc_list.currentItem().text())
 
-        service_config = SERVICE_MANAGER.service_details(self.ogc_combo.currentData(), self.ogc_list.currentItem().text())
+        service_config = SERVICE_MANAGER.service_details(self.ogc_combo.currentData(),
+                                                         self.ogc_list.currentItem().text())
         self.button_ogc_edit_service.setEnabled(not service_config['read_only'])
         self.button_ogc_rename_service.setEnabled(not service_config['read_only'])
         self.button_ogc_remove_service.setEnabled(not service_config['read_only'])
@@ -733,14 +734,13 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.button_box.button(QDialogButtonBox.Ok).setText(self.tr('Fetch Data'))
         self.button_box.button(QDialogButtonBox.Ok).setEnabled(True)
 
-        found_results = False
         layers = []
         if self.fetcher.service_type in (SERVICE_MANAGER.FDSNEVENT, SERVICE_MANAGER.MACROSEISMIC):
             layers.append(self.fetcher.create_event_layer())
             if self.fetcher.service_type == SERVICE_MANAGER.MACROSEISMIC:
-                l = self.fetcher.create_mdp_layer()
-                if l:
-                    layers.append(l)
+                layer = self.fetcher.create_mdp_layer()
+                if layer:
+                    layers.append(layer)
 
             events_count = layers[0].featureCount()
             found_results = bool(events_count)

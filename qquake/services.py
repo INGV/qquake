@@ -227,7 +227,7 @@ class ServiceManager(QObject):
         else:
             service_id = Path(path).stem
 
-        if not 'servicetype' in service:
+        if 'servicetype' not in service:
             return False, 'Incomplete service definition'
 
         service_type = service['servicetype']
@@ -261,7 +261,7 @@ class ServiceManager(QObject):
         """
         default_endpoint = self.service_details(service_type, service_id)['endpointurl']
         if service_type == SERVICE_MANAGER.FDSNEVENT:
-            return default_endpoint[:default_endpoint.index('event/1')+7] + '/contributors'
+            return default_endpoint[:default_endpoint.index('event/1') + 7] + '/contributors'
         elif service_type == SERVICE_MANAGER.MACROSEISMIC:
             return default_endpoint[:default_endpoint.index('/query')] + '/contributors'
 

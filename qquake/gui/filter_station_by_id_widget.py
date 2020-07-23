@@ -24,8 +24,8 @@
 import re
 
 from qgis.PyQt import uic
-from qgis.PyQt.QtWidgets import QWidget, QFileDialog
-from qgis.PyQt.QtCore import pyqtSignal, QDir
+from qgis.PyQt.QtWidgets import QWidget
+from qgis.PyQt.QtCore import pyqtSignal
 
 from qgis.core import (
     QgsSettings
@@ -119,7 +119,8 @@ class FilterStationByIdWidget(QWidget, FORM_CLASS):
         s.setValue('/plugins/qquake/{}_location_code'.format(prefix), self.edit_location_code.text())
 
         s.setValue('/plugins/qquake/{}_single_event_basic_checked'.format(prefix), self.radio_basic_output.isChecked())
-        s.setValue('/plugins/qquake/{}_single_event_extended_checked'.format(prefix), self.radio_extended_output.isChecked())
+        s.setValue('/plugins/qquake/{}_single_event_extended_checked'.format(prefix),
+                   self.radio_extended_output.isChecked())
 
     def _enable_widgets(self):
         self.output_table_options_button.setEnabled(self.radio_extended_output.isChecked())
