@@ -1336,7 +1336,7 @@
         {
           "field_short": "msetref",
           "field_long": "literatureSourceMDPSetReference",
-          "source": "macroseismicParameters>mdpSet>literatureSourceMDPSetReference",
+          "source": "macroseismicParameters>mdpSet>literatureSource",
           "description": "",
           "type": "String"
         },
@@ -1359,49 +1359,56 @@
           "field_long": "MDPsetCommentTxt",
           "source": "macroseismicParameters>mdpSet>comment>text",
           "description": "",
-          "type": "String"
+          "type": "String",
+          "one_to_many": true
         },
         {
           "field_short": "msetcmagid",
           "field_long": "MDPsetCommentAgencyID",
           "source": "macroseismicParameters>mdpSet>comment>creationInfo>agencyID",
           "description": "",
-          "type": "String"
+          "type": "String",
+          "one_to_many": true
         },
         {
           "field_short": "msetcmagur",
           "field_long": "MDPsetCommentAgencyURI",
           "source": "macroseismicParameters>mdpSet>comment>creationInfo>agencyURI",
           "description": "",
-          "type": "String"
+          "type": "String",
+          "one_to_many": true
         },
         {
           "field_short": "msetcmaut",
           "field_long": "MDPsetCommentAuthor",
           "source": "macroseismicParameters>mdpSet>comment>creationInfo>author",
           "description": "",
-          "type": "String"
+          "type": "String",
+          "one_to_many": true
         },
         {
           "field_short": "msetcmautu",
           "field_long": "MDPsetCommentAuthorURI",
           "source": "macroseismicParameters>mdpSet>comment>creationInfo>authorURI",
           "description": "",
-          "type": "String"
+          "type": "String",
+          "one_to_many": true
         },
         {
           "field_short": "msetcmtime",
           "field_long": "MDPsetCommentTime",
           "source": "macroseismicParameters>mdpSet>comment>creationInfo>creationTime",
           "description": "",
-          "type": "DateTime"
+          "type": "DateTime",
+          "one_to_many": true
         },
         {
           "field_short": "msetcmver",
           "field_long": "MDPsetCommentVersion",
           "source": "macroseismicParameters>mdpSet>comment>creationInfo>version",
           "description": "",
-          "type": "String"
+          "type": "String",
+          "one_to_many": true
         },
         {
           "field_short": "msetcragid",
@@ -1460,7 +1467,7 @@
         {
           "field_short": "mdpref",
           "field_long": "MDPLiterSrc",
-          "source": "macroseismicParameters>mdp>literatureSourceMDPReference",
+          "source": "macroseismicParameters>mdp>literatureSource",
           "description": "",
           "type": "String"
         },
@@ -1574,56 +1581,64 @@
           "field_long": "MDPRelatedMDP",
           "source": "macroseismicParameters>mdp>relatedMDP",
           "description": "",
-          "type": "String"
+          "type": "String",
+          "one_to_many": true
         },
         {
           "field_short": "mdpcm",
           "field_long": "MDPCommentTxt",
           "source": "macroseismicParameters>mdp>comment>text",
           "description": "",
-          "type": "String"
+          "type": "String",
+          "one_to_many": true
         },
         {
           "field_short": "mdpcmagid",
           "field_long": "MDPCommentAgencyID",
           "source": "macroseismicParameters>mdp>comment>creationInfo>agencyID",
           "description": "",
-          "type": "String"
+          "type": "String",
+          "one_to_many": true
         },
         {
           "field_short": "mdpcmagur",
           "field_long": "MDPCommentAgencyURI",
           "source": "macroseismicParameters>mdp>comment>creationInfo>agencyURI",
           "description": "",
-          "type": "String"
+          "type": "String",
+          "one_to_many": true
         },
         {
           "field_short": "mdpcmaut",
           "field_long": "MDPCommentAuthor",
           "source": "macroseismicParameters>mdp>comment>creationInfo>author",
           "description": "",
-          "type": "String"
+          "type": "String",
+          "one_to_many": true
         },
         {
           "field_short": "mdpcmautu",
           "field_long": "MDPCommentAuthorURI",
           "source": "macroseismicParameters>mdp>comment>creationInfo>authorURI",
           "description": "",
-          "type": "String"
+          "type": "String",
+          "one_to_many": true
         },
         {
           "field_short": "mdpcmtime",
           "field_long": "MDPCommentTime",
           "source": "macroseismicParameters>mdp>comment>creationInfo>creationTime",
           "description": "",
-          "type": "DateTime"
+          "type": "DateTime",
+          "one_to_many": true
         },
         {
           "field_short": "mdpcmver",
           "field_long": "MDPCommentVersion",
           "source": "macroseismicParameters>mdp>comment>creationInfo>version",
           "description": "",
-          "type": "String"
+          "type": "String",
+          "one_to_many": true
         },
         {
           "field_short": "mdpcragid",
@@ -1829,7 +1844,7 @@
         {
           "field_short": "plsrclit",
           "field_long": "PlaceLiterSrc",
-          "source": "macroseismicParameters>place>literatureSourcePlaceReference",
+          "source": "macroseismicParameters>place>literatureSource",
           "description": "",
           "type": "String"
         },
@@ -1838,7 +1853,6 @@
           "field_long": "PlaceSiteMorphBasinFlagLiterSrc",
           "source": "macroseismicParameters>place>siteMorphology>basinFlagLiteratureSource",
           "description": "",
-          "skip": true,
           "type": "String"
         },
         {
@@ -1846,7 +1860,6 @@
           "field_long": "PlaceSiteMorphBedrockDepth",
           "source": "macroseismicParameters>place>siteMorphology>bedrockDepth",
           "description": "",
-          "skip": true,
           "type": "String"
         },
         {
@@ -1854,7 +1867,6 @@
           "field_long": "PlaceSiteMorphBedrockDepthLiterSrc",
           "source": "macroseismicParameters>place>siteMorphology>bedrockDepthLiteratureSource",
           "description": "",
-          "skip": true,
           "type": "String"
         },
         {
@@ -1862,7 +1874,6 @@
           "field_long": "PlaceSiteMorphGeolSurfaceAge",
           "source": "macroseismicParameters>place>siteMorphology>geologicalSurfaceAge",
           "description": "",
-          "skip": true,
           "type": "String"
         },
         {
@@ -1870,7 +1881,6 @@
           "field_long": "PlaceSiteMorphGeolUnit",
           "source": "macroseismicParameters>place>siteMorphology>geologicalUnit",
           "description": "",
-          "skip": true,
           "type": "String"
         },
         {
@@ -1878,7 +1888,6 @@
           "field_long": "PlaceSiteMorphGroundwaterDepth",
           "source": "macroseismicParameters>place>siteMorphology>groundwaterDepth",
           "description": "",
-          "skip": true,
           "type": "String"
         },
         {
@@ -1886,7 +1895,6 @@
           "field_long": "PlaceSiteMorphGroundwaterDepthLiterSrc",
           "source": "macroseismicParameters>place>siteMorphology>groundwaterDepthLiteratureSource",
           "description": "",
-          "skip": true,
           "type": "String"
         },
         {
@@ -1894,7 +1902,6 @@
           "field_long": "PlaceSiteMorph",
           "source": "macroseismicParameters>place>siteMorphology>morphology",
           "description": "",
-          "skip": true,
           "type": "String"
         },
         {
@@ -1902,7 +1909,6 @@
           "field_long": "PlaceSiteMorphLiterSrc",
           "source": "macroseismicParameters>place>siteMorphology>morphologyLiteratureSource",
           "description": "",
-          "skip": true,
           "type": "String"
         },
         {
@@ -1910,7 +1916,6 @@
           "field_long": "PlaceSiteMorphRefBorehole",
           "source": "macroseismicParameters>place>siteMorphology>referenceBorehole",
           "description": "",
-          "skip": true,
           "type": "String"
         },
         {
@@ -1918,7 +1923,6 @@
           "field_long": "PlaceSiteMorphSedimeBasinName",
           "source": "macroseismicParameters>place>siteMorphology>sedimentaryBasinName",
           "description": "",
-          "skip": true,
           "type": "String"
         },
         {
@@ -1926,7 +1930,6 @@
           "field_long": "PlaceSiteMorphSiteClassDescr",
           "source": "macroseismicParameters>place>siteMorphology>siteClassDescription",
           "description": "",
-          "skip": true,
           "type": "String"
         },
         {
@@ -1934,7 +1937,6 @@
           "field_long": "PlaceSiteMorphSiteClassEC8",
           "source": "macroseismicParameters>place>siteMorphology>siteClassEC8",
           "description": "",
-          "skip": true,
           "type": "String"
         },
         {
@@ -1942,7 +1944,6 @@
           "field_long": "PlaceSiteMorphSiteClassEC8LiterSrc",
           "source": "macroseismicParameters>place>siteMorphology>siteClassEC8LiteratureSource",
           "description": "",
-          "skip": true,
           "type": "String"
         },
         {
@@ -1950,7 +1951,6 @@
           "field_long": "PlaceSiteMorphsiteClassSIA261Src",
           "source": "macroseismicParameters>place>siteMorphology>siteClassSIA261Source",
           "description": "",
-          "skip": true,
           "type": "String"
         },
         {
