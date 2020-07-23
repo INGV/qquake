@@ -10,7 +10,7 @@
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
       "dataproviderurl": "http://www.ingv.it",
       "endpointurl": "https://www.emidius.eu/fdsnws/event/1/query?",
-      "datestart": "1000-01-01T01:01:01+00:00",
+      "datestart": "1000-01-01T00:00:00+00:00",
       "dateend": "1899-12-31T23:59:59+00:00",
       "boundingbox": [
         32,
@@ -19,7 +19,7 @@
         32
       ],
       "default": {
-        "datestart": "1000-01-01T01:01:01+00:00",
+        "datestart": "1000-01-01T00:00:00+00:00",
         "dateend": "1899-12-31T23:59:59+00:00",
         "boundingboxpredefined": "europe",
         "style": {
@@ -95,7 +95,7 @@
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
       "dataproviderurl": "http://www.ingv.it",
       "endpointurl": "https://emidius.mi.ingv.it/fdsnws/event/1/query?",
-      "datestart": "1000-01-01T01:01:01+00:00",
+      "datestart": "1000-01-01T00:00:00+00:00",
       "dateend": "2017-12-31T23:59:59+00:00",
       "boundingbox": [
         35,
@@ -104,7 +104,7 @@
         21
       ],
       "default": {
-        "datestart": "1000-01-01T01:01:01+00:00",
+        "datestart": "1000-01-01T00:00:00+00:00",
         "dateend": "2017-12-31T23:59:59+00:00",
         "boundingboxpredefined": "italy",
         "style": {
@@ -180,7 +180,7 @@
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
       "dataproviderurl": "http://www.ingv.it",
       "endpointurl": "http://webservices.ingv.it/fdsnws/event/1/query?",
-      "datestart": "1985-01-01T01:01:01+00:00",
+      "datestart": "1985-01-01T00:00:00+00:00",
       "dateend": "",
       "boundingbox": [
         35,
@@ -189,7 +189,7 @@
         19
       ],
       "default": {
-        "datestart": "2020-01-01T01:01:01+00:00",
+        "datestart": "2020-01-01T00:00:00+00:00",
         "dateend": "",
         "boundingboxpredefined": "italy",
         "style": {
@@ -259,7 +259,7 @@
       "dataprovider": "European-Mediterranean Seismological Centre (EMSC-CSEM)",
       "dataproviderurl": "https://www.emsc-csem.org/",
       "endpointurl": "https://www.seismicportal.eu/fdsnws/event/1/query?",
-      "datestart": "1998-01-01T01:01:01+00:00",
+      "datestart": "1998-01-01T00:00:00+00:00",
       "dateend": "",
       "boundingbox": [
         -180,
@@ -268,7 +268,7 @@
         90
       ],
       "default": {
-        "datestart": "2020-01-01T01:01:01+00:00",
+        "datestart": "2020-01-01T00:00:00+00:00",
         "dateend": "",
         "boundingboxpredefined": "europe",
         "style": {
@@ -328,6 +328,85 @@
       },
       "configversion": 0.2,
       "configlastupdate": "2020-02-22T18:50:00+00:00"
+    },
+    "USGS NEIC": {
+      "title": "USGS NEIC",
+      "info": "National Earthquake Information Center (NEIC)",
+      "infourl": "http://earthquake.usgs.gov/fdsnws/event/1/",
+      "datalicense": "USGS Policies and Notices",
+      "datalicenseurl": "https://www.usgs.gov/policies-and-notices",
+      "dataprovider": "United States Geological Survey (USGS)",
+      "dataproviderurl": "https://earthquake.usgs.gov/",
+      "endpointurl": "http://earthquake.usgs.gov/fdsnws/event/1/query?",
+      "datestart": "1600-01-01T00:00:00+00:00",
+      "dateend": "",
+      "boundingbox": [
+        -180,
+        -90,
+        180,
+        90
+      ],
+      "default": {
+        "datestart": "2020-01-01T00:00:00+00:00",
+        "dateend": "",
+        "boundingboxpredefined": "world",
+        "style": {
+          "events": {
+            "style": "CPTI",
+            "classified_attribute_text": "Magnitude",
+            "classified_attribute_xml": "eventParameters>event>magnitude>mag>value"
+          }
+        },
+        "format": "text",
+        "fields": [
+          "eventParameters>event§publicID",
+          "eventParameters>event>creationInfo>agencyID",
+          "eventParameters>event>creationInfo>author",
+          "eventParameters>event>origin§publicID",
+          "eventParameters>event>origin>creationInfo>agencyID",
+          "eventParameters>event>origin>creationInfo>author",
+          "eventParameters>event>origin>time>value",
+          "eventParameters>event>description>text",
+          "eventParameters>event>origin>latitude>value",
+          "eventParameters>event>origin>longitude>value",
+          "eventParameters>event>origin>depth>value",
+          "eventParameters>event>magnitude§publicID",
+          "eventParameters>event>magnitude>creationInfo>agencyID",
+          "eventParameters>event>magnitude>creationInfo>author",
+          "eventParameters>event>magnitude>mag>value",
+          "eventParameters>event>magnitude>mag>uncertainty"
+        ]
+      },
+      "settings": {
+        "queryeventid": true,
+        "queryoriginid": true,
+        "querymagnitudeid": false,
+        "queryfocalmechanismid": false,
+        "queryupdatedafter": false,
+        "querycatalog": true,
+        "querycontributor": true,
+        "querycontributorid": true,
+        "queryeventtype": false,
+        "querymagnitudetype": false,
+        "queryincludeallorigins": true,
+        "queryincludeallmagnitudes": true,
+        "queryincludearrivals": true,
+        "queryincludeallstationsmagnitudes": true,
+        "querylimit": true,
+        "querylimitmaxentries": 20000,
+        "querycircular": true,
+        "querycircularradiuskm": false,
+        "querydepth": true,
+        "outputtext": true,
+        "outputxml": true,
+        "outputgeojson": true,
+        "outputjson": true,
+        "outputkml": true,
+        "outputxlsx": false,
+        "httpcodenodata": "204"
+      },
+      "configversion": 0.1,
+      "configlastupdate": "2020-07-22T11:37:27+00:00"
     }
   },
   "fdsnstation": {
@@ -1278,7 +1357,7 @@
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
       "dataproviderurl": "http://www.ingv.it",
       "endpointurl": "https://www.emidius.eu/services/macroseismic/query?",
-      "datestart": "1000-01-01T01:01:01+00:00",
+      "datestart": "1000-01-01T00:00:00+00:00",
       "dateend": "1899-12-31T23:59:59+00:00",
       "boundingbox": [
         32,
@@ -1287,14 +1366,19 @@
         32
       ],
       "default": {
-        "datestart": "1000-01-01T01:01:01+00:00",
+        "datestart": "1000-01-01T00:00:00+00:00",
         "dateend": "1899-12-31T23:59:59+00:00",
         "boundingboxpredefined": "europe",
         "style": {
           "mdp": {
             "style": "AHEAD_intensities",
-            "classified_attribute_text": "",
-            "classified_attribute_xml": ""
+            "classified_attribute_text": "ExpectedIntensity",
+            "classified_attribute_xml": "macroseismicParameters>mdp>intensity>expectedIntensity>class"
+          },
+          "events": {
+            "style": "CPTI",
+            "classified_attribute_text": "Magnitude",
+            "classified_attribute_xml": "eventParameters>event>magnitude>mag>value"
           }
         },
         "fields": [
@@ -1378,7 +1462,7 @@
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
       "dataproviderurl": "http://www.ingv.it",
       "endpointurl": "https://emidius.mi.ingv.it/services/macroseismic/query?",
-      "datestart": "1000-01-01T01:01:01+00:00",
+      "datestart": "1000-01-01T00:00:00+00:00",
       "dateend": "2017-12-31T23:59:59+00:00",
       "boundingbox": [
         35,
@@ -1387,16 +1471,16 @@
         21
       ],
       "default": {
-        "datestart": "1000-01-01T01:01:01+00:00",
+        "datestart": "1000-01-01T00:00:00+00:00",
         "dateend": "2017-12-31T23:59:59+00:00",
         "boundingboxpredefined": "italy",
         "style": {
           "mdp": {
             "style": "AHEAD_intensities",
-            "classified_attribute_text": "",
-            "classified_attribute_xml": ""
+            "classified_attribute_text": "ExpectedIntensity",
+            "classified_attribute_xml": "macroseismicParameters>mdp>intensity>expectedIntensity>class"
           },
-            "events": {
+          "events": {
             "style": "CPTI",
             "classified_attribute_text": "Magnitude",
             "classified_attribute_xml": "eventParameters>event>magnitude>mag>value"
@@ -1485,7 +1569,7 @@
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
       "dataproviderurl": "http://www.ingv.it",
       "endpointurl": "https://www.emidius.eu/services/europe/wfs?",
-      "datestart": "1000-01-01T01:01:01+00:00",
+      "datestart": "1000-01-01T00:00:00+00:00",
       "dateend": "1899-12-31T23:59:59+00:00",
       "srs": "EPSG:4326",
       "default": {
@@ -1512,7 +1596,7 @@
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
       "dataproviderurl": "http://www.ingv.it",
       "endpointurl": "https://emidius.mi.ingv.it/services/italy/wfs?",
-      "datestart": "1000-01-01T01:01:01+00:00",
+      "datestart": "1000-01-01T00:00:00+00:00",
       "dateend": "2017-12-31T23:59:59+00:00",
       "srs": "EPSG:4326",
       "default": {
@@ -1585,7 +1669,7 @@
       "dataproviderurl": "http://www.ingv.it",
       "endpointurl": "https://www.emidius.eu/services/europe/wms?",
       "srs": "EPSG:4326",
-      "datestart": "1000-01-01T01:01:01+00:00",
+      "datestart": "1000-01-01T00:00:00+00:00",
       "dateend": "1899-12-31T23:59:59+00:00",
       "default": {
         "wmsversion": "1.3.0",
@@ -1614,7 +1698,7 @@
       "dataproviderurl": "http://www.ingv.it",
       "endpointurl": "https://emidius.mi.ingv.it/services/italy/wms?",
       "srs": "EPSG:4326",
-      "datestart": "1000-01-01T01:01:01+00:00",
+      "datestart": "1000-01-01T00:00:00+00:00",
       "dateend": "2017-12-31T23:59:59+00:00",
       "default": {
         "wmsversion": "1.3.0",
