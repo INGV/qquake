@@ -24,6 +24,7 @@
 
 import os
 import json
+from typing import Optional
 from copy import deepcopy
 from pathlib import Path
 from qgis.core import (
@@ -253,6 +254,18 @@ class ServiceManager(QObject):
 
     def get_field_config(self, service_type):
         return self._CONFIG_FIELDS[service_type]
+
+    def get_contributor_endpoint(self, service_type, service_id) -> Optional[str]:
+        """
+        Returns the get contributor endpoint URL for the specified service
+        """
+        default_endpoint = self.service_details(service_type, service_id)['endpointurl']
+        if service_type == SERVICE_MANAGER.FDSNEVENT:
+            return default_endpoint[:default_endpoint.index('event/1')+7] + '/contributors'
+        elif service_type == SERVICE_MANAGER.MACROSEISMIC:
+            return default_endpoint[:default_endpoint.index('/query')] + '/contributors'
+
+        return None
 
 
 SERVICE_MANAGER = ServiceManager()

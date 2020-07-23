@@ -220,9 +220,11 @@ class FilterByIdWidget(QWidget, FORM_CLASS):
         return Fetcher.BASIC if self.radio_basic_output.isChecked() else Fetcher.EXTENDED
 
     def _refresh_contributors(self):
-        self.button_refresh_contributors.setEnabled(False)
+        url = SERVICE_MANAGER.get_contributor_endpoint(self.service_type, self.service_id)
+        if not url:
+            return
 
-        url = self.service_config['endpointurl'][:self.service_config['endpointurl'].index('event/1')+7] + '/contributors'
+        self.button_refresh_contributors.setEnabled(False)
         request = QNetworkRequest(QUrl(url))
         request.setAttribute(QNetworkRequest.FollowRedirectsAttribute, True)
 

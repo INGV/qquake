@@ -68,6 +68,11 @@ class QQuakeServiceManagerTest(unittest.TestCase):
         self.assertEqual(len(spy), 3)
         self.assertNotIn('mine', SERVICE_MANAGER.available_predefined_bounding_boxes())
 
+    def testGetContributorEndpoint(self):
+        self.assertEqual(SERVICE_MANAGER.get_contributor_endpoint(SERVICE_MANAGER.FDSNEVENT, 'AHEAD-SHEEC'), 'https://www.emidius.eu/fdsnws/event/1/contributors')
+        self.assertEqual(SERVICE_MANAGER.get_contributor_endpoint(SERVICE_MANAGER.MACROSEISMIC, 'INGV ASMI-DBMI'), 'https://emidius.mi.ingv.it/services/macroseismic/contributors')
+        self.assertIsNone(SERVICE_MANAGER.get_contributor_endpoint(SERVICE_MANAGER.FDSNSTATION, 'EIDA node ODC'))
+
 
 if __name__ == "__main__":
     suite = unittest.makeSuite(QQuakeServiceManagerTest)
