@@ -22,6 +22,7 @@
  ***************************************************************************/
 """
 import re
+from typing import List
 
 from qgis.PyQt import uic
 from qgis.PyQt.QtWidgets import QWidget, QFileDialog
@@ -128,6 +129,8 @@ class FilterByIdWidget(QWidget, FORM_CLASS):
         else:
             self.button_refresh_contributors.setEnabled(False)
 
+        self._update_contributor_list(SERVICE_MANAGER.get_contributors(self.service_type, self.service_id))
+
     def restore_settings(self, prefix):
         s = QgsSettings()
 
@@ -221,6 +224,7 @@ class FilterByIdWidget(QWidget, FORM_CLASS):
         return Fetcher.BASIC if self.radio_basic_output.isChecked() else Fetcher.EXTENDED
 
     def _refresh_contributors(self):
+        self.edit_contributor_id.clear()
         url = SERVICE_MANAGER.get_contributor_endpoint(self.service_type, self.service_id)
         if not url:
             return
@@ -240,11 +244,19 @@ class FilterByIdWidget(QWidget, FORM_CLASS):
         if not content:
             return
 
-        self.edit_contributor_id.clear()
-
         doc = QDomDocument()
         doc.setContent(content)
         contributor_elements = doc.elementsByTagName('Contributor')
+
+        contributors = []
         for e in range(contributor_elements.length()):
             contributor_element = contributor_elements.at(e).toElement()
-            self.edit_contributor_id.addItem(contributor_element.text())
+            contributors.append(contributor_element.text())
+
+        SERVICE_MANAGER.set_contributors(self.service_type, self.service_id, contributors)
+        self._update_contributor_list(contributors)
+
+    def _update_contributor_list(self, contributors: List[str]):
+        self.edit_contributor_id.clear()
+        for c in contributors:
+            self.edit_contributor_id.addItem(c)

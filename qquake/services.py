@@ -24,7 +24,8 @@
 
 import os
 import json
-from typing import Optional
+from collections import defaultdict
+from typing import Optional, List
 from copy import deepcopy
 from pathlib import Path
 from qgis.core import (
@@ -72,6 +73,7 @@ class ServiceManager(QObject):
     def __init__(self):
         super().__init__()
         self.services = {}
+        self.contributors = defaultdict(dict)
         self.refresh_services()
         self._load_predefined_areas()
 
@@ -266,6 +268,18 @@ class ServiceManager(QObject):
             return default_endpoint[:default_endpoint.index('/query')] + '/contributors'
 
         return None
+
+    def get_contributors(self, service_type, service_id) -> List[str]:
+        """
+        Returns a list of previously retrieved contributors for the specified service and service ID
+        """
+        return self.contributors[service_type].get(service_id, [])
+
+    def set_contributors(self, service_type, service_id, contributors: List[str]):
+        """
+        Sets a list of previously retrieved contributors for the specified service and service ID
+        """
+        self.contributors[service_type][service_id] = contributors
 
 
 SERVICE_MANAGER = ServiceManager()

@@ -75,6 +75,21 @@ class QQuakeServiceManagerTest(unittest.TestCase):
                          'https://emidius.mi.ingv.it/services/macroseismic/contributors')
         self.assertIsNone(SERVICE_MANAGER.get_contributor_endpoint(SERVICE_MANAGER.FDSNSTATION, 'EIDA node ODC'))
 
+    def testContributors(self):
+        self.assertFalse(SERVICE_MANAGER.get_contributors(SERVICE_MANAGER.FDSNSTATION, 'test'))
+        self.assertFalse(SERVICE_MANAGER.get_contributors(SERVICE_MANAGER.FDSNSTATION, 'test'))
+        self.assertFalse(SERVICE_MANAGER.get_contributors(SERVICE_MANAGER.MACROSEISMIC, 'test'))
+        SERVICE_MANAGER.set_contributors(SERVICE_MANAGER.FDSNSTATION, 'test', ['a', 'b'])
+        self.assertEqual(SERVICE_MANAGER.contributors(SERVICE_MANAGER.FDSNSTATION, 'test'), ['a', 'b'])
+        self.assertFalse(SERVICE_MANAGER.get_contributors(SERVICE_MANAGER.FDSNSTATION, 'test2'))
+        SERVICE_MANAGER.set_contributors(SERVICE_MANAGER.FDSNSTATION, 'test2', ['c', 'd'])
+        self.assertEqual(SERVICE_MANAGER.contributors(SERVICE_MANAGER.FDSNSTATION, 'test'), ['a', 'b'])
+        self.assertEqual(SERVICE_MANAGER.contributors(SERVICE_MANAGER.FDSNSTATION, 'test2'), ['c', 'd'])
+        SERVICE_MANAGER.set_contributors(SERVICE_MANAGER.MACROSEISMIC, 'test', ['e', 'f'])
+        self.assertEqual(SERVICE_MANAGER.contributors(SERVICE_MANAGER.FDSNSTATION, 'test'), ['a', 'b'])
+        self.assertEqual(SERVICE_MANAGER.contributors(SERVICE_MANAGER.FDSNSTATION, 'test2'), ['c', 'd'])
+        self.assertEqual(SERVICE_MANAGER.contributors(SERVICE_MANAGER.MACROSEISMIC, 'test'), ['e', 'f'])
+
 
 if __name__ == "__main__":
     suite = unittest.makeSuite(QQuakeServiceManagerTest)
