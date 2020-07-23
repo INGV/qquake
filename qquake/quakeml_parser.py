@@ -188,6 +188,24 @@ def get_service_fields(service_type, selected_fields):
 
         fields.append(QgsField(f[field_config_key], FIELD_TYPE_MAP[f['type']]))
 
+    for f in field_config['field_groups'].get('mdpSet', {}).get('fields', []):
+        if f.get('skip'):
+            continue
+
+        if f.get('one_to_many'):
+            continue
+
+        path = f['source']
+        if selected_fields:
+            selected = path in selected_fields
+        else:
+            path = path[len('macroseismicParameters>'):].replace('§', '>').replace('>', '_')
+            selected = settings.value('/plugins/qquake/output_field_{}'.format(path), True, bool)
+        if not selected:
+            continue
+
+        fields.append(QgsField(f[field_config_key], FIELD_TYPE_MAP[f['type']]))
+
     return fields
 
 
@@ -373,6 +391,13 @@ class ElementParser:
             return None
 
         return MsPlaceName.from_element(child)
+
+    def ms_sitemorphology(self, attribute, optional=True):
+        child = self.element.firstChildElement(attribute)
+        if optional and child.isNull():
+            return None
+
+        return MsSiteMorphology.from_element(child)
 
     def site(self, attribute, optional=True):
         child = self.element.firstChildElement(attribute)
@@ -851,6 +876,7 @@ class TimeQuantity:
     def is_valid(self):
         return self.value and self.value.isValid()
 
+
 class Epoch:
 
     def __init__(self,
@@ -992,7 +1018,7 @@ class MsPlace:
                  creationInfo,
                  epoch):
         self.publicID = publicID
-        self.name = name # one to many
+        self.name = name  # one to many
         self.preferredName = preferredName
         self.referenceLatitude = referenceLatitude
         self.referenceLongitude = referenceLongitude
@@ -1031,7 +1057,7 @@ class MsPlace:
                        altitude=parser.float('ms:altitude', optional=True),
                        isoCountryCode=parser.string('ms:isoCountryCode', optional=True),
                        literatureSource=parser.string('ms:literatureSource', optional=True),
-                       siteMorphology=parser.string('ms:siteMorphology', optional=True),
+                       siteMorphology=parser.ms_sitemorphology('ms:siteMorphology', optional=True),
                        creationInfo=parser.creation_info('ms:creationInfo', optional=True),
                        epoch=parser.epoch('ms:epoch', optional=True))
 
@@ -1043,8 +1069,8 @@ class MsItensityValueType:
                  numeric,
                  text):
         self._class = _class
-        self.numeric=numeric
-        self.text=text
+        self.numeric = numeric
+        self.text = text
 
     @staticmethod
     def from_element(element):
@@ -1060,16 +1086,24 @@ class MsIntensity:
 
     def __init__(self,
                  macroseismicScale,
-                 expectedIntensity):
+                 expectedIntensity,
+                 maximalCredibleIntensity,
+                 minimalCredibleIntensity):
         self.macroseismicScale = macroseismicScale
         self.expectedIntensity = expectedIntensity
+        self.maximalCredibleIntensity = maximalCredibleIntensity
+        self.minimalCredibleIntensity = minimalCredibleIntensity
 
     @staticmethod
     def from_element(element):
         parser = ElementParser(element)
 
         return MsIntensity(macroseismicScale=parser.string('ms:macroseismicScale', is_attribute=False, optional=False),
-                           expectedIntensity=parser.ms_intensity_value_type('ms:expectedIntensity'))
+                           expectedIntensity=parser.ms_intensity_value_type('ms:expectedIntensity'),
+                           maximalCredibleIntensity=parser.ms_intensity_value_type('ms:maximalCredibleIntensity',
+                                                                                   optional=True),
+                           minimalCredibleIntensity=parser.ms_intensity_value_type('ms:minimalCredibleIntensity',
+                                                                                   optional=True))
 
 
 class MsPlaceName:
@@ -1120,7 +1154,7 @@ class MsMdp:
         self.eventReference = eventReference
         self.placeReference = placeReference
         self.intensity = intensity
-        self.comment = comment # one to many
+        self.comment = comment  # one to many
         self.reportCount = reportCount
         self.reportedTime = reportedTime
         self.methodID = methodID
@@ -1162,6 +1196,135 @@ class MsMdp:
                      creationInfo=parser.creation_info('ms:creationInfo', optional=True),
                      intensity=parser.ms_intensity('ms:intensity'),
                      relatedMDP=related)
+
+
+class MsMdpSet:
+
+    def __init__(self,
+                 publicID,
+                 relatedMDPSet,
+                 comment: List,
+                 methodID,
+                 mdpCount,
+                 maximumIntensity,
+                 literatureSource,
+                 creationInfo,
+                 mdpReferences: List):
+        self.publicID = publicID
+        self.relatedMDPSet = relatedMDPSet
+        self.comment = comment  # one to many
+        self.mdpCount = mdpCount
+        self.maximumIntensity = maximumIntensity
+        self.methodID = methodID
+        self.literatureSource = literatureSource
+        self.creationInfo = creationInfo
+        self.mdpReferences = mdpReferences  # one to many
+
+    @staticmethod
+    def from_element(element):
+        parser = ElementParser(element)
+
+        comments = []
+        comment_node = element.firstChildElement('ms:comment')
+        while not comment_node.isNull():
+            comments.append(Comment.from_element(comment_node))
+            comment_node = comment_node.nextSiblingElement('ms:comment')
+
+        mdpReferences = []
+        reference_node = element.firstChildElement('ms:mdpReference')
+        while not reference_node.isNull():
+            mdpReferences.append(reference_node.text())
+            reference_node = reference_node.nextSiblingElement('ms:mdpReference')
+
+        return MsMdpSet(publicID=parser.string('publicID', is_attribute=True, optional=False),
+                        relatedMDPSet=parser.resource_reference('ms:relatedMDPSet'),
+                        comment=comments,
+                        mdpCount=parser.int('ms:mdpCount', optional=True),
+                        maximumIntensity=parser.ms_intensity('ms:maximumIntensity', optional=True),
+                        methodID=parser.resource_reference('ms:methodID', optional=True),
+                        literatureSource=parser.string('ms:literatureSource', optional=True),
+                        creationInfo=parser.creation_info('ms:creationInfo', optional=True),
+                        mdpReferences=mdpReferences)
+
+
+class MsSiteMorphology:
+
+    def __init__(self,
+                 basinFlagLiteratureSource,
+                 bedrockDepth,
+                 bedrockDepthLiteratureSource,
+                 geologicalSurfaceAge,
+                 geologicalUnit,
+                 groundwaterDepth,
+                 creationInfo,
+                 groundwaterDepthLiteratureSource,
+                 morphology,
+                 morphologyLiteratureSource,
+                 referenceBorehole,
+                 sedimentaryBasinName,
+                 siteClassDescription,
+                 siteClassEC8,
+                 siteClassEC8LiteratureSource,
+                 siteClassSIA261,
+                 siteClassSIA261Source,
+                 SurfaceLayerGranularity):
+        self.basinFlagLiteratureSource = basinFlagLiteratureSource
+        self.bedrockDepth = bedrockDepth
+        self.bedrockDepthLiteratureSource = bedrockDepthLiteratureSource
+        self.geologicalSurfaceAge = geologicalSurfaceAge
+        self.geologicalUnit = geologicalUnit
+        self.groundwaterDepth = groundwaterDepth
+        self.groundwaterDepthLiteratureSource = groundwaterDepthLiteratureSource
+        self.morphology = morphology
+        self.creationInfo = creationInfo
+        self.morphologyLiteratureSource = morphologyLiteratureSource
+        self.referenceBorehole = referenceBorehole
+        self.sedimentaryBasinName = sedimentaryBasinName
+        self.siteClassDescription = siteClassDescription
+        self.siteClassEC8 = siteClassEC8
+        self.siteClassEC8LiteratureSource = siteClassEC8LiteratureSource
+        self.siteClassSIA261 = siteClassSIA261
+        self.siteClassSIA261Source = siteClassSIA261Source
+        self.SurfaceLayerGranularity = SurfaceLayerGranularity
+
+    @staticmethod
+    def from_element(element):
+        parser = ElementParser(element)
+
+        comments = []
+        comment_node = element.firstChildElement('ms:comment')
+        while not comment_node.isNull():
+            comments.append(Comment.from_element(comment_node))
+            comment_node = comment_node.nextSiblingElement('ms:comment')
+
+        mdpReferences = []
+        reference_node = element.firstChildElement('ms:mdpReference')
+        while not reference_node.isNull():
+            mdpReferences.append(reference_node.text())
+            reference_node = reference_node.nextSiblingElement('ms:mdpReference')
+
+        assert False
+        return MsSiteMorphology(basinFlagLiteratureSource=parser.string('ms:basinFlagLiteratureSource', optional=True),
+                                bedrockDepth=parser.int('ms:bedrockDepth', optional=True),
+                                bedrockDepthLiteratureSource=parser.string('ms:bedrockDepthLiteratureSource',
+                                                                           optional=True),
+                                geologicalSurfaceAge=parser.int_quantity('ms:geologicalSurfaceAge', optional=True),
+                                geologicalUnit=parser.string('ms:geologicalUnit', optional=True),
+                                groundwaterDepth=parser.int('ms:groundwaterDepth', optional=True),
+                                groundwaterDepthLiteratureSource=parser.string('ms:groundwaterDepthLiteratureSource',
+                                                                               optional=True),
+                                morphology=parser.string('ms:morphology', optional=True),
+                                morphologyLiteratureSource=parser.string('ms:morphologyLiteratureSource',
+                                                                         optional=True),
+                                referenceBorehole=parser.string('ms:referenceBorehole', optional=True),
+                                sedimentaryBasinName=parser.string('ms:sedimentaryBasinName', optional=True),
+                                siteClassDescription=parser.string('ms:siteClassDescription', optional=True),
+                                siteClassEC8=parser.string('ms:siteClassEC8', optional=True),
+                                siteClassEC8LiteratureSource=parser.string('ms:siteClassEC8LiteratureSource',
+                                                                           optional=True),
+                                siteClassSIA261=parser.string('ms:siteClassSIA261', optional=True),
+                                siteClassSIA261Source=parser.string('ms:siteClassSIA261Source', optional=True),
+                                SurfaceLayerGranularity=parser.string('ms:SurfaceLayerGranularity', optional=True))
 
 
 class Event:
@@ -1405,6 +1568,7 @@ class QuakeMlParser:
         self.magnitudes = {}
         self.macro_places = {}
         self.mdps = {}
+        self.mdpsets = {}
 
     def parse_initial(self, content):
         self.events = []
@@ -1412,6 +1576,7 @@ class QuakeMlParser:
         self.magnitudes = {}
         self.macro_places = {}
         self.mdps = {}
+        self.mdpsets = {}
         self.add_events(content)
 
     def remap_attribute_name(self, service_type, attribute):
@@ -1448,6 +1613,15 @@ class QuakeMlParser:
             mdp_element = macro_mdp.at(e).toElement()
             mdp = MsMdp.from_element(mdp_element)
             self.mdps[mdp.publicID] = mdp
+
+        mdpset_elements = doc.elementsByTagName('ms:mdpSet')
+        for e in range(mdpset_elements.length()):
+            mdpset_element = mdpset_elements.at(e).toElement()
+            mdpset = MsMdpSet.from_element(mdpset_element)
+            self.mdpsets[mdpset.publicID] = mdpset
+
+    def mdp_set_for_mdp(self, mdp):
+        return [v for k, v in self.mdpsets.items() if mdp.publicID in v.mdpReferences][0]
 
     def parse_missing_origin(self, content):
         doc = QDomDocument()
@@ -1507,6 +1681,8 @@ class QuakeMlParser:
             else:
                 place = None
 
+            mdpset = self.mdp_set_for_mdp(m)
+
             f = QgsFeature(fields)
             for dest_field in field_config['field_groups']['basic_event_info']['fields']:
                 if dest_field.get('skip'):
@@ -1515,7 +1691,8 @@ class QuakeMlParser:
                 if dest_field.get('one_to_many'):
                     continue
 
-                if not include_quake_details_in_mdp and '>event>' in dest_field['source'] and dest_field['source'] != 'eventParameters>event§publicID':
+                if not include_quake_details_in_mdp and '>event>' in dest_field['source'] and dest_field[
+                    'source'] != 'eventParameters>event§publicID':
                     continue
 
                 source = dest_field['source'].replace('§', '>').split('>')
@@ -1562,7 +1739,8 @@ class QuakeMlParser:
                     if selected_fields:
                         selected = dest_field['source'] in selected_fields
                     else:
-                        selected = settings.value('/plugins/qquake/output_field_{}'.format('_'.join(source)), True, bool)
+                        selected = settings.value('/plugins/qquake/output_field_{}'.format('_'.join(source)), True,
+                                                  bool)
 
                     if not selected:
                         continue
@@ -1597,7 +1775,8 @@ class QuakeMlParser:
                     if selected_fields:
                         selected = dest_field['source'] in selected_fields
                     else:
-                        selected = settings.value('/plugins/qquake/output_field_{}'.format('_'.join(source)), True, bool)
+                        selected = settings.value('/plugins/qquake/output_field_{}'.format('_'.join(source)), True,
+                                                  bool)
 
                     if not selected:
                         continue
@@ -1675,6 +1854,42 @@ class QuakeMlParser:
                     if source_obj is None:
                         source_obj = NULL
                         break
+                    assert hasattr(source_obj, s)
+                    source_obj = getattr(source_obj, s)
+
+                f[dest_field[field_config_key]] = source_obj
+
+            for dest_field in field_config['field_groups'].get('mdpSet', {}).get('fields', []):
+                if dest_field.get('skip'):
+                    continue
+
+                if dest_field.get('one_to_many'):
+                    continue
+
+                source = dest_field['source'].replace('§', '>').split('>')
+                assert source[0] == 'macroseismicParameters'
+                source = source[1:]
+                assert source[0] == 'mdpSet'
+                source = source[1:]
+
+                if selected_fields:
+                    selected = dest_field['source'] in selected_fields
+                else:
+                    selected = settings.value('/plugins/qquake/output_field_{}'.format('_'.join(source)), True, bool)
+
+                if not selected:
+                    continue
+
+                source_obj = mdpset
+                for s in source:
+                    if source_obj is None:
+                        source_obj = NULL
+                        break
+
+                    if s == 'class':
+                        # reserved keyword, can't use!
+                        s = '_class'
+
                     assert hasattr(source_obj, s)
                     source_obj = getattr(source_obj, s)
 
