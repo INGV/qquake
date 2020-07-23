@@ -24,6 +24,8 @@
 
 import os
 import json
+from collections import defaultdict
+from typing import Optional, List
 from copy import deepcopy
 from pathlib import Path
 from qgis.core import (
@@ -71,6 +73,7 @@ class ServiceManager(QObject):
     def __init__(self):
         super().__init__()
         self.services = {}
+        self.contributors = defaultdict(dict)
         self.refresh_services()
         self._load_predefined_areas()
 
@@ -226,7 +229,7 @@ class ServiceManager(QObject):
         else:
             service_id = Path(path).stem
 
-        if not 'servicetype' in service:
+        if 'servicetype' not in service:
             return False, 'Incomplete service definition'
 
         service_type = service['servicetype']
@@ -253,6 +256,30 @@ class ServiceManager(QObject):
 
     def get_field_config(self, service_type):
         return self._CONFIG_FIELDS[service_type]
+
+    def get_contributor_endpoint(self, service_type, service_id) -> Optional[str]:
+        """
+        Returns the get contributor endpoint URL for the specified service
+        """
+        default_endpoint = self.service_details(service_type, service_id)['endpointurl']
+        if service_type == SERVICE_MANAGER.FDSNEVENT:
+            return default_endpoint[:default_endpoint.index('event/1') + 7] + '/contributors'
+        elif service_type == SERVICE_MANAGER.MACROSEISMIC:
+            return default_endpoint[:default_endpoint.index('/query')] + '/contributors'
+
+        return None
+
+    def get_contributors(self, service_type, service_id) -> List[str]:
+        """
+        Returns a list of previously retrieved contributors for the specified service and service ID
+        """
+        return self.contributors[service_type].get(service_id, [])
+
+    def set_contributors(self, service_type, service_id, contributors: List[str]):
+        """
+        Sets a list of previously retrieved contributors for the specified service and service ID
+        """
+        self.contributors[service_type][service_id] = contributors
 
 
 SERVICE_MANAGER = ServiceManager()

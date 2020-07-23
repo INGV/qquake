@@ -110,7 +110,8 @@ class PredefinedAreasWidget(QDialog, FORM_CLASS):
         self.spin_max_lat.setValue(current.data(Qt.UserRole + 6))
 
         read_only = current.data(Qt.UserRole + 1)
-        for w in [self.edit_label, self.spin_min_long, self.spin_max_long, self.spin_min_lat, self.spin_max_lat, self.button_draw_on_map]:
+        for w in [self.edit_label, self.spin_min_long, self.spin_max_long, self.spin_min_lat, self.spin_max_lat,
+                  self.button_draw_on_map]:
             w.setEnabled(not read_only)
         self.button_remove.setEnabled(not read_only)
         self.blocked = False
@@ -198,13 +199,13 @@ class PredefinedAreasDialog(QDialog):
         QgsGui.enableAutoGeometryRestore(self)
 
         self.widget = PredefinedAreasWidget()
-        l = QVBoxLayout()
-        l.addWidget(self.widget)
+        layout = QVBoxLayout()
+        layout.addWidget(self.widget)
         self.button_box = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
         self.button_box.accepted.connect(self.accept)
         self.button_box.rejected.connect(self.reject)
-        l.addWidget(self.button_box)
-        self.setLayout(l)
+        layout.addWidget(self.button_box)
+        self.setLayout(layout)
 
     def accept(self):
         self.widget.save_areas()

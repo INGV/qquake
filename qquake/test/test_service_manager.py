@@ -45,13 +45,13 @@ class QQuakeServiceManagerTest(unittest.TestCase):
         self.assertTrue(extent['read_only'])
 
         spy = QSignalSpy(SERVICE_MANAGER.areasChanged)
-        SERVICE_MANAGER.add_predefined_bounding_box('mine', {'title': 'Mine', 'boundingbox': [1,2,3,4]})
+        SERVICE_MANAGER.add_predefined_bounding_box('mine', {'title': 'Mine', 'boundingbox': [1, 2, 3, 4]})
         self.assertEqual(len(spy), 1)
 
         self.assertIn('mine', SERVICE_MANAGER.available_predefined_bounding_boxes())
         self.assertEqual(SERVICE_MANAGER.predefined_bounding_box('mine')['title'], 'Mine')
 
-        SERVICE_MANAGER.add_predefined_bounding_box('mine', {'title': 'Mine2', 'boundingbox': [1,2,3,4]})
+        SERVICE_MANAGER.add_predefined_bounding_box('mine', {'title': 'Mine2', 'boundingbox': [1, 2, 3, 4]})
         self.assertEqual(len(spy), 2)
         self.assertIn('mine', SERVICE_MANAGER.available_predefined_bounding_boxes())
         self.assertEqual(SERVICE_MANAGER.predefined_bounding_box('mine')['title'], 'Mine2')
@@ -67,6 +67,28 @@ class QQuakeServiceManagerTest(unittest.TestCase):
         self.assertTrue(SERVICE_MANAGER.remove_predefined_bounding_box('mine'))
         self.assertEqual(len(spy), 3)
         self.assertNotIn('mine', SERVICE_MANAGER.available_predefined_bounding_boxes())
+
+    def testGetContributorEndpoint(self):
+        self.assertEqual(SERVICE_MANAGER.get_contributor_endpoint(SERVICE_MANAGER.FDSNEVENT, 'AHEAD-SHEEC'),
+                         'https://www.emidius.eu/fdsnws/event/1/contributors')
+        self.assertEqual(SERVICE_MANAGER.get_contributor_endpoint(SERVICE_MANAGER.MACROSEISMIC, 'INGV ASMI-DBMI'),
+                         'https://emidius.mi.ingv.it/services/macroseismic/contributors')
+        self.assertIsNone(SERVICE_MANAGER.get_contributor_endpoint(SERVICE_MANAGER.FDSNSTATION, 'EIDA node ODC'))
+
+    def testContributors(self):
+        self.assertFalse(SERVICE_MANAGER.get_contributors(SERVICE_MANAGER.FDSNSTATION, 'test'))
+        self.assertFalse(SERVICE_MANAGER.get_contributors(SERVICE_MANAGER.FDSNSTATION, 'test'))
+        self.assertFalse(SERVICE_MANAGER.get_contributors(SERVICE_MANAGER.MACROSEISMIC, 'test'))
+        SERVICE_MANAGER.set_contributors(SERVICE_MANAGER.FDSNSTATION, 'test', ['a', 'b'])
+        self.assertEqual(SERVICE_MANAGER.contributors(SERVICE_MANAGER.FDSNSTATION, 'test'), ['a', 'b'])
+        self.assertFalse(SERVICE_MANAGER.get_contributors(SERVICE_MANAGER.FDSNSTATION, 'test2'))
+        SERVICE_MANAGER.set_contributors(SERVICE_MANAGER.FDSNSTATION, 'test2', ['c', 'd'])
+        self.assertEqual(SERVICE_MANAGER.contributors(SERVICE_MANAGER.FDSNSTATION, 'test'), ['a', 'b'])
+        self.assertEqual(SERVICE_MANAGER.contributors(SERVICE_MANAGER.FDSNSTATION, 'test2'), ['c', 'd'])
+        SERVICE_MANAGER.set_contributors(SERVICE_MANAGER.MACROSEISMIC, 'test', ['e', 'f'])
+        self.assertEqual(SERVICE_MANAGER.contributors(SERVICE_MANAGER.FDSNSTATION, 'test'), ['a', 'b'])
+        self.assertEqual(SERVICE_MANAGER.contributors(SERVICE_MANAGER.FDSNSTATION, 'test2'), ['c', 'd'])
+        self.assertEqual(SERVICE_MANAGER.contributors(SERVICE_MANAGER.MACROSEISMIC, 'test'), ['e', 'f'])
 
 
 if __name__ == "__main__":

@@ -22,6 +22,7 @@
  ***************************************************************************/
 """
 import re
+from typing import List
 
 from qgis.PyQt import uic
 from qgis.PyQt.QtWidgets import QWidget, QFileDialog
@@ -37,7 +38,6 @@ from qgis.PyQt.QtCore import (
     pyqtSignal
 )
 from qgis.PyQt.QtNetwork import QNetworkRequest
-
 
 from qquake.gui.gui_utils import GuiUtils
 from qquake.gui.output_table_options_dialog import OutputTableOptionsDialog
@@ -129,6 +129,8 @@ class FilterByIdWidget(QWidget, FORM_CLASS):
         else:
             self.button_refresh_contributors.setEnabled(False)
 
+        self._update_contributor_list(SERVICE_MANAGER.get_contributors(self.service_type, self.service_id))
+
     def restore_settings(self, prefix):
         s = QgsSettings()
 
@@ -165,7 +167,8 @@ class FilterByIdWidget(QWidget, FORM_CLASS):
         s.setValue('/plugins/qquake/{}_contributor_checked'.format(prefix), self.radio_contributor.isChecked())
         s.setValue('/plugins/qquake/{}_contributor_id'.format(prefix), self.edit_contributor_id.currentText())
         s.setValue('/plugins/qquake/{}_single_event_basic_checked'.format(prefix), self.radio_basic_output.isChecked())
-        s.setValue('/plugins/qquake/{}_single_event_extended_checked'.format(prefix), self.radio_extended_output.isChecked())
+        s.setValue('/plugins/qquake/{}_single_event_extended_checked'.format(prefix),
+                   self.radio_extended_output.isChecked())
 
     def _enable_widgets(self):
         for w in [self.label_event_id,
@@ -208,7 +211,8 @@ class FilterByIdWidget(QWidget, FORM_CLASS):
         return [l.strip() for l in re.split(r'[,\n]', text) if l.strip()]
 
     def load_from_file(self):
-        file, _ = QFileDialog.getOpenFileName(self, self.tr('Import Event IDs from File'), QDir.homePath(), 'Text Files (*.*)')
+        file, _ = QFileDialog.getOpenFileName(self, self.tr('Import Event IDs from File'), QDir.homePath(),
+                                              'Text Files (*.*)')
         if not file:
             return
 
@@ -220,9 +224,12 @@ class FilterByIdWidget(QWidget, FORM_CLASS):
         return Fetcher.BASIC if self.radio_basic_output.isChecked() else Fetcher.EXTENDED
 
     def _refresh_contributors(self):
-        self.button_refresh_contributors.setEnabled(False)
+        self.edit_contributor_id.clear()
+        url = SERVICE_MANAGER.get_contributor_endpoint(self.service_type, self.service_id)
+        if not url:
+            return
 
-        url = self.service_config['endpointurl'][:self.service_config['endpointurl'].index('event/1')+7] + '/contributors'
+        self.button_refresh_contributors.setEnabled(False)
         request = QNetworkRequest(QUrl(url))
         request.setAttribute(QNetworkRequest.FollowRedirectsAttribute, True)
 
@@ -237,12 +244,19 @@ class FilterByIdWidget(QWidget, FORM_CLASS):
         if not content:
             return
 
-        self.edit_contributor_id.clear()
-
         doc = QDomDocument()
         doc.setContent(content)
         contributor_elements = doc.elementsByTagName('Contributor')
+
+        contributors = []
         for e in range(contributor_elements.length()):
             contributor_element = contributor_elements.at(e).toElement()
-            self.edit_contributor_id.addItem(contributor_element.text())
+            contributors.append(contributor_element.text())
 
+        SERVICE_MANAGER.set_contributors(self.service_type, self.service_id, contributors)
+        self._update_contributor_list(contributors)
+
+    def _update_contributor_list(self, contributors: List[str]):
+        self.edit_contributor_id.clear()
+        for c in contributors:
+            self.edit_contributor_id.addItem(c)

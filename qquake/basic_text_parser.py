@@ -152,7 +152,7 @@ class BasicTextParser:
         for k, v in event.items():
             try:
                 if fields[fields.lookupField(k)].type() == QVariant.DateTime:
-                    v = v.replace('--','00')
+                    v = v.replace('--', '00')
                     v = QDateTime.fromString(v, Qt.ISODate)
                 elif fields[fields.lookupField(k)].type() == QVariant.Date:
                     v = QDate.fromString(v, Qt.ISODate)
@@ -162,7 +162,7 @@ class BasicTextParser:
                     v = float(v)
                 elif fields[fields.lookupField(k)].type() == QVariant.Int:
                     v = int(v)
-            except:
+            except Exception:
                 v = NULL
 
             f[k] = v
@@ -197,7 +197,7 @@ class BasicTextParser:
         for k, v in event.items():
             try:
                 if fields[fields.lookupField(k)].type() == QVariant.DateTime:
-                    v = v.replace('--','00')
+                    v = v.replace('--', '00')
                     v = QDateTime.fromString(v, Qt.ISODate)
                 elif fields[fields.lookupField(k)].type() == QVariant.Date:
                     v = QDate.fromString(v, Qt.ISODate)
@@ -207,7 +207,7 @@ class BasicTextParser:
                     v = float(v)
                 elif fields[fields.lookupField(k)].type() == QVariant.Int:
                     v = int(v)
-            except:
+            except Exception:
                 v = NULL
 
             f[k] = v
@@ -261,7 +261,7 @@ class BasicStationParser:
         for k, v in station.items():
             try:
                 if fields[fields.lookupField(k)].type() == QVariant.DateTime:
-                    v = v.replace('--','00')
+                    v = v.replace('--', '00')
                     v = QDateTime.fromString(v, Qt.ISODate)
                 elif fields[fields.lookupField(k)].type() == QVariant.Date:
                     v = QDate.fromString(v, Qt.ISODate)
@@ -271,7 +271,7 @@ class BasicStationParser:
                     v = float(v)
                 elif fields[fields.lookupField(k)].type() == QVariant.Int:
                     v = int(v)
-            except:
+            except Exception:
                 v = NULL
 
             f[k] = v
