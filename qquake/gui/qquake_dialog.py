@@ -515,13 +515,14 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         if service_config['default'].get('macromdpsgreaterthan'):
             filter_widget.set_mdps_greater_than(service_config['default'].get('macromdpsgreaterthan'))
 
+        filter_widget.set_extent_limit(service_config.get('boundingbox', [-180,-90,180,90]))
+
         if service_type in [SERVICE_MANAGER.FDSNEVENT, SERVICE_MANAGER.MACROSEISMIC]:
             tab_widget.widget(1).setEnabled(service_config['settings'].get('queryeventid', False))
 
         if service_config['default'].get('boundingboxpredefined'):
             box = SERVICE_MANAGER.predefined_bounding_box(service_config['default']['boundingboxpredefined'])[
                 'boundingbox']
-            filter_widget.set_extent_limit(box)
 
         info_widget.set_service(service_type=service_type, service_id=service_id)
 
@@ -729,10 +730,15 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.message_bar.pushMessage(
             message, level, 0)
 
-    def _fetcher_finished(self):
+    def _fetcher_finished(self, res):
         self.progressBar.reset()
         self.button_box.button(QDialogButtonBox.Ok).setText(self.tr('Fetch Data'))
         self.button_box.button(QDialogButtonBox.Ok).setEnabled(True)
+
+        if not res:
+            self.fetcher.deleteLater()
+            self.fetcher = None
+            return
 
         layers = []
         if self.fetcher.service_type in (SERVICE_MANAGER.FDSNEVENT, SERVICE_MANAGER.MACROSEISMIC):
