@@ -729,10 +729,15 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.message_bar.pushMessage(
             message, level, 0)
 
-    def _fetcher_finished(self):
+    def _fetcher_finished(self, res):
         self.progressBar.reset()
         self.button_box.button(QDialogButtonBox.Ok).setText(self.tr('Fetch Data'))
         self.button_box.button(QDialogButtonBox.Ok).setEnabled(True)
+
+        if not res:
+            self.fetcher.deleteLater()
+            self.fetcher = None
+            return
 
         layers = []
         if self.fetcher.service_type in (SERVICE_MANAGER.FDSNEVENT, SERVICE_MANAGER.MACROSEISMIC):

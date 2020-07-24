@@ -24,7 +24,7 @@ from qgis.PyQt.QtCore import (
     pyqtSignal,
     QTemporaryFile
 )
-from qgis.PyQt.QtNetwork import QNetworkRequest
+from qgis.PyQt.QtNetwork import QNetworkRequest, QNetworkReply
 
 from qgis.core import (
     Qgis,
@@ -59,7 +59,7 @@ class Fetcher(QObject):
     EXTENDED = 'EXTENDED'
 
     progress = pyqtSignal(float)
-    finished = pyqtSignal()
+    finished = pyqtSignal(bool)
     message = pyqtSignal(str, Qgis.MessageLevel)
 
     def __init__(self, service_type,
@@ -283,6 +283,11 @@ class Fetcher(QObject):
             self.progress.emit(float(received) / total * 100)
 
     def _reply_finished(self, reply):
+        if reply.error() != QNetworkReply.NoError:
+            self.message.emit(self.tr('Error: {}').format(reply.errorString()), Qgis.Critical)
+            self.finished.emit(False)
+            return
+
         if self.output_type == self.EXTENDED:
             if self.service_type in (SERVICE_MANAGER.FDSNEVENT, SERVICE_MANAGER.MACROSEISMIC):
                 if self.is_missing_origin_request:
@@ -312,14 +317,14 @@ class Fetcher(QObject):
             elif self.pending_event_ids:
                 self.fetch_next_event_by_id()
             else:
-                self.finished.emit()
+                self.finished.emit(True)
 
         else:
             # basic output types
             if self.service_type == SERVICE_MANAGER.FDSNSTATION:
                 self.result = BasicStationParser()
                 self.result.parse(reply.readAll())
-                self.finished.emit()
+                self.finished.emit(True)
             else:
                 if self.pending_event_ids:
                     self.pending_event_ids = self.pending_event_ids[1:]
@@ -339,7 +344,7 @@ class Fetcher(QObject):
                         if self.is_mdp_basic_text_request:
                             self.result.add_mdp(reply.readAll())
 
-                        self.finished.emit()
+                        self.finished.emit(True)
 
     def _generate_layer_name(self, layer_type=None):
         name = self.event_service
