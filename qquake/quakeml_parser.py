@@ -152,6 +152,24 @@ def get_service_fields(service_type, selected_fields):
 
         fields.append(QgsField(f[field_config_key], FIELD_TYPE_MAP[f['type']]))
 
+    for f in field_config['field_groups'].get('mdpSet', {}).get('fields', []):
+        if f.get('skip'):
+            continue
+
+        if f.get('one_to_many'):
+            continue
+
+        path = f['source']
+        if selected_fields:
+            selected = path in selected_fields
+        else:
+            path = path[len('macroseismicParameters>'):].replace('§', '>').replace('>', '_')
+            selected = settings.value('/plugins/qquake/output_field_{}'.format(path), True, bool)
+        if not selected:
+            continue
+
+        fields.append(QgsField(f[field_config_key], FIELD_TYPE_MAP[f['type']]))
+
     for f in field_config['field_groups'].get('mdp', {}).get('fields', []):
         if f.get('skip'):
             continue
@@ -171,24 +189,6 @@ def get_service_fields(service_type, selected_fields):
         fields.append(QgsField(f[field_config_key], FIELD_TYPE_MAP[f['type']]))
 
     for f in field_config['field_groups'].get('place', {}).get('fields', []):
-        if f.get('skip'):
-            continue
-
-        if f.get('one_to_many'):
-            continue
-
-        path = f['source']
-        if selected_fields:
-            selected = path in selected_fields
-        else:
-            path = path[len('macroseismicParameters>'):].replace('§', '>').replace('>', '_')
-            selected = settings.value('/plugins/qquake/output_field_{}'.format(path), True, bool)
-        if not selected:
-            continue
-
-        fields.append(QgsField(f[field_config_key], FIELD_TYPE_MAP[f['type']]))
-
-    for f in field_config['field_groups'].get('mdpSet', {}).get('fields', []):
         if f.get('skip'):
             continue
 
