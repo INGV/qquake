@@ -515,13 +515,14 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         if service_config['default'].get('macromdpsgreaterthan'):
             filter_widget.set_mdps_greater_than(service_config['default'].get('macromdpsgreaterthan'))
 
+        filter_widget.set_extent_limit(service_config.get('boundingbox', [-180,-90,180,90]))
+
         if service_type in [SERVICE_MANAGER.FDSNEVENT, SERVICE_MANAGER.MACROSEISMIC]:
             tab_widget.widget(1).setEnabled(service_config['settings'].get('queryeventid', False))
 
         if service_config['default'].get('boundingboxpredefined'):
             box = SERVICE_MANAGER.predefined_bounding_box(service_config['default']['boundingboxpredefined'])[
                 'boundingbox']
-            filter_widget.set_extent_limit(box)
 
         info_widget.set_service(service_type=service_type, service_id=service_id)
 
