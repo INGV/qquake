@@ -141,7 +141,13 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
         self.output_fields = None
 
     def is_valid(self):
-        return True
+        for check in [self.min_time_check, self.max_time_check, self.min_mag_check, self.max_mag_check,
+                      self.limit_extent_checkbox, self.earthquake_max_intensity_greater_check,
+                      self.earthquake_number_mdps_greater_check]:
+            if check.isChecked():
+                return True
+
+        return False
 
     def set_service_type(self, service_type):
         self.service_type = service_type
