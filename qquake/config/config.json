@@ -316,7 +316,7 @@
         "querylimit": true,
         "querylimitmaxentries": 15000,
         "querycircular": true,
-        "querycircularradiuskm": true,
+        "querycircularradiuskm": false,
         "querydepth": true,
         "outputtext": true,
         "outputxml": true,
