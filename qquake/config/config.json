@@ -212,13 +212,13 @@
           "eventParameters>event>origin>depth>value",
           "eventParameters>event>origin>creationInfo>agencyID",
           "eventParameters>event>origin>creationInfo>author",
-		  "eventParameters>event>origin>creationInfo>creationTime",
-		  "eventParameters>event>origin>creationInfo>version",
+          "eventParameters>event>origin>creationInfo>creationTime",
+          "eventParameters>event>origin>creationInfo>version",
           "eventParameters>event>magnitude§publicID",
           "eventParameters>event>magnitude>mag>value",
           "eventParameters>event>magnitude>mag>uncertainty",
           "eventParameters>event>magnitude>creationInfo>agencyID",
-		  "eventParameters>event>magnitude>creationInfo>creationTime",
+          "eventParameters>event>magnitude>creationInfo>creationTime",
           "eventParameters>event>magnitude>creationInfo>author"
         ]
       },
