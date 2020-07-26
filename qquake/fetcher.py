@@ -13,16 +13,11 @@ __copyright__ = 'Copyright 2020, North Road'
 # This will get replaced with a git SHA1 when you do a git archive
 __revision__ = '$Format:%H$'
 
-import os
-import json
-
 from qgis.PyQt.QtCore import (
     Qt,
-    QDir,
     QUrl,
     QObject,
-    pyqtSignal,
-    QTemporaryFile
+    pyqtSignal
 )
 from qgis.PyQt.QtNetwork import QNetworkRequest, QNetworkReply
 
@@ -31,21 +26,17 @@ from qgis.core import (
     QgsNetworkAccessManager,
     QgsVectorLayer,
     QgsSettings,
-    QgsBlockingNetworkRequest,
     QgsUnitTypes,
-    QgsGraduatedSymbolRenderer,
-    QgsCategorizedSymbolRenderer
 )
 
 from qquake.quakeml_parser import (
     QuakeMlParser,
     FDSNStationXMLParser,
-    Event,
-    Origin,
     Magnitude,
     Station
 )
 from qquake.basic_text_parser import BasicTextParser, BasicStationParser
+from qquake.style_utils import StyleUtils
 
 from qquake.services import SERVICE_MANAGER
 
@@ -437,7 +428,9 @@ class Fetcher(QObject):
         assert ok
 
         if self.service_config.get('styleurl'):
-            self.fetch_and_apply_style(vl, self.service_config.get('styleurl'))
+            err = StyleUtils.fetch_and_apply_style(vl, self.service_config.get('styleurl'))
+            if err:
+                self.message.emit(err, Qgis.Warning)
         elif isinstance(self.service_config.get('default', {}).get('style', {}), dict) and \
                 self.service_config['default']['style'].get('events'):
             style = self.service_config['default']['style']['events']
@@ -450,32 +443,11 @@ class Fetcher(QObject):
                 else:
                     style_attr = self.result.remap_attribute_name(SERVICE_MANAGER.FDSNEVENT,
                                                                   style.get('classified_attribute_xml'))
-
-                self.fetch_and_apply_style(vl, style_url, style_attr)
+                err = StyleUtils.fetch_and_apply_style(vl, style_url, style_attr)
+                if err:
+                    self.message.emit(err, Qgis.Warning)
 
         return vl
-
-    def fetch_and_apply_style(self, layer, url, style_attr=''):
-        request = QgsBlockingNetworkRequest()
-        if request.get(QNetworkRequest(QUrl(url))) != QgsBlockingNetworkRequest.NoError:
-            self.message.emit(self.tr('Error while fetching QML style'), Qgis.Warning)
-        else:
-            reply = request.reply().content()
-            tmp_file = QTemporaryFile('{}/XXXXXX.qml'.format(QDir.tempPath()))
-            tmp_file.open()
-            tmp_file_name = tmp_file.fileName()
-            tmp_file.close()
-            with open(tmp_file_name, 'wt') as f:
-                f.write(reply.data().decode())
-
-            layer.loadNamedStyle(tmp_file_name)
-
-            if style_attr:
-                if isinstance(layer.renderer(), QgsGraduatedSymbolRenderer):
-                    layer.renderer().setClassAttribute(style_attr)
-                elif isinstance(layer.renderer(), QgsCategorizedSymbolRenderer):
-                    layer.renderer().setClassAttribute(style_attr)
-            layer.triggerRepaint()
 
     def mdpset_to_layer(self, parser):
         """
@@ -491,7 +463,9 @@ class Fetcher(QObject):
         assert ok
 
         if self.service_config.get('mdpstyleurl'):
-            self.fetch_and_apply_style(vl, self.service_config.get('mdpstyleurl'))
+            err = StyleUtils.fetch_and_apply_style(vl, self.service_config.get('mdpstyleurl'))
+            if err:
+                self.message.emit(err, Qgis.Warning)
         elif isinstance(self.service_config.get('default', {}).get('style', {}), dict) and \
                 self.service_config['default']['style'].get('mdp'):
             style = self.service_config['default']['style']['mdp']
@@ -505,7 +479,9 @@ class Fetcher(QObject):
                     style_attr = self.result.remap_attribute_name(SERVICE_MANAGER.MACROSEISMIC,
                                                                   style.get('classified_attribute_xml'))
 
-                self.fetch_and_apply_style(vl, style_url, style_attr)
+                err = StyleUtils.fetch_and_apply_style(vl, style_url, style_attr)
+                if err:
+                    self.message.emit(err, Qgis.Warning)
 
         return vl
 
@@ -527,7 +503,9 @@ class Fetcher(QObject):
         assert ok
 
         if self.service_config.get('styleurl'):
-            self.fetch_and_apply_style(vl, self.service_config.get('styleurl'))
+            err = StyleUtils.fetch_and_apply_style(vl, self.service_config.get('styleurl'))
+            if err:
+                self.message.emit(err, Qgis.Warning)
 
         elif isinstance(self.service_config.get('default', {}).get('style', {}), dict) and \
                 self.service_config['default']['style'].get('stations'):
@@ -541,7 +519,9 @@ class Fetcher(QObject):
                 else:
                     style_attr = FDSNStationXMLParser.remap_attribute_name(style.get('classified_attribute_xml'))
 
-                self.fetch_and_apply_style(vl, style_url, style_attr)
+                err = StyleUtils.fetch_and_apply_style(vl, style_url, style_attr)
+                if err:
+                    self.message.emit(err, Qgis.Warning)
 
         return vl
 

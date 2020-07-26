@@ -608,6 +608,9 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
         self.lat_min_spinbox.setMaximum(box[3])
         self.lat_max_spinbox.setMaximum(box[3])
 
+        # reset previously selected predefined area, now that new min/max area has been applied
+        self._use_predefined_area()
+
     def _output_table_options(self):
         dlg = OutputTableOptionsDialog(self.service_type, self.service_id, self.output_fields, self)
         if dlg.exec_():

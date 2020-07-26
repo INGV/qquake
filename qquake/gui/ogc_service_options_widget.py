@@ -34,6 +34,7 @@ from qgis.core import (
 )
 
 from qquake.services import SERVICE_MANAGER
+from qquake.style_utils import StyleUtils
 from qquake.gui.gui_utils import GuiUtils
 from qquake.gui.simple_node_model import SimpleNodeModel, ModelNode
 
@@ -63,7 +64,7 @@ class OgcServiceWidget(QWidget, FORM_CLASS):
 
         nodes = []
         for l in layers:
-            if l['styles']:
+            if l.get('styles'):
                 parent_node = ModelNode([l['layername']])
                 checked_styles = l.get('checked_styles', None)
                 for style in l['styles']:
@@ -71,7 +72,9 @@ class OgcServiceWidget(QWidget, FORM_CLASS):
                     parent_node.addChild(
                         ModelNode(['checked', style], checked))
             else:
-                parent_node = ModelNode(['checked', l['layername']], True)
+                style = l.get('style', {}).get('wfs', {}).get('style', None)
+                parent_node = ModelNode(['checked', l['layername']], True, {'style': style})
+
             nodes.append(parent_node)
 
         self.layer_model = SimpleNodeModel(nodes, headers=[self.tr('Selected'), self.tr('Style Name')])
@@ -85,13 +88,18 @@ class OgcServiceWidget(QWidget, FORM_CLASS):
             self.layers_tree_view.setFirstColumnSpanned(r, QModelIndex(), True)
 
     def add_selected_layers(self):
-        def add_layer(layer_name, style=None):
+        def add_layer(layer_name, style=None, preset_style=None):
             if self.service_type == SERVICE_MANAGER.WFS:
                 uri = "pagingEnabled='true' restrictToRequestBBOX='1' srsname='{}' typename='{}' url='{}' version='auto'".format(
                     self.service_config['srs'],
                     layer_name,
                     self.service_config['endpointurl'])
                 vl = QgsVectorLayer(uri, layer_name, 'WFS')
+
+                if preset_style.get('style') and preset_style['style'] in SERVICE_MANAGER.PRESET_STYLES:
+                    style_url = SERVICE_MANAGER.PRESET_STYLES[preset_style['style']]['url']
+                    StyleUtils.fetch_and_apply_style(vl, style_url)
+
                 layers_to_add.append(vl)
             elif self.service_type == SERVICE_MANAGER.WMS:
                 if style:
@@ -117,7 +125,8 @@ class OgcServiceWidget(QWidget, FORM_CLASS):
 
             if self.layer_model.flags(parent) & Qt.ItemIsUserCheckable:
                 layer_name = self.layer_model.data(self.layer_model.index(r, 1, QModelIndex()), Qt.DisplayRole)
-                add_layer(layer_name)
+                preset_style = self.layer_model.data(self.layer_model.index(r, 1, QModelIndex()), Qt.UserRole)
+                add_layer(layer_name, preset_style=preset_style)
             else:
                 layer_name = self.layer_model.data(parent, Qt.DisplayRole)
                 for rc in range(self.layer_model.rowCount(parent)):
