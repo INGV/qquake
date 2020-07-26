@@ -35,8 +35,6 @@
           "eventParameters>event>creationInfo>agencyID",
           "eventParameters>event>creationInfo>author",
           "eventParameters>event>origin§publicID",
-          "eventParameters>event>origin>creationInfo>agencyID",
-          "eventParameters>event>origin>creationInfo>author",
           "eventParameters>event>origin>time>value",
           "eventParameters>event>origin>compositeTime>year>value",
           "eventParameters>event>origin>compositeTime>month>value",
@@ -44,14 +42,16 @@
           "eventParameters>event>origin>compositeTime>hour>value",
           "eventParameters>event>origin>compositeTime>minute>value",
           "eventParameters>event>origin>compositeTime>second>value",
+          "eventParameters>event>origin>creationInfo>agencyID",
+          "eventParameters>event>origin>creationInfo>author",
           "eventParameters>event>origin>region",
           "eventParameters>event>origin>latitude>value",
           "eventParameters>event>origin>longitude>value",
           "eventParameters>event>magnitude§publicID",
-          "eventParameters>event>magnitude>creationInfo>agencyID",
-          "eventParameters>event>magnitude>creationInfo>author",
           "eventParameters>event>magnitude>mag>value",
-          "eventParameters>event>magnitude>mag>uncertainty"
+          "eventParameters>event>magnitude>mag>uncertainty",
+          "eventParameters>event>magnitude>creationInfo>agencyID",
+          "eventParameters>event>magnitude>creationInfo>author"
         ]
       },
       "settings": {
@@ -120,8 +120,6 @@
           "eventParameters>event>creationInfo>agencyID",
           "eventParameters>event>creationInfo>author",
           "eventParameters>event>origin§publicID",
-          "eventParameters>event>origin>creationInfo>agencyID",
-          "eventParameters>event>origin>creationInfo>author",
           "eventParameters>event>origin>time>value",
           "eventParameters>event>origin>compositeTime>year>value",
           "eventParameters>event>origin>compositeTime>month>value",
@@ -133,11 +131,13 @@
           "eventParameters>event>origin>latitude>value",
           "eventParameters>event>origin>longitude>value",
           "eventParameters>event>origin>depth>value",
+          "eventParameters>event>origin>creationInfo>agencyID",
+          "eventParameters>event>origin>creationInfo>author",
           "eventParameters>event>magnitude§publicID",
-          "eventParameters>event>magnitude>creationInfo>agencyID",
-          "eventParameters>event>magnitude>creationInfo>author",
           "eventParameters>event>magnitude>mag>value",
-          "eventParameters>event>magnitude>mag>uncertainty"
+          "eventParameters>event>magnitude>mag>uncertainty",
+          "eventParameters>event>magnitude>creationInfo>agencyID",
+          "eventParameters>event>magnitude>creationInfo>author"
         ]
       },
       "settings": {
@@ -205,18 +205,21 @@
           "eventParameters>event>creationInfo>agencyID",
           "eventParameters>event>creationInfo>author",
           "eventParameters>event>origin§publicID",
-          "eventParameters>event>origin>creationInfo>agencyID",
-          "eventParameters>event>origin>creationInfo>author",
           "eventParameters>event>origin>time>value",
           "eventParameters>event>description>text",
           "eventParameters>event>origin>latitude>value",
           "eventParameters>event>origin>longitude>value",
           "eventParameters>event>origin>depth>value",
+          "eventParameters>event>origin>creationInfo>agencyID",
+          "eventParameters>event>origin>creationInfo>author",
+          "eventParameters>event>origin>creationInfo>creationTime",
+          "eventParameters>event>origin>creationInfo>version",
           "eventParameters>event>magnitude§publicID",
-          "eventParameters>event>magnitude>creationInfo>agencyID",
-          "eventParameters>event>magnitude>creationInfo>author",
           "eventParameters>event>magnitude>mag>value",
-          "eventParameters>event>magnitude>mag>uncertainty"
+          "eventParameters>event>magnitude>mag>uncertainty",
+          "eventParameters>event>magnitude>creationInfo>agencyID",
+          "eventParameters>event>magnitude>creationInfo>creationTime",
+          "eventParameters>event>magnitude>creationInfo>author"
         ]
       },
       "settings": {
@@ -281,21 +284,21 @@
         "format": "text",
         "fields": [
           "eventParameters>event§publicID",
-          "eventParameters>event>creationInfo>agencyID",
-          "eventParameters>event>creationInfo>author",
+          "eventParameters>event>creationInfo>agencyURI",
+          "eventParameters>event>creationInfo>authorURI",
           "eventParameters>event>origin§publicID",
-          "eventParameters>event>origin>creationInfo>agencyID",
-          "eventParameters>event>origin>creationInfo>author",
           "eventParameters>event>origin>time>value",
           "eventParameters>event>description>text",
           "eventParameters>event>origin>latitude>value",
           "eventParameters>event>origin>longitude>value",
           "eventParameters>event>origin>depth>value",
+          "eventParameters>event>origin>creationInfo>agencyURI",
+          "eventParameters>event>origin>creationInfo>authorURI",
           "eventParameters>event>magnitude§publicID",
-          "eventParameters>event>magnitude>creationInfo>agencyID",
-          "eventParameters>event>magnitude>creationInfo>author",
           "eventParameters>event>magnitude>mag>value",
-          "eventParameters>event>magnitude>mag>uncertainty"
+          "eventParameters>event>magnitude>mag>uncertainty",
+          "eventParameters>event>magnitude>creationInfo>agencyURI",
+          "eventParameters>event>magnitude>creationInfo>authorURI"
         ]
       },
       "settings": {
@@ -363,18 +366,18 @@
           "eventParameters>event>creationInfo>agencyID",
           "eventParameters>event>creationInfo>author",
           "eventParameters>event>origin§publicID",
-          "eventParameters>event>origin>creationInfo>agencyID",
-          "eventParameters>event>origin>creationInfo>author",
           "eventParameters>event>origin>time>value",
           "eventParameters>event>description>text",
           "eventParameters>event>origin>latitude>value",
           "eventParameters>event>origin>longitude>value",
           "eventParameters>event>origin>depth>value",
+          "eventParameters>event>origin>creationInfo>agencyID",
+          "eventParameters>event>origin>creationInfo>author",
           "eventParameters>event>magnitude§publicID",
-          "eventParameters>event>magnitude>creationInfo>agencyID",
-          "eventParameters>event>magnitude>creationInfo>author",
           "eventParameters>event>magnitude>mag>value",
-          "eventParameters>event>magnitude>mag>uncertainty"
+          "eventParameters>event>magnitude>mag>uncertainty",
+          "eventParameters>event>magnitude>creationInfo>agencyID",
+          "eventParameters>event>magnitude>creationInfo>author"
         ]
       },
       "settings": {
