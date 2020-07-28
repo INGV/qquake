@@ -745,7 +745,7 @@ class Origin:
         self.creationInfo = creationInfo
         self.originUncertainty = originUncertainty
 
-        if not self.time or not self.time.is_valid() and self.compositeTime and self.compositeTime.can_convert_to_datetime():
+        if (not self.time or not self.time.is_valid()) and self.compositeTime and self.compositeTime.can_convert_to_datetime():
             # upgrade composite time value to time value
             self.time = self.compositeTime.to_timequantity()
 
