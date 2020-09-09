@@ -410,6 +410,85 @@
       },
       "configversion": 0.1,
       "configlastupdate": "2020-07-22T11:37:27+00:00"
+    },
+    "ISC": {
+      "title": "International Seismological Centre (ISC)",
+      "info": "International Seismological Centre, On-line Bulletin, https://doi.org/10.31905/D808B830",
+      "infourl": "http://www.isc.ac.uk/fdsnws/event/1/",
+      "datalicense": "Citing data published by ISC",
+      "datalicenseurl": "http://www.isc.ac.uk/iscbulletin/citing.php",
+      "dataprovider": "International Seismological Centre (ISC)",
+      "dataproviderurl": "http://www.isc.ac.uk",
+      "endpointurl": "http://www.isc.ac.uk/fdsnws/event/1/query?",
+      "datestart": "1900-01-01T00:00:00+00:00",
+      "dateend": "",
+      "boundingbox": [
+        -180,
+        -90,
+        180,
+        90
+      ],
+      "default": {
+        "datestart": "1900-01-01T00:00:00+00:00",
+        "dateend": "",
+        "boundingboxpredefined": "europe",
+        "style": {
+          "events": {
+            "style": "CPTI",
+            "classified_attribute_text": "Magnitude",
+            "classified_attribute_xml": "eventParameters>event>magnitude>mag>value"
+          }
+        },
+        "format": "text",
+        "fields": [
+          "eventParameters>event§publicID",
+          "eventParameters>event>creationInfo>agencyURI",
+          "eventParameters>event>creationInfo>authorURI",
+          "eventParameters>event>origin§publicID",
+          "eventParameters>event>origin>time>value",
+          "eventParameters>event>description>text",
+          "eventParameters>event>origin>latitude>value",
+          "eventParameters>event>origin>longitude>value",
+          "eventParameters>event>origin>depth>value",
+          "eventParameters>event>origin>creationInfo>agencyURI",
+          "eventParameters>event>origin>creationInfo>authorURI",
+          "eventParameters>event>magnitude§publicID",
+          "eventParameters>event>magnitude>mag>value",
+          "eventParameters>event>magnitude>mag>uncertainty",
+          "eventParameters>event>magnitude>creationInfo>agencyURI",
+          "eventParameters>event>magnitude>creationInfo>authorURI"
+        ]
+      },
+      "settings": {
+        "queryeventid": true,
+        "queryoriginid": true,
+        "querymagnitudeid": true,
+        "queryfocalmechanismid": true,
+        "queryupdatedafter": true,
+        "querycatalog": true,
+        "querycontributor": true,
+        "querycontributorid": true,
+        "queryeventtype": true,
+        "querymagnitudetype": true,
+        "queryincludeallorigins": true,
+        "queryincludeallmagnitudes": true,
+        "queryincludearrivals": true,
+        "queryincludeallstationsmagnitudes": true,
+        "querylimit": true,
+        "querylimitmaxentries": 40000,
+        "querycircular": true,
+        "querycircularradiuskm": false,
+        "querydepth": true,
+        "outputtext": false,
+        "outputxml": true,
+        "outputgeojson": true,
+        "outputjson": true,
+        "outputkml": false,
+        "outputxlsx": false,
+        "httpcodenodata": "204"
+      },
+      "configversion": 0.1,
+      "configlastupdate": "2020-09-09T09:52:00+00:00"
     }
   },
   "fdsnstation": {
