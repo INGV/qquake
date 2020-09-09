@@ -108,6 +108,7 @@ class Fetcher(QObject):
         self.station_codes = station_codes
         self.locations = locations
         self.pending_event_ids = event_ids
+        self.macro_pending_event_ids = event_ids
         self.output_type = output_type
 
         self.service_config = SERVICE_MANAGER.service_details(self.service_type, self.event_service)
@@ -262,6 +263,8 @@ class Fetcher(QObject):
         self.is_mdp_basic_text_request = True
         self.message.emit(self.tr('Fetching MDPs'), Qgis.Info)
 
+        self.pending_event_ids = self.macro_pending_event_ids[:1]
+        self.macro_pending_event_ids = self.macro_pending_event_ids[1:]
         request = QNetworkRequest(QUrl(self.generate_url()))
         request.setAttribute(QNetworkRequest.FollowRedirectsAttribute, True)
 
@@ -335,7 +338,10 @@ class Fetcher(QObject):
                         if self.is_mdp_basic_text_request:
                             self.result.add_mdp(reply.readAll())
 
-                        self.finished.emit(True)
+                        if self.macro_pending_event_ids:
+                            self.fetch_basic_mdp()
+                        else:
+                            self.finished.emit(True)
 
     def _generate_layer_name(self, layer_type=None):
         name = self.event_service
