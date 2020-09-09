@@ -1980,23 +1980,23 @@
   "styles": {
     "CPTI": {
       "type": "events",
-	  "url": "https://www.emidius.eu/AHEAD/symbols/CPTI15_symbols.qml"
+	  "url": "https://www.emidius.eu/qquake/symbology/CPTI15_symbols.qml"
     },
     "AHEAD_intensities": {
       "type": "macroseismic",
-      "url": "https://www.emidius.eu/AHEAD/symbols/AHEAD_intensities.qml"
+      "url": "https://www.emidius.eu/qquake/symbology/AHEAD_intensities.qml"
     },
     "stations": {
       "type": "stations",
-      "url": "https://www.emidius.eu/AHEAD/symbols/stations.qml"
+      "url": "https://www.emidius.eu/qquake/symbology/stations.qml"
     },
     "CPTI_wfs": {
       "type": "wfs",
-      "url": "https://www.emidius.eu/AHEAD/symbols/CPTI15_symbols_wfs.qml"
+      "url": "https://www.emidius.eu/qquake/symbology/CPTI15_symbols_wfs.qml"
     },
     "SHEEC_wfs": {
       "type": "wfs",
-      "url": "https://www.emidius.eu/AHEAD/symbols/SHEEC_symbols_wfs.qml"
+      "url": "https://www.emidius.eu/qquake/symbology/SHEEC_symbols_wfs.qml"
     },
     "EDSF_CF_top": {
       "type": "wfs",
