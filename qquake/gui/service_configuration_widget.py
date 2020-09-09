@@ -184,12 +184,15 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
         self.data_provider_url_edit.setText(config.get('dataproviderurl'))
         self.web_service_url_edit.setText(config.get('endpointurl'))
         self.qml_style_url_edit.setText(config.get('styleurl'))
-        self.qml_style_name_combo.setCurrentIndex(
-            self.qml_style_name_combo.findText(config.get('default', {}).get('style')))
+        if isinstance(config.get('default', {}).get('style'), str):
+            self.qml_style_name_combo.setCurrentIndex(self.qml_style_name_combo.findText(config.get('default', {}).get('style')))
+        else:
+            self.qml_style_name_combo.setCurrentIndex(
+                self.qml_style_name_combo.findText(config.get('default', {}).get('style', {}).get('style')))
 
         self.qml_style_url_edit_mdp.setText(config.get('mdpstyleurl'))
         self.qml_style_name_combo_mdp.setCurrentIndex(
-            self.qml_style_name_combo.findText(config.get('default', {}).get('mdp_style')))
+            self.qml_style_name_combo_mdp.findText(config.get('default', {}).get('mdp_style')))
 
         if config.get('datestart'):
             self.start_date_edit.setDateTime(QDateTime.fromString(config.get('datestart'), Qt.ISODate))
