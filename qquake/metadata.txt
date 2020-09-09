@@ -6,7 +6,7 @@
 name=QQuake
 qgisMinimumVersion=3.0
 description=QQuake plugin to download seismological data
-version=development snapshot 2020 07 27
+version=development snapshot 9th September 2020
 author=Istituto Nazionale di Geofisica e Vulcanologia (INGV)
 email=mario.locati@ingv.it
 
