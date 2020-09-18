@@ -333,6 +333,11 @@ class Fetcher(QObject):
                     self.fetch_next_event_by_id()
                 else:
                     if self.require_mdp_basic_text_request:
+                        if not self.pending_event_ids:
+                            # we don't yet have an explicit list of event ids to fetch -- build that now, then fire
+                            # off the one-by-one requests for their details
+                            self.macro_pending_event_ids = self.result.all_event_ids()
+
                         self.fetch_basic_mdp()
                     else:
                         if self.is_mdp_basic_text_request:
