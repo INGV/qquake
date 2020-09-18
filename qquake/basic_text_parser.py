@@ -218,6 +218,9 @@ class BasicTextParser:
 
         return f
 
+    def all_event_ids(self):
+        return [e['EventID'] for e in self.events]
+
 
 class BasicStationParser:
 
