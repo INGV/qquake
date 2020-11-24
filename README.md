@@ -9,3 +9,6 @@ To install the early version:
 * click on the Download button in the upper right corner and select the `zip` format
 * open QGIS and go in `Plugins -> Manage and Install Plugin`
 * choose the `Install from Zip` tab from the left panel and load the downloaded file
+
+Alternatively, you may access the QQuake homepage and download a zip file with the latest beta release<br>
+https://www.emidius.eu/qquake/
