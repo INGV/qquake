@@ -13,11 +13,7 @@ __copyright__ = 'Copyright 2020, North Road'
 # This will get replaced with a git SHA1 when you do a git archive
 __revision__ = '$Format:%H$'
 
-import json
-import os
-
 from qgis.PyQt.QtCore import QVariant, QDate, QDateTime, QTime, Qt
-from qgis.PyQt.QtXml import QDomDocument
 
 from qgis.core import (
     QgsFields,
@@ -25,8 +21,8 @@ from qgis.core import (
     QgsFeature,
     QgsGeometry,
     QgsPoint,
-    QgsSettings,
-    NULL
+    NULL,
+    QgsUnitTypes
 )
 
 EVENT_FIELD_TYPE = {
@@ -35,6 +31,7 @@ EVENT_FIELD_TYPE = {
     'Latitude': QVariant.Double,
     'Longitude': QVariant.Double,
     'Depth/km': QVariant.Double,
+    'Depth/m': QVariant.Double,
     'Author': QVariant.String,
     'Catalog': QVariant.String,
     'Contributor': QVariant.String,
@@ -80,16 +77,25 @@ class BasicTextParser:
     Basic plain text parser
     """
 
-    def __init__(self):
+    def __init__(self, convert_negative_depths=False,
+                 depth_unit=QgsUnitTypes.DistanceMeters):
         self.headers = []
         self.mdp_headers = []
         self.events = []
         self.mdp = []
+        self.convert_negative_depths = convert_negative_depths
+        self.depth_unit = depth_unit
 
     def parser_header_line(self, line):
         assert line[0] == '#'
         line = line[1:]
-        self.headers = [h.strip() for h in line.split('|')]
+        headers = [h.strip() for h in line.split('|')]
+
+        for h in headers:
+            if h == 'Depth/km' and self.depth_unit == QgsUnitTypes.DistanceMeters:
+                h = 'Depth/m'
+
+            self.headers.append(h)
 
     def parse(self, content):
         if not content:
@@ -150,6 +156,9 @@ class BasicTextParser:
     def to_event_feature(self, event, fields):
         f = QgsFeature(fields)
         for k, v in event.items():
+            if k == 'Depth/km' and self.depth_unit == QgsUnitTypes.DistanceMeters:
+                k = 'Depth/m'
+
             try:
                 if fields[fields.lookupField(k)].type() == QVariant.DateTime:
                     v = v.replace('--', '00')
@@ -164,6 +173,12 @@ class BasicTextParser:
                     v = int(v)
             except Exception:
                 v = NULL
+
+            if k in ('Depth/km', 'Depth/m') and v != NULL:
+                if self.depth_unit == QgsUnitTypes.DistanceMeters:
+                    v *= 1000
+                if self.convert_negative_depths:
+                    v = abs(v)
 
             f[k] = v
 
