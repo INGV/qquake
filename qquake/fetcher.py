@@ -343,7 +343,7 @@ class Fetcher(QObject):
                         if self.is_mdp_basic_text_request:
                             self.result.add_mdp(reply.readAll())
 
-                        if self.macro_pending_event_ids:
+                        if self.is_mdp_basic_text_request and self.macro_pending_event_ids:
                             self.fetch_basic_mdp()
                         else:
                             self.finished.emit(True)
