@@ -20,7 +20,6 @@ from qgis.PyQt.QtCore import (
     pyqtSignal
 )
 from qgis.PyQt.QtNetwork import QNetworkRequest, QNetworkReply
-
 from qgis.core import (
     Qgis,
     QgsNetworkAccessManager,
@@ -29,16 +28,15 @@ from qgis.core import (
     QgsUnitTypes,
 )
 
+from qquake.basic_text_parser import BasicTextParser, BasicStationParser
 from qquake.quakeml_parser import (
     QuakeMlParser,
     FDSNStationXMLParser,
     Magnitude,
     Station
 )
-from qquake.basic_text_parser import BasicTextParser, BasicStationParser
-from qquake.style_utils import StyleUtils
-
 from qquake.services import SERVICE_MANAGER
+from qquake.style_utils import StyleUtils
 
 
 class Fetcher(QObject):
@@ -79,7 +77,9 @@ class Fetcher(QObject):
                  locations=None,
                  parent=None,
                  output_fields=None,
-                 output_type=EXTENDED
+                 output_type=EXTENDED,
+                 convert_negative_depths=False,
+                 depth_unit=QgsUnitTypes.DistanceMeters
                  ):
         super().__init__(parent=parent)
 
@@ -110,6 +110,8 @@ class Fetcher(QObject):
         self.pending_event_ids = event_ids
         self.macro_pending_event_ids = event_ids
         self.output_type = output_type
+        self.convert_negative_depths = convert_negative_depths
+        self.depth_unit = depth_unit
 
         self.service_config = SERVICE_MANAGER.service_details(self.service_type, self.event_service)
 
@@ -123,9 +125,11 @@ class Fetcher(QObject):
         self.output_fields = output_fields
 
         if self.output_type == self.EXTENDED:
-            self.result = QuakeMlParser()
+            self.result = QuakeMlParser(convert_negative_depths=self.convert_negative_depths,
+                                        depth_unit=self.depth_unit)
         else:
-            self.result = BasicTextParser()
+            self.result = BasicTextParser(convert_negative_depths=self.convert_negative_depths,
+                                        depth_unit=self.depth_unit)
 
         self.missing_origins = set()
         self.is_missing_origin_request = False
@@ -241,7 +245,8 @@ class Fetcher(QObject):
         self.missing_origins = set(remaining[1:])
 
         # change smi: prefix to http://
-        next_origin = 'http://' + next_origin[4:]
+        parts = next_origin.split(":")
+        next_origin = 'http://' + ':'.join(parts[1:])
 
         self.is_missing_origin_request = True
 
@@ -525,6 +530,7 @@ class Fetcher(QObject):
             style_ref = style.get('style')
             if style_ref:
                 style_url = SERVICE_MANAGER.PRESET_STYLES[style_ref]['url']
+                assert style_url
                 if isinstance(self.result, BasicTextParser):
                     style_attr = style.get('classified_attribute_text')
                 else:

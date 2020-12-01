@@ -28,7 +28,8 @@ from qgis.core import (
     QgsGeometry,
     QgsPoint,
     QgsSettings,
-    NULL
+    NULL,
+    QgsUnitTypes
 )
 
 from qquake.services import SERVICE_MANAGER
@@ -1361,7 +1362,9 @@ class Event:
         return get_service_fields(SERVICE_MANAGER.FDSNEVENT, selected_fields)
 
     @staticmethod
-    def add_origin_attributes(origin, feature, output_fields):
+    def add_origin_attributes(origin, feature, output_fields,
+                              convert_negative_depths,
+                              depth_unit):
         settings = QgsSettings()
 
         short_field_names = settings.value('/plugins/qquake/output_short_field_names', True, bool)
@@ -1373,6 +1376,8 @@ class Event:
 
             if dest_field.get('one_to_many'):
                 continue
+
+            is_depth_field = dest_field['source'] == "eventParameters>event>origin>depth>value"
 
             source = dest_field['source'].replace('§', '>').split('>')
             assert source[0] == 'eventParameters'
@@ -1397,6 +1402,12 @@ class Event:
                 source_obj = getattr(source_obj, s)
                 if source_obj is None:
                     break
+
+            if is_depth_field and source_obj != NULL and source_obj is not None:
+                if depth_unit == QgsUnitTypes.DistanceKilometers:
+                    source_obj /= 1000
+                if convert_negative_depths:
+                    source_obj = abs(source_obj)
 
             feature[dest_field[field_config_key]] = source_obj
 
@@ -1449,7 +1460,8 @@ class Event:
 
             feature[dest_field[field_config_key]] = source_obj
 
-    def to_features(self, output_fields, preferred_origin_only, preferred_magnitudes_only, all_origins):
+    def to_features(self, output_fields, preferred_origin_only, preferred_magnitudes_only, all_origins,
+                    convert_negative_depths, depth_unit):
         settings = QgsSettings()
 
         short_field_names = settings.value('/plugins/qquake/output_short_field_names', True, bool)
@@ -1500,7 +1512,9 @@ class Event:
             self.add_magnitude_attributes(m, magnitude_feature, output_fields)
 
             magnitude_origin = all_origins[m.originID]
-            self.add_origin_attributes(magnitude_origin, magnitude_feature, output_fields)
+            self.add_origin_attributes(magnitude_origin, magnitude_feature, output_fields,
+                                       convert_negative_depths=convert_negative_depths,
+                                       depth_unit=depth_unit)
 
             origins_handled.add(m.originID)
 
@@ -1514,7 +1528,9 @@ class Event:
                 continue
 
             origin_feature = QgsFeature(f)
-            self.add_origin_attributes(o, origin_feature, output_fields)
+            self.add_origin_attributes(o, origin_feature, output_fields,
+                                       convert_negative_depths=convert_negative_depths,
+                                       depth_unit=depth_unit)
 
             yield origin_feature
 
@@ -1562,13 +1578,17 @@ class QuakeMlParser:
     QuakeML parser
     """
 
-    def __init__(self):
+    def __init__(self,
+                 convert_negative_depths=False,
+                 depth_unit=QgsUnitTypes.DistanceMeters):
         self.events = {}
         self.origins = {}
         self.magnitudes = {}
         self.macro_places = {}
         self.mdps = {}
         self.mdpsets = {}
+        self.convert_negative_depths = convert_negative_depths
+        self.depth_unit = depth_unit
 
     def parse_initial(self, content):
         self.events = []
@@ -1658,7 +1678,9 @@ class QuakeMlParser:
     def create_event_features(self, output_fields, preferred_origin_only, preferred_magnitudes_only):
         for e in self.events:
             for f in e.to_features(output_fields, preferred_origin_only, preferred_magnitudes_only,
-                                   all_origins=self.origins):
+                                   all_origins=self.origins,
+                                   convert_negative_depths=self.convert_negative_depths,
+                                   depth_unit=self.depth_unit):
                 yield f
 
     @staticmethod
