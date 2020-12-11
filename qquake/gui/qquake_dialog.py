@@ -213,9 +213,6 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                   self.button_station_export_service, self.button_ogc_export_service]:
             b.clicked.connect(self._export_service)
 
-        self.depth_unit_combo_box.addItem(self.tr('Meters'), QgsUnitTypes.DistanceMeters)
-        self.depth_unit_combo_box.addItem(self.tr('Kilometers'), QgsUnitTypes.DistanceKilometers)
-
         self._restore_settings()
         self._refresh_url(SERVICE_MANAGER.FDSNEVENT)
         self._refresh_url(SERVICE_MANAGER.MACROSEISMIC)
@@ -291,10 +288,6 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         s.setValue('/plugins/qquake/macro_last_tab', self.macro_tab_widget.currentIndex())
         s.setValue('/plugins/qquake/station_last_tab', self.fdsnstation_tab_widget.currentIndex())
 
-        s.setValue('/plugins/qquake/convert_negative_depth', self.convert_negative_depth_check.isChecked())
-        s.setValue('/plugins/qquake/depth_units',
-                   'km' if self.depth_unit_combo_box.currentData() == int(QgsUnitTypes.DistanceKilometers) else 'm')
-
         self.fsdn_event_filter.save_settings('fsdn_event')
         self.fsdn_by_id_filter.save_settings('fsdn_event')
         self.macro_filter.save_settings('macro')
@@ -332,11 +325,6 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.fdsn_tab_widget.setCurrentIndex(s.value('/plugins/qquake/fsdnevent_last_tab', 0, int))
         self.macro_tab_widget.setCurrentIndex(s.value('/plugins/qquake/macro_last_tab', 0, int))
         self.fdsnstation_tab_widget.setCurrentIndex(s.value('/plugins/qquake/station_last_tab', 0, int))
-
-        self.convert_negative_depth_check.setChecked(s.value('/plugins/qquake/convert_negative_depth', False, bool))
-        prev_units = QgsUnitTypes.DistanceMeters if s.value('/plugins/qquake/depth_units',
-                                                            'm') == 'm' else QgsUnitTypes.DistanceKilometers
-        self.depth_unit_combo_box.setCurrentIndex(self.depth_unit_combo_box.findData(prev_units))
 
     def get_current_service_id(self, service_type):
         if service_type == SERVICE_MANAGER.FDSNEVENT:
@@ -418,8 +406,8 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                            earthquake_max_intensity_greater=filter_widget.earthquake_max_intensity_greater(),
                            output_fields=filter_widget.output_fields,
                            output_type=filter_widget.output_type(),
-                           convert_negative_depths=self.convert_negative_depth_check.isChecked(),
-                           depth_unit=self.depth_unit_combo_box.currentData()
+                           convert_negative_depths=filter_widget.convert_negative_depths(),
+                           depth_unit=filter_widget.depth_unit()
                            )
         elif isinstance(filter_widget, FilterByIdWidget):
             if not service_config['settings'].get('queryeventid'):
@@ -431,8 +419,8 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                            contributor_id=filter_widget.contributor_id(),
                            output_fields=filter_widget.output_fields,
                            output_type=filter_widget.output_type(),
-                           convert_negative_depths=self.convert_negative_depth_check.isChecked(),
-                           depth_unit=self.depth_unit_combo_box.currentData()
+                           convert_negative_depths=filter_widget.convert_negative_depths(),
+                           depth_unit=filter_widget.depth_unit()
                            )
         elif isinstance(filter_widget, FilterStationByIdWidget):
             return Fetcher(service_type=service_type,
@@ -442,8 +430,8 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                            locations=filter_widget.locations(),
                            output_fields=filter_widget.output_fields,
                            output_type=filter_widget.output_type(),
-                           convert_negative_depths=self.convert_negative_depth_check.isChecked(),
-                           depth_unit=self.depth_unit_combo_box.currentData()
+                           convert_negative_depths=filter_widget.convert_negative_depths(),
+                           depth_unit=filter_widget.depth_unit()
                            )
 
     def _refresh_url(self, service_type=None):

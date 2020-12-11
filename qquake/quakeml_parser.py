@@ -1407,7 +1407,7 @@ class Event:
                 if depth_unit == QgsUnitTypes.DistanceKilometers:
                     source_obj /= 1000
                 if convert_negative_depths:
-                    source_obj = abs(source_obj)
+                    source_obj = -source_obj
 
             feature[dest_field[field_config_key]] = source_obj
 

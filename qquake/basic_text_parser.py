@@ -178,7 +178,7 @@ class BasicTextParser:
                 if self.depth_unit == QgsUnitTypes.DistanceMeters:
                     v *= 1000
                 if self.convert_negative_depths:
-                    v = abs(v)
+                    v = -v
 
             f[k] = v
 
