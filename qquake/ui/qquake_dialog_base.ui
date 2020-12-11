@@ -20,7 +20,7 @@
       <enum>QTabWidget::North</enum>
      </property>
      <property name="currentIndex">
-      <number>3</number>
+      <number>0</number>
      </property>
      <property name="tabsClosable">
       <bool>false</bool>
@@ -222,6 +222,16 @@
                </item>
               </layout>
              </widget>
+             <widget class="QWidget" name="tab_14">
+              <attribute name="title">
+               <string>By URL</string>
+              </attribute>
+              <layout class="QVBoxLayout" name="verticalLayout_21">
+               <item>
+                <widget class="QWidget" name="fsdn_by_url_container" native="true"/>
+               </item>
+              </layout>
+             </widget>
              <widget class="QWidget" name="tab_6">
               <attribute name="title">
                <string>Service Information</string>
@@ -391,7 +401,7 @@
               </size>
              </property>
              <property name="currentIndex">
-              <number>0</number>
+              <number>2</number>
              </property>
              <widget class="QWidget" name="tab_3">
               <attribute name="title">
@@ -435,6 +445,16 @@
               <layout class="QVBoxLayout" name="verticalLayout_15">
                <item>
                 <widget class="QWidget" name="macro_by_id_container" native="true"/>
+               </item>
+              </layout>
+             </widget>
+             <widget class="QWidget" name="tab_15">
+              <attribute name="title">
+               <string>By URL</string>
+              </attribute>
+              <layout class="QVBoxLayout" name="verticalLayout_22">
+               <item>
+                <widget class="QWidget" name="macro_by_url_container" native="true"/>
                </item>
               </layout>
              </widget>
@@ -583,7 +603,7 @@
            <item>
             <widget class="QTabWidget" name="fdsnstation_tab_widget">
              <property name="currentIndex">
-              <number>0</number>
+              <number>1</number>
              </property>
              <widget class="QWidget" name="tab_9">
               <attribute name="title">

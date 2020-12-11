@@ -79,7 +79,8 @@ class Fetcher(QObject):
                  output_fields=None,
                  output_type=EXTENDED,
                  convert_negative_depths=False,
-                 depth_unit=QgsUnitTypes.DistanceMeters
+                 depth_unit=QgsUnitTypes.DistanceMeters,
+                 url=None
                  ):
         super().__init__(parent=parent)
 
@@ -112,6 +113,7 @@ class Fetcher(QObject):
         self.output_type = output_type
         self.convert_negative_depths = convert_negative_depths
         self.depth_unit = depth_unit
+        self.url = url
 
         self.service_config = SERVICE_MANAGER.service_details(self.service_type, self.event_service)
 
@@ -151,6 +153,13 @@ class Fetcher(QObject):
             format = 'textmacro'
         else:
             format = 'text' if self.output_type == Fetcher.BASIC else 'xml'
+
+        if self.url is not None:
+            u = self.url
+            u = u.replace('&format=text','')
+            u = u.replace('&format=xml', '')
+            u = u+'&format=' +format
+            return u
 
         query = []
         # append to the string the parameter of the UI (starttime, endtime, etc)

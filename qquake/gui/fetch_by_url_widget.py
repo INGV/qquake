@@ -21,26 +21,25 @@
  *                                                                         *
  ***************************************************************************/
 """
-import re
-
 from qgis.PyQt import uic
-from qgis.PyQt.QtWidgets import QWidget
-from qgis.PyQt.QtCore import pyqtSignal
+from qgis.PyQt.QtCore import (
 
+    pyqtSignal
+)
+from qgis.PyQt.QtWidgets import QWidget
 from qgis.core import (
     QgsSettings,
-    QgsUnitTypes
 )
 
+from qquake.fetcher import Fetcher
 from qquake.gui.gui_utils import GuiUtils
 from qquake.gui.output_table_options_dialog import OutputTableOptionsDialog
 from qquake.services import SERVICE_MANAGER
-from qquake.fetcher import Fetcher
 
-FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('filter_station_by_id_widget_base.ui'))
+FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('fetch_by_url_widget.ui'))
 
 
-class FilterStationByIdWidget(QWidget, FORM_CLASS):
+class FetchByUrlWidget(QWidget, FORM_CLASS):
     changed = pyqtSignal()
 
     def __init__(self, iface, service_type, parent=None):
@@ -49,45 +48,44 @@ class FilterStationByIdWidget(QWidget, FORM_CLASS):
 
         self.setupUi(self)
 
+        self._enable_widgets()
         self.radio_basic_output.toggled.connect(self._enable_widgets)
         self.radio_extended_output.toggled.connect(self._enable_widgets)
-
-        self._enable_widgets()
-
+        
         self.output_table_options_button.clicked.connect(self._output_table_options)
 
         self.service_type = None
         self.service_id = None
         self.set_service_type(service_type)
         self.output_fields = None
+        self.service_config = {}
 
-        self.edit_network_code.textChanged.connect(self.changed)
-        self.edit_station_code.textChanged.connect(self.changed)
-        self.edit_location_code.textChanged.connect(self.changed)
+        self.url_edit.textChanged.connect(self.changed)
         self.radio_basic_output.toggled.connect(self.changed)
         self.radio_extended_output.toggled.connect(self.changed)
 
     def is_valid(self):
-        return bool(self.edit_network_code.text() or self.edit_station_code.text() or self.edit_location_code.text())
+        return bool(self.url_edit.toPlainText())
 
     def set_service_type(self, service_type):
         self.service_type = service_type
 
     def set_service_id(self, service_id):
         self.service_id = service_id
+        config = SERVICE_MANAGER.service_details(self.service_type, self.service_id)
+        if 'fields' in config['default']:
+            self.output_fields = config['default']['fields']
 
-        service_config = SERVICE_MANAGER.service_details(self.service_type, self.service_id)
-        if 'fields' in service_config['default']:
-            self.output_fields = service_config['default']['fields']
+        self.service_config = SERVICE_MANAGER.service_details(self.service_type, self.service_id)
 
-        if not service_config['settings'].get('outputtext', False):
+        if not self.service_config['settings'].get('outputtext', False):
             if self.radio_basic_output.isChecked():
                 self.radio_extended_output.setChecked(True)
             self.radio_basic_output.setEnabled(False)
         else:
             self.radio_basic_output.setEnabled(True)
 
-        if not service_config['settings'].get('outputxml', False):
+        if not self.service_config['settings'].get('outputxml', False):
             if self.radio_extended_output.isChecked():
                 self.radio_basic_output.setChecked(True)
             self.radio_extended_output.setEnabled(False)
@@ -95,32 +93,25 @@ class FilterStationByIdWidget(QWidget, FORM_CLASS):
             self.radio_extended_output.setEnabled(True)
 
     def restore_settings(self, prefix):
+        s = QgsSettings()
+
         if self.service_id:
             service_config = SERVICE_MANAGER.service_details(self.service_type, self.service_id)
         else:
             service_config = None
 
-        s = QgsSettings()
-        self.edit_network_code.setText(s.value('/plugins/qquake/{}_network_code'.format(prefix), '', str))
-        self.edit_station_code.setText(s.value('/plugins/qquake/{}_station_code'.format(prefix), '', str))
-        self.edit_location_code.setText(s.value('/plugins/qquake/{}_location_code'.format(prefix), '', str))
-
         if not service_config or service_config['settings'].get('outputtext', False):
             self.radio_basic_output.setChecked(
-                s.value('/plugins/qquake/{}_single_event_basic_checked'.format(prefix), True, bool))
+                s.value('/plugins/qquake/{}_url_basic_checked'.format(prefix), True, bool))
 
         if not service_config or service_config['settings'].get('outputxml', False):
             self.radio_extended_output.setChecked(
-                s.value('/plugins/qquake/{}_single_event_extended_checked'.format(prefix), False, bool))
+                s.value('/plugins/qquake/{}_url_extended_checked'.format(prefix), False, bool))
 
     def save_settings(self, prefix):
         s = QgsSettings()
-        s.setValue('/plugins/qquake/{}_network_code'.format(prefix), self.edit_network_code.text())
-        s.setValue('/plugins/qquake/{}_station_code'.format(prefix), self.edit_station_code.text())
-        s.setValue('/plugins/qquake/{}_location_code'.format(prefix), self.edit_location_code.text())
-
-        s.setValue('/plugins/qquake/{}_single_event_basic_checked'.format(prefix), self.radio_basic_output.isChecked())
-        s.setValue('/plugins/qquake/{}_single_event_extended_checked'.format(prefix),
+        s.setValue('/plugins/qquake/{}_url_basic_checked'.format(prefix), self.radio_basic_output.isChecked())
+        s.setValue('/plugins/qquake/{}_url_extended_checked'.format(prefix),
                    self.radio_extended_output.isChecked())
 
     def _enable_widgets(self):
@@ -132,20 +123,14 @@ class FilterStationByIdWidget(QWidget, FORM_CLASS):
             self.output_fields = dlg.selected_fields()
             self.changed.emit()
 
-    def network_codes(self):
-        return self.edit_network_code.text().strip() or None
-
-    def station_codes(self):
-        return self.edit_station_code.text().strip() or None
-
-    def locations(self):
-        return self.edit_location_code.text().strip() or None
-
     def output_type(self):
         return Fetcher.BASIC if self.radio_basic_output.isChecked() else Fetcher.EXTENDED
 
     def convert_negative_depths(self):
-        return False
+        return self.output_options_widget.convert_negative_depths()
 
     def depth_unit(self):
-        return QgsUnitTypes.DistanceKilometers
+        return self.output_options_widget.depth_unit()
+
+    def url(self):
+        return self.url_edit.toPlainText()

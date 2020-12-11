@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>fetch_by_url_widget_base</class>
+ <widget class="QWidget" name="fetch_by_url_widget_base">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>629</width>
+    <height>501</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="4" column="0" colspan="3">
+    <widget class="QGroupBox" name="groupBox_4">
+     <property name="title">
+      <string>Output</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_8">
+      <item row="1" column="0">
+       <widget class="QRadioButton" name="radio_extended_output">
+        <property name="text">
+         <string>Extended (user customizable)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QPushButton" name="output_table_options_button">
+        <property name="text">
+         <string>Output Table Options…</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0" colspan="2">
+       <widget class="QRadioButton" name="radio_basic_output">
+        <property name="text">
+         <string>Basic (default FDSN text format)</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QPlainTextEdit" name="url_edit"/>
+   </item>
+   <item row="2" column="1" colspan="2">
+    <widget class="QWidget" name="multi_event_widget" native="true">
+     <layout class="QGridLayout" name="gridLayout_3">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+     </layout>
+    </widget>
+   </item>
+   <item row="3" column="0" colspan="3">
+    <widget class="OutputOptionsWidget" name="output_options_widget" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>10</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label_event_id">
+     <property name="text">
+      <string>URL</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>OutputOptionsWidget</class>
+   <extends>QWidget</extends>
+   <header>qquake.gui.output_options_widget</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+ <buttongroups>
+  <buttongroup name="buttonGroup"/>
+ </buttongroups>
+</ui>
