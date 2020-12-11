@@ -122,9 +122,16 @@ class Fetcher(QObject):
             self.service_config['settings'].get('queryincludeallmagnitudes', False)
         self.preferred_mdp_only = s.value('/plugins/qquake/output_preferred_mdp', True, bool)
 
-        self.output_fields = output_fields
+        self.output_fields = output_fields[:]
 
         if self.output_type == self.EXTENDED:
+            if not self.preferred_origins_only and "eventParameters>event>preferredOriginID" not in self.output_fields:
+                self.output_fields.append("eventParameters>event>preferredOriginID")
+            if not self.preferred_magnitudes_only and "eventParameters>event>preferredMagnitudeID" not in self.output_fields:
+                self.output_fields.append("eventParameters>event>preferredMagnitudeID")
+            if not self.preferred_mdp_only and "macroseismicParameters>macroseismicEvent>preferredMDPSetID" not in self.output_fields:
+                self.output_fields.append("macroseismicParameters>macroseismicEvent>preferredMDPSetID")
+
             self.result = QuakeMlParser(convert_negative_depths=self.convert_negative_depths,
                                         depth_unit=self.depth_unit)
         else:
