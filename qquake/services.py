@@ -143,7 +143,15 @@ class ServiceManager(QObject):
         return self.services[service_type].keys()
 
     def service_details(self, service_type, service_id):
-        return self.services[service_type][service_id]
+        details = self.services[service_type][service_id]
+
+        # auto update older formats
+        if details.get('info') and not details.get('servicedescription'):
+            details['servicedescription'] = details['info']
+        if details.get('infourl') and not details.get('servicedescriptionurl'):
+            details['servicedescriptionurl'] = details['infourl']
+
+        return details
 
     def available_predefined_bounding_boxes(self):
         return self._predefined_bounding_boxes.keys()

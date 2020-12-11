@@ -79,7 +79,8 @@ class Fetcher(QObject):
                  output_fields=None,
                  output_type=EXTENDED,
                  convert_negative_depths=False,
-                 depth_unit=QgsUnitTypes.DistanceMeters
+                 depth_unit=QgsUnitTypes.DistanceMeters,
+                 url=None
                  ):
         super().__init__(parent=parent)
 
@@ -112,6 +113,7 @@ class Fetcher(QObject):
         self.output_type = output_type
         self.convert_negative_depths = convert_negative_depths
         self.depth_unit = depth_unit
+        self.url = url
 
         self.service_config = SERVICE_MANAGER.service_details(self.service_type, self.event_service)
 
@@ -122,9 +124,16 @@ class Fetcher(QObject):
             self.service_config['settings'].get('queryincludeallmagnitudes', False)
         self.preferred_mdp_only = s.value('/plugins/qquake/output_preferred_mdp', True, bool)
 
-        self.output_fields = output_fields
+        self.output_fields = output_fields[:]
 
         if self.output_type == self.EXTENDED:
+            if not self.preferred_origins_only and "eventParameters>event>preferredOriginID" not in self.output_fields:
+                self.output_fields.append("eventParameters>event>preferredOriginID")
+            if not self.preferred_magnitudes_only and "eventParameters>event>preferredMagnitudeID" not in self.output_fields:
+                self.output_fields.append("eventParameters>event>preferredMagnitudeID")
+            if not self.preferred_mdp_only and "macroseismicParameters>macroseismicEvent>preferredMDPSetID" not in self.output_fields:
+                self.output_fields.append("macroseismicParameters>macroseismicEvent>preferredMDPSetID")
+
             self.result = QuakeMlParser(convert_negative_depths=self.convert_negative_depths,
                                         depth_unit=self.depth_unit)
         else:
@@ -144,6 +153,13 @@ class Fetcher(QObject):
             format = 'textmacro'
         else:
             format = 'text' if self.output_type == Fetcher.BASIC else 'xml'
+
+        if self.url is not None:
+            u = self.url
+            u = u.replace('&format=text','')
+            u = u.replace('&format=xml', '')
+            u = u+'&format=' +format
+            return u
 
         query = []
         # append to the string the parameter of the UI (starttime, endtime, etc)
@@ -472,7 +488,7 @@ class Fetcher(QObject):
         vl = self._create_empty_mdp_layer()
 
         features = []
-        for f in parser.create_mdp_features(self.output_fields):
+        for f in parser.create_mdp_features(self.output_fields, self.preferred_mdp_only):
             features.append(f)
 
         ok, _ = vl.dataProvider().addFeatures(features)

@@ -175,8 +175,11 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
 
     def set_state_from_config(self, config):
         self.title_edit.setText(config.get('title'))
-        self.info_edit.setText(config.get('info'))
-        self.info_url_edit.setText(config.get('infourl'))
+        self.service_description_edit.setText(config.get('servicedescription'))
+        self.service_description_url_edit.setText(config.get('servicedescriptionurl'))
+        self.data_description_edit.setText(config.get('datadescription'))
+        self.data_description_url_edit.setText(config.get('datadescriptionurl'))
+        self.publications_text_edit.setPlainText('\n'.join(config.get('publications')) if isinstance(config.get('publications'), list) else str(config.get('publications')))
         self.webservice_manual_url_edit.setText(config.get('manualurl'))
         self.data_license_edit.setText(config.get('datalicense'))
         self.data_license_url_edit.setText(config.get('datalicenseurl'))
@@ -241,8 +244,11 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
             }
 
         config['title'] = self.title_edit.text()
-        config['info'] = self.info_edit.text()
-        config['infourl'] = self.info_url_edit.text()
+        config['servicedescription'] = self.service_description_edit.text()
+        config['servicedescriptionurl'] = self.service_description_url_edit.text()
+        config['datadescription'] = self.data_description_edit.text()
+        config['datadescriptionurl'] = self.data_description_url_edit.text()
+        config['publications'] = [] if not self.publications_text_edit.toPlainText() else self.publications_text_edit.toPlainText().split('\n')
         config['manualurl'] = self.webservice_manual_url_edit.text()
         config['datalicense'] = self.data_license_edit.text()
         config['datalicenseurl'] = self.data_license_url_edit.text()

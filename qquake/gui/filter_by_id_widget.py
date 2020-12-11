@@ -223,6 +223,12 @@ class FilterByIdWidget(QWidget, FORM_CLASS):
     def output_type(self):
         return Fetcher.BASIC if self.radio_basic_output.isChecked() else Fetcher.EXTENDED
 
+    def convert_negative_depths(self):
+        return self.output_options_widget.convert_negative_depths()
+
+    def depth_unit(self):
+        return self.output_options_widget.depth_unit()
+
     def _refresh_contributors(self):
         self.edit_contributor_id.clear()
         url = SERVICE_MANAGER.get_contributor_endpoint(self.service_type, self.service_id)

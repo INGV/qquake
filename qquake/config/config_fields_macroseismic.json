@@ -1025,6 +1025,34 @@
           "type": "String"
         },
         {
+          "field_short": "mevntmdpset",
+          "field_long": "MacroEventMdpSetReference",
+          "source": "macroseismicParameters>macroseismicEvent>mdpSetReference",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "mevnteventr",
+          "field_long": "MacroEventEventReference",
+          "source": "macroseismicParameters>macroseismicEvent>eventReference",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "mevntpremdp",
+          "field_long": "MacroEventPreferredMdpSetId",
+          "source": "macroseismicParameters>macroseismicEvent>preferredMDPSetID",
+          "description": "",
+          "type": "String"
+        },
+        {
+          "field_short": "mevntpreori",
+          "field_long": "MacroEventPreferredMacroOriginId",
+          "source": "macroseismicParameters>macroseismicEvent>preferredMacroseismicOriginID",
+          "description": "",
+          "type": "String"
+        },
+        {
           "field_short": "mevntcragi",
           "field_long": "MacroEventCreationAgencyID",
           "source": "macroseismicParameters>macroseismicEvent>creationInfo>agencyID",

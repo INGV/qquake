@@ -56,6 +56,7 @@ from qquake.fetcher import Fetcher
 from qquake.gui.filter_by_id_widget import FilterByIdWidget
 from qquake.gui.filter_parameter_widget import FilterParameterWidget
 from qquake.gui.filter_station_by_id_widget import FilterStationByIdWidget
+from qquake.gui.fetch_by_url_widget import FetchByUrlWidget
 from qquake.gui.gui_utils import GuiUtils
 from qquake.gui.ogc_service_options_widget import OgcServiceWidget
 from qquake.gui.service_configuration_widget import ServiceConfigurationDialog
@@ -87,6 +88,11 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         vl.setContentsMargins(0, 0, 0, 0)
         vl.addWidget(self.fsdn_by_id_filter)
         self.fsdn_by_id_container.setLayout(vl)
+        self.fdsn_by_url_widget = FetchByUrlWidget(iface, SERVICE_MANAGER.FDSNEVENT)
+        vl = QVBoxLayout()
+        vl.setContentsMargins(0, 0, 0, 0)
+        vl.addWidget(self.fdsn_by_url_widget)
+        self.fsdn_by_url_container.setLayout(vl)
         vl = QVBoxLayout()
         vl.setContentsMargins(0, 0, 0, 0)
         vl.addWidget(self.earthquake_service_info_widget)
@@ -102,6 +108,11 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         vl.setContentsMargins(0, 0, 0, 0)
         vl.addWidget(self.macro_by_id_filter)
         self.macro_by_id_container.setLayout(vl)
+        self.macro_by_url_widget = FetchByUrlWidget(iface, SERVICE_MANAGER.MACROSEISMIC)
+        vl = QVBoxLayout()
+        vl.setContentsMargins(0, 0, 0, 0)
+        vl.addWidget(self.macro_by_url_widget)
+        self.macro_by_url_container.setLayout(vl)
         self.macro_service_info_widget = ServiceInformationWidget(iface)
         vl = QVBoxLayout()
         vl.setContentsMargins(0, 0, 0, 0)
@@ -173,9 +184,11 @@ class QQuakeDialog(QDialog, FORM_CLASS):
 
         self.fsdn_event_filter.changed.connect(lambda: self._refresh_url(SERVICE_MANAGER.FDSNEVENT))
         self.fsdn_by_id_filter.changed.connect(lambda: self._refresh_url(SERVICE_MANAGER.FDSNEVENT))
+        self.fdsn_by_url_widget.changed.connect(lambda: self._refresh_url(SERVICE_MANAGER.FDSNEVENT))
         self.fdsn_event_list.currentRowChanged.connect(lambda: self._refresh_url(SERVICE_MANAGER.FDSNEVENT))
         self.macro_filter.changed.connect(lambda: self._refresh_url(SERVICE_MANAGER.MACROSEISMIC))
         self.macro_by_id_filter.changed.connect(lambda: self._refresh_url(SERVICE_MANAGER.MACROSEISMIC))
+        self.macro_by_url_widget.changed.connect(lambda: self._refresh_url(SERVICE_MANAGER.MACROSEISMIC))
         self.fdsn_macro_list.currentRowChanged.connect(lambda: self._refresh_url(SERVICE_MANAGER.MACROSEISMIC))
         self.station_filter.changed.connect(lambda: self._refresh_url(SERVICE_MANAGER.FDSNSTATION))
         self.station_by_id_filter.changed.connect(lambda: self._refresh_url(SERVICE_MANAGER.FDSNSTATION))
@@ -212,9 +225,6 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         for b in [self.button_fdsn_export_service, self.button_macro_export_service,
                   self.button_station_export_service, self.button_ogc_export_service]:
             b.clicked.connect(self._export_service)
-
-        self.depth_unit_combo_box.addItem(self.tr('Meters'), QgsUnitTypes.DistanceMeters)
-        self.depth_unit_combo_box.addItem(self.tr('Kilometers'), QgsUnitTypes.DistanceKilometers)
 
         self._restore_settings()
         self._refresh_url(SERVICE_MANAGER.FDSNEVENT)
@@ -291,14 +301,12 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         s.setValue('/plugins/qquake/macro_last_tab', self.macro_tab_widget.currentIndex())
         s.setValue('/plugins/qquake/station_last_tab', self.fdsnstation_tab_widget.currentIndex())
 
-        s.setValue('/plugins/qquake/convert_negative_depth', self.convert_negative_depth_check.isChecked())
-        s.setValue('/plugins/qquake/depth_units',
-                   'km' if self.depth_unit_combo_box.currentData() == int(QgsUnitTypes.DistanceKilometers) else 'm')
-
         self.fsdn_event_filter.save_settings('fsdn_event')
         self.fsdn_by_id_filter.save_settings('fsdn_event')
+        self.fdsn_by_url_widget.save_settings('fsdn_event')
         self.macro_filter.save_settings('macro')
         self.macro_by_id_filter.save_settings('macro')
+        self.macro_by_url_widget.save_settings('macro')
         self.station_filter.save_settings('stations')
         self.station_by_id_filter.save_settings('stations')
 
@@ -324,19 +332,16 @@ class QQuakeDialog(QDialog, FORM_CLASS):
 
         self.fsdn_event_filter.restore_settings('fsdn_event')
         self.fsdn_by_id_filter.restore_settings('fsdn_event')
+        self.fdsn_by_url_widget.restore_settings('fsdn_event')
         self.macro_filter.restore_settings('macro')
         self.macro_by_id_filter.restore_settings('macro')
+        self.macro_by_url_widget.restore_settings('fsdn_event')
         self.station_filter.restore_settings('stations')
         self.station_by_id_filter.restore_settings('stations')
 
         self.fdsn_tab_widget.setCurrentIndex(s.value('/plugins/qquake/fsdnevent_last_tab', 0, int))
         self.macro_tab_widget.setCurrentIndex(s.value('/plugins/qquake/macro_last_tab', 0, int))
         self.fdsnstation_tab_widget.setCurrentIndex(s.value('/plugins/qquake/station_last_tab', 0, int))
-
-        self.convert_negative_depth_check.setChecked(s.value('/plugins/qquake/convert_negative_depth', False, bool))
-        prev_units = QgsUnitTypes.DistanceMeters if s.value('/plugins/qquake/depth_units',
-                                                            'm') == 'm' else QgsUnitTypes.DistanceKilometers
-        self.depth_unit_combo_box.setCurrentIndex(self.depth_unit_combo_box.findData(prev_units))
 
     def get_current_service_id(self, service_type):
         if service_type == SERVICE_MANAGER.FDSNEVENT:
@@ -363,15 +368,19 @@ class QQuakeDialog(QDialog, FORM_CLASS):
 
     def get_service_filter_widget(self, service_type):
         if service_type == SERVICE_MANAGER.FDSNEVENT:
-            if self.fdsn_tab_widget.currentIndex() in (0, 2):
+            if self.fdsn_tab_widget.currentIndex() in (0, 3):
                 return self.fsdn_event_filter
-            else:
+            elif self.fdsn_tab_widget.currentIndex() == 1:
                 return self.fsdn_by_id_filter
+            elif self.fdsn_tab_widget.currentIndex() == 2:
+                return self.fdsn_by_url_widget
         elif service_type == SERVICE_MANAGER.MACROSEISMIC:
-            if self.macro_tab_widget.currentIndex() in (0, 2):
+            if self.macro_tab_widget.currentIndex() in (0, 3):
                 return self.macro_filter
-            else:
+            elif self.macro_tab_widget.currentIndex() == 1:
                 return self.macro_by_id_filter
+            elif self.macro_tab_widget.currentIndex() == 2:
+                return self.macro_by_url_widget
         elif service_type == SERVICE_MANAGER.FDSNSTATION:
             if self.fdsnstation_tab_widget.currentIndex() in (0, 2):
                 return self.station_filter
@@ -418,8 +427,8 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                            earthquake_max_intensity_greater=filter_widget.earthquake_max_intensity_greater(),
                            output_fields=filter_widget.output_fields,
                            output_type=filter_widget.output_type(),
-                           convert_negative_depths=self.convert_negative_depth_check.isChecked(),
-                           depth_unit=self.depth_unit_combo_box.currentData()
+                           convert_negative_depths=filter_widget.convert_negative_depths(),
+                           depth_unit=filter_widget.depth_unit()
                            )
         elif isinstance(filter_widget, FilterByIdWidget):
             if not service_config['settings'].get('queryeventid'):
@@ -431,8 +440,17 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                            contributor_id=filter_widget.contributor_id(),
                            output_fields=filter_widget.output_fields,
                            output_type=filter_widget.output_type(),
-                           convert_negative_depths=self.convert_negative_depth_check.isChecked(),
-                           depth_unit=self.depth_unit_combo_box.currentData()
+                           convert_negative_depths=filter_widget.convert_negative_depths(),
+                           depth_unit=filter_widget.depth_unit()
+                           )
+        elif isinstance(filter_widget, FetchByUrlWidget):
+            return Fetcher(service_type=service_type,
+                           event_service=service,
+                           url=filter_widget.url(),
+                           output_fields=filter_widget.output_fields,
+                           output_type=filter_widget.output_type(),
+                           convert_negative_depths=filter_widget.convert_negative_depths(),
+                           depth_unit=filter_widget.depth_unit()
                            )
         elif isinstance(filter_widget, FilterStationByIdWidget):
             return Fetcher(service_type=service_type,
@@ -442,8 +460,8 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                            locations=filter_widget.locations(),
                            output_fields=filter_widget.output_fields,
                            output_type=filter_widget.output_type(),
-                           convert_negative_depths=self.convert_negative_depth_check.isChecked(),
-                           depth_unit=self.depth_unit_combo_box.currentData()
+                           convert_negative_depths=filter_widget.convert_negative_depths(),
+                           depth_unit=filter_widget.depth_unit()
                            )
 
     def _refresh_url(self, service_type=None):
@@ -482,7 +500,8 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         filter_widget = self.get_service_filter_widget(service_type)
         self.button_box.button(QDialogButtonBox.Ok).setEnabled(filter_widget.is_valid())
 
-    def _update_service_widgets(self, service_type, service_id, filter_widget, filter_by_id_widget, info_widget,
+    def _update_service_widgets(self, service_type, service_id, filter_widget, filter_by_id_widget, fetch_by_url_widget,
+                                info_widget,
                                 remove_service_button, edit_service_button, rename_service_button, tab_widget):
         service_config = SERVICE_MANAGER.service_details(service_type, service_id)
 
@@ -549,6 +568,8 @@ class QQuakeDialog(QDialog, FORM_CLASS):
 
         filter_widget.set_service_id(service_id)
         filter_by_id_widget.set_service_id(service_id)
+        if fetch_by_url_widget is not None:
+            fetch_by_url_widget.set_service_id(service_id)
 
         remove_service_button.setEnabled(not service_config['read_only'])
         edit_service_button.setEnabled(not service_config['read_only'])
@@ -565,6 +586,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self._update_service_widgets(service_type=SERVICE_MANAGER.FDSNEVENT, service_id=service_id,
                                      filter_widget=self.fsdn_event_filter,
                                      filter_by_id_widget=self.fsdn_by_id_filter,
+                                     fetch_by_url_widget=self.fdsn_by_url_widget,
                                      info_widget=self.earthquake_service_info_widget,
                                      remove_service_button=self.button_fdsn_remove_service,
                                      edit_service_button=self.button_fdsn_edit_service,
@@ -582,6 +604,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self._update_service_widgets(service_type=SERVICE_MANAGER.MACROSEISMIC, service_id=service_id,
                                      filter_widget=self.macro_filter,
                                      filter_by_id_widget=self.macro_by_id_filter,
+                                     fetch_by_url_widget=self.macro_by_url_widget,
                                      info_widget=self.macro_service_info_widget,
                                      remove_service_button=self.button_macro_remove_service,
                                      edit_service_button=self.button_macro_edit_service,
@@ -598,6 +621,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         service_id = self.fdsn_station_list.currentItem().text()
         self._update_service_widgets(service_type=SERVICE_MANAGER.FDSNSTATION, service_id=service_id,
                                      filter_by_id_widget=self.station_by_id_filter,
+                                     fetch_by_url_widget=None,
                                      filter_widget=self.station_filter, info_widget=self.station_service_info_widget,
                                      remove_service_button=self.button_station_remove_service,
                                      edit_service_button=self.button_station_edit_service,

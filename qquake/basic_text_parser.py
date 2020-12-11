@@ -178,7 +178,7 @@ class BasicTextParser:
                 if self.depth_unit == QgsUnitTypes.DistanceMeters:
                     v *= 1000
                 if self.convert_negative_depths:
-                    v = abs(v)
+                    v = -v
 
             f[k] = v
 
@@ -201,7 +201,7 @@ class BasicTextParser:
 
         return fields
 
-    def create_mdp_features(self, selected_fields):
+    def create_mdp_features(self, selected_fields, preferred_mdp_set_only):
         fields = self.create_mdp_fields(selected_fields)
 
         for e in self.mdp:

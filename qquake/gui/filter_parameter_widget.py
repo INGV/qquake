@@ -688,6 +688,12 @@ class FilterParameterWidget(QWidget, FORM_CLASS):
 
         return self.earthquake_number_mdps_greater_spin.value() if self.earthquake_number_mdps_greater_check.isChecked() else None
 
+    def convert_negative_depths(self):
+        return self.output_options_widget.convert_negative_depths()
+
+    def depth_unit(self):
+        return self.output_options_widget.depth_unit()
+
     def output_type(self):
         return Fetcher.BASIC if self.radio_basic_output.isChecked() else Fetcher.EXTENDED
 
