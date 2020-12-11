@@ -15,12 +15,10 @@ __revision__ = '$Format:%H$'
 
 import json
 import os
-
 from typing import List
 
 from qgis.PyQt.QtCore import QVariant, QDate, QDateTime, QTime, Qt
 from qgis.PyQt.QtXml import QDomDocument
-
 from qgis.core import (
     QgsFields,
     QgsField,
@@ -147,6 +145,24 @@ def get_service_fields(service_type, selected_fields):
             selected = path in selected_fields
         else:
             path = path[len('eventParameters>event>'):].replace('§', '>').replace('>', '_')
+            selected = settings.value('/plugins/qquake/output_field_{}'.format(path), True, bool)
+        if not selected:
+            continue
+
+        fields.append(QgsField(f[field_config_key], FIELD_TYPE_MAP[f['type']]))
+
+    for f in field_config['field_groups'].get('macro_basic_event_info', {}).get('fields', []):
+        if f.get('skip'):
+            continue
+
+        if f.get('one_to_many'):
+            continue
+
+        path = f['source']
+        if selected_fields:
+            selected = path in selected_fields
+        else:
+            path = path[len('macroseismicParameters>'):].replace('§', '>').replace('>', '_')
             selected = settings.value('/plugins/qquake/output_field_{}'.format(path), True, bool)
         if not selected:
             continue
@@ -989,14 +1005,54 @@ class MsParameters:
     """
 
     def __init__(self,
-                 publicID):
+                 publicID,
+                 macroseismicEvent: List,):
         self.publicID = publicID
+        self.macroseismicEvent = macroseismicEvent # one to many
 
     @staticmethod
     def from_element(element):
         parser = ElementParser(element)
 
-        return MsParameters(publicID=parser.string('publicID', is_attribute=True, optional=False))
+        events = []
+        event_node = element.firstChildElement('ms:macroseismicEvent')
+        while not event_node.isNull():
+            events.append(MsEvent.from_element(event_node))
+            event_node = event_node.nextSiblingElement('ms:macroseismicEvent')
+
+        return MsParameters(publicID=parser.string('publicID', is_attribute=True, optional=False),
+                            macroseismicEvent=events)
+
+
+class MsEvent:
+    """
+    MacroseismicEvent
+    """
+
+    def __init__(self,
+                 publicID,
+                 mdpSetReference,
+                 eventReference,
+                 preferredMDPSetID,
+                 preferredMacroseismicOriginID,
+                 creationInfo):
+        self.publicID = publicID
+        self.mdpSetReference = mdpSetReference
+        self.eventReference = eventReference
+        self.preferredMDPSetID = preferredMDPSetID
+        self.preferredMacroseismicOriginID = preferredMacroseismicOriginID
+        self.creationInfo = creationInfo
+
+    @staticmethod
+    def from_element(element):
+        parser = ElementParser(element)
+
+        return MsEvent(publicID=parser.string('publicID', is_attribute=True, optional=False),
+                       mdpSetReference=parser.string('ms:mdpSetReference', optional=True),
+                       eventReference=parser.string('ms:eventReference', optional=True),
+                       preferredMDPSetID=parser.string('ms:preferredMDPSetID', optional=True),
+                       preferredMacroseismicOriginID=parser.string('ms:preferredMacroseismicOriginID', optional=True),
+                       creationInfo=parser.creation_info('ms:creationInfo', optional=True))
 
 
 class MsPlace:
@@ -1585,6 +1641,7 @@ class QuakeMlParser:
         self.origins = {}
         self.magnitudes = {}
         self.macro_places = {}
+        self.macro_events = {}
         self.mdps = {}
         self.mdpsets = {}
         self.convert_negative_depths = convert_negative_depths
@@ -1594,6 +1651,7 @@ class QuakeMlParser:
         self.events = []
         self.origins = {}
         self.magnitudes = {}
+        self.macro_events = {}
         self.macro_places = {}
         self.mdps = {}
         self.mdpsets = {}
@@ -1633,6 +1691,12 @@ class QuakeMlParser:
             mdp_element = macro_mdp.at(e).toElement()
             mdp = MsMdp.from_element(mdp_element)
             self.mdps[mdp.publicID] = mdp
+
+        macro_events = doc.elementsByTagName('ms:macroseismicEvent')
+        for e in range(macro_events.length()):
+            macro_event_element=macro_events.at(e).toElement()
+            macro_event = MsEvent.from_element(macro_event_element)
+            self.macro_events[macro_event.publicID] = macro_event
 
         mdpset_elements = doc.elementsByTagName('ms:mdpSet')
         for e in range(mdpset_elements.length()):
@@ -1702,6 +1766,11 @@ class QuakeMlParser:
                 place = self.macro_places[m.placeReference]
             else:
                 place = None
+
+            event_reference = m.eventReference
+            # try to get macroseismicEvent
+            macro_events = [m for m in self.macro_events.values() if m.eventReference == event_reference]
+            macro_event = macro_events[0] if macro_events else None
 
             mdpset = self.mdp_set_for_mdp(m)
 
@@ -1872,6 +1941,40 @@ class QuakeMlParser:
                     continue
 
                 source_obj = place
+                for s in source:
+                    if source_obj is None:
+                        source_obj = NULL
+                        break
+                    assert hasattr(source_obj, s)
+                    source_obj = getattr(source_obj, s)
+
+                f[dest_field[field_config_key]] = source_obj
+
+            for dest_field in field_config['field_groups'].get('macro_basic_event_info', {}).get('fields', []):
+                if dest_field.get('skip'):
+                    continue
+
+                if dest_field.get('one_to_many'):
+                    continue
+
+                source = dest_field['source'].replace('§', '>').split('>')
+                assert source[0] == 'macroseismicParameters'
+                source = source[1:]
+                assert source[0] == 'macroseismicEvent'
+                source = source[1:]
+
+                if selected_fields:
+                    selected = dest_field['source'] in selected_fields
+                else:
+                    selected = settings.value('/plugins/qquake/output_field_{}'.format('_'.join(source)), True, bool)
+
+                if not selected:
+                    continue
+
+                source_obj = macro_event
+                if source_obj is None:
+                    continue
+                    
                 for s in source:
                     if source_obj is None:
                         source_obj = NULL
