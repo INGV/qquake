@@ -472,7 +472,7 @@ class Fetcher(QObject):
         vl = self._create_empty_mdp_layer()
 
         features = []
-        for f in parser.create_mdp_features(self.output_fields):
+        for f in parser.create_mdp_features(self.output_fields, self.preferred_mdp_only):
             features.append(f)
 
         ok, _ = vl.dataProvider().addFeatures(features)

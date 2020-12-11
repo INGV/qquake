@@ -201,7 +201,7 @@ class BasicTextParser:
 
         return fields
 
-    def create_mdp_features(self, selected_fields):
+    def create_mdp_features(self, selected_fields, preferred_mdp_set_only):
         fields = self.create_mdp_fields(selected_fields)
 
         for e in self.mdp:

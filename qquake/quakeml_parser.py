@@ -1751,7 +1751,7 @@ class QuakeMlParser:
     def create_mdp_fields(selected_fields):
         return get_service_fields(SERVICE_MANAGER.MACROSEISMIC, selected_fields)
 
-    def create_mdp_features(self, selected_fields):
+    def create_mdp_features(self, selected_fields, preferred_mdp_set_only):
         settings = QgsSettings()
 
         short_field_names = settings.value('/plugins/qquake/output_short_field_names', True, bool)
@@ -1773,6 +1773,12 @@ class QuakeMlParser:
             macro_event = macro_events[0] if macro_events else None
 
             mdpset = self.mdp_set_for_mdp(m)
+
+            if preferred_mdp_set_only and macro_event is not None:
+                preferred_mdp_set_id = macro_event.preferredMDPSetID
+                if mdpset.publicID != preferred_mdp_set_id:
+                    # not in the preferred mdp set, so skip
+                    continue
 
             f = QgsFeature(fields)
             for dest_field in field_config['field_groups']['basic_event_info']['fields']:
@@ -1974,7 +1980,7 @@ class QuakeMlParser:
                 source_obj = macro_event
                 if source_obj is None:
                     continue
-                    
+
                 for s in source:
                     if source_obj is None:
                         source_obj = NULL
