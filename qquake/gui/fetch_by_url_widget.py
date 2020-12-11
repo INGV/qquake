@@ -51,7 +51,7 @@ class FetchByUrlWidget(QWidget, FORM_CLASS):
         self._enable_widgets()
         self.radio_basic_output.toggled.connect(self._enable_widgets)
         self.radio_extended_output.toggled.connect(self._enable_widgets)
-        
+
         self.output_table_options_button.clicked.connect(self._output_table_options)
 
         self.service_type = None

@@ -28,6 +28,8 @@ from qgis.PyQt.QtWidgets import QWidget
 from qquake.services import SERVICE_MANAGER
 from qquake.gui.gui_utils import GuiUtils
 
+from qgis.core import QgsStringUtils
+
 FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('service_information_widget.ui'))
 
 
@@ -50,10 +52,16 @@ class ServiceInformationWidget(QWidget, FORM_CLASS):
         self.service_id = service_id
         self.service_config = SERVICE_MANAGER.service_details(service_type, service_id)
 
-        html = """<p><b>Title</b><br>
-        {title}</p>
-        <p><b>Description</b><br>
-        <a href="{infourl}">{info}</a></p>""".format(**self.service_config)
+        html = f"""<p><b>Title</b><br>
+        {self.service_config['title']}</p>"""
+
+        if self.service_config.get('servicedescriptionurl') or self.service_config.get('servicedescription'):
+            html+=f"""<p><b>Service description</b><br>
+            <a href="{self.service_config['servicedescriptionurl']}">{self.service_config.get('servicedescription') or self.service_config['servicedescriptionurl']}</a></p>"""
+
+        html += """<p><b>Service managed by</b><br>
+            <a href="{dataproviderurl}">{dataprovider}</a></p>
+            """.format(**self.service_config)
 
         if self.service_config.get('help'):
             html += """
@@ -61,13 +69,21 @@ class ServiceInformationWidget(QWidget, FORM_CLASS):
             <a href="{help}">{help}</a></p>
             """.format(**self.service_config)
 
-        html += """<p><b>Data license</b><br>
-            <a href="{datalicenseurl}">{datalicense}</a></p>
-            """.format(**self.service_config)
+        if self.service_config.get('datadescription') or self.service_config.get('datadescriptionurl'):
+            html += f"""<p><b>Data description</b><br>
+                <a href="{self.service_config['datadescriptionurl']}">{self.service_config.get('datadescription') or self.service_config['datadescriptionurl']}</a></p>
+                """
 
-        html += """<p><b>Service managed by</b><br>
-            <a href="{dataproviderurl}">{dataprovider}</a></p>
-            """.format(**self.service_config)
+        if self.service_config.get('datalicenseurl') or self.service_config.get('datalicense'):
+            html += f"""<p><b>Data license</b><br>
+                <a href="{self.service_config['datalicenseurl']}">{self.service_config.get('datalicense') or self.service_config.get('datalicenseurl')}</a></p>
+                """
+
+        if self.service_config.get('publications'):
+            html += f"""<p><b>Publications</b></p><ul>"""
+            for p in self.service_config['publications']:
+                html += f"""<li>{QgsStringUtils.insertLinks(p)[0]}</li>"""
+            html += "</ul>"
 
         capabilities = []
 
