@@ -2,16 +2,18 @@
   "fdsnevent": {
     "AHEAD-SHEEC": {
       "title": "AHEAD, European Archive of Historical EArthquake Data (pre 1900)",
-      "servicedescription": "Albini P., Locati M., Rovida A., Stucchi M. (2013). European Archive of Historical EArthquake Data (AHEAD). Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.6092/INGV.IT-AHEAD",
-      "servicedescriptionurl": "https://doi.org/10.6092/INGV.IT-AHEAD",
-      "datadescription": "",
-      "datadescriptionurl": "",
-      "help": "https://www.emidius.eu/AHEAD/services/",
+      "servicedescription": "FDSN-event provided by AHEAD",
+      "servicedescriptionurl": "https://www.emidius.eu/AHEAD/services/",
+      "datadescription": "Albini P., Locati M., Rovida A., Stucchi M. (2013). European Archive of Historical EArthquake Data (AHEAD). Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.6092/INGV.IT-AHEAD",
+      "datadescriptionurl": "https://doi.org/10.6092/INGV.IT-AHEAD",
       "datalicense": "custom",
       "datalicenseurl": "https://www.emidius.eu/AHEAD/introduction.php#copyright",
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
       "dataproviderurl": "http://www.ingv.it",
-      "publications": ["some text http://google.com more text", "some other text http://google.com a http://google.com"],
+      "help": "",
+      "publications": [
+        "Locati, M., Rovida, A., Albini, P., Stucchi, M. (2014). The AHEAD Portal: A Gateway to European Historical Earthquake Data. Seismological Research Letters, 85(3), 727–734. https://doi.org/10.1785/0220130113",
+        "Rovida, A., Locati, M. (2015). Archive of Historical Earthquake Data for the European-Mediterranean Area. In Perspectives on European Earthquake Engineering and Seismology (pp. 359–369). Springer International Publishing. https://doi.org/10.1007/978-3-319-16964-4_14"],
       "endpointurl": "https://www.emidius.eu/fdsnws/event/1/query?",
       "datestart": "1000-01-01T00:00:00+00:00",
       "dateend": "1899-12-31T23:59:59+00:00",
@@ -85,20 +87,21 @@
         "outputxlsx": false,
         "httpcodenodata": "204"
       },
-      "configversion": 0.1,
-      "configlastupdate": "2020-01-31T11:37:27+00:00"
+      "configversion": 0.2,
+      "configlastupdate": "2020-12-11T16:25:12+00:00"
     },
     "INGV ASMI-CPTI": {
       "title": "ASMI, Archivio Storico Macrosismico Italiano (INGV)",
-      "servicedescription": "Rovida A., Locati M., Antonucci A., Camassi R. (2017). Archivio Storico Macrosismico Italiano (ASMI). Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/ASMI",
-      "servicedescriptionurl": "https://doi.org/10.13127/ASMI",
-      "datadescription": "",
-      "datadescriptionurl": "",
-      "help": "https://emidius.mi.ingv.it/ASMI/services/",
+      "servicedescription": "FDSN-event provided by ASMI",
+      "servicedescriptionurl": "https://emidius.mi.ingv.it/ASMI/services/",
+      "datadescription": "Rovida A., Locati M., Antonucci A., Camassi R. (2017). Archivio Storico Macrosismico Italiano (ASMI). Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/ASMI",
+      "datadescriptionurl": "https://doi.org/10.13127/ASMI",
       "datalicense": "CC BY-SA 4.0",
       "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
       "dataproviderurl": "http://www.ingv.it",
+      "help": "",
+      "publications": [],
       "endpointurl": "https://emidius.mi.ingv.it/fdsnws/event/1/query?",
       "datestart": "1000-01-01T00:00:00+00:00",
       "dateend": "2017-12-31T23:59:59+00:00",
@@ -173,19 +176,21 @@
         "outputxlsx": false,
         "httpcodenodata": "204"
       },
-      "configversion": 0.1,
-      "configlastupdate": "2020-01-31T11:37:27+00:00"
+      "configversion": 0.2,
+      "configlastupdate": "2020-12-11T16:25:12+00:00"
     },
     "INGV ISIDe": {
       "title": "ISIDe, Italian Seismological Instrumental and Parametric Database (INGV)",
-      "servicedescription": "ISIDe Working Group (2007). Italian Seismological Instrumental and Parametric Database (ISIDe). Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/ISIDE",
-      "servicedescriptionurl": "http://terremoti.ingv.it/",
-      "datadescription": "",
-      "datadescriptionurl": "",
+      "servicedescription": "FDSN-event provided by ONT, Osservatorio Nazionale Terremoti (INGV)",
+      "servicedescriptionurl": "http://webservices.ingv.it/swagger-ui/dist/?url=https://ingv.github.io/openapi/fdsnws/event/0.0.1/event.yaml",
+      "datadescription": "ISIDe Working Group (2007). Italian Seismological Instrumental and Parametric Database (ISIDe). Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/ISIDE",
+      "datadescriptionurl": "http://terremoti.ingv.it/",
       "datalicense": "CC BY 4.0",
       "datalicenseurl": "https://creativecommons.org/licenses/by/4.0/",
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
       "dataproviderurl": "http://www.ingv.it",
+      "help": "",
+      "publications": [],
       "endpointurl": "http://webservices.ingv.it/fdsnws/event/1/query?",
       "datestart": "1985-01-01T00:00:00+00:00",
       "dateend": "",
@@ -257,19 +262,21 @@
         "outputxlsx": false,
         "httpcodenodata": "204"
       },
-      "configversion": 0.1,
-      "configlastupdate": "2020-01-31T11:37:27+00:00"
+      "configversion": 0.2,
+      "configlastupdate": "2020-12-11T16:25:12+00:00"
     },
     "EMSC-CSEM": {
       "title": "European-Mediterranean Seismological Centre (EMSC-CSEM)",
-      "servicedescription": "European-Mediterranean Seismological Centre (EMSC-CSEM) FDSN-event",
+      "servicedescription": "FDSN-event provided by EMSC-CSEM",
       "servicedescriptionurl": "https://www.seismicportal.eu/fdsn-wsevent.html",
-      "datadescription": "",
-      "datadescriptionurl": "",
+      "datadescription": "European-Mediterranean Seismological Centre (EMSC-CSEM)",
+      "datadescriptionurl": "https://www.emsc-csem.org/",
       "datalicense": "Copyright © 2018 EMSC",
-      "datalicenseurl": "https://www.emsc-csem.org/",
+      "datalicenseurl": "https://www.emsc-csem.org/policy.php",
       "dataprovider": "European-Mediterranean Seismological Centre (EMSC-CSEM)",
-      "dataproviderurl": "https://www.emsc-csem.org/",
+      "dataproviderurl": "https://www.emsc-csem.org/about/",
+      "help": "",
+      "publications": [],
       "endpointurl": "https://www.seismicportal.eu/fdsnws/event/1/query?",
       "datestart": "1998-01-01T00:00:00+00:00",
       "dateend": "",
@@ -339,11 +346,11 @@
         "httpcodenodata": "204"
       },
       "configversion": 0.2,
-      "configlastupdate": "2020-02-22T18:50:00+00:00"
+      "configlastupdate": "2020-12-11T16:25:12+00:00"
     },
     "USGS NEIC": {
       "title": "USGS NEIC",
-      "servicedescription": "National Earthquake Information Center (NEIC)",
+      "servicedescription": "FDS-event provided by National Earthquake Information Center (NEIC)",
       "servicedescriptionurl": "http://earthquake.usgs.gov/fdsnws/event/1/",
       "datadescription": "",
       "datadescriptionurl": "",
@@ -351,6 +358,8 @@
       "datalicenseurl": "https://www.usgs.gov/policies-and-notices",
       "dataprovider": "United States Geological Survey (USGS)",
       "dataproviderurl": "https://earthquake.usgs.gov/",
+      "help": "",
+      "publications": [],
       "endpointurl": "http://earthquake.usgs.gov/fdsnws/event/1/query?",
       "datestart": "1600-01-01T00:00:00+00:00",
       "dateend": "",
@@ -419,21 +428,23 @@
         "outputxlsx": false,
         "httpcodenodata": "204"
       },
-      "configversion": 0.1,
-      "configlastupdate": "2020-07-22T11:37:27+00:00"
+      "configversion": 0.2,
+      "configlastupdate": "2020-12-11T16:25:12+00:00"
     }
   },
   "fdsnstation": {
     "EIDA node ODC": {
       "title": "EIDA node ORFEUS Data Center",
-      "servicedescription": "",
-      "servicedescriptionurl": "https://www.orfeus-eu.org/data/eida/nodes/ODC/",
-      "datadescription": "",
-      "datadescriptionurl": "",
+      "servicedescription": "FDSN-station web service provided by Orfeus",
+      "servicedescriptionurl": "http://www.orfeus-eu.org/fdsnws/station/1/",
+      "datadescription": "EIDA node ORFEUS",
+      "datadescriptionurl": "https://www.orfeus-eu.org/data/eida/nodes/ODC/",
       "datalicense": "",
       "datalicenseurl": "",
       "dataprovider": "ORFEUS Data Center - Koninklijk Nederlands Meterologisch Instituut (KNMI) (data publisher)",
       "dataproviderurl": "https://www.orfeus-eu.org/",
+      "help": "",
+      "publications": [],
       "endpointurl": "http://www.orfeus-eu.org/fdsnws/station/1/query?",
       "datestart": "",
       "dateend": "",
@@ -495,19 +506,21 @@
         "outputxlsx": false,
         "httpcodenodata": "204"
       },
-      "configversion": 0.1,
-      "configlastupdate": "2020-06-24T18:20:35+00:00"
+      "configversion": 0.2,
+      "configlastupdate": "2020-12-11T16:25:12+00:00"
     },
     "EIDA node GFZ": {
       "title": "EIDA node GFZ - Helmholz-Zentrum Potsdam",
-      "servicedescription": "",
-      "servicedescriptionurl": "https://www.orfeus-eu.org/data/eida/nodes/GFZ/",
-      "datadescription": "",
-      "datadescriptionurl": "",
-      "datalicense": "",
-      "datalicenseurl": "",
+      "servicedescription": "FDSN-station web service provided by GFZ",
+      "servicedescriptionurl": "http://geofon.gfz-potsdam.de/fdsnws/station/1/",
+      "datadescription": "EIDA node GFZ",
+      "datadescriptionurl": "https://www.orfeus-eu.org/data/eida/nodes/GFZ/",
+      "datalicense": "Citing data obtained from GEOFON",
+      "datalicenseurl": "https://geofon.gfz-potsdam.de/citation.php",
       "dataprovider": "GFZ - Deutsche GeoForschungsZentrum (data publisher)",
       "dataproviderurl": "https://www.gfz-potsdam.de/",
+      "help": "",
+      "publications": [],
       "endpointurl": "http://geofon.gfz-potsdam.de/fdsnws/station/1/query?",
       "datestart": "",
       "dateend": "",
@@ -569,19 +582,21 @@
         "outputxlsx": false,
         "httpcodenodata": "204"
       },
-      "configversion": 0.1,
-      "configlastupdate": "2020-06-24T18:20:35+00:00"
+      "configversion": 0.2,
+      "configlastupdate": "2020-12-11T16:25:12+00:00"
     },
     "EIDA node RESIF": {
       "title": "EIDA node Résif - Réseau sismologique et géodésique français",
-      "servicedescription": "",
-      "servicedescriptionurl": "https://www.orfeus-eu.org/data/eida/nodes/RESIF/",
-      "datadescription": "",
-      "datadescriptionurl": "",
-      "datalicense": "",
-      "datalicenseurl": "",
+      "servicedescription": "FDSN-station web service provided by Résif",
+      "servicedescriptionurl": "http://seismology.resif.fr/#CMSConsultPlace:FDSN_WEBSERVICES",
+      "datadescription": "EIDA node Résif",
+      "datadescriptionurl": "https://www.orfeus-eu.org/data/eida/nodes/RESIF/",
+      "datalicense": "Legal notice",
+      "datalicenseurl": "http://seismology.resif.fr/#CMSConsultPlace:DISCLAIMER",
       "dataprovider": "Résif - Réseau sismologique et géodésique français (data publisher)",
       "dataproviderurl": "https://www.resif.fr/",
+      "help": "",
+      "publications": [],
       "endpointurl": "http://ws.resif.fr/fdsnws/station/1/query?",
       "datestart": "",
       "dateend": "",
@@ -643,19 +658,21 @@
         "outputxlsx": false,
         "httpcodenodata": "204"
       },
-      "configversion": 0.1,
-      "configlastupdate": "2020-06-24T18:20:35+00:00"
+      "configversion": 0.2,
+      "configlastupdate": "2020-12-11T16:25:12+00:00"
     },
     "EIDA node INGV": {
       "title": "EIDA node INGV - Istituto Nazionale di Geofisica e Vulcanologia",
-      "servicedescription": "",
-      "servicedescriptionurl": "https://www.orfeus-eu.org/data/eida/nodes/INGV/",
-      "datadescription": "",
-      "datadescriptionurl": "",
-      "datalicense": "",
-      "datalicenseurl": "",
+      "servicedescription": "FDSN-station web service provided by INGV",
+      "servicedescriptionurl": "http://webservices.ingv.it/swagger-ui/dist/?url=http%3A%2F%2Fwebservices.ingv.it%2Ffdsnws%2Fstation%2F1%2Fswagger.json#/fdsnws-station-1.1",
+      "datadescription": "EIDA node INGV",
+      "datadescriptionurl": "https://www.orfeus-eu.org/data/eida/nodes/INGV/",
+      "datalicense": "CC BY-SA 4.0",
+      "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
       "dataprovider": "INGV - Istituto Nazionale di Geofisica e Vulcanologia (data publisher)",
       "dataproviderurl": "http://www.ingv.it/",
+      "help": "",
+      "publications": [],
       "endpointurl": "http://webservices.ingv.it/fdsnws/station/1/query?",
       "datestart": "",
       "dateend": "",
@@ -717,19 +734,21 @@
         "outputxlsx": false,
         "httpcodenodata": "204"
       },
-      "configversion": 0.1,
-      "configlastupdate": "2020-06-24T18:20:35+00:00"
+      "configversion": 0.2,
+      "configlastupdate": "2020-12-11T16:25:12+00:00"
     },
     "EIDA node ETHZ": {
-      "title": "EIDA node ETH Zurich Schweizerischer Erdbebendienst (SED)",
-      "servicedescription": "",
-      "servicedescriptionurl": "https://www.orfeus-eu.org/data/eida/nodes/ETHZ/",
-      "datadescription": "",
-      "datadescriptionurl": "",
-      "datalicense": "",
-      "datalicenseurl": "",
+      "title": "EIDA node ETH Zürich Schweizerischer Erdbebendienst (SED)",
+      "servicedescription": "FDSN-station web service provided by ETHZ SED",
+      "servicedescriptionurl": "http://arclink.ethz.ch/webinterface/help.html",
+      "datadescription": "EIDA node ETH Zürich",
+      "datadescriptionurl": "https://www.orfeus-eu.org/data/eida/nodes/ETHZ/",
+      "datalicense": "Disclaimer",
+      "datalicenseurl": "http://www.seismo.ethz.ch/en/service/Disclaimer/",
       "dataprovider": "ETH Zürich - Eidgenössische Technische Hochschule Zürich (data publisher)",
       "dataproviderurl": "https://ethz.ch/",
+      "help": "",
+      "publications": [],
       "endpointurl": "http://eida.ethz.ch/fdsnws/station/1/query?",
       "datestart": "",
       "dateend": "",
@@ -791,19 +810,21 @@
         "outputxlsx": false,
         "httpcodenodata": "204"
       },
-      "configversion": 0.1,
-      "configlastupdate": "2020-06-24T18:20:35+00:00"
+      "configversion": 0.2,
+      "configlastupdate": "2020-12-11T16:25:12+00:00"
     },
     "EIDA node BGR": {
       "title": "EIDA node BGR - Bundesanstalt für Geowissenschaften und Rohstoffe",
-      "servicedescription": "",
-      "servicedescriptionurl": "https://www.orfeus-eu.org/data/eida/nodes/BGR/",
-      "datadescription": "",
-      "datadescriptionurl": "",
-      "datalicense": "",
-      "datalicenseurl": "",
+      "servicedescription": "FDSN-station web service provided by BGR",
+      "servicedescriptionurl": "http://eida.bgr.de/fdsnws/station/1/",
+      "datadescription": "EIDA node BGR",
+      "datadescriptionurl": "https://www.orfeus-eu.org/data/eida/nodes/BGR/",
+      "datalicense": "Legal notice",
+      "datalicenseurl": "https://www.bgr.bund.de/EN/Allgemeines/Wm/Impressum/impressum_node_en.html",
       "dataprovider": "BGR - Bundesanstalt für Geowissenschaften und Rohstoffe (data publisher)",
       "dataproviderurl": "https://www.bgr.bund.de/",
+      "help": "",
+      "publications": [],
       "endpointurl": "http://eida.bgr.de/fdsnws/station/1/query?",
       "datestart": "",
       "dateend": "",
@@ -865,19 +886,21 @@
         "outputxlsx": false,
         "httpcodenodata": "204"
       },
-      "configversion": 0.1,
-      "configlastupdate": "2020-06-24T18:20:35+00:00"
+      "configversion": 0.2,
+      "configlastupdate": "2020-12-11T16:25:12+00:00"
     },
     "EIDA node NIEP": {
       "title": "EIDA node NIEP - National Institute for Earth Physics",
-      "servicedescription": "",
-      "servicedescriptionurl": "https://www.orfeus-eu.org/data/eida/nodes/NIEP/",
-      "datadescription": "",
-      "datadescriptionurl": "",
-      "datalicense": "",
-      "datalicenseurl": "",
+      "servicedescription": "FDSN-station web service provided by NIEP",
+      "servicedescriptionurl": "http://www.infp.ro/index.php?i=eida",
+      "datadescription": "EIDA node NIEP",
+      "datadescriptionurl": "https://www.orfeus-eu.org/data/eida/nodes/NIEP/",
+      "datalicense": "Disclaimer",
+      "datalicenseurl": "http://www.infp.ro/index.php?i=dis",
       "dataprovider": "NIEP - National Institute for Earth Physics (data publisher)",
       "dataproviderurl": "http://www.infp.ro/",
+      "help": "",
+      "publications": [],
       "endpointurl": "http://eida-sc3.infp.ro/fdsnws/station/1/query?",
       "datestart": "",
       "dateend": "",
@@ -939,19 +962,21 @@
         "outputxlsx": false,
         "httpcodenodata": "204"
       },
-      "configversion": 0.1,
-      "configlastupdate": "2020-06-24T18:20:35+00:00"
+      "configversion": 0.2,
+      "configlastupdate": "2020-12-11T16:25:12+00:00"
     },
     "EIDA node KOERI": {
       "title": "EIDA node KOERI - Kandilli Observatory and Earthquake Research Institute",
-      "servicedescription": "",
-      "servicedescriptionurl": "https://www.orfeus-eu.org/data/eida/nodes/KOERI/",
-      "datadescription": "",
-      "datadescriptionurl": "",
-      "datalicense": "",
-      "datalicenseurl": "",
+      "servicedescription": "FDSN-station web service provided by KOERI",
+      "servicedescriptionurl": "http://eida.koeri.boun.edu.tr/webinterface/",
+      "datadescription": "EIDA node KOERI",
+      "datadescriptionurl": "https://www.orfeus-eu.org/data/eida/nodes/KOERI/",
+      "datalicense": "Copyright",
+      "datalicenseurl": "http://www.koeri.boun.edu.tr/sismo/2/copyright-2/",
       "dataprovider": "KOERI - Kandilli Observatory and Earthquake Research Institute (data publisher)",
       "dataproviderurl": "http://www.koeri.boun.edu.tr/",
+      "help": "",
+      "publications": [],
       "endpointurl": "http://eida-service.koeri.boun.edu.tr/fdsnws/station/1/query?",
       "datestart": "",
       "dateend": "",
@@ -1013,19 +1038,21 @@
         "outputxlsx": false,
         "httpcodenodata": "204"
       },
-      "configversion": 0.1,
-      "configlastupdate": "2020-06-24T18:20:35+00:00"
+      "configversion": 0.2,
+      "configlastupdate": "2020-12-11T16:25:12+00:00"
     },
     "EIDA node LMU": {
       "title": "EIDA node LMU - Ludwig-Maximilians-Universität München",
-      "servicedescription": "",
-      "servicedescriptionurl": "https://www.orfeus-eu.org/data/eida/nodes/LMU/",
-      "datadescription": "",
-      "datadescriptionurl": "",
+      "servicedescription": "FDSN-station web service provided by LMU",
+      "servicedescriptionurl": "http://erde.geophysik.uni-muenchen.de/fdsnws/station/",
+      "datadescription": "EIDA node LMU",
+      "datadescriptionurl": "https://www.orfeus-eu.org/data/eida/nodes/LMU/",
       "datalicense": "",
       "datalicenseurl": "",
       "dataprovider": "LMU - Ludwig-Maximilians-Universität München (data publisher)",
       "dataproviderurl": "https://www.en.uni-muenchen.de/",
+      "help": "",
+      "publications": [],
       "endpointurl": "http://erde.geophysik.uni-muenchen.de/fdsnws/station/1/query?",
       "datestart": "",
       "dateend": "",
@@ -1087,8 +1114,8 @@
         "outputxlsx": false,
         "httpcodenodata": "204"
       },
-      "configversion": 0.1,
-      "configlastupdate": "2020-06-24T18:20:35+00:00"
+      "configversion": 0.2,
+      "configlastupdate": "2020-12-11T16:25:12+00:00"
     },
     "EIDA node NOA": {
       "title": "EIDA node NOA - National Observatory of Athens",
@@ -1100,6 +1127,8 @@
       "datalicenseurl": "",
       "dataprovider": "NOA - National Observatory of Athens (data publisher)",
       "dataproviderurl": "http://www.noa.gr/",
+      "help": "",
+      "publications": [],
       "endpointurl": "http://eida.gein.noa.gr/fdsnws/station/1/query?",
       "datestart": "",
       "dateend": "",
@@ -1161,19 +1190,21 @@
         "outputxlsx": false,
         "httpcodenodata": "204"
       },
-      "configversion": 0.1,
-      "configlastupdate": "2020-06-24T18:20:35+00:00"
+      "configversion": 0.2,
+      "configlastupdate": "2020-12-11T16:25:12+00:00"
     },
     "EIDA node UIB-NORSAR": {
       "title": "EIDA node UIB, NORSAR - University of Bergen, NORSAR",
-      "servicedescription": "",
-      "servicedescriptionurl": "https://www.orfeus-eu.org/data/eida/nodes/UIB_NORSAR/",
-      "datadescription": "",
-      "datadescriptionurl": "",
+      "servicedescription": "FDSN-station web service provided by UIB",
+      "servicedescriptionurl": "https://eida.geo.uib.no/webdc3/",
+      "datadescription": "EIDA node UIB",
+      "datadescriptionurl": "https://www.orfeus-eu.org/data/eida/nodes/UIB_NORSAR/",
       "datalicense": "",
       "datalicenseurl": "",
       "dataprovider": "UIB, NORSAR - University of Bergen, NORSAR (data publisher)",
       "dataproviderurl": "https://www.uib.no/",
+      "help": "",
+      "publications": [],
       "endpointurl": "http://eida.geo.uib.no/fdsnws/station/1/query?",
       "datestart": "",
       "dateend": "",
@@ -1235,19 +1266,21 @@
         "outputxlsx": false,
         "httpcodenodata": "204"
       },
-      "configversion": 0.1,
-      "configlastupdate": "2020-06-24T18:20:35+00:00"
+      "configversion": 0.2,
+      "configlastupdate": "2020-12-11T16:25:12+00:00"
     },
     "EIDA node ICGC": {
       "title": "EIDA node ICGC - Institut Cartogràfic i Geològic de Catalunya",
-      "servicedescription": "",
-      "servicedescriptionurl": "https://www.orfeus-eu.org/data/eida/nodes/ICGC/",
-      "datadescription": "",
-      "datadescriptionurl": "",
+      "servicedescription": "FDSN-event provided by ICGC",
+      "servicedescriptionurl": "http://ws.icgc.cat/fdsnws/station/1/",
+      "datadescription": "EIDA node ICGC",
+      "datadescriptionurl": "https://www.orfeus-eu.org/data/eida/nodes/ICGC/",
       "datalicense": "",
       "datalicenseurl": "",
       "dataprovider": "ICGC - Institut Cartogràfic i Geològic de Catalunya (data publisher)",
       "dataproviderurl": "https://www.icgc.cat/",
+      "help": "",
+      "publications": [],
       "endpointurl": "http://ws.icgc.cat/fdsnws/station/1/query?",
       "datestart": "",
       "dateend": "",
@@ -1309,19 +1342,21 @@
         "outputxlsx": false,
         "httpcodenodata": "204"
       },
-      "configversion": 0.1,
-      "configlastupdate": "2020-06-24T18:20:35+00:00"
+      "configversion": 0.2,
+      "configlastupdate": "2020-12-11T16:25:12+00:00"
     },
     "IRIS": {
       "title": "IRIS - Incorporated Research Institutions for Seismology",
-      "servicedescription": "",
+      "servicedescription": "FDSN-station web service provided by IRIS",
       "servicedescriptionurl": "http://service.iris.edu/fdsnws/station/1/",
       "datadescription": "",
       "datadescriptionurl": "",
-      "datalicense": "",
-      "datalicenseurl": "",
+      "datalicense": "IRIS citations",
+      "datalicenseurl": "https://www.iris.edu/hq/iris_citations",
       "dataprovider": "IRIS - Incorporated Research Institutions for Seismology (data publisher)",
       "dataproviderurl": "https://www.iris.edu/",
+      "help": "",
+      "publications": [],
       "endpointurl": "http://service.iris.edu/fdsnws/station/1/query?",
       "datestart": "",
       "dateend": "",
@@ -1383,21 +1418,25 @@
         "outputxlsx": false,
         "httpcodenodata": "204"
       },
-      "configversion": 0.1,
-      "configlastupdate": "2020-06-24T18:20:35+00:00"
+      "configversion": 0.2,
+      "configlastupdate": "2020-12-11T16:25:12+00:00"
     }
   },
   "macroseismic": {
     "AHEAD": {
       "title": "AHEAD, European Archive of Historical EArthquake Data (pre 1900)",
-      "servicedescription": "Albini P., Locati M., Rovida A., Stucchi M. (2013). European Archive of Historical EArthquake Data (AHEAD). Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.6092/INGV.IT-AHEAD",
-      "servicedescriptionurl": "https://www.emidius.eu/AHEAD",
-      "datadescription": "",
-      "datadescriptionurl": "",
+      "servicedescription": "Macroseismic web services provided by AHEAD",
+      "servicedescriptionurl": "https://www.emidius.eu/AHEAD/services/",
+      "datadescription": "Albini P., Locati M., Rovida A., Stucchi M. (2013). European Archive of Historical EArthquake Data (AHEAD). Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.6092/INGV.IT-AHEAD",
+      "datadescriptionurl": "https://doi.org/10.6092/INGV.IT-AHEAD",
       "datalicense": "custom",
       "datalicenseurl": "https://www.emidius.eu/AHEAD/introduction.php#copyright",
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
       "dataproviderurl": "http://www.ingv.it",
+      "help": "",
+      "publications": [
+        "Locati, M., Rovida, A., Albini, P., Stucchi, M. (2014). The AHEAD Portal: A Gateway to European Historical Earthquake Data. Seismological Research Letters, 85(3), 727–734. https://doi.org/10.1785/0220130113",
+        "Rovida, A., Locati, M. (2015). Archive of Historical Earthquake Data for the European-Mediterranean Area. In Perspectives on European Earthquake Engineering and Seismology (pp. 359–369). Springer International Publishing. https://doi.org/10.1007/978-3-319-16964-4_14"],
       "endpointurl": "https://www.emidius.eu/services/macroseismic/query?",
       "datestart": "1000-01-01T00:00:00+00:00",
       "dateend": "1899-12-31T23:59:59+00:00",
@@ -1492,19 +1531,21 @@
         "outputxlsx": false,
         "httpcodenodata": "204"
       },
-      "configversion": 0.1,
-      "configlastupdate": "2020-01-31T11:37:27+00:00"
+      "configversion": 0.2,
+      "configlastupdate": "2020-12-11T16:25:12+00:00"
     },
     "INGV ASMI-DBMI": {
       "title": "ASMI, Archivio Storico Macrosismico Italiano (INGV)",
-      "servicedescription": "Rovida A., Locati M., Antonucci A., Camassi R. (2017). Archivio Storico Macrosismico Italiano (ASMI). Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/ASMI",
-      "servicedescriptionurl": "https://emidius.mi.ingv.it/ASMI",
-      "datadescription": "",
-      "datadescriptionurl": "",
+      "servicedescription": "Macroseismic web service provided by ",
+      "servicedescriptionurl": "https://emidius.mi.ingv.it/ASMI/services",
+      "datadescription": "Rovida A., Locati M., Antonucci A., Camassi R. (2017). Archivio Storico Macrosismico Italiano (ASMI). Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/ASMI",
+      "datadescriptionurl": "https://doi.org/10.13127/ASMI",
       "datalicense": "CC BY-SA 4.0",
       "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
       "dataproviderurl": "http://www.ingv.it",
+      "help": "",
+      "publications": [],
       "endpointurl": "https://emidius.mi.ingv.it/services/macroseismic/query?",
       "datestart": "1000-01-01T00:00:00+00:00",
       "dateend": "2017-12-31T23:59:59+00:00",
@@ -1599,21 +1640,23 @@
         "outputxlsx": false,
         "httpcodenodata": "204"
       },
-      "configversion": 0.1,
-      "configlastupdate": "2020-01-31T11:37:27+00:00"
+      "configversion": 0.2,
+      "configlastupdate": "2020-12-11T16:25:12+00:00"
     }
   },
   "wfs": {
     "AHEAD-SHEEC": {
       "title": "SHARE European Earthquake Catalogue (SHEEC) 1000-1899",
-      "servicedescription": "Stucchi M., Rovida A., Gómez Capera A. A., Alexandre P., Camelbeeck T., Demircioglu M. B. et al. (2012). SHARE European Earthquake Catalogue (SHEEC) 1000-1899. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.6092/INGV.IT-SHARE-SHEEC.1000-1899",
-      "servicedescriptionurl": "https://www.emidius.eu/SHEEC/sheec_1000_1899.html",
-      "datadescription": "",
-      "datadescriptionurl": "",
+      "servicedescription": "OGS WFS provided by AHEAD",
+      "servicedescriptionurl": "https://www.emidius.eu/AHEAD/services/",
+      "datadescription": "Stucchi M., Rovida A., Gómez Capera A. A., Alexandre P., Camelbeeck T., Demircioglu M. B. et al. (2012). SHARE European Earthquake Catalogue (SHEEC) 1000-1899. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.6092/INGV.IT-SHARE-SHEEC.1000-1899",
+      "datadescriptionurl": "https://doi.org/10.6092/INGV.IT-SHARE-SHEEC.1000-1899",
       "datalicense": "CC BY-SA 4.0",
       "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
       "dataproviderurl": "http://www.ingv.it",
+      "help": "",
+      "publications": [],
       "endpointurl": "https://www.emidius.eu/services/europe/wfs?",
       "datestart": "1000-01-01T00:00:00+00:00",
       "dateend": "1899-12-31T23:59:59+00:00",
@@ -1632,19 +1675,21 @@
         ]
       },
       "settings": {},
-      "configversion": 0.1,
-      "configlastupdate": "2020-01-31T11:37:27+00:00"
+      "configversion": 0.2,
+      "configlastupdate": "2020-12-11T16:25:12+00:00"
     },
     "INGV CPTI": {
       "title": "CPTI, Catalogo Parametrico dei Terremoti Italiani (INGV)",
-      "servicedescription": "Rovida A., Locati M., Camassi R., Lolli B., Gasperini P. (2019). Catalogo Parametrico dei Terremoti Italiani (CPTI15), versione 2.0 [Data set]. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/CPTI/CPTI15.2",
-      "servicedescriptionurl": "https://emidius.mi.ingv.it/CPTI15-DBMI15",
-      "datadescription": "",
-      "datadescriptionurl": "",
+      "servicedescription": "OGC WFS provided by ASMI",
+      "servicedescriptionurl": "https://emidius.mi.ingv.it/ASMI/services/",
+      "datadescription": "Rovida A., Locati M., Camassi R., Lolli B., Gasperini P. (2019). Catalogo Parametrico dei Terremoti Italiani (CPTI15), versione 2.0 [Data set]. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/CPTI/CPTI15.2",
+      "datadescriptionurl": "https://doi.org/10.13127/CPTI/CPTI15.2",
       "datalicense": "CC BY-SA 4.0",
       "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
       "dataproviderurl": "http://www.ingv.it",
+      "help": "",
+      "publications": ["Rovida A., Locati M., Camassi R., Lolli B., Gasperini P. (2020). The Italian earthquake catalogue CPTI15. Bulletin of Earthquake Engineering, 18(7), 2953–2984. https://doi.org/10.1007/s10518-020-00818-y"],
       "endpointurl": "https://emidius.mi.ingv.it/services/italy/wfs?",
       "datestart": "1000-01-01T00:00:00+00:00",
       "dateend": "2017-12-31T23:59:59+00:00",
@@ -1662,23 +1707,25 @@
           }
         ]
       },
-      "configversion": 0.1,
-      "configlastupdate": "2020-01-31T11:37:27+00:00"
+      "configversion": 0.2,
+      "configlastupdate": "2020-12-11T16:25:12+00:00"
     },
     "EDSF": {
       "title": "EDSF, European Database of Seismogenic Faults",
-      "servicedescription": "Basili R., Kastelic V., Demircioglu M. B., Garcia Moreno D., Nemser E. S., Petricca P., Sboras S. P., Besana-Ostman G. M., Cabral J., Camelbeeck T., Caputo R., Danciu L., Domac H., Fonseca J., García-Mayordomo J., Giardini D., Glavatovic B., Gulen L., Ince Y., Pavlides S., Sesetyan K., Tarabusi G., Tiberti M. M., Utkucu M., Valensise G., Vanneste K., Vilanova S., Wössner J. (2013). The European Database of Seismogenic Faults (EDSF) compiled in the framework of the Project SHARE. https://doi.org/10.6092/INGV.IT-SHARE-EDSF",
-      "servicedescriptionurl": "http://diss.rm.ingv.it/share-edsf/",
-      "datadescription": "",
-      "datadescriptionurl": "",
+      "servicedescription": "OGC WFS provided by EDSF",
+      "servicedescriptionurl": "https://www.seismofaults.eu/index.php/services/edsf13-services",
+      "datadescription": "Basili R., Kastelic V., Demircioglu M. B., Garcia Moreno D., Nemser E. S., Petricca P., Sboras S. P., Besana-Ostman G. M., Cabral J., Camelbeeck T., Caputo R., Danciu L., Domac H., Fonseca J., García-Mayordomo J., Giardini D., Glavatovic B., Gulen L., Ince Y., Pavlides S., Sesetyan K., Tarabusi G., Tiberti M. M., Utkucu M., Valensise G., Vanneste K., Vilanova S., Wössner J. (2013). The European Database of Seismogenic Faults (EDSF) compiled in the framework of the Project SHARE. https://doi.org/10.6092/INGV.IT-SHARE-EDSF",
+      "datadescriptionurl": "https://doi.org/10.6092/INGV.IT-SHARE-EDSF",
       "datalicense": "CC BY-SA 4.0",
       "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
       "dataproviderurl": "http://www.ingv.it",
-      "srs": "EPSG:4326",
+      "help": "",
+      "publications": [],
       "endpointurl": "http://services.seismofaults.eu/geoserver/EDSF/wfs?",
       "datestart": "",
       "dateend": "",
+      "srs": "EPSG:4326",
       "default": {
         "wfsversion": "2.0.0",
         "layers": [
@@ -1717,22 +1764,24 @@
         ]
       },
       "configversion": 0.2,
-      "configlastupdate": "2020-05-27T11:10:00+00:00"
+      "configlastupdate": "2020-12-11T16:25:12+00:00"
     },
     "DISS": {
       "title": "DISS 3.2.1, Database of Individual Seismogenic Sources",
-      "servicedescription": "DISS Working Group (2018). Database of Individual Seismogenic Sources (DISS), version 3.2.1. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.6092/INGV.IT-DISS3.2.1",
-      "servicedescriptionurl": "http://diss.rm.ingv.it/diss/",
-      "datadescription": "",
-      "datadescriptionurl": "",
+      "servicedescription": "OGC WFS privided by DISS",
+      "servicedescriptionurl": "https://www.seismofaults.eu/index.php/services/diss-services/",
+      "datadescription": "DISS Working Group (2018). Database of Individual Seismogenic Sources (DISS), version 3.2.1. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.6092/INGV.IT-DISS3.2.1",
+      "datadescriptionurl": "https://doi.org/10.6092/INGV.IT-DISS3.2.1",
       "datalicense": "CC BY-SA 4.0",
       "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
       "dataproviderurl": "http://www.ingv.it",
-      "srs": "EPSG:4326",
+      "help": "",
+      "publications": ["Basili R., Valensise G., Vannoli P., Burrato P., Fracassi U., Mariano S., Tiberti M.M., Boschi E. (2008). The Database of Individual Seismogenic Sources (DISS), version 3: Summarizing 20 years of research on Italy’s earthquake geology. Tectonophysics, 453(1–4), 20–43. https://doi.org/10.1016/j.tecto.2007.04.014"],
       "endpointurl": "http://services.seismofaults.eu/geoserver/DISS321/wfs?",
       "datestart": "",
       "dateend": "",
+      "srs": "EPSG:4326",
       "default": {
         "wfsversion": "2.0.0",
         "layers": [
@@ -1786,25 +1835,27 @@
           }
         ]
       },
-      "configversion": 0.1,
-      "configlastupdate": "2020-07-24T12:55:00+00:00"
+      "configversion": 0.2,
+      "configlastupdate": "2020-12-11T16:25:12+00:00"
     }
   },
   "wms": {
     "AHEAD-SHEEC": {
       "title": "SHARE European Earthquake Catalogue (SHEEC) 1000-1899",
-      "servicedescription": "Stucchi M., Rovida A., Gómez Capera A. A., Alexandre P., Camelbeeck T., Demircioglu M. B. et al. (2012). SHARE European Earthquake Catalogue (SHEEC) 1000-1899. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.6092/INGV.IT-SHARE-SHEEC.1000-1899",
-      "servicedescriptionurl": "https://www.emidius.eu/SHEEC/sheec_1000_1899.html",
-      "datadescription": "",
-      "datadescriptionurl": "",
+      "servicedescription": "OGC WMS provided by AHEAD",
+      "servicedescriptionurl": "https://www.emidius.eu/AHEAD/services/",
+      "datadescription": "Stucchi M., Rovida A., Gómez Capera A. A., Alexandre P., Camelbeeck T., Demircioglu M. B. et al. (2012). SHARE European Earthquake Catalogue (SHEEC) 1000-1899. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.6092/INGV.IT-SHARE-SHEEC.1000-1899",
+      "datadescriptionurl": "https://doi.org/10.6092/INGV.IT-SHARE-SHEEC.1000-1899",
       "datalicense": "CC BY-SA 4.0",
       "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
       "dataproviderurl": "http://www.ingv.it",
+      "help": "",
+      "publications": [],
       "endpointurl": "https://www.emidius.eu/services/europe/wms?",
-      "srs": "EPSG:4326",
       "datestart": "1000-01-01T00:00:00+00:00",
       "dateend": "1899-12-31T23:59:59+00:00",
+      "srs": "EPSG:4326",
       "default": {
         "wmsversion": "1.3.0",
         "layers": [
@@ -1819,23 +1870,25 @@
           }
         ]
       },
-      "configversion": 0.1,
-      "configlastupdate": "2020-01-31T11:37:27+00:00"
+      "configversion": 0.2,
+      "configlastupdate": "2020-12-11T16:25:12+00:00"
     },
     "INGV CPTI": {
       "title": "CPTI, Catalogo Parametrico dei Terremoti Italiani (INGV)",
-      "servicedescription": "Rovida A., Locati M., Camassi R., Lolli B., Gasperini P. (2019). Catalogo Parametrico dei Terremoti Italiani (CPTI15), versione 2.0 [Data set]. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/CPTI/CPTI15.2",
-      "servicedescriptionurl": "https://emidius.mi.ingv.it/CPTI15-DBMI15",
-      "datadescription": "",
-      "datadescriptionurl": "",
+      "servicedescription": "OGC WMS provided by ASMI",
+      "servicedescriptionurl": "https://emidius.mi.ingv.it/ASMI/services/",
+      "datadescription": "Rovida A., Locati M., Camassi R., Lolli B., Gasperini P. (2019). Catalogo Parametrico dei Terremoti Italiani (CPTI15), versione 2.0 [Data set]. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/CPTI/CPTI15.2",
+      "datadescriptionurl": "https://doi.org/10.13127/CPTI/CPTI15.2",
       "datalicense": "CC BY-SA 4.0",
       "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
       "dataproviderurl": "http://www.ingv.it",
+      "help": "",
+      "publications": ["Rovida A., Locati M., Camassi R., Lolli B., Gasperini P. (2020). The Italian earthquake catalogue CPTI15. Bulletin of Earthquake Engineering, 18(7), 2953–2984. https://doi.org/10.1007/s10518-020-00818-y"],
       "endpointurl": "https://emidius.mi.ingv.it/services/italy/wms?",
-      "srs": "EPSG:4326",
       "datestart": "1000-01-01T00:00:00+00:00",
       "dateend": "2017-12-31T23:59:59+00:00",
+      "srs": "EPSG:4326",
       "default": {
         "wmsversion": "1.3.0",
         "layers": [
@@ -1847,23 +1900,25 @@
           }
         ]
       },
-      "configversion": 0.1,
-      "configlastupdate": "2019-12-27T11:37:27+00:00"
+      "configversion": 0.2,
+      "configlastupdate": "2020-12-11T16:25:12+00:00"
     },
     "EDSF": {
       "title": "EDSF, European Database of Seismogenic Faults",
-      "servicedescription": "Basili R., Kastelic V., Demircioglu M. B., Garcia Moreno D., Nemser E. S., Petricca P., Sboras S. P., Besana-Ostman G. M., Cabral J., Camelbeeck T., Caputo R., Danciu L., Domac H., Fonseca J., García-Mayordomo J., Giardini D., Glavatovic B., Gulen L., Ince Y., Pavlides S., Sesetyan K., Tarabusi G., Tiberti M. M., Utkucu M., Valensise G., Vanneste K., Vilanova S., Wössner J. (2013). The European Database of Seismogenic Faults (EDSF) compiled in the framework of the Project SHARE. https://doi.org/10.6092/INGV.IT-SHARE-EDSF",
-      "servicedescriptionurl": "http://diss.rm.ingv.it/share-edsf/",
-      "datadescription": "",
-      "datadescriptionurl": "",
+      "servicedescription": "OGC WMS provided by EDSF",
+      "servicedescriptionurl": "https://www.seismofaults.eu/index.php/services/edsf13-services",
+      "datadescription": "Basili R., Kastelic V., Demircioglu M. B., Garcia Moreno D., Nemser E. S., Petricca P., Sboras S. P., Besana-Ostman G. M., Cabral J., Camelbeeck T., Caputo R., Danciu L., Domac H., Fonseca J., García-Mayordomo J., Giardini D., Glavatovic B., Gulen L., Ince Y., Pavlides S., Sesetyan K., Tarabusi G., Tiberti M. M., Utkucu M., Valensise G., Vanneste K., Vilanova S., Wössner J. (2013). The European Database of Seismogenic Faults (EDSF) compiled in the framework of the Project SHARE. https://doi.org/10.6092/INGV.IT-SHARE-EDSF",
+      "datadescriptionurl": "https://doi.org/10.6092/INGV.IT-SHARE-EDSF",
       "datalicense": "CC BY-SA 4.0",
       "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
       "dataproviderurl": "http://www.ingv.it",
+      "help": "",
+      "publications": [],
       "endpointurl": "http://services.seismofaults.eu/geoserver/EDSF/wms?",
-      "srs": "EPSG:4326",
       "datestart": "",
       "dateend": "",
+      "srs": "EPSG:4326",
       "default": {
         "wmsversion": "1.3.0",
         "layers": [
@@ -1894,22 +1949,24 @@
         ]
       },
       "configversion": 0.2,
-      "configlastupdate": "2020-02-10T09:10:00+00:00"
+      "configlastupdate": "2020-12-11T16:25:12+00:00"
     },
     "DISS": {
       "title": "DISS 3.2.1, Database of Individual Seismogenic Sources",
-      "servicedescription": "DISS Working Group (2018). Database of Individual Seismogenic Sources (DISS), version 3.2.1. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.6092/INGV.IT-DISS3.2.1",
-      "servicedescriptionurl": "http://diss.rm.ingv.it/diss/",
-      "datadescription": "",
-      "datadescriptionurl": "",
+      "servicedescription": "OGC WMS provided by DISS",
+      "servicedescriptionurl": "https://www.seismofaults.eu/index.php/services/diss-services/",
+      "datadescription": "DISS Working Group (2018). Database of Individual Seismogenic Sources (DISS), version 3.2.1. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.6092/INGV.IT-DISS3.2.1",
+      "datadescriptionurl": "https://doi.org/10.6092/INGV.IT-DISS3.2.1",
       "datalicense": "CC BY-SA 4.0",
       "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
       "dataproviderurl": "http://www.ingv.it",
+      "help": "",
+      "publications": ["Basili R., Valensise G., Vannoli P., Burrato P., Fracassi U., Mariano S., Tiberti M.M., Boschi E. (2008). The Database of Individual Seismogenic Sources (DISS), version 3: Summarizing 20 years of research on Italy’s earthquake geology. Tectonophysics, 453(1–4), 20–43. https://doi.org/10.1016/j.tecto.2007.04.014"],
       "endpointurl": "http://services.seismofaults.eu/geoserver/DISS321/wms?",
-      "srs": "EPSG:4326",
       "datestart": "",
       "dateend": "",
+      "srs": "EPSG:4326",
       "default": {
         "wmsversion": "1.3.0",
         "layers": [
@@ -1951,8 +2008,8 @@
           }
         ]
       },
-      "configversion": 0.1,
-      "configlastupdate": "2020-07-24T12:55:00+00:00"
+      "configversion": 0.2,
+      "configlastupdate": "2020-12-11T16:25:12+00:00"
     }
   },
   "styles": {
