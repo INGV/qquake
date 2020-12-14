@@ -11,6 +11,20 @@
           "type": "String"
         },
         {
+          "field_short": "ispreforig",
+          "field_long": "IsPrefOrigin",
+          "source": "!IsPrefOrigin",
+          "description": "",
+          "type": "Boolean"
+        },
+        {
+          "field_short": "isprefmag",
+          "field_long": "IsPrefMag",
+          "source": "!IsPrefMag",
+          "description": "",
+          "type": "Boolean"
+        },
+        {
           "field_short": "eventype",
           "field_long": "EvenType",
           "source": "eventParameters>event>type",
