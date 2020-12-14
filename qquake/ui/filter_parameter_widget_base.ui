@@ -271,7 +271,7 @@
       <item row="10" column="2" colspan="2">
        <widget class="QPushButton" name="circle_center_draw_on_map">
         <property name="text">
-         <string>Draw the circular area on the map</string>
+         <string>Select the circle center on the map</string>
         </property>
        </widget>
       </item>
