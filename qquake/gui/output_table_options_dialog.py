@@ -79,12 +79,15 @@ class OutputTableOptionsDialog(QDialog, FORM_CLASS):
                 if f.get('skip'):
                     continue
 
-                if f['source'].startswith('eventParameters'):
-                    path = f['source'][len('eventParameters>event>'):]
-                elif f['source'].startswith('macroseismicParameters'):
-                    path = f['source'][len('macroseismicParameters>'):]
+                if f['source'] is not None:
+                    if f['source'].startswith('eventParameters'):
+                        path = f['source'][len('eventParameters>event>'):]
+                    elif f['source'].startswith('macroseismicParameters'):
+                        path = f['source'][len('macroseismicParameters>'):]
+                    else:
+                        path = f['source'][len('FDSNStationXML>Network>'):]
                 else:
-                    path = f['source'][len('FDSNStationXML>Network>'):]
+                    path = ''
 
                 if initial_fields:
                     checked = f['source'] in initial_fields

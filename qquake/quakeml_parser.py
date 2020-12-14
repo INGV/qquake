@@ -72,7 +72,8 @@ FIELD_TYPE_MAP = {
     'Double': QVariant.Double,
     'Time': QVariant.Time,
     'DateTime': QVariant.DateTime,
-    'Date': QVariant.Date
+    'Date': QVariant.Date,
+    'Boolean': QVariant.Bool
 }
 
 
@@ -1420,11 +1421,19 @@ class Event:
     @staticmethod
     def add_origin_attributes(origin, feature, output_fields,
                               convert_negative_depths,
-                              depth_unit):
+                              depth_unit, is_preferred_origin: bool):
         settings = QgsSettings()
 
         short_field_names = settings.value('/plugins/qquake/output_short_field_names', True, bool)
         field_config_key = 'field_short' if short_field_names else 'field_long'
+
+        if output_fields:
+            output_is_preferred_origin = '!IsPrefOrigin' in output_fields
+        else:
+            output_is_preferred_origin = settings.value('/plugins/qquake/output_field_!IsPrefOrigin', False, bool)
+        if output_is_preferred_origin:
+            dest_field = [f for f in CONFIG_FIELDS['field_groups']['basic_event_info']['fields'] if f['source'] == '!IsPrefOrigin'][0]
+            feature[dest_field[field_config_key]] = is_preferred_origin or NULL
 
         for dest_field in CONFIG_FIELDS['field_groups']['origin']['fields']:
             if dest_field.get('skip'):
@@ -1477,11 +1486,19 @@ class Event:
         feature.setGeometry(QgsGeometry(geom))
 
     @staticmethod
-    def add_magnitude_attributes(magnitude, feature, output_fields):
+    def add_magnitude_attributes(magnitude, feature, output_fields, is_preferred_magnitude: bool):
         settings = QgsSettings()
 
         short_field_names = settings.value('/plugins/qquake/output_short_field_names', True, bool)
         field_config_key = 'field_short' if short_field_names else 'field_long'
+
+        if output_fields:
+            output_is_preferred_mag = '!IsPrefMag' in output_fields
+        else:
+            output_is_preferred_mag = settings.value('/plugins/qquake/output_field_!IsPrefMag', False, bool)
+        if output_is_preferred_mag:
+            dest_field = [f for f in CONFIG_FIELDS['field_groups']['basic_event_info']['fields'] if f['source'] == '!IsPrefMag'][0]
+            feature[dest_field[field_config_key]] = is_preferred_magnitude or NULL
 
         for dest_field in CONFIG_FIELDS['field_groups']['magnitude']['fields']:
             if dest_field.get('skip'):
@@ -1531,6 +1548,9 @@ class Event:
             if dest_field.get('one_to_many'):
                 continue
 
+            if dest_field['source'].startswith('!'):
+                continue
+
             source = dest_field['source'].replace('§', '>').split('>')
             assert source[0] == 'eventParameters'
             source = source[1:]
@@ -1561,23 +1581,30 @@ class Event:
         origins_handled = set()
         for _, m in self.magnitudes.items():
 
-            if preferred_magnitudes_only and m.publicID != self.preferredMagnitudeID:
+            is_preferred_magnitude = m.publicID == self.preferredMagnitudeID
+            if preferred_magnitudes_only and not is_preferred_magnitude:
+                continue
+
+            magnitude_origin = all_origins[m.originID]
+
+            is_preferred_origin = magnitude_origin.publicID == self.preferredOriginID
+            if preferred_origin_only and not is_preferred_origin:
                 continue
 
             magnitude_feature = QgsFeature(f)
-            self.add_magnitude_attributes(m, magnitude_feature, output_fields)
 
-            magnitude_origin = all_origins[m.originID]
+            self.add_magnitude_attributes(m, magnitude_feature, output_fields, is_preferred_magnitude)
             self.add_origin_attributes(magnitude_origin, magnitude_feature, output_fields,
                                        convert_negative_depths=convert_negative_depths,
-                                       depth_unit=depth_unit)
+                                       depth_unit=depth_unit, is_preferred_origin=is_preferred_origin)
 
             origins_handled.add(m.originID)
 
             yield magnitude_feature
 
         for _, o in self.origins.items():
-            if preferred_origin_only and o.publicID != self.preferredOriginID:
+            is_preferred_origin = o.publicID == self.preferredOriginID
+            if preferred_origin_only and not is_preferred_origin:
                 continue
 
             if o.publicID in origins_handled:
@@ -1586,7 +1613,7 @@ class Event:
             origin_feature = QgsFeature(f)
             self.add_origin_attributes(o, origin_feature, output_fields,
                                        convert_negative_depths=convert_negative_depths,
-                                       depth_unit=depth_unit)
+                                       depth_unit=depth_unit, is_preferred_origin=is_preferred_origin)
 
             yield origin_feature
 
@@ -1774,13 +1801,27 @@ class QuakeMlParser:
 
             mdpset = self.mdp_set_for_mdp(m)
 
-            if preferred_mdp_set_only and macro_event is not None:
+            is_preferred_mdp_set = False
+            if macro_event is not None:
                 preferred_mdp_set_id = macro_event.preferredMDPSetID
-                if mdpset.publicID != preferred_mdp_set_id:
-                    # not in the preferred mdp set, so skip
-                    continue
+                is_preferred_mdp_set = mdpset.publicID == preferred_mdp_set_id
+
+            if preferred_mdp_set_only and not is_preferred_mdp_set:
+                # not in the preferred mdp set, so skip
+                continue
 
             f = QgsFeature(fields)
+
+            if selected_fields:
+                output_is_preferred_mdpset = '!IsPrefMdpset' in selected_fields
+            else:
+                output_is_preferred_mdpset = settings.value('/plugins/qquake/output_field_!IsPrefMdpset', False,
+                                                            bool)
+            if output_is_preferred_mdpset:
+                dest_field = [f for f in field_config['field_groups']['basic_event_info']['fields'] if
+                              f['source'] == '!IsPrefMdpset'][0]
+                f[dest_field[field_config_key]] = is_preferred_mdp_set or NULL
+
             for dest_field in field_config['field_groups']['basic_event_info']['fields']:
                 if dest_field.get('skip'):
                     continue
@@ -1790,6 +1831,9 @@ class QuakeMlParser:
 
                 if not include_quake_details_in_mdp and '>event>' in dest_field['source'] and dest_field[
                     'source'] != 'eventParameters>event§publicID':
+                    continue
+
+                if dest_field['source'].startswith('!'):
                     continue
 
                 source = dest_field['source'].replace('§', '>').split('>')
@@ -1818,6 +1862,18 @@ class QuakeMlParser:
                 f[dest_field[field_config_key]] = source_obj
 
             if include_quake_details_in_mdp:
+
+                if selected_fields:
+                    output_is_preferred_origin = '!IsPrefOrigin' in selected_fields
+                else:
+                    output_is_preferred_origin = settings.value('/plugins/qquake/output_field_!IsPrefOrigin', False,
+                                                                bool)
+                if output_is_preferred_origin:
+                    dest_field = [f for f in field_config['field_groups']['basic_event_info']['fields'] if
+                                  f['source'] == '!IsPrefOrigin'][0]
+                    f[dest_field[field_config_key]] = True
+
+
                 for dest_field in field_config['field_groups']['origin']['fields']:
                     if dest_field.get('skip'):
                         continue
@@ -1843,7 +1899,10 @@ class QuakeMlParser:
                         continue
 
                     event = [e for e in self.events if e.publicID == m.eventReference][0]
-                    source_obj = self.origins[event.preferredOriginID]
+                    origin = self.origins[event.preferredOriginID]
+
+                    source_obj = origin
+
                     for s in source:
                         if source_obj is None:
                             source_obj = NULL
@@ -1854,6 +1913,16 @@ class QuakeMlParser:
                     f[dest_field[field_config_key]] = source_obj
 
             if include_quake_details_in_mdp:
+
+                if selected_fields:
+                    output_is_preferred_mag = '!IsPrefMag' in selected_fields
+                else:
+                    output_is_preferred_mag = settings.value('/plugins/qquake/output_field_!IsPrefMag', False, bool)
+                if output_is_preferred_mag:
+                    dest_field = [f for f in CONFIG_FIELDS['field_groups']['basic_event_info']['fields'] if
+                                  f['source'] == '!IsPrefMag'][0]
+                    f[dest_field[field_config_key]] = True
+
                 for dest_field in field_config['field_groups']['magnitude']['fields']:
                     if dest_field.get('skip'):
                         continue
