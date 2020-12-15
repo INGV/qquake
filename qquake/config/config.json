@@ -1851,7 +1851,9 @@
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
       "dataproviderurl": "http://www.ingv.it",
       "help": "",
-      "publications": [],
+      "publications": [
+        "Locati, M., Rovida, A., Albini, P., Stucchi, M. (2014). The AHEAD Portal: A Gateway to European Historical Earthquake Data. Seismological Research Letters, 85(3), 727–734. https://doi.org/10.1785/0220130113",
+        "Rovida, A., Locati, M. (2015). Archive of Historical Earthquake Data for the European-Mediterranean Area. In Perspectives on European Earthquake Engineering and Seismology (pp. 359–369). Springer International Publishing. https://doi.org/10.1007/978-3-319-16964-4_14"],
       "endpointurl": "https://www.emidius.eu/services/europe/wms?",
       "datestart": "1000-01-01T00:00:00+00:00",
       "dateend": "1899-12-31T23:59:59+00:00",
