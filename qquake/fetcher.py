@@ -149,17 +149,13 @@ class Fetcher(QObject):
         """
         Returns the URL request for the query
         """
+        if self.url is not None:
+            return self.url
+
         if self.is_mdp_basic_text_request:
             format = 'textmacro'
         else:
             format = 'text' if self.output_type == Fetcher.BASIC else 'xml'
-
-        if self.url is not None:
-            u = self.url
-            u = u.replace('&format=text','')
-            u = u.replace('&format=xml', '')
-            u = u+'&format=' +format
-            return u
 
         query = []
         # append to the string the parameter of the UI (starttime, endtime, etc)
@@ -459,11 +455,11 @@ class Fetcher(QObject):
         ok, _ = vl.dataProvider().addFeatures(features)
         assert ok
 
-        if self.service_config.get('styleurl'):
+        if not self.url and self.service_config.get('styleurl'):
             err = StyleUtils.fetch_and_apply_style(vl, self.service_config.get('styleurl'))
             if err:
                 self.message.emit(err, Qgis.Warning)
-        elif isinstance(self.service_config.get('default', {}).get('style', {}), dict) and \
+        elif not self.url and isinstance(self.service_config.get('default', {}).get('style', {}), dict) and \
                 self.service_config['default']['style'].get('events'):
             style = self.service_config['default']['style']['events']
 
@@ -494,11 +490,11 @@ class Fetcher(QObject):
         ok, _ = vl.dataProvider().addFeatures(features)
         assert ok
 
-        if self.service_config.get('mdpstyleurl'):
+        if not self.url and self.service_config.get('mdpstyleurl'):
             err = StyleUtils.fetch_and_apply_style(vl, self.service_config.get('mdpstyleurl'))
             if err:
                 self.message.emit(err, Qgis.Warning)
-        elif isinstance(self.service_config.get('default', {}).get('style', {}), dict) and \
+        elif not self.url and isinstance(self.service_config.get('default', {}).get('style', {}), dict) and \
                 self.service_config['default']['style'].get('mdp'):
             style = self.service_config['default']['style']['mdp']
 
