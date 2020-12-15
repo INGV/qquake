@@ -24,11 +24,10 @@
 
 from qgis.PyQt import uic
 from qgis.PyQt.QtWidgets import QWidget
-
-from qquake.services import SERVICE_MANAGER
-from qquake.gui.gui_utils import GuiUtils
-
 from qgis.core import QgsStringUtils
+
+from qquake.gui.gui_utils import GuiUtils
+from qquake.services import SERVICE_MANAGER
 
 FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('service_information_widget.ui'))
 
@@ -56,7 +55,7 @@ class ServiceInformationWidget(QWidget, FORM_CLASS):
         {self.service_config['title']}</p>"""
 
         if self.service_config.get('servicedescriptionurl') or self.service_config.get('servicedescription'):
-            html+=f"""<p><b>Service description</b><br>
+            html += f"""<p><b>Service description</b><br>
             <a href="{self.service_config['servicedescriptionurl']}">{self.service_config.get('servicedescription') or self.service_config['servicedescriptionurl']}</a></p>"""
 
         html += """<p><b>Service managed by</b><br>
@@ -89,88 +88,78 @@ class ServiceInformationWidget(QWidget, FORM_CLASS):
 
         if service_type in (SERVICE_MANAGER.MACROSEISMIC, SERVICE_MANAGER.FDSNSTATION, SERVICE_MANAGER.FDSNEVENT):
             if self.service_config['settings'].get('querylimitmaxentries'):
-                capabilities.append('Allowed maximum number of returned entries: {}'.format(self.service_config['settings'].get('querylimitmaxentries')))
+                capabilities.append('Allowed maximum number of returned entries: {}'.format(
+                    self.service_config['settings'].get('querylimitmaxentries')))
             if self.service_config.get('datestart'):
                 capabilities.append(
                     'Earliest date: {}'.format(self.service_config['datestart']))
             if self.service_config.get('dateend'):
                 capabilities.append(
                     'Latest date: {}'.format(self.service_config['dateend']))
-            if self.service_config.get('queryeventid'):
+
+            def add_capability_string(title, source, key):
                 capabilities.append(
-                    'Support requests using event identifier: YES')
-            if not self.service_config.get('queryoriginid'):
+                    '{}: {}'.format(title,
+                                    'YES' if source.get(key) else 'NO'))
+
+            add_capability_string('Support requests using event identifier', self.service_config['settings'],
+                                  'queryeventid')
+            add_capability_string(
+                'Support requests using origin identifier', self.service_config['settings'], 'queryoriginid')
+            add_capability_string(
+                'Support requests using magnitude identifier', self.service_config['settings'], 'querymagnitudeid')
+            add_capability_string(
+                'Support requests using forcal mechanism identifier', self.service_config['settings'],
+                'queryfocalmechanismid')
+            add_capability_string(
+                'Support requests of data published after a certain date', self.service_config['settings'],
+                'queryupdatedafter')
+            add_capability_string(
+                'Support requests of data published after a certain date', self.service_config['settings'],
+                'queryupdatedafter')
+            add_capability_string(
+                'Support requests using source catalog identifier', self.service_config['settings'], 'querycatalog')
+            add_capability_string(
+                'Support requests using source contributor identifier', self.service_config['settings'],
+                'querycontributorid')
+            add_capability_string(
+                'Support requests by event type', self.service_config['settings'], 'queryeventtype')
+            add_capability_string(
+                'Support requests by magnitude type', self.service_config['settings'], 'querymagnitudetype')
+            add_capability_string(
+                'Support retrieval of all origin estimates', self.service_config['settings'], 'queryincludeallorigins')
+            add_capability_string(
+                'Support retrieval of all magnitude estimates', self.service_config['settings'],
+                'queryincludeallmagnitudes')
+            add_capability_string(
+                'Support retrieval of arrival times', self.service_config['settings'], 'queryincludearrivals')
+            add_capability_string(
+                'Support retrieval of all station magnitude estimates', self.service_config['settings'],
+                'queryincludeallstationsmagnitudes')
+            add_capability_string(
+                'Support query limit', self.service_config['settings'], 'querylimit')
+            add_capability_string(
+                'Support filter using circular search', self.service_config['settings'], 'querycircular')
+            add_capability_string(
+                'Support search radius in kilometers', self.service_config['settings'], 'querycircularradiuskm')
+            add_capability_string(
+                'Support filter by hypocentral depth', self.service_config['settings'], 'querydepth')
+            add_capability_string(
+                'Support text output', self.service_config['settings'], 'outputtext')
+            add_capability_string(
+                'Support QuakeML output', self.service_config['settings'], 'outputxml')
+            add_capability_string(
+                'Support GeoJSON output', self.service_config['settings'], 'outputgeojson')
+            add_capability_string(
+                'Support JSON output', self.service_config['settings'], 'outputjson')
+            add_capability_string(
+                'Support KML output', self.service_config['settings'], 'outputkml')
+            add_capability_string(
+                'Support XLSX output', self.service_config['settings'], 'outputxlsx')
+
+            if self.service_config.get('httpcodenodata'):
                 capabilities.append(
-                    'Support requests using origin identifier: NO')
-            if not self.service_config.get('querymagnitudeid'):
-                capabilities.append(
-                    'Support requests using magnitude identifier: NO')
-            if not self.service_config.get('queryfocalmechanismid'):
-                capabilities.append(
-                    'Support requests using forcal mechanism identifier: NO')
-            if not self.service_config.get('queryupdatedafter'):
-                capabilities.append(
-                    'Support requests of data published after a certain date: NO')
-            if not self.service_config.get('queryupdatedafter'):
-                capabilities.append(
-                    'Support requests of data published after a certain date: NO')
-            if self.service_config.get('querycatalog'):
-                capabilities.append(
-                    'Support requests using source catalog identifier: YES')
-            if self.service_config.get('querycontributorid'):
-                capabilities.append(
-                    'Support requests using source contributor identifier: YES')
-            if not self.service_config.get('queryeventtype'):
-                capabilities.append(
-                    'Support requests by event type: NO')
-            if not self.service_config.get('querymagnitudetype'):
-                capabilities.append(
-                    'Support requests by magnitude type: NO')
-            if self.service_config.get('queryincludeallorigins'):
-                capabilities.append(
-                    'Support retrieval of all origin estimates: YES')
-            if self.service_config.get('queryincludeallmagnitudes'):
-                capabilities.append(
-                    'Support retrieval of all magnitude estimates: YES')
-            if not self.service_config.get('queryincludearrivals'):
-                capabilities.append(
-                    'Support retrieval of arrival times: NO')
-            if not self.service_config.get('queryincludeallstationsmagnitudes'):
-                capabilities.append(
-                    'Support retrieval of all station magnitude estimates: NO')
-            if self.service_config.get('querylimit'):
-                capabilities.append(
-                    'Support query limit: YES')
-            if self.service_config.get('querycircular'):
-                capabilities.append(
-                    'Support filter using circular search: YES')
-            if self.service_config.get('querycircularradiuskm'):
-                capabilities.append(
-                    'Support search radius in kilometers: YES')
-            if not self.service_config.get('querydepth'):
-                capabilities.append(
-                    'Support filter by hypocentral depth: NO')
-            if self.service_config.get('outputtext'):
-                capabilities.append(
-                    'Support text output: YES')
-            if self.service_config.get('outputxml'):
-                capabilities.append(
-                    'Support QuakeML output: YES')
-            if self.service_config.get('outputgeojson'):
-                capabilities.append(
-                    'Support GeoJSON output: YES')
-            if self.service_config.get('outputjson'):
-                capabilities.append(
-                    'Support JSON output: YES')
-            if not self.service_config.get('outputkml'):
-                capabilities.append(
-                    'Support KML output: NO')
-            if not self.service_config.get('outputxlsx'):
-                capabilities.append(
-                    'Support XLSX output: NO')
-            if self.service_config.get('httpcodenodata') == 204:
-                capabilities.append(
-                    'HTTP error code: 204')
+                    'HTTP error code: {}'.format(self.service_config['settings'].get('httpcodenodata')))
 
         if capabilities:
             html += """<p><b>Capabilities</b>"""
