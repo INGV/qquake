@@ -23,13 +23,16 @@
 """
 from qgis.PyQt import uic
 from qgis.PyQt.QtCore import (
+    pyqtSignal,
+    QDir,
+    QUrl
+)
+from qgis.PyQt.QtGui import QFontMetrics
+from qgis.PyQt.QtWidgets import (
+    QWidget,
+    QFileDialog
+)
 
-    pyqtSignal
-)
-from qgis.PyQt.QtWidgets import QWidget
-from qgis.core import (
-    QgsSettings,
-)
 
 from qquake.fetcher import Fetcher
 from qquake.gui.gui_utils import GuiUtils
@@ -48,11 +51,11 @@ class FetchByUrlWidget(QWidget, FORM_CLASS):
 
         self.setupUi(self)
 
-        self._enable_widgets()
-        self.radio_basic_output.toggled.connect(self._enable_widgets)
-        self.radio_extended_output.toggled.connect(self._enable_widgets)
+        fm = QFontMetrics(self.url_edit.font())
+        self.url_edit.setMaximumHeight(fm.lineSpacing()*6)
 
         self.output_table_options_button.clicked.connect(self._output_table_options)
+        self.import_file_button.clicked.connect(self._import_from_file)
 
         self.service_type = None
         self.service_id = None
@@ -61,8 +64,6 @@ class FetchByUrlWidget(QWidget, FORM_CLASS):
         self.service_config = {}
 
         self.url_edit.textChanged.connect(self.changed)
-        self.radio_basic_output.toggled.connect(self.changed)
-        self.radio_extended_output.toggled.connect(self.changed)
 
     def is_valid(self):
         return bool(self.url_edit.toPlainText())
@@ -78,44 +79,11 @@ class FetchByUrlWidget(QWidget, FORM_CLASS):
 
         self.service_config = SERVICE_MANAGER.service_details(self.service_type, self.service_id)
 
-        if not self.service_config['settings'].get('outputtext', False):
-            if self.radio_basic_output.isChecked():
-                self.radio_extended_output.setChecked(True)
-            self.radio_basic_output.setEnabled(False)
-        else:
-            self.radio_basic_output.setEnabled(True)
-
-        if not self.service_config['settings'].get('outputxml', False):
-            if self.radio_extended_output.isChecked():
-                self.radio_basic_output.setChecked(True)
-            self.radio_extended_output.setEnabled(False)
-        else:
-            self.radio_extended_output.setEnabled(True)
-
     def restore_settings(self, prefix):
-        s = QgsSettings()
-
-        if self.service_id:
-            service_config = SERVICE_MANAGER.service_details(self.service_type, self.service_id)
-        else:
-            service_config = None
-
-        if not service_config or service_config['settings'].get('outputtext', False):
-            self.radio_basic_output.setChecked(
-                s.value('/plugins/qquake/{}_url_basic_checked'.format(prefix), True, bool))
-
-        if not service_config or service_config['settings'].get('outputxml', False):
-            self.radio_extended_output.setChecked(
-                s.value('/plugins/qquake/{}_url_extended_checked'.format(prefix), False, bool))
+        pass
 
     def save_settings(self, prefix):
-        s = QgsSettings()
-        s.setValue('/plugins/qquake/{}_url_basic_checked'.format(prefix), self.radio_basic_output.isChecked())
-        s.setValue('/plugins/qquake/{}_url_extended_checked'.format(prefix),
-                   self.radio_extended_output.isChecked())
-
-    def _enable_widgets(self):
-        self.output_table_options_button.setEnabled(self.radio_extended_output.isChecked())
+        pass
 
     def _output_table_options(self):
         dlg = OutputTableOptionsDialog(self.service_type, self.service_id, self.output_fields, self)
@@ -123,8 +91,13 @@ class FetchByUrlWidget(QWidget, FORM_CLASS):
             self.output_fields = dlg.selected_fields()
             self.changed.emit()
 
+    def _import_from_file(self):
+        file, _ = QFileDialog.getOpenFileName(self, self.tr('Import QuakeML File'),QDir.homePath(), self.tr('QuakeML Files (*.xml *.XML)'))
+        if file:
+            self.url_edit.setPlainText(QUrl.fromLocalFile(file).toString())
+
     def output_type(self):
-        return Fetcher.BASIC if self.radio_basic_output.isChecked() else Fetcher.EXTENDED
+        return Fetcher.EXTENDED
 
     def convert_negative_depths(self):
         return self.output_options_widget.convert_negative_depths()
@@ -133,4 +106,4 @@ class FetchByUrlWidget(QWidget, FORM_CLASS):
         return self.output_options_widget.depth_unit()
 
     def url(self):
-        return self.url_edit.toPlainText()
+        return self.url_edit.toPlainText().strip()
