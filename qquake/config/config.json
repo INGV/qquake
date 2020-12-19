@@ -2023,6 +2023,10 @@
       "type": "events",
 	  "url": "https://www.emidius.eu/qquake/symbology/epicentres_circles_colors.qml"
     },
+    "circles_red": {
+      "type": "events",
+	  "url": "https://www.emidius.eu/qquake/symbology/epicentres_circles_red.qml"
+    },
     "circles_grayscale": {
       "type": "events",
 	  "url": "https://www.emidius.eu/qquake/symbology/epicentres_circles_grayscale.qml"
