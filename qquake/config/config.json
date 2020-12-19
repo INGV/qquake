@@ -29,7 +29,7 @@
         "boundingboxpredefined": "europe",
         "style": {
           "events": {
-            "style": "CPTI",
+            "style": "square_colors",
             "classified_attribute_text": "Magnitude",
             "classified_attribute_xml": "eventParameters>event>magnitude>mag>value"
           }
@@ -117,7 +117,7 @@
         "boundingboxpredefined": "italy",
         "style": {
           "events": {
-            "style": "CPTI",
+            "style": "square_colors",
             "classified_attribute_text": "Magnitude",
             "classified_attribute_xml": "eventParameters>event>magnitude>mag>value"
           }
@@ -206,7 +206,7 @@
         "boundingboxpredefined": "italy",
         "style": {
           "events": {
-            "style": "CPTI",
+            "style": "square_colors",
             "classified_attribute_text": "Magnitude",
             "classified_attribute_xml": "eventParameters>event>magnitude>mag>value"
           }
@@ -292,7 +292,7 @@
         "boundingboxpredefined": "europe",
         "style": {
           "events": {
-            "style": "CPTI",
+            "style": "square_colors",
             "classified_attribute_text": "Magnitude",
             "classified_attribute_xml": "eventParameters>event>magnitude>mag>value"
           }
@@ -375,7 +375,7 @@
         "boundingboxpredefined": "world",
         "style": {
           "events": {
-            "style": "CPTI",
+            "style": "square_colors",
             "classified_attribute_text": "Magnitude",
             "classified_attribute_xml": "eventParameters>event>magnitude>mag>value"
           }
@@ -1457,7 +1457,7 @@
             "classified_attribute_xml": "macroseismicParameters>mdp>intensity>expectedIntensity>class"
           },
           "events": {
-            "style": "CPTI",
+            "style": "square_colors",
             "classified_attribute_text": "Magnitude",
             "classified_attribute_xml": "eventParameters>event>magnitude>mag>value"
           }
@@ -1566,7 +1566,7 @@
             "classified_attribute_xml": "macroseismicParameters>mdp>intensity>expectedIntensity>class"
           },
           "events": {
-            "style": "CPTI",
+            "style": "square_colors",
             "classified_attribute_text": "Magnitude",
             "classified_attribute_xml": "eventParameters>event>magnitude>mag>value"
           }
@@ -2015,9 +2015,17 @@
     }
   },
   "styles": {
-    "CPTI": {
+    "square_colors": {
       "type": "events",
 	  "url": "https://www.emidius.eu/qquake/symbology/CPTI15_symbols.qml"
+    },
+    "circles_colors": {
+      "type": "events",
+	  "url": "https://www.emidius.eu/qquake/symbology/epicentres_circles_colors.qml"
+    },
+    "circles_grayscale": {
+      "type": "events",
+	  "url": "https://www.emidius.eu/qquake/symbology/epicentres_circles_grayscale.qml"
     },
     "AHEAD_intensities": {
       "type": "macroseismic",
