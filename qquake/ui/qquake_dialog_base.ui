@@ -224,7 +224,7 @@
              </widget>
              <widget class="QWidget" name="tab_14">
               <attribute name="title">
-               <string>By URL</string>
+               <string>Load QuakeML directly</string>
               </attribute>
               <layout class="QVBoxLayout" name="verticalLayout_21">
                <item>
@@ -450,7 +450,7 @@
              </widget>
              <widget class="QWidget" name="tab_15">
               <attribute name="title">
-               <string>By URL</string>
+               <string>Load QuakeML directly</string>
               </attribute>
               <layout class="QVBoxLayout" name="verticalLayout_22">
                <item>
