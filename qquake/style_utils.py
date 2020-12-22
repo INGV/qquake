@@ -29,11 +29,34 @@ from qgis.core import (
     QgsCategorizedSymbolRenderer
 )
 
+from qquake.services import SERVICE_MANAGER
 
 class StyleUtils:
     """
     Layer styling utilities
     """
+
+    @staticmethod
+    def default_style_for_events_url() -> str:
+        """
+        Returns the URL for the default style to use for event layers
+        """
+        for k, v in SERVICE_MANAGER.PRESET_STYLES.items():
+            if v['type'] == 'events':
+                return v['url']
+
+        assert False
+
+    @staticmethod
+    def default_style_for_macro_url() -> str:
+        """
+        Returns the URL for the default style to use for macro layers
+        """
+        for k, v in SERVICE_MANAGER.PRESET_STYLES.items():
+            if v['type'] == 'macroseismic':
+                return v['url']
+
+        assert False
 
     @staticmethod
     def fetch_and_apply_style(layer: QgsMapLayer, url: str, style_attr: str = '') -> Optional[str]:

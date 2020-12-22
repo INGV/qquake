@@ -474,7 +474,12 @@ class Fetcher(QObject):
         ok, _ = vl.dataProvider().addFeatures(features)
         assert ok
 
-        if not self.url and self.service_config.get('styleurl'):
+        if self.url:
+            default_style_url = StyleUtils.default_style_for_events_url()
+            err = StyleUtils.fetch_and_apply_style(vl, default_style_url)
+            if err:
+                self.message.emit(err, Qgis.Warning)
+        elif not self.url and self.service_config.get('styleurl'):
             err = StyleUtils.fetch_and_apply_style(vl, self.service_config.get('styleurl'))
             if err:
                 self.message.emit(err, Qgis.Warning)
@@ -509,11 +514,16 @@ class Fetcher(QObject):
         ok, _ = vl.dataProvider().addFeatures(features)
         assert ok
 
-        if not self.url and self.service_config.get('mdpstyleurl'):
+        if self.url:
+            default_style_url = StyleUtils.default_style_for_macro_url()
+            err = StyleUtils.fetch_and_apply_style(vl, default_style_url)
+            if err:
+                self.message.emit(err, Qgis.Warning)
+        elif self.service_config.get('mdpstyleurl'):
             err = StyleUtils.fetch_and_apply_style(vl, self.service_config.get('mdpstyleurl'))
             if err:
                 self.message.emit(err, Qgis.Warning)
-        elif not self.url and isinstance(self.service_config.get('default', {}).get('style', {}), dict) and \
+        elif isinstance(self.service_config.get('default', {}).get('style', {}), dict) and \
                 self.service_config['default']['style'].get('mdp'):
             style = self.service_config['default']['style']['mdp']
 
