@@ -1,4 +1,4 @@
-# QQuake Plugin to easy download seismological data
+# QQuake Plugin for loading seismological data in QGIS 3.x
 
 QQuake plugin is a plugin that facilitates the download of seismological data
 from different sources and loads them directly in QGIS.
