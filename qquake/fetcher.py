@@ -33,7 +33,8 @@ from qquake.quakeml_parser import (
     QuakeMlParser,
     FDSNStationXMLParser,
     Magnitude,
-    Station
+    Station,
+    MissingOriginException
 )
 from qquake.services import SERVICE_MANAGER
 from qquake.style_utils import StyleUtils
@@ -324,7 +325,14 @@ class Fetcher(QObject):
                 assert False
 
             if self.missing_origins:
-                self.fetch_missing()
+                if self.url is not None:
+                    self.message.emit(
+                        self.tr('QuakeML file is incomplete. {} origins are missing from the data').format(
+                            len(self.missing_origins)),
+                        Qgis.Warning)
+                    self.finished.emit(True)
+                else:
+                    self.fetch_missing()
             elif self.pending_event_ids:
                 self.fetch_next_event_by_id()
             else:
@@ -449,8 +457,14 @@ class Fetcher(QObject):
         vl = self._create_empty_event_layer()
 
         features = []
-        for f in parser.create_event_features(self.output_fields, preferred_origin_only, preferred_magnitudes_only):
-            features.append(f)
+        try:
+            for f in parser.create_event_features(self.output_fields, preferred_origin_only, preferred_magnitudes_only):
+                features.append(f)
+        except MissingOriginException as e:
+            self.message.emit(
+                str(e),
+                Qgis.Critical)
+            return None
 
         ok, _ = vl.dataProvider().addFeatures(features)
         assert ok
