@@ -13,6 +13,8 @@ __copyright__ = 'Copyright 2020, North Road'
 # This will get replaced with a git SHA1 when you do a git archive
 __revision__ = '$Format:%H$'
 
+from pathlib import Path
+
 from qgis.PyQt.QtCore import (
     Qt,
     QUrl,
@@ -374,6 +376,9 @@ class Fetcher(QObject):
                             self.finished.emit(True)
 
     def _generate_layer_name(self, layer_type=None):
+        if self.url and QUrl(self.url).isLocalFile():
+            return Path(QUrl(self.url).toLocalFile()).stem
+
         name = self.event_service
 
         if self.event_min_magnitude is not None and self.event_max_magnitude is not None:
