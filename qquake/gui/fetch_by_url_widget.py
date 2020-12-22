@@ -92,7 +92,7 @@ class FetchByUrlWidget(QWidget, FORM_CLASS):
             self.changed.emit()
 
     def _import_from_file(self):
-        file, _ = QFileDialog.getOpenFileName(self, self.tr('Import QuakeML File'),QDir.homePath(), self.tr('QuakeML Files (*.xml *.XML)'))
+        file, _ = QFileDialog.getOpenFileName(self, self.tr('Import QuakeML File'),QDir.homePath(), self.tr('Supported Files (*.xml *.XML *.qml *.QML);;XML Files (*.xml *.XML);;QuakeML Files (*.qml *.QML);;All Files (*.*)'))
         if file:
             self.url_edit.setPlainText(QUrl.fromLocalFile(file).toString())
 

@@ -32,6 +32,13 @@ from qgis.core import (
 
 from qquake.services import SERVICE_MANAGER
 
+
+class MissingOriginException(Exception):
+    """
+    Raised when a referenced origin is not present
+    """
+
+
 ORIGIN_DEPTH_TYPES = {
     'FROM_LOCATION': "from location",
     'FROM_MOMENT_TENSOR_INVERSION': "from moment tensor inversion",
@@ -815,7 +822,7 @@ class Comment:
     @staticmethod
     def from_element(element):
         parser = ElementParser(element)
-        return Comment(text=parser.float('text', optional=False),
+        return Comment(text=parser.string('text', optional=False),
                        id=parser.resource_reference('id'),
                        creationInfo=parser.creation_info('creationInfo'))
 
@@ -1584,6 +1591,9 @@ class Event:
             is_preferred_magnitude = m.publicID == self.preferredMagnitudeID
             if preferred_magnitudes_only and not is_preferred_magnitude:
                 continue
+
+            if m.originID not in all_origins:
+                raise MissingOriginException(f'Origin with ID {m.originID} is not present in QuakeML file -- cannot be parsed')
 
             magnitude_origin = all_origins[m.originID]
 

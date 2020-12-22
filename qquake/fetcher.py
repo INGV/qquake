@@ -13,6 +13,8 @@ __copyright__ = 'Copyright 2020, North Road'
 # This will get replaced with a git SHA1 when you do a git archive
 __revision__ = '$Format:%H$'
 
+from pathlib import Path
+
 from qgis.PyQt.QtCore import (
     Qt,
     QUrl,
@@ -33,7 +35,8 @@ from qquake.quakeml_parser import (
     QuakeMlParser,
     FDSNStationXMLParser,
     Magnitude,
-    Station
+    Station,
+    MissingOriginException
 )
 from qquake.services import SERVICE_MANAGER
 from qquake.style_utils import StyleUtils
@@ -324,7 +327,14 @@ class Fetcher(QObject):
                 assert False
 
             if self.missing_origins:
-                self.fetch_missing()
+                if self.url is not None:
+                    self.message.emit(
+                        self.tr('QuakeML file is incomplete. {} origins are missing from the data').format(
+                            len(self.missing_origins)),
+                        Qgis.Warning)
+                    self.finished.emit(True)
+                else:
+                    self.fetch_missing()
             elif self.pending_event_ids:
                 self.fetch_next_event_by_id()
             else:
@@ -366,6 +376,9 @@ class Fetcher(QObject):
                             self.finished.emit(True)
 
     def _generate_layer_name(self, layer_type=None):
+        if self.url and QUrl(self.url).isLocalFile():
+            return Path(QUrl(self.url).toLocalFile()).stem
+
         name = self.event_service
 
         if self.event_min_magnitude is not None and self.event_max_magnitude is not None:
@@ -449,13 +462,24 @@ class Fetcher(QObject):
         vl = self._create_empty_event_layer()
 
         features = []
-        for f in parser.create_event_features(self.output_fields, preferred_origin_only, preferred_magnitudes_only):
-            features.append(f)
+        try:
+            for f in parser.create_event_features(self.output_fields, preferred_origin_only, preferred_magnitudes_only):
+                features.append(f)
+        except MissingOriginException as e:
+            self.message.emit(
+                str(e),
+                Qgis.Critical)
+            return None
 
         ok, _ = vl.dataProvider().addFeatures(features)
         assert ok
 
-        if not self.url and self.service_config.get('styleurl'):
+        if self.url:
+            default_style_url = StyleUtils.default_style_for_events_url()
+            err = StyleUtils.fetch_and_apply_style(vl, default_style_url)
+            if err:
+                self.message.emit(err, Qgis.Warning)
+        elif not self.url and self.service_config.get('styleurl'):
             err = StyleUtils.fetch_and_apply_style(vl, self.service_config.get('styleurl'))
             if err:
                 self.message.emit(err, Qgis.Warning)
@@ -490,11 +514,16 @@ class Fetcher(QObject):
         ok, _ = vl.dataProvider().addFeatures(features)
         assert ok
 
-        if not self.url and self.service_config.get('mdpstyleurl'):
+        if self.url:
+            default_style_url = StyleUtils.default_style_for_macro_url()
+            err = StyleUtils.fetch_and_apply_style(vl, default_style_url)
+            if err:
+                self.message.emit(err, Qgis.Warning)
+        elif self.service_config.get('mdpstyleurl'):
             err = StyleUtils.fetch_and_apply_style(vl, self.service_config.get('mdpstyleurl'))
             if err:
                 self.message.emit(err, Qgis.Warning)
-        elif not self.url and isinstance(self.service_config.get('default', {}).get('style', {}), dict) and \
+        elif isinstance(self.service_config.get('default', {}).get('style', {}), dict) and \
                 self.service_config['default']['style'].get('mdp'):
             style = self.service_config['default']['style']['mdp']
 
