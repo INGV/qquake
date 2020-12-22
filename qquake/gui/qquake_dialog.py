@@ -791,7 +791,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         if self.fetcher.service_type in (SERVICE_MANAGER.FDSNEVENT, SERVICE_MANAGER.MACROSEISMIC):
             layer = self.fetcher.create_event_layer()
             if layer:
-                layers.append()
+                layers.append(layer)
             if self.fetcher.service_type == SERVICE_MANAGER.MACROSEISMIC:
                 layer = self.fetcher.create_mdp_layer()
                 if layer:
