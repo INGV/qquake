@@ -2027,6 +2027,10 @@
       "type": "events",
 	  "url": "https://www.emidius.eu/qquake/symbology/epicentres_circles_red.qml"
     },
+    "circles_blue": {
+      "type": "events",
+	  "url": "https://www.emidius.eu/qquake/symbology/epicentres_circles_blue.qml"
+    },
     "circles_grayscale": {
       "type": "events",
 	  "url": "https://www.emidius.eu/qquake/symbology/epicentres_circles_grayscale.qml"
