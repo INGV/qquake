@@ -1682,8 +1682,8 @@
       "title": "CPTI, Catalogo Parametrico dei Terremoti Italiani (INGV)",
       "servicedescription": "OGC WFS provided by ASMI",
       "servicedescriptionurl": "https://emidius.mi.ingv.it/ASMI/services/",
-      "datadescription": "Rovida A., Locati M., Camassi R., Lolli B., Gasperini P., Antonucci A. (2020). Catalogo Parametrico dei Terremoti Italiani (CPTI15), versione 3.0 [Data set]. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/CPTI/CPTI15.3",
-      "datadescriptionurl": "https://doi.org/10.13127/CPTI/CPTI15.3",
+      "datadescription": "The Italian Parametric Earthquake Catalogue (CPTI, Catalogo Parametrico dei Terremoti Italiani) represents the most extensive and reliable source of parameters for earthquakes in Italy.",
+      "datadescriptionurl": "https://emidius.mi.ingv.it/CPTI/",
       "datalicense": "CC BY-SA 4.0",
       "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
@@ -1698,7 +1698,7 @@
         "wfsversion": "2.0.0",
         "layers": [
           {
-            "layername": "italy:CPTI15",
+            "layername": "italy:CPTI_current",
             "style": {
               "wfs": {
                 "style": "CPTI_wfs"
@@ -1879,8 +1879,8 @@
       "title": "CPTI, Catalogo Parametrico dei Terremoti Italiani (INGV)",
       "servicedescription": "OGC WMS provided by ASMI",
       "servicedescriptionurl": "https://emidius.mi.ingv.it/ASMI/services/",
-      "datadescription": "Rovida A., Locati M., Camassi R., Lolli B., Gasperini P., Antonucci A. (2020). Catalogo Parametrico dei Terremoti Italiani (CPTI15), versione 3.0 [Data set]. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/CPTI/CPTI15.3",
-      "datadescriptionurl": "https://doi.org/10.13127/CPTI/CPTI15.3",
+      "datadescription": "The Italian Parametric Earthquake Catalogue (CPTI, Catalogo Parametrico dei Terremoti Italiani) represents the most extensive and reliable source of parameters for earthquakes in Italy",
+      "datadescriptionurl": "https://emidius.mi.ingv.it/CPTI/",
       "datalicense": "CC BY-SA 4.0",
       "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
@@ -1895,7 +1895,7 @@
         "wmsversion": "1.3.0",
         "layers": [
           {
-            "layername": "CPTI15",
+            "layername": "CPTI_current",
             "styles": [
               "italy:CPTI15_squares_colors"
             ]
