@@ -6,7 +6,7 @@
 name=QQuake
 qgisMinimumVersion=3.0
 description=QQuake plugin to download seismological data
-version=1.0
+version=1.0.1
 author=Istituto Nazionale di Geofisica e Vulcanologia (INGV)
 email=mario.locati@ingv.it
 
@@ -20,7 +20,7 @@ repository=https://github.com/INGV/qquake
 
 hasProcessingProvider=no
 # Uncomment the following line and add your changelog:
-# changelog=
+changelog=2021/01/27 1.0.1 Updated to include the version 3 of CPTI, the Parametric Catalogue of Italian Earthquakes
 
 # Tags are comma separated with spaces allowed
 tags=earthquake, seismology, macroseismic, stations, geology, fdsn, data, download
