@@ -1121,10 +1121,10 @@
       "title": "EIDA node NOA - National Observatory of Athens",
       "servicedescription": "",
       "servicedescriptionurl": "https://www.orfeus-eu.org/data/eida/nodes/NOA/",
-      "datadescription": "",
-      "datadescriptionurl": "",
-      "datalicense": "",
-      "datalicenseurl": "",
+      "datadescription": "EIDA node NOA",
+      "datadescriptionurl": "http://eida.gein.noa.gr/",
+      "datalicense": "CC BY 4.0",
+      "datalicenseurl": "https://creativecommons.org/licenses/by/4.0/",
       "dataprovider": "NOA - National Observatory of Athens (data publisher)",
       "dataproviderurl": "http://www.noa.gr/",
       "help": "",
@@ -1682,8 +1682,8 @@
       "title": "CPTI, Catalogo Parametrico dei Terremoti Italiani (INGV)",
       "servicedescription": "OGC WFS provided by ASMI",
       "servicedescriptionurl": "https://emidius.mi.ingv.it/ASMI/services/",
-      "datadescription": "The Italian Parametric Earthquake Catalogue (CPTI, Catalogo Parametrico dei Terremoti Italiani) represents the most extensive and reliable source of parameters for earthquakes in Italy.",
-      "datadescriptionurl": "https://emidius.mi.ingv.it/CPTI/",
+      "datadescription": "Rovida A., Locati M., Camassi R., Lolli B., Gasperini P., Antonucci A. (2021). Catalogo Parametrico dei Terremoti Italiani (CPTI15), versione 3.0 (Version 3.0) [Data set]. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/CPTI/CPTI15.3",
+      "datadescriptionurl": "https://doi.org/10.13127/CPTI/CPTI15.3",
       "datalicense": "CC BY-SA 4.0",
       "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
@@ -1766,7 +1766,7 @@
       "configversion": 0.2,
       "configlastupdate": "2020-12-11T16:25:12+00:00"
     },
-    "DISS": {
+    "INGV DISS": {
       "title": "DISS 3.2.1, Database of Individual Seismogenic Sources",
       "servicedescription": "OGC WFS privided by DISS",
       "servicedescriptionurl": "https://www.seismofaults.eu/index.php/services/diss-services/",
@@ -1837,6 +1837,38 @@
       },
       "configversion": 0.2,
       "configlastupdate": "2020-12-11T16:25:12+00:00"
+    },
+    "INGV EMTC": {
+      "title": "EMTC, Euro-Mediterranean Tsunami Catalogue (INGV)",
+      "servicedescription": "OGC WFS provided by tsunamiarchive.ingv.it",
+      "servicedescriptionurl": "https://tsunamiarchive.ingv.it/emtc.2.0/",
+      "datadescription": "Maramai A., Graziani L., Brizuela B. (2019). Euro-Mediterranean Tsunami Catalogue (EMTC), version 2.0. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/tsunami/emtc.2.0",
+      "datadescriptionurl": "https://doi.org/10.13127/tsunami/emtc.2.0",
+      "datalicense": "CC BY 4.0",
+      "datalicenseurl": "https://creativecommons.org/licenses/by/4.0/",
+      "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+      "dataproviderurl": "http://www.ingv.it",
+      "help": "",
+      "publications": ["Maramai A., Brizuela B., Graziani L. (2014). The Euro-Mediterranean Tsunami Catalogue. Annals of Geophysics, 57(4). https://doi.org/10.4401/ag-6437"],
+      "endpointurl": "https://tsunamiarchive.ingv.it/services/tsunami/wfs/wfs?",
+      "datestart": "1000-01-01T00:00:00+00:00",
+      "dateend": "",
+      "srs": "EPSG:4326",
+      "default": {
+        "wfsversion": "2.0.0",
+        "layers": [
+          {
+            "layername": "tsunami:EMTC_current",
+            "style": {
+              "wfs": {
+                "style": "EMTC_wfs"
+              }
+            }
+          }
+        ]
+      },
+      "configversion": 0.1,
+      "configlastupdate": "2021-03-04T14:34:00+00:00"
     }
   },
   "wms": {
@@ -1879,8 +1911,8 @@
       "title": "CPTI, Catalogo Parametrico dei Terremoti Italiani (INGV)",
       "servicedescription": "OGC WMS provided by ASMI",
       "servicedescriptionurl": "https://emidius.mi.ingv.it/ASMI/services/",
-      "datadescription": "The Italian Parametric Earthquake Catalogue (CPTI, Catalogo Parametrico dei Terremoti Italiani) represents the most extensive and reliable source of parameters for earthquakes in Italy",
-      "datadescriptionurl": "https://emidius.mi.ingv.it/CPTI/",
+      "datadescription": "Rovida A., Locati M., Camassi R., Lolli B., Gasperini P., Antonucci A. (2021). Catalogo Parametrico dei Terremoti Italiani (CPTI15), versione 3.0 (Version 3.0) [Data set]. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/CPTI/CPTI15.3",
+      "datadescriptionurl": "https://doi.org/10.13127/CPTI/CPTI15.3",
       "datalicense": "CC BY-SA 4.0",
       "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
@@ -1953,7 +1985,7 @@
       "configversion": 0.2,
       "configlastupdate": "2020-12-11T16:25:12+00:00"
     },
-    "DISS": {
+    "INGV DISS": {
       "title": "DISS 3.2.1, Database of Individual Seismogenic Sources",
       "servicedescription": "OGC WMS provided by DISS",
       "servicedescriptionurl": "https://www.seismofaults.eu/index.php/services/diss-services/",
@@ -2012,6 +2044,36 @@
       },
       "configversion": 0.2,
       "configlastupdate": "2020-12-11T16:25:12+00:00"
+    },
+    "INGV EMTC": {
+      "title": "EMTC, Euro-Mediterranean Tsunami Catalogue (INGV)",
+      "servicedescription": "OGC WMS provided by tsunamiarchive.ingv.it",
+      "servicedescriptionurl": "https://tsunamiarchive.ingv.it/emtc.2.0/",
+      "datadescription": "Maramai A., Graziani L., Brizuela B. (2019). Euro-Mediterranean Tsunami Catalogue (EMTC), version 2.0. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/tsunami/emtc.2.0",
+      "datadescriptionurl": "https://doi.org/10.13127/tsunami/emtc.2.0",
+      "datalicense": "CC BY 4.0",
+      "datalicenseurl": "https://creativecommons.org/licenses/by/4.0/",
+      "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+      "dataproviderurl": "http://www.ingv.it",
+      "help": "",
+      "publications": ["Maramai A., Brizuela B., Graziani L. (2014). The Euro-Mediterranean Tsunami Catalogue. Annals of Geophysics, 57(4). https://doi.org/10.4401/ag-6437"],
+      "endpointurl": "https://tsunamiarchive.ingv.it/services/tsunami/wms/wms?",
+      "datestart": "1000-01-01T00:00:00+00:00",
+      "dateend": "",
+      "srs": "EPSG:4326",
+      "default": {
+        "wmsversion": "1.3.0",
+        "layers": [
+          {
+            "layername": "EMTC_current",
+            "styles": [
+              "tsunami:EMTCv2"
+            ]
+          }
+        ]
+      },
+      "configversion": 0.1,
+      "configlastupdate": "2021-03-04T14:34:00+00:00"
     }
   },
   "styles": {
@@ -2090,6 +2152,10 @@
     "subdzon": {
       "type": "wfs",
       "url": "http://www.seismofaults.eu/DISS_styles/subdzon.qml"
+    },
+    "EMTC_wfs": {
+      "type": "wfs",
+      "url": "https://www.emidius.eu/qquake/symbology/EMTC_symbols_wfs.qml"
     }
   },
   "boundingboxpredefined": {
