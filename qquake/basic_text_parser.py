@@ -39,7 +39,8 @@ EVENT_FIELD_TYPE = {
     'MagType': QVariant.String,
     'Magnitude': QVariant.Double,
     'MagAuthor': QVariant.String,
-    'EventLocationName': QVariant.String
+    'EventLocationName': QVariant.String,
+    'EventType': QVariant.String
 }
 
 MDP_FIELD_TYPE = {
@@ -92,8 +93,13 @@ class BasicTextParser:
         headers = [h.strip() for h in line.split('|')]
 
         for h in headers:
+            h = h.strip()
             if h == 'Depth/km' and self.depth_unit == QgsUnitTypes.DistanceMeters:
                 h = 'Depth/m'
+            if h == 'MagnitudeType':
+                h = 'MagType'
+            if h == 'MagnitudeAuthor':
+                h = 'MagAuthor'
 
             self.headers.append(h)
 
@@ -149,7 +155,8 @@ class BasicTextParser:
     def to_event_fields(self, selected_fields=None):
         fields = QgsFields()
         for f in self.headers:
-            fields.append(QgsField(f, self.get_field_type(f)))
+            if self.get_field_type(f):
+                fields.append(QgsField(f, self.get_field_type(f)))
 
         return fields
 
