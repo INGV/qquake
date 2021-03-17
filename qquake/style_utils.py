@@ -7,9 +7,9 @@ the Free Software Foundation; either version 2 of the License, or
 (at your option) any later version.
 """
 
-__author__ = '(C) 2020 by Nyall Dawson'
+__author__ = 'Original authors: Mario Locati, Roberto Vallone, Matteo Ghetta, Nyall Dawson'
 __date__ = '29/01/2020'
-__copyright__ = 'Copyright 2020, North Road'
+__copyright__ = 'Istituto Nazionale di Geofisica e Vulcanoogia (INGV)'
 # This will get replaced with a git SHA1 when you do a git archive
 __revision__ = '$Format:%H$'
 
