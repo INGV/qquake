@@ -7,7 +7,7 @@
                               -------------------
         begin                : 2019-11-20
         git sha              : $Format:%H$
-        copyright            : Istituto Nazionale di Geofisica e Vulcanoogia (INGV)
+        copyright            : Istituto Nazionale di Geofisica e Vulcanologia (INGV)
         email                : mario.locati@ingv.it
  ***************************************************************************/
 
