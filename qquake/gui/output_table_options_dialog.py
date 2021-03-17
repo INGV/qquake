@@ -8,8 +8,8 @@
                              -------------------
         begin                : 2019-11-20
         git sha              : $Format:%H$
-        copyright            : (C) 2019 by Faunalia
-        email                : matteo.ghetta@faunalia.eu
+        copyright            : Istituto Nazionale di Geofisica e Vulcanologia (INGV)
+        email                : mario.locati@ingv.it
  ***************************************************************************/
 
 /***************************************************************************
