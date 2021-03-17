@@ -9,7 +9,7 @@ the Free Software Foundation; either version 2 of the License, or
 
 __author__ = 'Original authors: Mario Locati, Roberto Vallone, Matteo Ghetta, Nyall Dawson'
 __date__ = '29/01/2020'
-__copyright__ = 'Istituto Nazionale di Geofisica e Vulcanoogia (INGV)'
+__copyright__ = 'Istituto Nazionale di Geofisica e Vulcanologia (INGV)'
 # This will get replaced with a git SHA1 when you do a git archive
 __revision__ = '$Format:%H$'
 
