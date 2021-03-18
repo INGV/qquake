@@ -87,6 +87,7 @@ class BasicTextParser:
         self.convert_negative_depths = convert_negative_depths
         self.depth_unit = depth_unit
 
+    # Legacy function
     def parser_header_line(self, line):
         assert line[0] == '#'
         line = line[1:]
@@ -95,20 +96,32 @@ class BasicTextParser:
         for h in headers:
             h = h.strip()
             if h == 'Depth/km' and self.depth_unit == QgsUnitTypes.DistanceMeters:
-                h = 'Depth/m'
+                h = 'DepthMeters'
+            elif h == 'Depth/km':
+                h = 'DepthKm'
             if h == 'MagnitudeType':
                 h = 'MagType'
             if h == 'MagnitudeAuthor':
                 h = 'MagAuthor'
-
             self.headers.append(h)
+
+    def parser_header_by_index(self):
+
+        if self.depth_unit == QgsUnitTypes.DistanceMeters:
+            deep = 'DepthMeters'
+        else:
+            deep = 'DepthKm'
+        headers = ['EventID', 'Time', 'Latitude', 'Longitude',  deep, 'Author', 'Catalog', 'Contributor',
+                   'ContributorID', 'MagType', 'Magnitude', 'MagAuthor', 'EventLocationName', 'EventType']
+
+        self.headers = headers
+        return
 
     def parse(self, content):
         if not content:
             return
         lines = content.data().decode().split('\n')
-
-        self.parser_header_line(lines[0])
+        self.parser_header_by_index()
         self._add_events(lines[1:])
 
     def add_events(self, content):
@@ -154,17 +167,46 @@ class BasicTextParser:
 
     def to_event_fields(self, selected_fields=None):
         fields = QgsFields()
-        for f in self.headers:
-            if self.get_field_type(f):
-                fields.append(QgsField(f, self.get_field_type(f)))
+
+        # 0 EventId
+        fields.append(QgsField(self.headers[0], QVariant.String))
+        # 1 Time
+        fields.append(QgsField(self.headers[1], QVariant.DateTime))
+        # 2 Lat
+        fields.append(QgsField(self.headers[2], QVariant.Double))
+        # 3 Lon
+        fields.append(QgsField(self.headers[3], QVariant.Double))
+        # 4 DepthKm
+        fields.append(QgsField(self.headers[4], QVariant.Double))
+        # 5 Author
+        fields.append(QgsField(self.headers[5], QVariant.String))
+        # 6 Catalog
+        fields.append(QgsField(self.headers[6], QVariant.String))
+        # 7 Contributor
+        fields.append(QgsField(self.headers[7], QVariant.String))
+        # 8 ContributorID
+        fields.append(QgsField(self.headers[8], QVariant.String))
+        # 9 MagType
+        fields.append(QgsField(self.headers[9], QVariant.String))
+        # 10 Magnitude
+        fields.append(QgsField(self.headers[10], QVariant.Double))
+        # 11 MagAuthor
+        fields.append(QgsField(self.headers[11], QVariant.String))
+        # 12 EventLocationName
+        fields.append(QgsField(self.headers[12], QVariant.String))
+        # 13 EventType
+        fields.append(QgsField(self.headers[13], QVariant.String))
 
         return fields
 
     def to_event_feature(self, event, fields):
         f = QgsFeature(fields)
         for k, v in event.items():
+
             if k == 'Depth/km' and self.depth_unit == QgsUnitTypes.DistanceMeters:
-                k = 'Depth/m'
+                k = 'DepthMeters'
+            elif k == 'Depth/km':
+                k = 'DepthKm'
 
             try:
                 if fields[fields.lookupField(k)].type() == QVariant.DateTime:
@@ -178,19 +220,21 @@ class BasicTextParser:
                     v = float(v)
                 elif fields[fields.lookupField(k)].type() == QVariant.Int:
                     v = int(v)
+                elif fields[fields.lookupField(k)].type() == QVariant.String:
+                    v = v.replace('--', '')
             except Exception:
                 v = NULL
 
-            if k in ('Depth/km', 'Depth/m') and v != NULL:
+            if k in ('DepthKm', 'DepthMeters') and v != NULL:
                 if self.depth_unit == QgsUnitTypes.DistanceMeters:
                     v *= 1000
                 if self.convert_negative_depths:
                     v = -v
-
             f[k] = v
 
         if event.get('Latitude') and event.get('Longitude'):
-            geom = QgsPoint(x=float(event['Longitude']), y=float(event['Latitude']))
+            geom = QgsPoint(
+                x=float(event['Longitude']), y=float(event['Latitude']))
             f.setGeometry(QgsGeometry(geom))
 
         return f
@@ -235,7 +279,8 @@ class BasicTextParser:
             f[k] = v
 
         if event.get('ReferenceLatitude') and event.get('ReferenceLongitude'):
-            geom = QgsPoint(x=float(event['ReferenceLongitude']), y=float(event['ReferenceLatitude']))
+            geom = QgsPoint(x=float(event['ReferenceLongitude']), y=float(
+                event['ReferenceLatitude']))
             f.setGeometry(QgsGeometry(geom))
 
         return f
@@ -302,7 +347,8 @@ class BasicStationParser:
             f[k] = v
 
         if station.get('Latitude') and station.get('Longitude'):
-            geom = QgsPoint(x=float(station['Longitude']), y=float(station['Latitude']))
+            geom = QgsPoint(
+                x=float(station['Longitude']), y=float(station['Latitude']))
             f.setGeometry(QgsGeometry(geom))
 
         return f
