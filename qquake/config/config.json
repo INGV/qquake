@@ -1869,6 +1869,38 @@
       },
       "configversion": 0.1,
       "configlastupdate": "2021-03-04T14:34:00+00:00"
+    },
+    "INGV ITED": {
+      "title": "ITED, Italian Tsunami Effects Database (INGV)",
+      "servicedescription": "OGC WFS provided by tsunamiarchive.ingv.it",
+      "servicedescriptionurl": "https://tsunamiarchive.ingv.it/ited.1.0/",
+      "datadescription": "Maramai A., Graziani L., Brizuela Reyes, B. (2019). Italian Tsunami Effects Database (ITED) [Data set]. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/tsunami/ited.1.0",
+      "datadescriptionurl": "https://doi.org/10.13127/tsunami/ited.1.0",
+      "datalicense": "CC BY 4.0",
+      "datalicenseurl": "https://creativecommons.org/licenses/by/4.0/",
+      "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+      "dataproviderurl": "http://www.ingv.it",
+      "help": "",
+      "publications": [],
+      "endpointurl": "https://tsunamiarchive.ingv.it/services/tsunami/wfs/wfs?",
+      "datestart": "0001-01-01T00:00:00+00:00",
+      "dateend": "",
+      "srs": "EPSG:4326",
+      "default": {
+        "wfsversion": "2.0.0",
+        "layers": [
+          {
+            "layername": "tsunami:ITED_current",
+            "style": {
+              "wfs": {
+                "style": "ITED_wfs_int"
+              }
+            }
+          }
+        ]
+      },
+      "configversion": 0.1,
+      "configlastupdate": "2021-04-20T16:46:00+00:00"
     }
   },
   "wms": {
@@ -2074,28 +2106,58 @@
       },
       "configversion": 0.1,
       "configlastupdate": "2021-03-04T14:34:00+00:00"
+    },
+    "INGV ITED": {
+      "title": "ITED, Italian Tsunami Effects Database (INGV)",
+      "servicedescription": "OGC WMS provided by tsunamiarchive.ingv.it",
+      "servicedescriptionurl": "https://tsunamiarchive.ingv.it/ited.1.0/",
+      "datadescription": "Maramai A., Graziani L., Brizuela B. (2019). Euro-Mediterranean Tsunami Catalogue (EMTC), version 2.0. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/tsunami/emtc.2.0",
+      "datadescriptionurl": "https://doi.org/10.13127/tsunami/ited.1.0",
+      "datalicense": "CC BY 4.0",
+      "datalicenseurl": "https://creativecommons.org/licenses/by/4.0/",
+      "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+      "dataproviderurl": "http://www.ingv.it",
+      "help": "",
+      "publications": [],
+      "endpointurl": "https://tsunamiarchive.ingv.it/services/tsunami/wms/wms?",
+      "datestart": "0001-01-01T00:00:00+00:00",
+      "dateend": "",
+      "srs": "EPSG:4326",
+      "default": {
+        "wmsversion": "1.3.0",
+        "layers": [
+          {
+            "layername": "ITED_current",
+            "styles": [
+              "tsunami:ITED_v1_int_sa"
+            ]
+          }
+        ]
+      },
+      "configversion": 0.1,
+      "configlastupdate": "2021-03-04T14:34:00+00:00"
     }
   },
   "styles": {
     "square_colors": {
       "type": "events",
-	  "url": "https://www.emidius.eu/qquake/symbology/CPTI15_symbols.qml"
+      "url": "https://www.emidius.eu/qquake/symbology/CPTI15_symbols.qml"
     },
     "circles_colors": {
       "type": "events",
-	  "url": "https://www.emidius.eu/qquake/symbology/epicentres_circles_colors.qml"
+      "url": "https://www.emidius.eu/qquake/symbology/epicentres_circles_colors.qml"
     },
     "circles_red": {
       "type": "events",
-	  "url": "https://www.emidius.eu/qquake/symbology/epicentres_circles_red.qml"
+      "url": "https://www.emidius.eu/qquake/symbology/epicentres_circles_red.qml"
     },
     "circles_blue": {
       "type": "events",
-	  "url": "https://www.emidius.eu/qquake/symbology/epicentres_circles_blue.qml"
+      "url": "https://www.emidius.eu/qquake/symbology/epicentres_circles_blue.qml"
     },
     "circles_grayscale": {
       "type": "events",
-	  "url": "https://www.emidius.eu/qquake/symbology/epicentres_circles_grayscale.qml"
+      "url": "https://www.emidius.eu/qquake/symbology/epicentres_circles_grayscale.qml"
     },
     "AHEAD_intensities": {
       "type": "macroseismic",
@@ -2156,6 +2218,14 @@
     "EMTC_wfs": {
       "type": "wfs",
       "url": "https://www.emidius.eu/qquake/symbology/EMTC_symbols_wfs.qml"
+    },
+    "ITED_wfs_int": {
+      "type": "wfs",
+      "url": "https://www.emidius.eu/qquake/symbology/ITED_symbols_wfs_int.qml"
+    },
+    "ITED_wfs_inund": {
+      "type": "wfs",
+      "url": "https://www.emidius.eu/qquake/symbology/ITED_symbols_wfs_inund.qml"
     }
   },
   "boundingboxpredefined": {
