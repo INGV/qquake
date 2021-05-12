@@ -1,6 +1,6 @@
 {
   "fdsnevent": {
-    "AHEAD-SHEEC": {
+    "AHEAD-EPICA": {
       "title": "AHEAD, European Archive of Historical EArthquake Data (pre 1900)",
       "servicedescription": "FDSN-event provided by AHEAD",
       "servicedescriptionurl": "https://www.emidius.eu/AHEAD/services/",
@@ -87,8 +87,8 @@
         "outputxlsx": false,
         "httpcodenodata": "204"
       },
-      "configversion": 0.2,
-      "configlastupdate": "2020-12-11T16:25:12+00:00"
+      "configversion": 0.1,
+      "configlastupdate": "2021-05-12T18:33:11+00:00"
     },
     "INGV ASMI-CPTI": {
       "title": "ASMI, Archivio Storico Macrosismico Italiano (INGV)",
@@ -1645,18 +1645,20 @@
     }
   },
   "wfs": {
-    "AHEAD-SHEEC": {
-      "title": "SHARE European Earthquake Catalogue (SHEEC) 1000-1899",
+    "AHEAD-EPICA": {
+      "title": "European PreInstrumental earthquake CAtalogue (EPICA) 1000-1899",
       "servicedescription": "OGS WFS provided by AHEAD",
       "servicedescriptionurl": "https://www.emidius.eu/AHEAD/services/",
-      "datadescription": "Stucchi M., Rovida A., Gómez Capera A. A., Alexandre P., Camelbeeck T., Demircioglu M. B. et al. (2012). SHARE European Earthquake Catalogue (SHEEC) 1000-1899. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.6092/INGV.IT-SHARE-SHEEC.1000-1899",
-      "datadescriptionurl": "https://doi.org/10.6092/INGV.IT-SHARE-SHEEC.1000-1899",
-      "datalicense": "CC BY-SA 4.0",
-      "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "datadescription": "Rovida A., Antonucci A. (2021). EPICA - European PreInstrumental earthquake CAtalogue, version 1.1. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/epica.1.1",
+      "datadescriptionurl": "https://doi.org/10.13127/epica.1.1",
+      "datalicense": "CC BY 4.0",
+      "datalicenseurl": "https://creativecommons.org/licenses/by/4.0/",
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
       "dataproviderurl": "http://www.ingv.it",
       "help": "",
-      "publications": [],
+      "publications": [
+        "Locati, M., Rovida, A., Albini, P., Stucchi, M. (2014). The AHEAD Portal: A Gateway to European Historical Earthquake Data. Seismological Research Letters, 85(3), 727–734. https://doi.org/10.1785/0220130113",
+        "Rovida, A., Locati, M. (2015). Archive of Historical Earthquake Data for the European-Mediterranean Area. In Perspectives on European Earthquake Engineering and Seismology (pp. 359–369). Springer International Publishing. https://doi.org/10.1007/978-3-319-16964-4_14"],
       "endpointurl": "https://www.emidius.eu/services/europe/wfs?",
       "datestart": "1000-01-01T00:00:00+00:00",
       "dateend": "1899-12-31T23:59:59+00:00",
@@ -1665,18 +1667,18 @@
         "wfsversion": "2.0.0",
         "layers": [
           {
-            "layername": "europe:SHEEC_1000_1899",
+            "layername": "europe:EPICA_1000_1899",
             "style": {
               "wfs": {
-                "style": "SHEEC_wfs"
+                "style": "EPICA_wfs"
               }
             }
           }
         ]
       },
       "settings": {},
-      "configversion": 0.2,
-      "configlastupdate": "2020-12-11T16:25:12+00:00"
+      "configversion": 0.1,
+      "configlastupdate": "2021-05-12T18:33:11+00:00"
     },
     "INGV CPTI": {
       "title": "CPTI, Catalogo Parametrico dei Terremoti Italiani (INGV)",
@@ -1904,14 +1906,14 @@
     }
   },
   "wms": {
-    "AHEAD-SHEEC": {
-      "title": "SHARE European Earthquake Catalogue (SHEEC) 1000-1899",
+    "AHEAD-EPICA": {
+      "title": "European PreInstrumental earthquake CAtalogue (EPICA) 1000-1899",
       "servicedescription": "OGC WMS provided by AHEAD",
       "servicedescriptionurl": "https://www.emidius.eu/AHEAD/services/",
-      "datadescription": "Stucchi M., Rovida A., Gómez Capera A. A., Alexandre P., Camelbeeck T., Demircioglu M. B. et al. (2012). SHARE European Earthquake Catalogue (SHEEC) 1000-1899. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.6092/INGV.IT-SHARE-SHEEC.1000-1899",
-      "datadescriptionurl": "https://doi.org/10.6092/INGV.IT-SHARE-SHEEC.1000-1899",
-      "datalicense": "CC BY-SA 4.0",
-      "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "datadescription": "Rovida A., Antonucci A., 2021. EPICA - European PreInstrumental earthquake CAtalogue, version 1.1. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/epica.1.1",
+      "datadescriptionurl": "https://doi.org/10.13127/epica.1.1",
+      "datalicense": "CC BY 4.0",
+      "datalicenseurl": "https://creativecommons.org/licenses/by/4.0/",
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
       "dataproviderurl": "http://www.ingv.it",
       "help": "",
@@ -1926,18 +1928,15 @@
         "wmsversion": "1.3.0",
         "layers": [
           {
-            "layername": "SHEEC_1000_1899",
+            "layername": "EPICA_1000_1899",
             "styles": [
-              "europe:SHEEC_circles_colors",
-              "europe:SHEEC_circles_gray",
-              "europe:SHEEC_squares_colors",
-              "europe:SHEEC_squares_gray"
+              "europe:EPICA_squares_colors"
             ]
           }
         ]
       },
-      "configversion": 0.2,
-      "configlastupdate": "2020-12-11T16:25:12+00:00"
+      "configversion": 0.1,
+      "configlastupdate": "2021-05-12T18:33:11+00:00"
     },
     "INGV CPTI": {
       "title": "CPTI, Catalogo Parametrico dei Terremoti Italiani (INGV)",
@@ -2171,9 +2170,9 @@
       "type": "wfs",
       "url": "https://www.emidius.eu/qquake/symbology/CPTI15_symbols_wfs.qml"
     },
-    "SHEEC_wfs": {
+    "EPICA_wfs": {
       "type": "wfs",
-      "url": "https://www.emidius.eu/qquake/symbology/SHEEC_symbols_wfs.qml"
+      "url": "https://www.emidius.eu/qquake/symbology/EPICA_symbols_wfs.qml"
     },
     "EDSF_CF_top": {
       "type": "wfs",
