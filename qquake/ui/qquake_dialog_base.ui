@@ -30,7 +30,7 @@
      </property>
      <widget class="QWidget" name="fdsn_event_tab">
       <attribute name="title">
-       <string>Earthquakes</string>
+       <string>Earthquakes parameters</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_2">
        <item row="0" column="0">
