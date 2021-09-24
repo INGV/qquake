@@ -83,13 +83,13 @@
    <item row="7" column="0" colspan="3">
     <widget class="QGroupBox" name="groupBox_4">
      <property name="title">
-      <string>Output</string>
+      <string>Output Table</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_8">
       <item row="0" column="1">
        <widget class="QPushButton" name="output_table_options_button">
         <property name="text">
-         <string>Output Table Options…</string>
+         <string>Extended Table Options…</string>
         </property>
        </widget>
       </item>
