@@ -2139,90 +2139,112 @@
   },
   "styles": {
     "square_colors": {
+      "label": "square colors",
       "type": "events",
       "url": "https://www.emidius.eu/qquake/symbology/CPTI15_symbols.qml"
     },
     "circles_colors": {
+      "label": "circle colors",
       "type": "events",
       "url": "https://www.emidius.eu/qquake/symbology/epicentres_circles_colors.qml"
     },
     "circles_red": {
+      "label": "circle red",
       "type": "events",
       "url": "https://www.emidius.eu/qquake/symbology/epicentres_circles_red.qml"
     },
     "circles_blue": {
+      "label": "circle blue",
       "type": "events",
       "url": "https://www.emidius.eu/qquake/symbology/epicentres_circles_blue.qml"
     },
     "circles_grayscale": {
+      "label": "circle gray scale",
       "type": "events",
       "url": "https://www.emidius.eu/qquake/symbology/epicentres_circles_grayscale.qml"
     },
     "AHEAD_intensities": {
+      "label": "European Archive of Historical Earthquake Data (AHEAD)",
       "type": "macroseismic",
       "url": "https://www.emidius.eu/qquake/symbology/AHEAD_intensities.qml"
     },
     "stations": {
+      "label": "triangle red",
       "type": "stations",
       "url": "https://www.emidius.eu/qquake/symbology/stations.qml"
     },
     "CPTI_wfs": {
+      "label": "Parametric Catalogue of Italian Earthquakes (CPTI)",
       "type": "wfs",
       "url": "https://www.emidius.eu/qquake/symbology/CPTI15_symbols_wfs.qml"
     },
     "EPICA_wfs": {
+      "label": "",
       "type": "wfs",
       "url": "https://www.emidius.eu/qquake/symbology/EPICA_symbols_wfs.qml"
     },
     "EDSF_CF_top": {
+      "label": "",
       "type": "wfs",
       "url": "https://www.seismofaults.eu/EDSFStyles/EDSF_CF_top.qml"
     },
     "EDSF_CF_pln": {
+      "label": "EDSF_CF_pln",
       "type": "wfs",
       "url": "https://www.seismofaults.eu/EDSFStyles/EDSF_CF_pln.qml"
     },
     "EDSF_SUBD_zon": {
+      "label": "EDSF subduction zones",
       "type": "wfs",
       "url": "https://www.seismofaults.eu/EDSFStyles/EDSF_SUBD_zon.qml"
     },
     "EDSF_SUBD_cnt": {
+      "label": "EDSF subduction contour",
       "type": "wfs",
       "url": "https://www.seismofaults.eu/EDSFStyles/EDSF_SUBD_cnt.qml"
     },
     "iss": {
+      "label": "EDSF Individual Seismogenic Sources",
       "type": "wfs",
       "url": "http://www.seismofaults.eu/DISS_styles/iss.qml"
     },
     "csstop": {
+      "label": "EDSF Composite Seismogenic Sources Top",
       "type": "wfs",
       "url": "http://www.seismofaults.eu/DISS_styles/csstop.qml"
     },
     "csspln": {
+      "label": "EDSF Composite Seismogenic Sources Planes",
       "type": "wfs",
       "url": "http://www.seismofaults.eu/DISS_styles/csspln.qml"
     },
     "dss": {
+      "label": "dss",
       "type": "wfs",
       "url": "http://www.seismofaults.eu/DISS_styles/dss.qml"
     },
     "subdcnt": {
+      "label": "Subduction Contour",
       "type": "wfs",
       "url": "http://www.seismofaults.eu/DISS_styles/subdcnt.qml"
     },
     "subdzon": {
+      "label": "Subduction Zone",
       "type": "wfs",
       "url": "http://www.seismofaults.eu/DISS_styles/subdzon.qml"
     },
     "EMTC_wfs": {
+      "label": "EMTC WFS events",
       "type": "wfs",
       "url": "https://www.emidius.eu/qquake/symbology/EMTC_symbols_wfs.qml"
     },
     "ITED_wfs_int": {
+      "label": "ITED WFS intensities",
       "type": "wfs",
       "url": "https://www.emidius.eu/qquake/symbology/ITED_symbols_wfs_int.qml"
     },
     "ITED_wfs_inund": {
+      "label": "ITED WFS inundation",
       "type": "wfs",
       "url": "https://www.emidius.eu/qquake/symbology/ITED_symbols_wfs_inund.qml"
     }
