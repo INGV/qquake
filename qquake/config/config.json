@@ -1661,6 +1661,7 @@
   "wfs": {
     "AHEAD-EPICA": {
       "title": "European PreInstrumental earthquake CAtalogue (EPICA) 1000-1899",
+      "group": "Earthquake catalogues",
       "servicedescription": "OGS WFS provided by AHEAD",
       "servicedescriptionurl": "https://www.emidius.eu/AHEAD/services/",
       "datadescription": "Rovida A., Antonucci A. (2021). EPICA - European PreInstrumental earthquake CAtalogue, version 1.1. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/epica.1.1",
@@ -1696,6 +1697,7 @@
     },
     "INGV CPTI": {
       "title": "CPTI, Catalogo Parametrico dei Terremoti Italiani (INGV)",
+      "group": "Earthquake catalogues",
       "servicedescription": "OGC WFS provided by ASMI",
       "servicedescriptionurl": "https://emidius.mi.ingv.it/ASMI/services/",
       "datadescription": "Rovida A., Locati M., Camassi R., Lolli B., Gasperini P., Antonucci A. (2021). Catalogo Parametrico dei Terremoti Italiani (CPTI15), versione 3.0. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/CPTI/CPTI15.3",
@@ -1728,6 +1730,7 @@
     },
     "EDSF": {
       "title": "EDSF, European Database of Seismogenic Faults",
+      "group": "Seismogenic faults",
       "servicedescription": "OGC WFS provided by EDSF",
       "servicedescriptionurl": "https://www.seismofaults.eu/index.php/services/edsf13-services",
       "datadescription": "Basili R., Kastelic V., Demircioglu M. B., Garcia Moreno D., Nemser E. S., Petricca P., Sboras S. P., Besana-Ostman G. M., Cabral J., Camelbeeck T., Caputo R., Danciu L., Domac H., Fonseca J., García-Mayordomo J., Giardini D., Glavatovic B., Gulen L., Ince Y., Pavlides S., Sesetyan K., Tarabusi G., Tiberti M. M., Utkucu M., Valensise G., Vanneste K., Vilanova S., Wössner J. (2013). The European Database of Seismogenic Faults (EDSF) compiled in the framework of the Project SHARE. https://doi.org/10.6092/INGV.IT-SHARE-EDSF",
@@ -1784,6 +1787,7 @@
     },
     "INGV DISS": {
       "title": "DISS 3.2.1, Database of Individual Seismogenic Sources",
+      "group": "Seismogenic faults",
       "servicedescription": "OGC WFS privided by DISS",
       "servicedescriptionurl": "https://www.seismofaults.eu/index.php/services/diss-services/",
       "datadescription": "DISS Working Group (2018). Database of Individual Seismogenic Sources (DISS), version 3.2.1. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.6092/INGV.IT-DISS3.2.1",
@@ -1856,6 +1860,7 @@
     },
     "INGV EMTC": {
       "title": "EMTC, Euro-Mediterranean Tsunami Catalogue (INGV)",
+      "group": "Tsunami",
       "servicedescription": "OGC WFS provided by tsunamiarchive.ingv.it",
       "servicedescriptionurl": "https://tsunamiarchive.ingv.it/emtc.2.0/",
       "datadescription": "Maramai A., Graziani L., Brizuela B. (2019). Euro-Mediterranean Tsunami Catalogue (EMTC), version 2.0. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/tsunami/emtc.2.0",
@@ -1888,6 +1893,7 @@
     },
     "INGV ITED": {
       "title": "ITED, Italian Tsunami Effects Database (INGV)",
+      "group": "Tsunami",
       "servicedescription": "OGC WFS provided by tsunamiarchive.ingv.it",
       "servicedescriptionurl": "https://tsunamiarchive.ingv.it/ited.1.0/",
       "datadescription": "Maramai A., Graziani L., Brizuela Reyes, B. (2019). Italian Tsunami Effects Database (ITED). Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/tsunami/ited.1.0",
@@ -1922,6 +1928,7 @@
   "wms": {
     "AHEAD-EPICA": {
       "title": "European PreInstrumental earthquake CAtalogue (EPICA) 1000-1899",
+      "group": "Earthquake catalogues",
       "servicedescription": "OGC WMS provided by AHEAD",
       "servicedescriptionurl": "https://www.emidius.eu/AHEAD/services/",
       "datadescription": "Rovida A., Antonucci A., 2021. EPICA - European PreInstrumental earthquake CAtalogue, version 1.1. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/epica.1.1",
@@ -1954,6 +1961,7 @@
     },
     "INGV CPTI": {
       "title": "CPTI, Catalogo Parametrico dei Terremoti Italiani (INGV)",
+      "group": "Earthquake catalogues",
       "servicedescription": "OGC WMS provided by ASMI",
       "servicedescriptionurl": "https://emidius.mi.ingv.it/ASMI/services/",
       "datadescription": "Rovida A., Locati M., Camassi R., Lolli B., Gasperini P., Antonucci A. (2021). Catalogo Parametrico dei Terremoti Italiani (CPTI15), versione 3.0. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/CPTI/CPTI15.3",
@@ -1984,6 +1992,7 @@
     },
     "EDSF": {
       "title": "EDSF, European Database of Seismogenic Faults",
+      "group": "Seismogenic faults",
       "servicedescription": "OGC WMS provided by EDSF",
       "servicedescriptionurl": "https://www.seismofaults.eu/index.php/services/edsf13-services",
       "datadescription": "Basili R., Kastelic V., Demircioglu M. B., Garcia Moreno D., Nemser E. S., Petricca P., Sboras S. P., Besana-Ostman G. M., Cabral J., Camelbeeck T., Caputo R., Danciu L., Domac H., Fonseca J., García-Mayordomo J., Giardini D., Glavatovic B., Gulen L., Ince Y., Pavlides S., Sesetyan K., Tarabusi G., Tiberti M. M., Utkucu M., Valensise G., Vanneste K., Vilanova S., Wössner J. (2013). The European Database of Seismogenic Faults (EDSF) compiled in the framework of the Project SHARE. https://doi.org/10.6092/INGV.IT-SHARE-EDSF",
@@ -2032,6 +2041,7 @@
     },
     "INGV DISS": {
       "title": "DISS 3.2.1, Database of Individual Seismogenic Sources",
+      "group": "Seismogenic faults",
       "servicedescription": "OGC WMS provided by DISS",
       "servicedescriptionurl": "https://www.seismofaults.eu/index.php/services/diss-services/",
       "datadescription": "DISS Working Group (2018). Database of Individual Seismogenic Sources (DISS), version 3.2.1. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.6092/INGV.IT-DISS3.2.1",
@@ -2092,6 +2102,7 @@
     },
     "INGV EMTC": {
       "title": "EMTC, Euro-Mediterranean Tsunami Catalogue (INGV)",
+      "group": "Tsunami",
       "servicedescription": "OGC WMS provided by tsunamiarchive.ingv.it",
       "servicedescriptionurl": "https://tsunamiarchive.ingv.it/emtc.2.0/",
       "datadescription": "Maramai A., Graziani L., Brizuela B. (2019). Euro-Mediterranean Tsunami Catalogue (EMTC), version 2.0. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/tsunami/emtc.2.0",
@@ -2122,6 +2133,7 @@
     },
     "INGV ITED": {
       "title": "ITED, Italian Tsunami Effects Database (INGV)",
+      "group": "Tsunami",
       "servicedescription": "OGC WMS provided by tsunamiarchive.ingv.it",
       "servicedescriptionurl": "https://tsunamiarchive.ingv.it/ited.1.0/",
       "datadescription": "Maramai A., Graziani L., Brizuela Reyes, B. (2019). Italian Tsunami Effects Database (ITED). Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/tsunami/ited.1.0",
