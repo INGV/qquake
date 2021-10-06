@@ -89,8 +89,8 @@
         "outputxlsx": false,
         "httpcodenodata": "204"
       },
-      "configversion": 0.1,
-      "configlastupdate": "2021-05-12T18:33:11+00:00"
+      "configversion": 0.2,
+      "configlastupdate": "2021-10-06T09:35:11+00:00"
     },
     "INGV ASMI-CPTI": {
       "title": "ASMI, Archivio Storico Macrosismico Italiano (INGV)",
@@ -180,8 +180,8 @@
         "outputxlsx": false,
         "httpcodenodata": "204"
       },
-      "configversion": 0.2,
-      "configlastupdate": "2020-12-11T16:25:12+00:00"
+      "configversion": 0.3,
+      "configlastupdate": "2021-10-06T09:35:11+00:00"
     },
     "INGV ISIDe": {
       "title": "ISIDe, Italian Seismological Instrumental and Parametric Database (INGV)",
@@ -268,8 +268,8 @@
         "outputxlsx": false,
         "httpcodenodata": "204"
       },
-      "configversion": 0.2,
-      "configlastupdate": "2020-12-11T16:25:12+00:00"
+      "configversion": 0.3,
+      "configlastupdate": "2021-10-06T09:35:11+00:00"
     },
     "EMSC-CSEM": {
       "title": "European-Mediterranean Seismological Centre (EMSC-CSEM)",
@@ -353,8 +353,8 @@
         "outputxlsx": false,
         "httpcodenodata": "204"
       },
-      "configversion": 0.2,
-      "configlastupdate": "2020-12-11T16:25:12+00:00"
+      "configversion": 0.3,
+      "configlastupdate": "2021-10-06T09:35:11+00:00"
     },
     "USGS NEIC": {
       "title": "USGS NEIC",
@@ -438,8 +438,8 @@
         "outputxlsx": false,
         "httpcodenodata": "204"
       },
-      "configversion": 0.2,
-      "configlastupdate": "2020-12-11T16:25:12+00:00"
+      "configversion": 0.3,
+      "configlastupdate": "2021-10-06T09:35:11+00:00"
     }
   },
   "fdsnstation": {
@@ -1523,9 +1523,9 @@
         "queryeventtype": false,
         "querymagnitudetype": false,
         "queryincludeallorigins": true,
-		"queryincludeallorigins_multiple": true,
+        "queryincludeallorigins_multiple": true,
         "queryincludeallmagnitudes": true,
-		"queryincludeallmagnitudes_multiple": true,
+        "queryincludeallmagnitudes_multiple": true,
         "queryincludearrivals": false,
         "queryincludeallstationsmagnitudes": false,
         "includemdps": true,
@@ -1543,8 +1543,8 @@
         "outputxlsx": false,
         "httpcodenodata": "204"
       },
-      "configversion": 0.2,
-      "configlastupdate": "2020-12-11T16:25:12+00:00"
+      "configversion": 0.3,
+      "configlastupdate": "2021-10-06T09:35:11+00:00"
     },
     "INGV ASMI-DBMI": {
       "title": "ASMI, Archivio Storico Macrosismico Italiano (INGV)",
@@ -1634,9 +1634,9 @@
         "queryeventtype": false,
         "querymagnitudetype": false,
         "queryincludeallorigins": true,
-		"queryincludeallorigins_multiple": true,
+        "queryincludeallorigins_multiple": true,
         "queryincludeallmagnitudes": true,
-		"queryincludeallmagnitudes_multiple": true,
+        "queryincludeallmagnitudes_multiple": true,
         "queryincludearrivals": false,
         "queryincludeallstationsmagnitudes": false,
         "includemdps": true,
@@ -1654,8 +1654,8 @@
         "outputxlsx": false,
         "httpcodenodata": "204"
       },
-      "configversion": 0.2,
-      "configlastupdate": "2020-12-11T16:25:12+00:00"
+      "configversion": 0.3,
+      "configlastupdate": "2021-10-06T09:35:11+00:00"
     }
   },
   "wfs": {
