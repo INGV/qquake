@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# pylint: disable=too-many-lines
 """QQuake- QuakeML Parser
 
 .. note:: This program is free software; you can redistribute it and/or modify
@@ -15,10 +16,20 @@ __revision__ = '$Format:%H$'
 
 import json
 import os
-from typing import List
+from typing import List, Optional, Dict
 
-from qgis.PyQt.QtCore import QVariant, QDate, QDateTime, QTime, Qt
-from qgis.PyQt.QtXml import QDomDocument
+from qgis.PyQt.QtCore import (
+    QVariant,
+    QByteArray,
+    QDate,
+    QDateTime,
+    QTime,
+    Qt
+)
+from qgis.PyQt.QtXml import (
+    QDomDocument,
+    QDomElement
+)
 from qgis.core import (
     QgsFields,
     QgsField,
@@ -70,8 +81,8 @@ CONFIG_FIELDS_PATH = os.path.join(
     'config',
     'config_fields_fsdnevent.json')
 
-with open(CONFIG_FIELDS_PATH, 'r') as f:
-    CONFIG_FIELDS = json.load(f)
+with open(CONFIG_FIELDS_PATH, 'r') as config_file:
+    CONFIG_FIELDS = json.load(config_file)
 
 FIELD_TYPE_MAP = {
     'String': QVariant.String,
@@ -84,7 +95,11 @@ FIELD_TYPE_MAP = {
 }
 
 
-def get_service_fields(service_type, selected_fields):
+def get_service_fields(service_type: str,  # pylint: disable=too-many-branches,too-many-statements
+                       selected_fields: Optional[List[str]]) -> QgsFields:
+    """
+    Gets the field configuration for a service
+    """
     fields = QgsFields()
     settings = QgsSettings()
     short_field_names = settings.value('/plugins/qquake/output_short_field_names', True, bool)
@@ -234,32 +249,46 @@ def get_service_fields(service_type, selected_fields):
     return fields
 
 
-class ElementParser:
+class ElementParser:  # pylint: disable=too-many-public-methods
+    """
+    QuakeML Element parser
+    """
 
     def __init__(self, element):
         self.element = element
 
-    def string(self, attribute, optional=True, is_attribute=False):
+    def string(self, attribute: str, optional: bool = True, is_attribute: bool = False) -> Optional[str]:
+        """
+        Returns an attribute as a string
+        """
         if is_attribute:
             if optional and not self.element.hasAttribute(attribute):
-                return None
+                res = None
             else:
-                return self.element.attribute(attribute)
+                res = self.element.attribute(attribute)
         else:
             child = self.element.firstChildElement(attribute)
             if optional and child.isNull():
-                return None
+                res = None
+            else:
+                res = child.text()
+        return res
 
-            return child.text()
-
-    def resource_reference(self, attribute, optional=True):
+    def resource_reference(self, attribute: str, optional: bool = True) -> Optional[str]:
+        """
+        Returns a resource reference as a string
+        """
         child = self.element.firstChildElement(attribute)
         if optional and child.isNull():
             return None
 
         return child.text()
 
-    def datetime(self, attribute, optional=True, is_attribute=False):
+    def datetime(self, attribute: str, optional: bool = True, is_attribute: bool = False) -> Optional[QDateTime]:
+        """
+        Returns an attribute as a QDateTime
+        """
+
         def to_datetime(val):
             if not val:
                 return NULL
@@ -271,31 +300,38 @@ class ElementParser:
                 dt = QDateTime.fromString((val + '000')[:23], 'yyyy-MM-ddThh:mm:ss.zzz')
                 dt.setTimeSpec(Qt.UTC)
                 return dt
-            else:
-                dt = QDateTime(QDate.fromString(val, 'yyyy-MM-dd'), QTime())
-                dt.setTimeSpec(Qt.UTC)
-                return dt
+
+            dt = QDateTime(QDate.fromString(val, 'yyyy-MM-dd'), QTime())
+            dt.setTimeSpec(Qt.UTC)
+            return dt
 
         if is_attribute:
             if optional and not self.element.hasAttribute(attribute):
-                return None
+                res = None
             else:
-                return to_datetime(self.element.attribute(attribute))
+                res = to_datetime(self.element.attribute(attribute))
         else:
             child = self.element.firstChildElement(attribute)
             if optional and child.isNull():
-                return None
+                res = None
+            else:
+                res = to_datetime(child.text())
+        return res
 
-            return to_datetime(child.text())
-
-    def time_quantity(self, attribute, optional=True):
+    def time_quantity(self, attribute: str, optional: bool = True) -> Optional['TimeQuantity']:
+        """
+        Returns an attribute as a TimeQuantity
+        """
         child = self.element.firstChildElement(attribute)
         if optional and child.isNull():
             return None
 
         return TimeQuantity.from_element(child)
 
-    def real_quantity(self, attribute, optional=True):
+    def real_quantity(self, attribute: str, optional: bool = True) -> Optional['RealQuantity']:
+        """
+        Returns an attribute as a RealQuantity
+        """
         child = self.element.firstChildElement(attribute)
         if optional and child.isNull():
             return None
@@ -307,7 +343,10 @@ class ElementParser:
 
         return RealQuantity.from_element(child)
 
-    def int_quantity(self, attribute, optional=True):
+    def int_quantity(self, attribute: str, optional: bool = True) -> Optional['IntegerQuantity']:
+        """
+        Returns an attributes as an IntegerQuantity
+        """
         child = self.element.firstChildElement(attribute)
         if optional and child.isNull():
             return None
@@ -319,147 +358,210 @@ class ElementParser:
 
         return IntegerQuantity.from_element(child)
 
-    def float(self, attribute, optional=True):
+    def float(self, attribute: str, optional: bool = True) -> Optional[float]:
+        """
+        Returns an attribute as a float value
+        """
         child = self.element.firstChildElement(attribute)
         if optional:
             return float(child.text()) if not child.isNull() else None
-        else:
-            return float(child.text())
 
-    def int(self, attribute, optional=True):
+        return float(child.text())
+
+    def int(self, attribute: str, optional: bool = True) -> Optional[int]:
+        """
+        Returns an attribute as an integer value
+        """
         child = self.element.firstChildElement(attribute)
         if optional:
             return int(child.text()) if not child.isNull() else None
-        else:
-            return int(child.text())
 
-    def boolean(self, attribute, optional=True):
+        return int(child.text())
+
+    def boolean(self, attribute: str, optional: bool = True) -> Optional[bool]:
+        """
+        Returns an attribute as a boolean value
+        """
         child = self.element.firstChildElement(attribute)
         if optional:
             return bool(child.text()) if not child.isNull() else None
-        else:
-            return bool(child.text())
 
-    def creation_info(self, attribute, optional=True):
+        return bool(child.text())
+
+    def creation_info(self, attribute: str, optional: bool = True) -> Optional['CreationInfo']:
+        """
+        Returns an attribute as an CreationInfo
+        """
         child = self.element.firstChildElement(attribute)
         if optional and child.isNull():
             return None
 
         return CreationInfo.from_element(child)
 
-    def composite_time(self, attribute, optional=True):
+    def composite_time(self, attribute, optional=True) -> Optional['CompositeTime']:
+        """
+        Returns an attribute as a CompositeTime
+        """
         child = self.element.firstChildElement(attribute)
         if optional and child.isNull():
             return None
 
         return CompositeTime.from_element(child)
 
-    def epoch(self, attribute, optional=True):
+    def epoch(self, attribute, optional=True) -> Optional['Epoch']:
+        """
+        Returns an attribute as a Epoch
+        """
         child = self.element.firstChildElement(attribute)
         if optional and child.isNull():
             return None
 
         return Epoch.from_element(child)
 
-    def origin_depth_type(self, attribute, optional=True):
+    def origin_depth_type(self, attribute, optional=True) -> Optional[str]:
+        """
+        Returns an attribute as an origin depth type
+        """
         child = self.element.firstChildElement(attribute)
         if optional and child.isNull():
             return None
 
         return child.text()
 
-    def origin_type(self, attribute, optional=True):
+    def origin_type(self, attribute, optional=True) -> Optional[str]:
+        """
+        Returns an attribute as a origin type
+        """
         child = self.element.firstChildElement(attribute)
         if optional and child.isNull():
             return None
 
         return child.text()
 
-    def origin_quality(self, attribute, optional=True):
+    def origin_quality(self, attribute, optional=True) -> Optional['OriginQuality']:
+        """
+        Returns an attribute as a OriginQuality
+        """
         child = self.element.firstChildElement(attribute)
         if optional and child.isNull():
             return None
 
         return OriginQuality.from_element(child)
 
-    def origin_uncertainty_description(self, attribute, optional=True):
+    def origin_uncertainty_description(self, attribute, optional=True) -> Optional[str]:
+        """
+        Returns an attributes as an origin uncertainty string
+        """
         child = self.element.firstChildElement(attribute)
         if optional and child.isNull():
             return None
 
         return child.text()
 
-    def confidence_ellipsoid(self, attribute, optional=True):
+    def confidence_ellipsoid(self, attribute, optional=True) -> Optional['ConfidenceEllipsoid']:
+        """
+        Returns an attributes as a ConfidenceEllipsoid
+        """
         child = self.element.firstChildElement(attribute)
         if optional and child.isNull():
             return None
 
         return ConfidenceEllipsoid.from_element(child)
 
-    def ms_intensity_value_type(self, attribute, optional=True):
+    def ms_intensity_value_type(self, attribute, optional=True) -> Optional['MsItensityValueType']:
+        """
+        Returns an attribute as a MsItensityValueType
+        """
         child = self.element.firstChildElement(attribute)
         if optional and child.isNull():
             return None
 
         return MsItensityValueType.from_element(child)
 
-    def ms_intensity(self, attribute, optional=True):
+    def ms_intensity(self, attribute, optional=True) -> Optional['MsIntensity']:
+        """
+        Returns an attribute as a MsIntensity
+        """
         child = self.element.firstChildElement(attribute)
         if optional and child.isNull():
             return None
 
         return MsIntensity.from_element(child)
 
-    def ms_placename(self, attribute, optional=True):
+    def ms_placename(self, attribute, optional=True) -> Optional['MsPlaceName']:
+        """
+        Returns an attribute as a MsPlaceName
+        """
         child = self.element.firstChildElement(attribute)
         if optional and child.isNull():
             return None
 
         return MsPlaceName.from_element(child)
 
-    def ms_sitemorphology(self, attribute, optional=True):
+    def ms_sitemorphology(self, attribute, optional=True) -> Optional['MsSiteMorphology']:
+        """
+        Returns an attribute as a MsSiteMorphology
+        """
         child = self.element.firstChildElement(attribute)
         if optional and child.isNull():
             return None
 
         return MsSiteMorphology.from_element(child)
 
-    def site(self, attribute, optional=True):
+    def site(self, attribute, optional=True) -> Optional['Site']:
+        """
+        Returns an attribute as a Site
+        """
         child = self.element.firstChildElement(attribute)
         if optional and child.isNull():
             return None
 
         return Site.from_element(child)
 
-    def equipment(self, attribute, optional=True):
+    def equipment(self, attribute, optional=True) -> Optional['Equipment']:
+        """
+        Returns an attribute as a Equipment
+        """
         child = self.element.firstChildElement(attribute)
         if optional and child.isNull():
             return None
 
         return Equipment.from_element(child)
 
-    def operator(self, attribute, optional=True):
+    def operator(self, attribute, optional=True) -> Optional['Operator']:
+        """
+        Returns an attribute as a Operator
+        """
         child = self.element.firstChildElement(attribute)
         if optional and child.isNull():
             return None
 
         return Operator.from_element(child)
 
-    def person(self, attribute, optional=True):
+    def person(self, attribute, optional=True) -> Optional['Person']:
+        """
+        Returns an attribute as a Person
+        """
         child = self.element.firstChildElement(attribute)
         if optional and child.isNull():
             return None
 
         return Person.from_element(child)
 
-    def phone_number(self, attribute, optional=True):
+    def phone_number(self, attribute, optional=True) -> Optional['PhoneNumber']:
+        """
+        Returns an attribute as a PhoneNumber
+        """
         child = self.element.firstChildElement(attribute)
         if optional and child.isNull():
             return None
 
         return PhoneNumber.from_element(child)
 
-    def external_reference(self, attribute, optional=True):
+    def external_reference(self, attribute, optional=True) -> Optional['ExternalReference']:
+        """
+        Returns an attribute as a ExternalReference
+        """
         child = self.element.firstChildElement(attribute)
         if optional and child.isNull():
             return None
@@ -468,6 +570,9 @@ class ElementParser:
 
 
 class CreationInfo:
+    """
+    CreationInfo
+    """
 
     def __init__(self,
                  agencyID,
@@ -484,7 +589,10 @@ class CreationInfo:
         self.version = version
 
     @staticmethod
-    def from_element(element):
+    def from_element(element: QDomElement) -> 'CreationInfo':
+        """
+        Constructs a CreationInfo from a DOM element
+        """
         parser = ElementParser(element)
         return CreationInfo(agencyID=parser.string('agencyID'),
                             agencyURI=parser.string('agencyURI'),
@@ -495,6 +603,9 @@ class CreationInfo:
 
 
 class ConfidenceEllipsoid:
+    """
+    ConfidenceEllipsoid
+    """
 
     def __init__(self,
                  semiMajorAxisLength,
@@ -511,7 +622,10 @@ class ConfidenceEllipsoid:
         self.majorAxisRotation = majorAxisRotation
 
     @staticmethod
-    def from_element(element):
+    def from_element(element: QDomElement) -> 'ConfidenceEllipsoid':
+        """
+        Constructs a ConfidenceEllipsoid from a DOM element
+        """
         parser = ElementParser(element)
         return ConfidenceEllipsoid(
             semiMajorAxisLength=parser.float('semiMajorAxisLength', optional=False),
@@ -523,6 +637,9 @@ class ConfidenceEllipsoid:
 
 
 class OriginQuality:
+    """
+    OriginQuality
+    """
 
     def __init__(self,
                  associatedPhaseCount,
@@ -551,7 +668,10 @@ class OriginQuality:
         self.medianDistance = medianDistance
 
     @staticmethod
-    def from_element(element):
+    def from_element(element: QDomElement) -> 'OriginQuality':
+        """
+        Constructs a OriginQuality from a DOM element
+        """
         parser = ElementParser(element)
         return OriginQuality(
             associatedPhaseCount=parser.int('associatedPhaseCount'),
@@ -570,6 +690,9 @@ class OriginQuality:
 
 
 class OriginUncertainty:
+    """
+    OriginUncertainty
+    """
 
     def __init__(self,
                  horizontalUncertainty,
@@ -588,7 +711,10 @@ class OriginUncertainty:
         self.confidenceLevel = confidenceLevel
 
     @staticmethod
-    def from_element(element):
+    def from_element(element: QDomElement) -> 'OriginUncertainty':
+        """
+        Constructs a OriginUncertainty from a DOM element
+        """
         parser = ElementParser(element)
         return OriginUncertainty(
             horizontalUncertainty=parser.float('horizontalUncertainty'),
@@ -602,18 +728,27 @@ class OriginUncertainty:
 
 
 class EventDescription:
+    """
+    EventDescription
+    """
 
-    def __init__(self, text, type):
+    def __init__(self, text, event_description_type):
         self.text = text
-        self.type = type
+        self.type = event_description_type
 
     @staticmethod
-    def from_element(element):
+    def from_element(element: QDomElement) -> 'EventDescription':
+        """
+        Constructs a EventDescription from a DOM element
+        """
         parser = ElementParser(element)
-        return EventDescription(text=parser.string('text'), type=parser.string('type'))
+        return EventDescription(text=parser.string('text'), event_description_type=parser.string('type'))
 
 
 class Site:
+    """
+    Site
+    """
 
     def __init__(self, Name, Description, Town, County, Region, Country):
         self.Name = Name
@@ -624,7 +759,10 @@ class Site:
         self.Country = Country
 
     @staticmethod
-    def from_element(element):
+    def from_element(element: QDomElement) -> 'Site':
+        """
+        Constructs a Site from a DOM element
+        """
         parser = ElementParser(element)
         return Site(Name=parser.string('Name'),
                     Description=parser.string('Description', optional=True),
@@ -635,6 +773,9 @@ class Site:
 
 
 class Equipment:
+    """
+    Equipment
+    """
 
     def __init__(self, Type, Description, Manufacturer, Vendor, Model, SerialNumber, InstallationDate, RemovalDate,
                  CalibrationDate, resourceId):
@@ -650,7 +791,10 @@ class Equipment:
         self.resourceId = resourceId
 
     @staticmethod
-    def from_element(element):
+    def from_element(element: QDomElement) -> 'Equipment':
+        """
+        Constructs Equipment from a DOM element
+        """
         parser = ElementParser(element)
         return Equipment(Type=parser.string('Type', optional=True),
                          Description=parser.string('Description', optional=True),
@@ -665,6 +809,9 @@ class Equipment:
 
 
 class Operator:
+    """
+    Operator
+    """
 
     def __init__(self, Agency, Contact, Website):
         self.Agency = Agency
@@ -672,7 +819,10 @@ class Operator:
         self.Website = Website
 
     @staticmethod
-    def from_element(element):
+    def from_element(element: QDomElement) -> 'Operator':
+        """
+        Constructs an Operator from a DOM element
+        """
         parser = ElementParser(element)
         return Operator(Agency=parser.string('Agency'),
                         Contact=parser.person('Contact', optional=True),
@@ -680,6 +830,9 @@ class Operator:
 
 
 class Person:
+    """
+    Person
+    """
 
     def __init__(self, Name, Agency, Email, Phone):
         self.Name = Name
@@ -688,7 +841,10 @@ class Person:
         self.Phone = Phone
 
     @staticmethod
-    def from_element(element):
+    def from_element(element: QDomElement) -> 'Person':
+        """
+        Constructs a Person from a DOM element
+        """
         parser = ElementParser(element)
         return Person(Name=parser.string('Name', optional=True),
                       Agency=parser.string('Agency', optional=True),
@@ -697,38 +853,53 @@ class Person:
 
 
 class PhoneNumber:
+    """
+    PhoneNumber
+    """
 
-    def __init__(self, CountryCode, AreaCode, PhoneNumber, Description):
-        self.CountryCode = CountryCode
-        self.AreaCode = AreaCode
-        self.PhoneNumber = PhoneNumber
-        self.Description = Description
+    def __init__(self, country_code, area_code, phone_number, description):
+        self.CountryCode = country_code
+        self.AreaCode = area_code
+        self.PhoneNumber = phone_number
+        self.Description = description
 
     @staticmethod
-    def from_element(element):
+    def from_element(element: QDomElement) -> 'PhoneNumber':
+        """
+        Constructs a PhoneNumber from a DOM element
+        """
         parser = ElementParser(element)
-        return PhoneNumber(CountryCode=parser.int('CountryCode', optional=True),
-                           AreaCode=parser.int('AreaCode'),
-                           PhoneNumber=parser.string('PhoneNumber'),
-                           Description=parser.string('Description', optional=True, is_attribute=True))
+        return PhoneNumber(country_code=parser.int('CountryCode', optional=True),
+                           area_code=parser.int('AreaCode'),
+                           phone_number=parser.string('PhoneNumber'),
+                           description=parser.string('Description', optional=True, is_attribute=True))
 
 
 class ExternalReference:
+    """
+    ExternalReference
+    """
 
     def __init__(self, URI, Description):
         self.URI = URI
         self.Description = Description
 
     @staticmethod
-    def from_element(element):
+    def from_element(element: QDomElement) -> 'ExternalReference':
+        """
+        Constructs an ExternalReference from a DOM element
+        """
         parser = ElementParser(element)
         return ExternalReference(URI=parser.string('URI'),
                                  Description=parser.string('Description'))
 
 
 class Origin:
+    """
+    Origin
+    """
 
-    def __init__(self,
+    def __init__(self,  # pylint: disable=too-many-locals
                  publicID,
                  time,
                  longitude,
@@ -742,7 +913,7 @@ class Origin:
                  earthModelID,
                  compositeTime,
                  quality,
-                 type,
+                 origin_type,
                  region,
                  evaluationMode,
                  evaluationStatus,
@@ -762,7 +933,7 @@ class Origin:
         self.earthModelID = earthModelID
         self.compositeTime = compositeTime
         self.quality = quality
-        self.type = type
+        self.type = origin_type
         self.region = region
         self.evaluationMode = evaluationMode
         self.evaluationStatus = evaluationStatus
@@ -770,12 +941,16 @@ class Origin:
         self.creationInfo = creationInfo
         self.originUncertainty = originUncertainty
 
-        if (not self.time or not self.time.is_valid()) and self.compositeTime and self.compositeTime.can_convert_to_datetime():
+        if (
+                not self.time or not self.time.is_valid()) and self.compositeTime and self.compositeTime.can_convert_to_datetime():
             # upgrade composite time value to time value
             self.time = self.compositeTime.to_timequantity()
 
     @staticmethod
-    def from_element(element):
+    def from_element(element: QDomElement) -> 'Origin':
+        """
+        Constructs an Origin from a DOM element
+        """
         comment_nodes = element.elementsByTagName('comment')
         comments = []
         for e in range(comment_nodes.length()):
@@ -800,7 +975,7 @@ class Origin:
                       earthModelID=parser.resource_reference('earthModelID'),
                       compositeTime=parser.composite_time('compositeTime'),
                       quality=parser.origin_quality('quality'),
-                      type=parser.origin_type('type'),
+                      origin_type=parser.origin_type('type'),
                       region=parser.string('region'),
                       evaluationMode=parser.string('evaluationMode'),
                       evaluationStatus=parser.string('evaluationStatus'),
@@ -810,24 +985,33 @@ class Origin:
 
 
 class Comment:
+    """
+    Comment
+    """
 
     def __init__(self,
                  text,
-                 id,
+                 comment_id,
                  creationInfo):
         self.text = text
-        self.id = id
+        self.id = comment_id
         self.creationInfo = creationInfo
 
     @staticmethod
-    def from_element(element):
+    def from_element(element: QDomElement) -> 'Comment':
+        """
+        Constructs a Comment from a DOM element
+        """
         parser = ElementParser(element)
         return Comment(text=parser.string('text', optional=False),
-                       id=parser.resource_reference('id'),
+                       comment_id=parser.resource_reference('id'),
                        creationInfo=parser.creation_info('creationInfo'))
 
 
 class RealQuantity:
+    """
+    RealQuantity
+    """
 
     def __init__(self,
                  value,
@@ -842,7 +1026,10 @@ class RealQuantity:
         self.confidenceLevel = confidenceLevel
 
     @staticmethod
-    def from_element(element):
+    def from_element(element: QDomElement) -> 'RealQuantity':
+        """
+        Constructs a RealQuantity from a DOM element
+        """
         parser = ElementParser(element)
         return RealQuantity(value=parser.float('value', optional=False),
                             uncertainty=parser.float('uncertainty'),
@@ -852,6 +1039,9 @@ class RealQuantity:
 
 
 class IntegerQuantity:
+    """
+    IntegerQuantity
+    """
 
     def __init__(self,
                  value,
@@ -866,7 +1056,10 @@ class IntegerQuantity:
         self.confidenceLevel = confidenceLevel
 
     @staticmethod
-    def from_element(element):
+    def from_element(element: QDomElement) -> 'IntegerQuantity':
+        """
+        Constructs an IntegerQuantity from a DOM element
+        """
         parser = ElementParser(element)
         return IntegerQuantity(value=parser.int('value', optional=False),
                                uncertainty=parser.int('uncertainty'),
@@ -876,6 +1069,9 @@ class IntegerQuantity:
 
 
 class TimeQuantity:
+    """
+    TimeQuantity
+    """
 
     def __init__(self,
                  value,
@@ -890,7 +1086,10 @@ class TimeQuantity:
         self.confidenceLevel = confidenceLevel
 
     @staticmethod
-    def from_element(element):
+    def from_element(element: QDomElement) -> 'TimeQuantity':
+        """
+        Constructs a TimeQuantity from a DOM element
+        """
         parser = ElementParser(element)
         return TimeQuantity(value=parser.datetime('value', optional=False),
                             uncertainty=parser.float('uncertainty'),
@@ -898,11 +1097,17 @@ class TimeQuantity:
                             upperUncertainty=parser.float('upperUncertainty'),
                             confidenceLevel=parser.float('confidenceLevel'))
 
-    def is_valid(self):
+    def is_valid(self) -> bool:
+        """
+        Returns True if the time is valid
+        """
         return self.value and self.value.isValid()
 
 
 class Epoch:
+    """
+    Epoch
+    """
 
     def __init__(self,
                  startTime,
@@ -911,13 +1116,19 @@ class Epoch:
         self.endTime = endTime
 
     @staticmethod
-    def from_element(element):
+    def from_element(element: QDomElement) -> 'Epoch':
+        """
+        Constructs a Epoch from a DOM element
+        """
         parser = ElementParser(element)
         return Epoch(startTime=parser.datetime('startTime', optional=True),
                      endTime=parser.datetime('endTime', optional=True))
 
 
 class CompositeTime:
+    """
+    CompositeTime
+    """
 
     def __init__(self,
                  year,
@@ -934,7 +1145,10 @@ class CompositeTime:
         self.second = second
 
     @staticmethod
-    def from_element(element):
+    def from_element(element) -> 'CompositeTime':
+        """
+        Constructs a CompositeTime from a DOM element
+        """
         parser = ElementParser(element)
         return CompositeTime(year=parser.int_quantity('year', optional=True),
                              month=parser.int_quantity('month', optional=True),
@@ -943,10 +1157,16 @@ class CompositeTime:
                              minute=parser.int_quantity('minute', optional=True),
                              second=parser.real_quantity('second', optional=True))
 
-    def can_convert_to_datetime(self):
-        return self.year and self.year.value
+    def can_convert_to_datetime(self) -> bool:
+        """
+        Returns True if the time can be converted to a date time
+        """
+        return bool(self.year and self.year.value)
 
-    def to_timequantity(self):
+    def to_timequantity(self) -> TimeQuantity:
+        """
+        Converts the composite time to a TimeQuantity
+        """
         return TimeQuantity(value=QDateTime(self.year.value,
                                             self.month and self.month.value or 1,
                                             self.day and self.day.value or 1,
@@ -960,11 +1180,14 @@ class CompositeTime:
 
 
 class Magnitude:
+    """
+    Magnitude
+    """
 
     def __init__(self,
                  publicID,
                  mag,
-                 type,
+                 magnitude_type,
                  originID,
                  methodID,
                  stationCount,
@@ -981,13 +1204,16 @@ class Magnitude:
         self.stationCount = stationCount
         self.stationCount = stationCount
         self.evaluationMode = evaluationMode
-        self.type = type
+        self.type = magnitude_type
         self.evaluationStatus = evaluationStatus
         self.comments = comments
         self.creationInfo = creationInfo
 
     @staticmethod
-    def from_element(element):
+    def from_element(element: QDomElement) -> 'Magnitude':
+        """
+        Constructs a Magnitude from a DOM element
+        """
         comment_nodes = element.elementsByTagName('comment')
         comments = []
         for e in range(comment_nodes.length()):
@@ -996,7 +1222,7 @@ class Magnitude:
         parser = ElementParser(element)
         return Magnitude(publicID=parser.string('publicID', is_attribute=True),
                          mag=parser.real_quantity('mag', optional=False),
-                         type=parser.string('type'),
+                         magnitude_type=parser.string('type'),
                          originID=parser.resource_reference('originID'),
                          methodID=parser.resource_reference('methodID'),
                          stationCount=parser.int('stationCount'),
@@ -1014,12 +1240,15 @@ class MsParameters:
 
     def __init__(self,
                  publicID,
-                 macroseismicEvent: List,):
+                 macroseismicEvent: List, ):
         self.publicID = publicID
-        self.macroseismicEvent = macroseismicEvent # one to many
+        self.macroseismicEvent = macroseismicEvent  # one to many
 
     @staticmethod
-    def from_element(element):
+    def from_element(element: QDomElement) -> 'MsParameters':
+        """
+        Constructs MsParameters from a DOM element
+        """
         parser = ElementParser(element)
 
         events = []
@@ -1052,7 +1281,10 @@ class MsEvent:
         self.creationInfo = creationInfo
 
     @staticmethod
-    def from_element(element):
+    def from_element(element: QDomElement) -> 'MsEvent':
+        """
+        Constructs a MsEvent from a DOM element
+        """
         parser = ElementParser(element)
 
         return MsEvent(publicID=parser.string('publicID', is_attribute=True, optional=False),
@@ -1064,8 +1296,11 @@ class MsEvent:
 
 
 class MsPlace:
+    """
+    MsPlace
+    """
 
-    def __init__(self,
+    def __init__(self,  # pylint: disable=too-many-locals
                  publicID,
                  name: List,
                  preferredName,
@@ -1074,7 +1309,7 @@ class MsPlace:
                  horizontalUncertainty,
                  geometry,
                  externalGazetteer,
-                 type,
+                 ms_type,
                  zipCode,
                  altitude,
                  isoCountryCode,
@@ -1090,7 +1325,7 @@ class MsPlace:
         self.horizontalUncertainty = horizontalUncertainty
         self.geometry = geometry
         self.externalGazetteer = externalGazetteer
-        self.type = type
+        self.type = ms_type
         self.zipCode = zipCode
         self.altitude = altitude
         self.isoCountryCode = isoCountryCode
@@ -1100,7 +1335,10 @@ class MsPlace:
         self.epoch = epoch
 
     @staticmethod
-    def from_element(element):
+    def from_element(element: QDomElement) -> 'MsPlace':
+        """
+        Constructs a MsPlace from a DOM element
+        """
         parser = ElementParser(element)
 
         names = []
@@ -1117,7 +1355,7 @@ class MsPlace:
                        horizontalUncertainty=parser.float('ms:horizontalUncertainty', optional=True),
                        geometry=parser.string('ms:geometry', optional=True),
                        externalGazetteer=parser.string('ms:externalGazetteer', optional=True),
-                       type=parser.string('ms:type', optional=True),
+                       ms_type=parser.string('ms:type', optional=True),
                        zipCode=parser.string('ms:zipCode', optional=True),
                        altitude=parser.float('ms:altitude', optional=True),
                        isoCountryCode=parser.string('ms:isoCountryCode', optional=True),
@@ -1128,6 +1366,9 @@ class MsPlace:
 
 
 class MsItensityValueType:
+    """
+    MsItensityValueType
+    """
 
     def __init__(self,
                  _class,
@@ -1138,7 +1379,10 @@ class MsItensityValueType:
         self.text = text
 
     @staticmethod
-    def from_element(element):
+    def from_element(element: QDomElement) -> 'MsItensityValueType':
+        """
+        Constructs a MsItensityValueType from a DOM element
+        """
         parser = ElementParser(element)
 
         return MsItensityValueType(_class=parser.string('ms:class', is_attribute=False, optional=True),
@@ -1148,6 +1392,9 @@ class MsItensityValueType:
 
 
 class MsIntensity:
+    """
+    MsIntensity
+    """
 
     def __init__(self,
                  macroseismicScale,
@@ -1160,7 +1407,10 @@ class MsIntensity:
         self.minimalCredibleIntensity = minimalCredibleIntensity
 
     @staticmethod
-    def from_element(element):
+    def from_element(element: QDomElement) -> 'MsIntensity':
+        """
+        Constructs an MsIntensity from a DOM element
+        """
         parser = ElementParser(element)
 
         return MsIntensity(macroseismicScale=parser.string('ms:macroseismicScale', is_attribute=False, optional=False),
@@ -1172,33 +1422,42 @@ class MsIntensity:
 
 
 class MsPlaceName:
+    """
+    MsPlaceName
+    """
 
     def __init__(self,
                  name,
-                 type,
+                 ms_type,
                  alternateType,
                  language,
                  epoch):
         self.name = name
-        self.type = type
+        self.type = ms_type
         self.alternateType = alternateType
         self.language = language
         self.epoch = epoch
 
     @staticmethod
-    def from_element(element):
+    def from_element(element: QDomElement) -> 'MsPlaceName':
+        """
+        Constructs a MsPlaceName from a DOM element
+        """
         parser = ElementParser(element)
 
         return MsPlaceName(name=parser.string('ms:name', is_attribute=False, optional=False),
-                           type=parser.string('ms:type', is_attribute=False, optional=True),
+                           ms_type=parser.string('ms:type', is_attribute=False, optional=True),
                            alternateType=parser.string('ms:alternateType', is_attribute=False, optional=True),
                            language=parser.string('ms:language', is_attribute=False, optional=True),
                            epoch=parser.string('ms:epoch', is_attribute=False, optional=True))
 
 
 class MsMdp:
+    """
+    MsMdp
+    """
 
-    def __init__(self,
+    def __init__(self,  # pylint: disable=too-many-locals
                  publicID,
                  reportReference,
                  eventReference,
@@ -1231,7 +1490,10 @@ class MsMdp:
         self.relatedMDP = relatedMDP
 
     @staticmethod
-    def from_element(element):
+    def from_element(element: QDomElement) -> 'MsMdp':
+        """
+        Constructs an MsMdp from a DOM element
+        """
         parser = ElementParser(element)
 
         comments = []
@@ -1264,6 +1526,9 @@ class MsMdp:
 
 
 class MsMdpSet:
+    """
+    MsMdpSet
+    """
 
     def __init__(self,
                  publicID,
@@ -1286,7 +1551,10 @@ class MsMdpSet:
         self.mdpReferences = mdpReferences  # one to many
 
     @staticmethod
-    def from_element(element):
+    def from_element(element: QDomElement) -> 'MsMdpSet':
+        """
+        Constructs an MsMdpSet from a DOM element
+        """
         parser = ElementParser(element)
 
         comments = []
@@ -1313,8 +1581,11 @@ class MsMdpSet:
 
 
 class MsSiteMorphology:
+    """
+    MsSiteMorphology
+    """
 
-    def __init__(self,
+    def __init__(self,  # pylint: disable=too-many-locals
                  basinFlagLiteratureSource,
                  bedrockDepth,
                  bedrockDepthLiteratureSource,
@@ -1353,7 +1624,10 @@ class MsSiteMorphology:
         self.SurfaceLayerGranularity = SurfaceLayerGranularity
 
     @staticmethod
-    def from_element(element):
+    def from_element(element: QDomElement) -> 'MsSiteMorphology':
+        """
+        Constructs a MsSiteMorphology from a DOM element
+        """
         parser = ElementParser(element)
 
         comments = []
@@ -1368,7 +1642,7 @@ class MsSiteMorphology:
             mdpReferences.append(reference_node.text())
             reference_node = reference_node.nextSiblingElement('ms:mdpReference')
 
-        assert False
+        assert False, 'Not implemented'
         return MsSiteMorphology(basinFlagLiteratureSource=parser.string('ms:basinFlagLiteratureSource', optional=True),
                                 bedrockDepth=parser.int('ms:bedrockDepth', optional=True),
                                 bedrockDepthLiteratureSource=parser.string('ms:bedrockDepthLiteratureSource',
@@ -1389,25 +1663,29 @@ class MsSiteMorphology:
                                                                            optional=True),
                                 siteClassSIA261=parser.string('ms:siteClassSIA261', optional=True),
                                 siteClassSIA261Source=parser.string('ms:siteClassSIA261Source', optional=True),
-                                SurfaceLayerGranularity=parser.string('ms:SurfaceLayerGranularity', optional=True))
+                                SurfaceLayerGranularity=parser.string('ms:SurfaceLayerGranularity', optional=True),
+                                creationInfo=None)
 
 
 class Event:
+    """
+    QuakeML Event
+    """
 
     def __init__(self,
                  publicID,
-                 type,
+                 event_type,
                  typeCertainty,
                  description,
                  preferredOriginID,
                  preferredMagnitudeID,
                  preferredFocalMechanismID,
                  creationInfo,
-                 origins,
-                 magnitudes,
+                 origins: Dict[str, Origin],
+                 magnitudes: Dict[str, Magnitude],
                  comments):
         self.publicID = publicID
-        self.type = type
+        self.type = event_type
         self.typeCertainty = typeCertainty
 
         # One to many join
@@ -1417,18 +1695,27 @@ class Event:
         self.preferredMagnitudeID = preferredMagnitudeID
         self.preferredFocalMechanismID = preferredFocalMechanismID
         self.creationInfo = creationInfo
-        self.origins = origins
-        self.magnitudes = magnitudes
+        self.origins: Dict[str, Origin] = origins
+        self.magnitudes: Dict[str, Magnitude] = magnitudes
         self.comments = comments
 
     @staticmethod
-    def to_fields(selected_fields=None):
+    def to_fields(selected_fields: Optional[List[str]] = None) -> QgsFields:
+        """
+        Returns the event field definition
+        """
         return get_service_fields(SERVICE_MANAGER.FDSNEVENT, selected_fields)
 
     @staticmethod
-    def add_origin_attributes(origin, feature, output_fields,
-                              convert_negative_depths,
-                              depth_unit, is_preferred_origin: bool):
+    def add_origin_attributes(origin: Origin,  # pylint: disable=too-many-locals,too-many-branches
+                              feature: QgsFeature,
+                              output_fields: Optional[List[str]],
+                              convert_negative_depths: bool,
+                              depth_unit: QgsUnitTypes.DistanceUnit,
+                              is_preferred_origin: bool):
+        """
+        Adds origin related attributes to a feature
+        """
         settings = QgsSettings()
 
         short_field_names = settings.value('/plugins/qquake/output_short_field_names', True, bool)
@@ -1439,7 +1726,10 @@ class Event:
         else:
             output_is_preferred_origin = settings.value('/plugins/qquake/output_field_!IsPrefOrigin', False, bool)
         if output_is_preferred_origin:
-            dest_field = [f for f in CONFIG_FIELDS['field_groups']['basic_event_info']['fields'] if f['source'] == '!IsPrefOrigin'][0]
+            dest_field = \
+                [f for f in CONFIG_FIELDS['field_groups']['basic_event_info']['fields'] if
+                 f['source'] == '!IsPrefOrigin'][
+                    0]
             feature[dest_field[field_config_key]] = is_preferred_origin or NULL
 
         for dest_field in CONFIG_FIELDS['field_groups']['origin']['fields']:
@@ -1493,7 +1783,13 @@ class Event:
         feature.setGeometry(QgsGeometry(geom))
 
     @staticmethod
-    def add_magnitude_attributes(magnitude, feature, output_fields, is_preferred_magnitude: bool):
+    def add_magnitude_attributes(magnitude: Magnitude,
+                                 feature: QgsFeature,
+                                 output_fields: Optional[List[str]],
+                                 is_preferred_magnitude: bool):
+        """
+        Adds magnitude related attributes to a feature
+        """
         settings = QgsSettings()
 
         short_field_names = settings.value('/plugins/qquake/output_short_field_names', True, bool)
@@ -1504,7 +1800,9 @@ class Event:
         else:
             output_is_preferred_mag = settings.value('/plugins/qquake/output_field_!IsPrefMag', False, bool)
         if output_is_preferred_mag:
-            dest_field = [f for f in CONFIG_FIELDS['field_groups']['basic_event_info']['fields'] if f['source'] == '!IsPrefMag'][0]
+            dest_field = \
+                [f for f in CONFIG_FIELDS['field_groups']['basic_event_info']['fields'] if f['source'] == '!IsPrefMag'][
+                    0]
             feature[dest_field[field_config_key]] = is_preferred_magnitude or NULL
 
         for dest_field in CONFIG_FIELDS['field_groups']['magnitude']['fields']:
@@ -1540,8 +1838,14 @@ class Event:
 
             feature[dest_field[field_config_key]] = source_obj
 
-    def to_features(self, output_fields, preferred_origin_only, preferred_magnitudes_only, all_origins,
-                    convert_negative_depths, depth_unit):
+    def to_features(self,  # pylint: disable=too-many-locals,too-many-branches,too-many-statements
+                    output_fields: Optional[List[str]],
+                    preferred_origin_only: bool,
+                    preferred_magnitudes_only: bool, all_origins,
+                    convert_negative_depths, depth_unit) -> QgsFeature:
+        """
+        Yields event features
+        """
         settings = QgsSettings()
 
         short_field_names = settings.value('/plugins/qquake/output_short_field_names', True, bool)
@@ -1593,7 +1897,8 @@ class Event:
                 continue
 
             if m.originID not in all_origins:
-                raise MissingOriginException(f'Origin with ID {m.originID} is not present in QuakeML file -- cannot be parsed')
+                raise MissingOriginException(
+                    f'Origin with ID {m.originID} is not present in QuakeML file -- cannot be parsed')
 
             magnitude_origin = all_origins[m.originID]
 
@@ -1628,7 +1933,10 @@ class Event:
             yield origin_feature
 
     @staticmethod
-    def from_element(element):
+    def from_element(element: QDomElement) -> 'Event':
+        """
+        Constructs an Event from a DOM element
+        """
         parser = ElementParser(element)
 
         description_nodes = element.elementsByTagName('description')
@@ -1654,7 +1962,7 @@ class Event:
             comments.append(Comment.from_element(comment_nodes.at(e).toElement()))
 
         return Event(publicID=parser.string('publicID', is_attribute=True, optional=False),
-                     type=parser.string('type'),
+                     event_type=parser.string('type'),
                      typeCertainty=parser.string('typeCertainty'),
                      description=descriptions,
                      preferredOriginID=parser.resource_reference('preferredOriginID'),
@@ -1684,7 +1992,10 @@ class QuakeMlParser:
         self.convert_negative_depths = convert_negative_depths
         self.depth_unit = depth_unit
 
-    def parse_initial(self, content):
+    def parse_initial(self, content: QByteArray):
+        """
+        Parses the initial first reply
+        """
         self.events = []
         self.origins = {}
         self.magnitudes = {}
@@ -1694,13 +2005,19 @@ class QuakeMlParser:
         self.mdpsets = {}
         self.add_events(content)
 
-    def remap_attribute_name(self, service_type, attribute):
+    def remap_attribute_name(self, service_type: str, attribute: str) -> str:
+        """
+        Returns a remapped attribute name (i.e. accounting for user-defined output attribute names)
+        """
         if not attribute:
             return attribute
 
         return get_service_fields(service_type, [attribute]).at(0).name()
 
-    def add_events(self, content):
+    def add_events(self, content: QByteArray):  # pylint:disable=too-many-locals
+        """
+        Adds events from a reply
+        """
         doc = QDomDocument()
         doc.setContent(content)
         event_elements = doc.elementsByTagName('event')
@@ -1731,7 +2048,7 @@ class QuakeMlParser:
 
         macro_events = doc.elementsByTagName('ms:macroseismicEvent')
         for e in range(macro_events.length()):
-            macro_event_element=macro_events.at(e).toElement()
+            macro_event_element = macro_events.at(e).toElement()
             macro_event = MsEvent.from_element(macro_event_element)
             self.macro_events[macro_event.publicID] = macro_event
 
@@ -1741,10 +2058,16 @@ class QuakeMlParser:
             mdpset = MsMdpSet.from_element(mdpset_element)
             self.mdpsets[mdpset.publicID] = mdpset
 
-    def mdp_set_for_mdp(self, mdp):
+    def mdp_set_for_mdp(self, mdp: MsMdp) -> MsMdpSet:
+        """
+        Returns the MDP set associated with an mdp
+        """
         return [v for k, v in self.mdpsets.items() if mdp.publicID in v.mdpReferences][0]
 
-    def parse_missing_origin(self, content):
+    def parse_missing_origin(self, content: QByteArray):
+        """
+        Parses for missing origins from a reply
+        """
         doc = QDomDocument()
         doc.setContent(content)
 
@@ -1760,7 +2083,10 @@ class QuakeMlParser:
                 if m not in self.magnitudes:
                     self.magnitudes[m.publicID] = m
 
-    def scan_for_missing_origins(self):
+    def scan_for_missing_origins(self) -> List[str]:
+        """
+        Returns a list of events missing the origin
+        """
         missing_origins = set()
         for e in self.events:
             if e.preferredOriginID not in self.origins:
@@ -1773,10 +2099,17 @@ class QuakeMlParser:
         return list(missing_origins)
 
     @staticmethod
-    def to_event_fields(selected_fields):
+    def to_event_fields(selected_fields: Optional[List[str]]) -> QgsFields:
+        """
+        Returns the field definition for events
+        """
         return Event.to_fields(selected_fields)
 
-    def create_event_features(self, output_fields, preferred_origin_only, preferred_magnitudes_only):
+    def create_event_features(self, output_fields: List[str], preferred_origin_only: bool,
+                              preferred_magnitudes_only: bool) -> QgsFeature:
+        """
+        Yields event features
+        """
         for e in self.events:
             for f in e.to_features(output_fields, preferred_origin_only, preferred_magnitudes_only,
                                    all_origins=self.origins,
@@ -1785,10 +2118,18 @@ class QuakeMlParser:
                 yield f
 
     @staticmethod
-    def create_mdp_fields(selected_fields):
+    def create_mdp_fields(selected_fields: Optional[List[str]]) -> QgsFields:
+        """
+        Creates the MDP field definitions
+        """
         return get_service_fields(SERVICE_MANAGER.MACROSEISMIC, selected_fields)
 
-    def create_mdp_features(self, selected_fields, preferred_mdp_set_only):
+    def create_mdp_features(self,  # pylint: disable=too-many-locals,too-many-branches,too-many-statements
+                            selected_fields: Optional[List[str]],
+                            preferred_mdp_set_only: bool) -> QgsFeature:
+        """
+        Yields MDP features
+        """
         settings = QgsSettings()
 
         short_field_names = settings.value('/plugins/qquake/output_short_field_names', True, bool)
@@ -1882,7 +2223,6 @@ class QuakeMlParser:
                     dest_field = [f for f in field_config['field_groups']['basic_event_info']['fields'] if
                                   f['source'] == '!IsPrefOrigin'][0]
                     f[dest_field[field_config_key]] = True
-
 
                 for dest_field in field_config['field_groups']['origin']['fields']:
                     if dest_field.get('skip'):
@@ -2136,7 +2476,10 @@ class BaseNodeType:
         self.Description = Description
 
     @staticmethod
-    def _from_element(obj, element):
+    def _from_element(obj: 'BaseNodeType', element: QDomElement):
+        """
+        Populates the base node attributes from a DOM element
+        """
         parser = ElementParser(element)
         obj.Code = parser.string('code', optional=False, is_attribute=True)
         obj.StartDate = parser.datetime('startDate', optional=False, is_attribute=True)
@@ -2169,7 +2512,10 @@ class Network(BaseNodeType):
                          None)
         self.stations = stations
 
-    def to_station_features(self, selected_fields):
+    def to_station_features(self, selected_fields: Optional[List[str]]) -> List[QgsFeature]:
+        """
+        Converts the network to a list of station features
+        """
         features = []
         settings = QgsSettings()
 
@@ -2221,7 +2567,10 @@ class Network(BaseNodeType):
         return features
 
     @staticmethod
-    def from_element(element):
+    def from_element(element: QDomElement) -> 'Network':
+        """
+        Constructs a Network from a DOM element
+        """
         station_nodes = element.elementsByTagName('Station')
         stations = []
         for e in range(station_nodes.length()):
@@ -2238,23 +2587,23 @@ class Station(BaseNodeType):
     station's creation and termination dates as the epoch start and end dates.
     """
 
-    def __init__(self,
-                 StartDate,
-                 EndDate,
-                 Latitude,
-                 Longitude,
-                 Elevation,
-                 Site,
-                 WaterLevel,
-                 Vault,
-                 Geology,
-                 Equipment,
-                 Operator,
-                 CreationDate,
-                 TerminationDate,
-                 TotalNumberChannels,
-                 SelectedNumberChannels,
-                 ExternalReference
+    def __init__(self,  # pylint: disable=too-many-locals
+                 start_date,
+                 end_date,
+                 latitude,
+                 longitude,
+                 elevation,
+                 site,
+                 water_level,
+                 vault,
+                 geology,
+                 equipment,
+                 operator,
+                 creation_date,
+                 termination_date,
+                 total_number_channels,
+                 selected_number_channels,
+                 external_reference
                  # Channel
                  ):
         super().__init__(None,
@@ -2264,25 +2613,28 @@ class Station(BaseNodeType):
                          None,
                          None,
                          None)
-        self.StartDate = StartDate
-        self.EndDate = EndDate
-        self.Latitude = Latitude
-        self.Longitude = Longitude
-        self.Elevation = Elevation
-        self.Site = Site
-        self.WaterLevel = WaterLevel
-        self.Vault = Vault
-        self.Geology = Geology
-        self.CreationDate = CreationDate
-        self.TerminationDate = TerminationDate
-        self.TotalNumberChannels = TotalNumberChannels
-        self.SelectedNumberChannels = SelectedNumberChannels
-        self.Equipment = Equipment
-        self.Operator = Operator
-        self.ExternalReference = ExternalReference
+        self.StartDate = start_date
+        self.EndDate = end_date
+        self.Latitude = latitude
+        self.Longitude = longitude
+        self.Elevation = elevation
+        self.Site = site
+        self.WaterLevel = water_level
+        self.Vault = vault
+        self.Geology = geology
+        self.CreationDate = creation_date
+        self.TerminationDate = termination_date
+        self.TotalNumberChannels = total_number_channels
+        self.SelectedNumberChannels = selected_number_channels
+        self.Equipment = equipment
+        self.Operator = operator
+        self.ExternalReference = external_reference
 
     @staticmethod
-    def to_fields(selected_fields):
+    def to_fields(selected_fields: Optional[List[str]]) -> QgsFields:
+        """
+        Returns station fields
+        """
         fields = QgsFields()
         settings = QgsSettings()
 
@@ -2309,25 +2661,28 @@ class Station(BaseNodeType):
         return fields
 
     @staticmethod
-    def from_element(element):
+    def from_element(element: QDomElement) -> 'Station':
+        """
+        Constructs a Station from a DOM element
+        """
         parser = ElementParser(element)
         res = Station(
-            StartDate=parser.datetime('startDate', is_attribute=True, optional=True),
-            EndDate=parser.datetime('endDate', is_attribute=True, optional=True),
-            Latitude=parser.float('Latitude', optional=False),
-            Longitude=parser.float('Longitude', optional=False),
-            Elevation=parser.float('Elevation', optional=False),
-            Site=parser.site('Site', optional=False),
-            Equipment=parser.equipment('Equipment', optional=True),
-            WaterLevel=parser.float('WaterLevel'),
-            Vault=parser.string('Vault'),
-            Geology=parser.string('Geology'),
-            CreationDate=parser.datetime('CreationDate'),
-            TerminationDate=parser.datetime('TerminationDate'),
-            TotalNumberChannels=parser.int('TotalNumberChannels'),
-            SelectedNumberChannels=parser.int('SelectedNumberChannels'),
-            Operator=parser.operator('Operator', optional=True),
-            ExternalReference=parser.external_reference('ExternalReference', optional=True)
+            start_date=parser.datetime('startDate', is_attribute=True, optional=True),
+            end_date=parser.datetime('endDate', is_attribute=True, optional=True),
+            latitude=parser.float('Latitude', optional=False),
+            longitude=parser.float('Longitude', optional=False),
+            elevation=parser.float('Elevation', optional=False),
+            site=parser.site('Site', optional=False),
+            equipment=parser.equipment('Equipment', optional=True),
+            water_level=parser.float('WaterLevel'),
+            vault=parser.string('Vault'),
+            geology=parser.string('Geology'),
+            creation_date=parser.datetime('CreationDate'),
+            termination_date=parser.datetime('TerminationDate'),
+            total_number_channels=parser.int('TotalNumberChannels'),
+            selected_number_channels=parser.int('SelectedNumberChannels'),
+            operator=parser.operator('Operator', optional=True),
+            external_reference=parser.external_reference('ExternalReference', optional=True)
         )
         BaseNodeType._from_element(res, element)
         return res
@@ -2339,7 +2694,10 @@ class FDSNStationXMLParser:
     """
 
     @staticmethod
-    def parse(content):
+    def parse(content: QByteArray) -> List[Network]:
+        """
+        Parses content
+        """
         doc = QDomDocument()
         doc.setContent(content)
         network_elements = doc.elementsByTagName('Network')
@@ -2352,7 +2710,10 @@ class FDSNStationXMLParser:
         return networks
 
     @staticmethod
-    def remap_attribute_name(attribute):
+    def remap_attribute_name(attribute: str) -> str:
+        """
+        Returns a remapped attribute name (i.e. accounting for user-defined output attribute names)
+        """
         if not attribute:
             return attribute
         return get_service_fields(SERVICE_MANAGER.FDSNSTATION, [attribute]).at(0).name()

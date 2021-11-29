@@ -14,13 +14,13 @@ __copyright__ = 'Istituto Nazionale di Geofisica e Vulcanologia (INGV)'
 __revision__ = '$Format:%H$'
 
 from typing import Optional
+
 from qgis.PyQt.QtCore import (
     QDir,
     QUrl,
     QTemporaryFile
 )
 from qgis.PyQt.QtNetwork import QNetworkRequest
-
 from qgis.core import (
     QgsVectorLayer,
     QgsMapLayer,
@@ -30,6 +30,7 @@ from qgis.core import (
 )
 
 from qquake.services import SERVICE_MANAGER
+
 
 class StyleUtils:
     """
@@ -41,7 +42,7 @@ class StyleUtils:
         """
         Returns the URL for the default style to use for event layers
         """
-        for k, v in SERVICE_MANAGER.PRESET_STYLES.items():
+        for _, v in SERVICE_MANAGER.PRESET_STYLES.items():
             if v['type'] == 'events':
                 return v['url']
 
@@ -52,7 +53,7 @@ class StyleUtils:
         """
         Returns the URL for the default style to use for macro layers
         """
-        for k, v in SERVICE_MANAGER.PRESET_STYLES.items():
+        for _, v in SERVICE_MANAGER.PRESET_STYLES.items():
             if v['type'] == 'macroseismic':
                 return v['url']
 
@@ -71,21 +72,22 @@ class StyleUtils:
         request = QgsBlockingNetworkRequest()
         if request.get(QNetworkRequest(QUrl(url))) != QgsBlockingNetworkRequest.NoError:
             return 'Error while fetching QML style: {}'.format(request.errorMessage())
-        else:
-            reply = request.reply().content()
-            tmp_file = QTemporaryFile('{}/XXXXXX.qml'.format(QDir.tempPath()))
-            tmp_file.open()
-            tmp_file_name = tmp_file.fileName()
-            tmp_file.close()
-            with open(tmp_file_name, 'wt') as f:
-                f.write(reply.data().decode())
 
-            layer.loadNamedStyle(tmp_file_name)
+        reply = request.reply().content()
+        tmp_file = QTemporaryFile('{}/XXXXXX.qml'.format(QDir.tempPath()))
+        tmp_file.open()
+        tmp_file_name = tmp_file.fileName()
+        tmp_file.close()
+        with open(tmp_file_name, 'wt') as f:
+            f.write(reply.data().decode())
 
-            if style_attr:
-                StyleUtils.update_class_attribute(layer, style_attr)
+        layer.loadNamedStyle(tmp_file_name)
 
-            layer.triggerRepaint()
+        if style_attr:
+            StyleUtils.update_class_attribute(layer, style_attr)
+
+        layer.triggerRepaint()
+        return None
 
     @staticmethod
     def update_class_attribute(layer: QgsVectorLayer, style_attr: str):

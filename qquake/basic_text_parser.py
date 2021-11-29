@@ -13,7 +13,16 @@ __copyright__ = 'Istituto Nazionale di Geofisica e Vulcanologia (INGV)'
 # This will get replaced with a git SHA1 when you do a git archive
 __revision__ = '$Format:%H$'
 
-from qgis.PyQt.QtCore import QVariant, QDate, QDateTime, QTime, Qt
+from typing import List, Optional
+
+from qgis.PyQt.QtCore import (
+    QVariant,
+    QByteArray,
+    QDate,
+    QDateTime,
+    QTime,
+    Qt
+)
 
 from qgis.core import (
     QgsFields,
@@ -87,60 +96,55 @@ class BasicTextParser:
         self.convert_negative_depths = convert_negative_depths
         self.depth_unit = depth_unit
 
-    # Legacy function
-    def parser_header_line(self, line):
-        assert line[0] == '#'
-        line = line[1:]
-        headers = [h.strip() for h in line.split('|')]
-
-        for h in headers:
-            h = h.strip()
-            if h == 'Depth/km' and self.depth_unit == QgsUnitTypes.DistanceMeters:
-                h = 'DepthMeters'
-            elif h == 'Depth/km':
-                h = 'DepthKm'
-            if h == 'MagnitudeType':
-                h = 'MagType'
-            if h == 'MagnitudeAuthor':
-                h = 'MagAuthor'
-            self.headers.append(h)
-
     def parser_header_by_index(self):
-
+        """
+        Sets headers
+        """
         if self.depth_unit == QgsUnitTypes.DistanceMeters:
             deep = 'DepthMeters'
         else:
             deep = 'DepthKm'
-        headers = ['EventID', 'Time', 'Latitude', 'Longitude',  deep, 'Author', 'Catalog', 'Contributor',
+        headers = ['EventID', 'Time', 'Latitude', 'Longitude', deep, 'Author', 'Catalog', 'Contributor',
                    'ContributorID', 'MagType', 'Magnitude', 'MagAuthor', 'EventLocationName', 'EventType']
 
         self.headers = headers
-        return
 
-    def parse(self, content):
+    def parse(self, content: QByteArray):
+        """
+        Parses reply content
+        """
         if not content:
             return
         lines = content.data().decode().split('\n')
         self.parser_header_by_index()
         self._add_events(lines[1:])
 
-    def add_events(self, content):
+    def add_events(self, content: QByteArray):
+        """
+        Adds events from reply content
+        """
         lines = content.data().decode().split('\n')
         self._add_events(lines[1:])
 
-    def _add_events(self, lines):
+    def _add_events(self, lines: List[str]):
+        """
+        Adds events from text
+        """
         for e in lines:
             if not e:
                 continue
 
             self.events.append(dict(zip(self.headers, e.split('|'))))
 
-    def add_mdp(self, content):
+    def add_mdp(self, content: QByteArray):
+        """
+        Adds an MDP from reply content
+        """
         if not content:
             return
 
         lines = content.data().decode().split('\n')
-        if not len(lines):
+        if not lines:
             return
 
         assert lines[0][0] == '#'
@@ -152,20 +156,29 @@ class BasicTextParser:
             self.mdp.append(dict(zip(self.mdp_headers, e.split('|'))))
 
     @staticmethod
-    def get_field_type(name):
+    def get_field_type(name: str) -> Optional[int]:
+        """
+        Gets the QVariant type for an event field
+        """
         for k, v in EVENT_FIELD_TYPE.items():
             if k.lower() == name.lower():
                 return v
         return None
 
     @staticmethod
-    def get_mdp_field_type(name):
+    def get_mdp_field_type(name: str) -> Optional[int]:
+        """
+        Gets the QVariant type for an MDP field
+        """
         for k, v in MDP_FIELD_TYPE.items():
             if k.lower() == name.lower():
                 return v
         return None
 
-    def to_event_fields(self, selected_fields=None):
+    def to_event_fields(self, selected_fields=None) -> QgsFields:  # pylint: disable=unused-argument
+        """
+        Constructs event field definitions
+        """
         fields = QgsFields()
 
         # 0 EventId
@@ -199,7 +212,10 @@ class BasicTextParser:
 
         return fields
 
-    def to_event_feature(self, event, fields):
+    def to_event_feature(self, event: dict, fields: QgsFields) -> QgsFeature:  # pylint: disable=too-many-branches
+        """
+        Converts an event to a feature
+        """
         f = QgsFeature(fields)
         for k, v in event.items():
 
@@ -222,7 +238,7 @@ class BasicTextParser:
                     v = int(v)
                 elif fields[fields.lookupField(k)].type() == QVariant.String:
                     v = v.replace('--', '')
-            except Exception:
+            except Exception:  # pylint: disable=broad-except
                 v = NULL
 
             if k in ('DepthKm', 'DepthMeters') and v != NULL:
@@ -239,26 +255,38 @@ class BasicTextParser:
 
         return f
 
-    def create_event_features(self, output_fields, preferred_origin_only, preferred_magnitudes_only):
+    def create_event_features(self, output_fields, preferred_origin_only, preferred_magnitudes_only) -> QgsFeature:   # pylint: disable=unused-argument
+        """
+        Yields an event feature
+        """
         fields = self.to_event_fields()
 
         for e in self.events:
             yield self.to_event_feature(e, fields)
 
-    def create_mdp_fields(self, selected_fields):
+    def create_mdp_fields(self, selected_fields) -> QgsFields:  # pylint: disable=unused-argument
+        """
+        Creates MDP field definitions
+        """
         fields = QgsFields()
         for f in self.mdp_headers:
             fields.append(QgsField(f, self.get_mdp_field_type(f)))
 
         return fields
 
-    def create_mdp_features(self, selected_fields, preferred_mdp_set_only):
+    def create_mdp_features(self, selected_fields, preferred_mdp_set_only) -> QgsFeature:  # pylint: disable=unused-argument
+        """
+        Yields an MDP feature
+        """
         fields = self.create_mdp_fields(selected_fields)
 
         for e in self.mdp:
             yield self.to_mdp_feature(e, fields)
 
-    def to_mdp_feature(self, event, fields):
+    def to_mdp_feature(self, event: dict, fields: QgsFields) -> QgsFeature:
+        """
+        Converts results to a MDP feature
+        """
         f = QgsFeature(fields)
         for k, v in event.items():
             try:
@@ -273,7 +301,7 @@ class BasicTextParser:
                     v = float(v)
                 elif fields[fields.lookupField(k)].type() == QVariant.Int:
                     v = int(v)
-            except Exception:
+            except Exception:  # pylint: disable=broad-except
                 v = NULL
 
             f[k] = v
@@ -285,22 +313,34 @@ class BasicTextParser:
 
         return f
 
-    def all_event_ids(self):
+    def all_event_ids(self) -> List[str]:
+        """
+        Returns a list of all event IDs
+        """
         return [e['EventID'] for e in self.events]
 
 
 class BasicStationParser:
+    """
+    Basic (text) station parser
+    """
 
     def __init__(self):
-        self.headers = []
-        self.stations = []
+        self.headers: List[str] = []
+        self.stations: List[dict] = []
 
-    def parser_header_line(self, line):
+    def parser_header_line(self, line: str):
+        """
+        Parses a header line
+        """
         assert line[0] == '#'
         line = line[1:]
         self.headers = [h.strip() for h in line.split('|')]
 
-    def parse(self, content):
+    def parse(self, content: QByteArray):
+        """
+        Parses reply content
+        """
         if not content:
             return
 
@@ -308,25 +348,37 @@ class BasicStationParser:
         self.parser_header_line(lines[0])
         self._add_stations(lines[1:])
 
-    def add_stations(self, content):
+    def add_stations(self, content: QByteArray):
+        """
+        Adds stations from reply content
+        """
         lines = content.data().decode().split('\n')
         self._add_stations(lines[1:])
 
-    def _add_stations(self, lines):
+    def _add_stations(self, lines: List[str]):
+        """
+        Adds stations from text
+        """
         for e in lines:
             if not e:
                 continue
 
             self.stations.append(dict(zip(self.headers, e.split('|'))))
 
-    def to_station_fields(self, selected_fields=None):
+    def to_station_fields(self, selected_fields=None) -> QgsFields:  # pylint: disable=unused-argument
+        """
+        Creates station field definition
+        """
         fields = QgsFields()
         for f in self.headers:
             fields.append(QgsField(f, STATION_FIELD_TYPE[f]))
 
         return fields
 
-    def to_station_feature(self, station, fields):
+    def to_station_feature(self, station: dict, fields: QgsFields) -> QgsFeature:
+        """
+        Creates a station feature
+        """
         f = QgsFeature(fields)
         for k, v in station.items():
             try:
@@ -341,7 +393,7 @@ class BasicStationParser:
                     v = float(v)
                 elif fields[fields.lookupField(k)].type() == QVariant.Int:
                     v = int(v)
-            except Exception:
+            except Exception:  # pylint: disable=broad-except
                 v = NULL
 
             f[k] = v
@@ -353,7 +405,10 @@ class BasicStationParser:
 
         return f
 
-    def create_station_features(self):
+    def create_station_features(self) -> QgsFeature:
+        """
+        Yields station features
+        """
         fields = self.to_station_fields()
 
         for e in self.stations:
