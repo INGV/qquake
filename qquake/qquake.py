@@ -65,7 +65,7 @@ class QQuake:
 
         # Declare instance attributes
         self.actions = []
-        self.menu = self.tr(u'&QQuake')
+        self.menu = self.tr('&QQuake')
 
         # Check if plugin was started the first time in current QGIS session
         # Must be set in initGui() to survive plugin reloads
@@ -166,7 +166,7 @@ class QQuake:
         icon_path = GuiUtils.get_icon_svg('icon.svg')
         self.add_action(
             icon_path,
-            text=self.tr(u'QQuake'),
+            text=self.tr('QQuake'),
             callback=self.run,
             parent=self.iface.mainWindow())
 
@@ -177,7 +177,7 @@ class QQuake:
         """Removes the plugin menu item and icon from QGIS GUI."""
         for action in self.actions:
             self.iface.removePluginMenu(
-                self.tr(u'&QQuake'),
+                self.tr('&QQuake'),
                 action)
             self.iface.removeToolBarIcon(action)
 
