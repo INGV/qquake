@@ -14,6 +14,7 @@ __copyright__ = 'Istituto Nazionale di Geofisica e Vulcanologia (INGV)'
 __revision__ = '$Format:%H$'
 
 from pathlib import Path
+from typing import List, Union, Optional
 
 from qgis.PyQt.QtCore import (
     Qt,
@@ -34,9 +35,9 @@ from qquake.basic_text_parser import BasicTextParser, BasicStationParser
 from qquake.quakeml_parser import (
     QuakeMlParser,
     FDSNStationXMLParser,
-    Magnitude,
     Station,
-    MissingOriginException
+    MissingOriginException,
+    Network
 )
 from qquake.services import SERVICE_MANAGER
 from qquake.style_utils import StyleUtils
@@ -54,7 +55,8 @@ class Fetcher(QObject):
     finished = pyqtSignal(bool)
     message = pyqtSignal(str, Qgis.MessageLevel)
 
-    def __init__(self, service_type,
+    def __init__(self,  # pylint: disable=too-many-locals,too-many-statements
+                 service_type,
                  event_service,
                  event_start_date=None,
                  event_end_date=None,
@@ -141,14 +143,14 @@ class Fetcher(QObject):
                                         depth_unit=self.depth_unit)
         else:
             self.result = BasicTextParser(convert_negative_depths=self.convert_negative_depths,
-                                        depth_unit=self.depth_unit)
+                                          depth_unit=self.depth_unit)
 
         self.missing_origins = set()
         self.is_missing_origin_request = False
         self.require_mdp_basic_text_request = self.output_type == self.BASIC and self.service_type == SERVICE_MANAGER.MACROSEISMIC
         self.is_mdp_basic_text_request = False
 
-    def generate_url(self):
+    def generate_url(self):  # pylint: disable=too-many-statements,too-many-branches
         """
         Returns the URL request for the query
         """
@@ -156,9 +158,9 @@ class Fetcher(QObject):
             return self.url
 
         if self.is_mdp_basic_text_request:
-            format = 'textmacro'
+            result_format = 'textmacro'
         else:
-            format = 'text' if self.output_type == Fetcher.BASIC else 'xml'
+            result_format = 'text' if self.output_type == Fetcher.BASIC else 'xml'
 
         query = []
         # append to the string the parameter of the UI (starttime, endtime, etc)
@@ -233,7 +235,7 @@ class Fetcher(QObject):
         if self.service_type == SERVICE_MANAGER.MACROSEISMIC:
             query.append('includemdps=true')
 
-        query.append('format={}'.format(format))
+        query.append('format={}'.format(result_format))
 
         return self.service_config['endpointurl'] + '&'.join(query)
 
@@ -250,6 +252,9 @@ class Fetcher(QObject):
         reply.downloadProgress.connect(self._reply_progress)
 
     def fetch_missing(self):
+        """
+        Fetches missing results
+        """
         # pop first missing origin from front of queue and fetch it
         self.message.emit(
             self.tr('Returned XML was incomplete. {} missing origins left to fetch').format(len(self.missing_origins)),
@@ -274,11 +279,17 @@ class Fetcher(QObject):
         reply.downloadProgress.connect(self._reply_progress)
 
     def fetch_next_event_by_id(self):
+        """
+        Fetches next event by ID
+        """
         # pop first id from front of queue and fetch it
         self.message.emit(self.tr('{} events left to fetch').format(len(self.pending_event_ids)), Qgis.Info)
         self.fetch_data()
 
     def fetch_basic_mdp(self):
+        """
+        Fetches basic MDP
+        """
         self.require_mdp_basic_text_request = False
         self.is_mdp_basic_text_request = True
         self.message.emit(self.tr('Fetching MDPs'), Qgis.Info)
@@ -293,10 +304,16 @@ class Fetcher(QObject):
         reply.downloadProgress.connect(self._reply_progress)
 
     def _reply_progress(self, received, total):
+        """
+        Triggered when reply progress is received
+        """
         if total > 0:
             self.progress.emit(float(received) / total * 100)
 
-    def _reply_finished(self, reply):
+    def _reply_finished(self, reply: QNetworkReply):  # pylint: disable=too-many-branches,too-many-statements
+        """
+        Triggered when a reply is finished
+        """
         if reply.error() != QNetworkReply.NoError:
             self.message.emit(self.tr('Error: {}').format(reply.errorString()), Qgis.Critical)
             self.finished.emit(False)
@@ -375,7 +392,10 @@ class Fetcher(QObject):
                         else:
                             self.finished.emit(True)
 
-    def _generate_layer_name(self, layer_type=None):
+    def _generate_layer_name(self, layer_type: Optional[str] = None) -> str:
+        """
+        Generates a good default layer name
+        """
         if self.url and QUrl(self.url).isLocalFile():
             return Path(QUrl(self.url).toLocalFile()).stem
 
@@ -396,7 +416,7 @@ class Fetcher(QObject):
 
         return name
 
-    def _create_empty_event_layer(self):
+    def _create_empty_event_layer(self) -> QgsVectorLayer:
         """
         Creates an empty layer for earthquake data
         """
@@ -411,7 +431,7 @@ class Fetcher(QObject):
                 temporal_props = vl.temporalProperties()
                 temporal_props.setIsActive(True)
                 temporal_props.setStartField('time')
-                from qgis.core import QgsVectorLayerTemporalProperties
+                from qgis.core import QgsVectorLayerTemporalProperties  # pylint: disable=import-outside-toplevel
                 temporal_props.setMode(QgsVectorLayerTemporalProperties.ModeFeatureDateTimeInstantFromField)
 
         except AttributeError:
@@ -419,7 +439,7 @@ class Fetcher(QObject):
 
         return vl
 
-    def _create_empty_mdp_layer(self):
+    def _create_empty_mdp_layer(self) -> QgsVectorLayer:
         """
         Creates an empty layer for mdp
         """
@@ -430,18 +450,7 @@ class Fetcher(QObject):
 
         return vl
 
-    def _create_empty_magnitudes_layer(self):
-        """
-        Creates an empty layer for earthquake data
-        """
-        vl = QgsVectorLayer('PointZ?crs=EPSG:4326', self._generate_layer_name('Magnitudes'), 'memory')
-
-        vl.dataProvider().addAttributes(Magnitude.to_fields(self.output_fields))
-        vl.updateFields()
-
-        return vl
-
-    def _create_empty_stations_layer(self):
+    def _create_empty_stations_layer(self) -> QgsVectorLayer:
         """
         Creates an empty layer for stations
         """
@@ -455,7 +464,10 @@ class Fetcher(QObject):
 
         return vl
 
-    def events_to_layer(self, parser, preferred_origin_only, preferred_magnitudes_only):
+    def events_to_layer(self,  # pylint: disable=too-many-locals
+                        parser: Union[BasicTextParser, QuakeMlParser],
+                        preferred_origin_only: bool,
+                        preferred_magnitudes_only: bool) -> Optional[QgsVectorLayer]:
         """
         Returns a new vector layer containing the reply contents
         """
@@ -501,7 +513,7 @@ class Fetcher(QObject):
 
         return vl
 
-    def mdpset_to_layer(self, parser):
+    def mdpset_to_layer(self, parser: Union[BasicTextParser, QuakeMlParser]) -> QgsVectorLayer:
         """
         Returns a new vector layer containing the reply contents
         """
@@ -542,7 +554,7 @@ class Fetcher(QObject):
 
         return vl
 
-    def stations_to_layer(self, networks):
+    def stations_to_layer(self, networks: List[Network]) -> QgsVectorLayer:
         """
         Returns a new vector layer containing the reply contents
         """
@@ -583,14 +595,23 @@ class Fetcher(QObject):
 
         return vl
 
-    def create_event_layer(self):
+    def create_event_layer(self) -> Optional[QgsVectorLayer]:
+        """
+        Creates an event layer from the results
+        """
         return self.events_to_layer(self.result, self.preferred_origins_only, self.preferred_magnitudes_only)
 
-    def create_mdp_layer(self):
+    def create_mdp_layer(self) -> QgsVectorLayer:
+        """
+        Creates an MDP layer from the results
+        """
         if not hasattr(self.result, 'create_mdp_features'):
             return None
 
         return self.mdpset_to_layer(self.result)
 
-    def create_stations_layer(self):
+    def create_stations_layer(self) -> QgsVectorLayer:
+        """
+        Creates a stations layer from the results
+        """
         return self.stations_to_layer(self.result)
