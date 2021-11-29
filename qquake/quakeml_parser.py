@@ -81,7 +81,7 @@ CONFIG_FIELDS_PATH = os.path.join(
     'config',
     'config_fields_fsdnevent.json')
 
-with open(CONFIG_FIELDS_PATH, 'r') as config_file:
+with open(CONFIG_FIELDS_PATH, 'r', encoding='utf8') as config_file:
     CONFIG_FIELDS = json.load(config_file)
 
 FIELD_TYPE_MAP = {

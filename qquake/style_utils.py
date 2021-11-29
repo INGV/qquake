@@ -78,7 +78,7 @@ class StyleUtils:
         tmp_file.open()
         tmp_file_name = tmp_file.fileName()
         tmp_file.close()
-        with open(tmp_file_name, 'wt') as f:
+        with open(tmp_file_name, 'wt', encoding='utf8') as f:
             f.write(reply.data().decode())
 
         layer.loadNamedStyle(tmp_file_name)
