@@ -13,7 +13,6 @@ import pprint
 import unittest
 
 from qgis.PyQt.QtCore import QByteArray
-from qgis.PyQt.QtGui import QGuiApplication
 
 from qquake.quakeml_parser import QuakeMlParser, FDSNStationXMLParser
 
@@ -104,8 +103,6 @@ class TestQuakeMlParser(unittest.TestCase):
             __file__), 'data', 'stations.xml')
         self.run_check_stations(path)
 
-
-app = QGuiApplication([])
 
 if __name__ == '__main__':
     unittest.main()
