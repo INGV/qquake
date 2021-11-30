@@ -569,7 +569,55 @@ class ElementParser:  # pylint: disable=too-many-public-methods
         return ExternalReference.from_element(child)
 
 
-class CreationInfo:
+class QuakeMlElement:
+    """
+    Base class for QuakeML elements
+    """
+
+    def to_dict(self) -> Dict[str, object]:
+        """
+        Converts the element to a python dictionary
+        """
+        res = {
+            'type': self.__class__.__name__
+        }
+
+        def convert_value(value):
+            """
+            Converts a value for storage in a dictionary
+            """
+            if value is None:
+                return None
+            if isinstance(value, (str, float, bool, int)):
+                return value
+            if isinstance(value, QDateTime):
+                return value.toString(Qt.ISODate)
+            if isinstance(value, QuakeMlElement):
+                return value.to_dict()
+            if isinstance(value, list):
+                return [convert_value(v) for v in value]
+            if isinstance(value, dict):
+                return {k:convert_value(v) for k, v in value.items()}
+
+            raise NotImplementedError()
+
+        for _attr in dir(self):
+            if _attr.startswith('__'):
+                continue
+
+            val = getattr(self, _attr)
+            if callable(val):
+                continue
+
+            try:
+                res[_attr] = convert_value(val)
+            except NotImplementedError:
+                assert False, (_attr, val)
+
+        return res
+
+
+class CreationInfo(QuakeMlElement):
     """
     CreationInfo
     """
@@ -602,7 +650,7 @@ class CreationInfo:
                             version=parser.string('version'))
 
 
-class ConfidenceEllipsoid:
+class ConfidenceEllipsoid(QuakeMlElement):
     """
     ConfidenceEllipsoid
     """
@@ -636,7 +684,7 @@ class ConfidenceEllipsoid:
             majorAxisRotation=parser.float('majorAxisRotation', optional=False))
 
 
-class OriginQuality:
+class OriginQuality(QuakeMlElement):
     """
     OriginQuality
     """
@@ -689,7 +737,7 @@ class OriginQuality:
         )
 
 
-class OriginUncertainty:
+class OriginUncertainty(QuakeMlElement):
     """
     OriginUncertainty
     """
@@ -727,7 +775,7 @@ class OriginUncertainty:
         )
 
 
-class EventDescription:
+class EventDescription(QuakeMlElement):
     """
     EventDescription
     """
@@ -745,7 +793,7 @@ class EventDescription:
         return EventDescription(text=parser.string('text'), event_description_type=parser.string('type'))
 
 
-class Site:
+class Site(QuakeMlElement):
     """
     Site
     """
@@ -772,7 +820,7 @@ class Site:
                     Country=parser.string('Country', optional=True))
 
 
-class Equipment:
+class Equipment(QuakeMlElement):
     """
     Equipment
     """
@@ -808,7 +856,7 @@ class Equipment:
                          resourceId=parser.string('resourceId', optional=True, is_attribute=True))
 
 
-class Operator:
+class Operator(QuakeMlElement):
     """
     Operator
     """
@@ -829,7 +877,7 @@ class Operator:
                         Website=parser.string('Website', optional=True))
 
 
-class Person:
+class Person(QuakeMlElement):
     """
     Person
     """
@@ -852,7 +900,7 @@ class Person:
                       Phone=parser.phone_number('Phone', optional=True))
 
 
-class PhoneNumber:
+class PhoneNumber(QuakeMlElement):
     """
     PhoneNumber
     """
@@ -875,7 +923,7 @@ class PhoneNumber:
                            description=parser.string('Description', optional=True, is_attribute=True))
 
 
-class ExternalReference:
+class ExternalReference(QuakeMlElement):
     """
     ExternalReference
     """
@@ -894,7 +942,7 @@ class ExternalReference:
                                  Description=parser.string('Description'))
 
 
-class Origin:
+class Origin(QuakeMlElement):
     """
     Origin
     """
@@ -984,7 +1032,7 @@ class Origin:
                       originUncertainty=origin_uncertainty)
 
 
-class Comment:
+class Comment(QuakeMlElement):
     """
     Comment
     """
@@ -1008,7 +1056,7 @@ class Comment:
                        creationInfo=parser.creation_info('creationInfo'))
 
 
-class RealQuantity:
+class RealQuantity(QuakeMlElement):
     """
     RealQuantity
     """
@@ -1038,7 +1086,7 @@ class RealQuantity:
                             confidenceLevel=parser.float('confidenceLevel'))
 
 
-class IntegerQuantity:
+class IntegerQuantity(QuakeMlElement):
     """
     IntegerQuantity
     """
@@ -1068,7 +1116,7 @@ class IntegerQuantity:
                                confidenceLevel=parser.int('confidenceLevel'))
 
 
-class TimeQuantity:
+class TimeQuantity(QuakeMlElement):
     """
     TimeQuantity
     """
@@ -1104,7 +1152,7 @@ class TimeQuantity:
         return self.value and self.value.isValid()
 
 
-class Epoch:
+class Epoch(QuakeMlElement):
     """
     Epoch
     """
@@ -1125,7 +1173,7 @@ class Epoch:
                      endTime=parser.datetime('endTime', optional=True))
 
 
-class CompositeTime:
+class CompositeTime(QuakeMlElement):
     """
     CompositeTime
     """
@@ -1179,7 +1227,7 @@ class CompositeTime:
                             confidenceLevel=None)
 
 
-class Magnitude:
+class Magnitude(QuakeMlElement):
     """
     Magnitude
     """
@@ -1233,7 +1281,7 @@ class Magnitude:
                          creationInfo=parser.creation_info('creationInfo'))
 
 
-class MsParameters:
+class MsParameters(QuakeMlElement):
     """
     MacroseismicParameters
     """
@@ -1261,7 +1309,7 @@ class MsParameters:
                             macroseismicEvent=events)
 
 
-class MsEvent:
+class MsEvent(QuakeMlElement):
     """
     MacroseismicEvent
     """
@@ -1295,7 +1343,7 @@ class MsEvent:
                        creationInfo=parser.creation_info('ms:creationInfo', optional=True))
 
 
-class MsPlace:
+class MsPlace(QuakeMlElement):
     """
     MsPlace
     """
@@ -1365,7 +1413,7 @@ class MsPlace:
                        epoch=parser.epoch('ms:epoch', optional=True))
 
 
-class MsItensityValueType:
+class MsItensityValueType(QuakeMlElement):
     """
     MsItensityValueType
     """
@@ -1391,7 +1439,7 @@ class MsItensityValueType:
                                    )
 
 
-class MsIntensity:
+class MsIntensity(QuakeMlElement):
     """
     MsIntensity
     """
@@ -1421,7 +1469,7 @@ class MsIntensity:
                                                                                    optional=True))
 
 
-class MsPlaceName:
+class MsPlaceName(QuakeMlElement):
     """
     MsPlaceName
     """
@@ -1452,7 +1500,7 @@ class MsPlaceName:
                            epoch=parser.string('ms:epoch', is_attribute=False, optional=True))
 
 
-class MsMdp:
+class MsMdp(QuakeMlElement):
     """
     MsMdp
     """
@@ -1525,7 +1573,7 @@ class MsMdp:
                      relatedMDP=related)
 
 
-class MsMdpSet:
+class MsMdpSet(QuakeMlElement):
     """
     MsMdpSet
     """
@@ -1580,7 +1628,7 @@ class MsMdpSet:
                         mdpReferences=mdpReferences)
 
 
-class MsSiteMorphology:
+class MsSiteMorphology(QuakeMlElement):
     """
     MsSiteMorphology
     """
@@ -1667,7 +1715,7 @@ class MsSiteMorphology:
                                 creationInfo=None)
 
 
-class Event:
+class Event(QuakeMlElement):
     """
     QuakeML Event
     """
@@ -1991,6 +2039,14 @@ class QuakeMlParser:
         self.mdpsets = {}
         self.convert_negative_depths = convert_negative_depths
         self.depth_unit = depth_unit
+
+    def to_dict(self) -> Dict[str, object]:
+        """
+        Returns the results as a dictionary
+        """
+        return {
+            'events': [e.to_dict() for e in self.events]
+        }
 
     def parse_initial(self, content: QByteArray):
         """
