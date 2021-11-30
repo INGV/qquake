@@ -840,7 +840,17 @@ class QQuakeDialog(QDialog, FORM_CLASS):
             return
 
         self.fetcher = self.get_fetcher()
-        self.fetcher.progress.connect(self.progressBar.setValue)
+
+        def on_started():
+            self.progressBar.setValue(0)
+            self.progressBar.setRange(0,0)
+
+        def on_progress(progress: float):
+            self.progressBar.setRange(0,100)
+            self.progressBar.setValue(progress)
+
+        self.fetcher.started.connect(on_started)
+        self.fetcher.progress.connect(on_progress)
         self.fetcher.finished.connect(self._fetcher_finished)
         self.fetcher.message.connect(self._fetcher_message)
         self.button_box.button(QDialogButtonBox.Ok).setText(self.tr('Fetching'))
@@ -860,6 +870,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         """
         Triggered when a fetcher is finished
         """
+        self.progressBar.setRange(0, 100)
         self.progressBar.reset()
         self.button_box.button(QDialogButtonBox.Ok).setText(self.tr('Fetch Data'))
         self.button_box.button(QDialogButtonBox.Ok).setEnabled(True)
