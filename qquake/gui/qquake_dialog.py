@@ -80,6 +80,15 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.setObjectName('QQuakeDialog')
         QgsGui.enableAutoGeometryRestore(self)
 
+        self.scrollArea.setStyleSheet("""
+            QScrollArea { background: transparent; }
+            QScrollArea > QWidget > QWidget { background: transparent; }
+            QScrollArea > QWidget > QScrollBar { background: 1; }
+        """)
+        self.scrollArea_2.setStyleSheet(self.scrollArea.styleSheet())
+        self.scrollArea_3.setStyleSheet(self.scrollArea.styleSheet())
+        self.scrollArea_4.setStyleSheet(self.scrollArea.styleSheet())
+
         self.splitter.setStretchFactor(0, 0)
         self.splitter_2.setStretchFactor(0, 0)
         self.splitter_3.setStretchFactor(0, 0)
