@@ -14,7 +14,7 @@ import unittest
 
 from qgis.PyQt.QtCore import QByteArray
 
-from qquake.quakeml_parser import QuakeMlParser, FDSNStationXMLParser
+from qquake.quakeml import QuakeMlParser, FDSNStationXMLParser
 
 
 class TestQuakeMlParser(unittest.TestCase):
