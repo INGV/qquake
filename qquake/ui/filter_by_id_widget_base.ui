@@ -203,14 +203,7 @@
     </spacer>
    </item>
    <item row="7" column="0" colspan="3">
-    <widget class="OutputOptionsWidget" name="output_options_widget" native="true">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>10</height>
-      </size>
-     </property>
-    </widget>
+    <widget class="OutputOptionsWidget" name="output_options_widget" native="true"/>
    </item>
   </layout>
  </widget>
