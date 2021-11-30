@@ -7,14 +7,14 @@
     <x>0</x>
     <y>0</y>
     <width>596</width>
-    <height>618</height>
+    <height>539</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout_2" rowstretch="0,1,0">
-   <item row="2" column="0" colspan="2">
+  <layout class="QGridLayout" name="gridLayout_2" rowstretch="0,0,1,0">
+   <item row="3" column="0" colspan="2">
     <widget class="QDialogButtonBox" name="button_box">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -24,79 +24,12 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="0">
-    <widget class="QGroupBox" name="groupBox_2">
-     <property name="title">
-      <string>Output Features</string>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout_2">
-      <item>
-       <widget class="QCheckBox" name="output_preferred_origins_only_check">
-        <property name="text">
-         <string>Only preferred origins</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="output_preferred_magnitudes_only_check">
-        <property name="text">
-         <string>Only preferred magnitudes</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="output_preferred_mdp_only_check">
-        <property name="text">
-         <string>Only preferred MDP set</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="0" column="1">
-    <widget class="QGroupBox" name="groupBox_3">
-     <property name="title">
-      <string>Field Names</string>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_3">
-      <item row="3" column="0" colspan="2">
-       <widget class="QRadioButton" name="radio_long_fields">
-        <property name="text">
-         <string>Long (no character limit)</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0" colspan="2">
-       <widget class="QRadioButton" name="radio_short_fields">
-        <property name="text">
-         <string>Short (max 10 characters)</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0" colspan="2">
-       <widget class="QLabel" name="label">
-        <property name="text">
-         <string>&lt;i&gt;Compatible with ESRI ShapeFiles&lt;/i&gt;</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="0" colspan="2">
-       <widget class="QLabel" name="label_2">
-        <property name="text">
-         <string>&lt;i&gt;Not compatible with ESRI ShapeFiles&lt;/i&gt;</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="1" column="0" colspan="2">
+   <item row="2" column="0" colspan="2">
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
       <string>Output Table Fields</string>
      </property>
-     <layout class="QGridLayout" name="gridLayout">
+     <layout class="QGridLayout" name="gridLayout" columnstretch="0,0,0,0">
       <item row="3" column="0">
        <spacer name="horizontalSpacer">
         <property name="orientation">
@@ -146,6 +79,83 @@
       </item>
      </layout>
     </widget>
+   </item>
+   <item row="1" column="0" colspan="2">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QGroupBox" name="output_features_group_box">
+       <property name="title">
+        <string>Output Features</string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <property name="rightMargin">
+         <number>33</number>
+        </property>
+        <item>
+         <widget class="QCheckBox" name="output_preferred_origins_only_check">
+          <property name="text">
+           <string>Only preferred origins</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="output_preferred_magnitudes_only_check">
+          <property name="text">
+           <string>Only preferred magnitudes</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="output_preferred_mdp_only_check">
+          <property name="text">
+           <string>Only preferred MDP set</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="groupBox_3">
+       <property name="title">
+        <string>Field Names</string>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_3">
+        <item row="0" column="0" colspan="2">
+         <widget class="QRadioButton" name="radio_short_fields">
+          <property name="text">
+           <string>Short (max 10 characters)</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0" colspan="2">
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>&lt;i&gt;Not compatible with ESRI ShapeFiles&lt;/i&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0" colspan="2">
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>&lt;i&gt;Compatible with ESRI ShapeFiles&lt;/i&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0" colspan="2">
+         <widget class="QRadioButton" name="radio_long_fields">
+          <property name="text">
+           <string>Long (no character limit)</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>

@@ -133,6 +133,9 @@ class OutputTableOptionsDialog(QDialog, FORM_CLASS):
 
         self.output_preferred_mdp_only_check.setVisible(self.service_type == SERVICE_MANAGER.MACROSEISMIC)
 
+        self.output_features_group_box.setVisible(
+            self.service_type in (SERVICE_MANAGER.MACROSEISMIC, SERVICE_MANAGER.FDSNEVENT))
+
         preferred_origins_only_checked = s.value('/plugins/qquake/output_preferred_origins', True, bool)
         self.output_preferred_origins_only_check.setChecked(preferred_origins_only_checked)
         preferred_magnitudes_only_checked = s.value(
