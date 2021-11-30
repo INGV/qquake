@@ -29,7 +29,7 @@ class GuiUtilsTest(unittest.TestCase):
         Tests get_icon
         """
         self.assertFalse(
-            GuiUtils.get_icon('plugin.svg').isNull())
+            GuiUtils.get_icon('icon.svg').isNull())
         self.assertTrue(GuiUtils.get_icon('not_an_icon.svg').isNull())
 
     def testGetIconSvg(self):
@@ -37,9 +37,9 @@ class GuiUtilsTest(unittest.TestCase):
         Tests get_icon svg path
         """
         self.assertTrue(
-            GuiUtils.get_icon_svg('plugin.svg'))
-        self.assertIn('plugin.svg',
-                      GuiUtils.get_icon_svg('plugin.svg'))
+            GuiUtils.get_icon_svg('icon.svg'))
+        self.assertIn('icon.svg',
+                      GuiUtils.get_icon_svg('icon.svg'))
         self.assertFalse(GuiUtils.get_icon_svg('not_an_icon.svg'))
 
     def testGetUiFilePath(self):
@@ -47,9 +47,9 @@ class GuiUtilsTest(unittest.TestCase):
         Tests get_ui_file_path svg path
         """
         self.assertTrue(
-            GuiUtils.get_ui_file_path('test.ui'))
-        self.assertIn('test.ui',
-                      GuiUtils.get_ui_file_path('test.ui'))
+            GuiUtils.get_ui_file_path('fetch_by_url_widget.ui'))
+        self.assertIn('fetch_by_url_widget.ui',
+                      GuiUtils.get_ui_file_path('fetch_by_url_widget.ui'))
         self.assertFalse(GuiUtils.get_ui_file_path('not_a_form.ui'))
 
 
