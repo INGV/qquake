@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>561</width>
-    <height>783</height>
+    <height>799</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -26,47 +26,101 @@
    <property name="bottomMargin">
     <number>0</number>
    </property>
-   <item row="2" column="0" colspan="2">
-    <widget class="QGroupBox" name="macroseismic_data_group">
+   <item row="0" column="0">
+    <widget class="QGroupBox" name="time_coverage_group">
      <property name="title">
-      <string>Macroseismic Data</string>
+      <string>Time Coverage</string>
      </property>
-     <property name="checkable">
-      <bool>false</bool>
-     </property>
-     <property name="checked">
-      <bool>false</bool>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_2" columnstretch="2,1">
-      <item row="1" column="0">
-       <widget class="QCheckBox" name="earthquake_number_mdps_greater_check">
-        <property name="text">
-         <string>Only earthquakes with a number of MDPs greater than</string>
-        </property>
-       </widget>
-      </item>
+     <layout class="QGridLayout" name="gridLayout_3" columnstretch="0,1">
       <item row="0" column="0">
-       <widget class="QCheckBox" name="earthquake_max_intensity_greater_check">
+       <widget class="QCheckBox" name="min_time_check">
         <property name="text">
-         <string>Only earthquakes with a max intensity greater than</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QSpinBox" name="earthquake_number_mdps_greater_spin">
-        <property name="maximum">
-         <number>999999</number>
-        </property>
-        <property name="value">
-         <number>20</number>
+         <string>Start</string>
         </property>
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QComboBox" name="earthquake_max_intensity_greater_combo"/>
+       <widget class="QDateTimeEdit" name="fdsn_event_start_date">
+        <property name="maximumDateTime">
+         <datetime>
+          <hour>23</hour>
+          <minute>59</minute>
+          <second>59</second>
+          <year>9999</year>
+          <month>12</month>
+          <day>31</day>
+         </datetime>
+        </property>
+        <property name="displayFormat">
+         <string>yyyy-MM-dd</string>
+        </property>
+        <property name="calendarPopup">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QDateTimeEdit" name="fdsn_event_end_date">
+        <property name="minimumDate">
+         <date>
+          <year>1777</year>
+          <month>9</month>
+          <day>14</day>
+         </date>
+        </property>
+        <property name="displayFormat">
+         <string>yyyy-MM-dd</string>
+        </property>
+        <property name="calendarPopup">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QCheckBox" name="max_time_check">
+        <property name="text">
+         <string>End</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
+   </item>
+   <item row="4" column="0" colspan="2">
+    <widget class="QGroupBox" name="groupBox_4">
+     <property name="title">
+      <string>Output Table</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_8">
+      <item row="1" column="0">
+       <widget class="QRadioButton" name="radio_extended_output">
+        <property name="text">
+         <string>Extended (user customizable)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QPushButton" name="output_table_options_button">
+        <property name="text">
+         <string>Extended Table Options…</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0" colspan="2">
+       <widget class="QRadioButton" name="radio_basic_output">
+        <property name="text">
+         <string>Basic (default FDSN text format)</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="3" column="0" colspan="2">
+    <widget class="OutputOptionsWidget" name="output_options_widget" native="true"/>
    </item>
    <item row="0" column="1">
     <widget class="QGroupBox" name="magnitude_group">
@@ -123,66 +177,6 @@
         </property>
         <property name="value">
          <double>9.000000000000000</double>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="0" column="0">
-    <widget class="QGroupBox" name="time_coverage_group">
-     <property name="title">
-      <string>Time Coverage</string>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_3" columnstretch="0,1">
-      <item row="0" column="0">
-       <widget class="QCheckBox" name="min_time_check">
-        <property name="text">
-         <string>Start</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QDateTimeEdit" name="fdsn_event_start_date">
-        <property name="maximumDateTime">
-         <datetime>
-          <hour>23</hour>
-          <minute>59</minute>
-          <second>59</second>
-          <year>9999</year>
-          <month>12</month>
-          <day>31</day>
-         </datetime>
-        </property>
-        <property name="displayFormat">
-         <string>yyyy-MM-dd</string>
-        </property>
-        <property name="calendarPopup">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QDateTimeEdit" name="fdsn_event_end_date">
-        <property name="minimumDate">
-         <date>
-          <year>1777</year>
-          <month>9</month>
-          <day>14</day>
-         </date>
-        </property>
-        <property name="displayFormat">
-         <string>yyyy-MM-dd</string>
-        </property>
-        <property name="calendarPopup">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QCheckBox" name="max_time_check">
-        <property name="text">
-         <string>End</string>
         </property>
        </widget>
       </item>
@@ -459,41 +453,60 @@
      </layout>
     </widget>
    </item>
-   <item row="4" column="0" colspan="2">
-    <widget class="QGroupBox" name="groupBox_4">
+   <item row="2" column="0" colspan="2">
+    <widget class="QGroupBox" name="macroseismic_data_group">
      <property name="title">
-      <string>Output Table</string>
+      <string>Macroseismic Data</string>
      </property>
-     <layout class="QGridLayout" name="gridLayout_8">
+     <property name="checkable">
+      <bool>false</bool>
+     </property>
+     <property name="checked">
+      <bool>false</bool>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2" columnstretch="2,1">
       <item row="1" column="0">
-       <widget class="QRadioButton" name="radio_extended_output">
+       <widget class="QCheckBox" name="earthquake_number_mdps_greater_check">
         <property name="text">
-         <string>Extended (user customizable)</string>
+         <string>Only earthquakes with a number of MDPs greater than</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QCheckBox" name="earthquake_max_intensity_greater_check">
+        <property name="text">
+         <string>Only earthquakes with a max intensity greater than</string>
         </property>
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QPushButton" name="output_table_options_button">
-        <property name="text">
-         <string>Extended Table Options…</string>
+       <widget class="QSpinBox" name="earthquake_number_mdps_greater_spin">
+        <property name="maximum">
+         <number>999999</number>
+        </property>
+        <property name="value">
+         <number>20</number>
         </property>
        </widget>
       </item>
-      <item row="0" column="0" colspan="2">
-       <widget class="QRadioButton" name="radio_basic_output">
-        <property name="text">
-         <string>Basic (default FDSN text format)</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-       </widget>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="earthquake_max_intensity_greater_combo"/>
       </item>
      </layout>
     </widget>
    </item>
-   <item row="3" column="0" colspan="2">
-    <widget class="OutputOptionsWidget" name="output_options_widget" native="true"/>
+   <item row="5" column="0">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
    </item>
   </layout>
  </widget>
