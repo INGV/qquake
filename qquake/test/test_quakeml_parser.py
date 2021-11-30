@@ -62,6 +62,14 @@ class TestQuakeMlParser(unittest.TestCase):
             __file__), 'data', 'events.xml')
         self.run_check(path)
 
+    def test_macro(self):
+        """
+        Test macroseismic XML parsing
+        """
+        path = os.path.join(os.path.dirname(
+            __file__), 'data', 'macro.xml')
+        self.run_check(path)
+
 
 app = QGuiApplication([])
 
