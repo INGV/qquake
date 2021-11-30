@@ -32,13 +32,16 @@ from qgis.core import (
 )
 
 from qquake.basic_text_parser import BasicTextParser, BasicStationParser
-from qquake.quakeml_parser import (
+from qquake.quakeml import (
     QuakeMlParser,
+    MissingOriginException
+)
+from qquake.quakeml.fsdn_station import (
     FDSNStationXMLParser,
     Station,
-    MissingOriginException,
     Network
 )
+
 from qquake.services import SERVICE_MANAGER
 from qquake.style_utils import StyleUtils
 
