@@ -2030,7 +2030,7 @@ class QuakeMlParser:
     def __init__(self,
                  convert_negative_depths=False,
                  depth_unit=QgsUnitTypes.DistanceMeters):
-        self.events = {}
+        self.events = []
         self.origins = {}
         self.magnitudes = {}
         self.macro_places = {}
@@ -2045,7 +2045,13 @@ class QuakeMlParser:
         Returns the results as a dictionary
         """
         return {
-            'events': [e.to_dict() for e in self.events]
+            'events': [v.to_dict() for v in self.events],
+            'origins': {k: v.to_dict() for k, v in self.origins.items()},
+            'magnitudes': {k: v.to_dict() for k, v in self.magnitudes.items()},
+            'macro_places': {k: v.to_dict() for k, v in self.macro_places.items()},
+            'macro_events': {k: v.to_dict() for k, v in self.macro_events.items()},
+            'mdps': {k: v.to_dict() for k, v in self.mdps.items()},
+            'mdpsets': {k: v.to_dict() for k, v in self.mdpsets.items()},
         }
 
     def parse_initial(self, content: QByteArray):
