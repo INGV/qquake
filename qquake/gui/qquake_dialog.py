@@ -80,6 +80,15 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.setObjectName('QQuakeDialog')
         QgsGui.enableAutoGeometryRestore(self)
 
+        self.splitter.setStretchFactor(0, 0)
+        self.splitter_2.setStretchFactor(0, 0)
+        self.splitter_3.setStretchFactor(0, 0)
+        self.splitter_4.setStretchFactor(0, 0)
+        self.splitter.setStretchFactor(1, 1)
+        self.splitter_2.setStretchFactor(1, 1)
+        self.splitter_3.setStretchFactor(1, 1)
+        self.splitter_4.setStretchFactor(1, 1)
+
         self.fsdn_event_filter = FilterParameterWidget(iface, SERVICE_MANAGER.FDSNEVENT)
         vl = QVBoxLayout()
         vl.setContentsMargins(0, 0, 0, 0)
