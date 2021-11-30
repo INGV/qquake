@@ -54,6 +54,7 @@ class Fetcher(QObject):
     BASIC = 'BASIC'
     EXTENDED = 'EXTENDED'
 
+    started = pyqtSignal()
     progress = pyqtSignal(float)
     finished = pyqtSignal(bool)
     message = pyqtSignal(str, Qgis.MessageLevel)
@@ -152,6 +153,7 @@ class Fetcher(QObject):
         self.is_missing_origin_request = False
         self.require_mdp_basic_text_request = self.output_type == self.BASIC and self.service_type == SERVICE_MANAGER.MACROSEISMIC
         self.is_mdp_basic_text_request = False
+        self.is_first_request = True
 
     def generate_url(self):  # pylint: disable=too-many-statements,too-many-branches
         """
@@ -246,6 +248,10 @@ class Fetcher(QObject):
         """
         Starts the fetch request
         """
+        if self.is_first_request:
+            self.started.emit()
+            self.is_first_request = False
+
         request = QNetworkRequest(QUrl(self.generate_url()))
         request.setAttribute(QNetworkRequest.FollowRedirectsAttribute, True)
 
