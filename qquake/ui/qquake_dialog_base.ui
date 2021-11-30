@@ -180,9 +180,6 @@
                     <height>240</height>
                    </rect>
                   </property>
-                  <property name="autoFillBackground">
-                   <bool>true</bool>
-                  </property>
                   <layout class="QVBoxLayout" name="verticalLayout_12">
                    <item>
                     <widget class="QWidget" name="fsdn_event_filter_container" native="true"/>
