@@ -15,7 +15,7 @@ import unittest
 from qgis.PyQt.QtCore import QByteArray
 from qgis.PyQt.QtGui import QGuiApplication
 
-from qquake.quakeml_parser import QuakeMlParser
+from qquake.quakeml_parser import QuakeMlParser, FDSNStationXMLParser
 
 
 class TestQuakeMlParser(unittest.TestCase):
@@ -54,6 +54,32 @@ class TestQuakeMlParser(unittest.TestCase):
 
             self.assertEqual(res, expected_res)
 
+    def run_check_stations(self, path):
+        """
+        Checks parsed stations against expectations
+        """
+        with open(path, 'rb') as f:
+            content = f.read()
+
+        byte_array = QByteArray(content)
+
+        stations = FDSNStationXMLParser().parse(byte_array)
+
+        base, expected_name = os.path.split(path)
+        name, _ = os.path.splitext(expected_name)
+
+        expected_file = os.path.join(base, name + '.txt')
+        res = [station.to_dict() for station in stations]
+
+        if self.UPDATE:
+            with open(expected_file, 'wt', encoding='utf8') as o:
+                pprint.pprint(res, o)
+        else:
+            with open(expected_file, 'rt', encoding='utf8') as o:
+                expected_res = ast.literal_eval(o.read())
+
+            self.assertEqual(res, expected_res)
+
     def test_events(self):
         """
         Test event XML parsing
@@ -69,6 +95,14 @@ class TestQuakeMlParser(unittest.TestCase):
         path = os.path.join(os.path.dirname(
             __file__), 'data', 'macro.xml')
         self.run_check(path)
+
+    def test_stations(self):
+        """
+        Test station XML parsing
+        """
+        path = os.path.join(os.path.dirname(
+            __file__), 'data', 'stations.xml')
+        self.run_check_stations(path)
 
 
 app = QGuiApplication([])

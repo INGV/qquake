@@ -586,7 +586,7 @@ class QuakeMlElement:
             """
             Converts a value for storage in a dictionary
             """
-            if value is None:
+            if value is None or value == NULL:
                 return None
             if isinstance(value, (str, float, bool, int)):
                 return value
@@ -597,7 +597,7 @@ class QuakeMlElement:
             if isinstance(value, list):
                 return [convert_value(v) for v in value]
             if isinstance(value, dict):
-                return {k:convert_value(v) for k, v in value.items()}
+                return {k: convert_value(v) for k, v in value.items()}
 
             raise NotImplementedError()
 
@@ -2514,7 +2514,7 @@ class QuakeMlParser:
             yield f
 
 
-class BaseNodeType:
+class BaseNodeType(QuakeMlElement):
     """
     A base node type for derivation from: Network, Station and Channel types.
     """
@@ -2573,6 +2573,14 @@ class Network(BaseNodeType):
                          None,
                          None)
         self.stations = stations
+
+    def to_dict(self) -> Dict[str, object]:
+        """
+        Returns a dictionary representing the network
+        """
+        return {
+            'stations': [s.to_dict() for s in self.stations]
+        }
 
     def to_station_features(self, selected_fields: Optional[List[str]]) -> List[QgsFeature]:
         """
