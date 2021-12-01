@@ -89,6 +89,7 @@ class Fetcher(QObject):
                  output_type=EXTENDED,
                  convert_negative_depths=False,
                  depth_unit=QgsUnitTypes.DistanceMeters,
+                 event_type: Optional[str] = None,
                  url=None
                  ):
         super().__init__(parent=parent)
@@ -99,6 +100,7 @@ class Fetcher(QObject):
         self.event_end_date = event_end_date
         self.event_min_magnitude = event_min_magnitude
         self.event_max_magnitude = event_max_magnitude
+        self.event_type = event_type
         self.limit_extent_rect = limit_extent_rect
         self.min_latitude = min_latitude
         self.max_latitude = max_latitude
@@ -180,6 +182,9 @@ class Fetcher(QObject):
 
         if self.event_max_magnitude is not None:
             query.append('maxmag={}'.format(self.event_max_magnitude))
+
+        if self.event_type is not None:
+            query.append('eventtype={}'.format(self.event_type))
 
         if self.limit_extent_rect:
             if self.min_latitude is not None:
