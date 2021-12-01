@@ -182,7 +182,7 @@ class FilterParameterWidget(QWidget, FORM_CLASS):  # pylint: disable=too-many-pu
         self.magnitude_group.setVisible(self.service_type in (SERVICE_MANAGER.MACROSEISMIC, SERVICE_MANAGER.FDSNEVENT))
         self.macroseismic_data_group.setVisible(self.service_type == SERVICE_MANAGER.MACROSEISMIC)
 
-    def set_service_id(self, service_id: str):
+    def set_service_id(self, service_id: str):  # pylint:disable=too-many-branches
         """
         Sets the associated service ID
         """
