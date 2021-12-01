@@ -484,7 +484,8 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                               output_fields=filter_widget.output_fields,
                               output_type=filter_widget.output_type(),
                               convert_negative_depths=filter_widget.convert_negative_depths(),
-                              depth_unit=filter_widget.depth_unit()
+                              depth_unit=filter_widget.depth_unit(),
+                              event_type=filter_widget.event_type()
                               )
         elif isinstance(filter_widget, FilterByIdWidget):
             if not service_config['settings'].get('queryeventid'):
@@ -621,6 +622,8 @@ class QQuakeDialog(QDialog, FORM_CLASS):
             filter_widget.set_max_intensity_greater(service_config['default'].get('macromaxintensitygreater'))
         if service_config['default'].get('macromdpsgreaterthan'):
             filter_widget.set_mdps_greater_than(service_config['default'].get('macromdpsgreaterthan'))
+        if service_config['default'].get('eventtype'):
+            filter_widget.set_event_type(service_config['default'].get('eventtype'))
 
         filter_widget.set_extent_limit(service_config.get('boundingbox', [-180, -90, 180, 90]))
 

@@ -17,3 +17,5 @@ from .phone_number import PhoneNumber
 from .real_quantity import RealQuantity
 from .site import Site
 from .time_quantity import TimeQuantity
+
+from .event_type import EVENT_TYPES

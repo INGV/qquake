@@ -51,6 +51,7 @@ from qquake.gui.gui_utils import GuiUtils
 from qquake.gui.output_table_options_dialog import OutputTableOptionsDialog
 from qquake.gui.predefined_areas_dialog import PredefinedAreasDialog
 from qquake.services import SERVICE_MANAGER
+from qquake.quakeml.common import EVENT_TYPES
 
 FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('filter_parameter_widget_base.ui'))
 
@@ -115,6 +116,8 @@ class FilterParameterWidget(QWidget, FORM_CLASS):  # pylint: disable=too-many-pu
         self.earthquake_number_mdps_greater_spin.valueChanged.connect(self.changed)
         self.radio_basic_output.toggled.connect(self.changed)
         self.radio_extended_output.toggled.connect(self.changed)
+        self.event_type_check.toggled.connect(self.changed)
+        self.event_type_combo.currentIndexChanged.connect(self.changed)
 
         self.rect_extent_draw_on_map.clicked.connect(self.draw_rect_on_map)
         self.circle_center_draw_on_map.clicked.connect(self.draw_center_on_map)
@@ -146,6 +149,10 @@ class FilterParameterWidget(QWidget, FORM_CLASS):  # pylint: disable=too-many-pu
         self.radio_predefined_area.toggled.connect(self._use_predefined_area)
 
         self.button_customize_areas.clicked.connect(self._customize_areas)
+
+        self.event_type_check.toggled.connect(self._enable_widgets)
+        for event_type in EVENT_TYPES:
+            self.event_type_combo.addItem(event_type, event_type)
 
         self.service_type = None
         self.service_id = None
@@ -192,6 +199,13 @@ class FilterParameterWidget(QWidget, FORM_CLASS):  # pylint: disable=too-many-pu
             self.radio_circular_area.setEnabled(False)
         else:
             self.radio_circular_area.setEnabled(True)
+
+        if not service_config['settings'].get('queryeventtype', False):
+            if self.event_type_check.isChecked():
+                self.event_type_check.setChecked(False)
+            self.event_type_check.setEnabled(False)
+        else:
+            self.event_type_check.setEnabled(True)
 
         self.radius_unit_combobox.clear()
         self.radius_unit_combobox.addItem(self.tr('Degrees'), QgsUnitTypes.DistanceDegrees)
@@ -484,6 +498,8 @@ class FilterParameterWidget(QWidget, FORM_CLASS):  # pylint: disable=too-many-pu
         self.earthquake_max_intensity_greater_combo.setEnabled(self.earthquake_max_intensity_greater_check.isChecked())
         self.earthquake_number_mdps_greater_spin.setEnabled(self.earthquake_number_mdps_greater_check.isChecked())
 
+        self.event_type_combo.setEnabled(self.event_type_check.isChecked())
+
         self.output_table_options_button.setEnabled(self.radio_extended_output.isChecked())
 
     def draw_rect_on_map(self):
@@ -696,6 +712,14 @@ class FilterParameterWidget(QWidget, FORM_CLASS):  # pylint: disable=too-many-pu
         if mdps is not None:
             self.earthquake_number_mdps_greater_spin.setValue(float(mdps))
 
+    def set_event_type(self, event_type: Optional[str]):
+        """
+        Sets the event type than filter value
+        """
+        self.event_type_check.setChecked(event_type is not None)
+        if event_type is not None:
+            self.event_type_combo.setCurrentIndex(self.event_type_combo.findData(event_type))
+
     def set_extent_limit(self, box: List[float]):
         """
         Sets the extent limits
@@ -855,6 +879,12 @@ class FilterParameterWidget(QWidget, FORM_CLASS):  # pylint: disable=too-many-pu
         """
         return self.output_options_widget.depth_unit()
 
+    def event_type(self) -> Optional[str]:
+        """
+        Returns the selected event type, or None
+        """
+        return self.event_type_combo.currentData() if self.event_type_check.isChecked() else None
+
     def output_type(self) -> str:
         """
         Returns the output table type
@@ -883,7 +913,8 @@ class FilterParameterWidget(QWidget, FORM_CLASS):  # pylint: disable=too-many-pu
                      'minimummagnitude': self.min_magnitude(),
                      'maximummagnitude': self.max_magnitude(),
                      'macromaxintensitygreater': self.earthquake_max_intensity_greater(),
-                     'macromdpsgreaterthan': self.earthquake_number_mdps_greater()
+                     'macromdpsgreaterthan': self.earthquake_number_mdps_greater(),
+                     'eventtype': self.event_type()
                      }.items():
             if v:
                 defaults[k] = v
