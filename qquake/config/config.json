@@ -417,7 +417,7 @@
         "querycatalog": true,
         "querycontributor": true,
         "querycontributorid": true,
-        "queryeventtype": false,
+        "queryeventtype": true,
         "querymagnitudetype": false,
         "queryincludeallorigins": true,
         "queryincludeallorigins_multiple": true,
