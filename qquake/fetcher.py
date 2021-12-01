@@ -135,7 +135,7 @@ class Fetcher(QObject):
             self.service_config['settings'].get('queryincludeallmagnitudes', False)
         self.preferred_mdp_only = s.value('/plugins/qquake/output_preferred_mdp', True, bool)
 
-        self.output_fields = output_fields[:]
+        self.output_fields = output_fields[:] if output_fields else []
 
         if self.output_type == self.EXTENDED:
             if not self.preferred_origins_only and "!IsPrefOrigin" not in self.output_fields:
