@@ -32,6 +32,12 @@ class ElementParser:  # pylint: disable=too-many-public-methods
     def __init__(self, element):
         self.element = element
 
+    def text(self) -> Optional[str]:
+        """
+        Returns the element text
+        """
+        return self.element.text()
+
     def string(self, attribute: str, optional: bool = True, is_attribute: bool = False) -> Optional[str]:
         """
         Returns an attribute as a string
@@ -136,25 +142,39 @@ class ElementParser:  # pylint: disable=too-many-public-methods
         from .common import IntegerQuantity  # pylint: disable=import-outside-toplevel,cyclic-import
         return IntegerQuantity.from_element(child)
 
-    def float(self, attribute: str, optional: bool = True) -> Optional[float]:
+    def float(self, attribute: str, optional: bool = True, is_attribute: bool = False) -> Optional[float]:
         """
         Returns an attribute as a float value
         """
-        child = self.element.firstChildElement(attribute)
-        if optional:
-            return float(child.text()) if not child.isNull() else None
+        if is_attribute:
+            if optional and not self.element.hasAttribute(attribute):
+                res = None
+            else:
+                res = float(self.element.attribute(attribute))
+        else:
+            child = self.element.firstChildElement(attribute)
+            if optional:
+                res = float(child.text()) if not child.isNull() else None
+            else:
+                res = float(child.text())
+        return res
 
-        return float(child.text())
-
-    def int(self, attribute: str, optional: bool = True) -> Optional[int]:
+    def int(self, attribute: str, optional: bool = True, is_attribute: bool = False) -> Optional[int]:
         """
         Returns an attribute as an integer value
         """
-        child = self.element.firstChildElement(attribute)
-        if optional:
-            return int(child.text()) if not child.isNull() else None
-
-        return int(child.text())
+        if is_attribute:
+            if optional and not self.element.hasAttribute(attribute):
+                res = None
+            else:
+                res = int(self.element.attribute(attribute))
+        else:
+            child = self.element.firstChildElement(attribute)
+            if optional:
+                res = int(child.text()) if not child.isNull() else None
+            else:
+                res = int(child.text())
+        return res
 
     def boolean(self, attribute: str, optional: bool = True) -> Optional[bool]:
         """
@@ -316,17 +336,6 @@ class ElementParser:  # pylint: disable=too-many-public-methods
 
         from .common import Equipment  # pylint: disable=import-outside-toplevel,cyclic-import
         return Equipment.from_element(child)
-
-    def operator(self, attribute, optional=True) -> Optional['Operator']:
-        """
-        Returns an attribute as a Operator
-        """
-        child = self.element.firstChildElement(attribute)
-        if optional and child.isNull():
-            return None
-
-        from .common import Operator  # pylint: disable=import-outside-toplevel,cyclic-import
-        return Operator.from_element(child)
 
     def person(self, attribute, optional=True) -> Optional['Person']:
         """

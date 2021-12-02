@@ -31,7 +31,10 @@ class BaseNodeType(QuakeMlElement):
                  RestrictedStatus,
                  AlternateCode,
                  HistoricalCode,
-                 Description=None):
+                 Description=None,
+                 DataAvailability=None,
+                 Comment=None,
+                 Identifier=None):
         self.Code = Code
         self.StartDate = StartDate
         self.EndDate = EndDate
@@ -40,14 +43,17 @@ class BaseNodeType(QuakeMlElement):
         self.AlternateCode = AlternateCode
         self.HistoricalCode = HistoricalCode
         self.Description = Description
+        self.DataAvailability = DataAvailability
+        self.Comment = Comment
+        self.Identifier = Identifier
 
     @staticmethod
     def _from_element(obj: 'BaseNodeType', element: QDomElement):
         """
         Populates the base node attributes from a DOM element
         """
-        from ..element_parser import ElementParser  # pylint: disable=import-outside-toplevel
-        parser = ElementParser(element)
+        from .element_parser import FDSNStationElementParser  # pylint: disable=import-outside-toplevel
+        parser = FDSNStationElementParser(element)
         obj.Code = parser.string('code', optional=False, is_attribute=True)
         obj.StartDate = parser.datetime('startDate', optional=False, is_attribute=True)
         obj.EndDate = parser.datetime('endDate', optional=False, is_attribute=True)
@@ -56,6 +62,6 @@ class BaseNodeType(QuakeMlElement):
         obj.AlternateCode = parser.string('alternateCode', is_attribute=True)
         obj.HistoricalCode = parser.string('historicalCode', is_attribute=True)
         obj.Description = parser.string('Description')
-        # Identifier
-        # Comment
-        # DataAvailability
+        obj.Identifier = parser.identifier('Identifier', optional=True)
+        obj.DataAvailability = parser.data_availability('DataAvailability', optional=True)
+        obj.Comment = parser.comment('Comment', optional=True)

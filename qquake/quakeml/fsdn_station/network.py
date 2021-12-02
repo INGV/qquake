@@ -36,7 +36,10 @@ class Network(BaseNodeType):
     """
 
     def __init__(self,
-                 stations):
+                 stations,
+                 operator,
+                 total_number_stations,
+                 selected_number_stations):
         super().__init__(None,
                          None,
                          None,
@@ -45,14 +48,17 @@ class Network(BaseNodeType):
                          None,
                          None)
         self.stations = stations
+        self.Operator = operator
+        self.TotalNumberStations = total_number_stations
+        self.SelectedNumberStations = selected_number_stations
 
     def to_dict(self) -> Dict[str, object]:
         """
         Returns a dictionary representing the network
         """
-        return {
-            'stations': [s.to_dict() for s in self.stations]
-        }
+        res = super().to_dict()
+        res['stations'] = [s.to_dict() for s in self.stations]
+        return res
 
     def to_station_features(self, selected_fields: Optional[List[str]]) -> List[QgsFeature]:
         """
@@ -118,6 +124,12 @@ class Network(BaseNodeType):
         for e in range(station_nodes.length()):
             stations.append(Station.from_element(station_nodes.at(e).toElement()))
 
-        res = Network(stations=stations)
+        from .element_parser import FDSNStationElementParser  # pylint: disable=import-outside-toplevel
+        parser = FDSNStationElementParser(element)
+        res = Network(stations=stations,
+                      operator=parser.operator('Operator', optional=True),
+                      total_number_stations=parser.int('TotalNumberStations', optional=True),
+                      selected_number_stations=parser.int('SelectedNumberStations', optional=True),
+                      )
         BaseNodeType._from_element(res, element)
         return res
