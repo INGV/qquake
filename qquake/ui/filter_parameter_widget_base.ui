@@ -533,7 +533,7 @@
       <item row="1" column="0">
        <widget class="QCheckBox" name="events_updated_after_check">
         <property name="text">
-         <string>Events updated after</string>
+         <string>Records updated after</string>
         </property>
        </widget>
       </item>
