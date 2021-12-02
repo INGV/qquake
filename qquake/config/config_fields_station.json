@@ -36,7 +36,7 @@
           "field_long": "Created",
           "source": "FDSNStationXML>Created",
           "description": "",
-          "type": "String"
+          "type": "DateTime"
         }
       ]
     },
@@ -102,7 +102,7 @@
         {
           "field_short": "netid",
           "field_long": "NetIdentifier",
-          "source": "FDSNStationXML>Network>Identifier",
+          "source": "FDSNStationXML>Network>Identifier>Value",
           "description": "",
           "type": "String"
         },

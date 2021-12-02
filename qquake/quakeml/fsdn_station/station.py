@@ -88,23 +88,24 @@ class Station(BaseNodeType):
         short_field_names = settings.value('/plugins/qquake/output_short_field_names', True, bool)
         field_config_key = 'field_short' if short_field_names else 'field_long'
 
-        for f in SERVICE_MANAGER.get_field_config(SERVICE_MANAGER.FDSNSTATION)['field_groups']['station']['fields']:
-            if f.get('skip'):
-                continue
+        for group in ['general', 'network', 'station']:
+            for f in SERVICE_MANAGER.get_field_config(SERVICE_MANAGER.FDSNSTATION)['field_groups'][group]['fields']:
+                if f.get('skip'):
+                    continue
 
-            if f.get('one_to_many'):
-                continue
+                if f.get('one_to_many'):
+                    continue
 
-            path = f['source']
-            if selected_fields:
-                selected = path in selected_fields
-            else:
-                path = path[len('FDSNStationXML>Network>'):].replace('§', '>').replace('>', '_')
-                selected = settings.value('/plugins/qquake/output_field_{}'.format(path), True, bool)
-            if not selected:
-                continue
+                path = f['source']
+                if selected_fields:
+                    selected = path in selected_fields
+                else:
+                    path = path[len('FDSNStationXML>'):].replace('§', '>').replace('>', '_')
+                    selected = settings.value('/plugins/qquake/output_field_{}'.format(path), True, bool)
+                if not selected:
+                    continue
 
-            fields.append(QgsField(f[field_config_key], FIELD_TYPE_MAP[f['type']]))
+                fields.append(QgsField(f[field_config_key], FIELD_TYPE_MAP[f['type']]))
         return fields
 
     @staticmethod
