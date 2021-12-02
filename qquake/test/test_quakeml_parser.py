@@ -12,7 +12,11 @@ import os
 import pprint
 import unittest
 
-from qgis.PyQt.QtCore import QByteArray
+from qgis.PyQt.QtCore import (
+    QByteArray,
+    QDateTime,
+    Qt
+)
 
 from qquake.quakeml import QuakeMlParser, FDSNStationXMLParser
 
@@ -102,6 +106,92 @@ class TestQuakeMlParser(unittest.TestCase):
         path = os.path.join(os.path.dirname(
             __file__), 'data', 'stations.xml')
         self.run_check_stations(path)
+
+    def test_origin_datetime_composite_handling(self):
+        """
+        Test that datetime values can be split to component fields
+        """
+        path = os.path.join(os.path.dirname(
+            __file__), 'data', 'date_components.xml')
+        with open(path, 'rb') as f:
+            content = f.read()
+
+        byte_array = QByteArray(content)
+
+        parser = QuakeMlParser()
+        parser.parse_initial(byte_array)
+        self.assertTrue(parser.events)
+
+        features = list(parser.create_event_features([], False, False))
+        self.assertEqual(len(features), 1)
+        self.assertEqual(features[0]['time'], QDateTime(2020, 1, 19, 2, 52, 9, 500, Qt.UTC))
+        self.assertEqual(features[0]['year'], 2020)
+        self.assertEqual(features[0]['month'], 1)
+        self.assertEqual(features[0]['day'], 19)
+        self.assertEqual(features[0]['hour'], 2)
+        self.assertEqual(features[0]['min'], 52)
+        self.assertEqual(features[0]['sec'], 9)
+
+        # with some unselected fields
+        features = list(parser.create_event_features(['eventParameters>event>origin>time>value',
+                                                      'eventParameters>event>origin>compositeTime>month>value'],
+                                                     False, False))
+        self.assertEqual(len(features), 1)
+        self.assertEqual(features[0]['time'], QDateTime(2020, 1, 19, 2, 52, 9, 500, Qt.UTC))
+        with self.assertRaises(KeyError):
+            _ = features[0]['year']
+        self.assertEqual(features[0]['month'], 1)
+        with self.assertRaises(KeyError):
+            _ = features[0]['day']
+        with self.assertRaises(KeyError):
+            _ = features[0]['hour']
+        with self.assertRaises(KeyError):
+            _ = features[0]['min']
+        with self.assertRaises(KeyError):
+            _ = features[0]['sec']
+
+    def test_origin_datetime_composite_exists(self):
+        """
+        Test that datetime values when composite time exists
+        """
+        path = os.path.join(os.path.dirname(
+            __file__), 'data', 'composite_time.xml')
+        with open(path, 'rb') as f:
+            content = f.read()
+
+        byte_array = QByteArray(content)
+
+        parser = QuakeMlParser()
+        parser.parse_initial(byte_array)
+        self.assertTrue(parser.events)
+
+        features = list(parser.create_event_features([], False, False))
+        self.assertEqual(len(features), 1)
+        self.assertEqual(features[0]['time'], QDateTime(1899, 9, 21, 8, 0, 0, 0))
+        self.assertEqual(features[0]['year'], 1899)
+        self.assertEqual(features[0]['month'], 9)
+        self.assertEqual(features[0]['day'], 21)
+        self.assertEqual(features[0]['hour'], 8)
+        self.assertEqual(features[0]['min'], 0)
+        self.assertEqual(features[0]['sec'], 0)
+
+        # with some unselected fields
+        features = list(parser.create_event_features(['eventParameters>event>origin>time>value',
+                                                      'eventParameters>event>origin>compositeTime>month>value'],
+                                                     False, False))
+        self.assertEqual(len(features), 1)
+        self.assertEqual(features[0]['time'], QDateTime(1899, 9, 21, 8, 0, 0, 0))
+        with self.assertRaises(KeyError):
+            _ = features[0]['year']
+        self.assertEqual(features[0]['month'], 9)
+        with self.assertRaises(KeyError):
+            _ = features[0]['day']
+        with self.assertRaises(KeyError):
+            _ = features[0]['hour']
+        with self.assertRaises(KeyError):
+            _ = features[0]['min']
+        with self.assertRaises(KeyError):
+            _ = features[0]['sec']
 
 
 if __name__ == '__main__':

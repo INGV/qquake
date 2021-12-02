@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<q:quakeml xmlns:q="http://quakeml.org/xmlns/quakeml/1.2"  xmlns="http://quakeml.org/xmlns/bed/1.2">
+<eventParameters publicID="smi:eu.emsc/unid">
+<event publicID="quakeml:eu.emsc/event/20200119_0000012">
+  <preferredOriginID>quakeml:eu.emsc/event/20200119_0000012/origin/UUDG6</preferredOriginID>
+  <preferredMagnitudeID>quakeml:eu.emsc/event/20200119_0000012/origin/UUDG6/mag/1</preferredMagnitudeID>
+  <creationInfo>
+    <agencyURI>smi:smi-registry/organization/EMSC</agencyURI>
+    <authorURI>smi:smi-registry/organization/EMSC</authorURI>
+    <creationTime>2020-01-20T08:39:24.281532Z</creationTime>
+  </creationInfo>
+  <description>
+    <text>GREECE</text>
+    <type>Flinn-Engdahl region</type>
+  </description>
+  <origin publicID="quakeml:eu.emsc/event/20200119_0000012/origin/UUDG6">
+    <time>
+      <value>2020-01-19T02:52:09.5Z</value>
+    </time>
+    <latitude>
+      <value>38.2</value>
+    </latitude>
+    <longitude>
+      <value>20.75</value>
+    </longitude>
+    <depth>
+      <value>1000.0</value>
+    </depth>
+    <depthType>from location</depthType>
+    <methodID>smi:eu.emsc-csem/origin_method/NA</methodID>
+    <quality>
+      <usedPhaseCount>33</usedPhaseCount>
+      <usedStationCount>24</usedStationCount>
+      <standardError>0.18</standardError>
+      <azimuthalGap>87</azimuthalGap>
+      <minimumDistance>0.12</minimumDistance>
+      <maximumDistance>31.47</maximumDistance>
+    </quality>
+    <evaluationMode>manual</evaluationMode>
+    <creationInfo>
+      <agencyURI>smi:smi-registry/organization/EMSC</agencyURI>
+      <authorURI>smi:smi-registry/organization/EMSC</authorURI>
+    </creationInfo>
+  </origin>
+  <magnitude publicID="quakeml:eu.emsc/event/20200119_0000012/origin/UUDG6/mag/1">
+    <mag>
+      <value>5.0</value>
+    </mag>
+    <type>mw</type>
+    <originID>quakeml:eu.emsc/event/20200119_0000012/origin/UUDG6</originID>
+    <creationInfo>
+      <agencyURI>smi:smi-registry/organization/EMSC</agencyURI>
+      <authorURI>smi:smi-registry/organization/EMSC</authorURI>
+    </creationInfo>
+  </magnitude>
+</event>
+</eventParameters>
+</q:quakeml>
