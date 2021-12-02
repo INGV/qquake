@@ -20,7 +20,8 @@ from qgis.PyQt.QtCore import (
     Qt,
     QUrl,
     QObject,
-    pyqtSignal
+    pyqtSignal,
+    QDateTime
 )
 from qgis.PyQt.QtNetwork import QNetworkRequest, QNetworkReply
 from qgis.core import (
@@ -90,6 +91,7 @@ class Fetcher(QObject):
                  convert_negative_depths=False,
                  depth_unit=QgsUnitTypes.DistanceMeters,
                  event_type: Optional[str] = None,
+                 updated_after: Optional[QDateTime] = None,
                  url=None
                  ):
         super().__init__(parent=parent)
@@ -124,6 +126,7 @@ class Fetcher(QObject):
         self.output_type = output_type
         self.convert_negative_depths = convert_negative_depths
         self.depth_unit = depth_unit
+        self.updated_after = updated_after
         self.url = url
 
         self.service_config = SERVICE_MANAGER.service_details(self.service_type, self.event_service)
@@ -176,6 +179,9 @@ class Fetcher(QObject):
 
         if self.event_end_date is not None and self.event_end_date.isValid():
             query.append('endtime={}'.format(self.event_end_date.toString(Qt.ISODate)))
+
+        if self.updated_after is not None and self.updated_after.isValid():
+            query.append('updatedafter={}'.format(self.updated_after.toString(Qt.ISODate)))
 
         if self.event_min_magnitude is not None:
             query.append('minmag={}'.format(self.event_min_magnitude))

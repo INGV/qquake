@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>561</width>
-    <height>805</height>
+    <height>884</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -527,6 +527,33 @@
        <widget class="QCheckBox" name="event_type_check">
         <property name="text">
          <string>Filter by event type</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QCheckBox" name="events_updated_after_check">
+        <property name="text">
+         <string>Events updated after</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QDateTimeEdit" name="events_updated_after">
+        <property name="maximumDateTime">
+         <datetime>
+          <hour>23</hour>
+          <minute>59</minute>
+          <second>59</second>
+          <year>9999</year>
+          <month>12</month>
+          <day>31</day>
+         </datetime>
+        </property>
+        <property name="displayFormat">
+         <string>yyyy-MM-dd</string>
+        </property>
+        <property name="calendarPopup">
+         <bool>true</bool>
         </property>
        </widget>
       </item>

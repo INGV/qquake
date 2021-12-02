@@ -50,8 +50,8 @@ from qquake.fetcher import Fetcher
 from qquake.gui.gui_utils import GuiUtils
 from qquake.gui.output_table_options_dialog import OutputTableOptionsDialog
 from qquake.gui.predefined_areas_dialog import PredefinedAreasDialog
-from qquake.services import SERVICE_MANAGER
 from qquake.quakeml.common import EVENT_TYPES
+from qquake.services import SERVICE_MANAGER
 
 FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('filter_parameter_widget_base.ui'))
 
@@ -118,6 +118,8 @@ class FilterParameterWidget(QWidget, FORM_CLASS):  # pylint: disable=too-many-pu
         self.radio_extended_output.toggled.connect(self.changed)
         self.event_type_check.toggled.connect(self.changed)
         self.event_type_combo.currentIndexChanged.connect(self.changed)
+        self.events_updated_after_check.toggled.connect(self.changed)
+        self.events_updated_after.dateChanged.connect(self.changed)
 
         self.rect_extent_draw_on_map.clicked.connect(self.draw_rect_on_map)
         self.circle_center_draw_on_map.clicked.connect(self.draw_center_on_map)
@@ -153,6 +155,8 @@ class FilterParameterWidget(QWidget, FORM_CLASS):  # pylint: disable=too-many-pu
         self.event_type_check.toggled.connect(self._enable_widgets)
         for event_type in EVENT_TYPES:
             self.event_type_combo.addItem(event_type, event_type)
+
+        self.events_updated_after_check.toggled.connect(self._enable_widgets)
 
         self.service_type = None
         self.service_id = None
@@ -206,6 +210,13 @@ class FilterParameterWidget(QWidget, FORM_CLASS):  # pylint: disable=too-many-pu
             self.event_type_check.setEnabled(False)
         else:
             self.event_type_check.setEnabled(True)
+
+        if not service_config['settings'].get('queryupdatedafter', False):
+            if self.events_updated_after_check.isChecked():
+                self.events_updated_after_check.setChecked(False)
+            self.events_updated_after_check.setEnabled(False)
+        else:
+            self.events_updated_after_check.setEnabled(True)
 
         self.radius_unit_combobox.clear()
         self.radius_unit_combobox.addItem(self.tr('Degrees'), QgsUnitTypes.DistanceDegrees)
@@ -338,6 +349,18 @@ class FilterParameterWidget(QWidget, FORM_CLASS):  # pylint: disable=too-many-pu
             self.radio_extended_output.setChecked(
                 s.value('/plugins/qquake/{}_last_event_extended_checked'.format(prefix), False, bool))
 
+        self.event_type_check.setChecked(
+            s.value('/plugins/qquake/{}_last_event_type_checked'.format(prefix), False, bool))
+        last_event_type = s.value('/plugins/qquake/{}_last_event_type'.format(prefix), '', str)
+        if last_event_type is not None:
+            self.event_type_combo.setCurrentIndex(self.event_type_combo.findData(last_event_type))
+
+        self.events_updated_after_check.setChecked(
+            s.value('/plugins/qquake/{}_events_updated_after_checked'.format(prefix), False, bool))
+        last_updated_after_date = s.value('/plugins/qquake/{}_events_updated_after_date'.format(prefix))
+        if last_updated_after_date is not None:
+            self.events_updated_after.setDateTime(last_updated_after_date)
+
     def save_settings(self, prefix: str):
         """
         Saves widget state to settings
@@ -392,6 +415,14 @@ class FilterParameterWidget(QWidget, FORM_CLASS):  # pylint: disable=too-many-pu
         s.setValue('/plugins/qquake/{}_last_event_basic_checked'.format(prefix), self.radio_basic_output.isChecked())
         s.setValue('/plugins/qquake/{}_last_event_extended_checked'.format(prefix),
                    self.radio_extended_output.isChecked())
+
+        s.setValue('/plugins/qquake/{}_last_event_type'.format(prefix), self.event_type_combo.currentData())
+        s.setValue('/plugins/qquake/{}_last_event_type_checked'.format(prefix),
+                   self.event_type_check.isChecked())
+
+        s.setValue('/plugins/qquake/{}_events_updated_after_date'.format(prefix), self.events_updated_after.dateTime())
+        s.setValue('/plugins/qquake/{}_events_updated_after_checked'.format(prefix),
+                   self.events_updated_after_check.isChecked())
 
     def _populated_predefined_areas(self):
         """
@@ -499,6 +530,7 @@ class FilterParameterWidget(QWidget, FORM_CLASS):  # pylint: disable=too-many-pu
         self.earthquake_number_mdps_greater_spin.setEnabled(self.earthquake_number_mdps_greater_check.isChecked())
 
         self.event_type_combo.setEnabled(self.event_type_check.isChecked())
+        self.events_updated_after.setEnabled(self.events_updated_after_check.isChecked())
 
         self.output_table_options_button.setEnabled(self.radio_extended_output.isChecked())
 
@@ -720,6 +752,14 @@ class FilterParameterWidget(QWidget, FORM_CLASS):  # pylint: disable=too-many-pu
         if event_type is not None:
             self.event_type_combo.setCurrentIndex(self.event_type_combo.findData(event_type))
 
+    def set_updated_after(self, after: Optional[QDateTime]):
+        """
+        Sets the updated after date
+        """
+        self.events_updated_after_check.setChecked(after is not None)
+        if after is not None:
+            self.events_updated_after.setDateTime(after)
+
     def set_extent_limit(self, box: List[float]):
         """
         Sets the extent limits
@@ -885,6 +925,12 @@ class FilterParameterWidget(QWidget, FORM_CLASS):  # pylint: disable=too-many-pu
         """
         return self.event_type_combo.currentData() if self.event_type_check.isChecked() else None
 
+    def updated_after(self) -> Optional[QDateTime]:
+        """
+        Returns the selected updated after date, or None
+        """
+        return self.events_updated_after.dateTime() if self.events_updated_after_check.isChecked() else None
+
     def output_type(self) -> str:
         """
         Returns the output table type
@@ -914,7 +960,8 @@ class FilterParameterWidget(QWidget, FORM_CLASS):  # pylint: disable=too-many-pu
                      'maximummagnitude': self.max_magnitude(),
                      'macromaxintensitygreater': self.earthquake_max_intensity_greater(),
                      'macromdpsgreaterthan': self.earthquake_number_mdps_greater(),
-                     'eventtype': self.event_type()
+                     'eventtype': self.event_type(),
+                     'updatedafter': self.updated_after().toString(Qt.ISODate) if self.updated_after() else None,
                      }.items():
             if v:
                 defaults[k] = v
