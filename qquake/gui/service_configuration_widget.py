@@ -78,7 +78,8 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
         'outputgeojson': 'check_can_output_geojson',
         'outputjson': 'check_can_output_json',
         'outputkml': 'check_can_output_kml',
-        'outputxlsx': 'check_can_output_microsoft_xlsx'
+        'outputxlsx': 'check_can_output_microsoft_xlsx',
+        'group': 'group_edit'
     }
 
     validChanged = pyqtSignal(bool)
@@ -133,6 +134,8 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
         else:
             self.group_ogc_layers.setEnabled(False)
             self.group_ogc_layers.hide()
+            self.group_label.hide()
+            self.group_edit.hide()
 
         if self.service_type == SERVICE_MANAGER.FDSNSTATION:
             for w in [self.check_filter_by_eventid,
@@ -193,6 +196,7 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
         self.service_description_edit.setText(config.get('servicedescription'))
         self.service_description_url_edit.setText(config.get('servicedescriptionurl'))
         self.data_description_edit.setText(config.get('datadescription'))
+        self.group_edit.setText(config.get('group'))
         self.data_description_url_edit.setText(config.get('datadescriptionurl'))
         self.publications_text_edit.setPlainText(
             '\n'.join(config.get('publications')) if isinstance(config.get('publications'), list) else str(
@@ -265,6 +269,7 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
             }
 
         config['title'] = self.title_edit.text()
+        config['group'] = self.group_edit.text()
         config['servicedescription'] = self.service_description_edit.text()
         config['servicedescriptionurl'] = self.service_description_url_edit.text()
         config['datadescription'] = self.data_description_edit.text()
