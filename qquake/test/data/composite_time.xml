@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<q:quakeml xmlns="http://quakeml.org/xmlns/bed/1.2" xmlns:q="http://quakeml.org/xmlns/quakeml/1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://quakeml.org/schema/xsd http://quake.ethz.ch/schema/xsd/QuakeML-1.2.xsd">
+	<eventParameters publicID="smi:eu.ahead/fdsnws/event/1/query">
+		<comment>
+			<creationInfo>
+				<creationTime>2021-12-02T03:18:46</creationTime>
+				<author>European Archive of Historical Earthquake Data (AHEAD)</author>
+				<authorURI>smi:doi.org/10.6092/INGV.IT-AHEAD</authorURI>
+				<agencyID>INGV</agencyID>
+				<version>0.1</version>
+			</creationInfo>
+		</comment>
+		<event publicID="quakeml:eu.ahead/event/18990921_0800_000">
+			<type>earthquake</type>
+			<typeCertainty>known</typeCertainty>
+			<description>
+				<text><![CDATA[[Bulgaria]]]></text>
+				<type>region name</type>
+			</description>
+			<description>
+				<text><![CDATA[Bulgaria]]></text>
+				<type>Flinn-Engdahl region</type>
+			</description>
+			<preferredOriginID>quakeml:eu.ahead/origin/EPICAv1.1/122224#18990921_0800_000</preferredOriginID>
+			<preferredMagnitudeID>quakeml:eu.ahead/magnitude/EPICAv1.1/122224#18990921_0800_000</preferredMagnitudeID>
+			<origin publicID="quakeml:eu.ahead/origin/EPICAv1.1/122224#18990921_0800_000">
+				<type>macroseismic</type>
+				<compositeTime>
+					<year><value>1899</value></year>
+					<month><value>9</value></month>
+					<day><value>21</value></day>
+					<hour><value>8</value></hour>
+				</compositeTime>
+				<region>[Bulgaria]</region>
+				<latitude>
+					<value>42.175</value>
+				</latitude>
+				<longitude>
+					<value>23.775</value>
+				</longitude>
+				<evaluationMode>manual</evaluationMode>
+				<evaluationStatus>final</evaluationStatus>
+				<creationInfo>
+					<author>EPICAv1.1</author>
+					<authorURI>smi:doi.org/10.13127/epica.1.1</authorURI>
+				</creationInfo>
+			</origin>
+			<magnitude publicID="quakeml:eu.ahead/magnitude/EPICAv1.1/122224#18990921_0800_000">
+				<mag>
+					<value>5.27</value>
+					<uncertainty>0.36</uncertainty>
+				</mag>
+				<type>Mw</type>
+				<originID>quakeml:eu.ahead/origin/EPICAv1.1/122224#18990921_0800_000</originID>
+				<evaluationMode>manual</evaluationMode>
+				<evaluationStatus>final</evaluationStatus>
+				<creationInfo>
+					<author>EPICAv1.1</author>
+					<authorURI>smi:doi.org/10.13127/epica.1.1</authorURI>
+				</creationInfo>
+			</magnitude>
+			<creationInfo>
+				<agencyID>INGV</agencyID>
+				<author>European Archive of Historical Earthquake Data (AHEAD)</author>
+			</creationInfo>
+		</event>
+	</eventParameters>
+</q:quakeml>

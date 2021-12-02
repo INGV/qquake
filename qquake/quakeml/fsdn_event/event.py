@@ -79,7 +79,7 @@ class Event(QuakeMlElement):
         return get_service_fields(SERVICE_MANAGER.FDSNEVENT, selected_fields)
 
     @staticmethod
-    def add_origin_attributes(origin: Origin,  # pylint: disable=too-many-locals,too-many-branches
+    def add_origin_attributes(origin: Origin,  # pylint: disable=too-many-locals,too-many-branches,too-many-statements
                               feature: QgsFeature,
                               output_fields: Optional[List[str]],
                               convert_negative_depths: bool,
@@ -144,6 +144,54 @@ class Event(QuakeMlElement):
                     source_obj = -source_obj
 
             feature[dest_field[field_config_key]] = source_obj
+
+        # link associated components
+        for dest_field in CONFIG_FIELDS['field_groups']['origin']['fields']:
+            if dest_field.get('skip') or dest_field.get('one_to_many'):
+                continue
+
+            associated_components = dest_field.get('associated_components')
+            if not associated_components:
+                continue
+
+            composite_value = feature[dest_field[field_config_key]]
+            if not composite_value or not composite_value.isValid():
+                continue
+
+            # find field linked to associated component and populate if empty
+            for component, source in associated_components.items():
+                if output_fields:
+                    selected = source in output_fields
+                else:
+                    selected = settings.value('/plugins/qquake/output_field_{}'.format('_'.join(source)), True,
+                                              bool)
+                if not selected:
+                    continue
+
+                matching_field = [field for field in CONFIG_FIELDS['field_groups']['origin']['fields'] if
+                                  field['source'] == source]
+                assert matching_field
+
+                current_value = feature[matching_field[0][field_config_key]]
+                if current_value and current_value != NULL:
+                    continue
+
+                if component == 'year':
+                    component_value = composite_value.date().year()
+                elif component == 'month':
+                    component_value = composite_value.date().month()
+                elif component == 'day':
+                    component_value = composite_value.date().day()
+                elif component == 'hour':
+                    component_value = composite_value.time().hour()
+                elif component == 'minute':
+                    component_value = composite_value.time().minute()
+                elif component == 'second':
+                    component_value = composite_value.time().second()
+                else:
+                    assert False
+
+                feature[matching_field[0][field_config_key]] = component_value
 
         if origin.depth is not None and origin.longitude is not None and origin.latitude is not None:
             geom = QgsPoint(x=origin.longitude.value, y=origin.latitude.value,

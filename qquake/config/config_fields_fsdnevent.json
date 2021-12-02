@@ -189,7 +189,15 @@
           "field_long": "Time",
           "source": "eventParameters>event>origin>time>value",
           "description": "",
-          "type": "DateTime"
+          "type": "DateTime",
+          "associated_components": {
+            "year": "eventParameters>event>origin>compositeTime>year>value",
+            "month": "eventParameters>event>origin>compositeTime>month>value",
+            "day": "eventParameters>event>origin>compositeTime>day>value",
+            "hour": "eventParameters>event>origin>compositeTime>hour>value",
+            "minute": "eventParameters>event>origin>compositeTime>minute>value",
+            "second": "eventParameters>event>origin>compositeTime>second>value"
+          }
         },
         {
           "field_short": "timeunc",
