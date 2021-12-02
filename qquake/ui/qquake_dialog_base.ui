@@ -20,7 +20,7 @@
       <enum>QTabWidget::North</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <property name="tabsClosable">
       <bool>false</bool>
@@ -668,7 +668,11 @@
             <widget class="QComboBox" name="ogc_combo"/>
            </item>
            <item>
-            <widget class="QListWidget" name="ogc_list"/>
+            <widget class="QTreeView" name="ogc_list">
+             <property name="headerHidden">
+              <bool>true</bool>
+             </property>
+            </widget>
            </item>
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_4">
