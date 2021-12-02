@@ -112,8 +112,8 @@ class Station(BaseNodeType):
         """
         Constructs a Station from a DOM element
         """
-        from ..element_parser import ElementParser  # pylint: disable=import-outside-toplevel
-        parser = ElementParser(element)
+        from .element_parser import FDSNStationElementParser  # pylint: disable=import-outside-toplevel
+        parser = FDSNStationElementParser(element)
         res = Station(
             start_date=parser.datetime('startDate', is_attribute=True, optional=True),
             end_date=parser.datetime('endDate', is_attribute=True, optional=True),

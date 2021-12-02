@@ -28,7 +28,7 @@ class TestQuakeMlParser(unittest.TestCase):
 
     maxDiff = None
 
-    UPDATE = False
+    UPDATE = True
 
     def run_check(self, path):
         """
@@ -66,13 +66,14 @@ class TestQuakeMlParser(unittest.TestCase):
 
         byte_array = QByteArray(content)
 
-        stations = FDSNStationXMLParser().parse(byte_array)
+        fdsn = FDSNStationXMLParser().parse(byte_array)
 
         base, expected_name = os.path.split(path)
         name, _ = os.path.splitext(expected_name)
 
         expected_file = os.path.join(base, name + '.txt')
-        res = [station.to_dict() for station in stations]
+
+        res = fdsn.to_dict()
 
         if self.UPDATE:
             with open(expected_file, 'wt', encoding='utf8') as o:

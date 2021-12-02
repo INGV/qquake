@@ -13,16 +13,13 @@ __copyright__ = 'Istituto Nazionale di Geofisica e Vulcanologia (INGV)'
 # This will get replaced with a git SHA1 when you do a git archive
 __revision__ = '$Format:%H$'
 
-from typing import List
-
 from qgis.PyQt.QtCore import (
     QByteArray
 )
 from qgis.PyQt.QtXml import QDomDocument
 
 from qquake.services import SERVICE_MANAGER
-
-from .network import Network
+from .fdsn import Fdsn
 from ..fields import get_service_fields
 
 
@@ -32,20 +29,14 @@ class FDSNStationXMLParser:
     """
 
     @staticmethod
-    def parse(content: QByteArray) -> List[Network]:
+    def parse(content: QByteArray) -> Fdsn:
         """
         Parses content
         """
         doc = QDomDocument()
         doc.setContent(content)
-        network_elements = doc.elementsByTagName('Network')
 
-        networks = []
-        for e in range(network_elements.length()):
-            network_element = network_elements.at(e).toElement()
-            networks.append(Network.from_element(network_element))
-
-        return networks
+        return Fdsn.from_element(doc.documentElement())
 
     @staticmethod
     def remap_attribute_name(attribute: str) -> str:

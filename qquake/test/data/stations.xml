@@ -1,1 +1,103 @@
-<?xml version="1.0" encoding="UTF-8"?><FDSNStationXML xmlns="http://www.fdsn.org/xml/station/1" schemaVersion="1.1"><Source>SeisComP</Source><Sender>SED</Sender><Created>2021-11-30T00:56:10.720901</Created><Network code="CH" startDate="1980-01-01T00:00:00" restrictedStatus="open"><Description>National Seismic Networks of Switzerland</Description><Station code="WIMIS" startDate="2000-05-24T00:00:00" restrictedStatus="open"><Latitude>46.66488</Latitude><Longitude>7.62418</Longitude><Elevation>770</Elevation><Site><Name>Wimmis, BE</Name><Country>Switzerland</Country></Site><CreationDate>2000-05-24T00:00:00</CreationDate></Station><Station code="SINS" startDate="2012-09-14T00:00:00" restrictedStatus="open"><Latitude>46.68692</Latitude><Longitude>7.86414</Longitude><Elevation>560</Elevation><Site><Name>Interlaken, Schloss, BE</Name><Country>Switzerland</Country></Site><CreationDate>2012-09-14T00:00:00</CreationDate></Station><Station code="SFRS" startDate="2018-10-11T22:00:00" restrictedStatus="open"><Latitude>46.58232</Latitude><Longitude>7.65632</Longitude><Elevation>772.3</Elevation><Site><Name>Frutigen, Schulhaus Kanderbrück, BE</Name><Country>Switzerland</Country></Site><CreationDate>2018-10-11T22:00:00</CreationDate></Station><Station code="STHK" startDate="2015-04-21T11:31:34" restrictedStatus="open"><Latitude>46.7437</Latitude><Longitude>7.62953</Longitude><Elevation>559</Elevation><Site><Name>Thun, Kantonsschule, BE</Name><Country>Switzerland</Country></Site><CreationDate>2015-04-21T11:31:34</CreationDate></Station><Station code="SOLB" startDate="2011-11-22T00:00:00" restrictedStatus="open"><Latitude>47.206835</Latitude><Longitude>7.517052</Longitude><Elevation>430</Elevation><Site><Name>Solothurn, Schulhaus Bruehl, SO</Name><Country>Switzerland</Country></Site><CreationDate>2011-11-22T00:00:00</CreationDate></Station><Station code="SOLZ" startDate="2012-01-12T00:00:00" restrictedStatus="open"><Latitude>47.208825</Latitude><Longitude>7.538306</Longitude><Elevation>444</Elevation><Site><Name>Solothurn, Zeughausgasse, SO</Name><Country>Switzerland</Country></Site><CreationDate>2012-01-12T00:00:00</CreationDate></Station><Station code="LAUCH" startDate="2010-10-21T00:00:00" restrictedStatus="open"><Latitude>46.41554</Latitude><Longitude>7.77166</Longitude><Elevation>2160</Elevation><Site><Name>Lauchernalp - Loetschental, VS</Name><Country>Switzerland</Country></Site><CreationDate>2010-10-21T00:00:00</CreationDate></Station></Network><Network code="Z3" startDate="2015-01-01T00:00:00" endDate="2022-12-31T00:00:00" restrictedStatus="closed"><Description>AlpArray Seismic Network (AASN) temporary component</Description><Identifier type="DOI">10.12686/alparray/z3_2015</Identifier><Station code="A060A" startDate="2015-08-14T14:00:00" endDate="2017-02-16T10:00:00" restrictedStatus="closed"><Latitude>47.0305</Latitude><Longitude>7.8904</Longitude><Elevation>1112.1</Elevation><Site><Name>Wasen, Napf, BE, Switzerland</Name><Country>Switzerland</Country></Site><CreationDate>2015-08-14T14:00:00</CreationDate></Station><Station code="A060B" startDate="2017-05-09T12:30:00" endDate="2022-12-31T00:00:00" restrictedStatus="closed"><Latitude>46.993</Latitude><Longitude>7.97764</Longitude><Elevation>1049.1</Elevation><Site><Name>Romoos, Napf, BE, Switzerland</Name><Country>Switzerland</Country></Site><CreationDate>2017-05-09T12:30:00</CreationDate></Station></Network></FDSNStationXML>
+<?xml version="1.0" encoding="UTF-8"?>
+<FDSNStationXML xmlns="http://www.fdsn.org/xml/station/1" schemaVersion="1.1">
+    <Source>SeisComP</Source>
+    <Sender>SED</Sender>
+    <Created>2021-11-30T00:56:10.720901</Created>
+    <Network code="CH" startDate="1980-01-01T00:00:00" restrictedStatus="open">
+        <Description>National Seismic Networks of Switzerland</Description>
+        <Station code="WIMIS" startDate="2000-05-24T00:00:00" restrictedStatus="open">
+            <Latitude>46.66488</Latitude>
+            <Longitude>7.62418</Longitude>
+            <Elevation>770</Elevation>
+            <Site>
+                <Name>Wimmis, BE</Name>
+                <Country>Switzerland</Country>
+            </Site>
+            <CreationDate>2000-05-24T00:00:00</CreationDate>
+        </Station>
+        <Station code="SINS" startDate="2012-09-14T00:00:00" restrictedStatus="open">
+            <Latitude>46.68692</Latitude>
+            <Longitude>7.86414</Longitude>
+            <Elevation>560</Elevation>
+            <Site>
+                <Name>Interlaken, Schloss, BE</Name>
+                <Country>Switzerland</Country>
+            </Site>
+            <CreationDate>2012-09-14T00:00:00</CreationDate>
+        </Station>
+        <Station code="SFRS" startDate="2018-10-11T22:00:00" restrictedStatus="open">
+            <Latitude>46.58232</Latitude>
+            <Longitude>7.65632</Longitude>
+            <Elevation>772.3</Elevation>
+            <Site>
+                <Name>Frutigen, Schulhaus Kanderbrück, BE</Name>
+                <Country>Switzerland</Country>
+            </Site>
+            <CreationDate>2018-10-11T22:00:00</CreationDate>
+        </Station>
+        <Station code="STHK" startDate="2015-04-21T11:31:34" restrictedStatus="open">
+            <Latitude>46.7437</Latitude>
+            <Longitude>7.62953</Longitude>
+            <Elevation>559</Elevation>
+            <Site>
+                <Name>Thun, Kantonsschule, BE</Name>
+                <Country>Switzerland</Country>
+            </Site>
+            <CreationDate>2015-04-21T11:31:34</CreationDate>
+        </Station>
+        <Station code="SOLB" startDate="2011-11-22T00:00:00" restrictedStatus="open">
+            <Latitude>47.206835</Latitude>
+            <Longitude>7.517052</Longitude>
+            <Elevation>430</Elevation>
+            <Site>
+                <Name>Solothurn, Schulhaus Bruehl, SO</Name>
+                <Country>Switzerland</Country>
+            </Site>
+            <CreationDate>2011-11-22T00:00:00</CreationDate>
+        </Station>
+        <Station code="SOLZ" startDate="2012-01-12T00:00:00" restrictedStatus="open">
+            <Latitude>47.208825</Latitude>
+            <Longitude>7.538306</Longitude>
+            <Elevation>444</Elevation>
+            <Site>
+                <Name>Solothurn, Zeughausgasse, SO</Name>
+                <Country>Switzerland</Country>
+            </Site>
+            <CreationDate>2012-01-12T00:00:00</CreationDate>
+        </Station>
+        <Station code="LAUCH" startDate="2010-10-21T00:00:00" restrictedStatus="open">
+            <Latitude>46.41554</Latitude>
+            <Longitude>7.77166</Longitude>
+            <Elevation>2160</Elevation>
+            <Site>
+                <Name>Lauchernalp - Loetschental, VS</Name>
+                <Country>Switzerland</Country>
+            </Site>
+            <CreationDate>2010-10-21T00:00:00</CreationDate>
+        </Station>
+    </Network>
+    <Network code="Z3" startDate="2015-01-01T00:00:00" endDate="2022-12-31T00:00:00" restrictedStatus="closed">
+        <Description>AlpArray Seismic Network (AASN) temporary component</Description>
+        <Identifier type="DOI">10.12686/alparray/z3_2015</Identifier>
+        <Station code="A060A" startDate="2015-08-14T14:00:00" endDate="2017-02-16T10:00:00" restrictedStatus="closed">
+            <Latitude>47.0305</Latitude>
+            <Longitude>7.8904</Longitude>
+            <Elevation>1112.1</Elevation>
+            <Site>
+                <Name>Wasen, Napf, BE, Switzerland</Name>
+                <Country>Switzerland</Country>
+            </Site>
+            <CreationDate>2015-08-14T14:00:00</CreationDate>
+        </Station>
+        <Station code="A060B" startDate="2017-05-09T12:30:00" endDate="2022-12-31T00:00:00" restrictedStatus="closed">
+            <Latitude>46.993</Latitude>
+            <Longitude>7.97764</Longitude>
+            <Elevation>1049.1</Elevation>
+            <Site>
+                <Name>Romoos, Napf, BE, Switzerland</Name>
+                <Country>Switzerland</Country>
+            </Site>
+            <CreationDate>2017-05-09T12:30:00</CreationDate>
+        </Station>
+    </Network>
+</FDSNStationXML>
