@@ -62,6 +62,9 @@ class FetchByUrlWidget(QWidget, FORM_CLASS):
         self.output_table_options_button.clicked.connect(self._output_table_options)
         self.import_file_button.clicked.connect(self._import_from_file)
 
+        if service_type == SERVICE_MANAGER.FDSNSTATION:
+            self.label_import_file.setText(self.tr('Or import a local StationXML file'))
+
         self.service_type = None
         self.service_id = None
         self.set_service_type(service_type)
