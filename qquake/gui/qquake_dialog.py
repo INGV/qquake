@@ -27,7 +27,8 @@ from qgis.PyQt import uic
 from qgis.PyQt.QtCore import (
     Qt,
     QDateTime,
-    QDir
+    QDir,
+    QItemSelectionModel
 )
 from qgis.PyQt.QtWidgets import (
     QDialogButtonBox,
@@ -38,7 +39,10 @@ from qgis.PyQt.QtWidgets import (
     QAction,
     QMessageBox,
     QInputDialog,
-    QFileDialog
+)
+from qgis.PyQt.QtGui import (
+    QStandardItem,
+    QStandardItemModel
 )
 from qgis.core import (
     Qgis,
@@ -184,7 +188,10 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.ogc_combo.addItem(self.tr('Web Map Services (WMS)'), SERVICE_MANAGER.WMS)
         self.ogc_combo.addItem(self.tr('Web Feature Services (WFS)'), SERVICE_MANAGER.WFS)
         self.ogc_combo.currentIndexChanged.connect(self.refreshOgcWidgets)
-        self.ogc_list.currentRowChanged.connect(
+
+        self.ogc_list_model = QStandardItemModel(self.ogc_list)
+        self.ogc_list.setModel(self.ogc_list_model)
+        self.ogc_list.selectionModel().selectionChanged.connect(
             self._ogc_service_changed)
 
         self._refresh_services()
@@ -394,7 +401,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         elif service_type == SERVICE_MANAGER.FDSNSTATION:
             service_id = self.fdsn_station_list.currentItem().text() if self.fdsn_station_list.currentItem() else None
         elif service_type in (SERVICE_MANAGER.WMS, SERVICE_MANAGER.WFS):
-            service_id = self.ogc_list.currentItem().text() if self.ogc_list.currentItem() else None
+            service_id = self.ogc_list.selectionModel().selectedIndexes()[0].data() if self.ogc_list.selectionModel().selectedIndexes() else None
         else:
             service_id = None
 
@@ -705,31 +712,68 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         """
         read the ogc_combo and fill it with the services
         """
-        self.ogc_list.clear()
+        self.ogc_list_model.clear()
         ogc_selection = self.ogc_combo.currentData()
-        self.ogc_list.addItems(SERVICE_MANAGER.available_services(ogc_selection))
-        self.ogc_list.setCurrentRow(0)
+
+        services = SERVICE_MANAGER.available_services(ogc_selection)
+
+        group_items = {}
+
+        for service in services:
+            service_config = SERVICE_MANAGER.service_details(ogc_selection, service)
+            group = service_config.get('group')
+            if not group or group in group_items:
+                continue
+
+            group_item = QStandardItem(group)
+            group_item.setFlags(Qt.ItemIsEnabled)
+            self.ogc_list_model.appendRow([group_item])
+            group_items[group] = group_item
+
+        first_item = None
+        for service in services:
+            item = QStandardItem(service)
+            item.setFlags(Qt.ItemIsEnabled | Qt.ItemIsSelectable)
+            item.setData(service, role=Qt.UserRole)
+            if not first_item:
+                first_item = item
+
+            service_config = SERVICE_MANAGER.service_details(ogc_selection, service)
+            group = service_config.get('group')
+            if group:
+                parent = group_items[group]
+                parent.appendRow([item])
+            else:
+                self.ogc_list_model.appendRow([item])
+
+        self.ogc_list.expandAll()
+        first_item_index = self.ogc_list_model.indexFromItem(first_item)
+        self.ogc_list.selectionModel().select(first_item_index, QItemSelectionModel.ClearAndSelect)
 
         service_config = SERVICE_MANAGER.service_details(ogc_selection, self.get_current_service_id(ogc_selection))
         self.button_ogc_edit_service.setEnabled(not service_config['read_only'])
         self.button_ogc_rename_service.setEnabled(not service_config['read_only'])
         self.button_ogc_remove_service.setEnabled(not service_config['read_only'])
 
-    def _ogc_service_changed(self):
+    def _ogc_service_changed(self, _, __):
         """
         Triggered when the current OGC service changes
         """
-        if not self.ogc_list.currentItem():
+        if not self.ogc_list.selectionModel().selectedIndexes():
+            return
+
+        current_service = self.ogc_list.selectionModel().selectedIndexes()[0].data(Qt.UserRole)
+        if not current_service:
             return
 
         self.ogc_service_widget.set_service(service_type=self.ogc_combo.currentData(),
-                                            service_id=self.ogc_list.currentItem().text())
+                                            service_id=current_service)
 
         self.ogc_service_info_widget.set_service(service_type=self.ogc_combo.currentData(),
-                                                 service_id=self.ogc_list.currentItem().text())
+                                                 service_id=current_service)
 
         service_config = SERVICE_MANAGER.service_details(self.ogc_combo.currentData(),
-                                                         self.ogc_list.currentItem().text())
+                                                         current_service)
         self.button_ogc_edit_service.setEnabled(not service_config['read_only'])
         self.button_ogc_rename_service.setEnabled(not service_config['read_only'])
         self.button_ogc_remove_service.setEnabled(not service_config['read_only'])
@@ -788,9 +832,10 @@ class QQuakeDialog(QDialog, FORM_CLASS):
             self.fdsn_station_list.setCurrentItem(self.fdsn_station_list.findItems(service_id, Qt.MatchContains)[0])
         elif service_type in (SERVICE_MANAGER.WMS, SERVICE_MANAGER.WFS):
             self.ogc_combo.setCurrentIndex(self.ogc_combo.findData(service_type))
-            items = self.ogc_list.findItems(service_id, Qt.MatchExactly)
-            if len(items) > 0:
-                self.ogc_list.setCurrentItem(items[0])
+
+            indexes = self.ogc_list_model.match(self.ogc_list_model.index(0,0), Qt.UserRole, service_id,flags=Qt.MatchExactly | Qt.MatchRecursive)
+            if len(indexes) > 0:
+                self.ogc_list.selectionModel().select(indexes[0], QItemSelectionModel.ClearAndSelect)
 
     def _create_configuration(self):
         """
