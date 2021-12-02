@@ -120,9 +120,6 @@ class ServiceInformationWidget(QWidget, FORM_CLASS):
                 'Support requests of data published after a certain date', self.service_config['settings'],
                 'queryupdatedafter')
             add_capability_string(
-                'Support requests of data published after a certain date', self.service_config['settings'],
-                'queryupdatedafter')
-            add_capability_string(
                 'Support requests using source catalog identifier', self.service_config['settings'], 'querycatalog')
             add_capability_string(
                 'Support requests using source contributor identifier', self.service_config['settings'],
