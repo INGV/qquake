@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# pylint: disable=too-many-lines
 """
 /***************************************************************************
  QQuake, a QGIS Plugin for Loading Seismological Data From Web Services
@@ -30,6 +31,10 @@ from qgis.PyQt.QtCore import (
     QDir,
     QItemSelectionModel
 )
+from qgis.PyQt.QtGui import (
+    QStandardItem,
+    QStandardItemModel
+)
 from qgis.PyQt.QtWidgets import (
     QDialogButtonBox,
     QDialog,
@@ -39,10 +44,7 @@ from qgis.PyQt.QtWidgets import (
     QAction,
     QMessageBox,
     QInputDialog,
-)
-from qgis.PyQt.QtGui import (
-    QStandardItem,
-    QStandardItemModel
+    QFileDialog
 )
 from qgis.core import (
     Qgis,
@@ -401,7 +403,8 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         elif service_type == SERVICE_MANAGER.FDSNSTATION:
             service_id = self.fdsn_station_list.currentItem().text() if self.fdsn_station_list.currentItem() else None
         elif service_type in (SERVICE_MANAGER.WMS, SERVICE_MANAGER.WFS):
-            service_id = self.ogc_list.selectionModel().selectedIndexes()[0].data() if self.ogc_list.selectionModel().selectedIndexes() else None
+            service_id = self.ogc_list.selectionModel().selectedIndexes()[
+                0].data() if self.ogc_list.selectionModel().selectedIndexes() else None
         else:
             service_id = None
 
@@ -833,7 +836,8 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         elif service_type in (SERVICE_MANAGER.WMS, SERVICE_MANAGER.WFS):
             self.ogc_combo.setCurrentIndex(self.ogc_combo.findData(service_type))
 
-            indexes = self.ogc_list_model.match(self.ogc_list_model.index(0,0), Qt.UserRole, service_id,flags=Qt.MatchExactly | Qt.MatchRecursive)
+            indexes = self.ogc_list_model.match(self.ogc_list_model.index(0, 0), Qt.UserRole, service_id,
+                                                flags=Qt.MatchExactly | Qt.MatchRecursive)
             if len(indexes) > 0:
                 self.ogc_list.selectionModel().select(indexes[0], QItemSelectionModel.ClearAndSelect)
 
