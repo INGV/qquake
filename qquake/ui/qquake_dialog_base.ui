@@ -20,7 +20,7 @@
       <enum>QTabWidget::North</enum>
      </property>
      <property name="currentIndex">
-      <number>3</number>
+      <number>2</number>
      </property>
      <property name="tabsClosable">
       <bool>false</bool>
@@ -153,7 +153,7 @@
               </sizepolicy>
              </property>
              <property name="currentIndex">
-              <number>0</number>
+              <number>2</number>
              </property>
              <widget class="QWidget" name="tab_5">
               <attribute name="title">
@@ -202,7 +202,7 @@
              </widget>
              <widget class="QWidget" name="tab_14">
               <attribute name="title">
-               <string>Load QuakeML directly</string>
+               <string>Load QuakeML Directly</string>
               </attribute>
               <layout class="QVBoxLayout" name="verticalLayout_21">
                <item>
@@ -390,8 +390,8 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>100</width>
-                    <height>30</height>
+                    <width>68</width>
+                    <height>28</height>
                    </rect>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_14">
@@ -416,7 +416,7 @@
              </widget>
              <widget class="QWidget" name="tab_15">
               <attribute name="title">
-               <string>Load QuakeML directly</string>
+               <string>Load QuakeML Directly</string>
               </attribute>
               <layout class="QVBoxLayout" name="verticalLayout_22">
                <item>
@@ -562,7 +562,7 @@
            <item>
             <widget class="QTabWidget" name="fdsnstation_tab_widget">
              <property name="currentIndex">
-              <number>1</number>
+              <number>2</number>
              </property>
              <widget class="QWidget" name="tab_9">
               <attribute name="title">
@@ -585,8 +585,8 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>100</width>
-                    <height>30</height>
+                    <width>68</width>
+                    <height>28</height>
                    </rect>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_17">
@@ -606,6 +606,16 @@
               <layout class="QVBoxLayout" name="verticalLayout_18">
                <item>
                 <widget class="QWidget" name="station_by_id_container" native="true"/>
+               </item>
+              </layout>
+             </widget>
+             <widget class="QWidget" name="tab_16">
+              <attribute name="title">
+               <string>Load StationXML Directly</string>
+              </attribute>
+              <layout class="QGridLayout" name="gridLayout_7">
+               <item row="0" column="0">
+                <widget class="QWidget" name="station_by_url_container" native="true"/>
                </item>
               </layout>
              </widget>

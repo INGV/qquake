@@ -162,6 +162,12 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         vl.addWidget(self.station_service_info_widget)
         self.station_service_info_container.setLayout(vl)
 
+        self.station_by_url_widget = FetchByUrlWidget(iface, SERVICE_MANAGER.FDSNSTATION)
+        vl = QVBoxLayout()
+        vl.setContentsMargins(0, 0, 0, 0)
+        vl.addWidget(self.station_by_url_widget)
+        self.station_by_url_container.setLayout(vl)
+
         self.ogc_service_widget = OgcServiceWidget(iface)
         vl = QVBoxLayout()
         vl.setContentsMargins(0, 0, 0, 0)
@@ -223,6 +229,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.station_filter.changed.connect(lambda: self._refresh_url(SERVICE_MANAGER.FDSNSTATION))
         self.station_by_id_filter.changed.connect(lambda: self._refresh_url(SERVICE_MANAGER.FDSNSTATION))
         self.fdsn_station_list.currentRowChanged.connect(lambda: self._refresh_url(SERVICE_MANAGER.FDSNSTATION))
+        self.station_by_url_widget.changed.connect(lambda: self._refresh_url(SERVICE_MANAGER.FDSNSTATION))
 
         self.button_box.accepted.connect(self._getEventList)
 
@@ -355,6 +362,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.macro_by_url_widget.save_settings('macro')
         self.station_filter.save_settings('stations')
         self.station_by_id_filter.save_settings('stations')
+        self.station_by_url_widget.save_settings('stations')
 
     def _restore_settings(self):
         """
@@ -387,6 +395,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.macro_by_url_widget.restore_settings('fsdn_event')
         self.station_filter.restore_settings('stations')
         self.station_by_id_filter.restore_settings('stations')
+        self.station_by_url_widget.restore_settings('stations')
 
         self.fdsn_tab_widget.setCurrentIndex(s.value('/plugins/qquake/fsdnevent_last_tab', 0, int))
         self.macro_tab_widget.setCurrentIndex(s.value('/plugins/qquake/macro_last_tab', 0, int))
@@ -426,7 +435,8 @@ class QQuakeDialog(QDialog, FORM_CLASS):
             service_type = None
         return service_type
 
-    def get_service_filter_widget(self, service_type: str) -> Optional[
+    def get_service_filter_widget(self,  # pylint:disable=too-many-branches
+                                  service_type: str) -> Optional[
         Union[FilterParameterWidget, FilterByIdWidget, FetchByUrlWidget, FilterStationByIdWidget, OgcServiceWidget]]:
         """
         Returns the service filter widget for a specific service type
@@ -447,10 +457,12 @@ class QQuakeDialog(QDialog, FORM_CLASS):
             elif self.macro_tab_widget.currentIndex() == 2:
                 widget = self.macro_by_url_widget
         elif service_type == SERVICE_MANAGER.FDSNSTATION:
-            if self.fdsnstation_tab_widget.currentIndex() in (0, 2):
+            if self.fdsnstation_tab_widget.currentIndex() in (0, 3):
                 widget = self.station_filter
-            else:
+            elif self.fdsnstation_tab_widget.currentIndex() == 1:
                 widget = self.station_by_id_filter
+            elif self.fdsnstation_tab_widget.currentIndex() == 2:
+                widget = self.station_by_url_widget
         elif service_type in (SERVICE_MANAGER.WMS, SERVICE_MANAGER.WFS):
             widget = self.ogc_service_widget
         return widget
@@ -704,7 +716,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         service_id = self.fdsn_station_list.currentItem().text()
         self._update_service_widgets(service_type=SERVICE_MANAGER.FDSNSTATION, service_id=service_id,
                                      filter_by_id_widget=self.station_by_id_filter,
-                                     fetch_by_url_widget=None,
+                                     fetch_by_url_widget=self.station_by_url_widget,
                                      filter_widget=self.station_filter, info_widget=self.station_service_info_widget,
                                      remove_service_button=self.button_station_remove_service,
                                      edit_service_button=self.button_station_edit_service,
