@@ -79,7 +79,7 @@ class OutputTableOptionsDialog(QDialog, FORM_CLASS):
         for _, settings in SERVICE_MANAGER.get_field_config(self.service_type)['field_groups'].items():
             if self.service_type != SERVICE_MANAGER.FDSNSTATION and settings['label'] == 'station':
                 continue
-            if self.service_type == SERVICE_MANAGER.FDSNSTATION and settings['label'] != 'station':
+            if self.service_type == SERVICE_MANAGER.FDSNSTATION and settings['label'] not in ('station', 'general', 'network'):
                 continue
 
             parent_node = ModelNode([settings['label']])
@@ -93,7 +93,7 @@ class OutputTableOptionsDialog(QDialog, FORM_CLASS):
                     elif f['source'].startswith('macroseismicParameters'):
                         path = f['source'][len('macroseismicParameters>'):]
                     else:
-                        path = f['source'][len('FDSNStationXML>Network>'):]
+                        path = f['source'][len('FDSNStationXML>'):]
                 else:
                     path = ''
 

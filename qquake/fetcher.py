@@ -14,7 +14,7 @@ __copyright__ = 'Istituto Nazionale di Geofisica e Vulcanologia (INGV)'
 __revision__ = '$Format:%H$'
 
 from pathlib import Path
-from typing import List, Union, Optional
+from typing import Union, Optional
 
 from qgis.PyQt.QtCore import (
     Qt,
@@ -40,9 +40,8 @@ from qquake.quakeml import (
 from qquake.quakeml.fsdn_station import (
     FDSNStationXMLParser,
     Station,
-    Network
+    Fdsn
 )
-
 from qquake.services import SERVICE_MANAGER
 from qquake.style_utils import StyleUtils
 
@@ -574,7 +573,7 @@ class Fetcher(QObject):
 
         return vl
 
-    def stations_to_layer(self, networks: List[Network]) -> QgsVectorLayer:
+    def stations_to_layer(self, fdsn: Optional[Fdsn]) -> QgsVectorLayer:
         """
         Returns a new vector layer containing the reply contents
         """
@@ -585,8 +584,7 @@ class Fetcher(QObject):
             for f in self.result.create_station_features():
                 features.append(f)
         else:
-            for n in networks:
-                features.extend(n.to_station_features(self.output_fields))
+            features.extend(fdsn.to_station_features(self.output_fields))
 
         ok, _ = vl.dataProvider().addFeatures(features)
         assert ok
