@@ -243,9 +243,11 @@ class Fetcher(QObject):
 
         if self.output_type == Fetcher.EXTENDED:
             if not self.preferred_origins_only:
-                query.append('includeallorigins=true')
+                if self.pending_event_ids or self.service_config['settings'].get('queryincludeallorigins_multiple', False):
+                    query.append('includeallorigins=true')
             if not self.preferred_magnitudes_only:
-                query.append('includeallmagnitudes=true')
+                if self.pending_event_ids or self.service_config['settings'].get('queryincludeallmagnitudes_multiple', False):
+                    query.append('includeallmagnitudes=true')
 
         if self.service_type == SERVICE_MANAGER.MACROSEISMIC:
             query.append('includemdps=true')
