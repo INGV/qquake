@@ -13,6 +13,8 @@ __copyright__ = 'Istituto Nazionale di Geofisica e Vulcanologia (INGV)'
 # This will get replaced with a git SHA1 when you do a git archive
 __revision__ = '$Format:%H$'
 
+import re
+
 from pathlib import Path
 from typing import Union, Optional
 
@@ -340,12 +342,13 @@ class Fetcher(QObject):
             self.finished.emit(False)
             return
 
-        if self.output_type == self.EXTENDED:
+        if self.output_type == self.EXTENDED:  # pylint:disable=too-many-nested-blocks
             if self.service_type in (SERVICE_MANAGER.FDSNEVENT, SERVICE_MANAGER.MACROSEISMIC):
                 if self.is_missing_origin_request:
                     self.result.parse_missing_origin(reply.readAll())
                     self.is_missing_origin_request = False
                 else:
+                    had_events_ids = bool(self.pending_event_ids)
                     if self.pending_event_ids:
                         self.pending_event_ids = self.pending_event_ids[1:]
 
@@ -357,6 +360,16 @@ class Fetcher(QObject):
                             # for a macroseismic parameter based search, we have to then go and fetch events
                             # one by one in order to get all the mdp location information required
                             self.pending_event_ids = [e.publicID for e in self.result.events]
+                        elif not had_events_ids and ((not self.service_config['settings'].get('queryincludeallorigins_multiple', False) and not self.preferred_origins_only) or
+                            (not self.service_config['settings'].get('queryincludeallmagnitudes_multiple', False) and not self.preferred_magnitudes_only)):
+                            # hmmm....
+                            extract_numeric_id_regex = re.compile('^.*=(.*?)$')
+                            self.pending_event_ids = []
+                            for e in self.result.events:
+                                public_id = e.publicID
+                                id_match = extract_numeric_id_regex.match(public_id)
+                                assert id_match
+                                self.pending_event_ids.append(id_match.group(1))
 
                     self.missing_origins = self.missing_origins.union(self.result.scan_for_missing_origins())
             elif self.service_type == SERVICE_MANAGER.FDSNSTATION:
