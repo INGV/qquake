@@ -15,6 +15,7 @@ __revision__ = '$Format:%H$'
 
 import re
 
+from typing import List, Tuple
 from pathlib import Path
 from typing import Union, Optional
 
@@ -201,6 +202,29 @@ class Fetcher(QObject):
             res = Fetcher.SPLIT_STRATEGY_MONTH
         else:
             res = Fetcher.SPLIT_STRATEGY_DAY
+        return res
+
+    @staticmethod
+    def split_range_by_strategy(strategy: str, begin: QDateTime, end: QDateTime) -> List[Tuple[QDateTime, QDateTime]]:
+        """
+        Splits a date range by the specified strategy
+        """
+        res = []
+        current = begin
+        while current < end:
+
+            if strategy == Fetcher.SPLIT_STRATEGY_YEAR:
+                part_end = current.addYears(1)
+            elif strategy == Fetcher.SPLIT_STRATEGY_MONTH:
+                part_end = current.addMonths(1)
+            elif strategy == Fetcher.SPLIT_STRATEGY_DAY:
+                part_end = current.addDays(1)
+            else:
+                assert False
+
+            res.append((current, part_end))
+            current = part_end.addSecs(1)
+
         return res
 
     def generate_url(self):  # pylint: disable=too-many-statements,too-many-branches
