@@ -34,7 +34,7 @@ from .fields import (
     CONFIG_FIELDS,
     get_service_fields
 )
-from .fsdn_event import (
+from .fdsn_event import (
     Event
 )
 from .macroseismic import (

@@ -32,7 +32,7 @@ CONFIG_FIELDS_PATH = os.path.join(
     os.path.dirname(__file__),
     '..',
     'config',
-    'config_fields_fsdnevent.json')
+    'config_fields_fdsnevent.json')
 
 with open(CONFIG_FIELDS_PATH, 'r', encoding='utf8') as config_file:
     CONFIG_FIELDS = json.load(config_file)

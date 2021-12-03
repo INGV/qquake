@@ -67,7 +67,7 @@ class ServiceManager(QObject):
     _SERVICE_TYPES = [FDSNEVENT, FDSNSTATION, MACROSEISMIC, WMS, WFS]
 
     _CONFIG_FIELDS = {
-        FDSNEVENT: load_field_config('config_fields_fsdnevent.json'),
+        FDSNEVENT: load_field_config('config_fields_fdsnevent.json'),
         MACROSEISMIC: load_field_config('config_fields_macroseismic.json'),
         FDSNSTATION: load_field_config('config_fields_station.json')
     }

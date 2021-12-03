@@ -37,7 +37,7 @@ from qquake.quakeml import (
     QuakeMlParser,
     MissingOriginException
 )
-from qquake.quakeml.fsdn_station import (
+from qquake.quakeml.fdsn_station import (
     FDSNStationXMLParser,
     Station,
     Fdsn
