@@ -208,6 +208,26 @@ class TestFetcher(unittest.TestCase):
         self.assertEqual(fetcher.event_start_date, QDateTime(1997, 1, 1, 0, 0, 0, 0))
         self.assertEqual(fetcher.event_end_date.date(), QDateTime.currentDateTime().date())
 
+    def test_split_range(self):
+        """
+        Test splitting a date range by strategy
+        """
+        self.assertEqual(Fetcher.split_range_by_strategy(Fetcher.SPLIT_STRATEGY_YEAR, QDateTime(2020, 1, 1, 1, 1, 1),
+                                                         QDateTime(2022, 1, 1, 1, 1, 1)),
+                         [(QDateTime(2020, 1, 1, 1, 1, 1),
+                           QDateTime(2021, 1, 1, 1, 1, 1)),
+                          (QDateTime(2021, 1, 1, 1, 1, 2),
+                           QDateTime(2022, 1, 1, 1, 1, 2))])
+
+        self.assertEqual(Fetcher.split_range_by_strategy(Fetcher.SPLIT_STRATEGY_MONTH, QDateTime(2020, 1, 1, 1, 1, 1),
+                                                         QDateTime(2020, 4, 1, 1, 1, 1)),
+                         [(QDateTime(2020, 1, 1, 1, 1, 1),
+                           QDateTime(2020, 2, 1, 1, 1, 1)),
+                          (QDateTime(2020, 2, 1, 1, 1, 2),
+                           QDateTime(2020, 3, 1, 1, 1, 2)),
+                          (QDateTime(2020, 3, 1, 1, 1, 3),
+                           QDateTime(2020, 4, 1, 1, 1, 3))])
+
 
 if __name__ == '__main__':
     unittest.main()
