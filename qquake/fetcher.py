@@ -111,8 +111,20 @@ class Fetcher(QObject):
 
         self.service_type = service_type
         self.event_service = event_service
+        self.service_config = SERVICE_MANAGER.service_details(self.service_type, self.event_service)
+
+        self.split_strategy = split_strategy
+
         self.event_start_date = event_start_date
         self.event_end_date = event_end_date
+
+        # if we have a split strategy set, we HAVE to have a full date range available
+        if self.split_strategy is not None and self.event_start_date is None:
+            self.event_start_date = QDateTime.fromString(self.service_config.get('datestart'), Qt.ISODate)
+        if self.split_strategy is not None and self.event_end_date is None:
+            self.event_end_date = QDateTime.fromString(self.service_config.get('dateend'), Qt.ISODate) if self.service_config.get(
+                    'dateend') else QDateTime.currentDateTime()
+
         self.event_min_magnitude = event_min_magnitude
         self.event_max_magnitude = event_max_magnitude
         self.event_type = event_type
@@ -141,9 +153,6 @@ class Fetcher(QObject):
         self.depth_unit = depth_unit
         self.updated_after = updated_after
         self.url = url
-        self.split_strategy = split_strategy
-
-        self.service_config = SERVICE_MANAGER.service_details(self.service_type, self.event_service)
 
         s = QgsSettings()
         self.preferred_origins_only = s.value('/plugins/qquake/output_preferred_origins', True, bool) or not \
