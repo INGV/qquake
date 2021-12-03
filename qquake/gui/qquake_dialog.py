@@ -946,7 +946,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.message_bar.pushMessage(
             message, level, 0)
 
-    def _fetcher_finished(self, res):  # pylint: disable=too-many-branches
+    def _fetcher_finished(self, res):  # pylint: disable=too-many-branches,too-many-statements
         """
         Triggered when a fetcher is finished
         """
@@ -979,7 +979,22 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                 service_limit = self.fetcher.service_config['settings'].get('querylimitmaxentries', None)
                 self.message_bar.clearWidgets()
                 if service_limit is not None and events_count >= service_limit:
-                    self.message_bar.pushMessage(self.tr("Query exceeded the service's result limit"), Qgis.Critical, 0)
+                    if self.fetcher.split_strategy is None:
+                        choices = list(Fetcher.STRATEGIES)
+                        default_choice = [k for k, v in Fetcher.STRATEGIES.items() if v == self.fetcher.suggest_split_strategy()][0]
+
+                        selection, ok = QInputDialog.getItem(self, self.tr('Query Exceeded Service Limit'),
+                                                             self.tr(
+                                                                 'Query exceeded the service\'s result limit.') + '\n\n' + self.tr(
+                                                                 'Select a strategy to split the query:'),
+                                                             choices,
+                                                             choices.index(default_choice), False)
+                        if ok:
+                            split_strategy = Fetcher.STRATEGIES[selection]
+
+                    else:
+                        self.message_bar.pushMessage(self.tr("Query exceeded the service's result limit"),
+                                                     Qgis.Critical, 0)
                 elif events_count > 500:
                     self.message_bar.pushMessage(
                         self.tr("Query returned a large number of results ({})".format(events_count)), Qgis.Warning, 0)
