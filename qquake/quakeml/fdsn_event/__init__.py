@@ -1,5 +1,5 @@
 """
-QuakeML FSDN module
+QuakeML FDSN module
 """
 
 from .event import Event

@@ -104,22 +104,22 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.splitter_3.setStretchFactor(1, 1)
         self.splitter_4.setStretchFactor(1, 1)
 
-        self.fsdn_event_filter = FilterParameterWidget(iface, SERVICE_MANAGER.FDSNEVENT)
+        self.fdsn_event_filter = FilterParameterWidget(iface, SERVICE_MANAGER.FDSNEVENT)
         vl = QVBoxLayout()
         vl.setContentsMargins(0, 0, 0, 0)
-        vl.addWidget(self.fsdn_event_filter)
-        self.fsdn_event_filter_container.setLayout(vl)
+        vl.addWidget(self.fdsn_event_filter)
+        self.fdsn_event_filter_container.setLayout(vl)
         self.earthquake_service_info_widget = ServiceInformationWidget(iface)
-        self.fsdn_by_id_filter = FilterByIdWidget(iface, SERVICE_MANAGER.FDSNEVENT)
+        self.fdsn_by_id_filter = FilterByIdWidget(iface, SERVICE_MANAGER.FDSNEVENT)
         vl = QVBoxLayout()
         vl.setContentsMargins(0, 0, 0, 0)
-        vl.addWidget(self.fsdn_by_id_filter)
-        self.fsdn_by_id_container.setLayout(vl)
+        vl.addWidget(self.fdsn_by_id_filter)
+        self.fdsn_by_id_container.setLayout(vl)
         self.fdsn_by_url_widget = FetchByUrlWidget(iface, SERVICE_MANAGER.FDSNEVENT)
         vl = QVBoxLayout()
         vl.setContentsMargins(0, 0, 0, 0)
         vl.addWidget(self.fdsn_by_url_widget)
-        self.fsdn_by_url_container.setLayout(vl)
+        self.fdsn_by_url_container.setLayout(vl)
         vl = QVBoxLayout()
         vl.setContentsMargins(0, 0, 0, 0)
         vl.addWidget(self.earthquake_service_info_widget)
@@ -183,7 +183,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.message_bar.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         self.verticalLayout.insertWidget(0, self.message_bar)
 
-        self.fsdn_event_url_text_browser.viewport().setAutoFillBackground(False)
+        self.fdsn_event_url_text_browser.viewport().setAutoFillBackground(False)
         self.fdsn_macro_url_text_browser.viewport().setAutoFillBackground(False)
         self.fdsn_station_url_text_browser.viewport().setAutoFillBackground(False)
 
@@ -218,8 +218,8 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.fdsn_station_list.currentRowChanged.connect(
             self.refreshFdsnStationWidgets)
 
-        self.fsdn_event_filter.changed.connect(lambda: self._refresh_url(SERVICE_MANAGER.FDSNEVENT))
-        self.fsdn_by_id_filter.changed.connect(lambda: self._refresh_url(SERVICE_MANAGER.FDSNEVENT))
+        self.fdsn_event_filter.changed.connect(lambda: self._refresh_url(SERVICE_MANAGER.FDSNEVENT))
+        self.fdsn_by_id_filter.changed.connect(lambda: self._refresh_url(SERVICE_MANAGER.FDSNEVENT))
         self.fdsn_by_url_widget.changed.connect(lambda: self._refresh_url(SERVICE_MANAGER.FDSNEVENT))
         self.fdsn_event_list.currentRowChanged.connect(lambda: self._refresh_url(SERVICE_MANAGER.FDSNEVENT))
         self.macro_filter.changed.connect(lambda: self._refresh_url(SERVICE_MANAGER.MACROSEISMIC))
@@ -350,13 +350,13 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         s.setValue('/plugins/qquake/fdsn_event_last_event_service', self.fdsn_event_list.currentItem().text())
         s.setValue('/plugins/qquake/macro_last_event_service', self.fdsn_macro_list.currentItem().text())
 
-        s.setValue('/plugins/qquake/fsdnevent_last_tab', self.fdsn_tab_widget.currentIndex())
+        s.setValue('/plugins/qquake/fdsnevent_last_tab', self.fdsn_tab_widget.currentIndex())
         s.setValue('/plugins/qquake/macro_last_tab', self.macro_tab_widget.currentIndex())
         s.setValue('/plugins/qquake/station_last_tab', self.fdsnstation_tab_widget.currentIndex())
 
-        self.fsdn_event_filter.save_settings('fsdn_event')
-        self.fsdn_by_id_filter.save_settings('fsdn_event')
-        self.fdsn_by_url_widget.save_settings('fsdn_event')
+        self.fdsn_event_filter.save_settings('fdsn_event')
+        self.fdsn_by_id_filter.save_settings('fdsn_event')
+        self.fdsn_by_url_widget.save_settings('fdsn_event')
         self.macro_filter.save_settings('macro')
         self.macro_by_id_filter.save_settings('macro')
         self.macro_by_url_widget.save_settings('macro')
@@ -387,17 +387,17 @@ class QQuakeDialog(QDialog, FORM_CLASS):
             self.fdsn_macro_list.setCurrentItem(
                 self.fdsn_macro_list.findItems(last_service, Qt.MatchContains)[0])
 
-        self.fsdn_event_filter.restore_settings('fsdn_event')
-        self.fsdn_by_id_filter.restore_settings('fsdn_event')
-        self.fdsn_by_url_widget.restore_settings('fsdn_event')
+        self.fdsn_event_filter.restore_settings('fdsn_event')
+        self.fdsn_by_id_filter.restore_settings('fdsn_event')
+        self.fdsn_by_url_widget.restore_settings('fdsn_event')
         self.macro_filter.restore_settings('macro')
         self.macro_by_id_filter.restore_settings('macro')
-        self.macro_by_url_widget.restore_settings('fsdn_event')
+        self.macro_by_url_widget.restore_settings('fdsn_event')
         self.station_filter.restore_settings('stations')
         self.station_by_id_filter.restore_settings('stations')
         self.station_by_url_widget.restore_settings('stations')
 
-        self.fdsn_tab_widget.setCurrentIndex(s.value('/plugins/qquake/fsdnevent_last_tab', 0, int))
+        self.fdsn_tab_widget.setCurrentIndex(s.value('/plugins/qquake/fdsnevent_last_tab', 0, int))
         self.macro_tab_widget.setCurrentIndex(s.value('/plugins/qquake/macro_last_tab', 0, int))
         self.fdsnstation_tab_widget.setCurrentIndex(s.value('/plugins/qquake/station_last_tab', 0, int))
 
@@ -444,9 +444,9 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         widget = None
         if service_type == SERVICE_MANAGER.FDSNEVENT:
             if self.fdsn_tab_widget.currentIndex() in (0, 3):
-                widget = self.fsdn_event_filter
+                widget = self.fdsn_event_filter
             elif self.fdsn_tab_widget.currentIndex() == 1:
-                widget = self.fsdn_by_id_filter
+                widget = self.fdsn_by_id_filter
             elif self.fdsn_tab_widget.currentIndex() == 2:
                 widget = self.fdsn_by_url_widget
         elif service_type == SERVICE_MANAGER.MACROSEISMIC:
@@ -568,7 +568,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self._valid_changed()
 
         if service_type == SERVICE_MANAGER.FDSNEVENT:
-            self.fsdn_event_url_text_browser.setText('<a href="{0}">{0}</a>'.format(fetcher.generate_url()))
+            self.fdsn_event_url_text_browser.setText('<a href="{0}">{0}</a>'.format(fetcher.generate_url()))
         elif service_type == SERVICE_MANAGER.MACROSEISMIC:
             self.fdsn_macro_url_text_browser.setText('<a href="{0}">{0}</a>'.format(fetcher.generate_url()))
         elif service_type == SERVICE_MANAGER.FDSNSTATION:
@@ -679,8 +679,8 @@ class QQuakeDialog(QDialog, FORM_CLASS):
 
         service_id = self.fdsn_event_list.currentItem().text()
         self._update_service_widgets(service_type=SERVICE_MANAGER.FDSNEVENT, service_id=service_id,
-                                     filter_widget=self.fsdn_event_filter,
-                                     filter_by_id_widget=self.fsdn_by_id_filter,
+                                     filter_widget=self.fdsn_event_filter,
+                                     filter_by_id_widget=self.fdsn_by_id_filter,
                                      fetch_by_url_widget=self.fdsn_by_url_widget,
                                      info_widget=self.earthquake_service_info_widget,
                                      remove_service_button=self.button_fdsn_remove_service,
