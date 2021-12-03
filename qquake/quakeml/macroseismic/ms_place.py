@@ -65,8 +65,8 @@ class MsPlace(QuakeMlElement):
         """
         Constructs a MsPlace from a DOM element
         """
-        from ..element_parser import ElementParser  # pylint: disable=import-outside-toplevel
-        parser = ElementParser(element)
+        from .element_parser import MacroseismicElementParser  # pylint: disable=import-outside-toplevel
+        parser = MacroseismicElementParser(element)
 
         names = []
         place_name_node = element.firstChildElement('ms:name')

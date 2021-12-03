@@ -59,8 +59,8 @@ class Magnitude(QuakeMlElement):
         for e in range(comment_nodes.length()):
             comments.append(Comment.from_element(comment_nodes.at(e).toElement()))
 
-        from ..element_parser import ElementParser  # pylint: disable=import-outside-toplevel
-        parser = ElementParser(element)
+        from .element_parser import FDSNEventElementParser  # pylint: disable=import-outside-toplevel
+        parser = FDSNEventElementParser(element)
         return Magnitude(publicID=parser.string('publicID', is_attribute=True),
                          mag=parser.real_quantity('mag', optional=False),
                          magnitude_type=parser.string('type'),

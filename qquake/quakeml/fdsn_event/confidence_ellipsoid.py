@@ -42,8 +42,8 @@ class ConfidenceEllipsoid(QuakeMlElement):
         """
         Constructs a ConfidenceEllipsoid from a DOM element
         """
-        from ..element_parser import ElementParser  # pylint: disable=import-outside-toplevel
-        parser = ElementParser(element)
+        from .element_parser import FDSNEventElementParser  # pylint: disable=import-outside-toplevel
+        parser = FDSNEventElementParser(element)
         return ConfidenceEllipsoid(
             semiMajorAxisLength=parser.float('semiMajorAxisLength', optional=False),
             semiMinorAxisLength=parser.float('semiMinorAxisLength', optional=False),

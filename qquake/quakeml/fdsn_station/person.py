@@ -39,8 +39,8 @@ class Person(QuakeMlElement):
         """
         Constructs a Person from a DOM element
         """
-        from ..element_parser import ElementParser  # pylint: disable=import-outside-toplevel
-        parser = ElementParser(element)
+        from .element_parser import FDSNStationElementParser  # pylint: disable=import-outside-toplevel
+        parser = FDSNStationElementParser(element)
         return Person(
             name=parser.string('Name', optional=True),
             agency=parser.string('Agency', optional=True),

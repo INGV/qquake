@@ -67,8 +67,8 @@ class MsSiteMorphology(QuakeMlElement):
         """
         Constructs a MsSiteMorphology from a DOM element
         """
-        from ..element_parser import ElementParser  # pylint: disable=import-outside-toplevel
-        parser = ElementParser(element)
+        from .element_parser import MacroseismicElementParser  # pylint: disable=import-outside-toplevel
+        parser = MacroseismicElementParser(element)
 
         comments = []
         comment_node = element.firstChildElement('ms:comment')

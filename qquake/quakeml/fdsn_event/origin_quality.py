@@ -54,8 +54,8 @@ class OriginQuality(QuakeMlElement):
         """
         Constructs a OriginQuality from a DOM element
         """
-        from ..element_parser import ElementParser  # pylint: disable=import-outside-toplevel
-        parser = ElementParser(element)
+        from .element_parser import FDSNEventElementParser  # pylint: disable=import-outside-toplevel
+        parser = FDSNEventElementParser(element)
         return OriginQuality(
             associatedPhaseCount=parser.int('associatedPhaseCount'),
             usedPhaseCount=parser.int('usedPhaseCount'),

@@ -37,8 +37,8 @@ class MsParameters(QuakeMlElement):
         """
         Constructs MsParameters from a DOM element
         """
-        from ..element_parser import ElementParser  # pylint: disable=import-outside-toplevel
-        parser = ElementParser(element)
+        from .element_parser import MacroseismicElementParser  # pylint: disable=import-outside-toplevel
+        parser = MacroseismicElementParser(element)
 
         events = []
         event_node = element.firstChildElement('ms:macroseismicEvent')
