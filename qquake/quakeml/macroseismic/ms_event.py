@@ -42,8 +42,8 @@ class MsEvent(QuakeMlElement):
         """
         Constructs a MsEvent from a DOM element
         """
-        from ..element_parser import ElementParser  # pylint: disable=import-outside-toplevel
-        parser = ElementParser(element)
+        from .element_parser import MacroseismicElementParser  # pylint: disable=import-outside-toplevel
+        parser = MacroseismicElementParser(element)
 
         return MsEvent(publicID=parser.string('publicID', is_attribute=True, optional=False),
                        mdpSetReference=parser.string('ms:mdpSetReference', optional=True),

@@ -43,8 +43,8 @@ class Comment(QuakeMlElement):
         """
         Constructs a DataAvailability from a DOM element
         """
-        from ..element_parser import ElementParser  # pylint: disable=import-outside-toplevel
-        parser = ElementParser(element)
+        from .element_parser import FDSNStationElementParser  # pylint: disable=import-outside-toplevel
+        parser = FDSNStationElementParser(element)
         return Comment(
             value=parser.string('Value', optional=False),
             begin_effective_time=parser.datetime('BeginEffectiveTime', optional=True),

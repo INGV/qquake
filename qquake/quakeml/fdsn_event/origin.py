@@ -15,9 +15,9 @@ __revision__ = '$Format:%H$'
 
 from qgis.PyQt.QtXml import QDomElement
 
-from ..element import QuakeMlElement
-from ..common import Comment
 from .origin_uncertainty import OriginUncertainty
+from ..common import Comment
+from ..element import QuakeMlElement
 
 
 class Origin(QuakeMlElement):
@@ -87,8 +87,8 @@ class Origin(QuakeMlElement):
         if origin_uncertainty_nodes.length():
             OriginUncertainty.from_element(origin_uncertainty_nodes.at(0).toElement())
 
-        from ..element_parser import ElementParser  # pylint: disable=import-outside-toplevel
-        parser = ElementParser(element)
+        from .element_parser import FDSNEventElementParser  # pylint: disable=import-outside-toplevel
+        parser = FDSNEventElementParser(element)
         return Origin(publicID=parser.string('publicID', optional=False, is_attribute=True),
                       time=parser.time_quantity('time'),
                       longitude=parser.real_quantity('longitude'),

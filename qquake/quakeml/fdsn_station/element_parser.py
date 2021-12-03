@@ -112,3 +112,36 @@ class FDSNStationElementParser(ElementParser):
 
         from .operator import Operator  # pylint: disable=import-outside-toplevel,cyclic-import
         return Operator.from_element(child)
+
+    def equipment(self, attribute, optional=True) -> Optional['Equipment']:
+        """
+        Returns an attribute as a Equipment
+        """
+        child = self.element.firstChildElement(attribute)
+        if optional and child.isNull():
+            return None
+
+        from .equipment import Equipment  # pylint: disable=import-outside-toplevel,cyclic-import
+        return Equipment.from_element(child)
+
+    def external_reference(self, attribute, optional=True) -> Optional['ExternalReference']:
+        """
+        Returns an attribute as a ExternalReference
+        """
+        child = self.element.firstChildElement(attribute)
+        if optional and child.isNull():
+            return None
+
+        from .external_reference import ExternalReference  # pylint: disable=import-outside-toplevel,cyclic-import
+        return ExternalReference.from_element(child)
+
+    def site(self, attribute, optional=True) -> Optional['Site']:
+        """
+        Returns an attribute as a Site
+        """
+        child = self.element.firstChildElement(attribute)
+        if optional and child.isNull():
+            return None
+
+        from .site import Site  # pylint: disable=import-outside-toplevel,cyclic-import
+        return Site.from_element(child)

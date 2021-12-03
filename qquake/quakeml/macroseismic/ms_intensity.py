@@ -38,8 +38,8 @@ class MsIntensity(QuakeMlElement):
         """
         Constructs an MsIntensity from a DOM element
         """
-        from ..element_parser import ElementParser  # pylint: disable=import-outside-toplevel
-        parser = ElementParser(element)
+        from .element_parser import MacroseismicElementParser  # pylint: disable=import-outside-toplevel
+        parser = MacroseismicElementParser(element)
 
         return MsIntensity(macroseismicScale=parser.string('ms:macroseismicScale', is_attribute=False, optional=False),
                            expectedIntensity=parser.ms_intensity_value_type('ms:expectedIntensity'),
