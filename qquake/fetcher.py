@@ -23,7 +23,8 @@ from qgis.PyQt.QtCore import (
     QUrl,
     QObject,
     pyqtSignal,
-    QDateTime
+    QDateTime,
+    QCoreApplication
 )
 from qgis.PyQt.QtNetwork import QNetworkRequest, QNetworkReply
 from qgis.core import (
@@ -55,6 +56,16 @@ class Fetcher(QObject):
 
     BASIC = 'BASIC'
     EXTENDED = 'EXTENDED'
+
+    SPLIT_STRATEGY_YEAR = 'SPLIT_STRATEGY_YEAR'
+    SPLIT_STRATEGY_MONTH = 'SPLIT_STRATEGY_MONTH'
+    SPLIT_STRATEGY_DAY = 'SPLIT_STRATEGY_DAY'
+
+    STRATEGIES = {
+        QCoreApplication.translate('QQuake', 'Split by Years'): SPLIT_STRATEGY_YEAR,
+        QCoreApplication.translate('QQuake', 'Split by Months'): SPLIT_STRATEGY_MONTH,
+        QCoreApplication.translate('QQuake', 'Split by Days'): SPLIT_STRATEGY_DAY,
+    }
 
     started = pyqtSignal()
     progress = pyqtSignal(float)
@@ -93,6 +104,7 @@ class Fetcher(QObject):
                  depth_unit=QgsUnitTypes.DistanceMeters,
                  event_type: Optional[str] = None,
                  updated_after: Optional[QDateTime] = None,
+                 split_strategy: Optional[str] = None,
                  url=None
                  ):
         super().__init__(parent=parent)
@@ -129,6 +141,7 @@ class Fetcher(QObject):
         self.depth_unit = depth_unit
         self.updated_after = updated_after
         self.url = url
+        self.split_strategy = split_strategy
 
         self.service_config = SERVICE_MANAGER.service_details(self.service_type, self.event_service)
 
@@ -160,6 +173,26 @@ class Fetcher(QObject):
         self.require_mdp_basic_text_request = self.output_type == self.BASIC and self.service_type == SERVICE_MANAGER.MACROSEISMIC
         self.is_mdp_basic_text_request = False
         self.is_first_request = True
+        self.query_limit = None
+
+    def suggest_split_strategy(self) -> str:
+        """
+        Suggests a split strategy based on the fetchers' date range
+        """
+        start_date = self.event_start_date if self.event_start_date is not None else QDateTime.fromString(self.service_config.get('datestart'), Qt.ISODate)
+        end_date = self.event_end_date if self.event_end_date is not None else (
+            QDateTime.fromString(self.service_config.get('dateend'), Qt.ISODate) if self.service_config.get('dateend') else QDateTime.currentDateTime()
+        )
+
+        days_between = start_date.daysTo(end_date)
+
+        if days_between > 5 * 365:
+            res = Fetcher.SPLIT_STRATEGY_YEAR
+        elif days_between > 30:
+            res = Fetcher.SPLIT_STRATEGY_MONTH
+        else:
+            res = Fetcher.SPLIT_STRATEGY_DAY
+        return res
 
     def generate_url(self):  # pylint: disable=too-many-statements,too-many-branches
         """
@@ -226,7 +259,8 @@ class Fetcher(QObject):
                 self.earthquake_max_intensity_greater))
 
         if not self.event_ids and 'querylimitmaxentries' in self.service_config['settings']:
-            query.append('limit={}'.format(self.service_config['settings']['querylimitmaxentries']))
+            self.query_limit = self.service_config['settings']['querylimitmaxentries']
+            query.append('limit={}'.format(self.query_limit))
 
         if self.pending_event_ids:
             query.append('eventid={}'.format(self.pending_event_ids[0]))

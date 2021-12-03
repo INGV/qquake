@@ -93,6 +93,85 @@ class TestFetcher(unittest.TestCase):
         self.assertEqual(fetcher.generate_url(),
                          'http://webservices.ingv.it/fdsnws/event/1/query?eventid=1&format=xml')
 
+    def test_url_with_limit(self):
+        """
+        Test URL with limit
+        """
+        fetcher = Fetcher(ServiceManager.FDSNEVENT,
+                          "EMSC-CSEM")
+        self.assertEqual(fetcher.generate_url(),
+                         'https://www.seismicportal.eu/fdsnws/event/1/query?limit=1000&format=xml')
+        self.assertEqual(fetcher.query_limit, 1000)
+
+    def test_suggest_strategy(self):
+        """
+        Test suggesting a split strategy
+        """
+
+        # with both start and end date specified
+        fetcher = Fetcher(ServiceManager.FDSNEVENT,
+                          "EMSC-CSEM", event_start_date=QDateTime(1980, 1, 1, 0, 0, 0),
+                          event_end_date=QDateTime(2000, 1, 1, 0, 0, 0))
+        self.assertEqual(fetcher.suggest_split_strategy(), Fetcher.SPLIT_STRATEGY_YEAR)
+
+        fetcher = Fetcher(ServiceManager.FDSNEVENT,
+                          "EMSC-CSEM", event_start_date=QDateTime(1980, 1, 1, 0, 0, 0),
+                          event_end_date=QDateTime(1981, 1, 1, 0, 0, 0))
+        self.assertEqual(fetcher.suggest_split_strategy(), Fetcher.SPLIT_STRATEGY_MONTH)
+
+        fetcher = Fetcher(ServiceManager.FDSNEVENT,
+                          "EMSC-CSEM", event_start_date=QDateTime(1980, 1, 1, 0, 0, 0),
+                          event_end_date=QDateTime(1980, 1, 30, 0, 0, 0))
+        self.assertEqual(fetcher.suggest_split_strategy(), Fetcher.SPLIT_STRATEGY_DAY)
+
+        # with only end date specified
+        SERVICE_MANAGER.services[ServiceManager.FDSNEVENT]['EMSC-CSEM']["datestart"] = "1998-01-01T00:00:00+00:00"
+        fetcher = Fetcher(ServiceManager.FDSNEVENT,
+                          "EMSC-CSEM",
+                          event_end_date=QDateTime(2003, 1, 30, 0, 0, 0))
+        self.assertEqual(fetcher.suggest_split_strategy(), Fetcher.SPLIT_STRATEGY_YEAR)
+        fetcher = Fetcher(ServiceManager.FDSNEVENT,
+                          "EMSC-CSEM",
+                          event_end_date=QDateTime(1998, 5, 30, 0, 0, 0))
+        self.assertEqual(fetcher.suggest_split_strategy(), Fetcher.SPLIT_STRATEGY_MONTH)
+        fetcher = Fetcher(ServiceManager.FDSNEVENT,
+                          "EMSC-CSEM",
+                          event_end_date=QDateTime(1998, 1, 30, 0, 0, 0))
+        self.assertEqual(fetcher.suggest_split_strategy(), Fetcher.SPLIT_STRATEGY_DAY)
+
+        # with only start date specified
+        SERVICE_MANAGER.services[ServiceManager.FDSNEVENT]['EMSC-CSEM']["dateend"] = "1998-05-01T00:00:00+00:00"
+        fetcher = Fetcher(ServiceManager.FDSNEVENT,
+                          "EMSC-CSEM",
+                          event_start_date=QDateTime(1991, 1, 30, 0, 0, 0))
+        self.assertEqual(fetcher.suggest_split_strategy(), Fetcher.SPLIT_STRATEGY_YEAR)
+        fetcher = Fetcher(ServiceManager.FDSNEVENT,
+                          "EMSC-CSEM",
+                          event_start_date=QDateTime(1998, 1, 1, 0, 0, 0))
+        self.assertEqual(fetcher.suggest_split_strategy(), Fetcher.SPLIT_STRATEGY_MONTH)
+        fetcher = Fetcher(ServiceManager.FDSNEVENT,
+                          "EMSC-CSEM",
+                          event_start_date=QDateTime(1998, 4, 20, 0, 0, 0))
+        self.assertEqual(fetcher.suggest_split_strategy(), Fetcher.SPLIT_STRATEGY_DAY)
+
+        # service doesn't have a fixed end date
+        SERVICE_MANAGER.services[ServiceManager.FDSNEVENT]['EMSC-CSEM']["dateend"] = None
+        start_date = QDateTime.currentDateTime().addYears(-10)
+        fetcher = Fetcher(ServiceManager.FDSNEVENT,
+                          "EMSC-CSEM",
+                          event_start_date=start_date)
+        start_date = QDateTime.currentDateTime().addMonths(-10)
+        self.assertEqual(fetcher.suggest_split_strategy(), Fetcher.SPLIT_STRATEGY_YEAR)
+        fetcher = Fetcher(ServiceManager.FDSNEVENT,
+                          "EMSC-CSEM",
+                          event_start_date=start_date)
+        self.assertEqual(fetcher.suggest_split_strategy(), Fetcher.SPLIT_STRATEGY_MONTH)
+        start_date = QDateTime.currentDateTime().addDays(-10)
+        fetcher = Fetcher(ServiceManager.FDSNEVENT,
+                          "EMSC-CSEM",
+                          event_start_date=start_date)
+        self.assertEqual(fetcher.suggest_split_strategy(), Fetcher.SPLIT_STRATEGY_DAY)
+
 
 if __name__ == '__main__':
     unittest.main()
