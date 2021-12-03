@@ -467,7 +467,9 @@ class QQuakeDialog(QDialog, FORM_CLASS):
             widget = self.ogc_service_widget
         return widget
 
-    def get_fetcher(self, service_type: Optional[str] = None):
+    def get_fetcher(self,
+                    service_type: Optional[str] = None,
+                    split_strategy: Optional[str] = None):
         """
         Returns a quake fetcher corresponding to the current dialog settings
         """
@@ -508,7 +510,8 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                               convert_negative_depths=filter_widget.convert_negative_depths(),
                               depth_unit=filter_widget.depth_unit(),
                               event_type=filter_widget.event_type(),
-                              updated_after=filter_widget.updated_after()
+                              updated_after=filter_widget.updated_after(),
+                              split_strategy=split_strategy
                               )
         elif isinstance(filter_widget, FilterByIdWidget):
             if not service_config['settings'].get('queryeventid'):
@@ -907,7 +910,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
             self.message_bar.pushMessage(
                 err, Qgis.Critical, 5)
 
-    def _getEventList(self):
+    def _getEventList(self, split_strategy: Optional[str] = None):
         """
         read the event URL and convert the response in a list
         """
@@ -919,7 +922,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
             # TODO - cancel current request
             return
 
-        self.fetcher = self.get_fetcher()
+        self.fetcher = self.get_fetcher(split_strategy=split_strategy)
 
         def on_started():
             self.progressBar.setValue(0)
@@ -991,6 +994,10 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                                                              choices.index(default_choice), False)
                         if ok:
                             split_strategy = Fetcher.STRATEGIES[selection]
+                            self.fetcher.deleteLater()
+                            self.fetcher = None
+                            self._getEventList(split_strategy=split_strategy)
+                            return
 
                     else:
                         self.message_bar.pushMessage(self.tr("Query exceeded the service's result limit"),

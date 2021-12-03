@@ -9,7 +9,7 @@
 """
 import unittest
 
-from qgis.PyQt.QtCore import QDateTime
+from qgis.PyQt.QtCore import QDateTime, Qt
 
 from qquake.fetcher import Fetcher
 from qquake.services import ServiceManager, SERVICE_MANAGER
@@ -171,6 +171,42 @@ class TestFetcher(unittest.TestCase):
                           "EMSC-CSEM",
                           event_start_date=start_date)
         self.assertEqual(fetcher.suggest_split_strategy(), Fetcher.SPLIT_STRATEGY_DAY)
+
+    def test_split_strategy(self):
+        """
+        Test split strategy logic
+        """
+        fetcher = Fetcher(ServiceManager.FDSNEVENT,
+                          "EMSC-CSEM", event_start_date=QDateTime(1980, 1, 1, 0, 0, 0),
+                          event_end_date=QDateTime(2000, 1, 1, 0, 0, 0),
+                          split_strategy=Fetcher.SPLIT_STRATEGY_DAY)
+        self.assertEqual(fetcher.event_start_date, QDateTime(1980, 1, 1, 0, 0, 0))
+        self.assertEqual(fetcher.event_end_date, QDateTime(2000, 1, 1, 0, 0, 0))
+
+        # no explicit start date
+        SERVICE_MANAGER.services[ServiceManager.FDSNEVENT]['EMSC-CSEM']["datestart"] = "1998-01-01T00:00:00+00:00"
+        fetcher = Fetcher(ServiceManager.FDSNEVENT,
+                          "EMSC-CSEM",
+                          event_end_date=QDateTime(2000, 1, 1, 0, 0, 0),
+                          split_strategy=Fetcher.SPLIT_STRATEGY_DAY)
+        self.assertEqual(fetcher.event_start_date, QDateTime(1998, 1, 1, 0, 0, 0, 0, Qt.UTC))
+        self.assertEqual(fetcher.event_end_date, QDateTime(2000, 1, 1, 0, 0, 0))
+
+        # no explicit end date
+        SERVICE_MANAGER.services[ServiceManager.FDSNEVENT]['EMSC-CSEM']["dateend"] = "1998-01-01T00:00:00+00:00"
+        fetcher = Fetcher(ServiceManager.FDSNEVENT,
+                          "EMSC-CSEM",
+                          event_start_date=QDateTime(1997, 1, 1, 0, 0, 0),
+                          split_strategy=Fetcher.SPLIT_STRATEGY_DAY)
+        self.assertEqual(fetcher.event_start_date, QDateTime(1997, 1, 1, 0, 0, 0, 0))
+        self.assertEqual(fetcher.event_end_date, QDateTime(1998, 1, 1, 0, 0, 0, 0, Qt.UTC))
+        SERVICE_MANAGER.services[ServiceManager.FDSNEVENT]['EMSC-CSEM']["dateend"] = ''
+        fetcher = Fetcher(ServiceManager.FDSNEVENT,
+                          "EMSC-CSEM",
+                          event_start_date=QDateTime(1997, 1, 1, 0, 0, 0),
+                          split_strategy=Fetcher.SPLIT_STRATEGY_DAY)
+        self.assertEqual(fetcher.event_start_date, QDateTime(1997, 1, 1, 0, 0, 0, 0))
+        self.assertEqual(fetcher.event_end_date.date(), QDateTime.currentDateTime().date())
 
 
 if __name__ == '__main__':
