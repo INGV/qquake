@@ -55,8 +55,6 @@ class OgcServiceWidget(QWidget, FORM_CLASS):
         self.service_id = None
         self.service_config = None
 
-        self.add_layers_button.clicked.connect(self.add_selected_layers)
-
     def set_service(self, service_id: str, service_type: str):
         """
         Sets the service details
