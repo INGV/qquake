@@ -126,6 +126,16 @@ class Fetcher(QObject):
             self.event_end_date = QDateTime.fromString(self.service_config.get('dateend'), Qt.ISODate) if self.service_config.get(
                     'dateend') else QDateTime.currentDateTime()
 
+        self.event_start_date_limit = self.event_start_date
+        self.event_end_date_limit = self.event_end_date
+
+        if self.split_strategy is not None:
+            self.ranges = Fetcher.split_range_by_strategy(self.split_strategy, self.event_start_date, self.event_end_date)
+            self.event_start_date, self.event_end_date = self.ranges[0]
+            del self.ranges[0]
+        else:
+            self.ranges = None
+
         self.event_min_magnitude = event_min_magnitude
         self.event_max_magnitude = event_max_magnitude
         self.event_type = event_type

@@ -180,8 +180,8 @@ class TestFetcher(unittest.TestCase):
                           "EMSC-CSEM", event_start_date=QDateTime(1980, 1, 1, 0, 0, 0),
                           event_end_date=QDateTime(2000, 1, 1, 0, 0, 0),
                           split_strategy=Fetcher.SPLIT_STRATEGY_DAY)
-        self.assertEqual(fetcher.event_start_date, QDateTime(1980, 1, 1, 0, 0, 0))
-        self.assertEqual(fetcher.event_end_date, QDateTime(2000, 1, 1, 0, 0, 0))
+        self.assertEqual(fetcher.event_start_date_limit, QDateTime(1980, 1, 1, 0, 0, 0))
+        self.assertEqual(fetcher.event_end_date_limit, QDateTime(2000, 1, 1, 0, 0, 0))
 
         # no explicit start date
         SERVICE_MANAGER.services[ServiceManager.FDSNEVENT]['EMSC-CSEM']["datestart"] = "1998-01-01T00:00:00+00:00"
@@ -189,8 +189,8 @@ class TestFetcher(unittest.TestCase):
                           "EMSC-CSEM",
                           event_end_date=QDateTime(2000, 1, 1, 0, 0, 0),
                           split_strategy=Fetcher.SPLIT_STRATEGY_DAY)
-        self.assertEqual(fetcher.event_start_date, QDateTime(1998, 1, 1, 0, 0, 0, 0, Qt.UTC))
-        self.assertEqual(fetcher.event_end_date, QDateTime(2000, 1, 1, 0, 0, 0))
+        self.assertEqual(fetcher.event_start_date_limit, QDateTime(1998, 1, 1, 0, 0, 0, 0, Qt.UTC))
+        self.assertEqual(fetcher.event_end_date_limit, QDateTime(2000, 1, 1, 0, 0, 0))
 
         # no explicit end date
         SERVICE_MANAGER.services[ServiceManager.FDSNEVENT]['EMSC-CSEM']["dateend"] = "1998-01-01T00:00:00+00:00"
@@ -198,15 +198,15 @@ class TestFetcher(unittest.TestCase):
                           "EMSC-CSEM",
                           event_start_date=QDateTime(1997, 1, 1, 0, 0, 0),
                           split_strategy=Fetcher.SPLIT_STRATEGY_DAY)
-        self.assertEqual(fetcher.event_start_date, QDateTime(1997, 1, 1, 0, 0, 0, 0))
-        self.assertEqual(fetcher.event_end_date, QDateTime(1998, 1, 1, 0, 0, 0, 0, Qt.UTC))
+        self.assertEqual(fetcher.event_start_date_limit, QDateTime(1997, 1, 1, 0, 0, 0, 0))
+        self.assertEqual(fetcher.event_end_date_limit, QDateTime(1998, 1, 1, 0, 0, 0, 0, Qt.UTC))
         SERVICE_MANAGER.services[ServiceManager.FDSNEVENT]['EMSC-CSEM']["dateend"] = ''
         fetcher = Fetcher(ServiceManager.FDSNEVENT,
                           "EMSC-CSEM",
                           event_start_date=QDateTime(1997, 1, 1, 0, 0, 0),
                           split_strategy=Fetcher.SPLIT_STRATEGY_DAY)
-        self.assertEqual(fetcher.event_start_date, QDateTime(1997, 1, 1, 0, 0, 0, 0))
-        self.assertEqual(fetcher.event_end_date.date(), QDateTime.currentDateTime().date())
+        self.assertEqual(fetcher.event_start_date_limit, QDateTime(1997, 1, 1, 0, 0, 0, 0))
+        self.assertEqual(fetcher.event_end_date_limit.date(), QDateTime.currentDateTime().date())
 
     def test_split_range(self):
         """
@@ -227,6 +227,23 @@ class TestFetcher(unittest.TestCase):
                            QDateTime(2020, 3, 1, 1, 1, 2)),
                           (QDateTime(2020, 3, 1, 1, 1, 3),
                            QDateTime(2020, 4, 1, 1, 1, 3))])
+
+    def test_fetch_with_split(self):
+        """
+        Test fetcher with split strategy
+        """
+        fetcher = Fetcher(ServiceManager.FDSNEVENT,
+                          "EMSC-CSEM",
+                          event_start_date=QDateTime(2020, 1, 1, 1, 1, 1),
+                          event_end_date=QDateTime(2020, 1, 4, 1, 1, 1),
+                          split_strategy=Fetcher.SPLIT_STRATEGY_DAY)
+        self.assertEqual(fetcher.event_start_date, QDateTime(2020, 1, 1, 1, 1, 1))
+        self.assertEqual(fetcher.event_end_date, QDateTime(2020, 1, 2, 1, 1, 1))
+        self.assertEqual(fetcher.ranges, [
+            (QDateTime(2020, 1, 2, 1, 1, 2),
+             QDateTime(2020, 1, 3, 1, 1, 2)),
+            (QDateTime(2020, 1, 3, 1, 1, 3),
+             QDateTime(2020, 1, 4, 1, 1, 3))])
 
 
 if __name__ == '__main__':
