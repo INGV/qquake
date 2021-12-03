@@ -999,8 +999,11 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                             self._getEventList(split_strategy=split_strategy)
                             return
 
-                    else:
                         self.message_bar.pushMessage(self.tr("Query exceeded the service's result limit"),
+                                                     Qgis.Critical, 0)
+
+                    elif self.fetcher.exceeded_limit:
+                        self.message_bar.pushMessage(self.tr("One or more queries exceeded the service's result limit. Please retry using an alternative strategy."),
                                                      Qgis.Critical, 0)
                 elif events_count > 500:
                     self.message_bar.pushMessage(

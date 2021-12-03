@@ -14,9 +14,8 @@ __copyright__ = 'Istituto Nazionale di Geofisica e Vulcanologia (INGV)'
 __revision__ = '$Format:%H$'
 
 import re
-
-from typing import List, Tuple
 from pathlib import Path
+from typing import List, Tuple
 from typing import Union, Optional
 
 from qgis.PyQt.QtCore import (
@@ -115,6 +114,7 @@ class Fetcher(QObject):
         self.service_config = SERVICE_MANAGER.service_details(self.service_type, self.event_service)
 
         self.split_strategy = split_strategy
+        self.exceeded_limit = False
 
         self.event_start_date = event_start_date
         self.event_end_date = event_end_date
@@ -123,14 +123,16 @@ class Fetcher(QObject):
         if self.split_strategy is not None and self.event_start_date is None:
             self.event_start_date = QDateTime.fromString(self.service_config.get('datestart'), Qt.ISODate)
         if self.split_strategy is not None and self.event_end_date is None:
-            self.event_end_date = QDateTime.fromString(self.service_config.get('dateend'), Qt.ISODate) if self.service_config.get(
-                    'dateend') else QDateTime.currentDateTime()
+            self.event_end_date = QDateTime.fromString(self.service_config.get('dateend'),
+                                                       Qt.ISODate) if self.service_config.get(
+                'dateend') else QDateTime.currentDateTime()
 
         self.event_start_date_limit = self.event_start_date
         self.event_end_date_limit = self.event_end_date
 
         if self.split_strategy is not None:
-            self.ranges = Fetcher.split_range_by_strategy(self.split_strategy, self.event_start_date, self.event_end_date)
+            self.ranges = Fetcher.split_range_by_strategy(self.split_strategy, self.event_start_date,
+                                                          self.event_end_date)
             self.event_start_date, self.event_end_date = self.ranges[0]
             del self.ranges[0]
         else:
@@ -199,9 +201,11 @@ class Fetcher(QObject):
         """
         Suggests a split strategy based on the fetchers' date range
         """
-        start_date = self.event_start_date if self.event_start_date is not None else QDateTime.fromString(self.service_config.get('datestart'), Qt.ISODate)
+        start_date = self.event_start_date if self.event_start_date is not None else QDateTime.fromString(
+            self.service_config.get('datestart'), Qt.ISODate)
         end_date = self.event_end_date if self.event_end_date is not None else (
-            QDateTime.fromString(self.service_config.get('dateend'), Qt.ISODate) if self.service_config.get('dateend') else QDateTime.currentDateTime()
+            QDateTime.fromString(self.service_config.get('dateend'), Qt.ISODate) if self.service_config.get(
+                'dateend') else QDateTime.currentDateTime()
         )
 
         days_between = start_date.daysTo(end_date)
@@ -322,10 +326,12 @@ class Fetcher(QObject):
 
         if self.output_type == Fetcher.EXTENDED:
             if not self.preferred_origins_only:
-                if self.pending_event_ids or self.service_config['settings'].get('queryincludeallorigins_multiple', False):
+                if self.pending_event_ids or self.service_config['settings'].get('queryincludeallorigins_multiple',
+                                                                                 False):
                     query.append('includeallorigins=true')
             if not self.preferred_magnitudes_only:
-                if self.pending_event_ids or self.service_config['settings'].get('queryincludeallmagnitudes_multiple', False):
+                if self.pending_event_ids or self.service_config['settings'].get('queryincludeallmagnitudes_multiple',
+                                                                                 False):
                     query.append('includeallmagnitudes=true')
 
         if self.service_type == SERVICE_MANAGER.MACROSEISMIC:
@@ -429,6 +435,8 @@ class Fetcher(QObject):
                     if self.pending_event_ids:
                         self.pending_event_ids = self.pending_event_ids[1:]
 
+                    prev_event_count = len(self.result.events)
+
                     if self.result.events:
                         self.result.add_events(reply.readAll())
                     else:
@@ -437,8 +445,11 @@ class Fetcher(QObject):
                             # for a macroseismic parameter based search, we have to then go and fetch events
                             # one by one in order to get all the mdp location information required
                             self.pending_event_ids = [e.publicID for e in self.result.events]
-                        elif not had_events_ids and ((not self.service_config['settings'].get('queryincludeallorigins_multiple', False) and not self.preferred_origins_only) or
-                            (not self.service_config['settings'].get('queryincludeallmagnitudes_multiple', False) and not self.preferred_magnitudes_only)):
+                        elif not had_events_ids and ((not self.service_config['settings'].get(
+                                'queryincludeallorigins_multiple', False) and not self.preferred_origins_only) or
+                                                     (not self.service_config['settings'].get(
+                                                         'queryincludeallmagnitudes_multiple',
+                                                         False) and not self.preferred_magnitudes_only)):
                             # hmmm....
                             extract_numeric_id_regex = re.compile('^.*=(.*?)$')
                             self.pending_event_ids = []
@@ -447,6 +458,9 @@ class Fetcher(QObject):
                                 id_match = extract_numeric_id_regex.match(public_id)
                                 assert id_match
                                 self.pending_event_ids.append(id_match.group(1))
+
+                    if self.query_limit and len(self.result.events) - prev_event_count >= self.query_limit:
+                        self.exceeded_limit = True
 
                     self.missing_origins = self.missing_origins.union(self.result.scan_for_missing_origins())
             elif self.service_type == SERVICE_MANAGER.FDSNSTATION:
@@ -465,9 +479,13 @@ class Fetcher(QObject):
                     self.fetch_missing()
             elif self.pending_event_ids:
                 self.fetch_next_event_by_id()
+            elif self.ranges:
+                # fetch next range
+                self.event_start_date, self.event_end_date = self.ranges[0]
+                del self.ranges[0]
+                self.fetch_data()
             else:
                 self.finished.emit(True)
-
         else:
             # basic output types
             if self.service_type == SERVICE_MANAGER.FDSNSTATION:
@@ -479,29 +497,37 @@ class Fetcher(QObject):
                     self.pending_event_ids = self.pending_event_ids[1:]
 
                 if not self.is_mdp_basic_text_request:
+                    prev_event_count = len(self.result.events)
                     if self.result.events:
                         self.result.add_events(reply.readAll())
                     else:
                         self.result.parse(reply.readAll())
 
+                    if self.query_limit and len(self.result.events) - prev_event_count >= self.query_limit:
+                        self.exceeded_limit = True
+
                 if self.pending_event_ids:
                     self.fetch_next_event_by_id()
+                elif self.require_mdp_basic_text_request:
+                    if not self.pending_event_ids:
+                        # we don't yet have an explicit list of event ids to fetch -- build that now, then fire
+                        # off the one-by-one requests for their details
+                        self.macro_pending_event_ids = self.result.all_event_ids()
+
+                    self.fetch_basic_mdp()
                 else:
-                    if self.require_mdp_basic_text_request:
-                        if not self.pending_event_ids:
-                            # we don't yet have an explicit list of event ids to fetch -- build that now, then fire
-                            # off the one-by-one requests for their details
-                            self.macro_pending_event_ids = self.result.all_event_ids()
+                    if self.is_mdp_basic_text_request:
+                        self.result.add_mdp(reply.readAll())
 
+                    if self.is_mdp_basic_text_request and self.macro_pending_event_ids:
                         self.fetch_basic_mdp()
+                    elif self.ranges:
+                        # fetch next range
+                        self.event_start_date, self.event_end_date = self.ranges[0]
+                        del self.ranges[0]
+                        self.fetch_data()
                     else:
-                        if self.is_mdp_basic_text_request:
-                            self.result.add_mdp(reply.readAll())
-
-                        if self.is_mdp_basic_text_request and self.macro_pending_event_ids:
-                            self.fetch_basic_mdp()
-                        else:
-                            self.finished.emit(True)
+                        self.finished.emit(True)
 
     def _generate_layer_name(self, layer_type: Optional[str] = None) -> str:
         """
