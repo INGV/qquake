@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
-"""QQuake- Basic text parser
-
-.. note:: This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
 """
+Basic text parser
+"""
+
+# .. note:: This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
 
 __author__ = 'Original authors: Mario Locati, Roberto Vallone, Matteo Ghetta, Nyall Dawson'
 __date__ = '29/01/2020'
