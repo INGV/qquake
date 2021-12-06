@@ -38,13 +38,15 @@ from qgis.core import (
     QgsUnitTypes
 )
 
+from qquake.gui.base_filter_widget import BaseFilterWidget
+
 from qquake.gui.gui_utils import GuiUtils
 from qquake.services import SERVICE_MANAGER
 
 FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('filter_by_id_widget_base.ui'))
 
 
-class FilterByIdWidget(QWidget, FORM_CLASS):
+class FilterByIdWidget(QWidget, FORM_CLASS, BaseFilterWidget):
     """
     A widget for filtering results by ID
     """
@@ -79,9 +81,6 @@ class FilterByIdWidget(QWidget, FORM_CLASS):
         self.button_import_from_file.clicked.connect(self.load_from_file)
 
     def is_valid(self) -> bool:
-        """
-        Returns True if the widget state is valid
-        """
         if self.radio_single_event.isChecked():
             res = bool(self.edit_event_id.text())
         elif self.radio_multiple_events.isChecked():
@@ -93,17 +92,11 @@ class FilterByIdWidget(QWidget, FORM_CLASS):
         return res
 
     def set_service_type(self, service_type: str):
-        """
-        Sets the associated service type
-        """
         self.service_type = service_type
 
         self.output_table_options_widget.set_service_type(service_type)
 
     def set_service_id(self, service_id: str):
-        """
-        Sets the associated service ID
-        """
         self.service_id = service_id
 
         self.output_table_options_widget.set_service_id(service_id)
@@ -125,9 +118,6 @@ class FilterByIdWidget(QWidget, FORM_CLASS):
         self._update_contributor_list(SERVICE_MANAGER.get_contributors(self.service_type, self.service_id))
 
     def restore_settings(self, prefix: str):
-        """
-        Restores widget state from settings
-        """
         s = QgsSettings()
 
         self.edit_event_id.setText(s.value('/plugins/qquake/{}_single_event_id'.format(prefix), '', str))
@@ -145,9 +135,6 @@ class FilterByIdWidget(QWidget, FORM_CLASS):
         self.output_table_options_widget.restore_settings(prefix, 'single')
 
     def save_settings(self, prefix: str):
-        """
-        Saves widget state to settings
-        """
         s = QgsSettings()
         s.setValue('/plugins/qquake/{}_single_event_id'.format(prefix), self.edit_event_id.text())
         s.setValue('/plugins/qquake/{}_single_event_checked'.format(prefix), self.radio_single_event.isChecked())
@@ -216,27 +203,15 @@ class FilterByIdWidget(QWidget, FORM_CLASS):
             self.event_ids_edit.setPlainText('\n'.join(self.parse_multi_input(text)))
 
     def output_type(self) -> str:
-        """
-        Returns the output table type
-        """
         return self.output_table_options_widget.output_type()
 
     def output_fields(self) -> Optional[List[str]]:
-        """
-        Returns the selected output fields
-        """
         return self.output_table_options_widget.output_fields
 
     def convert_negative_depths(self) -> bool:
-        """
-        Returns True if negative depths must be converted
-        """
         return self.output_options_widget.convert_negative_depths()
 
     def depth_unit(self) -> QgsUnitTypes.DistanceUnit:
-        """
-        Returns the associated depth unit
-        """
         return self.output_options_widget.depth_unit()
 
     def _refresh_contributors(self):
