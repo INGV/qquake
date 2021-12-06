@@ -36,7 +36,11 @@ from qgis.core import (
     QgsUnitTypes,
 )
 
-from qquake.basic_text_parser import BasicTextParser, BasicStationParser
+from qquake.basic_text import (
+    BasicTextParser,
+    BasicStationParser
+)
+
 from qquake.quakeml import (
     QuakeMlParser,
     MissingOriginException
