@@ -280,6 +280,15 @@ class ServiceManager(QObject):  # pylint:disable=too-many-public-methods
         self.user_styles_changed.emit()
         return True
 
+    def get_style(self, name: str) -> Dict[str, str]:
+        """
+        Gets a style definition
+        """
+        if name in self.PRESET_STYLES:
+            return self.PRESET_STYLES[name]
+
+        return self._user_styles[name]
+
     def _save_predefined_areas(self):
         """
         Saves all predefined areas
