@@ -42,7 +42,7 @@ class StyleUtils:
         """
         Returns the URL for the matching style
         """
-        return SERVICE_MANAGER.PRESET_STYLES[style_name]['url']
+        return SERVICE_MANAGER.get_style(style_name)['url']
 
     @staticmethod
     def default_style_for_events_url() -> str:

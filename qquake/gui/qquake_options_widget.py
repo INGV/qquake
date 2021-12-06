@@ -137,6 +137,7 @@ class QQuakeOptionsWidget(FORM_CLASS, QgsOptionsPageWidget):
 
         prev_name = self.styles_list.currentItem().text()
         self._user_styles[name] = deepcopy(self._user_styles[prev_name])
+        self._user_styles[name]['label'] = name
         del self._user_styles[prev_name]
         self._refresh_styles_list()
 

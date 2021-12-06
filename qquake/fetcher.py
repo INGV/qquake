@@ -649,7 +649,7 @@ class Fetcher(QObject):
 
                 style_ref = style.get('style')
                 if style_ref:
-                    style_url = SERVICE_MANAGER.PRESET_STYLES[style_ref]['url']
+                    style_url = SERVICE_MANAGER.get_style(style_ref)['url']
 
             if style_url:
                 if isinstance(self.result, BasicTextParser):
@@ -699,7 +699,7 @@ class Fetcher(QObject):
 
                 style_ref = style.get('style')
                 if style_ref:
-                    style_url = SERVICE_MANAGER.PRESET_STYLES[style_ref]['url']
+                    style_url = SERVICE_MANAGER.get_style(style_ref)['url']
 
             if style_url:
                 if isinstance(self.result, BasicTextParser):
@@ -748,7 +748,7 @@ class Fetcher(QObject):
             else:
                 style_ref = style.get('style')
                 if style_ref:
-                    style_url = SERVICE_MANAGER.PRESET_STYLES[style_ref]['url']
+                    style_url = SERVICE_MANAGER.get_style(style_ref)['url']
 
             if style_url:
                 if isinstance(self.result, BasicTextParser):

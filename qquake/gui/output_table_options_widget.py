@@ -80,7 +80,7 @@ class OutputTableOptionsWidget(QWidget, FORM_CLASS):
             combo.clear()
             styles = SERVICE_MANAGER.styles_for_service_type(service_type)
             for s in styles:
-                combo.addItem(SERVICE_MANAGER.PRESET_STYLES[s]['label'], s)
+                combo.addItem(SERVICE_MANAGER.get_style(s)['label'], s)
 
             prev_index = combo.findData(prev_entry)
             if prev_index >= 0:
