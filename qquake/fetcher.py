@@ -603,7 +603,7 @@ class Fetcher(QObject):
 
         return vl
 
-    def events_to_layer(self,  # pylint: disable=too-many-locals
+    def events_to_layer(self,  # pylint: disable=too-many-locals,too-many-branches
                         parser: Union[BasicTextParser, QuakeMlParser],
                         preferred_origin_only: bool,
                         preferred_magnitudes_only: bool) -> Optional[QgsVectorLayer]:
@@ -625,7 +625,8 @@ class Fetcher(QObject):
         ok, _ = vl.dataProvider().addFeatures(features)
         assert ok
 
-        epicenter_style_url = StyleUtils.style_url(self.styles[SERVICE_MANAGER.FDSNEVENT]) if SERVICE_MANAGER.FDSNEVENT in self.styles else None
+        epicenter_style_url = StyleUtils.style_url(
+            self.styles[SERVICE_MANAGER.FDSNEVENT]) if SERVICE_MANAGER.FDSNEVENT in self.styles else None
 
         if self.url:
             default_style_url = epicenter_style_url or StyleUtils.default_style_for_events_url()
@@ -636,8 +637,9 @@ class Fetcher(QObject):
             err = StyleUtils.fetch_and_apply_style(vl, epicenter_style_url or self.service_config.get('styleurl'))
             if err:
                 self.message.emit(err, Qgis.Warning)
-        elif not self.url and (epicenter_style_url or (isinstance(self.service_config.get('default', {}).get('style', {}), dict) and \
-                self.service_config['default']['style'].get('events'))):
+        elif not self.url and (
+                epicenter_style_url or (isinstance(self.service_config.get('default', {}).get('style', {}), dict) and
+                                        self.service_config['default']['style'].get('events'))):
 
             style_url = None
             if epicenter_style_url:
@@ -661,7 +663,7 @@ class Fetcher(QObject):
 
         return vl
 
-    def mdpset_to_layer(self, parser: Union[BasicTextParser, QuakeMlParser]) -> QgsVectorLayer:
+    def mdpset_to_layer(self, parser: Union[BasicTextParser, QuakeMlParser]) -> QgsVectorLayer:  # pylint:disable=too-many-branches
         """
         Returns a new vector layer containing the reply contents
         """
@@ -674,7 +676,8 @@ class Fetcher(QObject):
         ok, _ = vl.dataProvider().addFeatures(features)
         assert ok
 
-        mdp_style_url = StyleUtils.style_url(self.styles[SERVICE_MANAGER.MACROSEISMIC]) if SERVICE_MANAGER.MACROSEISMIC in self.styles else None
+        mdp_style_url = StyleUtils.style_url(
+            self.styles[SERVICE_MANAGER.MACROSEISMIC]) if SERVICE_MANAGER.MACROSEISMIC in self.styles else None
 
         if self.url:
             default_style_url = mdp_style_url or StyleUtils.default_style_for_macro_url()
@@ -711,7 +714,7 @@ class Fetcher(QObject):
 
         return vl
 
-    def stations_to_layer(self, fdsn: Optional[Fdsn]) -> QgsVectorLayer:
+    def stations_to_layer(self, fdsn: Optional[Fdsn]) -> QgsVectorLayer:  # pylint:disable=too-many-branches
         """
         Returns a new vector layer containing the reply contents
         """
