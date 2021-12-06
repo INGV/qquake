@@ -37,7 +37,7 @@ from qgis.core import (
 
 _CONFIG_SERVICES_PATH = os.path.join(
     os.path.dirname(__file__),
-    'config',
+    '../config',
     'config.json')
 
 
@@ -47,7 +47,7 @@ def load_field_config(filename: str) -> dict:
     """
     path = os.path.join(
         os.path.dirname(__file__),
-        'config', filename)
+        '../config', filename)
 
     with open(path, 'r', encoding='utf8') as f:
         return json.load(f)
