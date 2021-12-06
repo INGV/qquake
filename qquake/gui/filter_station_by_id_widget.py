@@ -32,11 +32,12 @@ from qgis.core import (
 )
 
 from qquake.gui.gui_utils import GuiUtils
+from qquake.gui.base_filter_widget import BaseFilterWidget
 
 FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('filter_station_by_id_widget_base.ui'))
 
 
-class FilterStationByIdWidget(QWidget, FORM_CLASS):
+class FilterStationByIdWidget(QWidget, FORM_CLASS, BaseFilterWidget):
     """
     A widget for filtering stations by ID
     """
@@ -62,31 +63,19 @@ class FilterStationByIdWidget(QWidget, FORM_CLASS):
         self.output_table_options_widget.changed.connect(self.changed)
 
     def is_valid(self) -> bool:
-        """
-        Returns True if the dialog state is valid
-        """
         return bool(self.edit_network_code.text() or self.edit_station_code.text() or self.edit_location_code.text())
 
     def set_service_type(self, service_type: str):
-        """
-        Sets the associated service type
-        """
         self.service_type = service_type
 
         self.output_table_options_widget.set_service_type(service_type)
 
     def set_service_id(self, service_id: str):
-        """
-        Sets the associated service ID
-        """
         self.service_id = service_id
 
         self.output_table_options_widget.set_service_id(service_id)
 
     def restore_settings(self, prefix: str):
-        """
-        Restores the dialog state from settings
-        """
         s = QgsSettings()
         self.edit_network_code.setText(s.value('/plugins/qquake/{}_network_code'.format(prefix), '', str))
         self.edit_station_code.setText(s.value('/plugins/qquake/{}_station_code'.format(prefix), '', str))
@@ -95,9 +84,6 @@ class FilterStationByIdWidget(QWidget, FORM_CLASS):
         self.output_table_options_widget.restore_settings(prefix, 'single')
 
     def save_settings(self, prefix: str):
-        """
-        Saves settings defined in the dialog
-        """
         s = QgsSettings()
         s.setValue('/plugins/qquake/{}_network_code'.format(prefix), self.edit_network_code.text())
         s.setValue('/plugins/qquake/{}_station_code'.format(prefix), self.edit_station_code.text())
@@ -129,25 +115,13 @@ class FilterStationByIdWidget(QWidget, FORM_CLASS):
         return self.edit_location_code.text().strip() or None
 
     def output_fields(self) -> Optional[List[str]]:
-        """
-        Returns the selected output fields
-        """
         return self.output_table_options_widget.output_fields
 
     def output_type(self) -> str:
-        """
-        Returns the output table type
-        """
         return self.output_table_options_widget.output_type()
 
     def convert_negative_depths(self) -> bool:
-        """
-        Returns whether negative depths should be converted
-        """
         return False
 
     def depth_unit(self) -> QgsUnitTypes.DistanceUnit:
-        """
-        Returns the associated depth unit
-        """
         return QgsUnitTypes.DistanceKilometers

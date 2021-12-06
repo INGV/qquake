@@ -47,6 +47,7 @@ from qgis.gui import (
 )
 
 from qquake.gui.gui_utils import GuiUtils
+from qquake.gui.base_filter_widget import BaseFilterWidget
 from qquake.gui.predefined_areas_dialog import PredefinedAreasDialog
 from qquake.quakeml.common import EVENT_TYPES
 from qquake.services import SERVICE_MANAGER
@@ -54,7 +55,7 @@ from qquake.services import SERVICE_MANAGER
 FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('filter_parameter_widget_base.ui'))
 
 
-class FilterParameterWidget(QWidget, FORM_CLASS):  # pylint: disable=too-many-public-methods
+class FilterParameterWidget(QWidget, FORM_CLASS, BaseFilterWidget):  # pylint: disable=too-many-public-methods
     """
     Service parameter based filtering widget
     """
@@ -158,9 +159,6 @@ class FilterParameterWidget(QWidget, FORM_CLASS):  # pylint: disable=too-many-pu
         self.set_service_type(service_type)
 
     def is_valid(self) -> bool:
-        """
-        Returns True if the widget state is valid
-        """
         for check in [self.min_time_check, self.max_time_check, self.min_mag_check, self.max_mag_check,
                       self.limit_extent_checkbox, self.earthquake_max_intensity_greater_check,
                       self.earthquake_number_mdps_greater_check]:
@@ -170,9 +168,6 @@ class FilterParameterWidget(QWidget, FORM_CLASS):  # pylint: disable=too-many-pu
         return False
 
     def set_service_type(self, service_type: str):
-        """
-        Sets the associated service type
-        """
         self.service_type = service_type
 
         self.time_coverage_group.setVisible(
@@ -183,9 +178,6 @@ class FilterParameterWidget(QWidget, FORM_CLASS):  # pylint: disable=too-many-pu
         self.output_table_options_widget.set_service_type(service_type)
 
     def set_service_id(self, service_id: str):  # pylint:disable=too-many-branches
-        """
-        Sets the associated service ID
-        """
         self.service_id = service_id
 
         service_config = SERVICE_MANAGER.service_details(self.service_type, self.service_id)
@@ -220,9 +212,6 @@ class FilterParameterWidget(QWidget, FORM_CLASS):  # pylint: disable=too-many-pu
         self.radius_unit_combobox.setCurrentIndex(0)
 
     def restore_settings(self, prefix: str):  # pylint: disable=too-many-locals,too-many-branches,too-many-statements
-        """
-        Restores widget state from settings
-        """
         s = QgsSettings()
 
         if self.service_id:
@@ -337,9 +326,6 @@ class FilterParameterWidget(QWidget, FORM_CLASS):  # pylint: disable=too-many-pu
             self.events_updated_after.setDateTime(last_updated_after_date)
 
     def save_settings(self, prefix: str):
-        """
-        Saves widget state to settings
-        """
         s = QgsSettings()
         s.setValue('/plugins/qquake/{}_last_event_start_date'.format(prefix), self.fdsn_event_start_date.dateTime())
         s.setValue('/plugins/qquake/{}_last_event_end_date'.format(prefix), self.fdsn_event_end_date.dateTime())
@@ -870,15 +856,9 @@ class FilterParameterWidget(QWidget, FORM_CLASS):  # pylint: disable=too-many-pu
         return self.earthquake_number_mdps_greater_spin.value() if self.earthquake_number_mdps_greater_check.isChecked() else None
 
     def convert_negative_depths(self) -> bool:
-        """
-        Returns True if negative depths must be converted
-        """
         return self.output_options_widget.convert_negative_depths()
 
     def depth_unit(self) -> QgsUnitTypes.DistanceUnit:
-        """
-        Returns the specified depth unit
-        """
         return self.output_options_widget.depth_unit()
 
     def event_type(self) -> Optional[str]:
@@ -894,15 +874,9 @@ class FilterParameterWidget(QWidget, FORM_CLASS):  # pylint: disable=too-many-pu
         return self.events_updated_after.dateTime() if self.events_updated_after_check.isChecked() else None
 
     def output_type(self) -> str:
-        """
-        Returns the output table type
-        """
         return self.output_table_options_widget.output_type()
 
     def output_fields(self) -> Optional[List[str]]:
-        """
-        Returns the selected output fields
-        """
         return self.output_table_options_widget.output_fields
 
     def to_service_definition(self) -> dict:

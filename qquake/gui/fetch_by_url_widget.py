@@ -38,12 +38,13 @@ from qgis.core import (
 )
 
 from qquake.gui.gui_utils import GuiUtils
+from qquake.gui.base_filter_widget import BaseFilterWidget
 from qquake.services import SERVICE_MANAGER
 
 FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('fetch_by_url_widget.ui'))
 
 
-class FetchByUrlWidget(QWidget, FORM_CLASS):
+class FetchByUrlWidget(QWidget, FORM_CLASS, BaseFilterWidget):
     """
     Fetch results by URL widget
     """
@@ -52,7 +53,7 @@ class FetchByUrlWidget(QWidget, FORM_CLASS):
     def __init__(self, iface,  # pylint: disable=unused-argument
                  service_type: str, parent=None):
         """Constructor."""
-        super().__init__(parent)
+        QWidget.__init__(self, parent)
 
         self.setupUi(self)
 
@@ -74,23 +75,14 @@ class FetchByUrlWidget(QWidget, FORM_CLASS):
         self.output_table_options_widget.enable_basic_option(False)
 
     def is_valid(self) -> bool:
-        """
-        Returns True if the widget state is valid
-        """
         return bool(self.url_edit.toPlainText())
 
     def set_service_type(self, service_type: str):
-        """
-        Sets the associated service type
-        """
         self.service_type = service_type
 
         self.output_table_options_widget.set_service_type(service_type)
 
     def set_service_id(self, service_id: str):
-        """
-        Sets the associated service ID
-        """
         self.service_id = service_id
 
         self.output_table_options_widget.set_service_id(service_id)
@@ -98,15 +90,9 @@ class FetchByUrlWidget(QWidget, FORM_CLASS):
         self.service_config = SERVICE_MANAGER.service_details(self.service_type, self.service_id)
 
     def restore_settings(self, prefix: str):
-        """
-        Restores widget state from settings
-        """
         self.output_table_options_widget.restore_settings(prefix, 'single')
 
     def save_settings(self, prefix: str):
-        """
-        Saves widget state to settings
-        """
         self.output_table_options_widget.save_settings(prefix, 'single')
 
     def _import_from_file(self):
@@ -119,27 +105,15 @@ class FetchByUrlWidget(QWidget, FORM_CLASS):
             self.url_edit.setPlainText(QUrl.fromLocalFile(file).toString())
 
     def output_type(self) -> str:
-        """
-        Returns the output table type
-        """
         return self.output_table_options_widget.output_type()
 
     def output_fields(self) -> Optional[List[str]]:
-        """
-        Returns the selected output fields
-        """
         return self.output_table_options_widget.output_fields
 
     def convert_negative_depths(self) -> bool:
-        """
-        Returns True if negative depths must be converted
-        """
         return self.output_options_widget.convert_negative_depths()
 
     def depth_unit(self) -> QgsUnitTypes.DistanceUnit:
-        """
-        Returns the current depth unit
-        """
         return self.output_options_widget.depth_unit()
 
     def url(self) -> str:

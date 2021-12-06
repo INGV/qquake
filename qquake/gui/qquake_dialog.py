@@ -67,6 +67,8 @@ from qquake.gui.gui_utils import GuiUtils
 from qquake.gui.ogc_service_options_widget import OgcServiceWidget
 from qquake.gui.service_configuration_widget import ServiceConfigurationDialog
 from qquake.gui.service_information_widget import ServiceInformationWidget
+from qquake.gui.base_filter_widget import BaseFilterWidget
+
 from qquake.services import SERVICE_MANAGER
 
 FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('qquake_dialog_base.ui'))
@@ -437,7 +439,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
 
     def get_service_filter_widget(self,  # pylint:disable=too-many-branches
                                   service_type: str) -> Optional[
-        Union[FilterParameterWidget, FilterByIdWidget, FetchByUrlWidget, FilterStationByIdWidget, OgcServiceWidget]]:
+        Union[BaseFilterWidget, OgcServiceWidget]]:
         """
         Returns the service filter widget for a specific service type
         """
