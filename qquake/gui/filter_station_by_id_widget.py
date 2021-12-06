@@ -21,7 +21,7 @@
  ***************************************************************************/
 """
 
-from typing import Optional
+from typing import Optional, List
 
 from qgis.PyQt import uic
 from qgis.PyQt.QtCore import pyqtSignal
@@ -31,10 +31,7 @@ from qgis.core import (
     QgsUnitTypes
 )
 
-from qquake.fetcher import Fetcher
 from qquake.gui.gui_utils import GuiUtils
-from qquake.gui.output_table_options_dialog import OutputTableOptionsDialog
-from qquake.services import SERVICE_MANAGER
 
 FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('filter_station_by_id_widget_base.ui'))
 
@@ -51,23 +48,18 @@ class FilterStationByIdWidget(QWidget, FORM_CLASS):
 
         self.setupUi(self)
 
-        self.radio_basic_output.toggled.connect(self._enable_widgets)
-        self.radio_extended_output.toggled.connect(self._enable_widgets)
+        self.output_table_options_widget.changed.connect(self._enable_widgets)
 
         self._enable_widgets()
-
-        self.output_table_options_button.clicked.connect(self._output_table_options)
 
         self.service_type = None
         self.service_id = None
         self.set_service_type(service_type)
-        self.output_fields = None
 
         self.edit_network_code.textChanged.connect(self.changed)
         self.edit_station_code.textChanged.connect(self.changed)
         self.edit_location_code.textChanged.connect(self.changed)
-        self.radio_basic_output.toggled.connect(self.changed)
-        self.radio_extended_output.toggled.connect(self.changed)
+        self.output_table_options_widget.changed.connect(self.changed)
 
     def is_valid(self) -> bool:
         """
@@ -81,51 +73,26 @@ class FilterStationByIdWidget(QWidget, FORM_CLASS):
         """
         self.service_type = service_type
 
+        self.output_table_options_widget.set_service_type(service_type)
+
     def set_service_id(self, service_id: str):
         """
         Sets the associated service ID
         """
         self.service_id = service_id
 
-        service_config = SERVICE_MANAGER.service_details(self.service_type, self.service_id)
-        if 'fields' in service_config['default']:
-            self.output_fields = service_config['default']['fields']
-
-        if not service_config['settings'].get('outputtext', False):
-            if self.radio_basic_output.isChecked():
-                self.radio_extended_output.setChecked(True)
-            self.radio_basic_output.setEnabled(False)
-        else:
-            self.radio_basic_output.setEnabled(True)
-
-        if not service_config['settings'].get('outputxml', False):
-            if self.radio_extended_output.isChecked():
-                self.radio_basic_output.setChecked(True)
-            self.radio_extended_output.setEnabled(False)
-        else:
-            self.radio_extended_output.setEnabled(True)
+        self.output_table_options_widget.set_service_id(service_id)
 
     def restore_settings(self, prefix: str):
         """
         Restores the dialog state from settings
         """
-        if self.service_id:
-            service_config = SERVICE_MANAGER.service_details(self.service_type, self.service_id)
-        else:
-            service_config = None
-
         s = QgsSettings()
         self.edit_network_code.setText(s.value('/plugins/qquake/{}_network_code'.format(prefix), '', str))
         self.edit_station_code.setText(s.value('/plugins/qquake/{}_station_code'.format(prefix), '', str))
         self.edit_location_code.setText(s.value('/plugins/qquake/{}_location_code'.format(prefix), '', str))
 
-        if not service_config or service_config['settings'].get('outputtext', False):
-            self.radio_basic_output.setChecked(
-                s.value('/plugins/qquake/{}_single_event_basic_checked'.format(prefix), True, bool))
-
-        if not service_config or service_config['settings'].get('outputxml', False):
-            self.radio_extended_output.setChecked(
-                s.value('/plugins/qquake/{}_single_event_extended_checked'.format(prefix), False, bool))
+        self.output_table_options_widget.restore_settings(prefix, 'single')
 
     def save_settings(self, prefix: str):
         """
@@ -136,24 +103,12 @@ class FilterStationByIdWidget(QWidget, FORM_CLASS):
         s.setValue('/plugins/qquake/{}_station_code'.format(prefix), self.edit_station_code.text())
         s.setValue('/plugins/qquake/{}_location_code'.format(prefix), self.edit_location_code.text())
 
-        s.setValue('/plugins/qquake/{}_single_event_basic_checked'.format(prefix), self.radio_basic_output.isChecked())
-        s.setValue('/plugins/qquake/{}_single_event_extended_checked'.format(prefix),
-                   self.radio_extended_output.isChecked())
+        self.output_table_options_widget.save_settings(prefix, 'single')
 
     def _enable_widgets(self):
         """
         Selectively enables widgets
         """
-        self.output_table_options_button.setEnabled(self.radio_extended_output.isChecked())
-
-    def _output_table_options(self):
-        """
-        Triggers display of the output table options dialog
-        """
-        dlg = OutputTableOptionsDialog(self.service_type, self.service_id, self.output_fields, self)
-        if dlg.exec_():
-            self.output_fields = dlg.selected_fields()
-            self.changed.emit()
 
     def network_codes(self) -> Optional[str]:
         """
@@ -173,11 +128,17 @@ class FilterStationByIdWidget(QWidget, FORM_CLASS):
         """
         return self.edit_location_code.text().strip() or None
 
+    def output_fields(self) -> Optional[List[str]]:
+        """
+        Returns the selected output fields
+        """
+        return self.output_table_options_widget.output_fields
+
     def output_type(self) -> str:
         """
-        Returns the output layer type
+        Returns the output table type
         """
-        return Fetcher.BASIC if self.radio_basic_output.isChecked() else Fetcher.EXTENDED
+        return self.output_table_options_widget.output_type()
 
     def convert_negative_depths(self) -> bool:
         """

@@ -505,7 +505,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                               circle_radius_unit=filter_widget.circle_radius_unit(),
                               earthquake_number_mdps_greater=filter_widget.earthquake_number_mdps_greater(),
                               earthquake_max_intensity_greater=filter_widget.earthquake_max_intensity_greater(),
-                              output_fields=filter_widget.output_fields,
+                              output_fields=filter_widget.output_fields(),
                               output_type=filter_widget.output_type(),
                               convert_negative_depths=filter_widget.convert_negative_depths(),
                               depth_unit=filter_widget.depth_unit(),
@@ -521,7 +521,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                                   event_service=service,
                                   event_ids=filter_widget.ids(),
                                   contributor_id=filter_widget.contributor_id(),
-                                  output_fields=filter_widget.output_fields,
+                                  output_fields=filter_widget.output_fields(),
                                   output_type=filter_widget.output_type(),
                                   convert_negative_depths=filter_widget.convert_negative_depths(),
                                   depth_unit=filter_widget.depth_unit()
@@ -530,7 +530,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
             fetcher = Fetcher(service_type=service_type,
                               event_service=service,
                               url=filter_widget.url(),
-                              output_fields=filter_widget.output_fields,
+                              output_fields=filter_widget.output_fields(),
                               output_type=filter_widget.output_type(),
                               convert_negative_depths=filter_widget.convert_negative_depths(),
                               depth_unit=filter_widget.depth_unit()
@@ -541,7 +541,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                               network_codes=filter_widget.network_codes(),
                               station_codes=filter_widget.station_codes(),
                               locations=filter_widget.locations(),
-                              output_fields=filter_widget.output_fields,
+                              output_fields=filter_widget.output_fields(),
                               output_type=filter_widget.output_type(),
                               convert_negative_depths=filter_widget.convert_negative_depths(),
                               depth_unit=filter_widget.depth_unit()
