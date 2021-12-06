@@ -28,11 +28,36 @@ from qgis.PyQt.QtCore import (
     QCoreApplication
 )
 from qgis.PyQt.QtGui import QIcon
-from qgis.PyQt.QtWidgets import QAction
+from qgis.PyQt.QtWidgets import (
+    QAction,
+    QMenu
+)
+
+from qgis.gui import (
+    QgsOptionsWidgetFactory
+)
 
 from qquake.gui.gui_utils import GuiUtils
 # Import the code for the dialog
 from qquake.gui.qquake_dialog import QQuakeDialog
+from qquake.gui.qquake_options_widget import QQuakeOptionsWidget
+
+
+class QQuakeOptionsFactory(QgsOptionsWidgetFactory):
+    """
+    Factory class for SLYR options widget
+    """
+
+    def __init__(self):  # pylint: disable=useless-super-delegation
+        super().__init__()
+
+    def icon(self):  # pylint: disable=missing-function-docstring
+        return GuiUtils.get_icon('icon.svg')
+
+    def createWidget(self, parent):  # pylint: disable=missing-function-docstring
+        res = QQuakeOptionsWidget(parent)
+        res.setObjectName('qquake_options')
+        return res
 
 
 class QQuake:
@@ -65,11 +90,12 @@ class QQuake:
 
         # Declare instance attributes
         self.actions = []
-        self.menu = self.tr('&QQuake')
+        self.menu = None
 
         # Check if plugin was started the first time in current QGIS session
         # Must be set in initGui() to survive plugin reloads
         self.first_start = None
+        self.options_factory = None
 
     # noinspection PyMethodMayBeStatic
     def tr(self, message):
@@ -162,30 +188,54 @@ class QQuake:
 
     def initGui(self):
         """Create the menu entries and toolbar icons inside the QGIS GUI."""
+        self.menu = QMenu(self.tr('&QQuake'))
+        self.iface.pluginMenu().addMenu(self.menu)
 
-        icon_path = GuiUtils.get_icon_svg('icon.svg')
-        self.add_action(
-            icon_path,
-            text=self.tr('QQuake'),
-            callback=self.run,
-            parent=self.iface.mainWindow())
+        show_dialog_action = QAction(self.tr('QQuake'))
+        show_dialog_action.setIcon(GuiUtils.get_icon('icon.svg'))
+        show_dialog_action.triggered.connect(self.show_dialog)
+        self.iface.addToolBarIcon(show_dialog_action)
+        self.menu.addAction(show_dialog_action)
+        self.actions.append(show_dialog_action)
+
+        show_options_action = QAction(self.tr('Options…'))
+        show_options_action.setIcon(GuiUtils.get_icon('options.svg'))
+        show_options_action.triggered.connect(self.show_options)
+        self.menu.addAction(show_options_action)
+        self.actions.append(show_options_action)
 
         # will be set False in run()
         self.first_start = True
 
+        self.options_factory = QQuakeOptionsFactory()
+        self.options_factory.setTitle(self.tr('QQuake'))
+        self.iface.registerOptionsWidgetFactory(self.options_factory)
+
     def unload(self):
         """Removes the plugin menu item and icon from QGIS GUI."""
         for action in self.actions:
-            self.iface.removePluginMenu(
-                self.tr('&QQuake'),
-                action)
-            self.iface.removeToolBarIcon(action)
+            action.deleteLater()
+        self.actions = []
 
-    def run(self):
-        """Run method that performs all the real work"""
+        if self.menu is not None:
+            self.menu.deleteLater()
+            self.menu = None
 
+        if self.options_factory:
+            self.iface.unregisterOptionsWidgetFactory(self.options_factory)
+
+    def show_dialog(self):
+        """
+        Shows the QQuake dialog
+        """
         self.dlg = QQuakeDialog(self.iface)
         # dlg.setAttribute(Qt.WA_DeleteOnClose)
 
         # show the dialog
         self.dlg.show()
+
+    def show_options(self):
+        """
+        Shows the plugin options
+        """
+        self.iface.showOptionsDialog(self.iface.mainWindow(), currentPage='qquake_options')

@@ -20,7 +20,7 @@
       <enum>QTabWidget::North</enum>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>3</number>
      </property>
      <property name="tabsClosable">
       <bool>false</bool>
@@ -176,8 +176,8 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>628</width>
-                    <height>240</height>
+                    <width>100</width>
+                    <height>30</height>
                    </rect>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_12">
@@ -390,8 +390,8 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>68</width>
-                    <height>28</height>
+                    <width>100</width>
+                    <height>30</height>
                    </rect>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_14">
@@ -585,8 +585,8 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>68</width>
-                    <height>28</height>
+                    <width>100</width>
+                    <height>30</height>
                    </rect>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_17">
