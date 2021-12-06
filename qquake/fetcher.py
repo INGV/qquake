@@ -625,22 +625,31 @@ class Fetcher(QObject):
         ok, _ = vl.dataProvider().addFeatures(features)
         assert ok
 
+        epicenter_style_url = StyleUtils.style_url(self.styles[SERVICE_MANAGER.FDSNEVENT]) if SERVICE_MANAGER.FDSNEVENT in self.styles else None
+
         if self.url:
-            default_style_url = StyleUtils.default_style_for_events_url()
+            default_style_url = epicenter_style_url or StyleUtils.default_style_for_events_url()
             err = StyleUtils.fetch_and_apply_style(vl, default_style_url)
             if err:
                 self.message.emit(err, Qgis.Warning)
-        elif not self.url and self.service_config.get('styleurl'):
-            err = StyleUtils.fetch_and_apply_style(vl, self.service_config.get('styleurl'))
+        elif not self.url and (epicenter_style_url or self.service_config.get('styleurl')):
+            err = StyleUtils.fetch_and_apply_style(vl, epicenter_style_url or self.service_config.get('styleurl'))
             if err:
                 self.message.emit(err, Qgis.Warning)
-        elif not self.url and isinstance(self.service_config.get('default', {}).get('style', {}), dict) and \
-                self.service_config['default']['style'].get('events'):
-            style = self.service_config['default']['style']['events']
+        elif not self.url and (epicenter_style_url or (isinstance(self.service_config.get('default', {}).get('style', {}), dict) and \
+                self.service_config['default']['style'].get('events'))):
 
-            style_ref = style.get('style')
-            if style_ref:
-                style_url = SERVICE_MANAGER.PRESET_STYLES[style_ref]['url']
+            style_url = None
+            if epicenter_style_url:
+                style_url = epicenter_style_url
+            else:
+                style = self.service_config['default']['style']['events']
+
+                style_ref = style.get('style')
+                if style_ref:
+                    style_url = SERVICE_MANAGER.PRESET_STYLES[style_ref]['url']
+
+            if style_url:
                 if isinstance(self.result, BasicTextParser):
                     style_attr = style.get('classified_attribute_text')
                 else:
@@ -665,22 +674,31 @@ class Fetcher(QObject):
         ok, _ = vl.dataProvider().addFeatures(features)
         assert ok
 
+        mdp_style_url = StyleUtils.style_url(self.styles[SERVICE_MANAGER.MACROSEISMIC]) if SERVICE_MANAGER.MACROSEISMIC in self.styles else None
+
         if self.url:
-            default_style_url = StyleUtils.default_style_for_macro_url()
+            default_style_url = mdp_style_url or StyleUtils.default_style_for_macro_url()
             err = StyleUtils.fetch_and_apply_style(vl, default_style_url)
             if err:
                 self.message.emit(err, Qgis.Warning)
         elif self.service_config.get('mdpstyleurl'):
-            err = StyleUtils.fetch_and_apply_style(vl, self.service_config.get('mdpstyleurl'))
+            err = StyleUtils.fetch_and_apply_style(vl, mdp_style_url or self.service_config.get('mdpstyleurl'))
             if err:
                 self.message.emit(err, Qgis.Warning)
         elif isinstance(self.service_config.get('default', {}).get('style', {}), dict) and \
                 self.service_config['default']['style'].get('mdp'):
-            style = self.service_config['default']['style']['mdp']
 
-            style_ref = style.get('style')
-            if style_ref:
-                style_url = SERVICE_MANAGER.PRESET_STYLES[style_ref]['url']
+            style_url = None
+            if mdp_style_url:
+                style_url = mdp_style_url
+            else:
+                style = self.service_config['default']['style']['mdp']
+
+                style_ref = style.get('style')
+                if style_ref:
+                    style_url = SERVICE_MANAGER.PRESET_STYLES[style_ref]['url']
+
+            if style_url:
                 if isinstance(self.result, BasicTextParser):
                     style_attr = style.get('classified_attribute_text')
                 else:
@@ -709,8 +727,11 @@ class Fetcher(QObject):
         ok, _ = vl.dataProvider().addFeatures(features)
         assert ok
 
-        if self.service_config.get('styleurl'):
-            err = StyleUtils.fetch_and_apply_style(vl, self.service_config.get('styleurl'))
+        station_style_url = StyleUtils.style_url(
+            self.styles[SERVICE_MANAGER.FDSNSTATION]) if SERVICE_MANAGER.FDSNSTATION in self.styles else None
+
+        if station_style_url or self.service_config.get('styleurl'):
+            err = StyleUtils.fetch_and_apply_style(vl, station_style_url or self.service_config.get('styleurl'))
             if err:
                 self.message.emit(err, Qgis.Warning)
 
@@ -718,10 +739,15 @@ class Fetcher(QObject):
                 self.service_config['default']['style'].get('stations'):
             style = self.service_config['default']['style']['stations']
 
-            style_ref = style.get('style')
-            if style_ref:
-                style_url = SERVICE_MANAGER.PRESET_STYLES[style_ref]['url']
-                assert style_url
+            style_url = None
+            if station_style_url:
+                style_url = station_style_url
+            else:
+                style_ref = style.get('style')
+                if style_ref:
+                    style_url = SERVICE_MANAGER.PRESET_STYLES[style_ref]['url']
+
+            if style_url:
                 if isinstance(self.result, BasicTextParser):
                     style_attr = style.get('classified_attribute_text')
                 else:
