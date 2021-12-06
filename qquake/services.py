@@ -353,5 +353,24 @@ class ServiceManager(QObject):
         """
         self.contributors[service_type][service_id] = contributors
 
+    def styles_for_service_type(self, service_type: str) -> List[str]:
+        """
+        Returns a list of available styles for the specified service type
+        """
+        res = []
+        for name, style in self.PRESET_STYLES.items():
+            style_type = style.get('type')
+            if not style_type:
+                continue
+
+            if service_type == ServiceManager.FDSNSTATION and style_type == "stations":
+                res.append(name)
+            elif service_type == ServiceManager.FDSNEVENT and style_type == "events":
+                res.append(name)
+            elif service_type == ServiceManager.MACROSEISMIC and style_type == "macroseismic":
+                res.append(name)
+
+        return res
+
 
 SERVICE_MANAGER = ServiceManager()
