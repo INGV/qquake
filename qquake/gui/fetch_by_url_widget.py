@@ -20,7 +20,7 @@
  *                                                                         *
  ***************************************************************************/
 """
-from typing import Optional, List
+from typing import Optional, List, Dict
 
 from qgis.PyQt import uic
 from qgis.PyQt.QtCore import (
@@ -121,3 +121,6 @@ class FetchByUrlWidget(QWidget, FORM_CLASS, BaseFilterWidget):
         Returns the current URL
         """
         return self.url_edit.toPlainText().strip()
+
+    def selected_styles(self) -> Dict[str, str]:
+        return self.output_table_options_widget.selected_styles()
