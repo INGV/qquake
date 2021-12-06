@@ -38,6 +38,13 @@ class StyleUtils:
     """
 
     @staticmethod
+    def style_url(style_name: str) -> str:
+        """
+        Returns the URL for the matching style
+        """
+        return SERVICE_MANAGER.PRESET_STYLES[style_name]['url']
+
+    @staticmethod
     def default_style_for_events_url() -> str:
         """
         Returns the URL for the default style to use for event layers
