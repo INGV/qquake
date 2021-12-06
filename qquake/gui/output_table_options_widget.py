@@ -22,6 +22,7 @@
 """
 
 from functools import partial
+from typing import Dict
 
 from qgis.PyQt import uic
 from qgis.PyQt.QtCore import pyqtSignal
@@ -267,3 +268,20 @@ class OutputTableOptionsWidget(QWidget, FORM_CLASS):
         Returns the output table type
         """
         return Fetcher.BASIC if self.radio_basic_output.isChecked() else Fetcher.EXTENDED
+
+    def selected_styles(self) -> Dict[str, str]:
+        """
+        Returns a dictionary of the selected styles for the results
+        """
+        res = {}
+
+        if self.service_type in (SERVICE_MANAGER.FDSNEVENT, SERVICE_MANAGER.MACROSEISMIC):
+            res[SERVICE_MANAGER.FDSNEVENT] = self.combo_style_epicentres.currentText()
+
+        if self.service_type == SERVICE_MANAGER.MACROSEISMIC:
+            res[SERVICE_MANAGER.MACROSEISMIC] = self.combo_style_macro.currentText()
+
+        if self.service_type == SERVICE_MANAGER.FDSNSTATION:
+            res[SERVICE_MANAGER.FDSNSTATION] = self.combo_style_stations.currentText()
+
+        return res

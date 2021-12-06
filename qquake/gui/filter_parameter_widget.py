@@ -22,7 +22,7 @@
 """
 
 from copy import deepcopy
-from typing import Optional, List
+from typing import Optional, List, Dict
 
 from qgis.PyQt import uic
 from qgis.PyQt.QtCore import (
@@ -878,6 +878,9 @@ class FilterParameterWidget(QWidget, FORM_CLASS, BaseFilterWidget):  # pylint: d
 
     def output_fields(self) -> Optional[List[str]]:
         return self.output_table_options_widget.output_fields
+
+    def selected_styles(self) -> Dict[str, str]:
+        return self.output_table_options_widget.selected_styles()
 
     def to_service_definition(self) -> dict:
         """

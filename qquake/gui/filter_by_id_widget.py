@@ -21,7 +21,7 @@
  ***************************************************************************/
 """
 import re
-from typing import List, Optional
+from typing import List, Optional, Dict
 
 from qgis.PyQt import uic
 from qgis.PyQt.QtCore import (
@@ -213,6 +213,9 @@ class FilterByIdWidget(QWidget, FORM_CLASS, BaseFilterWidget):
 
     def depth_unit(self) -> QgsUnitTypes.DistanceUnit:
         return self.output_options_widget.depth_unit()
+
+    def selected_styles(self) -> Dict[str, str]:
+        return self.output_table_options_widget.selected_styles()
 
     def _refresh_contributors(self):
         """

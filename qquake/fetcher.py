@@ -15,7 +15,7 @@ __revision__ = '$Format:%H$'
 
 import re
 from pathlib import Path
-from typing import List, Tuple
+from typing import List, Tuple, Dict
 from typing import Union, Optional
 
 from qgis.PyQt.QtCore import (
@@ -105,13 +105,14 @@ class Fetcher(QObject):
                  event_type: Optional[str] = None,
                  updated_after: Optional[QDateTime] = None,
                  split_strategy: Optional[str] = None,
+                 styles: Dict[str, str] = None,
                  url=None
                  ):
         super().__init__(parent=parent)
 
         self.service_type = service_type
-        self.event_service = event_service
-        self.service_config = SERVICE_MANAGER.service_details(self.service_type, self.event_service)
+        self.service_id = event_service
+        self.service_config = SERVICE_MANAGER.service_details(self.service_type, self.service_id)
 
         self.split_strategy = split_strategy
         self.exceeded_limit = False
@@ -196,6 +197,7 @@ class Fetcher(QObject):
         self.is_mdp_basic_text_request = False
         self.is_first_request = True
         self.query_limit = None
+        self.styles = styles
 
     def suggest_split_strategy(self) -> str:
         """
@@ -536,7 +538,7 @@ class Fetcher(QObject):
         if self.url and QUrl(self.url).isLocalFile():
             return Path(QUrl(self.url).toLocalFile()).stem
 
-        name = self.event_service
+        name = self.service_id
 
         if self.event_min_magnitude is not None and self.event_max_magnitude is not None:
             name += ' ({:.1f} ≤ Magnitude ≤ {:.1f})'.format(self.event_min_magnitude, self.event_max_magnitude)

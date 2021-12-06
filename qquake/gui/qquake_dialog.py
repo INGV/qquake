@@ -59,6 +59,7 @@ from qgis.gui import (
 )
 
 from qquake.fetcher import Fetcher
+from qquake.gui.base_filter_widget import BaseFilterWidget
 from qquake.gui.fetch_by_url_widget import FetchByUrlWidget
 from qquake.gui.filter_by_id_widget import FilterByIdWidget
 from qquake.gui.filter_parameter_widget import FilterParameterWidget
@@ -67,8 +68,6 @@ from qquake.gui.gui_utils import GuiUtils
 from qquake.gui.ogc_service_options_widget import OgcServiceWidget
 from qquake.gui.service_configuration_widget import ServiceConfigurationDialog
 from qquake.gui.service_information_widget import ServiceInformationWidget
-from qquake.gui.base_filter_widget import BaseFilterWidget
-
 from qquake.services import SERVICE_MANAGER
 
 FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('qquake_dialog_base.ui'))
@@ -513,7 +512,8 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                               depth_unit=filter_widget.depth_unit(),
                               event_type=filter_widget.event_type(),
                               updated_after=filter_widget.updated_after(),
-                              split_strategy=split_strategy
+                              split_strategy=split_strategy,
+                              styles=filter_widget.selected_styles()
                               )
         elif isinstance(filter_widget, FilterByIdWidget):
             if not service_config['settings'].get('queryeventid'):
@@ -526,7 +526,8 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                                   output_fields=filter_widget.output_fields(),
                                   output_type=filter_widget.output_type(),
                                   convert_negative_depths=filter_widget.convert_negative_depths(),
-                                  depth_unit=filter_widget.depth_unit()
+                                  depth_unit=filter_widget.depth_unit(),
+                                  styles=filter_widget.selected_styles()
                                   )
         elif isinstance(filter_widget, FetchByUrlWidget):
             fetcher = Fetcher(service_type=service_type,
@@ -535,7 +536,8 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                               output_fields=filter_widget.output_fields(),
                               output_type=filter_widget.output_type(),
                               convert_negative_depths=filter_widget.convert_negative_depths(),
-                              depth_unit=filter_widget.depth_unit()
+                              depth_unit=filter_widget.depth_unit(),
+                              styles=filter_widget.selected_styles()
                               )
         elif isinstance(filter_widget, FilterStationByIdWidget):
             fetcher = Fetcher(service_type=service_type,
@@ -546,7 +548,8 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                               output_fields=filter_widget.output_fields(),
                               output_type=filter_widget.output_type(),
                               convert_negative_depths=filter_widget.convert_negative_depths(),
-                              depth_unit=filter_widget.depth_unit()
+                              depth_unit=filter_widget.depth_unit(),
+                              styles=filter_widget.selected_styles()
                               )
         return fetcher
 
@@ -986,7 +989,8 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                 if service_limit is not None and events_count >= service_limit:
                     if self.fetcher.split_strategy is None:
                         choices = list(Fetcher.STRATEGIES)
-                        default_choice = [k for k, v in Fetcher.STRATEGIES.items() if v == self.fetcher.suggest_split_strategy()][0]
+                        default_choice = \
+                        [k for k, v in Fetcher.STRATEGIES.items() if v == self.fetcher.suggest_split_strategy()][0]
 
                         selection, ok = QInputDialog.getItem(self, self.tr('Query Exceeded Service Limit'),
                                                              self.tr(
@@ -1005,7 +1009,8 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                                                      Qgis.Critical, 0)
 
                     elif self.fetcher.exceeded_limit:
-                        self.message_bar.pushMessage(self.tr("One or more queries exceeded the service's result limit. Please retry using an alternative strategy."),
+                        self.message_bar.pushMessage(self.tr(
+                            "One or more queries exceeded the service's result limit. Please retry using an alternative strategy."),
                                                      Qgis.Critical, 0)
                 elif events_count > 500:
                     self.message_bar.pushMessage(

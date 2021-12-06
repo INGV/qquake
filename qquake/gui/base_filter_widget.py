@@ -21,7 +21,7 @@
  ***************************************************************************/
 """
 import abc
-from typing import List, Optional
+from typing import List, Optional, Dict
 
 from qgis.PyQt.QtWidgets import QWidget
 from qgis.core import (
@@ -92,4 +92,10 @@ class BaseFilterWidget(abc.ABC, metaclass=QABCMeta):
     def depth_unit(self) -> QgsUnitTypes.DistanceUnit:
         """
         Returns the associated depth unit
+        """
+
+    @abc.abstractmethod
+    def selected_styles(self) -> Dict[str, str]:
+        """
+        Returns a dictionary of the selected styles for the results
         """
