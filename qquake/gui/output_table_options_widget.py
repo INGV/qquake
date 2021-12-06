@@ -60,6 +60,33 @@ class OutputTableOptionsWidget(QWidget, FORM_CLASS):
 
         self.output_table_options_button.clicked.connect(self._output_table_options)
 
+        self.update_style_combos()
+
+    def update_style_combos(self):
+        """
+        Refreshes the entries in style combo boxes
+        """
+
+        def _populate_style_combo(combo, service_type: str):
+            """
+            Populates a style combo with matching styles of the specified type
+            """
+            prev_entry = combo.currentText()
+            combo.clear()
+            styles = SERVICE_MANAGER.styles_for_service_type(service_type)
+            for s in styles:
+                combo.addItem(s)
+
+            prev_index = combo.findText(prev_entry)
+            if prev_index >= 0:
+                combo.setCurrentIndex(prev_index)
+            else:
+                combo.setCurrentIndex(0)
+
+        _populate_style_combo(self.combo_style_epicentres, SERVICE_MANAGER.FDSNEVENT)
+        _populate_style_combo(self.combo_style_macro, SERVICE_MANAGER.MACROSEISMIC)
+        _populate_style_combo(self.combo_style_stations, SERVICE_MANAGER.FDSNSTATION)
+
     def restore_settings(self, prefix: str, suffix: str):
         """
         Restores widget state from settings
@@ -107,6 +134,15 @@ class OutputTableOptionsWidget(QWidget, FORM_CLASS):
         Sets the associated service type
         """
         self.service_type = service_type
+
+        self.label_style_epicentres.setVisible(self.service_type in (SERVICE_MANAGER.FDSNEVENT, SERVICE_MANAGER.MACROSEISMIC))
+        self.combo_style_epicentres.setVisible(self.service_type in (SERVICE_MANAGER.FDSNEVENT, SERVICE_MANAGER.MACROSEISMIC))
+
+        self.label_style_macro.setVisible(self.service_type == SERVICE_MANAGER.MACROSEISMIC)
+        self.combo_style_macro.setVisible(self.service_type == SERVICE_MANAGER.MACROSEISMIC)
+
+        self.label_style_stations.setVisible(self.service_type == SERVICE_MANAGER.FDSNSTATION)
+        self.combo_style_stations.setVisible(self.service_type == SERVICE_MANAGER.FDSNSTATION)
 
     def set_service_id(self, service_id: str):
         """
