@@ -58,6 +58,12 @@ class FilterByIdWidget(QWidget, FORM_CLASS, BaseFilterWidget):
 
         self.setupUi(self)
 
+        self.scroll_area.setStyleSheet("""
+            QScrollArea { background: transparent; }
+            QScrollArea > QWidget > QWidget { background: transparent; }
+            QScrollArea > QWidget > QScrollBar { background: 1; }
+        """)
+
         self.radio_single_event.toggled.connect(self._enable_widgets)
         self.radio_multiple_events.toggled.connect(self._enable_widgets)
         self.output_table_options_widget.changed.connect(self._enable_widgets)

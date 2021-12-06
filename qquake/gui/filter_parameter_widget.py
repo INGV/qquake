@@ -70,6 +70,12 @@ class FilterParameterWidget(QWidget, FORM_CLASS, BaseFilterWidget):  # pylint: d
 
         self.setupUi(self)
 
+        self.scroll_area.setStyleSheet("""
+            QScrollArea { background: transparent; }
+            QScrollArea > QWidget > QWidget { background: transparent; }
+            QScrollArea > QWidget > QScrollBar { background: 1; }
+        """)
+
         for m in range(1, 13):
             self.earthquake_max_intensity_greater_combo.addItem(str(m), m)
 

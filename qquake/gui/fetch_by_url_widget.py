@@ -37,8 +37,8 @@ from qgis.core import (
     QgsUnitTypes
 )
 
-from qquake.gui.gui_utils import GuiUtils
 from qquake.gui.base_filter_widget import BaseFilterWidget
+from qquake.gui.gui_utils import GuiUtils
 from qquake.services import SERVICE_MANAGER
 
 FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('fetch_by_url_widget.ui'))
@@ -56,6 +56,12 @@ class FetchByUrlWidget(QWidget, FORM_CLASS, BaseFilterWidget):
         QWidget.__init__(self, parent)
 
         self.setupUi(self)
+
+        self.scroll_area.setStyleSheet("""
+            QScrollArea { background: transparent; }
+            QScrollArea > QWidget > QWidget { background: transparent; }
+            QScrollArea > QWidget > QScrollBar { background: 1; }
+        """)
 
         fm = QFontMetrics(self.url_edit.font())
         self.url_edit.setMaximumHeight(fm.lineSpacing() * 6)

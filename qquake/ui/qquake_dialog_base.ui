@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1019</width>
-    <height>512</height>
+    <width>1082</width>
+    <height>901</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,7 +20,7 @@
       <enum>QTabWidget::North</enum>
      </property>
      <property name="currentIndex">
-      <number>3</number>
+      <number>0</number>
      </property>
      <property name="tabsClosable">
       <bool>false</bool>
@@ -153,40 +153,15 @@
               </sizepolicy>
              </property>
              <property name="currentIndex">
-              <number>2</number>
+              <number>0</number>
              </property>
              <widget class="QWidget" name="tab_5">
               <attribute name="title">
                <string>Search by Parameters</string>
               </attribute>
-              <layout class="QGridLayout" name="gridLayout">
-               <item row="0" column="0">
-                <widget class="QScrollArea" name="scrollArea">
-                 <property name="frameShape">
-                  <enum>QFrame::NoFrame</enum>
-                 </property>
-                 <property name="frameShadow">
-                  <enum>QFrame::Plain</enum>
-                 </property>
-                 <property name="widgetResizable">
-                  <bool>true</bool>
-                 </property>
-                 <widget class="QWidget" name="widget_2">
-                  <property name="geometry">
-                   <rect>
-                    <x>0</x>
-                    <y>0</y>
-                    <width>100</width>
-                    <height>30</height>
-                   </rect>
-                  </property>
-                  <layout class="QVBoxLayout" name="verticalLayout_12">
-                   <item>
-                    <widget class="QWidget" name="fdsn_event_filter_container" native="true"/>
-                   </item>
-                  </layout>
-                 </widget>
-                </widget>
+              <layout class="QVBoxLayout" name="verticalLayout_12">
+               <item>
+                <widget class="QWidget" name="fdsn_event_filter_container" native="true"/>
                </item>
               </layout>
              </widget>
@@ -373,34 +348,9 @@
               <attribute name="title">
                <string>Search by Parameters</string>
               </attribute>
-              <layout class="QVBoxLayout" name="verticalLayout_40">
+              <layout class="QVBoxLayout" name="verticalLayout_14">
                <item>
-                <widget class="QScrollArea" name="scrollArea_2">
-                 <property name="frameShape">
-                  <enum>QFrame::NoFrame</enum>
-                 </property>
-                 <property name="frameShadow">
-                  <enum>QFrame::Plain</enum>
-                 </property>
-                 <property name="widgetResizable">
-                  <bool>true</bool>
-                 </property>
-                 <widget class="QWidget" name="scrollAreaWidgetContents">
-                  <property name="geometry">
-                   <rect>
-                    <x>0</x>
-                    <y>0</y>
-                    <width>100</width>
-                    <height>30</height>
-                   </rect>
-                  </property>
-                  <layout class="QVBoxLayout" name="verticalLayout_14">
-                   <item>
-                    <widget class="QWidget" name="macro_filter_container" native="true"/>
-                   </item>
-                  </layout>
-                 </widget>
-                </widget>
+                <widget class="QWidget" name="macro_filter_container" native="true"/>
                </item>
               </layout>
              </widget>
@@ -562,7 +512,7 @@
            <item>
             <widget class="QTabWidget" name="fdsnstation_tab_widget">
              <property name="currentIndex">
-              <number>2</number>
+              <number>0</number>
              </property>
              <widget class="QWidget" name="tab_9">
               <attribute name="title">
@@ -570,32 +520,7 @@
               </attribute>
               <layout class="QVBoxLayout" name="verticalLayout_8">
                <item>
-                <widget class="QScrollArea" name="scrollArea_3">
-                 <property name="frameShape">
-                  <enum>QFrame::NoFrame</enum>
-                 </property>
-                 <property name="frameShadow">
-                  <enum>QFrame::Plain</enum>
-                 </property>
-                 <property name="widgetResizable">
-                  <bool>true</bool>
-                 </property>
-                 <widget class="QWidget" name="scrollAreaWidgetContents_2">
-                  <property name="geometry">
-                   <rect>
-                    <x>0</x>
-                    <y>0</y>
-                    <width>100</width>
-                    <height>30</height>
-                   </rect>
-                  </property>
-                  <layout class="QVBoxLayout" name="verticalLayout_17">
-                   <item>
-                    <widget class="QWidget" name="station_filter_container" native="true"/>
-                   </item>
-                  </layout>
-                 </widget>
-                </widget>
+                <widget class="QWidget" name="station_filter_container" native="true"/>
                </item>
               </layout>
              </widget>
@@ -760,7 +685,7 @@
              <x>0</x>
              <y>0</y>
              <width>598</width>
-             <height>375</height>
+             <height>764</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="gridLayout_4">

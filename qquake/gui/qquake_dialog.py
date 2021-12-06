@@ -87,15 +87,6 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.setObjectName('QQuakeDialog')
         QgsGui.enableAutoGeometryRestore(self)
 
-        self.scrollArea.setStyleSheet("""
-            QScrollArea { background: transparent; }
-            QScrollArea > QWidget > QWidget { background: transparent; }
-            QScrollArea > QWidget > QScrollBar { background: 1; }
-        """)
-        self.scrollArea_2.setStyleSheet(self.scrollArea.styleSheet())
-        self.scrollArea_3.setStyleSheet(self.scrollArea.styleSheet())
-        self.scrollArea_4.setStyleSheet(self.scrollArea.styleSheet())
-
         self.splitter.setStretchFactor(0, 0)
         self.splitter_2.setStretchFactor(0, 0)
         self.splitter_3.setStretchFactor(0, 0)
@@ -990,7 +981,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                     if self.fetcher.split_strategy is None:
                         choices = list(Fetcher.STRATEGIES)
                         default_choice = \
-                        [k for k, v in Fetcher.STRATEGIES.items() if v == self.fetcher.suggest_split_strategy()][0]
+                            [k for k, v in Fetcher.STRATEGIES.items() if v == self.fetcher.suggest_split_strategy()][0]
 
                         selection, ok = QInputDialog.getItem(self, self.tr('Query Exceeded Service Limit'),
                                                              self.tr(
@@ -1011,7 +1002,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                     elif self.fetcher.exceeded_limit:
                         self.message_bar.pushMessage(self.tr(
                             "One or more queries exceeded the service's result limit. Please retry using an alternative strategy."),
-                                                     Qgis.Critical, 0)
+                            Qgis.Critical, 0)
                 elif events_count > 500:
                     self.message_bar.pushMessage(
                         self.tr("Query returned a large number of results ({})".format(events_count)), Qgis.Warning, 0)
