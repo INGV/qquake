@@ -27,14 +27,7 @@
     <number>0</number>
    </property>
    <item row="7" column="0" colspan="3">
-    <widget class="OutputTableOptionsWidget" name="output_table_options_widget" native="true">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>20</height>
-      </size>
-     </property>
-    </widget>
+    <widget class="OutputTableOptionsWidget" name="output_table_options_widget" native="true"/>
    </item>
    <item row="8" column="0">
     <spacer name="verticalSpacer">
