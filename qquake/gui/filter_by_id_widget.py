@@ -38,9 +38,7 @@ from qgis.core import (
     QgsUnitTypes
 )
 
-from qquake.fetcher import Fetcher
 from qquake.gui.gui_utils import GuiUtils
-from qquake.gui.output_table_options_dialog import OutputTableOptionsDialog
 from qquake.services import SERVICE_MANAGER
 
 FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('filter_by_id_widget_base.ui'))
@@ -60,27 +58,22 @@ class FilterByIdWidget(QWidget, FORM_CLASS):
 
         self.radio_single_event.toggled.connect(self._enable_widgets)
         self.radio_multiple_events.toggled.connect(self._enable_widgets)
-        self.radio_basic_output.toggled.connect(self._enable_widgets)
-        self.radio_extended_output.toggled.connect(self._enable_widgets)
+        self.output_table_options_widget.changed.connect(self._enable_widgets)
         self.radio_contributor.toggled.connect(self._enable_widgets)
 
         self.button_refresh_contributors.clicked.connect(self._refresh_contributors)
 
         self._enable_widgets()
 
-        self.output_table_options_button.clicked.connect(self._output_table_options)
-
         self.service_type = None
         self.service_id = None
         self.set_service_type(service_type)
-        self.output_fields = None
         self.service_config = {}
 
         self.radio_single_event.toggled.connect(self.changed)
         self.edit_event_id.textChanged.connect(self.changed)
         self.event_ids_edit.textChanged.connect(self.changed)
-        self.radio_basic_output.toggled.connect(self.changed)
-        self.radio_extended_output.toggled.connect(self.changed)
+        self.output_table_options_widget.changed.connect(self.changed)
         self.radio_contributor.toggled.connect(self.changed)
         self.edit_contributor_id.currentTextChanged.connect(self.changed)
         self.button_import_from_file.clicked.connect(self.load_from_file)
@@ -105,30 +98,17 @@ class FilterByIdWidget(QWidget, FORM_CLASS):
         """
         self.service_type = service_type
 
+        self.output_table_options_widget.set_service_type(service_type)
+
     def set_service_id(self, service_id: str):
         """
         Sets the associated service ID
         """
         self.service_id = service_id
-        config = SERVICE_MANAGER.service_details(self.service_type, self.service_id)
-        if 'fields' in config['default']:
-            self.output_fields = config['default']['fields']
+
+        self.output_table_options_widget.set_service_id(service_id)
 
         self.service_config = SERVICE_MANAGER.service_details(self.service_type, self.service_id)
-
-        if not self.service_config['settings'].get('outputtext', False):
-            if self.radio_basic_output.isChecked():
-                self.radio_extended_output.setChecked(True)
-            self.radio_basic_output.setEnabled(False)
-        else:
-            self.radio_basic_output.setEnabled(True)
-
-        if not self.service_config['settings'].get('outputxml', False):
-            if self.radio_extended_output.isChecked():
-                self.radio_basic_output.setChecked(True)
-            self.radio_extended_output.setEnabled(False)
-        else:
-            self.radio_extended_output.setEnabled(True)
 
         if not self.service_config['settings'].get('querycontributorid'):
             if self.radio_contributor.isChecked():
@@ -150,11 +130,6 @@ class FilterByIdWidget(QWidget, FORM_CLASS):
         """
         s = QgsSettings()
 
-        if self.service_id:
-            service_config = SERVICE_MANAGER.service_details(self.service_type, self.service_id)
-        else:
-            service_config = None
-
         self.edit_event_id.setText(s.value('/plugins/qquake/{}_single_event_id'.format(prefix), '', str))
         self.edit_contributor_id.setCurrentText(s.value('/plugins/qquake/{}_contributor_id'.format(prefix), '', str))
         if s.value('/plugins/qquake/{}_single_event_checked'.format(prefix), True, bool):
@@ -167,13 +142,7 @@ class FilterByIdWidget(QWidget, FORM_CLASS):
             else:
                 self.radio_single_event.setChecked(True)
 
-        if not service_config or service_config['settings'].get('outputtext', False):
-            self.radio_basic_output.setChecked(
-                s.value('/plugins/qquake/{}_single_event_basic_checked'.format(prefix), True, bool))
-
-        if not service_config or service_config['settings'].get('outputxml', False):
-            self.radio_extended_output.setChecked(
-                s.value('/plugins/qquake/{}_single_event_extended_checked'.format(prefix), False, bool))
+        self.output_table_options_widget.restore_settings(prefix, 'single')
 
     def save_settings(self, prefix: str):
         """
@@ -185,9 +154,8 @@ class FilterByIdWidget(QWidget, FORM_CLASS):
         s.setValue('/plugins/qquake/{}_multi_event_checked'.format(prefix), self.radio_multiple_events.isChecked())
         s.setValue('/plugins/qquake/{}_contributor_checked'.format(prefix), self.radio_contributor.isChecked())
         s.setValue('/plugins/qquake/{}_contributor_id'.format(prefix), self.edit_contributor_id.currentText())
-        s.setValue('/plugins/qquake/{}_single_event_basic_checked'.format(prefix), self.radio_basic_output.isChecked())
-        s.setValue('/plugins/qquake/{}_single_event_extended_checked'.format(prefix),
-                   self.radio_extended_output.isChecked())
+
+        self.output_table_options_widget.save_settings(prefix, 'single')
 
     def _enable_widgets(self):
         """
@@ -207,17 +175,6 @@ class FilterByIdWidget(QWidget, FORM_CLASS):
             self.button_refresh_contributors.setEnabled(True)
         else:
             self.button_refresh_contributors.setEnabled(False)
-
-        self.output_table_options_button.setEnabled(self.radio_extended_output.isChecked())
-
-    def _output_table_options(self):
-        """
-        Triggers the output table options dialog
-        """
-        dlg = OutputTableOptionsDialog(self.service_type, self.service_id, self.output_fields, self)
-        if dlg.exec_():
-            self.output_fields = dlg.selected_fields()
-            self.changed.emit()
 
     def contributor_id(self) -> Optional[str]:
         """
@@ -262,7 +219,13 @@ class FilterByIdWidget(QWidget, FORM_CLASS):
         """
         Returns the output table type
         """
-        return Fetcher.BASIC if self.radio_basic_output.isChecked() else Fetcher.EXTENDED
+        return self.output_table_options_widget.output_type()
+
+    def output_fields(self) -> Optional[List[str]]:
+        """
+        Returns the selected output fields
+        """
+        return self.output_table_options_widget.output_fields
 
     def convert_negative_depths(self) -> bool:
         """

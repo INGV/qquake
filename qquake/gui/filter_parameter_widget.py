@@ -46,9 +46,7 @@ from qgis.gui import (
     QgsMapToolEmitPoint,
 )
 
-from qquake.fetcher import Fetcher
 from qquake.gui.gui_utils import GuiUtils
-from qquake.gui.output_table_options_dialog import OutputTableOptionsDialog
 from qquake.gui.predefined_areas_dialog import PredefinedAreasDialog
 from qquake.quakeml.common import EVENT_TYPES
 from qquake.services import SERVICE_MANAGER
@@ -114,8 +112,7 @@ class FilterParameterWidget(QWidget, FORM_CLASS):  # pylint: disable=too-many-pu
         self.earthquake_max_intensity_greater_combo.currentIndexChanged.connect(self.changed)
         self.earthquake_number_mdps_greater_check.toggled.connect(self.changed)
         self.earthquake_number_mdps_greater_spin.valueChanged.connect(self.changed)
-        self.radio_basic_output.toggled.connect(self.changed)
-        self.radio_extended_output.toggled.connect(self.changed)
+        self.output_table_options_widget.changed.connect(self.changed)
         self.event_type_check.toggled.connect(self.changed)
         self.event_type_combo.currentIndexChanged.connect(self.changed)
         self.events_updated_after_check.toggled.connect(self.changed)
@@ -138,13 +135,11 @@ class FilterParameterWidget(QWidget, FORM_CLASS):  # pylint: disable=too-many-pu
         self.max_time_check.toggled.connect(self._enable_widgets)
         self.min_mag_check.toggled.connect(self._enable_widgets)
         self.max_mag_check.toggled.connect(self._enable_widgets)
-        self.radio_basic_output.toggled.connect(self._enable_widgets)
-        self.radio_extended_output.toggled.connect(self._enable_widgets)
+        self.output_table_options_widget.changed.connect(self._enable_widgets)
         self.earthquake_max_intensity_greater_check.toggled.connect(self._enable_widgets)
         self.earthquake_number_mdps_greater_check.toggled.connect(self._enable_widgets)
         self._enable_widgets()
 
-        self.output_table_options_button.clicked.connect(self._output_table_options)
         self._populated_predefined_areas()
         SERVICE_MANAGER.areasChanged.connect(self._populated_predefined_areas)
         self.combo_predefined_area.currentIndexChanged.connect(self._use_predefined_area)
@@ -161,7 +156,6 @@ class FilterParameterWidget(QWidget, FORM_CLASS):  # pylint: disable=too-many-pu
         self.service_type = None
         self.service_id = None
         self.set_service_type(service_type)
-        self.output_fields = None
 
     def is_valid(self) -> bool:
         """
@@ -186,6 +180,8 @@ class FilterParameterWidget(QWidget, FORM_CLASS):  # pylint: disable=too-many-pu
         self.magnitude_group.setVisible(self.service_type in (SERVICE_MANAGER.MACROSEISMIC, SERVICE_MANAGER.FDSNEVENT))
         self.macroseismic_data_group.setVisible(self.service_type == SERVICE_MANAGER.MACROSEISMIC)
 
+        self.output_table_options_widget.set_service_type(service_type)
+
     def set_service_id(self, service_id: str):  # pylint:disable=too-many-branches
         """
         Sets the associated service ID
@@ -194,8 +190,7 @@ class FilterParameterWidget(QWidget, FORM_CLASS):  # pylint: disable=too-many-pu
 
         service_config = SERVICE_MANAGER.service_details(self.service_type, self.service_id)
 
-        if 'fields' in service_config['default']:
-            self.output_fields = service_config['default']['fields']
+        self.output_table_options_widget.set_service_id(service_id)
 
         if not service_config['settings'].get('querycircular', False):
             if self.radio_circular_area.isChecked():
@@ -223,20 +218,6 @@ class FilterParameterWidget(QWidget, FORM_CLASS):  # pylint: disable=too-many-pu
         if service_config['settings'].get('querycircularradiuskm', False):
             self.radius_unit_combobox.insertItem(0, self.tr('Kilometers'), QgsUnitTypes.DistanceKilometers)
         self.radius_unit_combobox.setCurrentIndex(0)
-
-        if not service_config['settings'].get('outputtext', False):
-            if self.radio_basic_output.isChecked():
-                self.radio_extended_output.setChecked(True)
-            self.radio_basic_output.setEnabled(False)
-        else:
-            self.radio_basic_output.setEnabled(True)
-
-        if not service_config['settings'].get('outputxml', False):
-            if self.radio_extended_output.isChecked():
-                self.radio_basic_output.setChecked(True)
-            self.radio_extended_output.setEnabled(False)
-        else:
-            self.radio_extended_output.setEnabled(True)
 
     def restore_settings(self, prefix: str):  # pylint: disable=too-many-locals,too-many-branches,too-many-statements
         """
@@ -341,13 +322,7 @@ class FilterParameterWidget(QWidget, FORM_CLASS):  # pylint: disable=too-many-pu
         if v is not None:
             self.earthquake_number_mdps_greater_spin.setValue(float(v))
 
-        if not service_config or service_config['settings'].get('outputtext', False):
-            self.radio_basic_output.setChecked(
-                s.value('/plugins/qquake/{}_last_event_basic_checked'.format(prefix), True, bool))
-
-        if not service_config or service_config['settings'].get('outputxml', False):
-            self.radio_extended_output.setChecked(
-                s.value('/plugins/qquake/{}_last_event_extended_checked'.format(prefix), False, bool))
+        self.output_table_options_widget.restore_settings(prefix, 'last')
 
         self.event_type_check.setChecked(
             s.value('/plugins/qquake/{}_last_event_type_checked'.format(prefix), False, bool))
@@ -412,9 +387,7 @@ class FilterParameterWidget(QWidget, FORM_CLASS):  # pylint: disable=too-many-pu
         s.setValue('/plugins/qquake/{}_last_event_min_mag_checked2'.format(prefix), self.min_mag_check.isChecked())
         s.setValue('/plugins/qquake/{}_last_event_max_mag_checked2'.format(prefix), self.max_mag_check.isChecked())
 
-        s.setValue('/plugins/qquake/{}_last_event_basic_checked'.format(prefix), self.radio_basic_output.isChecked())
-        s.setValue('/plugins/qquake/{}_last_event_extended_checked'.format(prefix),
-                   self.radio_extended_output.isChecked())
+        self.output_table_options_widget.save_settings(prefix, 'last')
 
         s.setValue('/plugins/qquake/{}_last_event_type'.format(prefix), self.event_type_combo.currentData())
         s.setValue('/plugins/qquake/{}_last_event_type_checked'.format(prefix),
@@ -531,8 +504,6 @@ class FilterParameterWidget(QWidget, FORM_CLASS):  # pylint: disable=too-many-pu
 
         self.event_type_combo.setEnabled(self.event_type_check.isChecked())
         self.events_updated_after.setEnabled(self.events_updated_after_check.isChecked())
-
-        self.output_table_options_button.setEnabled(self.radio_extended_output.isChecked())
 
     def draw_rect_on_map(self):
         """
@@ -776,15 +747,6 @@ class FilterParameterWidget(QWidget, FORM_CLASS):  # pylint: disable=too-many-pu
         # reset previously selected predefined area, now that new min/max area has been applied
         self._use_predefined_area()
 
-    def _output_table_options(self):
-        """
-        Triggers the output table options dialog
-        """
-        dlg = OutputTableOptionsDialog(self.service_type, self.service_id, self.output_fields, self)
-        if dlg.exec_():
-            self.output_fields = dlg.selected_fields()
-            self.changed.emit()
-
     def start_date(self) -> Optional[QDateTime]:
         """
         Returns the start date
@@ -935,7 +897,13 @@ class FilterParameterWidget(QWidget, FORM_CLASS):  # pylint: disable=too-many-pu
         """
         Returns the output table type
         """
-        return Fetcher.BASIC if self.radio_basic_output.isChecked() else Fetcher.EXTENDED
+        return self.output_table_options_widget.output_type()
+
+    def output_fields(self) -> Optional[List[str]]:
+        """
+        Returns the selected output fields
+        """
+        return self.output_table_options_widget.output_fields
 
     def to_service_definition(self) -> dict:
         """

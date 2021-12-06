@@ -9,10 +9,7 @@
 """
 import unittest
 
-from qgis.PyQt.QtCore import QDateTime, Qt
-
-from qquake.fetcher import Fetcher
-from qquake.services import ServiceManager, SERVICE_MANAGER
+from qquake.services import ServiceManager
 
 
 class TestServiceManager(unittest.TestCase):

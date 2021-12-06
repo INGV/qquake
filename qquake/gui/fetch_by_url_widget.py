@@ -20,6 +20,8 @@
  *                                                                         *
  ***************************************************************************/
 """
+from typing import Optional, List
+
 from qgis.PyQt import uic
 from qgis.PyQt.QtCore import (
     pyqtSignal,
@@ -35,9 +37,7 @@ from qgis.core import (
     QgsUnitTypes
 )
 
-from qquake.fetcher import Fetcher
 from qquake.gui.gui_utils import GuiUtils
-from qquake.gui.output_table_options_dialog import OutputTableOptionsDialog
 from qquake.services import SERVICE_MANAGER
 
 FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('fetch_by_url_widget.ui'))
@@ -59,7 +59,6 @@ class FetchByUrlWidget(QWidget, FORM_CLASS):
         fm = QFontMetrics(self.url_edit.font())
         self.url_edit.setMaximumHeight(fm.lineSpacing() * 6)
 
-        self.output_table_options_button.clicked.connect(self._output_table_options)
         self.import_file_button.clicked.connect(self._import_from_file)
 
         if service_type == SERVICE_MANAGER.FDSNSTATION:
@@ -68,10 +67,11 @@ class FetchByUrlWidget(QWidget, FORM_CLASS):
         self.service_type = None
         self.service_id = None
         self.set_service_type(service_type)
-        self.output_fields = None
         self.service_config = {}
 
         self.url_edit.textChanged.connect(self.changed)
+
+        self.output_table_options_widget.enable_basic_option(False)
 
     def is_valid(self) -> bool:
         """
@@ -85,14 +85,15 @@ class FetchByUrlWidget(QWidget, FORM_CLASS):
         """
         self.service_type = service_type
 
+        self.output_table_options_widget.set_service_type(service_type)
+
     def set_service_id(self, service_id: str):
         """
         Sets the associated service ID
         """
         self.service_id = service_id
-        config = SERVICE_MANAGER.service_details(self.service_type, self.service_id)
-        if 'fields' in config['default']:
-            self.output_fields = config['default']['fields']
+
+        self.output_table_options_widget.set_service_id(service_id)
 
         self.service_config = SERVICE_MANAGER.service_details(self.service_type, self.service_id)
 
@@ -100,20 +101,13 @@ class FetchByUrlWidget(QWidget, FORM_CLASS):
         """
         Restores widget state from settings
         """
+        self.output_table_options_widget.restore_settings(prefix, 'single')
 
     def save_settings(self, prefix: str):
         """
         Saves widget state to settings
         """
-
-    def _output_table_options(self):
-        """
-        Shows the output table options dialog
-        """
-        dlg = OutputTableOptionsDialog(self.service_type, self.service_id, self.output_fields, self)
-        if dlg.exec_():
-            self.output_fields = dlg.selected_fields()
-            self.changed.emit()
+        self.output_table_options_widget.save_settings(prefix, 'single')
 
     def _import_from_file(self):
         """
@@ -128,7 +122,13 @@ class FetchByUrlWidget(QWidget, FORM_CLASS):
         """
         Returns the output table type
         """
-        return Fetcher.EXTENDED
+        return self.output_table_options_widget.output_type()
+
+    def output_fields(self) -> Optional[List[str]]:
+        """
+        Returns the selected output fields
+        """
+        return self.output_table_options_widget.output_fields
 
     def convert_negative_depths(self) -> bool:
         """
