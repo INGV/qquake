@@ -80,9 +80,9 @@ class OutputTableOptionsWidget(QWidget, FORM_CLASS):
             combo.clear()
             styles = SERVICE_MANAGER.styles_for_service_type(service_type)
             for s in styles:
-                combo.addItem(s)
+                combo.addItem(SERVICE_MANAGER.PRESET_STYLES[s]['label'], s)
 
-            prev_index = combo.findText(prev_entry)
+            prev_index = combo.findData(prev_entry)
             if prev_index >= 0:
                 combo.setCurrentIndex(prev_index)
             else:
@@ -113,13 +113,13 @@ class OutputTableOptionsWidget(QWidget, FORM_CLASS):
         s = QgsSettings()
         if combo == self.combo_style_epicentres:
             s.setValue('/plugins/qquake/last_event_style_{}_{}'.format(self.service_type, self.service_id),
-                       self.combo_style_epicentres.currentText())
+                       self.combo_style_epicentres.currentData())
         if combo == self.combo_style_macro:
             s.setValue('/plugins/qquake/last_mdp_style_{}_{}'.format(self.service_type, self.service_id),
-                       self.combo_style_macro.currentText())
+                       self.combo_style_macro.currentData())
         if combo == self.combo_style_stations:
             s.setValue('/plugins/qquake/last_station_style_{}_{}'.format(self.service_type, self.service_id),
-                       self.combo_style_stations.currentText())
+                       self.combo_style_stations.currentData())
 
     def restore_settings(self, prefix: str, suffix: str):
         """
@@ -276,12 +276,12 @@ class OutputTableOptionsWidget(QWidget, FORM_CLASS):
         res = {}
 
         if self.service_type in (SERVICE_MANAGER.FDSNEVENT, SERVICE_MANAGER.MACROSEISMIC):
-            res[SERVICE_MANAGER.FDSNEVENT] = self.combo_style_epicentres.currentText()
+            res[SERVICE_MANAGER.FDSNEVENT] = self.combo_style_epicentres.currentData()
 
         if self.service_type == SERVICE_MANAGER.MACROSEISMIC:
-            res[SERVICE_MANAGER.MACROSEISMIC] = self.combo_style_macro.currentText()
+            res[SERVICE_MANAGER.MACROSEISMIC] = self.combo_style_macro.currentData()
 
         if self.service_type == SERVICE_MANAGER.FDSNSTATION:
-            res[SERVICE_MANAGER.FDSNSTATION] = self.combo_style_stations.currentText()
+            res[SERVICE_MANAGER.FDSNSTATION] = self.combo_style_stations.currentData()
 
         return res
