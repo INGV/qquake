@@ -26,7 +26,7 @@ import os
 from collections import defaultdict
 from copy import deepcopy
 from pathlib import Path
-from typing import Optional, List, Tuple
+from typing import Optional, List, Tuple, Dict
 
 from qgis.PyQt.QtCore import QObject, pyqtSignal
 from qgis.core import (
@@ -53,7 +53,7 @@ def load_field_config(filename: str) -> dict:
         return json.load(f)
 
 
-class ServiceManager(QObject):
+class ServiceManager(QObject):  # pylint:disable=too-many-public-methods
     """
     Manages available services
     """
@@ -76,13 +76,16 @@ class ServiceManager(QObject):
 
     refreshed = pyqtSignal()
     areasChanged = pyqtSignal()
+    user_styles_changed = pyqtSignal()
 
     def __init__(self):
         super().__init__()
         self.services = {}
+        self._user_styles = {}
         self.contributors = defaultdict(dict)
         self.refresh_services()
         self._load_predefined_areas()
+        self._load_user_styles()
 
     def refresh_services(self):
         """
@@ -210,6 +213,72 @@ class ServiceManager(QObject):
                 self.areasChanged.emit()
         except FileNotFoundError:
             return
+
+    def _load_user_styles(self):
+        """
+        Loads all user styles
+        """
+        path = self.user_service_path() / 'user_styles.json'
+        try:
+            with open(path, 'rt', encoding='utf8') as f:
+                try:
+                    self._user_styles = json.load(f)
+                except json.JSONDecodeError:
+                    return
+
+                self.user_styles_changed.emit()
+        except FileNotFoundError:
+            return
+
+    def set_user_styles(self, styles: Dict[str, dict]):
+        """
+        Sets all users styles
+        """
+        self._user_styles = deepcopy(styles)
+        self._save_user_styles()
+        self.user_styles_changed.emit()
+
+    def _save_user_styles(self):
+        """
+        Saves all user styles
+        """
+        path = self.user_service_path() / 'user_styles.json'
+        with open(path, 'wt', encoding='utf8') as f:
+            f.write(json.dumps(self._user_styles, indent=4))
+
+    def add_user_style(self,
+                       name: str,
+                       service_type: str,
+                       url: str):
+        """
+        Adds a new user style
+        """
+        if service_type == ServiceManager.MACROSEISMIC:
+            style_type = 'macroseismic'
+        elif service_type == ServiceManager.FDSNEVENT:
+            style_type = 'events'
+        else:
+            style_type = 'stations'
+
+        self._user_styles[name] = {
+            "label": name,
+            "type": style_type,
+            "url": url
+        }
+        self._save_user_styles()
+        self.user_styles_changed.emit()
+
+    def remove_user_style(self, name: str) -> bool:
+        """
+        Removes an existing user defined style
+        """
+        if name not in self._user_styles:
+            return False
+
+        del self._user_styles[name]
+        self._save_user_styles()
+        self.user_styles_changed.emit()
+        return True
 
     def _save_predefined_areas(self):
         """
@@ -353,12 +422,30 @@ class ServiceManager(QObject):
         """
         self.contributors[service_type][service_id] = contributors
 
+    def user_styles(self) -> List[str]:
+        """
+        Returns a list of the available user styles
+        """
+        return list(self._user_styles.keys())
+
     def styles_for_service_type(self, service_type: str) -> List[str]:
         """
         Returns a list of available styles for the specified service type
         """
         res = []
         for name, style in self.PRESET_STYLES.items():
+            style_type = style.get('type')
+            if not style_type:
+                continue
+
+            if service_type == ServiceManager.FDSNSTATION and style_type == "stations":
+                res.append(name)
+            elif service_type == ServiceManager.FDSNEVENT and style_type == "events":
+                res.append(name)
+            elif service_type == ServiceManager.MACROSEISMIC and style_type == "macroseismic":
+                res.append(name)
+
+        for name, style in self._user_styles.items():
             style_type = style.get('type')
             if not style_type:
                 continue

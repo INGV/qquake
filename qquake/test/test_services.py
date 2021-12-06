@@ -9,6 +9,8 @@
 """
 import unittest
 
+from qgis.PyQt.QtTest import QSignalSpy
+
 from qquake.services import ServiceManager
 
 
@@ -38,6 +40,39 @@ class TestServiceManager(unittest.TestCase):
 
         self.assertIn('stations', manager.styles_for_service_type(ServiceManager.FDSNSTATION))
         self.assertNotIn('square_colors', manager.styles_for_service_type(ServiceManager.FDSNSTATION))
+
+    def test_user_styles(self):
+        """
+        Test user styles
+        """
+        manager = ServiceManager()
+
+        manager.remove_user_style('test')
+        self.assertNotIn('test', manager.user_styles())
+
+        spy = QSignalSpy(manager.user_styles_changed)
+        manager.add_user_style('test', ServiceManager.MACROSEISMIC, 'http://me')
+        self.assertEqual(len(spy), 1)
+
+        # create a second manager to test that the style is persisted
+        manager2 = ServiceManager()
+        self.assertIn('test', manager2.user_styles())
+
+        self.assertIn('test', manager.styles_for_service_type(ServiceManager.MACROSEISMIC))
+        self.assertNotIn('test', manager.styles_for_service_type(ServiceManager.FDSNEVENT))
+        self.assertNotIn('test', manager.styles_for_service_type(ServiceManager.FDSNSTATION))
+
+        self.assertIn('test', manager2.styles_for_service_type(ServiceManager.MACROSEISMIC))
+        self.assertNotIn('test', manager2.styles_for_service_type(ServiceManager.FDSNEVENT))
+        self.assertNotIn('test', manager2.styles_for_service_type(ServiceManager.FDSNSTATION))
+
+        manager.remove_user_style('test')
+        self.assertEqual(len(spy), 2)
+        manager.remove_user_style('test')
+        self.assertEqual(len(spy), 2)
+
+        manager2 = ServiceManager()
+        self.assertNotIn('test', manager2.user_styles())
 
 
 if __name__ == '__main__':
