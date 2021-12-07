@@ -17,7 +17,7 @@ __revision__ = '$Format:%H$'
 import json
 from functools import partial
 from io import BytesIO
-from typing import List, Tuple
+from typing import List
 
 from qgis.PyQt import uic
 from qgis.PyQt.QtCore import QUrl, Qt
@@ -253,9 +253,6 @@ class CqlBuilderDialog(QDialog):
         self.button_box.rejected.connect(self.reject)
         layout.addWidget(self.button_box)
         self.setLayout(layout)
-
-    def accept(self):  # pylint: disable=missing-function-docstring
-        super().accept()
 
     def cql(self) -> str:
         """
