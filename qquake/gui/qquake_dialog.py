@@ -330,14 +330,14 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         Saves all settings currently defined in the dialog
         """
         s = QgsSettings()
-        if self.service_tab_widget.currentIndex() != self.service_tab_widget.count() - 1:
-            s.setValue('/plugins/qquake/last_tab', self.service_tab_widget.currentIndex())
+        s.setValue('/plugins/qquake/last_tab', self.service_tab_widget.currentIndex())
         s.setValue('/plugins/qquake/fdsn_event_last_event_service', self.fdsn_event_list.currentItem().text())
         s.setValue('/plugins/qquake/macro_last_event_service', self.fdsn_macro_list.currentItem().text())
 
         s.setValue('/plugins/qquake/fdsnevent_last_tab', self.fdsn_tab_widget.currentIndex())
         s.setValue('/plugins/qquake/macro_last_tab', self.macro_tab_widget.currentIndex())
         s.setValue('/plugins/qquake/station_last_tab', self.fdsnstation_tab_widget.currentIndex())
+        s.setValue('/plugins/qquake/ogc_last_tab', self.ogc_tab_widget.currentIndex())
 
         self.fdsn_event_filter.save_settings('fdsn_event')
         self.fdsn_by_id_filter.save_settings('fdsn_event')
@@ -385,6 +385,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.fdsn_tab_widget.setCurrentIndex(s.value('/plugins/qquake/fdsnevent_last_tab', 0, int))
         self.macro_tab_widget.setCurrentIndex(s.value('/plugins/qquake/macro_last_tab', 0, int))
         self.fdsnstation_tab_widget.setCurrentIndex(s.value('/plugins/qquake/station_last_tab', 0, int))
+        self.ogc_tab_widget.setCurrentIndex(s.value('/plugins/qquake/ogc_last_tab', 0, int))
 
     def get_current_service_id(self, service_type: str) -> Optional[str]:
         """

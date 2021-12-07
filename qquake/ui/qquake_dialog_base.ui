@@ -342,7 +342,7 @@
               </size>
              </property>
              <property name="currentIndex">
-              <number>2</number>
+              <number>0</number>
              </property>
              <widget class="QWidget" name="tab_3">
               <attribute name="title">
@@ -690,9 +690,9 @@
            </property>
            <layout class="QGridLayout" name="gridLayout_4">
             <item row="0" column="0">
-             <widget class="QTabWidget" name="tabWidget_3">
+             <widget class="QTabWidget" name="ogc_tab_widget">
               <property name="currentIndex">
-               <number>1</number>
+               <number>0</number>
               </property>
               <widget class="QWidget" name="tab_7">
                <attribute name="title">
