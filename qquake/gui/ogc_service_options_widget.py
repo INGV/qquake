@@ -115,7 +115,9 @@ class OgcServiceWidget(QWidget, FORM_CLASS):
                     end_point += 'CQL_FILTER=' + urllib.parse.quote(cql)
 
                 uri = "pagingEnabled='true'"
-                if not self.cql:
+                if self.cql:
+                    uri += " restrictToRequestBBOX='0'"
+                else:
                     uri += " restrictToRequestBBOX='1'"
 
                 uri += " srsname='{}' typename='{}' url='{}' version='auto'".format(
