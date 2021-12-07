@@ -67,6 +67,13 @@ class OgcServiceWidget(QWidget, FORM_CLASS):
         self.service_config = SERVICE_MANAGER.service_details(service_type, service_id)
         layers = self.service_config['default']['layers']
 
+        cql_available = self.service_config.get('settings', {}).get('queryCQL', False)
+        if not cql_available:
+            self.cql = None
+            self.simple_cql = []
+            self.cql_filter_label.setText('')
+        self.button_set_filter.setEnabled(cql_available)
+
         nodes = []
         for layer in layers:
             if layer.get('styles'):
