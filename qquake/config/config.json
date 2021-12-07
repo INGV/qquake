@@ -1691,7 +1691,9 @@
           }
         ]
       },
-      "settings": {},
+      "settings": {
+        "queryCQL": true
+      },
       "configversion": 0.1,
       "configlastupdate": "2021-05-12T18:33:11+00:00"
     },
@@ -1724,6 +1726,9 @@
             }
           }
         ]
+      },
+      "settings": {
+        "queryCQL": true
       },
       "configversion": 0.2,
       "configlastupdate": "2020-12-11T16:25:12+00:00"
@@ -1781,6 +1786,9 @@
             }
           }
         ]
+      },
+      "settings": {
+        "queryCQL": true
       },
       "configversion": 0.2,
       "configlastupdate": "2020-12-11T16:25:12+00:00"
@@ -1855,6 +1863,9 @@
           }
         ]
       },
+      "settings": {
+        "queryCQL": true
+      },
       "configversion": 0.2,
       "configlastupdate": "2020-12-11T16:25:12+00:00"
     },
@@ -1888,6 +1899,9 @@
           }
         ]
       },
+      "settings": {
+        "queryCQL": true
+      },
       "configversion": 0.1,
       "configlastupdate": "2021-03-04T14:34:00+00:00"
     },
@@ -1920,6 +1934,9 @@
             }
           }
         ]
+      },
+      "settings": {
+        "queryCQL": true
       },
       "configversion": 0.1,
       "configlastupdate": "2021-04-20T16:46:00+00:00"
@@ -1956,6 +1973,9 @@
           }
         ]
       },
+      "settings": {
+        "queryCQL": true
+      },
       "configversion": 0.1,
       "configlastupdate": "2021-05-12T18:33:11+00:00"
     },
@@ -1986,6 +2006,9 @@
             ]
           }
         ]
+      },
+      "settings": {
+        "queryCQL": true
       },
       "configversion": 0.2,
       "configlastupdate": "2020-12-11T16:25:12+00:00"
@@ -2035,6 +2058,9 @@
             ]
           }
         ]
+      },
+      "settings": {
+        "queryCQL": true
       },
       "configversion": 0.2,
       "configlastupdate": "2020-12-11T16:25:12+00:00"
@@ -2097,6 +2123,9 @@
           }
         ]
       },
+      "settings": {
+        "queryCQL": true
+      },
       "configversion": 0.2,
       "configlastupdate": "2020-12-11T16:25:12+00:00"
     },
@@ -2128,6 +2157,9 @@
           }
         ]
       },
+      "settings": {
+        "queryCQL": true
+      },
       "configversion": 0.1,
       "configlastupdate": "2021-03-04T14:34:00+00:00"
     },
@@ -2158,6 +2190,9 @@
             ]
           }
         ]
+      },
+      "settings": {
+        "queryCQL": true
       },
       "configversion": 0.1,
       "configlastupdate": "2021-03-04T14:34:00+00:00"
