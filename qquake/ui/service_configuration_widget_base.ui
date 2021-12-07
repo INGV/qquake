@@ -41,9 +41,9 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-1078</y>
-        <width>687</width>
-        <height>1950</height>
+        <y>-693</y>
+        <width>715</width>
+        <height>2012</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout">
@@ -315,87 +315,10 @@
           <string>Web Service Capabilities</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_5">
-          <item row="0" column="0">
-           <widget class="QCheckBox" name="check_filter_by_eventid">
+          <item row="3" column="1">
+           <widget class="QCheckBox" name="check_radius_of_circular_area_is_specified_in_km">
             <property name="text">
-             <string>Filter by EventID</string>
-            </property>
-           </widget>
-          </item>
-          <item row="11" column="0">
-           <widget class="QCheckBox" name="check_can_include_all_magnitudes">
-            <property name="text">
-             <string>Can include all magnitudes</string>
-            </property>
-           </widget>
-          </item>
-          <item row="10" column="0">
-           <widget class="QCheckBox" name="check_can_include_all_origins">
-            <property name="text">
-             <string>Can include all origins</string>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="0">
-           <widget class="QCheckBox" name="check_filter_by_event_type">
-            <property name="text">
-             <string>Filter by event type</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QCheckBox" name="check_filter_by_focalmechanismid">
-            <property name="text">
-             <string>Filter by FocalMechanismID</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QCheckBox" name="check_filter_by_magnitudeid">
-            <property name="text">
-             <string>Filter by MagnitudeID</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QCheckBox" name="check_filter_by_originid">
-            <property name="text">
-             <string>Filter by OriginID</string>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="0">
-           <widget class="QCheckBox" name="check_filter_by_contributorid">
-            <property name="text">
-             <string>Filter by ContributorID</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="0">
-           <widget class="QCheckBox" name="check_filter_by_contributor">
-            <property name="text">
-             <string>Query Contributors</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0">
-           <widget class="QCheckBox" name="check_filter_data_updated_after">
-            <property name="text">
-             <string>Filter data updated after</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="0">
-           <widget class="QCheckBox" name="check_filter_by_catalog">
-            <property name="text">
-             <string>Filter by Catalog</string>
-            </property>
-           </widget>
-          </item>
-          <item row="12" column="0">
-           <widget class="QCheckBox" name="check_can_include_arrivals">
-            <property name="text">
-             <string>Can include arrivals</string>
+             <string>Radius of circular area can be specified in km</string>
             </property>
            </widget>
           </item>
@@ -406,10 +329,143 @@
             </property>
            </widget>
           </item>
+          <item row="14" column="0">
+           <widget class="QCheckBox" name="check_can_include_arrivals">
+            <property name="text">
+             <string>Can include arrivals</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QCheckBox" name="check_filter_data_updated_after">
+            <property name="text">
+             <string>Filter data updated after</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QCheckBox" name="check_filter_by_originid">
+            <property name="text">
+             <string>Filter by OriginID</string>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="0">
+           <widget class="QCheckBox" name="check_can_include_all_origins">
+            <property name="text">
+             <string>Can include all origins</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0">
+           <widget class="QCheckBox" name="check_filter_by_contributor">
+            <property name="text">
+             <string>Query Contributors</string>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="1">
+           <widget class="QCheckBox" name="check_can_output_kml">
+            <property name="text">
+             <string>Can output KML</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="0">
+           <widget class="QCheckBox" name="check_filter_by_event_type">
+            <property name="text">
+             <string>Filter by event type</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QCheckBox" name="check_filter_by_eventid">
+            <property name="text">
+             <string>Filter by EventID</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="1">
+           <widget class="QCheckBox" name="check_can_output_geojson">
+            <property name="text">
+             <string>Can output GeoJSON</string>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="1">
+           <widget class="QCheckBox" name="check_can_output_microsoft_xlsx">
+            <property name="text">
+             <string>Can output Microsoft XLSX</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="QCheckBox" name="check_can_output_text">
+            <property name="text">
+             <string>Can output text</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QCheckBox" name="check_filter_by_magnitudeid">
+            <property name="text">
+             <string>Filter by MagnitudeID</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="1">
+           <widget class="QCheckBox" name="check_can_output_xml">
+            <property name="text">
+             <string>Can output XML</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QCheckBox" name="check_can_filter_using_circular_area">
+            <property name="text">
+             <string>Can filter using a circular area</string>
+            </property>
+           </widget>
+          </item>
           <item row="0" column="1">
            <widget class="QCheckBox" name="check_can_include_all_stations_magnitudes">
             <property name="text">
              <string>Can include all stations magnitudes</string>
+            </property>
+           </widget>
+          </item>
+          <item row="11" column="0">
+           <widget class="QCheckBox" name="check_can_include_all_origins_multiple">
+            <property name="text">
+             <string>Can include all origins for multiple events</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QCheckBox" name="check_filter_by_catalog">
+            <property name="text">
+             <string>Filter by Catalog</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QCheckBox" name="check_filter_by_focalmechanismid">
+            <property name="text">
+             <string>Filter by FocalMechanismID</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QCheckBox" name="check_can_filter_by_depth">
+            <property name="text">
+             <string>Can filter by depth</string>
+            </property>
+           </widget>
+          </item>
+          <item row="12" column="0">
+           <widget class="QCheckBox" name="check_can_include_all_magnitudes">
+            <property name="text">
+             <string>Can include all magnitudes</string>
             </property>
            </widget>
           </item>
@@ -460,45 +516,10 @@
             </item>
            </layout>
           </item>
-          <item row="2" column="1">
-           <widget class="QCheckBox" name="check_can_filter_using_circular_area">
+          <item row="7" column="0">
+           <widget class="QCheckBox" name="check_filter_by_contributorid">
             <property name="text">
-             <string>Can filter using a circular area</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
-           <widget class="QCheckBox" name="check_radius_of_circular_area_is_specified_in_km">
-            <property name="text">
-             <string>Radius of circular area can be specified in km</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="1">
-           <widget class="QCheckBox" name="check_can_filter_by_depth">
-            <property name="text">
-             <string>Can filter by depth</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="1">
-           <widget class="QCheckBox" name="check_can_output_text">
-            <property name="text">
-             <string>Can output text</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="1">
-           <widget class="QCheckBox" name="check_can_output_xml">
-            <property name="text">
-             <string>Can output XML</string>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="1">
-           <widget class="QCheckBox" name="check_can_output_geojson">
-            <property name="text">
-             <string>Can output GeoJSON</string>
+             <string>Filter by ContributorID</string>
             </property>
            </widget>
           </item>
@@ -509,17 +530,10 @@
             </property>
            </widget>
           </item>
-          <item row="9" column="1">
-           <widget class="QCheckBox" name="check_can_output_kml">
+          <item row="13" column="0">
+           <widget class="QCheckBox" name="check_can_include_all_magnitudes_multiple">
             <property name="text">
-             <string>Can output KML</string>
-            </property>
-           </widget>
-          </item>
-          <item row="10" column="1">
-           <widget class="QCheckBox" name="check_can_output_microsoft_xlsx">
-            <property name="text">
-             <string>Can output Microsoft XLSX</string>
+             <string>Can include all magnitudes for multiple events</string>
             </property>
            </widget>
           </item>
