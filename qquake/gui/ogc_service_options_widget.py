@@ -14,9 +14,9 @@ __copyright__ = 'Istituto Nazionale di Geofisica e Vulcanologia (INGV)'
 # This will get replaced with a git SHA1 when you do a git archive
 __revision__ = '$Format:%H$'
 
-from typing import List
-from copy import deepcopy
 import urllib.parse
+from copy import deepcopy
+from typing import List
 
 from qgis.PyQt import uic
 from qgis.PyQt.QtCore import QModelIndex, Qt
@@ -27,10 +27,9 @@ from qgis.core import (
     QgsRasterLayer
 )
 
+from qquake.gui.cql_builder_widget import CqlBuilderDialog
 from qquake.gui.gui_utils import GuiUtils
 from qquake.gui.simple_node_model import SimpleNodeModel, ModelNode
-from qquake.gui.cql_builder_widget import CqlBuilderDialog
-
 from qquake.services import SERVICE_MANAGER
 from qquake.style_utils import StyleUtils
 
@@ -52,7 +51,10 @@ class OgcServiceWidget(QWidget, FORM_CLASS):
         self.service_type = None
         self.service_id = None
         self.service_config = None
+
+        self.use_advanced_cql = False
         self.cql = None
+        self.simple_cql = []
 
         self.button_set_filter.clicked.connect(self._set_filter)
 
@@ -94,14 +96,16 @@ class OgcServiceWidget(QWidget, FORM_CLASS):
         """
         Adds all selected layers to the project
         """
+
         def add_layer(layer_name, style=None, preset_style=None):
+            cql = self.get_cql_query()
             if self.service_type == SERVICE_MANAGER.WFS:
                 end_point = self.service_config['endpointurl']
-                if self.cql:
+                if cql:
                     if not end_point.endswith('?'):
                         end_point += '?'
 
-                    end_point += 'CQL_FILTER=' + urllib.parse.quote(self.cql)
+                    end_point += 'CQL_FILTER=' + urllib.parse.quote(cql)
 
                 uri = "pagingEnabled='true'"
                 if not self.cql:
@@ -133,11 +137,11 @@ class OgcServiceWidget(QWidget, FORM_CLASS):
                     uri = base_uri + "&styles"
 
                 uri += "&url={}".format(
-                        self.service_config['endpointurl']
-                    )
+                    self.service_config['endpointurl']
+                )
 
-                if self.cql:
-                    uri += 'CQL_FILTER=' + urllib.parse.quote(self.cql)
+                if cql:
+                    uri += 'CQL_FILTER=' + urllib.parse.quote(cql)
                     uri = 'IgnoreGetMapUrl=1&' + uri
 
                 rl = QgsRasterLayer(uri, layer_name, 'wms')
@@ -224,8 +228,30 @@ class OgcServiceWidget(QWidget, FORM_CLASS):
         w.set_service_uri(end_point, self.selected_layer_names())
         if self.cql:
             w.set_cql(self.cql)
+        if self.simple_cql:
+            w.set_simple_query_fields(self.simple_cql)
+        w.set_use_advanced(self.use_advanced_cql)
 
         if w.exec_():
             self.cql = w.cql()
-            self.cql_filter_label.setText(self.cql)
+            self.simple_cql = w.simple_query_fields()
+            self.use_advanced_cql = w.use_advanced_cql()
+            self.cql_filter_label.setText(self.get_cql_query())
 
+    def get_cql_query(self) -> str:
+        """
+        Gets the defined cql query
+        """
+        if self.use_advanced_cql:
+            return self.cql
+
+        parts = []
+        for name, operator, value in self.simple_cql:
+            try:
+                field_value = str(float(value))
+            except ValueError:
+                field_value = "'{}'".format(value)
+
+            part = name + operator + field_value
+            parts.append(part)
+        return ' AND '.join(parts)

@@ -17,10 +17,10 @@ __revision__ = '$Format:%H$'
 import json
 from functools import partial
 from io import BytesIO
-from typing import List
+from typing import List, Tuple
 
 from qgis.PyQt import uic
-from qgis.PyQt.QtCore import QUrl
+from qgis.PyQt.QtCore import QUrl, Qt
 from qgis.PyQt.QtNetwork import (
     QNetworkRequest,
     QNetworkReply
@@ -30,7 +30,9 @@ from qgis.PyQt.QtWidgets import (
     QDialog,
     QVBoxLayout,
     QDialogButtonBox,
-    QTreeWidgetItem
+    QTreeWidgetItem,
+    QComboBox,
+    QToolButton
 )
 from qgis.core import (
     QgsNetworkAccessManager
@@ -55,6 +57,7 @@ class CqlBuilderWidget(QWidget, FORM_CLASS):
         self.setupUi(self)
 
         self.field_list.setHeaderLabels([self.tr('Field'), self.tr('Type')])
+        self.simple_query_list.setHeaderLabels([self.tr('Field'), self.tr('Operator'), self.tr('Value'), ''])
         self.field_list.itemDoubleClicked.connect(self._field_double_clicked)
         self.button_add.clicked.connect(self._add_field)
 
@@ -73,6 +76,21 @@ class CqlBuilderWidget(QWidget, FORM_CLASS):
 
         self._fetch_fields()
 
+    def use_advanced_cql(self) -> bool:
+        """
+        Returns True if advanced query should be used
+        """
+        return self.tab_widget.currentIndex() == 1
+
+    def set_use_advanced(self, use: bool):
+        """
+        Sets whether advanced query should be used
+        """
+        if use:
+            self.tab_widget.setCurrentIndex(1)
+        else:
+            self.tab_widget.setCurrentIndex(0)
+
     def cql(self) -> str:
         """
         Returns the current CQL string
@@ -84,6 +102,29 @@ class CqlBuilderWidget(QWidget, FORM_CLASS):
         Sets the current CQL string
         """
         self.sql_editor_widget.setText(cql)
+
+    def simple_query_fields(self) -> List:
+        """
+        Returns the simple query fields list
+        """
+        res = []
+        for i in range(self.simple_query_list.topLevelItemCount()):
+            item = self.simple_query_list.topLevelItem(i)
+            field_name = item.text(0)
+            field_value = item.text(2)
+
+            operator = self.simple_query_list.itemWidget(item, 1).currentText()
+
+            res.append((field_name, operator, field_value))
+        return res
+
+    def set_simple_query_fields(self, fields: List):
+        """
+        Sets the simple query fields
+        """
+        self.simple_query_list.clear()
+        for f in fields:
+            self._add_simple_query_item(*f)
 
     def _fetch_fields(self):
         """
@@ -140,15 +181,48 @@ class CqlBuilderWidget(QWidget, FORM_CLASS):
             items.append(item)
         self.field_list.insertTopLevelItems(0, items)
 
+    def _add_simple_query_item(self, field_name: str, operator: str = '=', value=None):
+        """
+        Adds a simple query item
+        """
+        combo = QComboBox()
+        combo.addItem('=')
+        combo.addItem('<')
+        combo.addItem('<=')
+        combo.addItem('>')
+        combo.addItem('>=')
+        combo.addItem('<>')
+        combo.setCurrentIndex(combo.findText(operator))
+
+        button = QToolButton()
+        button.setIcon(GuiUtils.get_icon('remove.svg'))
+        button.setAutoRaise(True)
+
+        filter_item = QTreeWidgetItem()
+        filter_item.setText(0, field_name)
+        filter_item.setFlags(Qt.ItemIsEnabled | Qt.ItemIsSelectable | Qt.ItemIsEditable)
+        filter_item.setText(2, value)
+        self.simple_query_list.addTopLevelItem(filter_item)
+        self.simple_query_list.setItemWidget(filter_item, 1, combo)
+        self.simple_query_list.setItemWidget(filter_item, 3, button)
+
+        button.clicked.connect(partial(self._remove_simple_item, filter_item))
+
+    def _remove_simple_item(self, item: QTreeWidgetItem):
+        """
+        Removes a simple field item
+        """
+        index = self.simple_query_list.indexOfTopLevelItem(item)
+        self.simple_query_list.takeTopLevelItem(index)
+
     def _field_double_clicked(self, item, _):
         """
         Triggered when a field is double clicked
         """
         if self.tab_widget.currentIndex() == 1:
-
             self.sql_editor_widget.insertText(item.text(0))
         else:
-            pass
+            self._add_simple_query_item(item.text(0))
 
     def _add_field(self):
         """
@@ -189,14 +263,38 @@ class CqlBuilderDialog(QDialog):
         """
         return self.widget.cql()
 
+    def simple_query_fields(self) -> List:
+        """
+        Returns the simple query fields list
+        """
+        return self.widget.simple_query_fields()
+
     def set_cql(self, cql: str):
         """
         Sets the current CQL string
         """
         self.widget.set_cql(cql)
 
+    def set_simple_query_fields(self, fields: List):
+        """
+        Sets the simple query fields
+        """
+        self.widget.set_simple_query_fields(fields)
+
     def set_service_uri(self, uri: str, layer_names: List[str]):
         """
         Sets the service URI
         """
         self.widget.set_service_uri(uri, layer_names)
+
+    def use_advanced_cql(self) -> bool:
+        """
+        Returns True if advanced query should be used
+        """
+        return self.widget.use_advanced_cql()
+
+    def set_use_advanced(self, use: bool):
+        """
+        Sets whether advanced query should be used
+        """
+        self.widget.set_use_advanced(use)
