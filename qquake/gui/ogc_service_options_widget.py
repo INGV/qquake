@@ -14,6 +14,7 @@ __copyright__ = 'Istituto Nazionale di Geofisica e Vulcanologia (INGV)'
 # This will get replaced with a git SHA1 when you do a git archive
 __revision__ = '$Format:%H$'
 
+from typing import List
 from copy import deepcopy
 import urllib.parse
 
@@ -161,6 +162,23 @@ class OgcServiceWidget(QWidget, FORM_CLASS):
 
         QgsProject.instance().addMapLayers(layers_to_add)
 
+    def selected_layer_names(self) -> List[str]:
+        """
+        Returns a list of selected layer names
+        """
+        layers = []
+        for r in range(self.layer_model.rowCount(QModelIndex())):
+            parent = self.layer_model.index(r, 0, QModelIndex())
+
+            if self.layer_model.flags(parent) & Qt.ItemIsUserCheckable:
+                layer_name = self.layer_model.data(self.layer_model.index(r, 1, QModelIndex()), Qt.DisplayRole)
+                layers.append(layer_name)
+            else:
+                layer_name = self.layer_model.data(parent, Qt.DisplayRole)
+                layers.append(layer_name)
+
+        return layers
+
     def is_style_selected(self, layer, style) -> bool:
         """
         Returns True if a style entry is selected
@@ -200,7 +218,10 @@ class OgcServiceWidget(QWidget, FORM_CLASS):
         """
         Sets the CQL filter
         """
+        end_point = self.service_config['endpointurl']
+
         w = CqlBuilderDialog(self)
+        w.set_service_uri(end_point, self.selected_layer_names())
         if self.cql:
             w.set_cql(self.cql)
 
