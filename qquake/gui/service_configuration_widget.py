@@ -388,7 +388,10 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
             self.button_load_service.setText(self.tr('Load Web Service Capabilities'))
 
             content = _reply.readAll()
-            self._set_state_from_wadl(WadlServiceParser.parse_wadl(content, self.service_type, url))
+            try:
+                self._set_state_from_wadl(WadlServiceParser.parse_wadl(content, self.service_type, url))
+            except AssertionError:
+                self.message_bar.pushMessage('', self.tr('Could not load web service capabilities from {}'.format(url)), Qgis.Critical, 0)
 
         self.button_load_service.setEnabled(False)
         self.button_load_service.setText(self.tr('Loading'))
