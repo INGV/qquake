@@ -44,7 +44,8 @@ class WadlServiceParser:
 
     @staticmethod
     def parse_wadl(content: QByteArray,  # pylint:disable=too-many-locals,too-many-branches,too-many-statements
-                   service_type: str) -> Dict:
+                   service_type: str,
+                   wadl_url: str) -> Dict:
         """
         Parses a WADL document and converts to a service configuration
         """
@@ -111,6 +112,11 @@ class WadlServiceParser:
         endpoint = resources_element.attribute('base')
         if not endpoint.endswith('/'):
             endpoint += '/'
+
+        if endpoint.startswith('/'):
+            base_url = wadl_url[:wadl_url.index('/', wadl_url.index(':') + 3)]
+            endpoint = base_url + endpoint
+
         resource_path = resource_element.attribute('path') + "?"
         if resource_path.startswith('/'):
             resource_path = resource_path[1:]

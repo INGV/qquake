@@ -35,7 +35,7 @@ class TestWadl(unittest.TestCase):
 
         byte_array = QByteArray(content)
 
-        res = WadlServiceParser.parse_wadl(byte_array, ServiceManager.FDSNEVENT)
+        res = WadlServiceParser.parse_wadl(byte_array, ServiceManager.FDSNEVENT, 'http://webservices.rm.ingv.it/fdsnws/event/1/application.wadl')
         self.assertEqual(res, {'boundingbox': [-120.0, -70.0, 60.0, 50.0],
                                'endpointurl': 'http://webservices.rm.ingv.it/fdsnws/event/1/query?',
                                'settings': {'querydepth': True,
@@ -54,7 +54,7 @@ class TestWadl(unittest.TestCase):
 
         byte_array = QByteArray(content)
 
-        res = WadlServiceParser.parse_wadl(byte_array, ServiceManager.FDSNEVENT)
+        res = WadlServiceParser.parse_wadl(byte_array, ServiceManager.FDSNEVENT, 'https://www.emidius.mi.ingv.it/fdsnws/event/1/application.wadl')
         self.assertEqual(res, {'boundingbox': [5.0, 35.0, 21.0, 48.0],
                                'endpointurl': 'https://www.emidius.mi.ingv.it/fdsnws/event/1/query?',
                                'settings': {'querydepth': False,
@@ -73,7 +73,7 @@ class TestWadl(unittest.TestCase):
 
         byte_array = QByteArray(content)
 
-        res = WadlServiceParser.parse_wadl(byte_array, ServiceManager.MACROSEISMIC)
+        res = WadlServiceParser.parse_wadl(byte_array, ServiceManager.MACROSEISMIC, 'https://www.emidius.eu/services/macroseismic/application.wadl')
         self.assertEqual(res, {'boundingbox': [-32.0, 33.0, 45.0, 74.0],
                                'endpointurl': 'https://www.emidius.eu/services/macroseismic/query?',
                                'settings': {'querydepth': False,
@@ -92,7 +92,7 @@ class TestWadl(unittest.TestCase):
 
         byte_array = QByteArray(content)
 
-        res = WadlServiceParser.parse_wadl(byte_array, ServiceManager.MACROSEISMIC)
+        res = WadlServiceParser.parse_wadl(byte_array, ServiceManager.MACROSEISMIC, 'https://www.emidius.mi.ingv.it/services/macroseismic/application.wadl')
         self.assertEqual(res, {'boundingbox': [5.0, 35.0, 21.0, 48.0],
                                'endpointurl': 'https://www.emidius.mi.ingv.it/services/macroseismic/query?',
                                'settings': {'querydepth': False,
@@ -111,9 +111,9 @@ class TestWadl(unittest.TestCase):
 
         byte_array = QByteArray(content)
 
-        res = WadlServiceParser.parse_wadl(byte_array, ServiceManager.FDSNSTATION)
+        res = WadlServiceParser.parse_wadl(byte_array, ServiceManager.FDSNSTATION, 'http://www.orfeus-eu.org/fdsnws/station/1/application.wadl')
         self.assertEqual(res, {'boundingbox': [-90.0, -180.0, 90.0, 180.0],
-                               'endpointurl': '/fdsnws/station/1/query?',
+                               'endpointurl': 'http://www.orfeus-eu.org/fdsnws/station/1/query?',
                                'settings': {}})
 
     def test_find_url(self):
