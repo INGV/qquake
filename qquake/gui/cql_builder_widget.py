@@ -19,6 +19,7 @@ from functools import partial
 from io import BytesIO
 from typing import List
 
+from qgis.PyQt import sip
 from qgis.PyQt import uic
 from qgis.PyQt.QtCore import QUrl, Qt
 from qgis.PyQt.QtNetwork import (
@@ -161,6 +162,9 @@ class CqlBuilderWidget(QWidget, FORM_CLASS):
             """
             Triggered when the response is finished
             """
+            if sip.isdeleted(self.label_fields):
+                return
+
             self.label_fields.setText(self.tr('List of fields'))
             res = json.load(BytesIO(_reply.readAll().data()))
 
