@@ -308,7 +308,7 @@ class FilterParameterWidget(QWidget, FORM_CLASS, BaseFilterWidget):  # pylint: d
             s.value('/plugins/qquake/{}_last_event_mdps_greater_checked2'.format(prefix), False, bool))
         v = s.value('/plugins/qquake/{}_last_event_mdps_greater'.format(prefix))
         if v is not None:
-            self.earthquake_number_mdps_greater_spin.setValue(float(v))
+            self.earthquake_number_mdps_greater_spin.setValue(int(v))
 
         self.output_table_options_widget.restore_settings(prefix, 'last')
 
