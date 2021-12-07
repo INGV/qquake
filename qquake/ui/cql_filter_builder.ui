@@ -31,7 +31,7 @@
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <layout class="QGridLayout" name="gridLayout" columnstretch="0,1">
        <item row="1" column="0" colspan="2">
         <widget class="QLabel" name="label_fields">
@@ -83,7 +83,7 @@
       <property name="currentIndex">
        <number>0</number>
       </property>
-      <widget class="QWidget" name="">
+      <widget class="QWidget" name="widget">
        <attribute name="title">
         <string>Simple Query</string>
        </attribute>
@@ -122,11 +122,18 @@
       </widget>
       <widget class="QWidget" name="tab_2">
        <attribute name="title">
-        <string>Advanced Query</string>
+        <string>Advanced Query (CQL Editor)</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
          <widget class="QgsCodeEditorSQL" name="sql_editor_widget" native="true"/>
+        </item>
+        <item>
+         <widget class="QPushButton" name="cql_help_button">
+          <property name="text">
+           <string>Help on how to write a CQL query</string>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
