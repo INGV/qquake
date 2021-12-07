@@ -212,8 +212,7 @@ class OutputTableOptionsWidget(QWidget, FORM_CLASS):
         default_style_index = self.combo_style_macro.findText(prev_mdp_style)
         if prev_mdp_style and default_style_index >= 0:
             self.combo_style_macro.setCurrentIndex(default_style_index)
-        elif 'mdp' in service_config['default'].get('style', {}) and isinstance(service_config['default']['style'],
-                                                                                dict):
+        elif isinstance(service_config['default'].get('style'), dict) and 'mdp' in service_config['default']['style']:
             default_style_index = self.combo_style_macro.findText(
                 service_config['default']['style']['mdp'].get('style', ''))
             if default_style_index >= 0:
@@ -222,8 +221,7 @@ class OutputTableOptionsWidget(QWidget, FORM_CLASS):
         default_style_index = self.combo_style_epicentres.findText(prev_event_style)
         if prev_event_style and default_style_index >= 0:
             self.combo_style_epicentres.setCurrentIndex(default_style_index)
-        elif 'events' in service_config['default'].get('style', {}) and isinstance(service_config['default']['style'],
-                                                                                   dict):
+        elif isinstance(service_config['default']['style'], dict) and 'events' in service_config['default']['style']:
             default_style_index = self.combo_style_epicentres.findText(
                 service_config['default']['style']['events'].get('style', ''))
             if default_style_index >= 0:
@@ -232,8 +230,7 @@ class OutputTableOptionsWidget(QWidget, FORM_CLASS):
         default_style_index = self.combo_style_stations.findText(prev_station_style)
         if prev_station_style and default_style_index >= 0:
             self.combo_style_stations.setCurrentIndex(default_style_index)
-        elif 'stations' in service_config['default'].get('style', {}) and isinstance(service_config['default']['style'],
-                                                                                     dict):
+        elif isinstance(service_config['default']['style'], dict) and 'stations' in service_config['default']['style']:
             default_style_index = self.combo_style_stations.findText(
                 service_config['default']['style']['stations'].get('style', ''))
             if default_style_index >= 0:
