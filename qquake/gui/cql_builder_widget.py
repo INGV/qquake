@@ -34,6 +34,8 @@ from qgis.PyQt.QtWidgets import (
     QComboBox,
     QToolButton
 )
+from qgis.PyQt.QtGui import QDesktopServices
+
 from qgis.core import (
     QgsNetworkAccessManager
 )
@@ -60,6 +62,7 @@ class CqlBuilderWidget(QWidget, FORM_CLASS):
         self.simple_query_list.setHeaderLabels([self.tr('Field'), self.tr('Operator'), self.tr('Value'), ''])
         self.field_list.itemDoubleClicked.connect(self._field_double_clicked)
         self.button_add.clicked.connect(self._add_field)
+        self.cql_help_button.clicked.connect(self._help)
 
         self.service_uri = None
         self.layer_names = []
@@ -230,6 +233,12 @@ class CqlBuilderWidget(QWidget, FORM_CLASS):
         """
         item = self.field_list.currentItem()
         self._field_double_clicked(item, 0)
+
+    def _help(self):
+        """
+        Opens CQL help
+        """
+        QDesktopServices.openUrl(QUrl('https://docs.geoserver.org/stable/en/user/tutorials/cql/cql_tutorial.html'))
 
 
 class CqlBuilderDialog(QDialog):
