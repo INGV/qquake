@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<application xmlns="http://wadl.dev.java.net/2009/02" xmlns:q="http://quakeml.org/xmlns/quakeml/1.2" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<resources base="http://webservices.rm.ingv.it/fdsnws/event/1/">
+		<resource path="version">
+			<method id="version" name="GET">
+			<response status="200">
+				<representation mediaType="text/plain"/>
+			</response>
+			</method>
+		</resource>
+		<resource path="catalogs">
+			<method id="catalogs" name="GET">
+			<response status="200">
+				<representation mediaType="application/xml"/>
+			</response>
+			</method>
+		</resource>
+		<resource path="contributors">
+			<method id="contributors" name="GET">
+			<response status="200">
+				<representation mediaType="application/xml"/>
+			</response>
+			</method>
+		</resource>
+		<resource path="application.wadl">
+			<method id="application.wadl" name="GET">
+			<response status="200">
+				<representation mediaType="application/xml"/>
+			</response>
+			</method>
+		</resource>
+		<resource path="query">
+			<method id="query" name="GET">
+			<request>
+				<param name="starttime" style="query" type="xs:dateTime"/>
+				<param name="endtime" style="query" type="xs:dateTime"/>
+				<param name="updatedafter" style="query" type="xs:dateTime"/>
+				<param name="minlatitude" style="query" type="xs:double" default="-70"/>
+				<param name="maxlatitude" style="query" type="xs:double" default="50"/>
+				<param name="minlongitude" style="query" type="xs:double" default="-120"/>
+				<param name="maxlongitude" style="query" type="xs:double" default="60"/>
+				<param name="latitude" style="query" type="xs:double" default="0"/>
+				<param name="longitude" style="query" type="xs:double" default="0"/>
+				<param name="minradius" style="query" type="xs:double" default="0"/>
+				<param name="maxradius" style="query" type="xs:double" default="180"/>
+				<param name="mindepth" style="query" type="xs:double"/>
+				<param name="maxdepth" style="query" type="xs:double"/>
+				<param name="minmagnitude" style="query" type="xs:double"/>
+				<param name="maxmagnitude" style="query" type="xs:double"/>
+				<param name="magnitudetype" style="query" type="xs:string"/>
+				<param name="includeallmagnitudes" style="query" type="xs:boolean"/>
+				<param name="includeallorigins" style="query" type="xs:boolean"/>
+				<param name="includearrivals" style="query" type="xs:boolean"/>
+				<param name="eventid" style="query" type="xs:string"/>
+				<param name="limit" style="query" type="xs:integer"/>
+				<param name="orderby" style="query" default="time">
+					<option value="time"/>
+					<option value="time-asc"/>
+					<option value="magnitude"/>
+					<option value="magnitude-asc"/>
+				</param>
+				<!-- extensions -->
+				<param name="maxradiuskm" style="query" type="xs:double" default="0"/>
+				<param name="minradiuskm" style="query" type="xs:double" default="0"/>
+			</request>
+			<response status="200">
+				<representation mediaType="application/xml" element="q:quakeml"/>
+				<representation mediaType="text/javascript"/>
+			</response>
+			</method>
+		</resource>
+	</resources>
+</application>
