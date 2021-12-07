@@ -16,10 +16,20 @@ __revision__ = '$Format:%H$'
 
 import json
 from copy import deepcopy
-from typing import Optional, Tuple
+from typing import Optional, Tuple, Dict
+from functools import partial
 
 from qgis.PyQt import uic
-from qgis.PyQt.QtCore import QDateTime, Qt, pyqtSignal
+from qgis.PyQt.QtCore import (
+    QDateTime,
+    Qt,
+    pyqtSignal,
+    QUrl
+)
+from qgis.PyQt.QtNetwork import (
+    QNetworkRequest,
+    QNetworkReply
+)
 from qgis.PyQt.QtWidgets import (
     QWidget,
     QDialog,
@@ -30,13 +40,14 @@ from qgis.PyQt.QtWidgets import (
 )
 from qgis.core import (
     Qgis,
+    QgsNetworkAccessManager
 )
 from qgis.gui import (
     QgsGui,
 )
 
 from qquake.gui.gui_utils import GuiUtils
-from qquake.services import SERVICE_MANAGER
+from qquake.services import SERVICE_MANAGER, WadlServiceParser
 
 FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('service_configuration_widget_base.ui'))
 
@@ -149,6 +160,7 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
                       self.check_can_filter_by_depth]:
                 w.setEnabled(False)
 
+        self.button_load_service.clicked.connect(self._load_service)
         self._changed()
 
     def _changed(self):
@@ -168,6 +180,8 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
         else:
             self.message_bar.clearWidgets()
             self.validChanged.emit(True)
+
+        self.button_load_service.setEnabled(bool(self.web_service_url_edit.text()))
 
     def is_valid(self) -> Tuple[bool, Optional[str]]:
         """
@@ -327,6 +341,52 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
         """
         config = self.get_config()
         SERVICE_MANAGER.save_service(self.service_type, self.service_id, config)
+
+    def _load_service(self):
+        """
+        Attempts to defined the service via WADL
+        """
+        url = self.web_service_url_edit.text().strip()
+        url = WadlServiceParser.find_url(url)
+
+        request = QNetworkRequest(QUrl(url))
+        reply = QgsNetworkAccessManager.instance().get(request)
+
+        def response_finished(_reply: QNetworkReply):
+            """
+            Triggered when the response is finished
+            """
+            self.button_load_service.setEnabled(True)
+            self.button_load_service.setText(self.tr('Load Web Service Capabilities'))
+
+            content = _reply.readAll()
+            self._set_state_from_wadl(WadlServiceParser.parse_wadl(content, self.service_type))
+
+        self.button_load_service.setEnabled(False)
+        self.button_load_service.setText(self.tr('Loading'))
+        reply.finished.connect(partial(response_finished, reply))
+
+    def _set_state_from_wadl(self, config: Dict):
+        """
+        Sets the widget state from a WADL configuration
+        """
+        self.web_service_url_edit.setText(config.get('endpointurl'))
+
+        extent = config.get('boundingbox')
+        if extent:
+            self.min_lat_spin.setValue(extent[1])
+            self.max_lat_spin.setValue(extent[3])
+            self.min_long_spin.setValue(extent[0])
+            self.max_long_spin.setValue(extent[2])
+
+        if 'queryeventid' in config.get('settings', {}):
+            self.check_filter_by_eventid.setChecked(config['settings']['queryeventid'])
+        if 'querydepth' in config.get('settings', {}):
+            self.check_can_filter_by_depth.setChecked(config['settings']['querydepth'])
+        if 'queryincludeallorigins' in config.get('settings', {}):
+            self.check_can_include_all_origins.setChecked(config['settings']['queryincludeallorigins'])
+        if 'queryincludeallmagnitudes' in config.get('settings', {}):
+            self.check_can_include_all_magnitudes.setChecked(config['settings']['queryincludeallmagnitudes'])
 
 
 class ServiceConfigurationDialog(QDialog):

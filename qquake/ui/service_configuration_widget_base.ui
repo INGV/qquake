@@ -29,7 +29,7 @@
    <item row="0" column="0">
     <widget class="QgsMessageBar" name="message_bar" native="true"/>
    </item>
-   <item row="1" column="0">
+   <item row="3" column="0">
     <widget class="QScrollArea" name="scrollArea">
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>
@@ -43,7 +43,7 @@
         <x>0</x>
         <y>0</y>
         <width>687</width>
-        <height>1851</height>
+        <height>1884</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout">
@@ -56,7 +56,85 @@
        <property name="bottomMargin">
         <number>9</number>
        </property>
-       <item row="0" column="0">
+       <item row="7" column="0">
+        <widget class="QGroupBox" name="groupBox_4">
+         <property name="title">
+          <string>Output Styling</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_8">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_16">
+            <property name="text">
+             <string>QML style URL (events/stations)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QComboBox" name="qml_style_name_combo"/>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_18">
+            <property name="text">
+             <string>Preset style name (events/stations)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_19">
+            <property name="text">
+             <string>QML style URL (mdps)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="qml_style_url_edit"/>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLineEdit" name="qml_style_url_edit_mdp"/>
+          </item>
+          <item row="3" column="1">
+           <widget class="QComboBox" name="qml_style_name_combo_mdp"/>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_20">
+            <property name="text">
+             <string>Preset style name (mdps)</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QGroupBox" name="groupBox_3">
+         <property name="title">
+          <string>Web Service Temporal Coverage</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_7">
+          <item row="0" column="1">
+           <widget class="QgsDateTimeEdit" name="start_date_edit"/>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_10">
+            <property name="text">
+             <string>Starting date</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QgsDateTimeEdit" name="end_date_edit"/>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_11">
+            <property name="text">
+             <string>Ending date</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="1" column="0">
         <widget class="QGroupBox" name="groupBox">
          <property name="title">
           <string>Basic Information</string>
@@ -192,7 +270,26 @@
          </layout>
         </widget>
        </item>
-       <item row="5" column="0">
+       <item row="8" column="0">
+        <widget class="QGroupBox" name="group_ogc_layers">
+         <property name="title">
+          <string>OGC Layer Configuration</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <widget class="QgsCodeEditor" name="ogc_layers_edit" native="true">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>300</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="6" column="0">
         <widget class="QGroupBox" name="group_capabilities">
          <property name="title">
           <string>Web Service Capabilities</string>
@@ -439,26 +536,7 @@
          </layout>
         </widget>
        </item>
-       <item row="7" column="0">
-        <widget class="QGroupBox" name="group_ogc_layers">
-         <property name="title">
-          <string>OGC Layer Configuration</string>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout">
-          <item>
-           <widget class="QgsCodeEditor" name="ogc_layers_edit" native="true">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>300</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="3" column="0">
+       <item row="4" column="0">
         <widget class="QGroupBox" name="group_bounding_box">
          <property name="title">
           <string>Web Service Geographical Coverage</string>
@@ -535,44 +613,12 @@
          </layout>
         </widget>
        </item>
-       <item row="2" column="0">
-        <widget class="QGroupBox" name="groupBox_3">
-         <property name="title">
-          <string>Web Service Temporal Coverage</string>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_7">
-          <item row="0" column="1">
-           <widget class="QgsDateTimeEdit" name="start_date_edit"/>
-          </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_10">
-            <property name="text">
-             <string>Starting date</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QgsDateTimeEdit" name="end_date_edit"/>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_11">
-            <property name="text">
-             <string>Ending date</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QGroupBox" name="groupBox_2">
+       <item row="0" column="0">
+        <widget class="QGroupBox" name="button_load_service_capabilities">
          <property name="title">
           <string>Web Service Basic Information</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_6">
-          <item row="0" column="1">
-           <widget class="QLineEdit" name="web_service_url_edit"/>
-          </item>
           <item row="0" column="0">
            <widget class="QLabel" name="label_9">
             <property name="text">
@@ -580,54 +626,15 @@
             </property>
            </widget>
           </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="6" column="0">
-        <widget class="QGroupBox" name="groupBox_4">
-         <property name="title">
-          <string>Output Styling</string>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_8">
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_16">
+          <item row="1" column="2">
+           <widget class="QPushButton" name="button_load_service">
             <property name="text">
-             <string>QML style URL (events/stations)</string>
+             <string>Load Web Service Capabilities</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="1">
-           <widget class="QComboBox" name="qml_style_name_combo"/>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_18">
-            <property name="text">
-             <string>Preset style name (events/stations)</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_19">
-            <property name="text">
-             <string>QML style URL (mdps)</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QLineEdit" name="qml_style_url_edit"/>
-          </item>
-          <item row="2" column="1">
-           <widget class="QLineEdit" name="qml_style_url_edit_mdp"/>
-          </item>
-          <item row="3" column="1">
-           <widget class="QComboBox" name="qml_style_name_combo_mdp"/>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="label_20">
-            <property name="text">
-             <string>Preset style name (mdps)</string>
-            </property>
-           </widget>
+          <item row="0" column="1" colspan="2">
+           <widget class="QLineEdit" name="web_service_url_edit"/>
           </item>
          </layout>
         </widget>
