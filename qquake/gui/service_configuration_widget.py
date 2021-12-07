@@ -97,13 +97,31 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
 
         self.setupUi(self)
 
-        self.qml_style_name_combo.addItem('')
+        self.qml_style_name_combo_events.addItem('')
         self.qml_style_name_combo_mdp.addItem('')
-        for name, props in SERVICE_MANAGER.PRESET_STYLES.items():
-            if props['type'] in ('events', 'stations'):
-                self.qml_style_name_combo.addItem(name)
-            elif props['type'] == 'macroseismic':
-                self.qml_style_name_combo_mdp.addItem(name)
+        self.qml_style_name_combo_stations.addItem('')
+
+        self.label_qml_events.setVisible(service_type in (SERVICE_MANAGER.FDSNEVENT, SERVICE_MANAGER.MACROSEISMIC))
+        self.qml_style_url_edit_events.setVisible(service_type in (SERVICE_MANAGER.FDSNEVENT, SERVICE_MANAGER.MACROSEISMIC))
+        self.label_preset_style_events.setVisible(service_type in (SERVICE_MANAGER.FDSNEVENT, SERVICE_MANAGER.MACROSEISMIC))
+        self.qml_style_name_combo_events.setVisible(service_type in (SERVICE_MANAGER.FDSNEVENT, SERVICE_MANAGER.MACROSEISMIC))
+        self.label_mdp_url.setVisible(service_type == SERVICE_MANAGER.MACROSEISMIC)
+        self.qml_style_url_edit_mdp.setVisible(service_type == SERVICE_MANAGER.MACROSEISMIC)
+        self.qml_style_name_combo_mdp.setVisible(service_type == SERVICE_MANAGER.MACROSEISMIC)
+        self.mdp_preset_label.setVisible(service_type == SERVICE_MANAGER.MACROSEISMIC)
+        self.label_stations_url.setVisible(service_type == SERVICE_MANAGER.FDSNSTATION)
+        self.qml_style_url_edit_stations.setVisible(service_type == SERVICE_MANAGER.FDSNSTATION)
+        self.label_preset_name_stations.setVisible(service_type == SERVICE_MANAGER.FDSNSTATION)
+        self.qml_style_name_combo_stations.setVisible(service_type == SERVICE_MANAGER.FDSNSTATION)
+
+        for name in SERVICE_MANAGER.styles_for_service_type(SERVICE_MANAGER.FDSNEVENT):
+            self.qml_style_name_combo_events.addItem(SERVICE_MANAGER.get_style(name)['label'], name)
+
+        for name in SERVICE_MANAGER.styles_for_service_type(SERVICE_MANAGER.MACROSEISMIC):
+            self.qml_style_name_combo_mdp.addItem(SERVICE_MANAGER.get_style(name)['label'], name)
+
+        for name in SERVICE_MANAGER.styles_for_service_type(SERVICE_MANAGER.FDSNSTATION):
+            self.qml_style_name_combo_stations.addItem(SERVICE_MANAGER.get_style(name)['label'], name)
 
         self.service_type = service_type
         self.service_id = service_id
@@ -212,17 +230,21 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
         self.data_provider_edit.setText(config.get('dataprovider'))
         self.data_provider_url_edit.setText(config.get('dataproviderurl'))
         self.web_service_url_edit.setText(config.get('endpointurl'))
-        self.qml_style_url_edit.setText(config.get('styleurl'))
+
+        uri_edit = self.qml_style_url_edit_events if self.service_type != SERVICE_MANAGER.FDSNSTATION else self.qml_style_url_edit_stations
+        uri_edit.setText(config.get('styleurl'))
+
+        combo = self.qml_style_name_combo_events if self.service_type != SERVICE_MANAGER.FDSNSTATION else self.qml_style_name_combo_stations
         if isinstance(config.get('default', {}).get('style'), str):
-            self.qml_style_name_combo.setCurrentIndex(
-                self.qml_style_name_combo.findText(config.get('default', {}).get('style')))
-        else:
-            self.qml_style_name_combo.setCurrentIndex(
-                self.qml_style_name_combo.findText(config.get('default', {}).get('style', {}).get('style')))
+            combo.setCurrentIndex(
+                combo.findData(config.get('default', {}).get('style')))
+        elif isinstance(config.get('default', {}).get('style'), dict):
+            combo.setCurrentIndex(
+                combo.findData(config.get('default', {}).get('style', {}).get('style')))
 
         self.qml_style_url_edit_mdp.setText(config.get('mdpstyleurl'))
         self.qml_style_name_combo_mdp.setCurrentIndex(
-            self.qml_style_name_combo_mdp.findText(config.get('default', {}).get('mdp_style')))
+            self.qml_style_name_combo_mdp.findData(config.get('default', {}).get('mdp_style')))
 
         if config.get('datestart'):
             self.start_date_edit.setDateTime(QDateTime.fromString(config.get('datestart'), Qt.ISODate))
@@ -288,11 +310,14 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
         config['dataprovider'] = self.data_provider_edit.text()
         config['dataproviderurl'] = self.data_provider_url_edit.text()
         config['endpointurl'] = self.web_service_url_edit.text()
-        config['styleurl'] = self.qml_style_url_edit.text()
-        config['default']['style'] = self.qml_style_name_combo.currentText()
+
+        uri_edit = self.qml_style_url_edit_events if self.service_type != SERVICE_MANAGER.FDSNSTATION else self.qml_style_url_edit_stations
+        combo = self.qml_style_name_combo_events if self.service_type != SERVICE_MANAGER.FDSNSTATION else self.qml_style_name_combo_stations
+        config['styleurl'] = uri_edit.text()
+        config['default']['style'] = combo.currentData()
 
         config['mdpstyleurl'] = self.qml_style_url_edit_mdp.text()
-        config['default']['mdp_style'] = self.qml_style_name_combo_mdp.currentText()
+        config['default']['mdp_style'] = self.qml_style_name_combo_mdp.currentData()
 
         if self.start_date_edit.dateTime().isValid():
             config['datestart'] = self.start_date_edit.dateTime().toString(Qt.ISODate)
