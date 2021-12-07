@@ -16,10 +16,10 @@ __revision__ = '$Format:%H$'
 
 from typing import Dict
 
-from .service_manager import ServiceManager
-
 from qgis.PyQt.QtCore import QByteArray
 from qgis.PyQt.QtXml import QDomDocument
+
+from .service_manager import ServiceManager
 
 
 class WadlServiceParser:
@@ -28,7 +28,8 @@ class WadlServiceParser:
     """
 
     @staticmethod
-    def parse_wadl(content: QByteArray, service_type: str) -> Dict:
+    def parse_wadl(content: QByteArray,  # pylint:disable=too-many-locals,too-many-branches,too-many-statements
+                   service_type: str) -> Dict:
         """
         Parses a WADL document and converts to a service configuration
         """
