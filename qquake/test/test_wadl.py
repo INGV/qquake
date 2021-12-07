@@ -116,6 +116,21 @@ class TestWadl(unittest.TestCase):
                                'endpointurl': '/fdsnws/station/1/query?',
                                'settings': {}})
 
+    def test_find_url(self):
+        """
+        Test finding URL
+        """
+        self.assertEqual(WadlServiceParser.find_url('https://www.emidius.eu/fdsnws/event/1/query?'),
+                         'https://www.emidius.eu/fdsnws/event/1/application.wadl')
+        self.assertEqual(WadlServiceParser.find_url('https://www.emidius.eu/fdsnws/event/1/query'),
+                         'https://www.emidius.eu/fdsnws/event/1/application.wadl')
+
+        self.assertEqual(WadlServiceParser.find_url('https://www.emidius.eu/fdsnws/event/1/'),
+                         'https://www.emidius.eu/fdsnws/event/1/application.wadl')
+
+        self.assertEqual(WadlServiceParser.find_url('https://www.emidius.eu/fdsnws/event/1/application.wadl'),
+                         'https://www.emidius.eu/fdsnws/event/1/application.wadl')
+
 
 if __name__ == '__main__':
     unittest.main()
