@@ -35,6 +35,20 @@
       <item row="0" column="0" colspan="2">
        <widget class="QTreeView" name="layers_tree_view"/>
       </item>
+      <item row="1" column="1">
+       <widget class="QLabel" name="cql_filter_label">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QPushButton" name="button_set_filter">
+        <property name="text">
+         <string>Set Filter…</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
