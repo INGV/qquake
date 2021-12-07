@@ -15,6 +15,7 @@ __copyright__ = 'Istituto Nazionale di Geofisica e Vulcanologia (INGV)'
 __revision__ = '$Format:%H$'
 
 from copy import deepcopy
+import urllib.parse
 
 from qgis.PyQt import uic
 from qgis.PyQt.QtCore import QModelIndex, Qt
@@ -27,6 +28,8 @@ from qgis.core import (
 
 from qquake.gui.gui_utils import GuiUtils
 from qquake.gui.simple_node_model import SimpleNodeModel, ModelNode
+from qquake.gui.cql_builder_widget import CqlBuilderDialog
+
 from qquake.services import SERVICE_MANAGER
 from qquake.style_utils import StyleUtils
 
@@ -48,6 +51,9 @@ class OgcServiceWidget(QWidget, FORM_CLASS):
         self.service_type = None
         self.service_id = None
         self.service_config = None
+        self.cql = None
+
+        self.button_set_filter.clicked.connect(self._set_filter)
 
     def set_service(self, service_id: str, service_type: str):
         """
@@ -89,10 +95,21 @@ class OgcServiceWidget(QWidget, FORM_CLASS):
         """
         def add_layer(layer_name, style=None, preset_style=None):
             if self.service_type == SERVICE_MANAGER.WFS:
-                uri = "pagingEnabled='true' restrictToRequestBBOX='1' srsname='{}' typename='{}' url='{}' version='auto'".format(
+                end_point = self.service_config['endpointurl']
+                if self.cql:
+                    if not end_point.endswith('?'):
+                        end_point += '?'
+
+                    end_point += 'CQL_FILTER=' + urllib.parse.quote(self.cql)
+
+                uri = "pagingEnabled='true'"
+                if not self.cql:
+                    uri += " restrictToRequestBBOX='1'"
+
+                uri += " srsname='{}' typename='{}' url='{}' version='auto'".format(
                     self.service_config['srs'],
                     layer_name,
-                    self.service_config['endpointurl'])
+                    end_point)
                 vl = QgsVectorLayer(uri, layer_name, 'WFS')
 
                 if preset_style.get('style') and preset_style['style'] in SERVICE_MANAGER.PRESET_STYLES:
@@ -101,20 +118,27 @@ class OgcServiceWidget(QWidget, FORM_CLASS):
 
                 layers_to_add.append(vl)
             elif self.service_type == SERVICE_MANAGER.WMS:
+                base_uri = 'contextualWMSLegend=0&crs={}&dpiMode=7&format=image/png&layers={}'.format(
+                    self.service_config['srs'],
+                    layer_name
+                )
+
                 if style:
-                    uri = "contextualWMSLegend=0&crs={}&dpiMode=7&format=image/png&layers={}&styles={}&url={}".format(
-                        self.service_config['srs'],
-                        layer_name,
-                        style,
-                        self.service_config['endpointurl']
+                    uri = base_uri + "&styles={}".format(
+                        style
                     )
                     layer_name += ' ({})'.format(style)
                 else:
-                    uri = "contextualWMSLegend=0&crs={}&dpiMode=7&format=image/png&layers={}&styles&url={}".format(
-                        self.service_config['srs'],
-                        layer_name,
+                    uri = base_uri + "&styles"
+
+                uri += "&url={}".format(
                         self.service_config['endpointurl']
                     )
+
+                if self.cql:
+                    uri += 'CQL_FILTER=' + urllib.parse.quote(self.cql)
+                    uri = 'IgnoreGetMapUrl=1&' + uri
+
                 rl = QgsRasterLayer(uri, layer_name, 'wms')
                 layers_to_add.append(rl)
 
@@ -171,3 +195,16 @@ class OgcServiceWidget(QWidget, FORM_CLASS):
 
         base_config['default'] = defaults
         return base_config
+
+    def _set_filter(self):
+        """
+        Sets the CQL filter
+        """
+        w = CqlBuilderDialog(self)
+        if self.cql:
+            w.set_cql(self.cql)
+
+        if w.exec_():
+            self.cql = w.cql()
+            self.cql_filter_label.setText(self.cql)
+
