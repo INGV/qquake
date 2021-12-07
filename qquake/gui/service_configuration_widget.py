@@ -377,6 +377,7 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
         url = WadlServiceParser.find_url(url)
 
         request = QNetworkRequest(QUrl(url))
+        request.setAttribute(QNetworkRequest.FollowRedirectsAttribute, True)
         reply = QgsNetworkAccessManager.instance().get(request)
 
         def response_finished(_reply: QNetworkReply):

@@ -131,6 +131,9 @@ class TestWadl(unittest.TestCase):
         self.assertEqual(WadlServiceParser.find_url('https://www.emidius.eu/fdsnws/event/1/application.wadl'),
                          'https://www.emidius.eu/fdsnws/event/1/application.wadl')
 
+        self.assertEqual(WadlServiceParser.find_url('https://earthquake.usgs.gov/fdsnws/event/1/'),
+                         'https://earthquake.usgs.gov/fdsnws/event/1/application.wadl')
+
 
 if __name__ == '__main__':
     unittest.main()
