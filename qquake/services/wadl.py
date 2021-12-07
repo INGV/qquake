@@ -28,6 +28,21 @@ class WadlServiceParser:
     """
 
     @staticmethod
+    def find_url(url: str) -> str:
+        """
+        Tries to find a application url from a general url
+        """
+        if url.endswith('wadl'):
+            return url
+
+        if url.endswith('?'):
+            url = url[:-1]
+
+        last_part = url.rindex('/')
+        strip_last_path = url[:last_part]
+        return strip_last_path + '/application.wadl'
+
+    @staticmethod
     def parse_wadl(content: QByteArray,  # pylint:disable=too-many-locals,too-many-branches,too-many-statements
                    service_type: str) -> Dict:
         """
