@@ -90,7 +90,7 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
 
     validChanged = pyqtSignal(bool)
 
-    def __init__(self, iface,  # pylint: disable=unused-argument,too-many-branches
+    def __init__(self, iface,  # pylint: disable=unused-argument,too-many-branches,too-many-statements
                  service_type: str,
                  service_id: str,
                  parent: Optional[QWidget] = None):
@@ -215,7 +215,7 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
 
         return True, None
 
-    def set_state_from_config(self, config: dict):  # pylint: disable=too-many-branches
+    def set_state_from_config(self, config: dict):  # pylint: disable=too-many-branches,too-many-statements
         """
         Sets the widget state from a service configuration
         """
