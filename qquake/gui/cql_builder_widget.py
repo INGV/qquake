@@ -75,7 +75,7 @@ class CqlBuilderWidget(QWidget, FORM_CLASS):
         Sets the service URI
         """
         self.service_uri = uri
-        self.layer_names = layer_names
+        self.layer_names = [CqlBuilderWidget._clean_layer_name(name) for name in layer_names]
 
         self._fetch_fields()
 
@@ -129,6 +129,16 @@ class CqlBuilderWidget(QWidget, FORM_CLASS):
         for f in fields:
             self._add_simple_query_item(*f)
 
+    @staticmethod
+    def _clean_layer_name(name: str) -> str:
+        """
+        Cleans an ogc layer name
+        """
+        try:
+            return name[name.index(':') + 1:]
+        except ValueError:
+            return name
+
     def _fetch_fields(self):
         """
         Triggers fetching fields
@@ -158,6 +168,9 @@ class CqlBuilderWidget(QWidget, FORM_CLASS):
 
             for _type in res['featureTypes']:
                 type_name = _type['typeName']
+                if CqlBuilderWidget._clean_layer_name(type_name) not in self.layer_names:
+                    continue
+
                 self.layer_combo.addItem(type_name)
                 layer_fields = []
                 for prop in _type['properties']:
