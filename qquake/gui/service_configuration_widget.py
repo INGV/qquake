@@ -169,8 +169,6 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
         """
         self.combo_http_code_nodata.setEnabled(self.check_http_code_nodata.isChecked())
         self.spin_has_limit_of_entries.setEnabled(self.check_has_limit_of_entries.isChecked())
-        self.check_radius_of_circular_area_is_specified_in_km.setEnabled(
-            self.check_can_filter_using_circular_area.isChecked())
 
         res, reason = self.is_valid()
         if not res:
