@@ -182,8 +182,6 @@
 						<param xmlns:xs="http://www.w3.org/2001/XMLSchema" name="mdpsetid" style="query" type="xs:string"> <!-- non standard FDSN-event parameter -->
 							<doc xml:lang="english" title="Request a specific macroseismic data set ID"/>
 						</param>
-						<!--
-							FDSN-event standard parameters not supported
 							<param xmlns:xs="http://www.w3.org/2001/XMLSchema" name="maxdepth" style="query" type="xs:double">
 								<doc xml:lang="english" title="Limit to events with depths equal to or less than the specified depth"/>
 							</param>
@@ -193,7 +191,6 @@
 							<param xmlns:xs="http://www.w3.org/2001/XMLSchema" name="includearrivals" style="query" type="xs:boolean" default="false">
 							<doc xml:lang="english" title="Specify if phase arrivals should be included"/>
 						</param>
-						-->
 					</request>
 					<response status="200">
 						<representation mediaType="text/csv"/>

@@ -42,6 +42,25 @@ class WadlServiceParser:
         strip_last_path = url[:last_part]
         return strip_last_path + '/application.wadl'
 
+    PARAM_MAP = {
+        'eventid': 'queryeventid',
+        'mindepth': 'querydepth',
+        'maxdepth': 'querydepth',
+        'includeallorigins': 'queryincludeallorigins',
+        'includeallmagnitudes': 'queryincludeallmagnitudes',
+        'originid': 'queryoriginid',
+        'magnitudeid': 'querymagnitudeid',
+        'updatedafter': 'queryupdatedafter',
+        'catalog': 'querycatalog',
+        'contributorid': 'querycontributorid',
+        'eventtype': 'queryeventtype',
+        'includearrivals': 'queryincludearrivals',
+        'minradius': 'querycircular',
+        'maxradius': 'querycircular',
+        'minradiuskm': 'querycircularradiuskm',
+        'maxradiuskm': 'querycircularradiuskm',
+    }
+
     @staticmethod
     def parse_wadl(content: QByteArray,  # pylint:disable=too-many-locals,too-many-branches,too-many-statements
                    service_type: str,
@@ -81,24 +100,20 @@ class WadlServiceParser:
         max_latitude = None
         min_longitude = None
         max_longitude = None
-        has_event_id = False
-        has_query_depth = False
-        include_all_origins = False
-        include_all_magnitudes = False
+
+        settings = {}
+        if service_type != ServiceManager.FDSNSTATION:
+            settings = {v: False for _, v in WadlServiceParser.PARAM_MAP.items()}
+
         for e in range(param_elements.length()):
             param_element = param_elements.at(e).toElement()
 
             param_name = param_element.attribute('name')
-
-            if service_type != ServiceManager.FDSNSTATION:
-                if param_name == 'eventid':
-                    has_event_id = True
-                elif param_name in ('mindepth', 'maxdepth'):
-                    has_query_depth = True
-                elif param_name == 'includeallorigins':
-                    include_all_origins = True
-                elif param_name == 'includeallmagnitudes':
-                    include_all_magnitudes = True
+            if param_name in WadlServiceParser.PARAM_MAP:
+                mapped_name = WadlServiceParser.PARAM_MAP[param_name]
+                if mapped_name in settings:
+                    settings[mapped_name] = True
+                continue
 
             if param_name == 'minlatitude':
                 min_latitude = float(param_element.attribute('default', '-180'))
@@ -121,15 +136,6 @@ class WadlServiceParser:
         if resource_path.startswith('/'):
             resource_path = resource_path[1:]
         endpoint += resource_path
-
-        settings = {}
-        if service_type != ServiceManager.FDSNSTATION:
-            settings = {
-                "queryeventid": has_event_id,
-                "querydepth": has_query_depth,
-                "queryincludeallorigins": include_all_origins,
-                "queryincludeallmagnitudes": include_all_magnitudes
-            }
 
         return {
             "endpointurl": endpoint,
