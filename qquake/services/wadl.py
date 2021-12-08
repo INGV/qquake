@@ -59,6 +59,10 @@ class WadlServiceParser:
         'maxradius': 'querycircular',
         'minradiuskm': 'querycircularradiuskm',
         'maxradiuskm': 'querycircularradiuskm',
+        'text': 'outputtext',
+        'json': 'outputjson',
+        'geojson': 'outputgeojson',
+        'kml': 'outputkml'
     }
 
     @staticmethod
@@ -123,6 +127,16 @@ class WadlServiceParser:
                 min_longitude = float(param_element.attribute('default', '-90'))
             elif param_name == 'maxlongitude':
                 max_longitude = float(param_element.attribute('default', '90'))
+            elif param_name == 'format':
+                option_elements = param_element.elementsByTagName('option')
+                for o in range(option_elements.length()):
+                    option_element = option_elements.at(o).toElement()
+                    option_name = option_element.attribute('value')
+                    if option_name in WadlServiceParser.PARAM_MAP:
+                        mapped_name = WadlServiceParser.PARAM_MAP[option_name]
+                        if mapped_name in settings:
+                            settings[mapped_name] = True
+                        continue
 
         endpoint = resources_element.attribute('base')
         if not endpoint.endswith('/'):
