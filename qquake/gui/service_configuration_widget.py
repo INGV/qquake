@@ -16,8 +16,8 @@ __revision__ = '$Format:%H$'
 
 import json
 from copy import deepcopy
-from typing import Optional, Tuple, Dict
 from functools import partial
+from typing import Optional, Tuple, Dict
 
 from qgis.PyQt import uic
 from qgis.PyQt.QtCore import (
@@ -104,9 +104,12 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
         self.qml_style_name_combo_stations.addItem('')
 
         self.label_qml_events.setVisible(service_type in (SERVICE_MANAGER.FDSNEVENT, SERVICE_MANAGER.MACROSEISMIC))
-        self.qml_style_url_edit_events.setVisible(service_type in (SERVICE_MANAGER.FDSNEVENT, SERVICE_MANAGER.MACROSEISMIC))
-        self.label_preset_style_events.setVisible(service_type in (SERVICE_MANAGER.FDSNEVENT, SERVICE_MANAGER.MACROSEISMIC))
-        self.qml_style_name_combo_events.setVisible(service_type in (SERVICE_MANAGER.FDSNEVENT, SERVICE_MANAGER.MACROSEISMIC))
+        self.qml_style_url_edit_events.setVisible(
+            service_type in (SERVICE_MANAGER.FDSNEVENT, SERVICE_MANAGER.MACROSEISMIC))
+        self.label_preset_style_events.setVisible(
+            service_type in (SERVICE_MANAGER.FDSNEVENT, SERVICE_MANAGER.MACROSEISMIC))
+        self.qml_style_name_combo_events.setVisible(
+            service_type in (SERVICE_MANAGER.FDSNEVENT, SERVICE_MANAGER.MACROSEISMIC))
         self.label_mdp_url.setVisible(service_type == SERVICE_MANAGER.MACROSEISMIC)
         self.qml_style_url_edit_mdp.setVisible(service_type == SERVICE_MANAGER.MACROSEISMIC)
         self.qml_style_name_combo_mdp.setVisible(service_type == SERVICE_MANAGER.MACROSEISMIC)
@@ -391,7 +394,8 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
             try:
                 self._set_state_from_wadl(WadlServiceParser.parse_wadl(content, self.service_type, url))
             except AssertionError:
-                self.message_bar.pushMessage('', self.tr('Could not load web service capabilities from {}'.format(url)), Qgis.Critical, 0)
+                self.message_bar.pushMessage('', self.tr('Could not load web service capabilities from {}'.format(url)),
+                                             Qgis.Critical, 0)
 
         self.button_load_service.setEnabled(False)
         self.button_load_service.setText(self.tr('Loading'))
@@ -410,14 +414,12 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
             self.min_long_spin.setValue(extent[0])
             self.max_long_spin.setValue(extent[2])
 
-        if 'queryeventid' in config.get('settings', {}):
-            self.check_filter_by_eventid.setChecked(config['settings']['queryeventid'])
-        if 'querydepth' in config.get('settings', {}):
-            self.check_can_filter_by_depth.setChecked(config['settings']['querydepth'])
-        if 'queryincludeallorigins' in config.get('settings', {}):
-            self.check_can_include_all_origins.setChecked(config['settings']['queryincludeallorigins'])
-        if 'queryincludeallmagnitudes' in config.get('settings', {}):
-            self.check_can_include_all_magnitudes.setChecked(config['settings']['queryincludeallmagnitudes'])
+        for setting in config.get('settings', {}):
+            widget = getattr(self, self.WIDGET_MAP.get(setting))
+            if not isinstance(widget, QCheckBox):
+                continue
+
+            widget.setChecked(config['settings'][setting])
 
 
 class ServiceConfigurationDialog(QDialog):

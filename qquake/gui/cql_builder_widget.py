@@ -162,7 +162,7 @@ class CqlBuilderWidget(QWidget, FORM_CLASS):
             """
             Triggered when the response is finished
             """
-            if sip.isdeleted(self.label_fields):
+            if sip.isdeleted(self.label_fields):  # pylint:disable=no-member
                 return
 
             self.label_fields.setText(self.tr('List of fields'))
