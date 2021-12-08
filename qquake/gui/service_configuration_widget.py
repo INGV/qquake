@@ -137,7 +137,13 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
         if service_id in SERVICE_MANAGER.available_services(service_type):
             config = SERVICE_MANAGER.service_details(service_type, service_id)
         else:
-            config = {}
+            # this is the default configuration for a newly created service!
+            config = {
+                'settings': {
+                    'outputxml': True,
+                    'httpcodenodata': True
+                }
+            }
         self.set_state_from_config(config)
 
         self.title_edit.textChanged.connect(self._changed)
