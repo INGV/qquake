@@ -125,6 +125,11 @@
 							<option value="json" mediaType="application/json"> <!-- non standard FDSN-event parameter -->
 								<doc xml:lang="english" title="The output will be encoded in GeoJSON (https://en.wikipedia.org/wiki/GeoJSON)."/>
 							</option>
+                            <option value="geojson" mediaType="application/geojson"> <!-- non standard FDSN-event parameter -->
+								<doc xml:lang="english" title="The output will be encoded in GeoJSON (https://en.wikipedia.org/wiki/GeoJSON)."/>
+							</option>
+                            <option value="kml" mediaType="application/kml"> <!-- non standard FDSN-event parameter -->
+							</option>
 						</param>
 						<param xmlns:xs="http://www.w3.org/2001/XMLSchema" name="nodata" style="query" type="xs:int" default="204">
 							<doc xml:lang="english" title="Specify which HTML Status code is returned when no data is found. This is an IRIS extension to the FDSN specification"/>

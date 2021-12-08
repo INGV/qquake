@@ -52,6 +52,9 @@
 				<param name="includeallorigins" style="query" type="xs:boolean"/>
 				<param name="includearrivals" style="query" type="xs:boolean"/>
 				<param name="eventid" style="query" type="xs:string"/>
+				<param name="originid" style="query" type="xs:string"/>
+				<param name="magnitudeid" style="query" type="xs:string"/>
+				<param name="eventtype" style="query" type="xs:string"/>
 				<param name="limit" style="query" type="xs:integer"/>
 				<param name="orderby" style="query" default="time">
 					<option value="time"/>
