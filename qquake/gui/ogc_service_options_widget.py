@@ -58,6 +58,16 @@ class OgcServiceWidget(QWidget, FORM_CLASS):
 
         self.button_set_filter.clicked.connect(self._set_filter)
 
+    def restore_settings(self):
+        """
+        Restores widget settings
+        """
+
+    def save_settings(self):
+        """
+        Saves widget settings
+        """
+
     def set_service(self, service_id: str, service_type: str):
         """
         Sets the service details
