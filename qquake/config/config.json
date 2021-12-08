@@ -1716,7 +1716,7 @@
       "configlastupdate": "2021-05-12T18:33:11+00:00"
     },
     "INGV CPTI": {
-      "title": "CPTI, Catalogo Parametrico dei Terremoti Italiani (INGV)",
+      "title": "Catalogo Parametrico dei Terremoti Italiani (CPTI15), versione 3.0",
       "group": "Earthquake catalogues",
       "servicedescription": "OGC WFS provided by ASMI",
       "servicedescriptionurl": "https://emidius.mi.ingv.it/ASMI/services/",
@@ -1998,7 +1998,7 @@
       "configlastupdate": "2021-05-12T18:33:11+00:00"
     },
     "INGV CPTI": {
-      "title": "CPTI, Catalogo Parametrico dei Terremoti Italiani (INGV)",
+      "title": "Catalogo Parametrico dei Terremoti Italiani (CPTI15), versione 3.0",
       "group": "Earthquake catalogues",
       "servicedescription": "OGC WMS provided by ASMI",
       "servicedescriptionurl": "https://emidius.mi.ingv.it/ASMI/services/",
