@@ -65,7 +65,7 @@ class ServiceInformationWidget(QWidget, FORM_CLASS):
         if self.service_config.get('publications'):
             html += """<p><b>Publications</b></p><ul>"""
             for p in self.service_config['publications']:
-                html += f"""<li>{QgsStringUtils.insertLinks(p)[0]}</li>"""
+                html += f"""<li style="margin-bottom:10px;">{QgsStringUtils.insertLinks(p)[0]}</li>"""
             html += "</ul>"
 
         if self.service_config.get('servicedescriptionurl') or self.service_config.get('servicedescription'):
