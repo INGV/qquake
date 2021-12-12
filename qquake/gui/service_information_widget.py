@@ -62,6 +62,12 @@ class ServiceInformationWidget(QWidget, FORM_CLASS):
                 <a href="{self.service_config['datalicenseurl']}">{self.service_config.get('datalicense') or self.service_config.get('datalicenseurl')}</a></p>
                 """
 
+        if self.service_config.get('publications'):
+            html += """<p><b>Publications</b></p><ul>"""
+            for p in self.service_config['publications']:
+                html += f"""<li>{QgsStringUtils.insertLinks(p)[0]}</li>"""
+            html += "</ul>"
+
         if self.service_config.get('servicedescriptionurl') or self.service_config.get('servicedescription'):
             html += f"""<p><b>Service description</b><br>
             <a href="{self.service_config['servicedescriptionurl']}">{self.service_config.get('servicedescription') or self.service_config['servicedescriptionurl']}</a></p>"""
@@ -75,12 +81,6 @@ class ServiceInformationWidget(QWidget, FORM_CLASS):
             <p><b>Help</b><br>
             <a href="{help}">{help}</a></p>
             """.format(**self.service_config)
-
-        if self.service_config.get('publications'):
-            html += """<p><b>Publications</b></p><ul>"""
-            for p in self.service_config['publications']:
-                html += f"""<li>{QgsStringUtils.insertLinks(p)[0]}</li>"""
-            html += "</ul>"
 
         capabilities = []
 
@@ -157,7 +157,7 @@ class ServiceInformationWidget(QWidget, FORM_CLASS):
                     'HTTP error code: {}'.format(self.service_config['settings'].get('httpcodenodata')))
 
         if capabilities:
-            html += """<p><b>Capabilities</b>"""
+            html += """<p><b>Service capabilities</b>"""
             html += ''.join(['<li>{}</li>'.format(c) for c in capabilities])
             html += """</p>"""
 
