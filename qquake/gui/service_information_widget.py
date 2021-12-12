@@ -52,6 +52,16 @@ class ServiceInformationWidget(QWidget, FORM_CLASS):
         html = f"""<p><b>Title</b><br>
         {self.service_config['title']}</p>"""
 
+        if self.service_config.get('datadescription') or self.service_config.get('datadescriptionurl'):
+            html += f"""<p><b>Data description</b><br>
+                <a href="{self.service_config['datadescriptionurl']}">{self.service_config.get('datadescription') or self.service_config['datadescriptionurl']}</a></p>
+                """
+
+        if self.service_config.get('datalicenseurl') or self.service_config.get('datalicense'):
+            html += f"""<p><b>Data license</b><br>
+                <a href="{self.service_config['datalicenseurl']}">{self.service_config.get('datalicense') or self.service_config.get('datalicenseurl')}</a></p>
+                """
+
         if self.service_config.get('servicedescriptionurl') or self.service_config.get('servicedescription'):
             html += f"""<p><b>Service description</b><br>
             <a href="{self.service_config['servicedescriptionurl']}">{self.service_config.get('servicedescription') or self.service_config['servicedescriptionurl']}</a></p>"""
@@ -65,16 +75,6 @@ class ServiceInformationWidget(QWidget, FORM_CLASS):
             <p><b>Help</b><br>
             <a href="{help}">{help}</a></p>
             """.format(**self.service_config)
-
-        if self.service_config.get('datadescription') or self.service_config.get('datadescriptionurl'):
-            html += f"""<p><b>Data description</b><br>
-                <a href="{self.service_config['datadescriptionurl']}">{self.service_config.get('datadescription') or self.service_config['datadescriptionurl']}</a></p>
-                """
-
-        if self.service_config.get('datalicenseurl') or self.service_config.get('datalicense'):
-            html += f"""<p><b>Data license</b><br>
-                <a href="{self.service_config['datalicenseurl']}">{self.service_config.get('datalicense') or self.service_config.get('datalicenseurl')}</a></p>
-                """
 
         if self.service_config.get('publications'):
             html += """<p><b>Publications</b></p><ul>"""
