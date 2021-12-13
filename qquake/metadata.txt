@@ -20,7 +20,7 @@ repository=https://github.com/INGV/qquake
 
 hasProcessingProvider=no
 
-changelog=2021-12-15 v1.3 Added more flexible handling of styles, filtering by event type and by last update (when supported by the service), direct load of StationXML, CQL filtering to OGC services, and other minor fixes
+changelog=2021-12-13 v1.3 Added more flexible handling of styles, filtering by event type and by last update (when supported by the service), direct load of StationXML, CQL filtering to OGC services, and other minor fixes
     2021-05-13 v1.2 Updated to replace the old SHEEC catalogue with the new European PreInstrumental earthquake CAtalogue (EPICA)
     2021-04-20 v1.1 Reworked the parsing of text based output from fdsnws-event; now users may request negative magnitudes down to -9; added EMTC and ITED, two datasets on historical tsunamis.
     2021-01-27 v1.0.1 Updated to include the latest version of CPTI, the Parametric Catalogue of Italian Earthquakes
