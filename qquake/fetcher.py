@@ -697,11 +697,11 @@ class Fetcher(QObject):
                 self.service_config['default']['style'].get('mdp'):
 
             style_url = None
+            style = self.service_config['default']['style']['mdp']
+
             if mdp_style_url:
                 style_url = mdp_style_url
             else:
-                style = self.service_config['default']['style']['mdp']
-
                 style_ref = style.get('style')
                 if style_ref:
                     style_url = SERVICE_MANAGER.get_style(style_ref)['url']
