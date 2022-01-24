@@ -106,7 +106,7 @@
       "publications": ["Rovida A., Locati M., Camassi R., Lolli B., Gasperini P. (2020). The Italian earthquake catalogue CPTI15. Bulletin of Earthquake Engineering, 18(7), 2953–2984. https://doi.org/10.1007/s10518-020-00818-y"],
       "endpointurl": "https://emidius.mi.ingv.it/fdsnws/event/1/query?",
       "datestart": "1000-01-01T00:00:00+00:00",
-      "dateend": "2019-12-31T23:59:59+00:00",
+      "dateend": "2020-01-24T23:59:59+00:00",
       "boundingbox": [
         5,
         35,
@@ -115,7 +115,7 @@
       ],
       "default": {
         "datestart": "1000-01-01T00:00:00+00:00",
-        "dateend": "2019-12-31T23:59:59+00:00",
+        "dateend": "2020-01-24T23:59:59+00:00",
         "boundingboxpredefined": "italy",
         "style": {
           "events": {
@@ -1578,7 +1578,7 @@
       "publications": ["Rovida A., Locati M., Camassi R., Lolli B., Gasperini P. (2020). The Italian earthquake catalogue CPTI15. Bulletin of Earthquake Engineering, 18(7), 2953–2984. https://doi.org/10.1007/s10518-020-00818-y"],
       "endpointurl": "https://emidius.mi.ingv.it/services/macroseismic/query?",
       "datestart": "1000-01-01T00:00:00+00:00",
-      "dateend": "2019-12-31T23:59:59+00:00",
+      "dateend": "2020-01-24T23:59:59+00:00",
       "boundingbox": [
         5,
         35,
@@ -1587,7 +1587,7 @@
       ],
       "default": {
         "datestart": "1000-01-01T00:00:00+00:00",
-        "dateend": "2019-12-31T23:59:59+00:00",
+        "dateend": "2020-01-24T23:59:59+00:00",
         "boundingboxpredefined": "italy",
         "style": {
           "mdp": {
@@ -1716,21 +1716,21 @@
       "configlastupdate": "2021-05-12T18:33:11+00:00"
     },
     "INGV CPTI": {
-      "title": "Catalogo Parametrico dei Terremoti Italiani (CPTI15), versione 3.0",
+      "title": "Catalogo Parametrico dei Terremoti Italiani (CPTI15), versione 4.0",
       "group": "Earthquake catalogues",
       "servicedescription": "OGC WFS provided by ASMI",
       "servicedescriptionurl": "https://emidius.mi.ingv.it/ASMI/services/",
-      "datadescription": "Rovida A., Locati M., Camassi R., Lolli B., Gasperini P., Antonucci A. (2021). Catalogo Parametrico dei Terremoti Italiani (CPTI15), versione 3.0. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/CPTI/CPTI15.3",
-      "datadescriptionurl": "https://doi.org/10.13127/CPTI/CPTI15.3",
-      "datalicense": "CC BY-SA 4.0",
-      "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "datadescription": "Rovida A., Locati M., Camassi R., Lolli B., Gasperini P., Antonucci A. (2022). Catalogo Parametrico dei Terremoti Italiani (CPTI15), versione 4.0. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/CPTI/CPTI15.4",
+      "datadescriptionurl": "https://doi.org/10.13127/CPTI/CPTI15.4",
+      "datalicense": "CC BY 4.0",
+      "datalicenseurl": "https://creativecommons.org/licenses/by/4.0/",
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
       "dataproviderurl": "http://www.ingv.it",
       "help": "",
       "publications": ["Rovida A., Locati M., Camassi R., Lolli B., Gasperini P. (2020). The Italian earthquake catalogue CPTI15. Bulletin of Earthquake Engineering, 18(7), 2953–2984. https://doi.org/10.1007/s10518-020-00818-y"],
       "endpointurl": "https://emidius.mi.ingv.it/services/italy/wfs?",
       "datestart": "1000-01-01T00:00:00+00:00",
-      "dateend": "2019-12-31T23:59:59+00:00",
+      "dateend": "2020-01-24T23:59:59+00:00",
       "srs": "EPSG:4326",
       "default": {
         "wfsversion": "2.0.0",
@@ -1748,8 +1748,8 @@
       "settings": {
         "queryCQL": true
       },
-      "configversion": 0.2,
-      "configlastupdate": "2020-12-11T16:25:12+00:00"
+      "configversion": 0.3,
+      "configlastupdate": "2022-01-24T16:25:12+00:00"
     },
     "EDSF": {
       "title": "EDSF, European Database of Seismogenic Faults",
@@ -1812,19 +1812,19 @@
       "configlastupdate": "2020-12-11T16:25:12+00:00"
     },
     "INGV DISS": {
-      "title": "DISS 3.2.1, Database of Individual Seismogenic Sources",
+      "title": "DISS 3.3.0, Database of Individual Seismogenic Sources",
       "group": "Seismogenic faults",
       "servicedescription": "OGC WFS privided by DISS",
       "servicedescriptionurl": "https://www.seismofaults.eu/index.php/services/diss-services/",
-      "datadescription": "DISS Working Group (2018). Database of Individual Seismogenic Sources (DISS), version 3.2.1. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.6092/INGV.IT-DISS3.2.1",
-      "datadescriptionurl": "https://doi.org/10.6092/INGV.IT-DISS3.2.1",
+      "datadescription": "DISS Working Group. (2021). Database of Individual Seismogenic Sources (DISS), version 3.3.0: A compilation of potential sources for earthquakes larger than M 5.5 in Italy and surrounding areas.. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/diss3.3.0",
+      "datadescriptionurl": "https://doi.org/10.13127/diss3.3.0",
       "datalicense": "CC BY-SA 4.0",
       "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
       "dataproviderurl": "http://www.ingv.it",
       "help": "",
       "publications": ["Basili R., Valensise G., Vannoli P., Burrato P., Fracassi U., Mariano S., Tiberti M.M., Boschi E. (2008). The Database of Individual Seismogenic Sources (DISS), version 3: Summarizing 20 years of research on Italy’s earthquake geology. Tectonophysics, 453(1–4), 20–43. https://doi.org/10.1016/j.tecto.2007.04.014"],
-      "endpointurl": "http://services.seismofaults.eu/geoserver/DISS321/wfs?",
+      "endpointurl": "http://services.seismofaults.eu/geoserver/DISS330/wfs?",
       "datestart": "",
       "dateend": "",
       "srs": "EPSG:4326",
@@ -1832,7 +1832,7 @@
         "wfsversion": "2.0.0",
         "layers": [
           {
-            "layername": "DISS321:csstop321",
+            "layername": "DISS330:csstop330",
             "style": {
               "wfs": {
                 "style": "csstop"
@@ -1840,7 +1840,7 @@
             }
           },
           {
-            "layername": "DISS321:dss321",
+            "layername": "DISS330:dss330",
             "style": {
               "wfs": {
                 "style": "dss"
@@ -1848,7 +1848,7 @@
             }
           },
           {
-            "layername": "DISS321:iss321",
+            "layername": "DISS330:iss330",
             "style": {
               "wfs": {
                 "style": "iss"
@@ -1856,7 +1856,7 @@
             }
           },
           {
-            "layername": "DISS321:csspln321",
+            "layername": "DISS330:csspln330",
             "style": {
               "wfs": {
                 "style": "csspln"
@@ -1864,7 +1864,7 @@
             }
           },
           {
-            "layername": "DISS321:subdcnt321",
+            "layername": "DISS330:subdcnt330",
             "style": {
               "wfs": {
                 "style": "subdcnt"
@@ -1872,7 +1872,7 @@
             }
           },
           {
-            "layername": "DISS321:subdzon321",
+            "layername": "DISS330:subdzon330",
             "style": {
               "wfs": {
                 "style": "subdzon"
@@ -1884,8 +1884,8 @@
       "settings": {
         "queryCQL": true
       },
-      "configversion": 0.2,
-      "configlastupdate": "2020-12-11T16:25:12+00:00"
+      "configversion": 0.3,
+      "configlastupdate": "2022-01-24T16:25:12+00:00"
     },
     "INGV EMTC": {
       "title": "EMTC, Euro-Mediterranean Tsunami Catalogue (INGV)",
@@ -1998,21 +1998,21 @@
       "configlastupdate": "2021-05-12T18:33:11+00:00"
     },
     "INGV CPTI": {
-      "title": "Catalogo Parametrico dei Terremoti Italiani (CPTI15), versione 3.0",
+      "title": "Catalogo Parametrico dei Terremoti Italiani (CPTI15), versione 4.0",
       "group": "Earthquake catalogues",
       "servicedescription": "OGC WMS provided by ASMI",
       "servicedescriptionurl": "https://emidius.mi.ingv.it/ASMI/services/",
-      "datadescription": "Rovida A., Locati M., Camassi R., Lolli B., Gasperini P., Antonucci A. (2021). Catalogo Parametrico dei Terremoti Italiani (CPTI15), versione 3.0. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/CPTI/CPTI15.3",
-      "datadescriptionurl": "https://doi.org/10.13127/CPTI/CPTI15.3",
-      "datalicense": "CC BY-SA 4.0",
-      "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "datadescription": "Rovida A., Locati M., Camassi R., Lolli B., Gasperini P., Antonucci A. (2022). Catalogo Parametrico dei Terremoti Italiani (CPTI15), versione 4.0. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/CPTI/CPTI15.4",
+      "datadescriptionurl": "https://doi.org/10.13127/CPTI/CPTI15.4",
+      "datalicense": "CC BY 4.0",
+      "datalicenseurl": "https://creativecommons.org/licenses/by/4.0/",
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
       "dataproviderurl": "http://www.ingv.it",
       "help": "",
       "publications": ["Rovida A., Locati M., Camassi R., Lolli B., Gasperini P. (2020). The Italian earthquake catalogue CPTI15. Bulletin of Earthquake Engineering, 18(7), 2953–2984. https://doi.org/10.1007/s10518-020-00818-y"],
       "endpointurl": "https://emidius.mi.ingv.it/services/italy/wms?",
       "datestart": "1000-01-01T00:00:00+00:00",
-      "dateend": "2019-12-31T23:59:59+00:00",
+      "dateend": "2020-01-24T23:59:59+00:00",
       "srs": "EPSG:4326",
       "default": {
         "wmsversion": "1.3.0",
@@ -2028,8 +2028,8 @@
       "settings": {
         "queryCQL": true
       },
-      "configversion": 0.2,
-      "configlastupdate": "2020-12-11T16:25:12+00:00"
+      "configversion": 0.3,
+      "configlastupdate": "2022-01-24T16:25:12+00:00"
     },
     "EDSF": {
       "title": "EDSF, European Database of Seismogenic Faults",
@@ -2084,19 +2084,19 @@
       "configlastupdate": "2020-12-11T16:25:12+00:00"
     },
     "INGV DISS": {
-      "title": "DISS 3.2.1, Database of Individual Seismogenic Sources",
+      "title": "DISS 3.3.0, Database of Individual Seismogenic Sources",
       "group": "Seismogenic faults",
       "servicedescription": "OGC WMS provided by DISS",
       "servicedescriptionurl": "https://www.seismofaults.eu/index.php/services/diss-services/",
-      "datadescription": "DISS Working Group (2018). Database of Individual Seismogenic Sources (DISS), version 3.2.1. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.6092/INGV.IT-DISS3.2.1",
-      "datadescriptionurl": "https://doi.org/10.6092/INGV.IT-DISS3.2.1",
+      "datadescription": "DISS Working Group. (2021). Database of Individual Seismogenic Sources (DISS), version 3.3.0: A compilation of potential sources for earthquakes larger than M 5.5 in Italy and surrounding areas.. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/diss3.3.0",
+      "datadescriptionurl": "https://doi.org/10.13127/diss3.3.0",
       "datalicense": "CC BY-SA 4.0",
       "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
       "dataproviderurl": "http://www.ingv.it",
       "help": "",
       "publications": ["Basili R., Valensise G., Vannoli P., Burrato P., Fracassi U., Mariano S., Tiberti M.M., Boschi E. (2008). The Database of Individual Seismogenic Sources (DISS), version 3: Summarizing 20 years of research on Italy’s earthquake geology. Tectonophysics, 453(1–4), 20–43. https://doi.org/10.1016/j.tecto.2007.04.014"],
-      "endpointurl": "http://services.seismofaults.eu/geoserver/DISS321/wms?",
+      "endpointurl": "http://services.seismofaults.eu/geoserver/DISS330/wms?",
       "datestart": "",
       "dateend": "",
       "srs": "EPSG:4326",
@@ -2104,37 +2104,37 @@
         "wmsversion": "1.3.0",
         "layers": [
           {
-            "layername": "DISS321:iss321",
+            "layername": "DISS330:iss330",
             "styles": [
               "ISS"
             ]
           },
           {
-            "layername": "DISS321:csstop321",
+            "layername": "DISS330:csstop330",
             "styles": [
               "CSS-top"
             ]
           },
           {
-            "layername": "DISS321:csspln321",
+            "layername": "DISS330:csspln330",
             "styles": [
               "CSS-pln"
             ]
           },
           {
-            "layername": "DISS321:dss321",
+            "layername": "DISS330:dss330",
             "styles": [
               "DSS"
             ]
           },
           {
-            "layername": "DISS321:subdcnt321",
+            "layername": "DISS330:subdcnt330",
             "styles": [
               "SUBD-cnt"
             ]
           },
           {
-            "layername": "DISS321:subdzon321",
+            "layername": "DISS330:subdzon330",
             "styles": [
               "SUBD-zon"
             ]
@@ -2144,8 +2144,8 @@
       "settings": {
         "queryCQL": true
       },
-      "configversion": 0.2,
-      "configlastupdate": "2020-12-11T16:25:12+00:00"
+      "configversion": 0.3,
+      "configlastupdate": "2022-01-24T16:25:12+00:00"
     },
     "INGV EMTC": {
       "title": "EMTC, Euro-Mediterranean Tsunami Catalogue (INGV)",
@@ -2214,6 +2214,82 @@
       },
       "configversion": 0.1,
       "configlastupdate": "2021-03-04T14:34:00+00:00"
+    },
+    "TINITALY": {
+      "title": "TINITALY, a digital elevation model of Italy with a 10 meters cell size",
+      "group": "Digital Elevation Models",
+      "servicedescription": "OGS WMS provided by INGV",
+      "servicedescriptionurl": "http://tinitaly.pi.ingv.it/wms_service.html",
+      "datadescription": "Tarquini S., Isola I., Favalli M., Battistini A. (2007). TINITALY, a digital elevation model of Italy with a 10 meters cell size (Version 1.0) [Data set]. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/tinitaly/1.0",
+      "datadescriptionurl": "https://doi.org/10.13127/tinitaly/1.0",
+      "datalicense": "CC BY 4.0",
+      "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+      "dataproviderurl": "http://www.ingv.it",
+      "help": "",
+      "publications": [
+        "S. Tarquini, I. Isola, M. Favalli, F. Mazzarini, M. Bisson, M. T. Pareschi, E. Boschi. (2009). TINITALY/01: a new Triangular Irregular Network of Italy [JD]. Annals of Geophysics, 50(3). https://doi.org/10.4401/ag-4424 ",
+		"Tarquini, S., Vinci, S., Favalli, M., Doumaz, F., Fornaciai, A., & Nannipieri, L. (2012). Release of a 10-m-resolution DEM for the Italian territory: Comparison with global-coverage DEMs and anaglyph-mode exploration via the web. Computers & Geosciences, 38(1), 168–170. https://doi.org/10.1016/j.cageo.2011.04.018",
+		"Tarquini, S., & Nannipieri, L. (2017). The 10 m-resolution TINITALY DEM as a trans-disciplinary basis for the analysis of the Italian territory: Current trends and new perspectives. Geomorphology, 281, 108–115. https://doi.org/10.1016/j.geomorph.2016.12.022"],
+      "endpointurl": "http://193.204.89.26:8080/geoserver/TINItaly/wms?",
+      "datestart": "",
+      "dateend": "",
+      "srs": "EPSG:32632",
+      "default": {
+        "wmsversion": "1.3.0",
+        "layers": [
+          {
+            "layername": "tinitaly",
+            "styles": [
+              "raster"
+            ]
+          }
+        ]
+      },
+      "settings": {
+        "queryCQL": true
+      },
+      "configversion": 0.1,
+      "configlastupdate": "2022-01-24T16:25:12+00:00"
+    }
+  },
+  "wcs": {
+    "TINITALY": {
+      "title": "TINITALY, a digital elevation model of Italy with a 10 meters cell size",
+      "group": "Digital Elevation Models",
+      "servicedescription": "OGS WCS provided by INGV",
+      "servicedescriptionurl": "http://tinitaly.pi.ingv.it/wcs_service.html",
+      "datadescription": "Tarquini S., Isola I., Favalli M., Battistini A. (2007). TINITALY, a digital elevation model of Italy with a 10 meters cell size (Version 1.0) [Data set]. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/tinitaly/1.0",
+      "datadescriptionurl": "https://doi.org/10.13127/tinitaly/1.0",
+      "datalicense": "CC BY 4.0",
+      "datalicenseurl": "https://creativecommons.org/licenses/by/4.0/",
+      "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+      "dataproviderurl": "http://www.ingv.it",
+      "help": "",
+      "publications": [
+        "S. Tarquini, I. Isola, M. Favalli, F. Mazzarini, M. Bisson, M. T. Pareschi, E. Boschi. (2009). TINITALY/01: a new Triangular Irregular Network of Italy [JD]. Annals of Geophysics, 50(3). https://doi.org/10.4401/ag-4424 ",
+		"Tarquini, S., Vinci, S., Favalli, M., Doumaz, F., Fornaciai, A., & Nannipieri, L. (2012). Release of a 10-m-resolution DEM for the Italian territory: Comparison with global-coverage DEMs and anaglyph-mode exploration via the web. Computers & Geosciences, 38(1), 168–170. https://doi.org/10.1016/j.cageo.2011.04.018",
+		"Tarquini, S., & Nannipieri, L. (2017). The 10 m-resolution TINITALY DEM as a trans-disciplinary basis for the analysis of the Italian territory: Current trends and new perspectives. Geomorphology, 281, 108–115. https://doi.org/10.1016/j.geomorph.2016.12.022"],
+      "endpointurl": "http://193.204.89.26:8080/geoserver/TINItaly/wcs?",
+      "datestart": "",
+      "dateend": "",
+      "srs": "EPSG:32632",
+      "default": {
+        "wfsversion": "2.0.0",
+        "layers": [
+          {
+            "layername": "TINItaly:tinitaly",
+            "styles": [
+              "dem:tinitaly_wcs"
+            ]
+          }
+        ]
+      },
+      "settings": {
+        "queryCQL": true
+      },
+      "configversion": 0.1,
+      "configlastupdate": "2022-01-24T18:33:11+00:00"
     }
   },
   "styles": {
@@ -2326,6 +2402,11 @@
       "label": "ITED WFS inundation",
       "type": "wfs",
       "url": "https://www.emidius.eu/qquake/symbology/ITED_symbols_wfs_inund.qml"
+    },
+    "tinitaly_wcs": {
+      "label": "Digital Elevation Model",
+      "type": "dem",
+      "url": "https://www.emidius.eu/qquake/symbology/tinitaly_wcs.qml"
     }
   },
   "boundingboxpredefined": {
