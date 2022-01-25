@@ -94,7 +94,10 @@ class OgcServiceWidget(QWidget, FORM_CLASS):
                     parent_node.addChild(
                         ModelNode(['checked', style], checked))
             else:
-                style = layer.get('style', {}).get('wfs', {}).get('style', None)
+                if self.service_type == SERVICE_MANAGER.WFS:
+                    style = layer.get('style', {}).get('wfs', {}).get('style', None)
+                elif self.service_type == SERVICE_MANAGER.WCS:
+                    style = layer.get('style', {}).get('wcs', {}).get('style', None)
                 parent_node = ModelNode(['checked', layer['layername']], True, {'style': style})
 
             nodes.append(parent_node)
@@ -162,6 +165,29 @@ class OgcServiceWidget(QWidget, FORM_CLASS):
                     uri = 'IgnoreGetMapUrl=1&' + uri
 
                 rl = QgsRasterLayer(uri, layer_name, 'wms')
+                layers_to_add.append(rl)
+            elif self.service_type == SERVICE_MANAGER.WCS:
+                end_point = self.service_config['endpointurl']
+                if cql:
+                    if not end_point.endswith('?'):
+                        end_point += '?'
+
+                    end_point += 'CQL_FILTER=' + urllib.parse.quote(cql)
+
+                uri = "pagingEnabled='true'"
+                if not cql:
+                    uri += " restrictToRequestBBOX='1'"
+
+                uri += " srsname='{}' typename='{}' url='{}' version='auto'".format(
+                    self.service_config['srs'],
+                    layer_name,
+                    end_point)
+                rl = QgsRasterLayer(uri, layer_name, 'wcs')
+
+                if preset_style.get('style') and preset_style['style'] in SERVICE_MANAGER.PRESET_STYLES:
+                    style_url = SERVICE_MANAGER.PRESET_STYLES[preset_style['style']]['url']
+                    StyleUtils.fetch_and_apply_style(rl, style_url)
+
                 layers_to_add.append(rl)
 
         layers_to_add = []
