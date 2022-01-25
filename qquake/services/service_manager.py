@@ -56,8 +56,9 @@ class ServiceManager(QObject):  # pylint:disable=too-many-public-methods
     MACROSEISMIC = 'macroseismic'
     WMS = 'wms'
     WFS = 'wfs'
+    WCS = 'wcs'
 
-    _SERVICE_TYPES = [FDSNEVENT, FDSNSTATION, MACROSEISMIC, WMS, WFS]
+    _SERVICE_TYPES = [FDSNEVENT, FDSNSTATION, MACROSEISMIC, WMS, WFS, WCS]
 
     _CONFIG_FIELDS = {
         FDSNEVENT: load_field_config('config_fields_fdsnevent.json'),
