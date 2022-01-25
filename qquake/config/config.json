@@ -2279,9 +2279,11 @@
         "layers": [
           {
             "layername": "TINItaly:tinitaly",
-            "styles": [
-              "dem:tinitaly_wcs"
-            ]
+            "style": {
+              "wcs": {
+                "style": "tinitaly_wcs"
+              }
+            }
           }
         ]
       },
@@ -2405,7 +2407,7 @@
     },
     "tinitaly_wcs": {
       "label": "Digital Elevation Model",
-      "type": "dem",
+      "type": "wcs",
       "url": "https://www.emidius.eu/qquake/symbology/tinitaly_wcs.qml"
     }
   },
