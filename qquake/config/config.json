@@ -2052,25 +2052,25 @@
         "wmsversion": "1.3.0",
         "layers": [
           {
-            "layername": "subduction_zones",
+            "layername": "EDSF:subduction_zones",
             "styles": [
               "SUBD-zon"
             ]
           },
           {
-            "layername": "subduction_contours",
+            "layername": "EDSF:subduction_contours",
             "styles": [
               "edsf_subd_cnt"
             ]
           },
           {
-            "layername": "crustal_fault_sources_pln",
+            "layername": "EDSF:crustal_fault_sources_pln",
             "styles": [
               "CSS-pln"
             ]
           },
           {
-            "layername": "crustal_fault_sources_top",
+            "layername": "EDSF:crustal_fault_sources_top",
             "styles": [
               "EDSF_CF_top"
             ]
