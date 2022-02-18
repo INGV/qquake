@@ -167,21 +167,19 @@ class OgcServiceWidget(QWidget, FORM_CLASS):
                 rl = QgsRasterLayer(uri, layer_name, 'wms')
                 layers_to_add.append(rl)
             elif self.service_type == SERVICE_MANAGER.WCS:
-                end_point = self.service_config['endpointurl']
-                if cql:
-                    if not end_point.endswith('?'):
-                        end_point += '?'
-
-                    end_point += 'CQL_FILTER=' + urllib.parse.quote(cql)
-
-                uri = "pagingEnabled='true'"
-                if not cql:
-                    uri += " restrictToRequestBBOX='1'"
-
-                uri += " srsname='{}' typename='{}' url='{}' version='auto'".format(
+                base_uri = "cache=PreferNetwork&crs={}&dpiMode=7&format=GeoTIFF&identifier={}&url={} version='auto'".format(
                     self.service_config['srs'],
                     layer_name,
-                    end_point)
+                    self.service_config['endpointurl'])
+                
+                if style:
+                    uri = base_uri + "&styles={}".format(
+                        style
+                    )
+                    layer_name += ' ({})'.format(style)
+                else:
+                    uri = base_uri + "&styles"
+                
                 rl = QgsRasterLayer(uri, layer_name, 'wcs')
 
                 if preset_style.get('style') and preset_style['style'] in SERVICE_MANAGER.PRESET_STYLES:
