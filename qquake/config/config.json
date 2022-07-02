@@ -2060,7 +2060,7 @@
           {
             "layername": "EDSF:subduction_contours",
             "styles": [
-              "edsf_subd_cnt"
+              "edsf-subd-cnt"
             ]
           },
           {
@@ -2072,7 +2072,7 @@
           {
             "layername": "EDSF:crustal_fault_sources_top",
             "styles": [
-              "EDSF_CF_top"
+              "CSS-top"
             ]
           }
         ]
@@ -2106,37 +2106,37 @@
           {
             "layername": "DISS330:iss330",
             "styles": [
-              "ISS"
+              "iss330"
             ]
           },
           {
             "layername": "DISS330:csstop330",
             "styles": [
-              "CSS-top"
+              "csstop330"
             ]
           },
           {
             "layername": "DISS330:csspln330",
             "styles": [
-              "CSS-pln"
+              "csspln330"
             ]
           },
           {
             "layername": "DISS330:dss330",
             "styles": [
-              "DSS"
+              "dss330"
             ]
           },
           {
             "layername": "DISS330:subdcnt330",
             "styles": [
-              "SUBD-cnt"
+              "subdcnt330"
             ]
           },
           {
             "layername": "DISS330:subdzon330",
             "styles": [
-              "SUBD-zon"
+              "subdzon330"
             ]
           }
         ]
