@@ -2052,25 +2052,25 @@
         "wmsversion": "1.3.0",
         "layers": [
           {
-            "layername": "EDSF:subduction_zones",
+            "layername": "subduction_zones",
             "styles": [
               "SUBD-zon"
             ]
           },
           {
-            "layername": "EDSF:subduction_contours",
+            "layername": "subduction_contours",
             "styles": [
               "edsf-subd-cnt"
             ]
           },
           {
-            "layername": "EDSF:crustal_fault_sources_pln",
+            "layername": "crustal_fault_sources_pln",
             "styles": [
               "CSS-pln"
             ]
           },
           {
-            "layername": "EDSF:crustal_fault_sources_top",
+            "layername": "crustal_fault_sources_top",
             "styles": [
               "CSS-top"
             ]
@@ -2104,37 +2104,37 @@
         "wmsversion": "1.3.0",
         "layers": [
           {
-            "layername": "DISS330:iss330",
+            "layername": "iss330",
             "styles": [
               "iss330"
             ]
           },
           {
-            "layername": "DISS330:csstop330",
+            "layername": "csstop330",
             "styles": [
               "csstop330"
             ]
           },
           {
-            "layername": "DISS330:csspln330",
+            "layername": "csspln330",
             "styles": [
               "csspln330"
             ]
           },
           {
-            "layername": "DISS330:dss330",
+            "layername": "dss330",
             "styles": [
               "dss330"
             ]
           },
           {
-            "layername": "DISS330:subdcnt330",
+            "layername": "subdcnt330",
             "styles": [
               "subdcnt330"
             ]
           },
           {
-            "layername": "DISS330:subdzon330",
+            "layername": "subdzon330",
             "styles": [
               "subdzon330"
             ]
