@@ -1755,7 +1755,7 @@
       "title": "EDSF, European Database of Seismogenic Faults",
       "group": "Seismogenic faults",
       "servicedescription": "OGC WFS provided by EDSF",
-      "servicedescriptionurl": "https://www.seismofaults.eu/index.php/services/edsf13-services",
+      "servicedescriptionurl": "https://seismofaults.eu/index.php/services/edsf13-services",
       "datadescription": "Basili R., Kastelic V., Demircioglu M. B., Garcia Moreno D., Nemser E. S., Petricca P., Sboras S. P., Besana-Ostman G. M., Cabral J., Camelbeeck T., Caputo R., Danciu L., Domac H., Fonseca J., García-Mayordomo J., Giardini D., Glavatovic B., Gulen L., Ince Y., Pavlides S., Sesetyan K., Tarabusi G., Tiberti M. M., Utkucu M., Valensise G., Vanneste K., Vilanova S., Wössner J. (2013). The European Database of Seismogenic Faults (EDSF) compiled in the framework of the Project SHARE. https://doi.org/10.6092/INGV.IT-SHARE-EDSF",
       "datadescriptionurl": "https://doi.org/10.6092/INGV.IT-SHARE-EDSF",
       "datalicense": "CC BY-SA 4.0",
@@ -1815,7 +1815,7 @@
       "title": "DISS 3.3.0, Database of Individual Seismogenic Sources",
       "group": "Seismogenic faults",
       "servicedescription": "OGC WFS privided by DISS",
-      "servicedescriptionurl": "https://www.seismofaults.eu/index.php/services/diss-services/",
+      "servicedescriptionurl": "https://seismofaults.eu/index.php/services/diss-services/",
       "datadescription": "DISS Working Group. (2021). Database of Individual Seismogenic Sources (DISS), version 3.3.0: A compilation of potential sources for earthquakes larger than M 5.5 in Italy and surrounding areas.. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/diss3.3.0",
       "datadescriptionurl": "https://doi.org/10.13127/diss3.3.0",
       "datalicense": "CC BY-SA 4.0",
@@ -2035,7 +2035,7 @@
       "title": "EDSF, European Database of Seismogenic Faults",
       "group": "Seismogenic faults",
       "servicedescription": "OGC WMS provided by EDSF",
-      "servicedescriptionurl": "https://www.seismofaults.eu/index.php/services/edsf13-services",
+      "servicedescriptionurl": "https://seismofaults.eu/index.php/services/edsf13-services",
       "datadescription": "Basili R., Kastelic V., Demircioglu M. B., Garcia Moreno D., Nemser E. S., Petricca P., Sboras S. P., Besana-Ostman G. M., Cabral J., Camelbeeck T., Caputo R., Danciu L., Domac H., Fonseca J., García-Mayordomo J., Giardini D., Glavatovic B., Gulen L., Ince Y., Pavlides S., Sesetyan K., Tarabusi G., Tiberti M. M., Utkucu M., Valensise G., Vanneste K., Vilanova S., Wössner J. (2013). The European Database of Seismogenic Faults (EDSF) compiled in the framework of the Project SHARE. https://doi.org/10.6092/INGV.IT-SHARE-EDSF",
       "datadescriptionurl": "https://doi.org/10.6092/INGV.IT-SHARE-EDSF",
       "datalicense": "CC BY-SA 4.0",
@@ -2087,7 +2087,7 @@
       "title": "DISS 3.3.0, Database of Individual Seismogenic Sources",
       "group": "Seismogenic faults",
       "servicedescription": "OGC WMS provided by DISS",
-      "servicedescriptionurl": "https://www.seismofaults.eu/index.php/services/diss-services/",
+      "servicedescriptionurl": "https://seismofaults.eu/index.php/services/diss-services/",
       "datadescription": "DISS Working Group. (2021). Database of Individual Seismogenic Sources (DISS), version 3.3.0: A compilation of potential sources for earthquakes larger than M 5.5 in Italy and surrounding areas.. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/diss3.3.0",
       "datadescriptionurl": "https://doi.org/10.13127/diss3.3.0",
       "datalicense": "CC BY-SA 4.0",
@@ -2160,7 +2160,7 @@
       "dataproviderurl": "http://www.ingv.it",
       "help": "",
       "publications": ["Maramai A., Brizuela B., Graziani L. (2014). The Euro-Mediterranean Tsunami Catalogue. Annals of Geophysics, 57(4). https://doi.org/10.4401/ag-6437"],
-      "endpointurl": "https://tsunamiarchive.ingv.it/services/tsunami/wms/wms?",
+      "endpointurl": "https://tsunamiarchiveservices.ingv.it/services/tsunami/wms/wms?",
       "datestart": "1000-01-01T00:00:00+00:00",
       "dateend": "",
       "srs": "EPSG:4326",
@@ -2194,7 +2194,7 @@
       "dataproviderurl": "http://www.ingv.it",
       "help": "",
       "publications": [],
-      "endpointurl": "https://tsunamiarchive.ingv.it/services/tsunami/wms/wms?",
+      "endpointurl": "https://tsunamiarchiveservices.ingv.it/services/tsunami/wms/wms?",
       "datestart": "0001-01-01T00:00:00+00:00",
       "dateend": "",
       "srs": "EPSG:4326",
@@ -2343,52 +2343,52 @@
     "EDSF_CF_top": {
       "label": "",
       "type": "wfs",
-      "url": "https://www.seismofaults.eu/EDSFStyles/EDSF_CF_top.qml"
+      "url": "https://seismofaults.eu/EDSFStyles/EDSF_CF_top.qml"
     },
     "EDSF_CF_pln": {
       "label": "EDSF_CF_pln",
       "type": "wfs",
-      "url": "https://www.seismofaults.eu/EDSFStyles/EDSF_CF_pln.qml"
+      "url": "https://seismofaults.eu/EDSFStyles/EDSF_CF_pln.qml"
     },
     "EDSF_SUBD_zon": {
       "label": "EDSF subduction zones",
       "type": "wfs",
-      "url": "https://www.seismofaults.eu/EDSFStyles/EDSF_SUBD_zon.qml"
+      "url": "https://seismofaults.eu/EDSFStyles/EDSF_SUBD_zon.qml"
     },
     "EDSF_SUBD_cnt": {
       "label": "EDSF subduction contour",
       "type": "wfs",
-      "url": "https://www.seismofaults.eu/EDSFStyles/EDSF_SUBD_cnt.qml"
+      "url": "https://seismofaults.eu/EDSFStyles/EDSF_SUBD_cnt.qml"
     },
     "iss": {
       "label": "EDSF Individual Seismogenic Sources",
       "type": "wfs",
-      "url": "http://www.seismofaults.eu/DISS_styles/iss.qml"
+      "url": "http://seismofaults.eu/DISS_styles/iss.qml"
     },
     "csstop": {
       "label": "EDSF Composite Seismogenic Sources Top",
       "type": "wfs",
-      "url": "http://www.seismofaults.eu/DISS_styles/csstop.qml"
+      "url": "http://seismofaults.eu/DISS_styles/csstop.qml"
     },
     "csspln": {
       "label": "EDSF Composite Seismogenic Sources Planes",
       "type": "wfs",
-      "url": "http://www.seismofaults.eu/DISS_styles/csspln.qml"
+      "url": "http://seismofaults.eu/DISS_styles/csspln.qml"
     },
     "dss": {
       "label": "dss",
       "type": "wfs",
-      "url": "http://www.seismofaults.eu/DISS_styles/dss.qml"
+      "url": "http://seismofaults.eu/DISS_styles/dss.qml"
     },
     "subdcnt": {
       "label": "Subduction Contour",
       "type": "wfs",
-      "url": "http://www.seismofaults.eu/DISS_styles/subdcnt.qml"
+      "url": "http://seismofaults.eu/DISS_styles/subdcnt.qml"
     },
     "subdzon": {
       "label": "Subduction Zone",
       "type": "wfs",
-      "url": "http://www.seismofaults.eu/DISS_styles/subdzon.qml"
+      "url": "http://seismofaults.eu/DISS_styles/subdzon.qml"
     },
     "EMTC_wfs": {
       "label": "EMTC WFS events",
