@@ -2204,7 +2204,9 @@
           {
             "layername": "ITED_current",
             "styles": [
-              "tsunami:ITED_v1_int_sa"
+              "tsunami:ITED_v1_int_sa",
+              "tsunami:ITED_v1_inund",
+              "tsunami:ITED_v1_runup"
             ]
           }
         ]
