@@ -1761,7 +1761,7 @@
       "datalicense": "CC BY 4.0",
       "datalicenseurl": "https://creativecommons.org/licenses/by/4.0/",
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
-      "dataproviderurl": "http://www.ingv.it",
+      "dataproviderurl": "https://www.ingv.it",
       "help": "",
       "publications": [],
       "endpointurl": "https://services.seismofaults.eu/EDSF/wfs?",
@@ -1822,8 +1822,8 @@
       "datalicenseurl": "https://creativecommons.org/licenses/by/4.0/",
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
       "dataproviderurl": "http://www.ingv.it",
-      "help": "",
-      "publications": [],
+      "help": "https://seismofaults.eu/efsm20documentation",
+      "publications": ["Basili R., Danciu L., Beauval C., Sesetyan K., Vilanova S., Adamia S., Arroucau P., Atanackov J., Baize S., Canora C., Caputo R., Carafa M., Cushing M., Custódio S., Demircioglu Tumsa M., Duarte J., Ganas A., García-Mayordomo J., Gómez de la Peña L., Gràcia E., Jamšek Rupnik P., Jomard H., Kastelic V., Maesano F., Martín-Banda R., Martínez-Loriente S., Neres M., Perea H., Sket-Motnikar B., Tiberti M., Tsereteli N., Tsironi V., Vallone R., Vanneste K., Zupančič P. (2022). European Fault-Source Model 2020 (EFSM20): online data on fault geometry and activity parameters. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/efsm20"],
       "endpointurl": "https://services.seismofaults.eu/EFSM20/wfs?",
       "datestart": "",
       "dateend": "",
@@ -1902,21 +1902,21 @@
       "settings": {
         "queryCQL": true
       },
-      "configversion": 0.1,
-      "configlastupdate": "2022-12-19T11:00:12+00:00"
+      "configversion": 0.2,
+      "configlastupdate": "2023-01-12T12:00:00+00:00"
     },
     "INGV DISS": {
-      "title": "DISS 3.3.0, Database of Individual Seismogenic Sources",
+      "title": "DISS 3.3.0, Database of Individual Seismogenic Faults",
       "group": "Seismogenic faults",
-      "servicedescription": "OGC WFS privided by DISS",
+      "servicedescription": "OGC WFS provided by Seismofaults.eu",
       "servicedescriptionurl": "https://seismofaults.eu/index.php/services/diss-services/",
       "datadescription": "DISS Working Group. (2021). Database of Individual Seismogenic Sources (DISS), version 3.3.0: A compilation of potential sources for earthquakes larger than M 5.5 in Italy and surrounding areas.. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/diss3.3.0",
       "datadescriptionurl": "https://doi.org/10.13127/diss3.3.0",
-      "datalicense": "CC BY-SA 4.0",
-      "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "datalicense": "CC BY 4.0",
+      "datalicenseurl": "https://creativecommons.org/licenses/by/4.0/",
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
       "dataproviderurl": "http://www.ingv.it",
-      "help": "",
+      "help": "https://diss.ingv.it/help/kb",
       "publications": ["Basili R., Valensise G., Vannoli P., Burrato P., Fracassi U., Mariano S., Tiberti M.M., Boschi E. (2008). The Database of Individual Seismogenic Sources (DISS), version 3: Summarizing 20 years of research on Italy’s earthquake geology. Tectonophysics, 453(1–4), 20–43. https://doi.org/10.1016/j.tecto.2007.04.014"],
       "endpointurl": "https://services.seismofaults.eu/DISS330/wfs?",
       "datestart": "",
@@ -2126,7 +2126,7 @@
       "configlastupdate": "2022-01-24T16:25:12+00:00"
     },
     "EDSF13": {
-      "title": "EDSF13, European Database of Seismogenic Faults2013",
+      "title": "EDSF13, European Database of Seismogenic Faults 2013",
       "group": "Seismogenic faults",
       "servicedescription": "OGC WMS provided by Seismofaults.eu",
       "servicedescriptionurl": "https://seismofaults.eu/index.php/services/edsf13-services",
@@ -2180,7 +2180,7 @@
     "INGV DISS": {
       "title": "DISS 3.3.0, Database of Individual Seismogenic Sources",
       "group": "Seismogenic faults",
-      "servicedescription": "OGC WMS provided by DISS",
+      "servicedescription": "OGC WMS provided by Seismofaults.eu",
       "servicedescriptionurl": "https://seismofaults.eu/index.php/services/diss-services/",
       "datadescription": "DISS Working Group. (2021). Database of Individual Seismogenic Sources (DISS), version 3.3.0: A compilation of potential sources for earthquakes larger than M 5.5 in Italy and surrounding areas.. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/diss3.3.0",
       "datadescriptionurl": "https://doi.org/10.13127/diss3.3.0",
@@ -2188,7 +2188,7 @@
       "datalicenseurl": "https://creativecommons.org/licenses/by/4.0/",
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
       "dataproviderurl": "http://www.ingv.it",
-      "help": "",
+      "help": "https://diss.ingv.it/help/kb",
       "publications": ["Basili R., Valensise G., Vannoli P., Burrato P., Fracassi U., Mariano S., Tiberti M.M., Boschi E. (2008). The Database of Individual Seismogenic Sources (DISS), version 3: Summarizing 20 years of research on Italy’s earthquake geology. Tectonophysics, 453(1–4), 20–43. https://doi.org/10.1016/j.tecto.2007.04.014"],
       "endpointurl": "https://services.seismofaults.eu/DISS330/wms?",
       "datestart": "",
@@ -2238,8 +2238,8 @@
       "settings": {
         "queryCQL": true
       },
-      "configversion": 0.4,
-      "configlastupdate": "2022-12-19T11:00:12+00:00"
+      "configversion": 0.5,
+      "configlastupdate": "2023-01-12T12:00:00+00:00"
     },
     "INGV EMTC": {
       "title": "EMTC, Euro-Mediterranean Tsunami Catalogue (INGV)",
@@ -2347,6 +2347,80 @@
       "configlastupdate": "2022-01-24T16:25:12+00:00"
     }
   },
+  "EFSM20": {
+    "title": "EFSM20, European Fault source Model 2020",
+    "group": "Seismogenic faults",
+    "servicedescription": "OGC WMS provided by Seismofaults.eu",
+    "servicedescriptionurl": "https://seismofaults.eu/services/efsm20-services",
+    "datadescription": "Basili R., Danciu L., Beauval C., Sesetyan K., Vilanova S., Adamia S., Arroucau P., Atanackov J., Baize S., Canora C., Caputo R., Carafa M., Cushing M., Custódio S., Demircioglu Tumsa M., Duarte J., Ganas A., García-Mayordomo J., Gómez de la Peña L., Gràcia E., Jamšek Rupnik P., Jomard H., Kastelic V., Maesano F., Martín-Banda R., Martínez-Loriente S., Neres M., Perea H., Sket-Motnikar B., Tiberti M., Tsereteli N., Tsironi V., Vallone R., Vanneste K., Zupančič P. (2022). European Fault-Source Model 2020 (EFSM20): online data on fault geometry and activity parameters. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/efsm20",
+    "datadescriptionurl": "https://doi.org/10.13127/efsm20",
+    "datalicense": "CC BY 4.0",
+    "datalicenseurl": "https://creativecommons.org/licenses/by/4.0/",
+    "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+    "dataproviderurl": "http://www.ingv.it",
+    "help": "https://seismofaults.eu/efsm20documentation",
+    "publications": ["Basili R., Danciu L., Beauval C., Sesetyan K., Vilanova S., Adamia S., Arroucau P., Atanackov J., Baize S., Canora C., Caputo R., Carafa M., Cushing M., Custódio S., Demircioglu Tumsa M., Duarte J., Ganas A., García-Mayordomo J., Gómez de la Peña L., Gràcia E., Jamšek Rupnik P., Jomard H., Kastelic V., Maesano F., Martín-Banda R., Martínez-Loriente S., Neres M., Perea H., Sket-Motnikar B., Tiberti M., Tsereteli N., Tsironi V., Vallone R., Vanneste K., Zupančič P. (2022). European Fault-Source Model 2020 (EFSM20): online data on fault geometry and activity parameters. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/efsm20"],
+    "endpointurl": "https://services.seismofaults.eu/EFSM20/wms?",
+    "datestart": "",
+    "dateend": "",
+    "srs": "EPSG:4326",
+    "default": {
+      "wmsversion": "1.3.0",
+      "layers": [
+        {
+          "layername": "efsm20_cf_faulttypes",
+          "styles": [
+            "FaultTypes"
+          ]
+        },
+	{
+	  "layername": "efsm20_cf_maxmagnitude",
+	  "styles": [
+	    "Mw_Percentile_05",
+	    "Mw_Average",
+	    "Mw_Percentile_02",
+	    "Mw_Percentile_95",
+	    "Mw_Percentile_98"
+	  ]
+	},
+	{
+	  "layername": "efsm20_cf_momentrates",
+	  "styles": [
+	    "M0R_Arithmetic_Mean",
+	    "M0R_Geometric_Mean",
+	    "M0R_Min"
+	    ]
+	},
+	{
+	  "layername": "efsm20_cf_sliprates",
+	  "styles": [
+	    "SR_Min",
+	    "SR_AMean",
+	    "SR_GMean",
+	    "SR_Max"
+	  ]
+	},
+	{
+	  "layername": "efsm20_cfdepths",
+	  "styles": [
+	    "CFDepths"
+	  ]
+	},
+	{
+	  "layername": "efsm20_slabdepths",
+	  "styles": [
+	    "SlabDepths"
+	  ]
+	}
+      ]
+    },
+    "settings": {
+      "queryCQL": true
+    },
+    "configversion": 0.2,
+    "configlastupdate": "2023-01-13T12:00:00+00:00"
+  },
+
   "wcs": {
     "TINITALY": {
       "title": "TINITALY, a digital elevation model of Italy with a 10 meters cell size",
@@ -2598,10 +2672,3 @@
     }
   }
 }
-
-
-
-
-####################################### 19/12/2022
-########### manca la configurazione di EFSM20 WMS
-######################################
