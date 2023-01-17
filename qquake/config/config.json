@@ -1860,35 +1860,30 @@
               "wfs": {
                 "style": "EFSM20_top"
               }
-            }
-          },
+            },
             "layername": "EFSM20:efsm20_is_lattice",
             "style": {
               "wfs": {
                 "style": "EFSM20_is_lattice"
               }
-            }
           },
             "layername": "EFSM20:efsm20_si_discretizations",
             "style": {
               "wfs": {
                 "style": "EFSM20_si_discretizations"
               }
-            }
           },
             "layername": "EFSM20:efsm20_si_parameters",
             "style": {
               "wfs": {
                 "style": "EFSM20_si_parameters"
               }
-            }
           },
             "layername": "EFSM20:efsm20_si_realizations",
             "style": {
               "wfs": {
                 "style": "EFSM20_si_realizations"
               }
-            }
           },
             "layername": "EFSM20:efsm20_slabdepths",
             "style": {
@@ -1896,7 +1891,6 @@
                 "style": "EFSM20_slabdepths"
               }
             }
-          }
         ]
       },
       "settings": {
