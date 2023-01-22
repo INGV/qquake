@@ -926,7 +926,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
 
         def on_progress(progress: float):
             self.progressBar.setRange(0, 100)
-            self.progressBar.setValue(progress)
+            self.progressBar.setValue(int(progress))
 
         self.fetcher.started.connect(on_started)
         self.fetcher.progress.connect(on_progress)
