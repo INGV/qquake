@@ -2555,12 +2555,46 @@
         "wmtsversion": "1.0",
         "layers": [
           {
-            "layername": "TINItaly:tinitaly",
-            "style": {
-              "wmts": {
-                "style": "tinitaly_wmts"
-              }
-            }
+            "layername": "tinitaly_dem",
+            "styles": [
+              "raster"
+            ]
+          },
+          {
+            "layername": "tinitaly_hshd",
+            "styles": [
+              "raster"
+            ]
+          },
+          {
+            "layername": "tinitaly_hsv",
+            "styles": [
+              "raster"
+            ]
+          },
+          {
+            "layername": "tinitaly_od",
+            "styles": [
+              "raster"
+            ]
+          },
+          {
+            "layername": "tinitaly_slope",
+            "styles": [
+              "raster"
+            ]
+          },
+          {
+            "layername": "tinitaly_svf_2d5",
+            "styles": [
+              "raster"
+            ]
+          },
+          {
+            "layername": "tinitaly_svf_ea",
+            "styles": [
+              "raster"
+            ]
           }
         ]
       },
