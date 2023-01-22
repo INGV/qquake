@@ -179,6 +179,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
 
         # OGC
         self.ogc_combo.addItem(self.tr('Web Map Services (WMS)'), SERVICE_MANAGER.WMS)
+        self.ogc_combo.addItem(self.tr('Web Map Tile Services (WMTS)'), SERVICE_MANAGER.WMTS)
         self.ogc_combo.addItem(self.tr('Web Feature Services (WFS)'), SERVICE_MANAGER.WFS)
         self.ogc_combo.addItem(self.tr('Web Coverage Services (WCS)'), SERVICE_MANAGER.WCS)
         self.ogc_combo.currentIndexChanged.connect(self.refreshOgcWidgets)
@@ -402,7 +403,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
             service_id = self.fdsn_macro_list.currentItem().text() if self.fdsn_macro_list.currentItem() else None
         elif service_type == SERVICE_MANAGER.FDSNSTATION:
             service_id = self.fdsn_station_list.currentItem().text() if self.fdsn_station_list.currentItem() else None
-        elif service_type in (SERVICE_MANAGER.WMS, SERVICE_MANAGER.WFS, SERVICE_MANAGER.WCS):
+        elif service_type in (SERVICE_MANAGER.WMS, SERVICE_MANAGER.WMTS, SERVICE_MANAGER.WFS, SERVICE_MANAGER.WCS):
             service_id = self.ogc_list.selectionModel().selectedIndexes()[
                 0].data() if self.ogc_list.selectionModel().selectedIndexes() else None
         else:
@@ -454,7 +455,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                 widget = self.station_by_id_filter
             elif self.fdsnstation_tab_widget.currentIndex() == 2:
                 widget = self.station_by_url_widget
-        elif service_type in (SERVICE_MANAGER.WMS, SERVICE_MANAGER.WFS, SERVICE_MANAGER.WCS):
+        elif service_type in (SERVICE_MANAGER.WMS, SERVICE_MANAGER.WMTS, SERVICE_MANAGER.WFS, SERVICE_MANAGER.WCS):
             widget = self.ogc_service_widget
         return widget
 
@@ -843,7 +844,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
             self.fdsn_macro_list.setCurrentItem(self.fdsn_macro_list.findItems(service_id, Qt.MatchContains)[0])
         elif service_type == SERVICE_MANAGER.FDSNSTATION:
             self.fdsn_station_list.setCurrentItem(self.fdsn_station_list.findItems(service_id, Qt.MatchContains)[0])
-        elif service_type in (SERVICE_MANAGER.WMS, SERVICE_MANAGER.WFS, SERVICE_MANAGER.WCS):
+        elif service_type in (SERVICE_MANAGER.WMS, SERVICE_MANAGER.WMTS, SERVICE_MANAGER.WFS, SERVICE_MANAGER.WCS):
             self.ogc_combo.setCurrentIndex(self.ogc_combo.findData(service_type))
 
             indexes = self.ogc_list_model.match(self.ogc_list_model.index(0, 0), Qt.UserRole, service_id,
@@ -909,7 +910,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         """
         read the event URL and convert the response in a list
         """
-        if self.get_current_service_type() in (SERVICE_MANAGER.WMS, SERVICE_MANAGER.WFS, SERVICE_MANAGER.WCS):
+        if self.get_current_service_type() in (SERVICE_MANAGER.WMS, SERVICE_MANAGER.WMTS, SERVICE_MANAGER.WFS, SERVICE_MANAGER.WCS):
             self.ogc_service_widget.add_selected_layers()
             return
 
