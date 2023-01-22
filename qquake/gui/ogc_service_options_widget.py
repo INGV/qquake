@@ -166,6 +166,34 @@ class OgcServiceWidget(QWidget, FORM_CLASS):
 
                 rl = QgsRasterLayer(uri, layer_name, 'wms')
                 layers_to_add.append(rl)
+            elif self.service_type == SERVICE_MANAGER.WMTS:
+                base_uri = 'contextualWMSLegend=0&crs={}&dpiMode=7&format=image/png&layers={}'.format(
+                    self.service_config['srs'],
+                    layer_name
+                )
+
+                if style:
+                    uri = base_uri + "&styles={}".format(
+                        style
+                    )
+                    layer_name += ' ({})'.format(style)
+                else:
+                    uri = base_uri + "&styles"
+                
+                uri += "&tileMatrixSet={}".format(
+                    self.service_config['srs']
+                )
+
+                uri += "&url={}".format(
+                    self.service_config['endpointurl']
+                )
+
+                if cql:
+                    uri += 'CQL_FILTER=' + urllib.parse.quote(cql)
+                    uri = 'IgnoreGetMapUrl=1&' + uri
+
+                rl = QgsRasterLayer(uri, layer_name, 'wms')
+                layers_to_add.append(rl)
             elif self.service_type == SERVICE_MANAGER.WCS:
                 base_uri = "cache=PreferNetwork&crs={}&dpiMode=7&format=GeoTIFF&identifier={}&url={} version='auto'".format(
                     self.service_config['srs'],
