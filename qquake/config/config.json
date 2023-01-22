@@ -2035,7 +2035,7 @@
       "configlastupdate": "2022-01-24T16:25:12+00:00"
     },
     "INGV EMTC": {
-      "title": "EMTC, Euro-Mediterranean Tsunami Catalogue (INGV)",
+      "title": "Euro-Mediterranean Tsunami Catalogue (EMTC), version 2.0",
       "group": "Tsunami",
       "servicedescription": "OGC WFS provided by tsunamiarchive.ingv.it",
       "servicedescriptionurl": "https://tsunamiarchive.ingv.it/index.php/en/tsunami-catalogues/emtc2-0-euro-mediterranean-tsunami-catalogue",
@@ -2073,7 +2073,7 @@
       "configlastupdate": "2021-03-04T14:34:00+00:00"
     },
     "INGV ITED": {
-      "title": "ITED, Italian Tsunami Effects Database (INGV)",
+      "title": "Italian Tsunami Effects Database (ITED)",
       "group": "Tsunami",
       "servicedescription": "OGC WFS provided by tsunamiarchive.ingv.it",
       "servicedescriptionurl": "https://tsunamiarchive.ingv.it/index.php/en/tsunami-catalogues/ited-italian-tsunami-effects-database",
@@ -2381,10 +2381,10 @@
       "configlastupdate": "2023-01-18T12:00:00+00:00"
     },
     "INGV EMTC": {
-      "title": "EMTC, Euro-Mediterranean Tsunami Catalogue (INGV)",
+      "title": "Euro-Mediterranean Tsunami Catalogue (EMTC), version 2.0",
       "group": "Tsunami",
       "servicedescription": "OGC WMS provided by tsunamiarchive.ingv.it",
-      "servicedescriptionurl": "https://tsunamiarchive.ingv.it/emtc.2.0/",
+      "servicedescriptionurl": "https://tsunamiarchive.ingv.it/index.php/en/tsunami-catalogues/emtc2-0-euro-mediterranean-tsunami-catalogue",
       "datadescription": "Maramai A., Graziani L., Brizuela B. (2019). Euro-Mediterranean Tsunami Catalogue (EMTC), version 2.0. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/tsunami/emtc.2.0",
       "datadescriptionurl": "https://doi.org/10.13127/tsunami/emtc.2.0",
       "datalicense": "CC BY 4.0",
@@ -2417,10 +2417,10 @@
       "configlastupdate": "2021-03-04T14:34:00+00:00"
     },
     "INGV ITED": {
-      "title": "ITED, Italian Tsunami Effects Database (INGV)",
+      "title": "Italian Tsunami Effects Database (ITED)",
       "group": "Tsunami",
       "servicedescription": "OGC WMS provided by tsunamiarchive.ingv.it",
-      "servicedescriptionurl": "https://tsunamiarchive.ingv.it/ited.1.0/",
+      "servicedescriptionurl": "https://tsunamiarchive.ingv.it/index.php/en/tsunami-catalogues/ited-italian-tsunami-effects-database",
       "datadescription": "Maramai A., Graziani L., Brizuela Reyes, B. (2019). Italian Tsunami Effects Database (ITED). Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/tsunami/ited.1.0",
       "datadescriptionurl": "https://doi.org/10.13127/tsunami/ited.1.0",
       "datalicense": "CC BY 4.0",
