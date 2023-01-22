@@ -160,7 +160,7 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
         self.check_http_code_nodata.toggled.connect(self._changed)
         self.combo_http_code_nodata.currentIndexChanged.connect(self._changed)
 
-        if self.service_type in (SERVICE_MANAGER.WMS, SERVICE_MANAGER.WFS, SERVICE_MANAGER.WCS):
+        if self.service_type in (SERVICE_MANAGER.WMS, SERVICE_MANAGER.WMTS, SERVICE_MANAGER.WFS, SERVICE_MANAGER.WCS):
             for w in [self.group_capabilities, self.group_bounding_box]:
                 w.setEnabled(False)
                 w.hide()
