@@ -55,6 +55,7 @@
           "eventParameters>event>origin>longitude>value",
           "eventParameters>event>magnitude§publicID",
           "eventParameters>event>magnitude>mag>value",
+          "eventParameters>event>magnitude>type",
           "eventParameters>event>magnitude>mag>uncertainty",
           "eventParameters>event>magnitude>creationInfo>agencyID",
           "eventParameters>event>magnitude>creationInfo>author"
@@ -148,6 +149,7 @@
           "eventParameters>event>origin>creationInfo>author",
           "eventParameters>event>magnitude§publicID",
           "eventParameters>event>magnitude>mag>value",
+          "eventParameters>event>magnitude>type",
           "eventParameters>event>magnitude>mag>uncertainty",
           "eventParameters>event>magnitude>creationInfo>agencyID",
           "eventParameters>event>magnitude>creationInfo>author"
@@ -243,6 +245,7 @@
           "eventParameters>event>origin>creationInfo>version",
           "eventParameters>event>magnitude§publicID",
           "eventParameters>event>magnitude>mag>value",
+          "eventParameters>event>magnitude>type",
           "eventParameters>event>magnitude>mag>uncertainty",
           "eventParameters>event>magnitude>creationInfo>agencyID",
           "eventParameters>event>magnitude>creationInfo>creationTime",
@@ -337,6 +340,7 @@
           "eventParameters>event>origin>creationInfo>authorURI",
           "eventParameters>event>magnitude§publicID",
           "eventParameters>event>magnitude>mag>value",
+          "eventParameters>event>magnitude>type",
           "eventParameters>event>magnitude>mag>uncertainty",
           "eventParameters>event>magnitude>creationInfo>agencyURI",
           "eventParameters>event>magnitude>creationInfo>authorURI"
@@ -430,6 +434,7 @@
           "eventParameters>event>origin>creationInfo>author",
           "eventParameters>event>magnitude§publicID",
           "eventParameters>event>magnitude>mag>value",
+          "eventParameters>event>magnitude>type",
           "eventParameters>event>magnitude>mag>uncertainty",
           "eventParameters>event>magnitude>creationInfo>agencyID",
           "eventParameters>event>magnitude>creationInfo>author"
@@ -1545,6 +1550,7 @@
           "eventParameters>event>origin>longitude>value",
           "eventParameters>event>origin>depth>value",
           "eventParameters>event>magnitude>mag>value",
+          "eventParameters>event>magnitude>type",
           "eventParameters>event>magnitude>mag>uncertainty",
           "macroseismicParameters>mdpSet§publicID",
           "macroseismicParameters>mdpSet>literatureSourceMDPSetReference",
@@ -1658,6 +1664,7 @@
           "eventParameters>event>origin>longitude>value",
           "eventParameters>event>origin>depth>value",
           "eventParameters>event>magnitude>mag>value",
+          "eventParameters>event>magnitude>type",
           "eventParameters>event>magnitude>mag>uncertainty",
           "macroseismicParameters>mdpSet§publicID",
           "macroseismicParameters>mdpSet>literatureSourceMDPSetReference",
