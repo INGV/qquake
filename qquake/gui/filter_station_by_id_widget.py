@@ -93,19 +93,19 @@ class FilterStationByIdWidget(QWidget, FORM_CLASS, BaseFilterWidget):
         """
         Returns the entered network codes
         """
-        return self.edit_network_code.text().strip() or None
+        return self.edit_network_code.text().strip().replace(" ", "") or None
 
     def station_codes(self) -> Optional[str]:
         """
         Returns the entered station codes
         """
-        return self.edit_station_code.text().strip() or None
+        return self.edit_station_code.text().strip().replace(" ", "") or None
 
     def locations(self) -> Optional[str]:
         """
         Returns the entered location codes
         """
-        return self.edit_location_code.text().strip() or None
+        return self.edit_location_code.text().strip().replace(" ", "") or None
 
     def output_fields(self) -> Optional[List[str]]:
         return self.output_table_options_widget.output_fields
