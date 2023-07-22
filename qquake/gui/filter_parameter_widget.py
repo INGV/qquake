@@ -559,7 +559,7 @@ class FilterParameterWidget(QWidget, FORM_CLASS, BaseFilterWidget):  # pylint: d
 
             self.fdsn_event_start_date.setDateTime(date_start)
             self.min_time_check.setText(
-                self.tr("Start (from {})").format(date_start.toString('yyyy-MM-dd')))
+                self.tr("Start (from {})").format(date_start.toString('yyyy-MM-dd hh:mm:ss')))
         else:
             self.fdsn_event_start_date.clearMinimumDate()
 
@@ -569,7 +569,7 @@ class FilterParameterWidget(QWidget, FORM_CLASS, BaseFilterWidget):  # pylint: d
             self.fdsn_event_start_date.setMaximumDateTime(date_end)
 
             self.max_time_check.setText(
-                self.tr("End (until {})").format(date_end.toString('yyyy-MM-dd')))
+                self.tr("End (until {})").format(date_end.toString('yyyy-MM-dd hh:mm:ss')))
         else:
             self.fdsn_event_start_date.clearMaximumDate()
 
