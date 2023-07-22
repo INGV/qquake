@@ -134,16 +134,16 @@
            <widget class="QDateTimeEdit" name="fdsn_event_start_date">
             <property name="maximumDateTime">
              <datetime>
-              <hour>23</hour>
-              <minute>59</minute>
-              <second>59</second>
               <year>9999</year>
               <month>12</month>
               <day>31</day>
+              <hour>23</hour>
+              <minute>59</minute>
+              <second>59</second>
              </datetime>
             </property>
             <property name="displayFormat">
-             <string>yyyy-MM-dd</string>
+             <string>yyyy-MM-dd hh:mm:ss</string>
             </property>
             <property name="calendarPopup">
              <bool>true</bool>
@@ -160,7 +160,7 @@
              </date>
             </property>
             <property name="displayFormat">
-             <string>yyyy-MM-dd</string>
+             <string>yyyy-MM-dd hh:mm:ss</string>
             </property>
             <property name="calendarPopup">
              <bool>true</bool>
