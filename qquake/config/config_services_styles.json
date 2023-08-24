@@ -1,0 +1,246 @@
+{
+  "styles": {
+    "square_colors": {
+      "label": "square colors",
+      "type": "events",
+      "url": "https://www.emidius.eu/qquake/symbology/CPTI15_symbols.qml"
+    },
+    "circles_colors": {
+      "label": "circle colors",
+      "type": "events",
+      "url": "https://www.emidius.eu/qquake/symbology/epicentres_circles_colors.qml"
+    },
+    "circles_red": {
+      "label": "circle red",
+      "type": "events",
+      "url": "https://www.emidius.eu/qquake/symbology/epicentres_circles_red.qml"
+    },
+    "circles_blue": {
+      "label": "circle blue",
+      "type": "events",
+      "url": "https://www.emidius.eu/qquake/symbology/epicentres_circles_blue.qml"
+    },
+    "circles_grayscale": {
+      "label": "circle gray scale",
+      "type": "events",
+      "url": "https://www.emidius.eu/qquake/symbology/epicentres_circles_grayscale.qml"
+    },
+    "AHEAD_intensities": {
+      "label": "European Archive of Historical Earthquake Data (AHEAD)",
+      "type": "macroseismic",
+      "url": "https://www.emidius.eu/qquake/symbology/AHEAD_intensities.qml"
+    },
+    "stations": {
+      "label": "triangle red",
+      "type": "stations",
+      "url": "https://www.emidius.eu/qquake/symbology/stations.qml"
+    },
+    "CPTI_wfs": {
+      "label": "Parametric Catalogue of Italian Earthquakes (CPTI)",
+      "type": "wfs",
+      "url": "https://www.emidius.eu/qquake/symbology/CPTI15_symbols_wfs.qml"
+    },
+    "EPICA_wfs": {
+      "label": "",
+      "type": "wfs",
+      "url": "https://www.emidius.eu/qquake/symbology/EPICA_symbols_wfs.qml"
+    },
+    "EFSM20_bot": {
+      "label": "EFSM20 trace of fault planes lower edge",
+      "type": "wfs",
+      "url": "https://seismofaults.eu/EDSFStyles/efsm20_bot.qml"
+    },
+    "EFSM20_mid": {
+      "label": "EFSM20 trace of fault planes middle line",
+      "type": "wfs",
+      "url": "https://seismofaults.eu/EDSFStyles/efsm20_mid.qml"
+    },
+    "EFSM20_pld": {
+      "label": "EFSM20 Vertical projection of faults",
+      "type": "wfs",
+      "url": "https://seismofaults.eu/EDSFStyles/efsm20_pld.qml"
+    },
+    "EFSM20_top": {
+      "label": "EFSM20 Trace of fault planes upper edge",
+      "type": "wfs",
+      "url": "https://seismofaults.eu/EDSFStyles/efsm20_top.qml"
+    },
+    "EFSM20_is_lattice": {
+      "label": "EFSM20 intraslab model ",
+      "type": "wfs",
+      "url": "https://seismofaults.eu/EDSFStyles/efsm20_is_lattice.qml"
+    },
+    "EFSM20_si_discretizations": {
+      "label": "EFSM20 subduction interface discretized",
+      "type": "wfs",
+      "url": "https://seismofaults.eu/EDSFStyles/efsm20_si_discretizations.qml"
+    },
+    "EFSM20_si_parameters": {
+      "label": "EFSM20 subduction interface parameters",
+      "type": "wfs",
+      "url": "https://seismofaults.eu/EDSFStyles/efsm20_si_parameters.qml"
+    },
+    "EFSM20_si_realizations": {
+      "label": "EFSM20 subduction interface model realization",
+      "type": "wfs",
+      "url": "https://seismofaults.eu/EDSFStyles/efsm20_si_realizations.qml"
+    },
+    "EFSM20_slabdepths": {
+      "label": "EFSM20 Slab depth isolines",
+      "type": "wfs",
+      "url": "https://seismofaults.eu/EDSFStyles/efsm20_slabdepths.qml"
+    },
+    "EDSF_CF_top": {
+      "label": "EDSF Crustal Fault tops",
+      "type": "wfs",
+      "url": "https://seismofaults.eu/EDSFStyles/EDSF_CF_top.qml"
+    },
+    "EDSF_CF_pln": {
+      "label": "EDSF Crustal Fault planes",
+      "type": "wfs",
+      "url": "https://seismofaults.eu/EDSFStyles/EDSF_CF_pln.qml"
+    },
+    "EDSF_SUBD_zon": {
+      "label": "EDSF subduction zones",
+      "type": "wfs",
+      "url": "https://seismofaults.eu/EDSFStyles/EDSF_SUBD_zon.qml"
+    },
+    "EDSF_SUBD_cnt": {
+      "label": "EDSF subduction contour lines",
+      "type": "wfs",
+      "url": "https://seismofaults.eu/EDSFStyles/EDSF_SUBD_cnt.qml"
+    },
+    "iss": {
+      "label": "DISS Individual Seismogenic Sources",
+      "type": "wfs",
+      "url": "http://seismofaults.eu/DISS_styles/iss.qml"
+    },
+    "csstop": {
+      "label": "DISS Composite Seismogenic Source Tops",
+      "type": "wfs",
+      "url": "http://seismofaults.eu/DISS_styles/csstop.qml"
+    },
+    "csspln": {
+      "label": "DISS Composite Seismogenic Source Planes",
+      "type": "wfs",
+      "url": "http://seismofaults.eu/DISS_styles/csspln.qml"
+    },
+    "dss": {
+      "label": "DISS Debated Seismogenic Sources",
+      "type": "wfs",
+      "url": "http://seismofaults.eu/DISS_styles/dss.qml"
+    },
+    "subdcnt": {
+      "label": "DISS Subduction Contour lines",
+      "type": "wfs",
+      "url": "http://seismofaults.eu/DISS_styles/subdcnt.qml"
+    },
+    "subdzon": {
+      "label": "DISS Subduction Zone",
+      "type": "wfs",
+      "url": "http://seismofaults.eu/DISS_styles/subdzon.qml"
+    },
+    "EMTC_wfs": {
+      "label": "EMTC WFS events",
+      "type": "wfs",
+      "url": "https://www.emidius.eu/qquake/symbology/EMTC_symbols_wfs.qml"
+    },
+    "ITED_wfs_int": {
+      "label": "ITED WFS intensities",
+      "type": "wfs",
+      "url": "https://www.emidius.eu/qquake/symbology/ITED_symbols_wfs_int.qml"
+    },
+    "ITED_wfs_inund": {
+      "label": "ITED WFS inundation",
+      "type": "wfs",
+      "url": "https://www.emidius.eu/qquake/symbology/ITED_symbols_wfs_inund.qml"
+    },
+    "tinitaly_1_1_wcs_dem": {
+      "label": "TINItaly Digital Elevation Model",
+      "type": "wcs",
+      "url": "https://www.emidius.eu/qquake/symbology/tinitaly_1_1_wcs_dem.qml"
+    },
+    "tinitaly_1_1_wcs_hshd": {
+      "label": "TINItaly Shaded relief map",
+      "type": "wcs",
+      "url": "https://www.emidius.eu/qquake/symbology/tinitaly_1_1_wcs_hshd.qml"
+    },
+    "tinitaly_1_1_wcs_hsv": {
+      "label": "TINItaly Hue-Saturation-Value (HSV) composition image with slope (2.5σ clipping) as saturation and SVF (2.5σ clipping) as value, according to RRIM (Red Relief Image Maps) style maps",
+      "type": "wcs",
+      "url": "https://www.emidius.eu/qquake/symbology/tinitaly_1_1_wcs_hsv.qml"
+    },
+    "tinitaly_1_1_wcs_od": {
+      "label": "TINItaly Openness down map using equal area equalization as technique for image enhancement",
+      "type": "wcs",
+      "url": "https://www.emidius.eu/qquake/symbology/tinitaly_1_1_wcs_od.qml"
+    },
+    "tinitaly_1_1_wcs_slope": {
+      "label": "TINItaly Slope map using 2.5σ clipping as technique for image enhancement",
+      "type": "wcs",
+      "url": "https://www.emidius.eu/qquake/symbology/tinitaly_1_1_wcs_slope.qml"
+    },
+    "tinitaly_1_1_wcs_svf_2d5": {
+      "label": "TINItaly Sky view Factor (SVF) map using 2.5σ clipping as technique for image enhancement",
+      "type": "wcs",
+      "url": "https://www.emidius.eu/qquake/symbology/tinitaly_1_1_wcs_svf_2d5.qml"
+    },
+    "tinitaly_1_1_wcs_svf_ea": {
+      "label": "TINItaly SVF map using equal area equalization as technique for image enhancement",
+      "type": "wcs",
+      "url": "https://www.emidius.eu/qquake/symbology/tinitaly_1_1_wcs_svf_ea.qml"
+    },
+    "tinitaly_wmts": {
+      "label": "Digital Elevation Model",
+      "type": "wmts",
+      "url": "https://www.emidius.eu/qquake/symbology/tinitaly_wmts.qml"
+    }
+  },
+  "boundingboxpredefined": {
+    "europe": {
+      "title": "Europe",
+      "boundingbox": [
+        -33,
+        32,
+        32,
+        75
+      ]
+    },
+    "italy": {
+      "title": "Italy",
+      "boundingbox": [
+        5,
+        35,
+        20,
+        49
+      ]
+    },
+    "switzerland": {
+      "title": "Switzerland",
+      "boundingbox": [
+        5.5,
+        45.4,
+        11,
+        48.3
+      ]
+    },
+    "mediterranean": {
+      "title": "Mediterranean Sea",
+      "boundingbox": [
+        -7,
+        27,
+        38,
+        48
+      ]
+    },
+    "world": {
+      "title": "World",
+      "boundingbox": [
+        -180,
+        -85,
+        180,
+        85
+      ]
+    }
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "wmts": {
+    "TINITALY": {
+      "title": "TINITALY, a digital elevation model of Italy with a 10 meters cell size (Version 1.1)<p></p><table><tr><td style='font-weight:bold; border-bottom:1px solid #CCC;'>Style Name</td><td style='font-weight:bold; border-bottom:1px solid #CCC;'>Description</td></tr><tr><td>tinitaly_dem</td><td>TINItaly DEM</td></tr><tr><td>tinitaly_hshd</td><td>Shaded relief map</td></tr><tr><td>tinitaly_hsv</td><td>Hue-Saturation-Value (HSV) composition image with slope (2.5σ clipping) as saturation and SVF (2.5σ clipping) as value, according to RRIM (Red Relief Image Maps) style maps</td></tr><tr><td>tinitaly_od</td><td>Openness down map using equal area equalization as technique for image enhancement</td></tr><tr><td>tinitaly_slope</td><td>Slope map using 2.5σ clipping as technique for image enhancement</td></tr><tr><td>tinitaly_svf_2d5&nbsp;&nbsp;</td><td>Sky view Factor (SVF) map using 2.5σ clipping as technique for image enhancement</td></tr><tr><td>tinitaly_svf_ea</td><td>SVF map using equal area equalization as technique for image enhancement</td></tr></table>",
+      "group": "Digital Elevation Models",
+      "servicedescription": "OGS WMTS provided by INGV",
+      "servicedescriptionurl": "https://tinitaly.pi.ingv.it/wmts_service.html",
+      "datadescription": "Tarquini S., Isola I., Favalli M., Battistini A., Dotta G. (2023). TINITALY, a digital elevation model of Italy with a 10 meters cell size (Version 1.1). Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/tinitaly/1.1",
+      "datadescriptionurl": "https://doi.org/10.13127/tinitaly/1.1",
+      "datalicense": "CC BY 4.0",
+      "datalicenseurl": "https://creativecommons.org/licenses/by/4.0/",
+      "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+      "dataproviderurl": "http://www.ingv.it/",
+      "help": "",
+      "publications": [
+        "S. Tarquini, I. Isola, M. Favalli, F. Mazzarini, M. Bisson, M. T. Pareschi, E. Boschi. (2009). TINITALY/01: a new Triangular Irregular Network of Italy [JD]. Annals of Geophysics, 50(3). https://doi.org/10.4401/ag-4424 ",
+        "Tarquini, S., Vinci, S., Favalli, M., Doumaz, F., Fornaciai, A., & Nannipieri, L. (2012). Release of a 10-m-resolution DEM for the Italian territory: Comparison with global-coverage DEMs and anaglyph-mode exploration via the web. Computers & Geosciences, 38(1), 168–170. https://doi.org/10.1016/j.cageo.2011.04.018",
+        "Tarquini, S., & Nannipieri, L. (2017). The 10 m-resolution TINITALY DEM as a trans-disciplinary basis for the analysis of the Italian territory: Current trends and new perspectives. Geomorphology, 281, 108–115. https://doi.org/10.1016/j.geomorph.2016.12.022"
+      ],
+      "endpointurl": "http://tinitaly.pi.ingv.it/TINItaly_1_1/gwc/service/wmts?",
+      "datestart": "",
+      "dateend": "",
+      "srs": "EPSG:32632",
+      "default": {
+        "wmtsversion": "1.0",
+        "layers": [
+          {
+            "layername": "tinitaly_dem",
+            "styles": [
+              "raster"
+            ]
+          },
+          {
+            "layername": "tinitaly_hshd",
+            "styles": [
+              "raster"
+            ]
+          },
+          {
+            "layername": "tinitaly_hsv",
+            "styles": [
+              "raster"
+            ]
+          },
+          {
+            "layername": "tinitaly_od",
+            "styles": [
+              "raster"
+            ]
+          },
+          {
+            "layername": "tinitaly_slope",
+            "styles": [
+              "raster"
+            ]
+          },
+          {
+            "layername": "tinitaly_svf_2d5",
+            "styles": [
+              "raster"
+            ]
+          },
+          {
+            "layername": "tinitaly_svf_ea",
+            "styles": [
+              "raster"
+            ]
+          }
+        ]
+      },
+      "settings": {
+        "queryCQL": true
+      },
+      "configversion": 0.2,
+      "configlastupdate": "2023-01-11T17:53:00+00:00"
+    }
+  }
+}

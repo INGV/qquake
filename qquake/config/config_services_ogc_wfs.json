@@ -1,0 +1,399 @@
+{
+  "wfs": {
+    "AHEAD-EPICA": {
+      "title": "European PreInstrumental earthquake CAtalogue (EPICA) 1000-1899",
+      "group": "Earthquake catalogues",
+      "servicedescription": "OGS WFS provided by AHEAD",
+      "servicedescriptionurl": "https://www.emidius.eu/AHEAD/services/",
+      "datadescription": "Rovida A., Antonucci A. (2021). EPICA - European PreInstrumental earthquake CAtalogue, version 1.1. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/epica.1.1",
+      "datadescriptionurl": "https://doi.org/10.13127/epica.1.1",
+      "datalicense": "CC BY 4.0",
+      "datalicenseurl": "https://creativecommons.org/licenses/by/4.0/",
+      "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+      "dataproviderurl": "http://www.ingv.it/",
+      "help": "",
+      "publications": [
+        "Locati, M., Rovida, A., Albini, P., Stucchi, M. (2014). The AHEAD Portal: A Gateway to European Historical Earthquake Data. Seismological Research Letters, 85(3), 727–734. https://doi.org/10.1785/0220130113",
+        "Rovida, A., Locati, M. (2015). Archive of Historical Earthquake Data for the European-Mediterranean Area. In Perspectives on European Earthquake Engineering and Seismology (pp. 359–369). Springer International Publishing. https://doi.org/10.1007/978-3-319-16964-4_14"
+      ],
+      "endpointurl": "https://www.emidius.eu/services/europe/wfs?",
+      "datestart": "1000-01-01T00:00:00+00:00",
+      "dateend": "1899-12-31T23:59:59+00:00",
+      "srs": "EPSG:4326",
+      "default": {
+        "wfsversion": "2.0.0",
+        "layers": [
+          {
+            "layername": "europe:EPICA_1000_1899",
+            "style": {
+              "wfs": {
+                "style": "EPICA_wfs"
+              }
+            }
+          }
+        ]
+      },
+      "settings": {
+        "queryCQL": true
+      },
+      "configversion": 0.1,
+      "configlastupdate": "2021-05-12T18:33:11+00:00"
+    },
+    "INGV CPTI": {
+      "title": "Catalogo Parametrico dei Terremoti Italiani (CPTI15), versione 4.0",
+      "group": "Earthquake catalogues",
+      "servicedescription": "OGC WFS provided by ASMI",
+      "servicedescriptionurl": "https://emidius.mi.ingv.it/ASMI/services/",
+      "datadescription": "Rovida A., Locati M., Camassi R., Lolli B., Gasperini P., Antonucci A. (2022). Catalogo Parametrico dei Terremoti Italiani (CPTI15), versione 4.0. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/CPTI/CPTI15.4",
+      "datadescriptionurl": "https://doi.org/10.13127/CPTI/CPTI15.4",
+      "datalicense": "CC BY 4.0",
+      "datalicenseurl": "https://creativecommons.org/licenses/by/4.0/",
+      "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+      "dataproviderurl": "http://www.ingv.it/",
+      "help": "",
+      "publications": [
+        "Rovida A., Locati M., Camassi R., Lolli B., Gasperini P. (2020). The Italian earthquake catalogue CPTI15. Bulletin of Earthquake Engineering, 18(7), 2953–2984. https://doi.org/10.1007/s10518-020-00818-y"
+      ],
+      "endpointurl": "https://emidius.mi.ingv.it/services/italy/wfs?",
+      "datestart": "1000-01-01T00:00:00+00:00",
+      "dateend": "2020-12-31T23:59:59+00:00",
+      "srs": "EPSG:4326",
+      "default": {
+        "wfsversion": "2.0.0",
+        "layers": [
+          {
+            "layername": "italy:CPTI_current",
+            "style": {
+              "wfs": {
+                "style": "CPTI_wfs"
+              }
+            }
+          }
+        ]
+      },
+      "settings": {
+        "queryCQL": true
+      },
+      "configversion": 0.3,
+      "configlastupdate": "2022-01-24T16:25:12+00:00"
+    },
+    "EDSF13": {
+      "title": "EDSF13, European Database of Seismogenic Faults 2013",
+      "group": "Seismogenic faults",
+      "servicedescription": "OGC WFS provided by Seismofaults.eu",
+      "servicedescriptionurl": "https://seismofaults.eu/index.php/services/edsf13-services",
+      "datadescription": "Basili R., Kastelic V., Demircioglu M. B., Garcia Moreno D., Nemser E. S., Petricca P., Sboras S. P., Besana-Ostman G. M., Cabral J., Camelbeeck T., Caputo R., Danciu L., Domac H., Fonseca J., García-Mayordomo J., Giardini D., Glavatovic B., Gulen L., Ince Y., Pavlides S., Sesetyan K., Tarabusi G., Tiberti M. M., Utkucu M., Valensise G., Vanneste K., Vilanova S., Wössner J. (2013). The European Database of Seismogenic Faults (EDSF) compiled in the framework of the Project SHARE. https://doi.org/10.6092/INGV.IT-SHARE-EDSF",
+      "datadescriptionurl": "https://doi.org/10.6092/INGV.IT-SHARE-EDSF",
+      "datalicense": "CC BY 4.0",
+      "datalicenseurl": "https://creativecommons.org/licenses/by/4.0/",
+      "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+      "dataproviderurl": "http://www.ingv.it/",
+      "help": "https://seismofaults.eu/datasets/edsf13webpages",
+      "publications": [
+
+      ],
+      "endpointurl": "https://services.seismofaults.eu/EDSF/wfs?",
+      "datestart": "",
+      "dateend": "",
+      "srs": "EPSG:4326",
+      "default": {
+        "wfsversion": "2.0.0",
+        "layers": [
+          {
+            "layername": "EDSF:crustal_fault_sources_pln",
+            "style": {
+              "wfs": {
+                "style": "EDSF_CF_pln"
+              }
+            }
+          },
+          {
+            "layername": "EDSF:crustal_fault_sources_top",
+            "style": {
+              "wfs": {
+                "style": "EDSF_CF_top"
+              }
+            }
+          },
+          {
+            "layername": "EDSF:subduction_zones",
+            "style": {
+              "wfs": {
+                "style": "EDSF_SUBD_zon"
+              }
+            }
+          },
+          {
+            "layername": "EDSF:subduction_contours",
+            "style": {
+              "wfs": {
+                "style": "EDSF_SUBD_cnt"
+              }
+            }
+          }
+        ]
+      },
+      "settings": {
+        "queryCQL": true
+      },
+      "configversion": 0.4,
+      "configlastupdate": "2023-01-18T12:00:00+00:00"
+    },
+    "EFSM20": {
+      "title": "EFSM20, European Fault Source Model 2020",
+      "group": "Seismogenic faults",
+      "servicedescription": "OGC WFS provided by Seismofaults.eu",
+      "servicedescriptionurl": "https://seismofaults.eu/services/efsm20-services",
+      "datadescription": "Basili R., Danciu L., Beauval C., Sesetyan K., Vilanova S., Adamia S., Arroucau P., Atanackov J., Baize S., Canora C., Caputo R., Carafa M., Cushing M., Custódio S., Demircioglu Tumsa M., Duarte J., Ganas A., García-Mayordomo J., Gómez de la Peña L., Gràcia E., Jamšek Rupnik P., Jomard H., Kastelic V., Maesano F., Martín-Banda R., Martínez-Loriente S., Neres M., Perea H., Sket-Motnikar B., Tiberti M., Tsereteli N., Tsironi V., Vallone R., Vanneste K., Zupančič P. (2022). European Fault-Source Model 2020 (EFSM20): online data on fault geometry and activity parameters. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/efsm20",
+      "datadescriptionurl": "https://doi.org/10.13127/efsm20",
+      "datalicense": "CC BY 4.0",
+      "datalicenseurl": "https://creativecommons.org/licenses/by/4.0/",
+      "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+      "dataproviderurl": "http://www.ingv.it/",
+      "help": "https://seismofaults.eu/efsm20documentation",
+      "publications": [
+        "Basili R., Danciu L., Beauval C., Sesetyan K., Vilanova S., Adamia S., Arroucau P., Atanackov J., Baize S., Canora C., Caputo R., Carafa M., Cushing M., Custódio S., Demircioglu Tumsa M., Duarte J., Ganas A., García-Mayordomo J., Gómez de la Peña L., Gràcia E., Jamšek Rupnik P., Jomard H., Kastelic V., Maesano F., Martín-Banda R., Martínez-Loriente S., Neres M., Perea H., Sket-Motnikar B., Tiberti M., Tsereteli N., Tsironi V., Vallone R., Vanneste K., Zupančič P. (2022). European Fault-Source Model 2020 (EFSM20): online data on fault geometry and activity parameters. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/efsm20"
+      ],
+      "endpointurl": "https://services.seismofaults.eu/EFSM20/wfs?",
+      "datestart": "",
+      "dateend": "",
+      "srs": "EPSG:4326",
+      "default": {
+        "wfsversion": "2.0.0",
+        "layers": [
+          {
+            "layername": "EFSM20:efsm20_cf_bot",
+            "style": {
+              "wfs": {
+                "style": "EFSM20_bot"
+              }
+            }
+          },
+          {
+            "layername": "EFSM20:efsm20_cf_mid",
+            "style": {
+              "wfs": {
+                "style": "EFSM20_mid"
+              }
+            }
+          },
+          {
+            "layername": "EFSM20:efsm20_cf_pld",
+            "style": {
+              "wfs": {
+                "style": "EFSM20_pld"
+              }
+            }
+          },
+          {
+            "layername": "EFSM20:efsm20_cf_top",
+            "style": {
+              "wfs": {
+                "style": "EFSM20_top"
+              }
+            }
+          },
+          {
+            "layername": "EFSM20:efsm20_is_lattice",
+            "style": {
+              "wfs": {
+                "style": "EFSM20_is_lattice"
+              }
+            }
+          },
+          {
+            "layername": "EFSM20:efsm20_si_discretizations",
+            "style": {
+              "wfs": {
+                "style": "EFSM20_si_discretizations"
+              }
+            }
+          },
+          {
+            "layername": "EFSM20:efsm20_si_parameters",
+            "style": {
+              "wfs": {
+                "style": "EFSM20_si_parameters"
+              }
+            }
+          },
+          {
+            "layername": "EFSM20:efsm20_si_realizations",
+            "style": {
+              "wfs": {
+                "style": "EFSM20_si_realizations"
+              }
+            }
+          },
+          {
+            "layername": "EFSM20:efsm20_slabdepths",
+            "style": {
+              "wfs": {
+                "style": "EFSM20_slabdepths"
+              }
+            }
+          }
+        ]
+      },
+      "settings": {
+        "queryCQL": true
+      },
+      "configversion": 0.4,
+      "configlastupdate": "2023-01-17T12:00:00+00:00"
+    },
+    "INGV DISS": {
+      "title": "DISS 3.3.0, Database of Individual Seismogenic Faults",
+      "group": "Seismogenic faults",
+      "servicedescription": "OGC WFS provided by Seismofaults.eu",
+      "servicedescriptionurl": "https://seismofaults.eu/index.php/services/diss-services/",
+      "datadescription": "DISS Working Group. (2021). Database of Individual Seismogenic Sources (DISS), version 3.3.0: A compilation of potential sources for earthquakes larger than M 5.5 in Italy and surrounding areas.. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/diss3.3.0",
+      "datadescriptionurl": "https://doi.org/10.13127/diss3.3.0",
+      "datalicense": "CC BY 4.0",
+      "datalicenseurl": "https://creativecommons.org/licenses/by/4.0/",
+      "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+      "dataproviderurl": "http://www.ingv.it/",
+      "help": "https://diss.ingv.it/help/kb",
+      "publications": [
+        "Basili R., Valensise G., Vannoli P., Burrato P., Fracassi U., Mariano S., Tiberti M.M., Boschi E. (2008). The Database of Individual Seismogenic Sources (DISS), version 3: Summarizing 20 years of research on Italy’s earthquake geology. Tectonophysics, 453(1–4), 20–43. https://doi.org/10.1016/j.tecto.2007.04.014"
+      ],
+      "endpointurl": "https://services.seismofaults.eu/DISS330/wfs?",
+      "datestart": "",
+      "dateend": "",
+      "srs": "EPSG:4326",
+      "default": {
+        "wfsversion": "2.0.0",
+        "layers": [
+          {
+            "layername": "DISS330:csstop330",
+            "style": {
+              "wfs": {
+                "style": "csstop"
+              }
+            }
+          },
+          {
+            "layername": "DISS330:dss330",
+            "style": {
+              "wfs": {
+                "style": "dss"
+              }
+            }
+          },
+          {
+            "layername": "DISS330:iss330",
+            "style": {
+              "wfs": {
+                "style": "iss"
+              }
+            }
+          },
+          {
+            "layername": "DISS330:csspln330",
+            "style": {
+              "wfs": {
+                "style": "csspln"
+              }
+            }
+          },
+          {
+            "layername": "DISS330:subdcnt330",
+            "style": {
+              "wfs": {
+                "style": "subdcnt"
+              }
+            }
+          },
+          {
+            "layername": "DISS330:subdzon330",
+            "style": {
+              "wfs": {
+                "style": "subdzon"
+              }
+            }
+          }
+        ]
+      },
+      "settings": {
+        "queryCQL": true
+      },
+      "configversion": 0.3,
+      "configlastupdate": "2022-01-24T16:25:12+00:00"
+    },
+    "INGV EMTC": {
+      "title": "Euro-Mediterranean Tsunami Catalogue (EMTC), version 2.0",
+      "group": "Tsunami",
+      "servicedescription": "OGC WFS provided by tsunamiarchive.ingv.it",
+      "servicedescriptionurl": "https://tsunamiarchive.ingv.it/index.php/en/tsunami-catalogues/emtc2-0-euro-mediterranean-tsunami-catalogue",
+      "datadescription": "Maramai A., Graziani L., Brizuela B. (2019). Euro-Mediterranean Tsunami Catalogue (EMTC), version 2.0. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/tsunami/emtc.2.0",
+      "datadescriptionurl": "https://doi.org/10.13127/tsunami/emtc.2.0",
+      "datalicense": "CC BY 4.0",
+      "datalicenseurl": "https://creativecommons.org/licenses/by/4.0/",
+      "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+      "dataproviderurl": "http://www.ingv.it/",
+      "help": "",
+      "publications": [
+        "Maramai A., Brizuela B., Graziani L. (2014). The Euro-Mediterranean Tsunami Catalogue. Annals of Geophysics, 57(4). https://doi.org/10.4401/ag-6437"
+      ],
+      "endpointurl": "https://tsunamiarchiveservices.ingv.it/services/tsunami/wfs/wfs?",
+      "datestart": "1000-01-01T00:00:00+00:00",
+      "dateend": "",
+      "srs": "EPSG:4326",
+      "default": {
+        "wfsversion": "2.0.0",
+        "layers": [
+          {
+            "layername": "tsunami:EMTC_current",
+            "style": {
+              "wfs": {
+                "style": "EMTC_wfs"
+              }
+            }
+          }
+        ]
+      },
+      "settings": {
+        "queryCQL": true
+      },
+      "configversion": 0.1,
+      "configlastupdate": "2021-03-04T14:34:00+00:00"
+    },
+    "INGV ITED": {
+      "title": "Italian Tsunami Effects Database (ITED)",
+      "group": "Tsunami",
+      "servicedescription": "OGC WFS provided by tsunamiarchive.ingv.it",
+      "servicedescriptionurl": "https://tsunamiarchive.ingv.it/index.php/en/tsunami-catalogues/ited-italian-tsunami-effects-database",
+      "datadescription": "Maramai A., Graziani L., Brizuela Reyes, B. (2019). Italian Tsunami Effects Database (ITED). Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/tsunami/ited.1.0",
+      "datadescriptionurl": "https://doi.org/10.13127/tsunami/ited.1.0",
+      "datalicense": "CC BY 4.0",
+      "datalicenseurl": "https://creativecommons.org/licenses/by/4.0/",
+      "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+      "dataproviderurl": "http://www.ingv.it/",
+      "help": "",
+      "publications": [
+
+      ],
+      "endpointurl": "https://tsunamiarchiveservices.ingv.it/services/tsunami/wfs/wfs?",
+      "datestart": "0001-01-01T00:00:00+00:00",
+      "dateend": "",
+      "srs": "EPSG:4326",
+      "default": {
+        "wfsversion": "2.0.0",
+        "layers": [
+          {
+            "layername": "tsunami:ITED_current",
+            "style": {
+              "wfs": {
+                "style": "ITED_wfs_int"
+              }
+            }
+          }
+        ]
+      },
+      "settings": {
+        "queryCQL": true
+      },
+      "configversion": 0.1,
+      "configlastupdate": "2021-04-20T16:46:00+00:00"
+    }
+  }
+}

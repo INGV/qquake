@@ -1,0 +1,1018 @@
+{
+  "fdsnstation": {
+    "EIDA node ODC": {
+      "title": "EIDA node ORFEUS Data Center",
+      "servicedescription": "FDSN-station web service provided by Orfeus",
+      "servicedescriptionurl": "http://www.orfeus-eu.org/fdsnws/station/1/",
+      "datadescription": "EIDA node ORFEUS",
+      "datadescriptionurl": "https://www.orfeus-eu.org/data/eida/nodes/ODC/",
+      "datalicense": "",
+      "datalicenseurl": "",
+      "dataprovider": "ORFEUS Data Center - Koninklijk Nederlands Meterologisch Instituut (KNMI) (data publisher)",
+      "dataproviderurl": "https://www.orfeus-eu.org/",
+      "help": "",
+      "publications": [
+
+      ],
+      "endpointurl": "http://www.orfeus-eu.org/fdsnws/station/1/query?",
+      "datestart": "",
+      "dateend": "",
+      "boundingbox": [
+        -180,
+        -85,
+        180,
+        85
+      ],
+      "default": {
+        "boundingboxpredefined": "world",
+        "style": {
+          "stations": {
+            "style": "stations"
+          }
+        },
+        "format": "text",
+        "fields": [
+          "FDSNStationXML>Network§Code",
+          "FDSNStationXML>Network§StartDate",
+          "FDSNStationXML>Network§EndDate",
+          "FDSNStationXML>Network>Identifier",
+          "FDSNStationXML>Network>TotalNumberStations",
+          "FDSNStationXML>Network>SelectedNumberStations",
+          "FDSNStationXML>Network>Station§Code",
+          "FDSNStationXML>Network>Station§StartDate",
+          "FDSNStationXML>Network>Station§EndDate",
+          "FDSNStationXML>Network>Station>Latitude",
+          "FDSNStationXML>Network>Station>Longitude",
+          "FDSNStationXML>Network>Station>Elevation",
+          "FDSNStationXML>Network>Station>Site>Name",
+          "FDSNStationXML>Network>Station>WaterLevel",
+          "FDSNStationXML>Network>Station>Vault",
+          "FDSNStationXML>Network>Station>Geology",
+          "FDSNStationXML>Network>Station>Equipment",
+          "FDSNStationXML>Network>Station>Operator>Agency",
+          "FDSNStationXML>Network>Station>CreationDate",
+          "FDSNStationXML>Network>Station>TerminationDate",
+          "FDSNStationXML>Network>Station>TotalNumberChannels",
+          "FDSNStationXML>Network>Station>SelectedNumberChannels"
+        ]
+      },
+      "settings": {
+        "querystartbefore": true,
+        "querystartafter": true,
+        "queryendbefore": true,
+        "queryendafter": true,
+        "querycircular": true,
+        "querycircularradiuskm": true,
+        "queryincluderestricted": true,
+        "queryincludeavailability": true,
+        "queryupdatedafter": false,
+        "querymatchtimeseries": true,
+        "outputtext": true,
+        "outputxml": true,
+        "outputgeojson": true,
+        "outputjson": true,
+        "outputkml": false,
+        "outputxlsx": false,
+        "httpcodenodata": "204"
+      },
+      "configversion": 0.2,
+      "configlastupdate": "2020-12-11T16:25:12+00:00"
+    },
+    "EIDA node GFZ": {
+      "title": "EIDA node GFZ - Helmholz-Zentrum Potsdam",
+      "servicedescription": "FDSN-station web service provided by GFZ",
+      "servicedescriptionurl": "http://geofon.gfz-potsdam.de/fdsnws/station/1/",
+      "datadescription": "EIDA node GFZ",
+      "datadescriptionurl": "https://www.orfeus-eu.org/data/eida/nodes/GFZ/",
+      "datalicense": "Citing data obtained from GEOFON",
+      "datalicenseurl": "https://geofon.gfz-potsdam.de/citation.php",
+      "dataprovider": "GFZ - Deutsche GeoForschungsZentrum (data publisher)",
+      "dataproviderurl": "https://www.gfz-potsdam.de/",
+      "help": "",
+      "publications": [
+
+      ],
+      "endpointurl": "http://geofon.gfz-potsdam.de/fdsnws/station/1/query?",
+      "datestart": "",
+      "dateend": "",
+      "boundingbox": [
+        -180,
+        -85,
+        180,
+        85
+      ],
+      "default": {
+        "boundingboxpredefined": "world",
+        "style": {
+          "stations": {
+            "style": "stations"
+          }
+        },
+        "format": "text",
+        "fields": [
+          "FDSNStationXML>Network§Code",
+          "FDSNStationXML>Network§StartDate",
+          "FDSNStationXML>Network§EndDate",
+          "FDSNStationXML>Network>Identifier",
+          "FDSNStationXML>Network>TotalNumberStations",
+          "FDSNStationXML>Network>SelectedNumberStations",
+          "FDSNStationXML>Network>Station§Code",
+          "FDSNStationXML>Network>Station§StartDate",
+          "FDSNStationXML>Network>Station§EndDate",
+          "FDSNStationXML>Network>Station>Latitude",
+          "FDSNStationXML>Network>Station>Longitude",
+          "FDSNStationXML>Network>Station>Elevation",
+          "FDSNStationXML>Network>Station>Site>Name",
+          "FDSNStationXML>Network>Station>WaterLevel",
+          "FDSNStationXML>Network>Station>Vault",
+          "FDSNStationXML>Network>Station>Geology",
+          "FDSNStationXML>Network>Station>Equipment",
+          "FDSNStationXML>Network>Station>Operator>Agency",
+          "FDSNStationXML>Network>Station>CreationDate",
+          "FDSNStationXML>Network>Station>TerminationDate",
+          "FDSNStationXML>Network>Station>TotalNumberChannels",
+          "FDSNStationXML>Network>Station>SelectedNumberChannels"
+        ]
+      },
+      "settings": {
+        "querystartbefore": true,
+        "querystartafter": true,
+        "queryendbefore": true,
+        "queryendafter": true,
+        "querycircular": true,
+        "querycircularradiuskm": true,
+        "queryincluderestricted": true,
+        "queryincludeavailability": true,
+        "queryupdatedafter": false,
+        "querymatchtimeseries": true,
+        "outputtext": true,
+        "outputxml": true,
+        "outputgeojson": true,
+        "outputjson": true,
+        "outputkml": false,
+        "outputxlsx": false,
+        "httpcodenodata": "204"
+      },
+      "configversion": 0.2,
+      "configlastupdate": "2020-12-11T16:25:12+00:00"
+    },
+    "EIDA node RESIF": {
+      "title": "EIDA node Résif - Réseau sismologique et géodésique français",
+      "servicedescription": "FDSN-station web service provided by Résif",
+      "servicedescriptionurl": "http://seismology.resif.fr/#CMSConsultPlace:FDSN_WEBSERVICES",
+      "datadescription": "EIDA node Résif",
+      "datadescriptionurl": "https://www.orfeus-eu.org/data/eida/nodes/RESIF/",
+      "datalicense": "Legal notice",
+      "datalicenseurl": "http://seismology.resif.fr/#CMSConsultPlace:DISCLAIMER",
+      "dataprovider": "Résif - Réseau sismologique et géodésique français (data publisher)",
+      "dataproviderurl": "https://www.resif.fr/",
+      "help": "",
+      "publications": [
+
+      ],
+      "endpointurl": "http://ws.resif.fr/fdsnws/station/1/query?",
+      "datestart": "",
+      "dateend": "",
+      "boundingbox": [
+        -180,
+        -85,
+        180,
+        85
+      ],
+      "default": {
+        "boundingboxpredefined": "world",
+        "style": {
+          "stations": {
+            "style": "stations"
+          }
+        },
+        "format": "text",
+        "fields": [
+          "FDSNStationXML>Network§Code",
+          "FDSNStationXML>Network§StartDate",
+          "FDSNStationXML>Network§EndDate",
+          "FDSNStationXML>Network>Identifier",
+          "FDSNStationXML>Network>TotalNumberStations",
+          "FDSNStationXML>Network>SelectedNumberStations",
+          "FDSNStationXML>Network>Station§Code",
+          "FDSNStationXML>Network>Station§StartDate",
+          "FDSNStationXML>Network>Station§EndDate",
+          "FDSNStationXML>Network>Station>Latitude",
+          "FDSNStationXML>Network>Station>Longitude",
+          "FDSNStationXML>Network>Station>Elevation",
+          "FDSNStationXML>Network>Station>Site>Name",
+          "FDSNStationXML>Network>Station>WaterLevel",
+          "FDSNStationXML>Network>Station>Vault",
+          "FDSNStationXML>Network>Station>Geology",
+          "FDSNStationXML>Network>Station>Equipment",
+          "FDSNStationXML>Network>Station>Operator>Agency",
+          "FDSNStationXML>Network>Station>CreationDate",
+          "FDSNStationXML>Network>Station>TerminationDate",
+          "FDSNStationXML>Network>Station>TotalNumberChannels",
+          "FDSNStationXML>Network>Station>SelectedNumberChannels"
+        ]
+      },
+      "settings": {
+        "querystartbefore": true,
+        "querystartafter": true,
+        "queryendbefore": true,
+        "queryendafter": true,
+        "querycircular": true,
+        "querycircularradiuskm": true,
+        "queryincluderestricted": true,
+        "queryincludeavailability": true,
+        "queryupdatedafter": true,
+        "querymatchtimeseries": true,
+        "outputtext": true,
+        "outputxml": true,
+        "outputgeojson": true,
+        "outputjson": true,
+        "outputkml": false,
+        "outputxlsx": false,
+        "httpcodenodata": "204"
+      },
+      "configversion": 0.2,
+      "configlastupdate": "2020-12-11T16:25:12+00:00"
+    },
+    "EIDA node INGV": {
+      "title": "EIDA node INGV - Istituto Nazionale di Geofisica e Vulcanologia",
+      "servicedescription": "FDSN-station web service provided by INGV",
+      "servicedescriptionurl": "http://webservices.ingv.it/swagger-ui/dist/?url=http%3A%2F%2Fwebservices.ingv.it%2Ffdsnws%2Fstation%2F1%2Fswagger.json#/fdsnws-station-1.1",
+      "datadescription": "EIDA node INGV",
+      "datadescriptionurl": "https://www.orfeus-eu.org/data/eida/nodes/INGV/",
+      "datalicense": "CC BY-SA 4.0",
+      "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "dataprovider": "INGV - Istituto Nazionale di Geofisica e Vulcanologia (data publisher)",
+      "dataproviderurl": "http://www.ingv.it/",
+      "help": "",
+      "publications": [
+
+      ],
+      "endpointurl": "http://webservices.ingv.it/fdsnws/station/1/query?",
+      "datestart": "",
+      "dateend": "",
+      "boundingbox": [
+        -180,
+        -85,
+        180,
+        85
+      ],
+      "default": {
+        "boundingboxpredefined": "italy",
+        "style": {
+          "stations": {
+            "style": "stations"
+          }
+        },
+        "format": "text",
+        "fields": [
+          "FDSNStationXML>Network§Code",
+          "FDSNStationXML>Network§StartDate",
+          "FDSNStationXML>Network§EndDate",
+          "FDSNStationXML>Network>Identifier",
+          "FDSNStationXML>Network>TotalNumberStations",
+          "FDSNStationXML>Network>SelectedNumberStations",
+          "FDSNStationXML>Network>Station§Code",
+          "FDSNStationXML>Network>Station§StartDate",
+          "FDSNStationXML>Network>Station§EndDate",
+          "FDSNStationXML>Network>Station>Latitude",
+          "FDSNStationXML>Network>Station>Longitude",
+          "FDSNStationXML>Network>Station>Elevation",
+          "FDSNStationXML>Network>Station>Site>Name",
+          "FDSNStationXML>Network>Station>WaterLevel",
+          "FDSNStationXML>Network>Station>Vault",
+          "FDSNStationXML>Network>Station>Geology",
+          "FDSNStationXML>Network>Station>Equipment",
+          "FDSNStationXML>Network>Station>Operator>Agency",
+          "FDSNStationXML>Network>Station>CreationDate",
+          "FDSNStationXML>Network>Station>TerminationDate",
+          "FDSNStationXML>Network>Station>TotalNumberChannels",
+          "FDSNStationXML>Network>Station>SelectedNumberChannels"
+        ]
+      },
+      "settings": {
+        "querystartbefore": true,
+        "querystartafter": true,
+        "queryendbefore": true,
+        "queryendafter": true,
+        "querycircular": true,
+        "querycircularradiuskm": true,
+        "queryincluderestricted": true,
+        "queryincludeavailability": true,
+        "queryupdatedafter": false,
+        "querymatchtimeseries": true,
+        "outputtext": true,
+        "outputxml": true,
+        "outputgeojson": true,
+        "outputjson": true,
+        "outputkml": false,
+        "outputxlsx": false,
+        "httpcodenodata": "204"
+      },
+      "configversion": 0.2,
+      "configlastupdate": "2020-12-11T16:25:12+00:00"
+    },
+    "EIDA node ETHZ": {
+      "title": "EIDA node ETH Zürich Schweizerischer Erdbebendienst (SED)",
+      "servicedescription": "FDSN-station web service provided by ETHZ SED",
+      "servicedescriptionurl": "http://arclink.ethz.ch/webinterface/help.html",
+      "datadescription": "EIDA node ETH Zürich",
+      "datadescriptionurl": "https://www.orfeus-eu.org/data/eida/nodes/ETHZ/",
+      "datalicense": "Disclaimer",
+      "datalicenseurl": "http://www.seismo.ethz.ch/en/service/Disclaimer/",
+      "dataprovider": "ETH Zürich - Eidgenössische Technische Hochschule Zürich (data publisher)",
+      "dataproviderurl": "https://ethz.ch/",
+      "help": "",
+      "publications": [
+
+      ],
+      "endpointurl": "http://eida.ethz.ch/fdsnws/station/1/query?",
+      "datestart": "",
+      "dateend": "",
+      "boundingbox": [
+        -180,
+        -85,
+        180,
+        85
+      ],
+      "default": {
+        "boundingboxpredefined": "switzerland",
+        "style": {
+          "stations": {
+            "style": "stations"
+          }
+        },
+        "format": "text",
+        "fields": [
+          "FDSNStationXML>Network§Code",
+          "FDSNStationXML>Network§StartDate",
+          "FDSNStationXML>Network§EndDate",
+          "FDSNStationXML>Network>Identifier",
+          "FDSNStationXML>Network>TotalNumberStations",
+          "FDSNStationXML>Network>SelectedNumberStations",
+          "FDSNStationXML>Network>Station§Code",
+          "FDSNStationXML>Network>Station§StartDate",
+          "FDSNStationXML>Network>Station§EndDate",
+          "FDSNStationXML>Network>Station>Latitude",
+          "FDSNStationXML>Network>Station>Longitude",
+          "FDSNStationXML>Network>Station>Elevation",
+          "FDSNStationXML>Network>Station>Site>Name",
+          "FDSNStationXML>Network>Station>WaterLevel",
+          "FDSNStationXML>Network>Station>Vault",
+          "FDSNStationXML>Network>Station>Geology",
+          "FDSNStationXML>Network>Station>Equipment",
+          "FDSNStationXML>Network>Station>Operator>Agency",
+          "FDSNStationXML>Network>Station>CreationDate",
+          "FDSNStationXML>Network>Station>TerminationDate",
+          "FDSNStationXML>Network>Station>TotalNumberChannels",
+          "FDSNStationXML>Network>Station>SelectedNumberChannels"
+        ]
+      },
+      "settings": {
+        "querystartbefore": true,
+        "querystartafter": true,
+        "queryendbefore": true,
+        "queryendafter": true,
+        "querycircular": true,
+        "querycircularradiuskm": true,
+        "queryincluderestricted": true,
+        "queryincludeavailability": true,
+        "queryupdatedafter": false,
+        "querymatchtimeseries": true,
+        "outputtext": true,
+        "outputxml": true,
+        "outputgeojson": true,
+        "outputjson": true,
+        "outputkml": false,
+        "outputxlsx": false,
+        "httpcodenodata": "204"
+      },
+      "configversion": 0.2,
+      "configlastupdate": "2020-12-11T16:25:12+00:00"
+    },
+    "EIDA node BGR": {
+      "title": "EIDA node BGR - Bundesanstalt für Geowissenschaften und Rohstoffe",
+      "servicedescription": "FDSN-station web service provided by BGR",
+      "servicedescriptionurl": "http://eida.bgr.de/fdsnws/station/1/",
+      "datadescription": "EIDA node BGR",
+      "datadescriptionurl": "https://www.orfeus-eu.org/data/eida/nodes/BGR/",
+      "datalicense": "Legal notice",
+      "datalicenseurl": "https://www.bgr.bund.de/EN/Allgemeines/Wm/Impressum/impressum_node_en.html",
+      "dataprovider": "BGR - Bundesanstalt für Geowissenschaften und Rohstoffe (data publisher)",
+      "dataproviderurl": "https://www.bgr.bund.de/",
+      "help": "",
+      "publications": [
+
+      ],
+      "endpointurl": "http://eida.bgr.de/fdsnws/station/1/query?",
+      "datestart": "",
+      "dateend": "",
+      "boundingbox": [
+        -180,
+        -85,
+        180,
+        85
+      ],
+      "default": {
+        "boundingboxpredefined": "europe",
+        "style": {
+          "stations": {
+            "style": "stations"
+          }
+        },
+        "format": "text",
+        "fields": [
+          "FDSNStationXML>Network§Code",
+          "FDSNStationXML>Network§StartDate",
+          "FDSNStationXML>Network§EndDate",
+          "FDSNStationXML>Network>Identifier",
+          "FDSNStationXML>Network>TotalNumberStations",
+          "FDSNStationXML>Network>SelectedNumberStations",
+          "FDSNStationXML>Network>Station§Code",
+          "FDSNStationXML>Network>Station§StartDate",
+          "FDSNStationXML>Network>Station§EndDate",
+          "FDSNStationXML>Network>Station>Latitude",
+          "FDSNStationXML>Network>Station>Longitude",
+          "FDSNStationXML>Network>Station>Elevation",
+          "FDSNStationXML>Network>Station>Site>Name",
+          "FDSNStationXML>Network>Station>WaterLevel",
+          "FDSNStationXML>Network>Station>Vault",
+          "FDSNStationXML>Network>Station>Geology",
+          "FDSNStationXML>Network>Station>Equipment",
+          "FDSNStationXML>Network>Station>Operator>Agency",
+          "FDSNStationXML>Network>Station>CreationDate",
+          "FDSNStationXML>Network>Station>TerminationDate",
+          "FDSNStationXML>Network>Station>TotalNumberChannels",
+          "FDSNStationXML>Network>Station>SelectedNumberChannels"
+        ]
+      },
+      "settings": {
+        "querystartbefore": true,
+        "querystartafter": true,
+        "queryendbefore": true,
+        "queryendafter": true,
+        "querycircular": true,
+        "querycircularradiuskm": true,
+        "queryincluderestricted": true,
+        "queryincludeavailability": true,
+        "queryupdatedafter": false,
+        "querymatchtimeseries": true,
+        "outputtext": true,
+        "outputxml": true,
+        "outputgeojson": true,
+        "outputjson": true,
+        "outputkml": false,
+        "outputxlsx": false,
+        "httpcodenodata": "204"
+      },
+      "configversion": 0.2,
+      "configlastupdate": "2020-12-11T16:25:12+00:00"
+    },
+    "EIDA node NIEP": {
+      "title": "EIDA node NIEP - National Institute for Earth Physics",
+      "servicedescription": "FDSN-station web service provided by NIEP",
+      "servicedescriptionurl": "http://www.infp.ro/index.php?i=eida",
+      "datadescription": "EIDA node NIEP",
+      "datadescriptionurl": "https://www.orfeus-eu.org/data/eida/nodes/NIEP/",
+      "datalicense": "Disclaimer",
+      "datalicenseurl": "http://www.infp.ro/index.php?i=dis",
+      "dataprovider": "NIEP - National Institute for Earth Physics (data publisher)",
+      "dataproviderurl": "http://www.infp.ro/",
+      "help": "",
+      "publications": [
+
+      ],
+      "endpointurl": "http://eida-sc3.infp.ro/fdsnws/station/1/query?",
+      "datestart": "",
+      "dateend": "",
+      "boundingbox": [
+        11,
+        40,
+        32,
+        52
+      ],
+      "default": {
+        "boundingboxpredefined": "europe",
+        "style": {
+          "stations": {
+            "style": "stations"
+          }
+        },
+        "format": "text",
+        "fields": [
+          "FDSNStationXML>Network§Code",
+          "FDSNStationXML>Network§StartDate",
+          "FDSNStationXML>Network§EndDate",
+          "FDSNStationXML>Network>Identifier",
+          "FDSNStationXML>Network>TotalNumberStations",
+          "FDSNStationXML>Network>SelectedNumberStations",
+          "FDSNStationXML>Network>Station§Code",
+          "FDSNStationXML>Network>Station§StartDate",
+          "FDSNStationXML>Network>Station§EndDate",
+          "FDSNStationXML>Network>Station>Latitude",
+          "FDSNStationXML>Network>Station>Longitude",
+          "FDSNStationXML>Network>Station>Elevation",
+          "FDSNStationXML>Network>Station>Site>Name",
+          "FDSNStationXML>Network>Station>WaterLevel",
+          "FDSNStationXML>Network>Station>Vault",
+          "FDSNStationXML>Network>Station>Geology",
+          "FDSNStationXML>Network>Station>Equipment",
+          "FDSNStationXML>Network>Station>Operator>Agency",
+          "FDSNStationXML>Network>Station>CreationDate",
+          "FDSNStationXML>Network>Station>TerminationDate",
+          "FDSNStationXML>Network>Station>TotalNumberChannels",
+          "FDSNStationXML>Network>Station>SelectedNumberChannels"
+        ]
+      },
+      "settings": {
+        "querystartbefore": true,
+        "querystartafter": true,
+        "queryendbefore": true,
+        "queryendafter": true,
+        "querycircular": true,
+        "querycircularradiuskm": true,
+        "queryincluderestricted": true,
+        "queryincludeavailability": true,
+        "queryupdatedafter": false,
+        "querymatchtimeseries": true,
+        "outputtext": true,
+        "outputxml": true,
+        "outputgeojson": true,
+        "outputjson": true,
+        "outputkml": false,
+        "outputxlsx": false,
+        "httpcodenodata": "204"
+      },
+      "configversion": 0.2,
+      "configlastupdate": "2020-12-11T16:25:12+00:00"
+    },
+    "EIDA node KOERI": {
+      "title": "EIDA node KOERI - Kandilli Observatory and Earthquake Research Institute",
+      "servicedescription": "FDSN-station web service provided by KOERI",
+      "servicedescriptionurl": "http://eida.koeri.boun.edu.tr/webinterface/",
+      "datadescription": "EIDA node KOERI",
+      "datadescriptionurl": "https://www.orfeus-eu.org/data/eida/nodes/KOERI/",
+      "datalicense": "Copyright",
+      "datalicenseurl": "http://www.koeri.boun.edu.tr/sismo/2/copyright-2/",
+      "dataprovider": "KOERI - Kandilli Observatory and Earthquake Research Institute (data publisher)",
+      "dataproviderurl": "http://www.koeri.boun.edu.tr/",
+      "help": "",
+      "publications": [
+
+      ],
+      "endpointurl": "http://eida-service.koeri.boun.edu.tr/fdsnws/station/1/query?",
+      "datestart": "",
+      "dateend": "",
+      "boundingbox": [
+        24,
+        34,
+        45,
+        43
+      ],
+      "default": {
+        "boundingboxpredefined": "world",
+        "style": {
+          "stations": {
+            "style": "stations"
+          }
+        },
+        "format": "text",
+        "fields": [
+          "FDSNStationXML>Network§Code",
+          "FDSNStationXML>Network§StartDate",
+          "FDSNStationXML>Network§EndDate",
+          "FDSNStationXML>Network>Identifier",
+          "FDSNStationXML>Network>TotalNumberStations",
+          "FDSNStationXML>Network>SelectedNumberStations",
+          "FDSNStationXML>Network>Station§Code",
+          "FDSNStationXML>Network>Station§StartDate",
+          "FDSNStationXML>Network>Station§EndDate",
+          "FDSNStationXML>Network>Station>Latitude",
+          "FDSNStationXML>Network>Station>Longitude",
+          "FDSNStationXML>Network>Station>Elevation",
+          "FDSNStationXML>Network>Station>Site>Name",
+          "FDSNStationXML>Network>Station>WaterLevel",
+          "FDSNStationXML>Network>Station>Vault",
+          "FDSNStationXML>Network>Station>Geology",
+          "FDSNStationXML>Network>Station>Equipment",
+          "FDSNStationXML>Network>Station>Operator>Agency",
+          "FDSNStationXML>Network>Station>CreationDate",
+          "FDSNStationXML>Network>Station>TerminationDate",
+          "FDSNStationXML>Network>Station>TotalNumberChannels",
+          "FDSNStationXML>Network>Station>SelectedNumberChannels"
+        ]
+      },
+      "settings": {
+        "querystartbefore": true,
+        "querystartafter": true,
+        "queryendbefore": true,
+        "queryendafter": true,
+        "querycircular": true,
+        "querycircularradiuskm": true,
+        "queryincluderestricted": true,
+        "queryincludeavailability": true,
+        "queryupdatedafter": false,
+        "querymatchtimeseries": true,
+        "outputtext": true,
+        "outputxml": true,
+        "outputgeojson": true,
+        "outputjson": true,
+        "outputkml": false,
+        "outputxlsx": false,
+        "httpcodenodata": "204"
+      },
+      "configversion": 0.2,
+      "configlastupdate": "2020-12-11T16:25:12+00:00"
+    },
+    "EIDA node LMU": {
+      "title": "EIDA node LMU - Ludwig-Maximilians-Universität München",
+      "servicedescription": "FDSN-station web service provided by LMU",
+      "servicedescriptionurl": "http://erde.geophysik.uni-muenchen.de/fdsnws/station/",
+      "datadescription": "EIDA node LMU",
+      "datadescriptionurl": "https://www.orfeus-eu.org/data/eida/nodes/LMU/",
+      "datalicense": "",
+      "datalicenseurl": "",
+      "dataprovider": "LMU - Ludwig-Maximilians-Universität München (data publisher)",
+      "dataproviderurl": "https://www.en.uni-muenchen.de/",
+      "help": "",
+      "publications": [
+
+      ],
+      "endpointurl": "http://erde.geophysik.uni-muenchen.de/fdsnws/station/1/query?",
+      "datestart": "",
+      "dateend": "",
+      "boundingbox": [
+        -120,
+        31,
+        24,
+        52
+      ],
+      "default": {
+        "boundingboxpredefined": "europe",
+        "style": {
+          "stations": {
+            "style": "stations"
+          }
+        },
+        "format": "text",
+        "fields": [
+          "FDSNStationXML>Network§Code",
+          "FDSNStationXML>Network§StartDate",
+          "FDSNStationXML>Network§EndDate",
+          "FDSNStationXML>Network>Identifier",
+          "FDSNStationXML>Network>TotalNumberStations",
+          "FDSNStationXML>Network>SelectedNumberStations",
+          "FDSNStationXML>Network>Station§Code",
+          "FDSNStationXML>Network>Station§StartDate",
+          "FDSNStationXML>Network>Station§EndDate",
+          "FDSNStationXML>Network>Station>Latitude",
+          "FDSNStationXML>Network>Station>Longitude",
+          "FDSNStationXML>Network>Station>Elevation",
+          "FDSNStationXML>Network>Station>Site>Name",
+          "FDSNStationXML>Network>Station>WaterLevel",
+          "FDSNStationXML>Network>Station>Vault",
+          "FDSNStationXML>Network>Station>Geology",
+          "FDSNStationXML>Network>Station>Equipment",
+          "FDSNStationXML>Network>Station>Operator>Agency",
+          "FDSNStationXML>Network>Station>CreationDate",
+          "FDSNStationXML>Network>Station>TerminationDate",
+          "FDSNStationXML>Network>Station>TotalNumberChannels",
+          "FDSNStationXML>Network>Station>SelectedNumberChannels"
+        ]
+      },
+      "settings": {
+        "querystartbefore": true,
+        "querystartafter": true,
+        "queryendbefore": true,
+        "queryendafter": true,
+        "querycircular": true,
+        "querycircularradiuskm": true,
+        "queryincluderestricted": true,
+        "queryincludeavailability": true,
+        "queryupdatedafter": false,
+        "querymatchtimeseries": true,
+        "outputtext": true,
+        "outputxml": true,
+        "outputgeojson": true,
+        "outputjson": true,
+        "outputkml": false,
+        "outputxlsx": false,
+        "httpcodenodata": "204"
+      },
+      "configversion": 0.2,
+      "configlastupdate": "2020-12-11T16:25:12+00:00"
+    },
+    "EIDA node NOA": {
+      "title": "EIDA node NOA - National Observatory of Athens",
+      "servicedescription": "",
+      "servicedescriptionurl": "https://www.orfeus-eu.org/data/eida/nodes/NOA/",
+      "datadescription": "EIDA node NOA",
+      "datadescriptionurl": "http://eida.gein.noa.gr/",
+      "datalicense": "CC BY 4.0",
+      "datalicenseurl": "https://creativecommons.org/licenses/by/4.0/",
+      "dataprovider": "NOA - National Observatory of Athens (data publisher)",
+      "dataproviderurl": "http://www.noa.gr/",
+      "help": "",
+      "publications": [
+
+      ],
+      "endpointurl": "http://eida.gein.noa.gr/fdsnws/station/1/query?",
+      "datestart": "",
+      "dateend": "",
+      "boundingbox": [
+        17,
+        31,
+        36,
+        45
+      ],
+      "default": {
+        "boundingboxpredefined": "europe",
+        "style": {
+          "stations": {
+            "style": "stations"
+          }
+        },
+        "format": "text",
+        "fields": [
+          "FDSNStationXML>Network§Code",
+          "FDSNStationXML>Network§StartDate",
+          "FDSNStationXML>Network§EndDate",
+          "FDSNStationXML>Network>Identifier",
+          "FDSNStationXML>Network>TotalNumberStations",
+          "FDSNStationXML>Network>SelectedNumberStations",
+          "FDSNStationXML>Network>Station§Code",
+          "FDSNStationXML>Network>Station§StartDate",
+          "FDSNStationXML>Network>Station§EndDate",
+          "FDSNStationXML>Network>Station>Latitude",
+          "FDSNStationXML>Network>Station>Longitude",
+          "FDSNStationXML>Network>Station>Elevation",
+          "FDSNStationXML>Network>Station>Site>Name",
+          "FDSNStationXML>Network>Station>WaterLevel",
+          "FDSNStationXML>Network>Station>Vault",
+          "FDSNStationXML>Network>Station>Geology",
+          "FDSNStationXML>Network>Station>Equipment",
+          "FDSNStationXML>Network>Station>Operator>Agency",
+          "FDSNStationXML>Network>Station>CreationDate",
+          "FDSNStationXML>Network>Station>TerminationDate",
+          "FDSNStationXML>Network>Station>TotalNumberChannels",
+          "FDSNStationXML>Network>Station>SelectedNumberChannels"
+        ]
+      },
+      "settings": {
+        "querystartbefore": true,
+        "querystartafter": true,
+        "queryendbefore": true,
+        "queryendafter": true,
+        "querycircular": true,
+        "querycircularradiuskm": true,
+        "queryincluderestricted": true,
+        "queryincludeavailability": true,
+        "queryupdatedafter": false,
+        "querymatchtimeseries": true,
+        "outputtext": true,
+        "outputxml": true,
+        "outputgeojson": true,
+        "outputjson": true,
+        "outputkml": false,
+        "outputxlsx": false,
+        "httpcodenodata": "204"
+      },
+      "configversion": 0.2,
+      "configlastupdate": "2020-12-11T16:25:12+00:00"
+    },
+    "EIDA node UIB-NORSAR": {
+      "title": "EIDA node UIB, NORSAR - University of Bergen, NORSAR",
+      "servicedescription": "FDSN-station web service provided by UIB",
+      "servicedescriptionurl": "https://eida.geo.uib.no/webdc3/",
+      "datadescription": "EIDA node UIB",
+      "datadescriptionurl": "https://www.orfeus-eu.org/data/eida/nodes/UIB_NORSAR/",
+      "datalicense": "",
+      "datalicenseurl": "",
+      "dataprovider": "UIB, NORSAR - University of Bergen, NORSAR (data publisher)",
+      "dataproviderurl": "https://www.uib.no/",
+      "help": "",
+      "publications": [
+
+      ],
+      "endpointurl": "http://eida.geo.uib.no/fdsnws/station/1/query?",
+      "datestart": "",
+      "dateend": "",
+      "boundingbox": [
+        -11,
+        55,
+        33,
+        81
+      ],
+      "default": {
+        "boundingboxpredefined": "europe",
+        "style": {
+          "stations": {
+            "style": "stations"
+          }
+        },
+        "format": "text",
+        "fields": [
+          "FDSNStationXML>Network§Code",
+          "FDSNStationXML>Network§StartDate",
+          "FDSNStationXML>Network§EndDate",
+          "FDSNStationXML>Network>Identifier",
+          "FDSNStationXML>Network>TotalNumberStations",
+          "FDSNStationXML>Network>SelectedNumberStations",
+          "FDSNStationXML>Network>Station§Code",
+          "FDSNStationXML>Network>Station§StartDate",
+          "FDSNStationXML>Network>Station§EndDate",
+          "FDSNStationXML>Network>Station>Latitude",
+          "FDSNStationXML>Network>Station>Longitude",
+          "FDSNStationXML>Network>Station>Elevation",
+          "FDSNStationXML>Network>Station>Site>Name",
+          "FDSNStationXML>Network>Station>WaterLevel",
+          "FDSNStationXML>Network>Station>Vault",
+          "FDSNStationXML>Network>Station>Geology",
+          "FDSNStationXML>Network>Station>Equipment",
+          "FDSNStationXML>Network>Station>Operator>Agency",
+          "FDSNStationXML>Network>Station>CreationDate",
+          "FDSNStationXML>Network>Station>TerminationDate",
+          "FDSNStationXML>Network>Station>TotalNumberChannels",
+          "FDSNStationXML>Network>Station>SelectedNumberChannels"
+        ]
+      },
+      "settings": {
+        "querystartbefore": true,
+        "querystartafter": true,
+        "queryendbefore": true,
+        "queryendafter": true,
+        "querycircular": true,
+        "querycircularradiuskm": true,
+        "queryincluderestricted": true,
+        "queryincludeavailability": true,
+        "queryupdatedafter": false,
+        "querymatchtimeseries": true,
+        "outputtext": true,
+        "outputxml": true,
+        "outputgeojson": true,
+        "outputjson": true,
+        "outputkml": false,
+        "outputxlsx": false,
+        "httpcodenodata": "204"
+      },
+      "configversion": 0.2,
+      "configlastupdate": "2020-12-11T16:25:12+00:00"
+    },
+    "EIDA node ICGC": {
+      "title": "EIDA node ICGC - Institut Cartogràfic i Geològic de Catalunya",
+      "servicedescription": "FDSN-event provided by ICGC",
+      "servicedescriptionurl": "http://ws.icgc.cat/fdsnws/station/1/",
+      "datadescription": "EIDA node ICGC",
+      "datadescriptionurl": "https://www.orfeus-eu.org/data/eida/nodes/ICGC/",
+      "datalicense": "",
+      "datalicenseurl": "",
+      "dataprovider": "ICGC - Institut Cartogràfic i Geològic de Catalunya (data publisher)",
+      "dataproviderurl": "https://www.icgc.cat/",
+      "help": "",
+      "publications": [
+
+      ],
+      "endpointurl": "http://ws.icgc.cat/fdsnws/station/1/query?",
+      "datestart": "",
+      "dateend": "",
+      "boundingbox": [
+        -19,
+        26,
+        5,
+        45
+      ],
+      "default": {
+        "boundingboxpredefined": "europe",
+        "style": {
+          "stations": {
+            "style": "stations"
+          }
+        },
+        "format": "text",
+        "fields": [
+          "FDSNStationXML>Network§Code",
+          "FDSNStationXML>Network§StartDate",
+          "FDSNStationXML>Network§EndDate",
+          "FDSNStationXML>Network>Identifier",
+          "FDSNStationXML>Network>TotalNumberStations",
+          "FDSNStationXML>Network>SelectedNumberStations",
+          "FDSNStationXML>Network>Station§Code",
+          "FDSNStationXML>Network>Station§StartDate",
+          "FDSNStationXML>Network>Station§EndDate",
+          "FDSNStationXML>Network>Station>Latitude",
+          "FDSNStationXML>Network>Station>Longitude",
+          "FDSNStationXML>Network>Station>Elevation",
+          "FDSNStationXML>Network>Station>Site>Name",
+          "FDSNStationXML>Network>Station>WaterLevel",
+          "FDSNStationXML>Network>Station>Vault",
+          "FDSNStationXML>Network>Station>Geology",
+          "FDSNStationXML>Network>Station>Equipment",
+          "FDSNStationXML>Network>Station>Operator>Agency",
+          "FDSNStationXML>Network>Station>CreationDate",
+          "FDSNStationXML>Network>Station>TerminationDate",
+          "FDSNStationXML>Network>Station>TotalNumberChannels",
+          "FDSNStationXML>Network>Station>SelectedNumberChannels"
+        ]
+      },
+      "settings": {
+        "querystartbefore": true,
+        "querystartafter": true,
+        "queryendbefore": true,
+        "queryendafter": true,
+        "querycircular": true,
+        "querycircularradiuskm": true,
+        "queryincluderestricted": true,
+        "queryincludeavailability": true,
+        "queryupdatedafter": false,
+        "querymatchtimeseries": true,
+        "outputtext": true,
+        "outputxml": true,
+        "outputgeojson": true,
+        "outputjson": true,
+        "outputkml": false,
+        "outputxlsx": false,
+        "httpcodenodata": "204"
+      },
+      "configversion": 0.2,
+      "configlastupdate": "2020-12-11T16:25:12+00:00"
+    },
+    "IRIS": {
+      "title": "IRIS - Incorporated Research Institutions for Seismology",
+      "servicedescription": "FDSN-station web service provided by IRIS",
+      "servicedescriptionurl": "http://service.iris.edu/fdsnws/station/1/",
+      "datadescription": "",
+      "datadescriptionurl": "",
+      "datalicense": "IRIS citations",
+      "datalicenseurl": "https://www.iris.edu/hq/iris_citations",
+      "dataprovider": "IRIS - Incorporated Research Institutions for Seismology (data publisher)",
+      "dataproviderurl": "https://www.iris.edu/",
+      "help": "",
+      "publications": [
+
+      ],
+      "endpointurl": "http://service.iris.edu/fdsnws/station/1/query?",
+      "datestart": "",
+      "dateend": "",
+      "boundingbox": [
+        -180,
+        -85,
+        180,
+        85
+      ],
+      "default": {
+        "boundingboxpredefined": "world",
+        "style": {
+          "stations": {
+            "style": "stations"
+          }
+        },
+        "format": "text",
+        "fields": [
+          "FDSNStationXML>Network§Code",
+          "FDSNStationXML>Network§StartDate",
+          "FDSNStationXML>Network§EndDate",
+          "FDSNStationXML>Network>Identifier",
+          "FDSNStationXML>Network>TotalNumberStations",
+          "FDSNStationXML>Network>SelectedNumberStations",
+          "FDSNStationXML>Network>Station§Code",
+          "FDSNStationXML>Network>Station§StartDate",
+          "FDSNStationXML>Network>Station§EndDate",
+          "FDSNStationXML>Network>Station>Latitude",
+          "FDSNStationXML>Network>Station>Longitude",
+          "FDSNStationXML>Network>Station>Elevation",
+          "FDSNStationXML>Network>Station>Site>Name",
+          "FDSNStationXML>Network>Station>WaterLevel",
+          "FDSNStationXML>Network>Station>Vault",
+          "FDSNStationXML>Network>Station>Geology",
+          "FDSNStationXML>Network>Station>Equipment",
+          "FDSNStationXML>Network>Station>Operator>Agency",
+          "FDSNStationXML>Network>Station>CreationDate",
+          "FDSNStationXML>Network>Station>TerminationDate",
+          "FDSNStationXML>Network>Station>TotalNumberChannels",
+          "FDSNStationXML>Network>Station>SelectedNumberChannels"
+        ]
+      },
+      "settings": {
+        "querystartbefore": true,
+        "querystartafter": true,
+        "queryendbefore": true,
+        "queryendafter": true,
+        "querycircular": true,
+        "querycircularradiuskm": true,
+        "queryincluderestricted": true,
+        "queryincludeavailability": true,
+        "queryupdatedafter": true,
+        "querymatchtimeseries": true,
+        "outputtext": true,
+        "outputxml": true,
+        "outputgeojson": true,
+        "outputjson": true,
+        "outputkml": false,
+        "outputxlsx": false,
+        "httpcodenodata": "204"
+      },
+      "configversion": 0.2,
+      "configlastupdate": "2020-12-11T16:25:12+00:00"
+    }
+  }
+}
