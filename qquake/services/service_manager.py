@@ -28,11 +28,45 @@ from qgis.core import (
     Qgis
 )
 
-_CONFIG_SERVICES_PATH = os.path.join(
+_CONFIG_SERVICES_STYLES_PATH = os.path.join(
     os.path.dirname(__file__),
     '../config',
-    'config.json')
+    'config_services_styles.json')
 
+_CONFIG_SERVICES_FDSN_EVENT_PATH = os.path.join(
+    os.path.dirname(__file__),
+    '../config',
+    'config_services_fdsn_event.json')
+
+_CONFIG_SERVICES_FDSN_MACROSEISMIC_PATH = os.path.join(
+    os.path.dirname(__file__),
+    '../config',
+    'config_services_fdsn_macroseismic.json')
+
+_CONFIG_SERVICES_FDSN_STATION_PATH = os.path.join(
+    os.path.dirname(__file__),
+    '../config',
+    'config_services_fdsn_station.json')
+
+_CONFIG_SERVICES_OGC_WCS_PATH = os.path.join(
+    os.path.dirname(__file__),
+    '../config',
+    'config_services_ogc_wcs.json')
+
+_CONFIG_SERVICES_OGC_WFS_PATH = os.path.join(
+    os.path.dirname(__file__),
+    '../config',
+    'config_services_ogc_wfs.json')
+
+_CONFIG_SERVICES_OGC_WMS_PATH = os.path.join(
+    os.path.dirname(__file__),
+    '../config',
+    'config_services_ogc_wms.json')
+
+_CONFIG_SERVICES_OGC_WMTS_PATH = os.path.join(
+    os.path.dirname(__file__),
+    '../config',
+    'config_services_ogc_wmts.json')
 
 def load_field_config(filename: str) -> dict:
     """
@@ -87,9 +121,40 @@ class ServiceManager(QObject):  # pylint:disable=too-many-public-methods
         Refreshes the available services
         """
 
-        # load the default services
-        with open(_CONFIG_SERVICES_PATH, 'r', encoding='utf8') as f:
-            default_services = json.load(f)
+        # load configuration for all services
+        
+        with open(_CONFIG_SERVICES_STYLES_PATH, 'r', encoding='utf8') as f:
+            config_services_styles = json.load(f)
+        
+        with open(_CONFIG_SERVICES_FDSN_EVENT_PATH, 'r', encoding='utf8') as f:
+            config_services_fdsn_event = json.load(f)
+        
+        with open(_CONFIG_SERVICES_FDSN_MACROSEISMIC_PATH, 'r', encoding='utf8') as f:
+            config_services_fdsn_macroseismic = json.load(f)
+        
+        with open(_CONFIG_SERVICES_FDSN_STATION_PATH, 'r', encoding='utf8') as f:
+            config_services_fdsn_station = json.load(f)
+        
+        with open(_CONFIG_SERVICES_OGC_WCS_PATH, 'r', encoding='utf8') as f:
+            config_services_ogc_wcs = json.load(f)
+        
+        with open(_CONFIG_SERVICES_OGC_WFS_PATH, 'r', encoding='utf8') as f:
+            config_services_ogc_wfs = json.load(f)
+        
+        with open(_CONFIG_SERVICES_OGC_WMS_PATH, 'r', encoding='utf8') as f:
+            config_services_ogc_wms = json.load(f)
+        
+        with open(_CONFIG_SERVICES_OGC_WMTS_PATH, 'r', encoding='utf8') as f:
+            config_services_ogc_wmts = json.load(f)
+        
+        default_services = config_services_styles
+        default_services.update(config_services_fdsn_event)
+        default_services.update(config_services_fdsn_macroseismic)
+        default_services.update(config_services_fdsn_station)
+        default_services.update(config_services_ogc_wcs)
+        default_services.update(config_services_ogc_wfs)
+        default_services.update(config_services_ogc_wms)
+        default_services.update(config_services_ogc_wmts)
 
         self.services = {}
         for service_type in self._SERVICE_TYPES:
