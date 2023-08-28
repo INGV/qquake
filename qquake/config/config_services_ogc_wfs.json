@@ -394,6 +394,45 @@
       },
       "configversion": 0.1,
       "configlastupdate": "2021-04-20T16:46:00+00:00"
+    },
+    "Tsunamidata NEAMTHM18": {
+      "title": "NEAM Tsunami Hazard Model 2018 (NEAMTHM18)",
+      "group": "Tsunami",
+      "servicedescription": "OGC WFS provided by tsunamidata.org",
+      "servicedescriptionurl": "https://tsumaps-neam.eu/neamthm18/",
+      "datadescription": "Basili, R., Brizuela, B., Herrero, A., Iqbal, S., Lorito, S., Maesano, F.E., Murphy, S., Perfetti, P., Romano, F., Scala, A., Selva, J., Taroni, M., Thio, H.K., Tiberti, M.M., Tonini, R., Volpe, M., Glimsdal, S., Harbitz, C.B., Løvholt, F., Baptista, M.A., Carrilho, F., Matias, L.M., Omira, R., Babeyko, A., Hoechner, A., Gurbuz, M., Pekcan, O., Yalçıner, A., Canals, M., Lastras, G., Agalos, A., Papadopoulos, G., Triantafyllou, I., Benchekroun, S., Agrebi Jaouadi, H., Attafi, K., Ben Abdallah, S., Bouallegue, A., Hamdi, H., Oueslati, F. (2018) NEAM Tsunami Hazard Model 2018 (NEAMTHM18): online data of the Probabilistic Tsunami Hazard Model for the NEAM Region from the TSUMAPS-NEAM project. Istituto Nazionale di Geofisica e Vulcanologia (INGV).",
+      "datadescriptionurl": "https://doi.org/10.13127/tsunami/neamthm18",
+      "datalicense": "CC BY 4.0",
+      "datalicenseurl": "https://creativecommons.org/licenses/by/4.0/",
+      "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+      "dataproviderurl": "http://www.ingv.it/",
+      "help": "",
+      "publications": [
+
+      ],
+      "endpointurl": "https://services.tsunamidata.org/NEAMTHM18/ows?",
+      "datestart": "0001-01-01T00:00:00+00:00",
+      "dateend": "",
+      "srs": "EPSG:4326",
+      "default": {
+        "wfsversion": "2.0.0",
+        "layers": [
+          {
+            "layername": "NEAMTHM18:neamthm18",
+            "style": {
+              "wfs": {
+                "style": "neamthm18_wfs"
+              }
+            }
+          }
+        ]
+      },
+      "settings": {
+        "queryCQL": true
+      },
+      "configversion": 0.1,
+      "configlastupdate": "2023-08-28T10:35:00+00:00"
     }
+
   }
 }

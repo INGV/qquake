@@ -194,6 +194,16 @@
       "label": "Digital Elevation Model",
       "type": "wmts",
       "url": "https://www.emidius.eu/qquake/symbology/tinitaly_wmts.qml"
+    },
+    "neamthm18_wfs": {
+      "label": "Tsunamidata NEAMTHM18",
+      "type": "wfs",
+      "url": "https://tsunamidata.org/styles/generic.qml"
+    },
+    "neamthm18_wms": {
+      "label": "Tsunamidata NEAMTHM18",
+      "type": "wms",
+      "url": "https://tsunamidata.org/styles/NEAMTHM18_neamthm18.qml"
     }
   },
   "boundingboxpredefined": {
