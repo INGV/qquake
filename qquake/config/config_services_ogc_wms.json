@@ -128,7 +128,7 @@
       "configlastupdate": "2023-01-18T12:00:00+00:00"
     },
     "EFSM20": {
-      "title": "EFSM20, European Fault Source Model 2020",
+      "title": "EFSM20, European Fault Source Model 2020 <p></p><p><table><thead><tr><th>Layer</th><th>Layer/Style description</th></tr></thead><tbody><tr><td>efsm20_cf_faulttypes</td><td>Color-coded fault types: normal, reverse, right-lateral, left-lateral.</td></tr><tr><td>efsm20_cf_maxmagnitude</td><td>Color-coded maximum magnitude. Five different layers for the average (default), and the 2nd, 5th, 95th, and 98th percentiles.</td></tr><tr><td>efsm20_cf_momentrates</td><td>Color-coded moment rates. Log scale. Four different layers for minimum, maximum, arithmetic mean (default), and geometric mean.</td></tr><tr><td>efsm20_cf_sliprates</td><td>Color-coded slip rates. Log-linear separation scale. Four different layers for minimum, maximum, arithmetic mean (default), and geometric mean. </td></tr><tr><td>efsm20_cfdepths</td><td>Color-coded depth isolines of the fault planes, including the top and bottom. Spacing interval is 0.5 km.</td></tr><tr><td>efsm20_slabdepths</td><td>Color-coded depth isolines of the top surface of the slab. Spacing interval is 1 km between 0-40 km, and 10 km between 40-300 km.</td></tr></tbody></table></p>",
       "group": "Seismogenic faults",
       "servicedescription": "OGC WMS provided by Seismofaults.eu",
       "servicedescriptionurl": "https://seismofaults.eu/services/efsm20-services",
