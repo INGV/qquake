@@ -202,10 +202,10 @@
             }
           },
           {
-            "layername": "EFSM20:efsm20_si_discretizations",
+            "layername": "EFSM20:efsm20_si_discretization",
             "style": {
               "wfs": {
-                "style": "EFSM20_si_discretizations"
+                "style": "EFSM20_si_discretization"
               }
             }
           },
