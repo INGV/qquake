@@ -199,11 +199,11 @@
       "settings": {
         "queryCQL": true
       },
-      "configversion": 0.4,
-      "configlastupdate": "2023-01-17T12:00:00+00:00"
+      "configversion": 0.5,
+      "configlastupdate": "2023-08-30T09:00:00+00:00"
     },
     "INGV DISS": {
-      "title": "DISS 3.3.0, Database of Individual Seismogenic Sources",
+      "title": "Database of Individual Seismogenic Sources (DISS) version 3.3.0",
       "group": "Seismogenic faults",
       "servicedescription": "OGC WMS provided by Seismofaults.eu",
       "servicedescriptionurl": "https://seismofaults.eu/index.php/services/diss-services/",
@@ -265,8 +265,8 @@
       "settings": {
         "queryCQL": true
       },
-      "configversion": 0.4,
-      "configlastupdate": "2023-01-18T12:00:00+00:00"
+      "configversion": 0.5,
+      "configlastupdate": "2023-08-30T09:00:00+00:00"
     },
     "INGV EMTC": {
       "title": "Euro-Mediterranean Tsunami Catalogue (EMTC), version 2.0",
