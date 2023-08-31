@@ -140,7 +140,7 @@
       "configlastupdate": "2023-01-18T12:00:00+00:00"
     },
     "EFSM20": {
-      "title": "EFSM20, European Fault Source Model 2020",
+      "title": "EFSM20, European Fault Source Model 2020 <p></p><p><table><thead><tr><th style='font-weight:bold; border-bottom:1px solid #CCC;'>Layer</th><th style='font-weight:bold; border-bottom:1px solid #CCC;'>Description</th></tr></thead><tbody><tr><td>efsm20_cf_bot</td><td>Trace of the fault plane lower edge. Polylines.</td></tr><tr><td>efsm20_cf_mid</td><td>Trace of the fault plane middle line. Polylines.</td></tr><tr><td>efsm20_cf_pld</td><td>Vertical projection of the fault planes (in the local dip direction along strike) onto the ground surface. Polygons.</td></tr><tr><td>efsm20_cf_top</td><td>Trace of the fault plane upper edge. Polylines.</td></tr><tr><td>efsm20_is_lattice</td><td>Intraslab (IS) model constituted by equally-spaced nodes sampling the crustal part of the slab volume. Points.</td></tr><tr><td>efsm20_si_discretization</td><td>Subduction Interface (SI) discretized in areas spanning 1 km depth. Polygons encompassing each area in map view.</td></tr><tr><td>efsm20_si_parameters</td><td>Subduction Interface (SI) parameters. Polygons encompassing the SI area in map view.</td></tr><tr><td>efsm20_si_realizations</td><td>Subduction Interface (SI) model realizations considering uncertainties. Polygons encompassing each area of the different realizations in map view.</td></tr><tr><td>efsm20_slabdepths</td><td>Depth isolines (contours) representing the geometry of the top surface of the slab. Polylines.</td></tr></tbody></table>", 
       "group": "Seismogenic faults",
       "servicedescription": "OGC WFS provided by Seismofaults.eu",
       "servicedescriptionurl": "https://seismofaults.eu/services/efsm20-services",
@@ -202,10 +202,10 @@
             }
           },
           {
-            "layername": "EFSM20:efsm20_si_discretizations",
+            "layername": "EFSM20:efsm20_si_discretization",
             "style": {
               "wfs": {
-                "style": "EFSM20_si_discretizations"
+                "style": "EFSM20_si_discretization"
               }
             }
           },
@@ -238,11 +238,11 @@
       "settings": {
         "queryCQL": true
       },
-      "configversion": 0.4,
-      "configlastupdate": "2023-01-17T12:00:00+00:00"
+      "configversion": 0.5,
+      "configlastupdate": "2023-08-30T09:00:00+00:00"
     },
     "INGV DISS": {
-      "title": "DISS 3.3.0, Database of Individual Seismogenic Faults",
+      "title": "Database of Individual Seismogenic Sources (DISS) version 3.3.0<p></p><p><table><thead><tr><th style='font-weight:bold; border-bottom:1px solid #CCC;'>Layer</th><th style='font-weight:bold; border-bottom:1px solid #CCC;'>Description</th></tr></thead><tbody><tr><td>iss330</td><td>Individual Seismogenic Sources. Vertical projection of the dipping fault planes onto the ground surface. Polygons.</td></tr><tr><td>csstop330</td><td>Composite Seismogenic Sources (top). Fault plane upper edge. Polylines.</td></tr><tr><td>csspln330</td><td>Composite Seismogenic Sources (planes). Vertical projection of the inclined dipping fault planes (in the local dip direction along strike) onto the ground surface. Polygons.</td></tr><tr><td>csscnt330</td><td>Composite Seismogenic Sources (contours). Depth isolines [...]. Polylines.</td></tr><tr><td>dss330</td><td>Debated Seismogenic Sources. Polygons.</td></tr><tr><td>subdcnt330</td><td>Subduction zones depth isolines (contours). Polylines.</td></tr><tr><td>subzon330</td><td>Subduction zones. Vertical projection of the dipping slab onto the ground surface. Polygons.</td></tr></tbody></table>",
       "group": "Seismogenic faults",
       "servicedescription": "OGC WFS provided by Seismofaults.eu",
       "servicedescriptionurl": "https://seismofaults.eu/index.php/services/diss-services/",
@@ -295,6 +295,14 @@
               }
             }
           },
+	  {
+            "layername": "DISS330:csscnt330",
+	    "style": {
+	      "wfs": {
+		"style": "csscnt"
+	      }
+	    }
+	  },
           {
             "layername": "DISS330:subdcnt330",
             "style": {
@@ -316,8 +324,8 @@
       "settings": {
         "queryCQL": true
       },
-      "configversion": 0.3,
-      "configlastupdate": "2022-01-24T16:25:12+00:00"
+      "configversion": 0.5,
+      "configlastupdate": "2023-08-30T09:00:00+00:00"
     },
     "INGV EMTC": {
       "title": "Euro-Mediterranean Tsunami Catalogue (EMTC), version 2.0",
@@ -394,6 +402,45 @@
       },
       "configversion": 0.1,
       "configlastupdate": "2021-04-20T16:46:00+00:00"
+    },
+    "NEAMTHM18": {
+      "title": "NEAM Tsunami Hazard Model 2018 (NEAMTHM18). Points of interest (POI) where the tsunami hazard is calculated for various average return periods and epistemic uncertainty. Points.",
+      "group": "Tsunami",
+      "servicedescription": "OGC WFS provided by tsunamidata.org",
+      "servicedescriptionurl": "https://tsumaps-neam.eu/neamthm18/",
+      "datadescription": "Basili, R., Brizuela, B., Herrero, A., Iqbal, S., Lorito, S., Maesano, F.E., Murphy, S., Perfetti, P., Romano, F., Scala, A., Selva, J., Taroni, M., Thio, H.K., Tiberti, M.M., Tonini, R., Volpe, M., Glimsdal, S., Harbitz, C.B., Løvholt, F., Baptista, M.A., Carrilho, F., Matias, L.M., Omira, R., Babeyko, A., Hoechner, A., Gurbuz, M., Pekcan, O., Yalçıner, A., Canals, M., Lastras, G., Agalos, A., Papadopoulos, G., Triantafyllou, I., Benchekroun, S., Agrebi Jaouadi, H., Attafi, K., Ben Abdallah, S., Bouallegue, A., Hamdi, H., Oueslati, F. (2018) NEAM Tsunami Hazard Model 2018 (NEAMTHM18): online data of the Probabilistic Tsunami Hazard Model for the NEAM Region from the TSUMAPS-NEAM project. Istituto Nazionale di Geofisica e Vulcanologia (INGV).",
+      "datadescriptionurl": "https://doi.org/10.13127/tsunami/neamthm18",
+      "datalicense": "CC BY 4.0",
+      "datalicenseurl": "https://creativecommons.org/licenses/by/4.0/",
+      "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+      "dataproviderurl": "http://www.ingv.it/",
+      "help": "",
+      "publications": [
+
+      ],
+      "endpointurl": "https://services.tsunamidata.org/NEAMTHM18/ows?",
+      "datestart": "0001-01-01T00:00:00+00:00",
+      "dateend": "",
+      "srs": "EPSG:4326",
+      "default": {
+        "wfsversion": "2.0.0",
+        "layers": [
+          {
+            "layername": "NEAMTHM18:neamthm18",
+            "style": {
+              "wfs": {
+                "style": "neamthm18_wfs"
+              }
+            }
+          }
+        ]
+      },
+      "settings": {
+        "queryCQL": true
+      },
+      "configversion": 0.1,
+      "configlastupdate": "2023-08-28T10:35:00+00:00"
     }
+
   }
 }

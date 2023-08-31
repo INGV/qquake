@@ -116,14 +116,19 @@
       "url": "http://seismofaults.eu/DISS_styles/iss.qml"
     },
     "csstop": {
-      "label": "DISS Composite Seismogenic Source Tops",
+      "label": "DISS Composite Seismogenic Sources Tops",
       "type": "wfs",
       "url": "http://seismofaults.eu/DISS_styles/csstop.qml"
     },
     "csspln": {
-      "label": "DISS Composite Seismogenic Source Planes",
+      "label": "DISS Composite Seismogenic Sources Planes",
       "type": "wfs",
       "url": "http://seismofaults.eu/DISS_styles/csspln.qml"
+    },
+    "csscnt": {
+      "label": "DISS Composite Seismogenic Sources Contours",
+      "type": "wfs",
+      "url": "http://seismofaults.eu/DISS_styles/csscnt.qml"
     },
     "dss": {
       "label": "DISS Debated Seismogenic Sources",
@@ -194,6 +199,16 @@
       "label": "Digital Elevation Model",
       "type": "wmts",
       "url": "https://www.emidius.eu/qquake/symbology/tinitaly_wmts.qml"
+    },
+    "neamthm18_wfs": {
+      "label": "Tsunamidata NEAMTHM18",
+      "type": "wfs",
+      "url": "https://tsunamidata.org/styles/generic.qml"
+    },
+    "neamthm18_wms": {
+      "label": "Tsunamidata NEAMTHM18",
+      "type": "wms",
+      "url": "https://tsunamidata.org/styles/NEAMTHM18_neamthm18.qml"
     }
   },
   "boundingboxpredefined": {
