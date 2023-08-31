@@ -271,8 +271,8 @@
         "querydepth": true,
         "outputtext": true,
         "outputxml": true,
-        "outputgeojson": true,
-        "outputjson": true,
+        "outputgeojson": false,
+        "outputjson": false,
         "outputkml": false,
         "outputxlsx": false,
         "httpcodenodata": "204"
