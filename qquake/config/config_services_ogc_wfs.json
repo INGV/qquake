@@ -140,7 +140,7 @@
       "configlastupdate": "2023-01-18T12:00:00+00:00"
     },
     "EFSM20": {
-      "title": "EFSM20, European Fault Source Model 2020 <p></p><p><table><thead><tr><th style='font-weight:bold; border-bottom:1px solid #CCC;'>Layer</th><th style='font-weight:bold; border-bottom:1px solid #CCC;'>Description</th></tr></thead><tbody><tr><td>efsm20_cf_bot</td><td>Trace of the fault plane lower edge. Polylines.</td></tr><tr><td>efsm20_cf_mid</td><td>Trace of the fault plane middle line. Polylines.</td></tr><tr><td>efsm20_cf_pld</td><td>Vertical projection of the inclined fault planes (in the local dip direction along strike) onto the ground surface. Polygons.</td></tr><tr><td>efsm20_cf_top</td><td>Trace of the fault plane upper edge. Polylines.</td></tr><tr><td>efsm20_is_lattice</td><td>Intraslab (IS) model constituted by equally-spaced nodes sampling the crustal part of the slab volume. Points.</td></tr><tr><td>efsm20_si_discretization</td><td>Subduction Interface (SI) discretized in areas spanning 1 km depth. Polygons encompassing each area in map view.</td></tr><tr><td>efsm20_si_parameters</td><td>Subduction Interface (SI) parameters. Polygons encompassing the SI area in map view.</td></tr><tr><td>efsm20_si_realizations</td><td>Subduction Interface (SI) model realizations considering uncertainties. Polygons encompassing each area of the different realizations in map view.</td></tr><tr><td>efsm20_slabdepths</td><td>Depth isolines (contours) representing the geometry of the top surface of the slab. Polylines.</td></tr></tbody></table>", 
+      "title": "EFSM20, European Fault Source Model 2020 <p></p><p><table><thead><tr><th style='font-weight:bold; border-bottom:1px solid #CCC;'>Layer</th><th style='font-weight:bold; border-bottom:1px solid #CCC;'>Description</th></tr></thead><tbody><tr><td>efsm20_cf_bot</td><td>Trace of the fault plane lower edge. Polylines.</td></tr><tr><td>efsm20_cf_mid</td><td>Trace of the fault plane middle line. Polylines.</td></tr><tr><td>efsm20_cf_pld</td><td>Vertical projection of the fault planes (in the local dip direction along strike) onto the ground surface. Polygons.</td></tr><tr><td>efsm20_cf_top</td><td>Trace of the fault plane upper edge. Polylines.</td></tr><tr><td>efsm20_is_lattice</td><td>Intraslab (IS) model constituted by equally-spaced nodes sampling the crustal part of the slab volume. Points.</td></tr><tr><td>efsm20_si_discretization</td><td>Subduction Interface (SI) discretized in areas spanning 1 km depth. Polygons encompassing each area in map view.</td></tr><tr><td>efsm20_si_parameters</td><td>Subduction Interface (SI) parameters. Polygons encompassing the SI area in map view.</td></tr><tr><td>efsm20_si_realizations</td><td>Subduction Interface (SI) model realizations considering uncertainties. Polygons encompassing each area of the different realizations in map view.</td></tr><tr><td>efsm20_slabdepths</td><td>Depth isolines (contours) representing the geometry of the top surface of the slab. Polylines.</td></tr></tbody></table>", 
       "group": "Seismogenic faults",
       "servicedescription": "OGC WFS provided by Seismofaults.eu",
       "servicedescriptionurl": "https://seismofaults.eu/services/efsm20-services",
@@ -238,11 +238,11 @@
       "settings": {
         "queryCQL": true
       },
-      "configversion": 0.4,
-      "configlastupdate": "2023-01-17T12:00:00+00:00"
+      "configversion": 0.5,
+      "configlastupdate": "2023-08-30T09:00:00+00:00"
     },
     "INGV DISS": {
-      "title": "Database of Individual Seismogenic Sources (DISS) version 3.3.0",
+      "title": "Database of Individual Seismogenic Sources (DISS) version 3.3.0<p></p><p><table><thead><tr><th style='font-weight:bold; border-bottom:1px solid #CCC;'>Layer</th><th style='font-weight:bold; border-bottom:1px solid #CCC;'>Description</th></tr></thead><tbody><tr><td>iss330</td><td>Individual Seismogenic Sources. Vertical projection of the dipping fault planes onto the ground surface. Polygons.</td></tr><tr><td>csstop330</td><td>Composite Seismogenic Sources (top). Fault plane upper edge. Polylines.</td></tr><tr><td>csspln330</td><td>Composite Seismogenic Sources (planes). Vertical projection of the inclined dipping fault planes (in the local dip direction along strike) onto the ground surface. Polygons.</td></tr><tr><td>csscnt330</td><td>Composite Seismogenic Sources (contours). Depth isolines [...]. Polylines.</td></tr><tr><td>dss330</td><td>Debated Seismogenic Sources. Polygons.</td></tr><tr><td>subdcnt330</td><td>Subduction zones depth isolines (contours). Polylines.</td></tr><tr><td>subzon330</td><td>Subduction zones. Vertical projection of the dipping slab onto the ground surface. Polygons.</td></tr></tbody></table>",
       "group": "Seismogenic faults",
       "servicedescription": "OGC WFS provided by Seismofaults.eu",
       "servicedescriptionurl": "https://seismofaults.eu/index.php/services/diss-services/",
@@ -295,6 +295,14 @@
               }
             }
           },
+	  {
+            "layername": "DISS330:csscnt330",
+	    "style": {
+	      "wfs": {
+		"style": "csscnt"
+	      }
+	    }
+	  },
           {
             "layername": "DISS330:subdcnt330",
             "style": {
@@ -396,7 +404,7 @@
       "configlastupdate": "2021-04-20T16:46:00+00:00"
     },
     "NEAMTHM18": {
-      "title": "NEAM Tsunami Hazard Model 2018 (NEAMTHM18)",
+      "title": "NEAM Tsunami Hazard Model 2018 (NEAMTHM18). Points of interest (POI) where the tsunami hazard is calculated for various average return periods and epistemic uncertainty. Points.",
       "group": "Tsunami",
       "servicedescription": "OGC WFS provided by tsunamidata.org",
       "servicedescriptionurl": "https://tsumaps-neam.eu/neamthm18/",
