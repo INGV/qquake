@@ -56,6 +56,8 @@ class OgcServiceWidget(QWidget, FORM_CLASS):
         self.cql = None
         self.simple_cql = []
 
+        self.button_check_all.clicked.connect(lambda: self._check_all(True))
+        self.button_check_none.clicked.connect(lambda: self._check_all(False))
         self.button_set_filter.clicked.connect(self._set_filter)
 
     def restore_settings(self):
@@ -287,6 +289,15 @@ class OgcServiceWidget(QWidget, FORM_CLASS):
         base_config['default'] = defaults
         return base_config
 
+    def _check_all(self, checked: bool = True):
+        """
+        Checks all fields
+        """
+        for r in range(self.layer_model.rowCount(QModelIndex())):
+            parent = self.layer_model.index(r, 0, QModelIndex())
+            for rc in range(self.layer_model.rowCount(parent)):
+                self.layer_model.setData(self.layer_model.index(rc, 0, parent), checked, Qt.CheckStateRole)
+                
     def _set_filter(self):
         """
         Sets the CQL filter
