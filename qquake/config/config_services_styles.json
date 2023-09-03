@@ -221,6 +221,15 @@
         75
       ]
     },
+    "france": {
+      "title": "France",
+      "boundingbox": [
+        -6,
+        40.5,
+        10.5,
+        52
+      ]
+    },
     "greece": {
       "title": "Greece",
       "boundingbox": [
