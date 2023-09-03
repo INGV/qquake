@@ -221,6 +221,15 @@
         75
       ]
     },
+    "greece": {
+      "title": "Greece",
+      "boundingbox": [
+        19,
+        33.5,
+        35,
+        43
+      ]
+    },
     "italy": {
       "title": "Italy",
       "boundingbox": [
@@ -230,15 +239,6 @@
         49
       ]
     },
-    "switzerland": {
-      "title": "Switzerland",
-      "boundingbox": [
-        5.5,
-        45.4,
-        11,
-        48.3
-      ]
-    },
     "mediterranean": {
       "title": "Mediterranean Sea",
       "boundingbox": [
@@ -246,6 +246,15 @@
         27,
         38,
         48
+      ]
+    },
+    "switzerland": {
+      "title": "Switzerland",
+      "boundingbox": [
+        5.5,
+        45.4,
+        11,
+        48.3
       ]
     },
     "world": {
