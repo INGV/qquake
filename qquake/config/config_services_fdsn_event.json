@@ -471,6 +471,100 @@
       "configversion": 0.3,
       "configlastupdate": "2021-10-06T09:35:11+00:00"
     },
+    "NOA": {
+      "title": "National Observatory of Athens (NOA)",
+      "servicedescription": "FDSN-event provided by NOA",
+      "servicedescriptionurl": "https://www.seismicportal.eu/fdsn-wsevent.html",
+      "datadescription": " National Observatory of Athens (NOA) EIDA Services",
+      "datadescriptionurl": "https://eida.gein.noa.gr/",
+      "datalicense": "CC BY 4.0",
+      "datalicenseurl": "https://creativecommons.org/licenses/by/4.0/",
+      "dataprovider": "National Observatory of Athens (NOA)",
+      "dataproviderurl": "https://www.noa.gr/",
+      "help": "",
+      "publications": [
+
+      ],
+      "endpointurl": "http://eida.gein.noa.gr/fdsnws/event/1/query?",
+      "datestart": "2010-01-05T00:00:00.00Z",
+      "dateend": "",
+      "boundingbox": [
+        19,
+        33.5,
+        35,
+        43
+      ],
+      "default": {
+        "datestart": "2020-01-01T00:00:00+00:00",
+        "dateend": "",
+        "boundingboxpredefined": "greece",
+        "style": {
+          "events": {
+            "style": "square_colors",
+            "classified_attribute_text": "Magnitude",
+            "classified_attribute_xml": "eventParameters>event>magnitude>mag>value"
+          }
+        },
+        "format": "text",
+        "fields": [
+          "eventParameters>event§publicID",
+          "eventParameters>event>creationInfo>agencyURI",
+          "eventParameters>event>creationInfo>authorURI",
+          "eventParameters>event>origin§publicID",
+          "eventParameters>event>origin>time>value",
+          "eventParameters>event>origin>compositeTime>year>value",
+          "eventParameters>event>origin>compositeTime>month>value",
+          "eventParameters>event>origin>compositeTime>day>value",
+          "eventParameters>event>origin>compositeTime>hour>value",
+          "eventParameters>event>origin>compositeTime>minute>value",
+          "eventParameters>event>origin>compositeTime>second>value",
+          "eventParameters>event>description>text",
+          "eventParameters>event>origin>latitude>value",
+          "eventParameters>event>origin>longitude>value",
+          "eventParameters>event>origin>depth>value",
+          "eventParameters>event>origin>creationInfo>agencyURI",
+          "eventParameters>event>origin>creationInfo>authorURI",
+          "eventParameters>event>magnitude§publicID",
+          "eventParameters>event>magnitude>mag>value",
+          "eventParameters>event>magnitude>type",
+          "eventParameters>event>magnitude>mag>uncertainty",
+          "eventParameters>event>magnitude>creationInfo>agencyURI",
+          "eventParameters>event>magnitude>creationInfo>authorURI"
+        ]
+      },
+      "settings": {
+        "queryeventid": true,
+        "queryoriginid": true,
+        "querymagnitudeid": true,
+        "queryfocalmechanismid": true,
+        "queryupdatedafter": true,
+        "querycatalog": true,
+        "querycontributor": true,
+        "querycontributorid": true,
+        "queryeventtype": true,
+        "querymagnitudetype": true,
+        "queryincludeallorigins": true,
+        "queryincludeallorigins_multiple": true,
+        "queryincludeallmagnitudes": true,
+        "queryincludeallmagnitudes_multiple": true,
+        "queryincludearrivals": true,
+        "queryincludeallstationsmagnitudes": true,
+        "querylimit": true,
+        "querylimitmaxentries": 5000,
+        "querycircular": true,
+        "querycircularradiuskm": false,
+        "querydepth": true,
+        "outputtext": true,
+        "outputxml": true,
+        "outputgeojson": false,
+        "outputjson": false,
+        "outputkml": false,
+        "outputxlsx": false,
+        "httpcodenodata": "204"
+      },
+      "configversion": 0.1,
+      "configlastupdate": "2023-09-03T16:00:00+00:00"
+    },
     "USGS NEIC": {
       "title": "USGS NEIC",
       "servicedescription": "FDS-event provided by National Earthquake Information Center (NEIC)",
@@ -564,6 +658,100 @@
       },
       "configversion": 0.3,
       "configlastupdate": "2021-10-06T09:35:11+00:00"
+    },
+    "RESIF": {
+      "title": "Réseau sismologique et géodésique français (Résif)",
+      "servicedescription": "FDSN-event provided by France Seisme / Résif",
+      "servicedescriptionurl": "http://ws.resif.fr/fdsnws/event/",
+      "datadescription": "Réseau sismologique et géodésique français (Résif)",
+      "datadescriptionurl": "http://www.resif.fr/",
+      "datalicense": "Résif terms of usage",
+      "datalicenseurl": "http://ws.resif.fr/terms_of_services/",
+      "dataprovider": "Réseau sismologique et géodésique français (Résif)",
+      "dataproviderurl": "https://www.resif.fr/",
+      "help": "",
+      "publications": [
+
+      ],
+      "endpointurl": "https://api.franceseisme.fr/fdsnws/event/1/query?",
+      "datestart": "1980-01-05T00:00:00.00Z",
+      "dateend": "",
+      "boundingbox": [
+        -180,
+        -85,
+        180,
+        85
+      ],
+      "default": {
+        "datestart": "2020-01-01T00:00:00+00:00",
+        "dateend": "",
+        "boundingboxpredefined": "france",
+        "style": {
+          "events": {
+            "style": "square_colors",
+            "classified_attribute_text": "Magnitude",
+            "classified_attribute_xml": "eventParameters>event>magnitude>mag>value"
+          }
+        },
+        "format": "text",
+        "fields": [
+          "eventParameters>event§publicID",
+          "eventParameters>event>creationInfo>agencyURI",
+          "eventParameters>event>creationInfo>authorURI",
+          "eventParameters>event>origin§publicID",
+          "eventParameters>event>origin>time>value",
+          "eventParameters>event>origin>compositeTime>year>value",
+          "eventParameters>event>origin>compositeTime>month>value",
+          "eventParameters>event>origin>compositeTime>day>value",
+          "eventParameters>event>origin>compositeTime>hour>value",
+          "eventParameters>event>origin>compositeTime>minute>value",
+          "eventParameters>event>origin>compositeTime>second>value",
+          "eventParameters>event>description>text",
+          "eventParameters>event>origin>latitude>value",
+          "eventParameters>event>origin>longitude>value",
+          "eventParameters>event>origin>depth>value",
+          "eventParameters>event>origin>creationInfo>agencyURI",
+          "eventParameters>event>origin>creationInfo>authorURI",
+          "eventParameters>event>magnitude§publicID",
+          "eventParameters>event>magnitude>mag>value",
+          "eventParameters>event>magnitude>type",
+          "eventParameters>event>magnitude>mag>uncertainty",
+          "eventParameters>event>magnitude>creationInfo>agencyURI",
+          "eventParameters>event>magnitude>creationInfo>authorURI"
+        ]
+      },
+      "settings": {
+        "queryeventid": true,
+        "queryoriginid": true,
+        "querymagnitudeid": true,
+        "queryfocalmechanismid": true,
+        "queryupdatedafter": true,
+        "querycatalog": true,
+        "querycontributor": true,
+        "querycontributorid": true,
+        "queryeventtype": true,
+        "querymagnitudetype": true,
+        "queryincludeallorigins": true,
+        "queryincludeallorigins_multiple": true,
+        "queryincludeallmagnitudes": true,
+        "queryincludeallmagnitudes_multiple": true,
+        "queryincludearrivals": true,
+        "queryincludeallstationsmagnitudes": true,
+        "querylimit": true,
+        "querylimitmaxentries": 5000,
+        "querycircular": true,
+        "querycircularradiuskm": false,
+        "querydepth": true,
+        "outputtext": true,
+        "outputxml": true,
+        "outputgeojson": false,
+        "outputjson": true,
+        "outputkml": false,
+        "outputxlsx": false,
+        "httpcodenodata": "204"
+      },
+      "configversion": 0.1,
+      "configlastupdate": "2023-09-04T16:00:00+00:00"
     }
   }
 }
