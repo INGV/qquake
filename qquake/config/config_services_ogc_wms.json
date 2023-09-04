@@ -1,5 +1,79 @@
 {
   "wms": {
+    "TINITALY": {
+      "title": "TINITALY, a digital elevation model of Italy with a 10 meters cell size (Version 1.1)<p></p><table><tr><td style='font-weight:bold; border-bottom:1px solid #CCC;'>Layer</td><td style='font-weight:bold; border-bottom:1px solid #CCC;'>Description</td></tr><tr><td>tinitaly_dem</td><td>TINItaly DEM</td></tr><tr><td>tinitaly_hshd</td><td>Shaded relief map</td></tr><tr><td>tinitaly_hsv</td><td>Hue-Saturation-Value (HSV) composition image with slope (2.5σ clipping) as saturation and SVF (2.5σ clipping) as value, according to RRIM (Red Relief Image Maps) style maps</td></tr><tr><td>tinitaly_od</td><td>Openness down map using equal area equalization as technique for image enhancement</td></tr><tr><td>tinitaly_slope</td><td>Slope map using 2.5σ clipping as technique for image enhancement</td></tr><tr><td>tinitaly_svf_2d5&nbsp;&nbsp;</td><td>Sky view Factor (SVF) map using 2.5σ clipping as technique for image enhancement</td></tr><tr><td>tinitaly_svf_ea</td><td>SVF map using equal area equalization as technique for image enhancement</td></tr></table>",
+      "group": "Digital Elevation Models",
+      "servicedescription": "OGS WMS provided by INGV",
+      "servicedescriptionurl": "http://tinitaly.pi.ingv.it/wms_service.html",
+      "datadescription": "Tarquini S., Isola I., Favalli M., Battistini A., Dotta G. (2023). TINITALY, a digital elevation model of Italy with a 10 meters cell size (Version 1.1). Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/tinitaly/1.1",
+      "datadescriptionurl": "https://doi.org/10.13127/tinitaly/1.1",
+      "datalicense": "CC BY 4.0",
+      "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+      "dataproviderurl": "http://www.ingv.it/",
+      "help": "",
+      "publications": [
+        "S. Tarquini, I. Isola, M. Favalli, F. Mazzarini, M. Bisson, M. T. Pareschi, E. Boschi. (2009). TINITALY/01: a new Triangular Irregular Network of Italy [JD]. Annals of Geophysics, 50(3). https://doi.org/10.4401/ag-4424 ",
+        "Tarquini, S., Vinci, S., Favalli, M., Doumaz, F., Fornaciai, A., & Nannipieri, L. (2012). Release of a 10-m-resolution DEM for the Italian territory: Comparison with global-coverage DEMs and anaglyph-mode exploration via the web. Computers & Geosciences, 38(1), 168–170. https://doi.org/10.1016/j.cageo.2011.04.018",
+        "Tarquini, S., & Nannipieri, L. (2017). The 10 m-resolution TINITALY DEM as a trans-disciplinary basis for the analysis of the Italian territory: Current trends and new perspectives. Geomorphology, 281, 108–115. https://doi.org/10.1016/j.geomorph.2016.12.022"
+      ],
+      "endpointurl": "http://tinitaly.pi.ingv.it/TINItaly_1_1/wms?",
+      "datestart": "",
+      "dateend": "",
+      "srs": "EPSG:32632",
+      "default": {
+        "wmsversion": "1.3.0",
+        "layers": [
+          {
+            "layername": "tinitaly_dem",
+            "styles": [
+              "raster"
+            ]
+          },
+          {
+            "layername": "tinitaly_hshd",
+            "styles": [
+              "raster"
+            ]
+          },
+          {
+            "layername": "tinitaly_hsv",
+            "styles": [
+              "raster"
+            ]
+          },
+          {
+            "layername": "tinitaly_od",
+            "styles": [
+              "raster"
+            ]
+          },
+          {
+            "layername": "tinitaly_slope",
+            "styles": [
+              "raster"
+            ]
+          },
+          {
+            "layername": "tinitaly_svf_2d5",
+            "styles": [
+              "raster"
+            ]
+          },
+          {
+            "layername": "tinitaly_svf_ea",
+            "styles": [
+              "raster"
+            ]
+          }
+        ]
+      },
+      "settings": {
+        "queryCQL": true
+      },
+      "configversion": 0.2,
+      "configlastupdate": "2023-01-11T17:53:00+00:00"
+    },
     "AHEAD-EPICA": {
       "title": "European PreInstrumental earthquake CAtalogue (EPICA) 1000-1899",
       "group": "Earthquake catalogues",
@@ -72,6 +146,1850 @@
       },
       "configversion": 0.3,
       "configlastupdate": "2022-01-24T16:25:12+00:00"
+    },
+    "MPS04 PGA": {
+      "title": "MPS04 Maps in Peak Ground Acceleration<table><thead><tr><th style='font-weight:bold; border-bottom:1px solid #CCC;'>Layer</th><th style='font-weight:bold; border-bottom:1px solid #CCC;'>Description</th></tr></thead><tbody><tr><td style='padding-right:10px;'>shkValsPoeCost_PGA_16oPerc_2poe_</td><td>Valori di PGA 16° percentile con PoE del 2% in 50 anni</td></tr><tr><td>shkValsPoeCost_PGA_16oPerc_5poe_</td><td>Valori di PGA 16° percentile con PoE del 5% in 50 anni</td></tr><tr><td>shkValsPoeCost_PGA_16oPerc_10poe_</td><td>Valori di PGA 16° percentile con PoE del 10% in 50 anni</td></tr><tr><td>shkValsPoeCost_PGA_16oPerc_22poe_</td><td>Valori di PGA 16° percentile con PoE del 22% in 50 anni</td></tr><tr><td>shkValsPoeCost_PGA_16oPerc_30poe_</td><td>Valori di PGA 16° percentile con PoE del 30% in 50 anni</td></tr><tr><td>shkValsPoeCost_PGA_16oPerc_39poe_</td><td>Valori di PGA 16° percentile con PoE del 39% in 50 anni</td></tr><tr><td>shkValsPoeCost_PGA_16oPerc_50poe_</td><td>Valori di PGA 16° percentile con PoE del 50% in 50 anni</td></tr><tr><td>shkValsPoeCost_PGA_16oPerc_63poe_</td><td>Valori di PGA 16° percentile con PoE del 63% in 50 anni</td></tr><tr><td>shkValsPoeCost_PGA_16oPerc_81poe_</td><td>Valori di PGA 16° percentile con PoE del 81% in 50 anni</td></tr><tr><td>shkValsPoeCost_PGA_50oPerc_2poe_</td><td>Valori di PGA 50° percentile con PoE del 2% in 50 anni</td></tr><tr><td>shkValsPoeCost_PGA_50oPerc_5poe_</td><td>Valori di PGA 50° percentile con PoE del 5% in 50 anni</td></tr><tr><td>shkValsPoeCost_PGA_50oPerc_10poe_</td><td>Valori di PGA 50° percentile con PoE del 10% in 50 anni</td></tr><tr><td>shkValsPoeCost_PGA_50oPerc_22poe_</td><td>Valori di PGA 50° percentile con PoE del 22% in 50 anni</td></tr><tr><td>shkValsPoeCost_PGA_50oPerc_30poe_</td><td>Valori di PGA 50° percentile con PoE del 30% in 50 anni</td></tr><tr><td>shkValsPoeCost_PGA_50oPerc_39poe_</td><td>Valori di PGA 50° percentile con PoE del 39% in 50 anni</td></tr><tr><td>shkValsPoeCost_PGA_50oPerc_50poe_</td><td>Valori di PGA 50° percentile con PoE del 50% in 50 anni</td></tr><tr><td>shkValsPoeCost_PGA_50oPerc_63poe_</td><td>Valori di PGA 50° percentile con PoE del 63% in 50 anni</td></tr><tr><td>shkValsPoeCost_PGA_50oPerc_81poe_</td><td>Valori di PGA 50° percentile con PoE del 81% in 50 anni</td></tr><tr><td>shkValsPoeCost_PGA_84oPerc_2poe_</td><td>Valori di PGA 84° percentile con PoE del 2% in 50 anni</td></tr><tr><td>shkValsPoeCost_PGA_84oPerc_5poe_</td><td>Valori di PGA 84° percentile con PoE del 5% in 50 anni</td></tr><tr><td>shkValsPoeCost_PGA_84oPerc_10poe_</td><td>Valori di PGA 84° percentile con PoE del 10% in 50 anni</td></tr><tr><td>shkValsPoeCost_PGA_84oPerc_22poe_</td><td>Valori di PGA 84° percentile con PoE del 22% in 50 anni</td></tr><tr><td>shkValsPoeCost_PGA_84oPerc_30poe_</td><td>Valori di PGA 84° percentile con PoE del 30% in 50 anni</td></tr><tr><td>shkValsPoeCost_PGA_84oPerc_39poe_</td><td>Valori di PGA 84° percentile con PoE del 39% in 50 anni</td></tr><tr><td>shkValsPoeCost_PGA_84oPerc_50poe_</td><td>Valori di PGA 84° percentile con PoE del 50% in 50 anni</td></tr><tr><td>shkValsPoeCost_PGA_84oPerc_63poe_</td><td>Valori di PGA 84° percentile con PoE del 63% in 50 anni</td></tr><tr><td>shkValsPoeCost_PGA_84oPerc_81poe_</td><td>Valori di PGA 84° percentile con PoE del 81% in 50 anni</td></tr><tbody></table>",
+      "group": "Seismic hazard",
+      "servicedescription": "OGC WMS provided by MPS04",
+      "servicedescriptionurl": "https://doi.org/10.13127/sh/mps04/db",
+      "datadescription": "Meletti C., Montaldo V., Stucchi M., Martinelli F. (2006). Database della pericolosità sismica MPS04. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/sh/mps04/db",
+      "datadescriptionurl": "https://doi.org/10.13127/sh/mps04/db",
+      "datalicense": "CC BY 4.0",
+      "datalicenseurl": "https://creativecommons.org/licenses/by/4.0/",
+      "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+      "dataproviderurl": "http://www.ingv.it/",
+      "help": "",
+      "publications": [
+        "Montaldo V., Meletti C., Martinelli F., Stucchi M., Locati M. (2007). On-Line Seismic Hazard Data for the New Italian Building Code. Journal of Earthquake Engineering. https://doi.org/10.1080/13632460701280146",
+		"Stucchi M., Meletti C., Montaldo V., Crowley H., Calvi G.M., Boschi E. (2011). Seismic Hazard Assessment (2003-2009) for the Italian Building Code. Bulletin of the Seismological Society of America, 101(4), pp.1885–1911. https://doi.org/10.1785/0120100130"
+      ],
+      "endpointurl": "http://mps04-ws.pi.ingv.it/wms_mps04_pga?",
+      "datestart": "",
+      "dateend": "",
+      "srs": "EPSG:4326",
+      "default": {
+        "wmsversion": "1.3.0",
+        "layers": [
+          {
+            "layername": "shkValsPoeCost_PGA_16oPerc_2poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_PGA_16oPerc_5poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_PGA_16oPerc_10poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_PGA_16oPerc_22poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_PGA_16oPerc_30poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_PGA_16oPerc_39poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_PGA_16oPerc_50poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_PGA_16oPerc_63poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_PGA_16oPerc_81poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_PGA_50oPerc_2poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_PGA_50oPerc_5poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_PGA_50oPerc_10poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_PGA_50oPerc_22poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_PGA_50oPerc_30poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_PGA_50oPerc_39poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_PGA_50oPerc_50poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_PGA_50oPerc_63poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_PGA_50oPerc_81poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_PGA_84oPerc_2poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_PGA_84oPerc_5poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_PGA_84oPerc_10poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_PGA_84oPerc_22poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_PGA_84oPerc_30poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_PGA_84oPerc_39poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_PGA_84oPerc_50poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_PGA_84oPerc_63poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_PGA_84oPerc_81poe_",
+            "styles": [
+              "default"
+            ]
+          }
+        ]
+      },
+      "settings": {
+        "queryCQL": false
+      },
+      "configversion": 0.1,
+      "configlastupdate": "2023-09-04T09:33:11+00:00"
+    },
+   "MPS04 SA": {
+      "title": "MPS04 Maps in Spectral Acceleration<table><thead><tr><th style='font-weight:bold; border-bottom:1px solid #CCC;'>Layer</th><th style='font-weight:bold; border-bottom:1px solid #CCC;'>Description</th></tr></thead><tbody><tr><td style='padding-right:10px;'>shkValsPoeCost_SA_015s_16oPerc_2poe_</td><td>Valori di SA(0.15s) 16° percentile con PoE del 2% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_015s_16oPerc_5poe_</td><td>Valori di SA(0.15s) 16° percentile con PoE del 5% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_015s_16oPerc_10poe_</td><td>Valori di SA(0.15s) 16° percentile con PoE del 10% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_015s_16oPerc_22poe_</td><td>Valori di SA(0.15s) 16° percentile con PoE del 22% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_015s_16oPerc_30poe_</td><td>Valori di SA(0.15s) 16° percentile con PoE del 30% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_015s_16oPerc_39poe_</td><td>Valori di SA(0.15s) 16° percentile con PoE del 39% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_015s_16oPerc_50poe_</td><td>Valori di SA(0.15s) 16° percentile con PoE del 50% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_015s_16oPerc_63poe_</td><td>Valori di SA(0.15s) 16° percentile con PoE del 63% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_015s_16oPerc_81poe_</td><td>Valori di SA(0.15s) 16° percentile con PoE del 81% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_015s_50oPerc_2poe_</td><td>Valori di SA(0.15s) 50° percentile con PoE del 2% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_015s_50oPerc_5poe_</td><td>Valori di SA(0.15s) 50° percentile con PoE del 5% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_015s_50oPerc_10poe_</td><td>Valori di SA(0.15s) 50° percentile con PoE del 10% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_015s_50oPerc_22poe_</td><td>Valori di SA(0.15s) 50° percentile con PoE del 22% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_015s_50oPerc_30poe_</td><td>Valori di SA(0.15s) 50° percentile con PoE del 30% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_015s_50oPerc_39poe_</td><td>Valori di SA(0.15s) 50° percentile con PoE del 39% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_015s_50oPerc_50poe_</td><td>Valori di SA(0.15s) 50° percentile con PoE del 50% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_015s_50oPerc_63poe_</td><td>Valori di SA(0.15s) 50° percentile con PoE del 63% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_015s_50oPerc_81poe_</td><td>Valori di SA(0.15s) 50° percentile con PoE del 81% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_015s_84oPerc_2poe_</td><td>Valori di SA(0.15s) 84° percentile con PoE del 2% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_015s_84oPerc_5poe_</td><td>Valori di SA(0.15s) 84° percentile con PoE del 5% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_015s_84oPerc_10poe_</td><td>Valori di SA(0.15s) 84° percentile con PoE del 10% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_015s_84oPerc_22poe_</td><td>Valori di SA(0.15s) 84° percentile con PoE del 22% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_015s_84oPerc_30poe_</td><td>Valori di SA(0.15s) 84° percentile con PoE del 30% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_015s_84oPerc_39poe_</td><td>Valori di SA(0.15s) 84° percentile con PoE del 39% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_015s_84oPerc_50poe_</td><td>Valori di SA(0.15s) 84° percentile con PoE del 50% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_015s_84oPerc_63poe_</td><td>Valori di SA(0.15s) 84° percentile con PoE del 63% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_015s_84oPerc_81poe_</td><td>Valori di SA(0.15s) 84° percentile con PoE del 81% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_01s_16oPerc_2poe_</td><td>Valori di SA(0.1s) 16° percentile con PoE del 2% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_01s_16oPerc_5poe_</td><td>Valori di SA(0.1s) 16° percentile con PoE del 5% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_01s_16oPerc_10poe_</td><td>Valori di SA(0.1s) 16° percentile con PoE del 10% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_01s_16oPerc_22poe_</td><td>Valori di SA(0.1s) 16° percentile con PoE del 22% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_01s_16oPerc_30poe_</td><td>Valori di SA(0.1s) 16° percentile con PoE del 30% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_01s_16oPerc_39poe_</td><td>Valori di SA(0.1s) 16° percentile con PoE del 39% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_01s_16oPerc_50poe_</td><td>Valori di SA(0.1s) 16° percentile con PoE del 50% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_01s_16oPerc_63poe_</td><td>Valori di SA(0.1s) 16° percentile con PoE del 63% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_01s_16oPerc_81poe_</td><td>Valori di SA(0.1s) 16° percentile con PoE del 81% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_01s_50oPerc_2poe_</td><td>Valori di SA(0.1s) 50° percentile con PoE del 2% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_01s_50oPerc_5poe_</td><td>Valori di SA(0.1s) 50° percentile con PoE del 5% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_01s_50oPerc_10poe_</td><td>Valori di SA(0.1s) 50° percentile con PoE del 10% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_01s_50oPerc_22poe_</td><td>Valori di SA(0.1s) 50° percentile con PoE del 22% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_01s_50oPerc_30poe_</td><td>Valori di SA(0.1s) 50° percentile con PoE del 30% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_01s_50oPerc_39poe_</td><td>Valori di SA(0.1s) 50° percentile con PoE del 39% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_01s_50oPerc_50poe_</td><td>Valori di SA(0.1s) 50° percentile con PoE del 50% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_01s_50oPerc_63poe_</td><td>Valori di SA(0.1s) 50° percentile con PoE del 63% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_01s_50oPerc_81poe_</td><td>Valori di SA(0.1s) 50° percentile con PoE del 81% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_01s_84oPerc_2poe_</td><td>Valori di SA(0.1s) 84° percentile con PoE del 2% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_01s_84oPerc_5poe_</td><td>Valori di SA(0.1s) 84° percentile con PoE del 5% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_01s_84oPerc_10poe_</td><td>Valori di SA(0.1s) 84° percentile con PoE del 10% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_01s_84oPerc_22poe_</td><td>Valori di SA(0.1s) 84° percentile con PoE del 22% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_01s_84oPerc_30poe_</td><td>Valori di SA(0.1s) 84° percentile con PoE del 30% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_01s_84oPerc_39poe_</td><td>Valori di SA(0.1s) 84° percentile con PoE del 39% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_01s_84oPerc_50poe_</td><td>Valori di SA(0.1s) 84° percentile con PoE del 50% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_01s_84oPerc_63poe_</td><td>Valori di SA(0.1s) 84° percentile con PoE del 63% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_01s_84oPerc_81poe_</td><td>Valori di SA(0.1s) 84° percentile con PoE del 81% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_02s_16oPerc_2poe_</td><td>Valori di SA(0.2s) 16° percentile con PoE del 2% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_02s_16oPerc_5poe_</td><td>Valori di SA(0.2s) 16° percentile con PoE del 5% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_02s_16oPerc_10poe_</td><td>Valori di SA(0.2s) 16° percentile con PoE del 10% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_02s_16oPerc_22poe_</td><td>Valori di SA(0.2s) 16° percentile con PoE del 22% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_02s_16oPerc_30poe_</td><td>Valori di SA(0.2s) 16° percentile con PoE del 30% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_02s_16oPerc_39poe_</td><td>Valori di SA(0.2s) 16° percentile con PoE del 39% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_02s_16oPerc_50poe_</td><td>Valori di SA(0.2s) 16° percentile con PoE del 50% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_02s_16oPerc_63poe_</td><td>Valori di SA(0.2s) 16° percentile con PoE del 63% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_02s_16oPerc_81poe_</td><td>Valori di SA(0.2s) 16° percentile con PoE del 81% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_02s_50oPerc_2poe_</td><td>Valori di SA(0.2s) 50° percentile con PoE del 2% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_02s_50oPerc_5poe_</td><td>Valori di SA(0.2s) 50° percentile con PoE del 5% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_02s_50oPerc_10poe_</td><td>Valori di SA(0.2s) 50° percentile con PoE del 10% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_02s_50oPerc_22poe_</td><td>Valori di SA(0.2s) 50° percentile con PoE del 22% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_02s_50oPerc_30poe_</td><td>Valori di SA(0.2s) 50° percentile con PoE del 30% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_02s_50oPerc_39poe_</td><td>Valori di SA(0.2s) 50° percentile con PoE del 39% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_02s_50oPerc_50poe_</td><td>Valori di SA(0.2s) 50° percentile con PoE del 50% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_02s_50oPerc_63poe_</td><td>Valori di SA(0.2s) 50° percentile con PoE del 63% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_02s_50oPerc_81poe_</td><td>Valori di SA(0.2s) 50° percentile con PoE del 81% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_02s_84oPerc_2poe_</td><td>Valori di SA(0.2s) 84° percentile con PoE del 2% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_02s_84oPerc_5poe_</td><td>Valori di SA(0.2s) 84° percentile con PoE del 5% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_02s_84oPerc_10poe_</td><td>Valori di SA(0.2s) 84° percentile con PoE del 10% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_02s_84oPerc_22poe_</td><td>Valori di SA(0.2s) 84° percentile con PoE del 22% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_02s_84oPerc_30poe_</td><td>Valori di SA(0.2s) 84° percentile con PoE del 30% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_02s_84oPerc_39poe_</td><td>Valori di SA(0.2s) 84° percentile con PoE del 39% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_02s_84oPerc_50poe_</td><td>Valori di SA(0.2s) 84° percentile con PoE del 50% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_02s_84oPerc_63poe_</td><td>Valori di SA(0.2s) 84° percentile con PoE del 63% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_02s_84oPerc_81poe_</td><td>Valori di SA(0.2s) 84° percentile con PoE del 81% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_03s_16oPerc_2poe_</td><td>Valori di SA(0.3s) 16° percentile con PoE del 2% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_03s_16oPerc_5poe_</td><td>Valori di SA(0.3s) 16° percentile con PoE del 5% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_03s_16oPerc_10poe_</td><td>Valori di SA(0.3s) 16° percentile con PoE del 10% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_03s_16oPerc_22poe_</td><td>Valori di SA(0.3s) 16° percentile con PoE del 22% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_03s_16oPerc_30poe_</td><td>Valori di SA(0.3s) 16° percentile con PoE del 30% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_03s_16oPerc_39poe_</td><td>Valori di SA(0.3s) 16° percentile con PoE del 39% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_03s_16oPerc_50poe_</td><td>Valori di SA(0.3s) 16° percentile con PoE del 50% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_03s_16oPerc_63poe_</td><td>Valori di SA(0.3s) 16° percentile con PoE del 63% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_03s_16oPerc_81poe_</td><td>Valori di SA(0.3s) 16° percentile con PoE del 81% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_03s_50oPerc_2poe_</td><td>Valori di SA(0.3s) 50° percentile con PoE del 2% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_03s_50oPerc_5poe_</td><td>Valori di SA(0.3s) 50° percentile con PoE del 5% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_03s_50oPerc_10poe_</td><td>Valori di SA(0.3s) 50° percentile con PoE del 10% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_03s_50oPerc_22poe_</td><td>Valori di SA(0.3s) 50° percentile con PoE del 22% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_03s_50oPerc_30poe_</td><td>Valori di SA(0.3s) 50° percentile con PoE del 30% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_03s_50oPerc_39poe_</td><td>Valori di SA(0.3s) 50° percentile con PoE del 39% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_03s_50oPerc_50poe_</td><td>Valori di SA(0.3s) 50° percentile con PoE del 50% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_03s_50oPerc_63poe_</td><td>Valori di SA(0.3s) 50° percentile con PoE del 63% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_03s_50oPerc_81poe_</td><td>Valori di SA(0.3s) 50° percentile con PoE del 81% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_03s_84oPerc_2poe_</td><td>Valori di SA(0.3s) 84° percentile con PoE del 2% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_03s_84oPerc_5poe_</td><td>Valori di SA(0.3s) 84° percentile con PoE del 5% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_03s_84oPerc_10poe_</td><td>Valori di SA(0.3s) 84° percentile con PoE del 10% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_03s_84oPerc_22poe_</td><td>Valori di SA(0.3s) 84° percentile con PoE del 22% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_03s_84oPerc_30poe_</td><td>Valori di SA(0.3s) 84° percentile con PoE del 30% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_03s_84oPerc_39poe_</td><td>Valori di SA(0.3s) 84° percentile con PoE del 39% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_03s_84oPerc_50poe_</td><td>Valori di SA(0.3s) 84° percentile con PoE del 50% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_03s_84oPerc_63poe_</td><td>Valori di SA(0.3s) 84° percentile con PoE del 63% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_03s_84oPerc_81poe_</td><td>Valori di SA(0.3s) 84° percentile con PoE del 81% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_04s_16oPerc_2poe_</td><td>Valori di SA(0.4s) 16° percentile con PoE del 2% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_04s_16oPerc_5poe_</td><td>Valori di SA(0.4s) 16° percentile con PoE del 5% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_04s_16oPerc_10poe_</td><td>Valori di SA(0.4s) 16° percentile con PoE del 10% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_04s_16oPerc_22poe_</td><td>Valori di SA(0.4s) 16° percentile con PoE del 22% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_04s_16oPerc_30poe_</td><td>Valori di SA(0.4s) 16° percentile con PoE del 30% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_04s_16oPerc_39poe_</td><td>Valori di SA(0.4s) 16° percentile con PoE del 39% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_04s_16oPerc_50poe_</td><td>Valori di SA(0.4s) 16° percentile con PoE del 50% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_04s_16oPerc_63poe_</td><td>Valori di SA(0.4s) 16° percentile con PoE del 63% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_04s_16oPerc_81poe_</td><td>Valori di SA(0.4s) 16° percentile con PoE del 81% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_04s_50oPerc_2poe_</td><td>Valori di SA(0.4s) 50° percentile con PoE del 2% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_04s_50oPerc_5poe_</td><td>Valori di SA(0.4s) 50° percentile con PoE del 5% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_04s_50oPerc_10poe_</td><td>Valori di SA(0.4s) 50° percentile con PoE del 10% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_04s_50oPerc_22poe_</td><td>Valori di SA(0.4s) 50° percentile con PoE del 22% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_04s_50oPerc_30poe_</td><td>Valori di SA(0.4s) 50° percentile con PoE del 30% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_04s_50oPerc_39poe_</td><td>Valori di SA(0.4s) 50° percentile con PoE del 39% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_04s_50oPerc_50poe_</td><td>Valori di SA(0.4s) 50° percentile con PoE del 50% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_04s_50oPerc_63poe_</td><td>Valori di SA(0.4s) 50° percentile con PoE del 63% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_04s_50oPerc_81poe_</td><td>Valori di SA(0.4s) 50° percentile con PoE del 81% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_04s_84oPerc_2poe_</td><td>Valori di SA(0.4s) 84° percentile con PoE del 2% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_04s_84oPerc_5poe_</td><td>Valori di SA(0.4s) 84° percentile con PoE del 5% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_04s_84oPerc_10poe_</td><td>Valori di SA(0.4s) 84° percentile con PoE del 10% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_04s_84oPerc_22poe_</td><td>Valori di SA(0.4s) 84° percentile con PoE del 22% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_04s_84oPerc_30poe_</td><td>Valori di SA(0.4s) 84° percentile con PoE del 30% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_04s_84oPerc_39poe_</td><td>Valori di SA(0.4s) 84° percentile con PoE del 39% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_04s_84oPerc_50poe_</td><td>Valori di SA(0.4s) 84° percentile con PoE del 50% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_04s_84oPerc_63poe_</td><td>Valori di SA(0.4s) 84° percentile con PoE del 63% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_04s_84oPerc_81poe_</td><td>Valori di SA(0.4s) 84° percentile con PoE del 81% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_05s_16oPerc_2poe_</td><td>Valori di SA(0.5s) 16° percentile con PoE del 2% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_05s_16oPerc_5poe_</td><td>Valori di SA(0.5s) 16° percentile con PoE del 5% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_05s_16oPerc_10poe_</td><td>Valori di SA(0.5s) 16° percentile con PoE del 10% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_05s_16oPerc_22poe_</td><td>Valori di SA(0.5s) 16° percentile con PoE del 22% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_05s_16oPerc_30poe_</td><td>Valori di SA(0.5s) 16° percentile con PoE del 30% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_05s_16oPerc_39poe_</td><td>Valori di SA(0.5s) 16° percentile con PoE del 39% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_05s_16oPerc_50poe_</td><td>Valori di SA(0.5s) 16° percentile con PoE del 50% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_05s_16oPerc_63poe_</td><td>Valori di SA(0.5s) 16° percentile con PoE del 63% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_05s_16oPerc_81poe_</td><td>Valori di SA(0.5s) 16° percentile con PoE del 81% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_05s_50oPerc_2poe_</td><td>Valori di SA(0.5s) 50° percentile con PoE del 2% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_05s_50oPerc_5poe_</td><td>Valori di SA(0.5s) 50° percentile con PoE del 5% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_05s_50oPerc_10poe_</td><td>Valori di SA(0.5s) 50° percentile con PoE del 10% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_05s_50oPerc_22poe_</td><td>Valori di SA(0.5s) 50° percentile con PoE del 22% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_05s_50oPerc_30poe_</td><td>Valori di SA(0.5s) 50° percentile con PoE del 30% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_05s_50oPerc_39poe_</td><td>Valori di SA(0.5s) 50° percentile con PoE del 39% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_05s_50oPerc_50poe_</td><td>Valori di SA(0.5s) 50° percentile con PoE del 50% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_05s_50oPerc_63poe_</td><td>Valori di SA(0.5s) 50° percentile con PoE del 63% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_05s_50oPerc_81poe_</td><td>Valori di SA(0.5s) 50° percentile con PoE del 81% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_05s_84oPerc_2poe_</td><td>Valori di SA(0.5s) 84° percentile con PoE del 2% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_05s_84oPerc_5poe_</td><td>Valori di SA(0.5s) 84° percentile con PoE del 5% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_05s_84oPerc_10poe_</td><td>Valori di SA(0.5s) 84° percentile con PoE del 10% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_05s_84oPerc_22poe_</td><td>Valori di SA(0.5s) 84° percentile con PoE del 22% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_05s_84oPerc_30poe_</td><td>Valori di SA(0.5s) 84° percentile con PoE del 30% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_05s_84oPerc_39poe_</td><td>Valori di SA(0.5s) 84° percentile con PoE del 39% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_05s_84oPerc_50poe_</td><td>Valori di SA(0.5s) 84° percentile con PoE del 50% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_05s_84oPerc_63poe_</td><td>Valori di SA(0.5s) 84° percentile con PoE del 63% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_05s_84oPerc_81poe_</td><td>Valori di SA(0.5s) 84° percentile con PoE del 81% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_075s_16oPerc_2poe_</td><td>Valori di SA(0.75s) 16° percentile con PoE del 2% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_075s_16oPerc_5poe_</td><td>Valori di SA(0.75s) 16° percentile con PoE del 5% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_075s_16oPerc_10poe_</td><td>Valori di SA(0.75s) 16° percentile con PoE del 10% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_075s_16oPerc_22poe_</td><td>Valori di SA(0.75s) 16° percentile con PoE del 22% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_075s_16oPerc_30poe_</td><td>Valori di SA(0.75s) 16° percentile con PoE del 30% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_075s_16oPerc_39poe_</td><td>Valori di SA(0.75s) 16° percentile con PoE del 39% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_075s_16oPerc_50poe_</td><td>Valori di SA(0.75s) 16° percentile con PoE del 50% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_075s_16oPerc_63poe_</td><td>Valori di SA(0.75s) 16° percentile con PoE del 63% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_075s_16oPerc_81poe_</td><td>Valori di SA(0.75s) 16° percentile con PoE del 81% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_075s_50oPerc_2poe_</td><td>Valori di SA(0.75s) 50° percentile con PoE del 2% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_075s_50oPerc_5poe_</td><td>Valori di SA(0.75s) 50° percentile con PoE del 5% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_075s_50oPerc_10poe_</td><td>Valori di SA(0.75s) 50° percentile con PoE del 10% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_075s_50oPerc_22poe_</td><td>Valori di SA(0.75s) 50° percentile con PoE del 22% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_075s_50oPerc_30poe_</td><td>Valori di SA(0.75s) 50° percentile con PoE del 30% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_075s_50oPerc_39poe_</td><td>Valori di SA(0.75s) 50° percentile con PoE del 39% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_075s_50oPerc_50poe_</td><td>Valori di SA(0.75s) 50° percentile con PoE del 50% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_075s_50oPerc_63poe_</td><td>Valori di SA(0.75s) 50° percentile con PoE del 63% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_075s_50oPerc_81poe_</td><td>Valori di SA(0.75s) 50° percentile con PoE del 81% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_075s_84oPerc_2poe_</td><td>Valori di SA(0.75s) 84° percentile con PoE del 2% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_075s_84oPerc_5poe_</td><td>Valori di SA(0.75s) 84° percentile con PoE del 5% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_075s_84oPerc_10poe_</td><td>Valori di SA(0.75s) 84° percentile con PoE del 10% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_075s_84oPerc_22poe_</td><td>Valori di SA(0.75s) 84° percentile con PoE del 22% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_075s_84oPerc_30poe_</td><td>Valori di SA(0.75s) 84° percentile con PoE del 30% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_075s_84oPerc_39poe_</td><td>Valori di SA(0.75s) 84° percentile con PoE del 39% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_075s_84oPerc_50poe_</td><td>Valori di SA(0.75s) 84° percentile con PoE del 50% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_075s_84oPerc_63poe_</td><td>Valori di SA(0.75s) 84° percentile con PoE del 63% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_075s_84oPerc_81poe_</td><td>Valori di SA(0.75s) 84° percentile con PoE del 81% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_10s_16oPerc_2poe_</td><td>Valori di SA(1.0s) 16° percentile con PoE del 2% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_10s_16oPerc_5poe_</td><td>Valori di SA(1.0s) 16° percentile con PoE del 5% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_10s_16oPerc_10poe_</td><td>Valori di SA(1.0s) 16° percentile con PoE del 10% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_10s_16oPerc_22poe_</td><td>Valori di SA(1.0s) 16° percentile con PoE del 22% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_10s_16oPerc_30poe_</td><td>Valori di SA(1.0s) 16° percentile con PoE del 30% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_10s_16oPerc_39poe_</td><td>Valori di SA(1.0s) 16° percentile con PoE del 39% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_10s_16oPerc_50poe_</td><td>Valori di SA(1.0s) 16° percentile con PoE del 50% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_10s_16oPerc_63poe_</td><td>Valori di SA(1.0s) 16° percentile con PoE del 63% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_10s_16oPerc_81poe_</td><td>Valori di SA(1.0s) 16° percentile con PoE del 81% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_10s_50oPerc_2poe_</td><td>Valori di SA(1.0s) 50° percentile con PoE del 2% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_10s_50oPerc_5poe_</td><td>Valori di SA(1.0s) 50° percentile con PoE del 5% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_10s_50oPerc_10poe_</td><td>Valori di SA(1.0s) 50° percentile con PoE del 10% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_10s_50oPerc_22poe_</td><td>Valori di SA(1.0s) 50° percentile con PoE del 22% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_10s_50oPerc_30poe_</td><td>Valori di SA(1.0s) 50° percentile con PoE del 30% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_10s_50oPerc_39poe_</td><td>Valori di SA(1.0s) 50° percentile con PoE del 39% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_10s_50oPerc_50poe_</td><td>Valori di SA(1.0s) 50° percentile con PoE del 50% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_10s_50oPerc_63poe_</td><td>Valori di SA(1.0s) 50° percentile con PoE del 63% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_10s_50oPerc_81poe_</td><td>Valori di SA(1.0s) 50° percentile con PoE del 81% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_10s_84oPerc_2poe_</td><td>Valori di SA(1.0s) 84° percentile con PoE del 2% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_10s_84oPerc_5poe_</td><td>Valori di SA(1.0s) 84° percentile con PoE del 5% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_10s_84oPerc_10poe_</td><td>Valori di SA(1.0s) 84° percentile con PoE del 10% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_10s_84oPerc_22poe_</td><td>Valori di SA(1.0s) 84° percentile con PoE del 22% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_10s_84oPerc_30poe_</td><td>Valori di SA(1.0s) 84° percentile con PoE del 30% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_10s_84oPerc_39poe_</td><td>Valori di SA(1.0s) 84° percentile con PoE del 39% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_10s_84oPerc_50poe_</td><td>Valori di SA(1.0s) 84° percentile con PoE del 50% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_10s_84oPerc_63poe_</td><td>Valori di SA(1.0s) 84° percentile con PoE del 63% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_10s_84oPerc_81poe_</td><td>Valori di SA(1.0s) 84° percentile con PoE del 81% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_15s_16oPerc_2poe_</td><td>Valori di SA(1.5s) 16° percentile con PoE del 2% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_15s_16oPerc_5poe_</td><td>Valori di SA(1.5s) 16° percentile con PoE del 5% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_15s_16oPerc_10poe_</td><td>Valori di SA(1.5s) 16° percentile con PoE del 10% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_15s_16oPerc_22poe_</td><td>Valori di SA(1.5s) 16° percentile con PoE del 22% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_15s_16oPerc_30poe_</td><td>Valori di SA(1.5s) 16° percentile con PoE del 30% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_15s_16oPerc_39poe_</td><td>Valori di SA(1.5s) 16° percentile con PoE del 39% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_15s_16oPerc_50poe_</td><td>Valori di SA(1.5s) 16° percentile con PoE del 50% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_15s_16oPerc_63poe_</td><td>Valori di SA(1.5s) 16° percentile con PoE del 63% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_15s_16oPerc_81poe_</td><td>Valori di SA(1.5s) 16° percentile con PoE del 81% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_15s_50oPerc_2poe_</td><td>Valori di SA(1.5s) 50° percentile con PoE del 2% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_15s_50oPerc_5poe_</td><td>Valori di SA(1.5s) 50° percentile con PoE del 5% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_15s_50oPerc_10poe_</td><td>Valori di SA(1.5s) 50° percentile con PoE del 10% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_15s_50oPerc_22poe_</td><td>Valori di SA(1.5s) 50° percentile con PoE del 22% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_15s_50oPerc_30poe_</td><td>Valori di SA(1.5s) 50° percentile con PoE del 30% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_15s_50oPerc_39poe_</td><td>Valori di SA(1.5s) 50° percentile con PoE del 39% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_15s_50oPerc_50poe_</td><td>Valori di SA(1.5s) 50° percentile con PoE del 50% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_15s_50oPerc_63poe_</td><td>Valori di SA(1.5s) 50° percentile con PoE del 63% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_15s_50oPerc_81poe_</td><td>Valori di SA(1.5s) 50° percentile con PoE del 81% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_15s_84oPerc_2poe_</td><td>Valori di SA(1.5s) 84° percentile con PoE del 2% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_15s_84oPerc_5poe_</td><td>Valori di SA(1.5s) 84° percentile con PoE del 5% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_15s_84oPerc_10poe_</td><td>Valori di SA(1.5s) 84° percentile con PoE del 10% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_15s_84oPerc_22poe_</td><td>Valori di SA(1.5s) 84° percentile con PoE del 22% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_15s_84oPerc_30poe_</td><td>Valori di SA(1.5s) 84° percentile con PoE del 30% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_15s_84oPerc_39poe_</td><td>Valori di SA(1.5s) 84° percentile con PoE del 39% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_15s_84oPerc_50poe_</td><td>Valori di SA(1.5s) 84° percentile con PoE del 50% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_15s_84oPerc_63poe_</td><td>Valori di SA(1.5s) 84° percentile con PoE del 63% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_15s_84oPerc_81poe_</td><td>Valori di SA(1.5s) 84° percentile con PoE del 81% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_20s_16oPerc_2poe_</td><td>Valori di SA(2.0s) 16° percentile con PoE del 2% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_20s_16oPerc_5poe_</td><td>Valori di SA(2.0s) 16° percentile con PoE del 5% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_20s_16oPerc_10poe_</td><td>Valori di SA(2.0s) 16° percentile con PoE del 10% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_20s_16oPerc_22poe_</td><td>Valori di SA(2.0s) 16° percentile con PoE del 22% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_20s_16oPerc_30poe_</td><td>Valori di SA(2.0s) 16° percentile con PoE del 30% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_20s_16oPerc_39poe_</td><td>Valori di SA(2.0s) 16° percentile con PoE del 39% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_20s_16oPerc_50poe_</td><td>Valori di SA(2.0s) 16° percentile con PoE del 50% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_20s_16oPerc_63poe_</td><td>Valori di SA(2.0s) 16° percentile con PoE del 63% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_20s_16oPerc_81poe_</td><td>Valori di SA(2.0s) 16° percentile con PoE del 81% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_20s_50oPerc_2poe_</td><td>Valori di SA(2.0s) 50° percentile con PoE del 2% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_20s_50oPerc_5poe_</td><td>Valori di SA(2.0s) 50° percentile con PoE del 5% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_20s_50oPerc_10poe_</td><td>Valori di SA(2.0s) 50° percentile con PoE del 10% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_20s_50oPerc_22poe_</td><td>Valori di SA(2.0s) 50° percentile con PoE del 22% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_20s_50oPerc_30poe_</td><td>Valori di SA(2.0s) 50° percentile con PoE del 30% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_20s_50oPerc_39poe_</td><td>Valori di SA(2.0s) 50° percentile con PoE del 39% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_20s_50oPerc_50poe_</td><td>Valori di SA(2.0s) 50° percentile con PoE del 50% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_20s_50oPerc_63poe_</td><td>Valori di SA(2.0s) 50° percentile con PoE del 63% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_20s_50oPerc_81poe_</td><td>Valori di SA(2.0s) 50° percentile con PoE del 81% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_20s_84oPerc_2poe_</td><td>Valori di SA(2.0s) 84° percentile con PoE del 2% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_20s_84oPerc_5poe_</td><td>Valori di SA(2.0s) 84° percentile con PoE del 5% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_20s_84oPerc_10poe_</td><td>Valori di SA(2.0s) 84° percentile con PoE del 10% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_20s_84oPerc_22poe_</td><td>Valori di SA(2.0s) 84° percentile con PoE del 22% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_20s_84oPerc_30poe_</td><td>Valori di SA(2.0s) 84° percentile con PoE del 30% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_20s_84oPerc_39poe_</td><td>Valori di SA(2.0s) 84° percentile con PoE del 39% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_20s_84oPerc_50poe_</td><td>Valori di SA(2.0s) 84° percentile con PoE del 50% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_20s_84oPerc_63poe_</td><td>Valori di SA(2.0s) 84° percentile con PoE del 63% in 50 anni</td></tr><tr><td>shkValsPoeCost_SA_20s_84oPerc_81poe_</td><td>Valori di SA(2.0s) 84° percentile con PoE del 81% in 50 anni</td></tr><tbody></table>",
+      "group": "Seismic hazard",
+      "servicedescription": "OGC WMS provided by MPS04",
+      "servicedescriptionurl": "https://doi.org/10.13127/sh/mps04/db",
+      "datadescription": "Meletti C., Montaldo V., Stucchi M., Martinelli F. (2006). Database della pericolosità sismica MPS04. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/sh/mps04/db",
+      "datadescriptionurl": "https://doi.org/10.13127/sh/mps04/db",
+      "datalicense": "CC BY 4.0",
+      "datalicenseurl": "https://creativecommons.org/licenses/by/4.0/",
+      "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+      "dataproviderurl": "http://www.ingv.it/",
+      "help": "",
+      "publications": [
+        "Montaldo V., Meletti C., Martinelli F., Stucchi M., Locati M. (2007). On-Line Seismic Hazard Data for the New Italian Building Code. Journal of Earthquake Engineering. https://doi.org/10.1080/13632460701280146",
+		"Stucchi M., Meletti C., Montaldo V., Crowley H., Calvi G.M., Boschi E. (2011). Seismic Hazard Assessment (2003-2009) for the Italian Building Code. Bulletin of the Seismological Society of America, 101(4), pp.1885–1911. https://doi.org/10.1785/0120100130"
+      ],
+      "endpointurl": "http://mps04-ws.pi.ingv.it/wms_mps04_sa?",
+      "datestart": "",
+      "dateend": "",
+      "srs": "EPSG:4326",
+      "default": {
+        "wmsversion": "1.3.0",
+        "layers": [
+          {
+            "layername": "shkValsPoeCost_SA_015s_16oPerc_2poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_015s_16oPerc_5poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_015s_16oPerc_10poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_015s_16oPerc_22poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_015s_16oPerc_30poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_015s_16oPerc_39poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_015s_16oPerc_50poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_015s_16oPerc_63poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_015s_16oPerc_81poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_015s_50oPerc_2poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_015s_50oPerc_5poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_015s_50oPerc_10poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_015s_50oPerc_22poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_015s_50oPerc_30poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_015s_50oPerc_39poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_015s_50oPerc_50poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_015s_50oPerc_63poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_015s_50oPerc_81poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_015s_84oPerc_2poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_015s_84oPerc_5poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_015s_84oPerc_10poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_015s_84oPerc_22poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_015s_84oPerc_30poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_015s_84oPerc_39poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_015s_84oPerc_50poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_015s_84oPerc_63poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_015s_84oPerc_81poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_01s_16oPerc_2poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_01s_16oPerc_5poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_01s_16oPerc_10poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_01s_16oPerc_22poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_01s_16oPerc_30poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_01s_16oPerc_39poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_01s_16oPerc_50poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_01s_16oPerc_63poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_01s_16oPerc_81poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_01s_50oPerc_2poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_01s_50oPerc_5poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_01s_50oPerc_10poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_01s_50oPerc_22poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_01s_50oPerc_30poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_01s_50oPerc_39poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_01s_50oPerc_50poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_01s_50oPerc_63poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_01s_50oPerc_81poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_01s_84oPerc_2poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_01s_84oPerc_5poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_01s_84oPerc_10poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_01s_84oPerc_22poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_01s_84oPerc_30poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_01s_84oPerc_39poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_01s_84oPerc_50poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_01s_84oPerc_63poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_01s_84oPerc_81poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_02s_16oPerc_2poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_02s_16oPerc_5poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_02s_16oPerc_10poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_02s_16oPerc_22poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_02s_16oPerc_30poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_02s_16oPerc_39poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_02s_16oPerc_50poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_02s_16oPerc_63poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_02s_16oPerc_81poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_02s_50oPerc_2poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_02s_50oPerc_5poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_02s_50oPerc_10poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_02s_50oPerc_22poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_02s_50oPerc_30poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_02s_50oPerc_39poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_02s_50oPerc_50poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_02s_50oPerc_63poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_02s_50oPerc_81poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_02s_84oPerc_2poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_02s_84oPerc_5poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_02s_84oPerc_10poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_02s_84oPerc_22poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_02s_84oPerc_30poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_02s_84oPerc_39poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_02s_84oPerc_50poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_02s_84oPerc_63poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_02s_84oPerc_81poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_03s_16oPerc_2poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_03s_16oPerc_5poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_03s_16oPerc_10poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_03s_16oPerc_22poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_03s_16oPerc_30poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_03s_16oPerc_39poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_03s_16oPerc_50poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_03s_16oPerc_63poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_03s_16oPerc_81poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_03s_50oPerc_2poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_03s_50oPerc_5poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_03s_50oPerc_10poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_03s_50oPerc_22poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_03s_50oPerc_30poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_03s_50oPerc_39poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_03s_50oPerc_50poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_03s_50oPerc_63poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_03s_50oPerc_81poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_03s_84oPerc_2poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_03s_84oPerc_5poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_03s_84oPerc_10poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_03s_84oPerc_22poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_03s_84oPerc_30poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_03s_84oPerc_39poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_03s_84oPerc_50poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_03s_84oPerc_63poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_03s_84oPerc_81poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_04s_16oPerc_2poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_04s_16oPerc_5poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_04s_16oPerc_10poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_04s_16oPerc_22poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_04s_16oPerc_30poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_04s_16oPerc_39poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_04s_16oPerc_50poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_04s_16oPerc_63poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_04s_16oPerc_81poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_04s_50oPerc_2poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_04s_50oPerc_5poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_04s_50oPerc_10poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_04s_50oPerc_22poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_04s_50oPerc_30poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_04s_50oPerc_39poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_04s_50oPerc_50poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_04s_50oPerc_63poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_04s_50oPerc_81poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_04s_84oPerc_2poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_04s_84oPerc_5poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_04s_84oPerc_10poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_04s_84oPerc_22poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_04s_84oPerc_30poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_04s_84oPerc_39poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_04s_84oPerc_50poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_04s_84oPerc_63poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_04s_84oPerc_81poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_05s_16oPerc_2poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_05s_16oPerc_5poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_05s_16oPerc_10poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_05s_16oPerc_22poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_05s_16oPerc_30poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_05s_16oPerc_39poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_05s_16oPerc_50poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_05s_16oPerc_63poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_05s_16oPerc_81poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_05s_50oPerc_2poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_05s_50oPerc_5poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_05s_50oPerc_10poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_05s_50oPerc_22poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_05s_50oPerc_30poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_05s_50oPerc_39poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_05s_50oPerc_50poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_05s_50oPerc_63poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_05s_50oPerc_81poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_05s_84oPerc_2poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_05s_84oPerc_5poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_05s_84oPerc_10poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_05s_84oPerc_22poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_05s_84oPerc_30poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_05s_84oPerc_39poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_05s_84oPerc_50poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_05s_84oPerc_63poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_05s_84oPerc_81poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_075s_16oPerc_2poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_075s_16oPerc_5poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_075s_16oPerc_10poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_075s_16oPerc_22poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_075s_16oPerc_30poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_075s_16oPerc_39poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_075s_16oPerc_50poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_075s_16oPerc_63poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_075s_16oPerc_81poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_075s_50oPerc_2poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_075s_50oPerc_5poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_075s_50oPerc_10poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_075s_50oPerc_22poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_075s_50oPerc_30poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_075s_50oPerc_39poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_075s_50oPerc_50poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_075s_50oPerc_63poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_075s_50oPerc_81poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_075s_84oPerc_2poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_075s_84oPerc_5poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_075s_84oPerc_10poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_075s_84oPerc_22poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_075s_84oPerc_30poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_075s_84oPerc_39poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_075s_84oPerc_50poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_075s_84oPerc_63poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_075s_84oPerc_81poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_10s_16oPerc_2poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_10s_16oPerc_5poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_10s_16oPerc_10poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_10s_16oPerc_22poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_10s_16oPerc_30poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_10s_16oPerc_39poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_10s_16oPerc_50poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_10s_16oPerc_63poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_10s_16oPerc_81poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_10s_50oPerc_2poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_10s_50oPerc_5poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_10s_50oPerc_10poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_10s_50oPerc_22poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_10s_50oPerc_30poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_10s_50oPerc_39poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_10s_50oPerc_50poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_10s_50oPerc_63poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_10s_50oPerc_81poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_10s_84oPerc_2poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_10s_84oPerc_5poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_10s_84oPerc_10poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_10s_84oPerc_22poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_10s_84oPerc_30poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_10s_84oPerc_39poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_10s_84oPerc_50poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_10s_84oPerc_63poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_10s_84oPerc_81poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_15s_16oPerc_2poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_15s_16oPerc_5poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_15s_16oPerc_10poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_15s_16oPerc_22poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_15s_16oPerc_30poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_15s_16oPerc_39poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_15s_16oPerc_50poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_15s_16oPerc_63poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_15s_16oPerc_81poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_15s_50oPerc_2poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_15s_50oPerc_5poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_15s_50oPerc_10poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_15s_50oPerc_22poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_15s_50oPerc_30poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_15s_50oPerc_39poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_15s_50oPerc_50poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_15s_50oPerc_63poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_15s_50oPerc_81poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_15s_84oPerc_2poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_15s_84oPerc_5poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_15s_84oPerc_10poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_15s_84oPerc_22poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_15s_84oPerc_30poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_15s_84oPerc_39poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_15s_84oPerc_50poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_15s_84oPerc_63poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_15s_84oPerc_81poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_20s_16oPerc_2poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_20s_16oPerc_5poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_20s_16oPerc_10poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_20s_16oPerc_22poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_20s_16oPerc_30poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_20s_16oPerc_39poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_20s_16oPerc_50poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_20s_16oPerc_63poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_20s_16oPerc_81poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_20s_50oPerc_2poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_20s_50oPerc_5poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_20s_50oPerc_10poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_20s_50oPerc_22poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_20s_50oPerc_30poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_20s_50oPerc_39poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_20s_50oPerc_50poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_20s_50oPerc_63poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_20s_50oPerc_81poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_20s_84oPerc_2poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_20s_84oPerc_5poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_20s_84oPerc_10poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_20s_84oPerc_22poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_20s_84oPerc_30poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_20s_84oPerc_39poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_20s_84oPerc_50poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_20s_84oPerc_63poe_",
+            "styles": [
+              "default"
+            ]
+          },
+          {
+            "layername": "shkValsPoeCost_SA_20s_84oPerc_81poe_",
+            "styles": [
+              "default"
+            ]
+          }
+        ]
+      },
+      "settings": {
+        "queryCQL": false
+      },
+      "configversion": 0.1,
+      "configlastupdate": "2023-09-04T09:33:11+00:00"
     },
     "EDSF13": {
       "title": "EDSF13, European Database of Seismogenic Faults 2013",
@@ -159,7 +2077,7 @@
             "layername": "efsm20_cf_maxmagnitude",
             "styles": [
               "Mw_Average",
-	      "Mw_Percentile_02",
+              "Mw_Percentile_02",
               "Mw_Percentile_05",
               "Mw_Percentile_95",
               "Mw_Percentile_98"
@@ -171,7 +2089,7 @@
               "M0R_Arithmetic_Mean",
               "M0R_Geometric_Mean",
               "M0R_Min",
-	      "M0R_Max"
+              "M0R_Max"
             ]
           },
           {
@@ -371,261 +2289,187 @@
               "neamthm18"
             ]
           },
-	  { 
+          {
             "layername": "arp2475_p02",
-	    "styles": [
-	      "neamthm18"
-	    ]
-	  },
-          { 
+            "styles": [
+              "neamthm18"
+            ]
+          },
+          {
             "layername": "arp2475_p16",
-	    "styles": [
-	      "neamthm18"
-	    ]
-	  },
-          { 
+            "styles": [
+              "neamthm18"
+            ]
+          },
+          {
             "layername": "arp2475_p50",
-	    "styles": [
-	      "neamthm18"
-	    ]
-	  },
-          { 
+            "styles": [
+              "neamthm18"
+            ]
+          },
+          {
             "layername": "arp2475_p84",
-	    "styles": [
-	      "neamthm18"
-	    ]
-	  },
-          { 
+            "styles": [
+              "neamthm18"
+            ]
+          },
+          {
             "layername": "arp2475_p98",
-	    "styles": [
-	      "neamthm18"
-	    ]
-	  },
-          { 
+            "styles": [
+              "neamthm18"
+            ]
+          },
+          {
             "layername": "arp4975_avg",
-	    "styles": [
-	      "neamthm18"
-	    ]
-	  },
-          { 
+            "styles": [
+              "neamthm18"
+            ]
+          },
+          {
             "layername": "arp4975_p02",
-	    "styles": [
-	      "neamthm18"
-	    ]
-	  },
-          { 
+            "styles": [
+              "neamthm18"
+            ]
+          },
+          {
             "layername": "arp4975_p16",
-	    "styles": [
-	      "neamthm18"
-	    ]
-	  },
-          { 
+            "styles": [
+              "neamthm18"
+            ]
+          },
+          {
             "layername": "arp4975_p50",
-	    "styles": [
-	      "neamthm18"
-	    ]
-	  },
-          { 
+            "styles": [
+              "neamthm18"
+            ]
+          },
+          {
             "layername": "arp4975_p84",
-	    "styles": [
-	      "neamthm18"
-	    ]
-	  },
-          { 
+            "styles": [
+              "neamthm18"
+            ]
+          },
+          {
             "layername": "arp4975_p98",
-	    "styles": [
-	      "neamthm18"
-	    ]
-	  },
-          { 
+            "styles": [
+              "neamthm18"
+            ]
+          },
+          {
             "layername": "arp9975_avg",
-	    "styles": [
-	      "neamthm18"
-	    ]
-	  },
-          { 
+            "styles": [
+              "neamthm18"
+            ]
+          },
+          {
             "layername": "arp9975_p02",
-	    "styles": [
-	      "neamthm18"
-	    ]
-	  },
-	  {
+            "styles": [
+              "neamthm18"
+            ]
+          },
+          {
             "layername": "arp9975_p16",
-	    "styles": [
-	      "neamthm18"
-	    ]
-	  },
-	  {
+            "styles": [
+              "neamthm18"
+            ]
+          },
+          {
             "layername": "arp9975_p50",
-	    "styles": [
-	      "neamthm18"
-	    ]
-	  },
-	  {
+            "styles": [
+              "neamthm18"
+            ]
+          },
+          {
             "layername": "arp9975_p84",
-	    "styles": [
-	      "neamthm18"
-	    ]
-	  },
-	  {
+            "styles": [
+              "neamthm18"
+            ]
+          },
+          {
             "layername": "arp9975_p98",
-	    "styles": [
-	      "neamthm18"
-	    ]
-	  },
-	  {
+            "styles": [
+              "neamthm18"
+            ]
+          },
+          {
             "layername": "arp_475_avg",
-	    "styles": [
-	      "neamthm18"
-	    ]
-	  },
-          { 
+            "styles": [
+              "neamthm18"
+            ]
+          },
+          {
             "layername": "arp_475_p02",
-	    "styles": [
-	      "neamthm18"
-	    ]
-	  },
-	  {
+            "styles": [
+              "neamthm18"
+            ]
+          },
+          {
             "layername": "arp_475_p16",
-	    "styles": [
-	      "neamthm18"
-	    ]
-	  },
-	  {
+            "styles": [
+              "neamthm18"
+            ]
+          },
+          {
             "layername": "arp_475_p50",
-	    "styles": [
-	      "neamthm18"
-	    ]
-	  },
-	  {
+            "styles": [
+              "neamthm18"
+            ]
+          },
+          {
             "layername": "arp_475_p84",
-	    "styles": [
-	      "neamthm18"
+            "styles": [
+              "neamthm18"
 	     ]
-	  },
-	  {
+          },
+          {
             "layername": "arp_475_p98",
-	    "styles": [
-	      "neamthm18"
-	    ]
-	  },
-	  {
+            "styles": [
+              "neamthm18"
+            ]
+          },
+          {
             "layername": "arp_975_avg",
-	    "styles": [
-	      "neamthm18"
-	    ]
-	  },
-          { 
+            "styles": [
+              "neamthm18"
+            ]
+          },
+          {
             "layername": "arp_975_p02",
-	    "styles": [
-	      "neamthm18"
-	    ]
-	  },
-	  {
+            "styles": [
+              "neamthm18"
+            ]
+          },
+          {
             "layername": "arp_975_p16",
-	    "styles": [
-	      "neamthm18"
-	    ]
-	  },
-	  {
+            "styles": [
+              "neamthm18"
+            ]
+          },
+          {
             "layername": "arp_975_p50",
-	    "styles": [
-	      "neamthm18"
-	    ]
-	  },
-	  {
+            "styles": [
+              "neamthm18"
+            ]
+          },
+          {
             "layername": "arp_975_p84",
-	    "styles": [
-	      "neamthm18"
-	    ]
-	  },
-	  {
+            "styles": [
+              "neamthm18"
+            ]
+          },
+          {
             "layername": "arp_975_p98",
-	    "styles": [
-	      "neamthm18"
-	    ]
-	  }
-        ]
+            "styles": [
+              "neamthm18"
+            ]
+          }
+		]
       },
       "settings": {
         "queryCQL": true
       },
       "configversion": 0.1,
-      "configlastupdate": "2023-08-28T12:04:00+00:00"	
-    },
-    "TINITALY": {
-      "title": "TINITALY, a digital elevation model of Italy with a 10 meters cell size (Version 1.1)<p></p><table><tr><td style='font-weight:bold; border-bottom:1px solid #CCC;'>Style Name</td><td style='font-weight:bold; border-bottom:1px solid #CCC;'>Description</td></tr><tr><td>tinitaly_dem</td><td>TINItaly DEM</td></tr><tr><td>tinitaly_hshd</td><td>Shaded relief map</td></tr><tr><td>tinitaly_hsv</td><td>Hue-Saturation-Value (HSV) composition image with slope (2.5σ clipping) as saturation and SVF (2.5σ clipping) as value, according to RRIM (Red Relief Image Maps) style maps</td></tr><tr><td>tinitaly_od</td><td>Openness down map using equal area equalization as technique for image enhancement</td></tr><tr><td>tinitaly_slope</td><td>Slope map using 2.5σ clipping as technique for image enhancement</td></tr><tr><td>tinitaly_svf_2d5&nbsp;&nbsp;</td><td>Sky view Factor (SVF) map using 2.5σ clipping as technique for image enhancement</td></tr><tr><td>tinitaly_svf_ea</td><td>SVF map using equal area equalization as technique for image enhancement</td></tr></table>",
-      "group": "Digital Elevation Models",
-      "servicedescription": "OGS WMS provided by INGV",
-      "servicedescriptionurl": "http://tinitaly.pi.ingv.it/wms_service.html",
-      "datadescription": "Tarquini S., Isola I., Favalli M., Battistini A., Dotta G. (2023). TINITALY, a digital elevation model of Italy with a 10 meters cell size (Version 1.1). Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/tinitaly/1.1",
-      "datadescriptionurl": "https://doi.org/10.13127/tinitaly/1.1",
-      "datalicense": "CC BY 4.0",
-      "datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
-      "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
-      "dataproviderurl": "http://www.ingv.it/",
-      "help": "",
-      "publications": [
-        "S. Tarquini, I. Isola, M. Favalli, F. Mazzarini, M. Bisson, M. T. Pareschi, E. Boschi. (2009). TINITALY/01: a new Triangular Irregular Network of Italy [JD]. Annals of Geophysics, 50(3). https://doi.org/10.4401/ag-4424 ",
-        "Tarquini, S., Vinci, S., Favalli, M., Doumaz, F., Fornaciai, A., & Nannipieri, L. (2012). Release of a 10-m-resolution DEM for the Italian territory: Comparison with global-coverage DEMs and anaglyph-mode exploration via the web. Computers & Geosciences, 38(1), 168–170. https://doi.org/10.1016/j.cageo.2011.04.018",
-        "Tarquini, S., & Nannipieri, L. (2017). The 10 m-resolution TINITALY DEM as a trans-disciplinary basis for the analysis of the Italian territory: Current trends and new perspectives. Geomorphology, 281, 108–115. https://doi.org/10.1016/j.geomorph.2016.12.022"
-      ],
-      "endpointurl": "http://tinitaly.pi.ingv.it/TINItaly_1_1/wms?",
-      "datestart": "",
-      "dateend": "",
-      "srs": "EPSG:32632",
-      "default": {
-        "wmsversion": "1.3.0",
-        "layers": [
-          {
-            "layername": "tinitaly_dem",
-            "styles": [
-              "raster"
-            ]
-          },
-          {
-            "layername": "tinitaly_hshd",
-            "styles": [
-              "raster"
-            ]
-          },
-          {
-            "layername": "tinitaly_hsv",
-            "styles": [
-              "raster"
-            ]
-          },
-          {
-            "layername": "tinitaly_od",
-            "styles": [
-              "raster"
-            ]
-          },
-          {
-            "layername": "tinitaly_slope",
-            "styles": [
-              "raster"
-            ]
-          },
-          {
-            "layername": "tinitaly_svf_2d5",
-            "styles": [
-              "raster"
-            ]
-          },
-          {
-            "layername": "tinitaly_svf_ea",
-            "styles": [
-              "raster"
-            ]
-          }
-        ]
-      },
-      "settings": {
-        "queryCQL": true
-      },
-      "configversion": 0.2,
-      "configlastupdate": "2023-01-11T17:53:00+00:00"
+      "configlastupdate": "2023-08-28T12:04:00+00:00"
     }
   }
 }
