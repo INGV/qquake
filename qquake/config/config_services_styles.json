@@ -200,6 +200,16 @@
       "type": "wmts",
       "url": "https://www.emidius.eu/qquake/symbology/tinitaly_wmts.qml"
     },
+    "MPS04_PGA_wfs": {
+      "label": "Parametric Catalogue of Italian Earthquakes (CPTI)",
+      "type": "wfs",
+      "url": "https://www.emidius.eu/qquake/symbology/MPS04_PGA_symbols_wfs.qml"
+    },
+    "MPS04_SA_wfs": {
+      "label": "Parametric Catalogue of Italian Earthquakes (CPTI)",
+      "type": "wfs",
+      "url": "https://www.emidius.eu/qquake/symbology/MPS04_SA_symbols_wfs.qml"
+    },
     "neamthm18_wfs": {
       "label": "Tsunamidata NEAMTHM18",
       "type": "wfs",
