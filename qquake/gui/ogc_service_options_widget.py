@@ -88,6 +88,7 @@ class OgcServiceWidget(QWidget, FORM_CLASS):
 
         nodes = []
         for layer in layers:
+            #print(layer)
             if layer.get('styles'):
                 parent_node = ModelNode([layer['layername']])
                 checked_styles = layer.get('checked_styles', None)
@@ -96,11 +97,31 @@ class OgcServiceWidget(QWidget, FORM_CLASS):
                     parent_node.addChild(
                         ModelNode(['checked', style], checked))
             else:
+                parent_node = ModelNode([layer['layername']])
                 if self.service_type == SERVICE_MANAGER.WFS:
+                    
                     style = layer.get('style', {}).get('wfs', {}).get('style', None)
+                    print(style)
+                    parent_node = ModelNode([layer['layername']])
+                    parent_node.addChild(ModelNode(['checked', layer['layername']], True, {'style': style}))
+                    #parent_node.addChild(ModelNode(['checked', style], True))
+                    #Versione che si carica correttamente
+                    #parent_node = ModelNode(['checked', layer['layername']], True, {'style': style})
+                    
                 elif self.service_type == SERVICE_MANAGER.WCS:
+                    
                     style = layer.get('style', {}).get('wcs', {}).get('style', None)
-                parent_node = ModelNode(['checked', layer['layername']], True, {'style': style})
+                    print(style)
+                    parent_node = ModelNode([layer['layername']])
+                    parent_node.addChild(ModelNode(['checked', layer['layername']], True, {'style': style}))
+                    #parent_node.addChild(ModelNode(['checked', style], True))
+                    #Versione che si carica correttamente 
+                    #parent_node = ModelNode(['checked', layer['layername']], True, {'style': style})
+
+                    
+                
+                
+                
 
             nodes.append(parent_node)
 
@@ -108,7 +129,15 @@ class OgcServiceWidget(QWidget, FORM_CLASS):
         self.layers_tree_view.setModel(self.layer_model)
         self.layers_tree_view.expandAll()
 
+        # print(self.layer_model)
+        # print(self.layer_model._root)
+        #print(self.layer_model._root._data)
+
+        # for t in self.layer_model:
+        #     print(t)
+
         for r in range(self.layer_model.rowCount(QModelIndex())):
+            
             if self.layer_model.flags(self.layer_model.index(r, 0, QModelIndex())) & Qt.ItemIsUserCheckable:
                 continue
 
@@ -120,6 +149,8 @@ class OgcServiceWidget(QWidget, FORM_CLASS):
         """
 
         def add_layer(layer_name, style=None, preset_style=None):
+            print(self.service_type)
+            print(preset_style)
             cql = self.get_cql_query()
             if self.service_type == SERVICE_MANAGER.WFS:
                 end_point = self.service_config['endpointurl']
@@ -139,9 +170,11 @@ class OgcServiceWidget(QWidget, FORM_CLASS):
                     end_point)
                 vl = QgsVectorLayer(uri, layer_name, 'WFS')
 
-                if preset_style.get('style') and preset_style['style'] in SERVICE_MANAGER.PRESET_STYLES:
-                    style_url = SERVICE_MANAGER.PRESET_STYLES[preset_style['style']]['url']
-                    StyleUtils.fetch_and_apply_style(vl, style_url)
+                # if preset_style.get('style') and preset_style['style'] in SERVICE_MANAGER.PRESET_STYLES:
+                
+                # if preset_style.get('style') and preset_style['style'] in SERVICE_MANAGER.PRESET_STYLES:
+                #     style_url = SERVICE_MANAGER.PRESET_STYLES[preset_style['style']]['url']
+                #     StyleUtils.fetch_and_apply_style(vl, style_url)
 
                 layers_to_add.append(vl)
             elif self.service_type == SERVICE_MANAGER.WMS:
@@ -212,16 +245,17 @@ class OgcServiceWidget(QWidget, FORM_CLASS):
                 
                 rl = QgsRasterLayer(uri, layer_name, 'wcs')
 
-                if preset_style.get('style') and preset_style['style'] in SERVICE_MANAGER.PRESET_STYLES:
-                    style_url = SERVICE_MANAGER.PRESET_STYLES[preset_style['style']]['url']
-                    StyleUtils.fetch_and_apply_style(rl, style_url)
+                # if preset_style.get('style') and preset_style['style'] in SERVICE_MANAGER.PRESET_STYLES:
+                #     style_url = SERVICE_MANAGER.PRESET_STYLES[preset_style['style']]['url']
+                #     StyleUtils.fetch_and_apply_style(rl, style_url)
 
                 layers_to_add.append(rl)
 
         layers_to_add = []
+        #print(self.layer_model)
         for r in range(self.layer_model.rowCount(QModelIndex())):
             parent = self.layer_model.index(r, 0, QModelIndex())
-
+            
             if self.layer_model.flags(parent) & Qt.ItemIsUserCheckable:
                 layer_name = self.layer_model.data(self.layer_model.index(r, 1, QModelIndex()), Qt.DisplayRole)
                 preset_style = self.layer_model.data(self.layer_model.index(r, 1, QModelIndex()), Qt.UserRole)

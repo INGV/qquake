@@ -45,7 +45,7 @@
       <item row="1" column="0">
        <widget class="QPushButton" name="button_check_all">
         <property name="text">
-         <string>Check All</string>
+         <string>Check all</string>
         </property>
        </widget>
       </item>
