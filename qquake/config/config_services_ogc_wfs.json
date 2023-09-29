@@ -2517,6 +2517,68 @@
       "configversion": 0.1,
       "configlastupdate": "2023-09-04T12:00:00+00:00"
     },
+    "EDSF13": {
+      "title": "EDSF13, European Database of Seismogenic Faults 2013",
+      "group": "Seismogenic faults",
+      "servicedescription": "OGC WFS provided by Seismofaults.eu",
+      "servicedescriptionurl": "https://seismofaults.eu/index.php/services/edsf13-services",
+      "datadescription": "Basili R., Kastelic V., Demircioglu M. B., Garcia Moreno D., Nemser E. S., Petricca P., Sboras S. P., Besana-Ostman G. M., Cabral J., Camelbeeck T., Caputo R., Danciu L., Domac H., Fonseca J., García-Mayordomo J., Giardini D., Glavatovic B., Gulen L., Ince Y., Pavlides S., Sesetyan K., Tarabusi G., Tiberti M. M., Utkucu M., Valensise G., Vanneste K., Vilanova S., Wössner J. (2013). The European Database of Seismogenic Faults (EDSF) compiled in the framework of the Project SHARE. https://doi.org/10.6092/INGV.IT-SHARE-EDSF",
+      "datadescriptionurl": "https://doi.org/10.6092/INGV.IT-SHARE-EDSF",
+      "datalicense": "CC BY 4.0",
+      "datalicenseurl": "https://creativecommons.org/licenses/by/4.0/",
+      "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+      "dataproviderurl": "http://www.ingv.it/",
+      "help": "https://seismofaults.eu/datasets/edsf13webpages",
+      "publications": [
+
+      ],
+      "endpointurl": "https://services.seismofaults.eu/EDSF/wfs?",
+      "datestart": "",
+      "dateend": "",
+      "srs": "EPSG:4326",
+      "default": {
+        "wfsversion": "2.0.0",
+        "layers": [
+          {
+            "layername": "EDSF:crustal_fault_sources_pln",
+            "style": {
+              "wfs": {
+                "style": "EDSF_CF_pln"
+              }
+            }
+          },
+          {
+            "layername": "EDSF:crustal_fault_sources_top",
+            "style": {
+              "wfs": {
+                "style": "EDSF_CF_top"
+              }
+            }
+          },
+          {
+            "layername": "EDSF:subduction_zones",
+            "style": {
+              "wfs": {
+                "style": "EDSF_SUBD_zon"
+              }
+            }
+          },
+          {
+            "layername": "EDSF:subduction_contours",
+            "style": {
+              "wfs": {
+                "style": "EDSF_SUBD_cnt"
+              }
+            }
+          }
+        ]
+      },
+      "settings": {
+        "queryCQL": true
+      },
+      "configversion": 0.4,
+      "configlastupdate": "2023-01-18T12:00:00+00:00"
+    },
     "EFSM20": {
       "title": "EFSM20, European Fault Source Model 2020<p></p><table><thead><tr><th style='font-weight:bold; border-bottom:1px solid #CCC;'>Layer</th><th style='font-weight:bold; border-bottom:1px solid #CCC;'>Description</th></tr></thead><tbody><tr><td>efsm20_cf_bot</td><td>Trace of the fault plane lower edge. Polylines.</td></tr><tr><td>efsm20_cf_mid</td><td>Trace of the fault plane middle line. Polylines.</td></tr><tr><td>efsm20_cf_pld</td><td>Vertical projection of the fault planes (in the local dip direction along strike) onto the ground surface. Polygons.</td></tr><tr><td>efsm20_cf_top</td><td>Trace of the fault plane upper edge. Polylines.</td></tr><tr><td>efsm20_is_lattice</td><td>Intraslab (IS) model constituted by equally-spaced nodes sampling the crustal part of the slab volume. Points.</td></tr><tr><td>efsm20_si_discretization</td><td>Subduction Interface (SI) discretized in areas spanning 1 km depth. Polygons encompassing each area in map view.</td></tr><tr><td>efsm20_si_parameters</td><td>Subduction Interface (SI) parameters. Polygons encompassing the SI area in map view.</td></tr><tr><td>efsm20_si_realizations</td><td>Subduction Interface (SI) model realizations considering uncertainties. Polygons encompassing each area of the different realizations in map view.</td></tr><tr><td>efsm20_slabdepths</td><td>Depth isolines (contours) representing the geometry of the top surface of the slab. Polylines.</td></tr></tbody></table>", 
       "group": "Seismogenic faults",

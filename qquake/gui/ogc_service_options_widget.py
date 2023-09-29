@@ -168,13 +168,17 @@ class OgcServiceWidget(QWidget, FORM_CLASS):
                     self.service_config['srs'],
                     layer_name,
                     end_point)
+                
+                print(uri)
                 vl = QgsVectorLayer(uri, layer_name, 'WFS')
 
-                # if preset_style.get('style') and preset_style['style'] in SERVICE_MANAGER.PRESET_STYLES:
+                print(preset_style.get('style'))
+                print(preset_style['style'])
                 
-                # if preset_style.get('style') and preset_style['style'] in SERVICE_MANAGER.PRESET_STYLES:
-                #     style_url = SERVICE_MANAGER.PRESET_STYLES[preset_style['style']]['url']
-                #     StyleUtils.fetch_and_apply_style(vl, style_url)
+                
+                if preset_style.get('style') and preset_style['style'] in SERVICE_MANAGER.PRESET_STYLES:
+                    style_url = SERVICE_MANAGER.PRESET_STYLES[preset_style['style']]['url']
+                    StyleUtils.fetch_and_apply_style(vl, style_url)
 
                 layers_to_add.append(vl)
             elif self.service_type == SERVICE_MANAGER.WMS:
@@ -245,29 +249,38 @@ class OgcServiceWidget(QWidget, FORM_CLASS):
                 
                 rl = QgsRasterLayer(uri, layer_name, 'wcs')
 
-                # if preset_style.get('style') and preset_style['style'] in SERVICE_MANAGER.PRESET_STYLES:
-                #     style_url = SERVICE_MANAGER.PRESET_STYLES[preset_style['style']]['url']
-                #     StyleUtils.fetch_and_apply_style(rl, style_url)
+                if preset_style.get('style') and preset_style['style'] in SERVICE_MANAGER.PRESET_STYLES:
+                    style_url = SERVICE_MANAGER.PRESET_STYLES[preset_style['style']]['url']
+                    StyleUtils.fetch_and_apply_style(rl, style_url)
 
                 layers_to_add.append(rl)
 
         layers_to_add = []
-        #print(self.layer_model)
+        print("questo è layer model: ", self.layer_model)
+        print(self.layer_model._root.childCount())
+        print(self.layer_model._root)
         for r in range(self.layer_model.rowCount(QModelIndex())):
+            print("r attuale: ", r)
             parent = self.layer_model.index(r, 0, QModelIndex())
             
             if self.layer_model.flags(parent) & Qt.ItemIsUserCheckable:
+                print("caso #1")
                 layer_name = self.layer_model.data(self.layer_model.index(r, 1, QModelIndex()), Qt.DisplayRole)
                 preset_style = self.layer_model.data(self.layer_model.index(r, 1, QModelIndex()), Qt.UserRole)
                 add_layer(layer_name, preset_style=preset_style)
             else:
+                print("caso #2")
                 layer_name = self.layer_model.data(parent, Qt.DisplayRole)
                 for rc in range(self.layer_model.rowCount(parent)):
                     style = self.layer_model.data(self.layer_model.index(rc, 1, parent), Qt.DisplayRole)
                     checked = self.layer_model.data(self.layer_model.index(rc, 0, parent), Qt.CheckStateRole)
+                    preset_style = self.layer_model.data(self.layer_model.index(rc, 1, parent), Qt.UserRole)
+                    #test = self.layer_model.
+
+                    print("questo è preset style:", preset_style)
                     if not checked:
                         continue
-                    add_layer(layer_name, style)
+                    add_layer(layer_name, style, preset_style=preset_style)
 
         QgsProject.instance().addMapLayers(layers_to_add)
 
