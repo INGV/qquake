@@ -1991,60 +1991,6 @@
       "configversion": 0.1,
       "configlastupdate": "2023-09-04T09:33:11+00:00"
     },
-    "EDSF13": {
-      "title": "EDSF13, European Database of Seismogenic Faults 2013",
-      "group": "Seismogenic faults",
-      "servicedescription": "OGC WMS provided by Seismofaults.eu",
-      "servicedescriptionurl": "https://seismofaults.eu/index.php/services/edsf13-services",
-      "datadescription": "Basili R., Kastelic V., Demircioglu M. B., Garcia Moreno D., Nemser E. S., Petricca P., Sboras S. P., Besana-Ostman G. M., Cabral J., Camelbeeck T., Caputo R., Danciu L., Domac H., Fonseca J., García-Mayordomo J., Giardini D., Glavatovic B., Gulen L., Ince Y., Pavlides S., Sesetyan K., Tarabusi G., Tiberti M. M., Utkucu M., Valensise G., Vanneste K., Vilanova S., Wössner J. (2013). The European Database of Seismogenic Faults (EDSF) compiled in the framework of the Project SHARE. https://doi.org/10.6092/INGV.IT-SHARE-EDSF",
-      "datadescriptionurl": "https://doi.org/10.6092/INGV.IT-SHARE-EDSF",
-      "datalicense": "CC BY 4.0",
-      "datalicenseurl": "https://creativecommons.org/licenses/by/4.0/",
-      "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
-      "dataproviderurl": "https://www.ingv.it/",
-      "help": "https://seismofaults.eu/datasets/edsf13webpages",
-      "publications": [
-
-      ],
-      "endpointurl": "https://services.seismofaults.eu/EDSF/wms?",
-      "datestart": "",
-      "dateend": "",
-      "srs": "EPSG:4326",
-      "default": {
-        "wmsversion": "1.3.0",
-        "layers": [
-          {
-            "layername": "subduction_zones",
-            "styles": [
-              "SUBD-zon"
-            ]
-          },
-          {
-            "layername": "subduction_contours",
-            "styles": [
-              "edsf-subd-cnt"
-            ]
-          },
-          {
-            "layername": "crustal_fault_sources_pln",
-            "styles": [
-              "CSS-pln"
-            ]
-          },
-          {
-            "layername": "crustal_fault_sources_top",
-            "styles": [
-              "CSS-top"
-            ]
-          }
-        ]
-      },
-      "settings": {
-        "queryCQL": true
-      },
-      "configversion": 0.4,
-      "configlastupdate": "2023-01-18T12:00:00+00:00"
-    },
     "EFSM20": {
       "title": "EFSM20, European Fault Source Model 2020<p></p><table><thead><tr><th style='font-weight:bold; border-bottom:1px solid #CCC;'>Layer</th><th style='font-weight:bold; border-bottom:1px solid #CCC;'>Description</th></tr></thead><tbody><tr><td>efsm20_cf_faulttypes</td><td>Color-coded fault types: normal, reverse, right-lateral, left-lateral.</td></tr><tr><td>efsm20_cf_maxmagnitude</td><td>Color-coded maximum magnitude. Five different layers for the average (default), and the 2nd, 5th, 95th, and 98th percentiles.</td></tr><tr><td>efsm20_cf_momentrates</td><td>Color-coded moment rates. Log scale. Four different layers for minimum, maximum, arithmetic mean (default), and geometric mean.</td></tr><tr><td>efsm20_cf_sliprates</td><td>Color-coded slip rates. Log-linear separation scale. Four different layers for minimum, maximum, arithmetic mean (default), and geometric mean. </td></tr><tr><td>efsm20_cfdepths</td><td>Color-coded depth isolines of the fault planes, including the top and bottom. Spacing interval is 0.5 km.</td></tr><tr><td>efsm20_slabdepths</td><td>Color-coded depth isolines of the top surface of the slab. Spacing interval is 1 km between 0-40 km, and 10 km between 40-300 km.</td></tr></tbody></table>",
       "group": "Seismogenic faults",
