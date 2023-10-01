@@ -125,30 +125,30 @@
        </property>
        <layout class="QGridLayout" name="gridLayout_3">
         <item row="0" column="0" colspan="2">
-         <widget class="QRadioButton" name="radio_short_fields">
+         <widget class="QRadioButton" name="radio_long_fields">
           <property name="text">
-           <string>Short (max 10 characters)</string>
+           <string>Long (no character limit)</string>
           </property>
          </widget>
         </item>
-        <item row="4" column="0" colspan="2">
+        <item row="1" column="0" colspan="2">
          <widget class="QLabel" name="label_2">
           <property name="text">
            <string>&lt;i&gt;Not compatible with ESRI ShapeFiles&lt;/i&gt;</string>
           </property>
          </widget>
         </item>
-        <item row="1" column="0" colspan="2">
-         <widget class="QLabel" name="label">
+        <item row="2" column="0" colspan="2">
+         <widget class="QRadioButton" name="radio_short_fields">
           <property name="text">
-           <string>&lt;i&gt;Compatible with ESRI ShapeFiles&lt;/i&gt;</string>
+           <string>Short (max 10 characters)</string>
           </property>
          </widget>
         </item>
         <item row="3" column="0" colspan="2">
-         <widget class="QRadioButton" name="radio_long_fields">
+         <widget class="QLabel" name="label">
           <property name="text">
-           <string>Long (no character limit)</string>
+           <string>&lt;i&gt;Compatible with ESRI ShapeFiles&lt;/i&gt;</string>
           </property>
          </widget>
         </item>
