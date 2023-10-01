@@ -866,8 +866,8 @@
           "type": "String"
         },
         {
-          "field_short": "mag",
-          "field_long": "Mag",
+          "field_short": "Magnitude",
+          "field_long": "Magnitude",
           "source": "eventParameters>event>magnitude>mag>value",
           "description": "",
           "type": "Double"
