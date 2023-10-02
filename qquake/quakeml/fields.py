@@ -57,7 +57,7 @@ def get_service_fields(service_type: str,  # pylint: disable=too-many-branches,t
     """
     fields = QgsFields()
     settings = QgsSettings()
-    short_field_names = settings.value('/plugins/qquake/output_short_field_names', True, bool)
+    short_field_names = settings.value('/plugins/qquake/output_short_field_names', False, bool)
     field_config_key = 'field_short' if short_field_names else 'field_long'
 
     include_quake_details_in_mdp = settings.value('/plugins/qquake/include_quake_details_in_mdp', True, bool)
