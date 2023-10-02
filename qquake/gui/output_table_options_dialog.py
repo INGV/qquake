@@ -60,7 +60,7 @@ class OutputTableOptionsDialog(QDialog, FORM_CLASS):
 
         s = QgsSettings()
 
-        short_field_names = s.value('/plugins/qquake/output_short_field_names', True, bool)
+        short_field_names = s.value('/plugins/qquake/output_short_field_names', False, bool)
         if short_field_names:
             self.radio_short_fields.setChecked(True)
         else:
