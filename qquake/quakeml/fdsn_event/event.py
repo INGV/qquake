@@ -90,7 +90,7 @@ class Event(QuakeMlElement):
         """
         settings = QgsSettings()
 
-        short_field_names = settings.value('/plugins/qquake/output_short_field_names', True, bool)
+        short_field_names = settings.value('/plugins/qquake/output_short_field_names', False, bool)
         field_config_key = 'field_short' if short_field_names else 'field_long'
 
         if output_fields:
@@ -212,7 +212,7 @@ class Event(QuakeMlElement):
         """
         settings = QgsSettings()
 
-        short_field_names = settings.value('/plugins/qquake/output_short_field_names', True, bool)
+        short_field_names = settings.value('/plugins/qquake/output_short_field_names', False, bool)
         field_config_key = 'field_short' if short_field_names else 'field_long'
 
         if output_fields:
@@ -268,7 +268,7 @@ class Event(QuakeMlElement):
         """
         settings = QgsSettings()
 
-        short_field_names = settings.value('/plugins/qquake/output_short_field_names', True, bool)
+        short_field_names = settings.value('/plugins/qquake/output_short_field_names', False, bool)
         field_config_key = 'field_short' if short_field_names else 'field_long'
 
         f = QgsFeature(self.to_fields(output_fields))
