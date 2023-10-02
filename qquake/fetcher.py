@@ -272,10 +272,10 @@ class Fetcher(QObject):
             query.append('updatedafter={}'.format(self.updated_after.toString(Qt.ISODate)))
 
         if self.event_min_magnitude is not None:
-            query.append('minmag={}'.format(self.event_min_magnitude))
+            query.append('minmagnitude={}'.format(self.event_min_magnitude))
 
         if self.event_max_magnitude is not None:
-            query.append('maxmag={}'.format(self.event_max_magnitude))
+            query.append('maxmagnitude={}'.format(self.event_max_magnitude))
 
         if self.event_type is not None:
             query.append('eventtype={}'.format(self.event_type))
