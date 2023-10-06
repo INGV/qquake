@@ -385,16 +385,14 @@ class QuakeMlParser:
 
                     event = [e for e in self.events if e.publicID == m.eventReference][0]
                     
-                    try:
-                        source_obj = self.magnitudes[event.preferredMagnitudeID]
-                        for s in source:
-                            if source_obj is None:
-                                source_obj = NULL
-                                break
-                            assert hasattr(source_obj, s)
-                            source_obj = getattr(source_obj, s)
-                    except:
-                        source_obj = NULL
+                    source_obj = self.magnitudes.get(event.preferredMagnitudeID)
+                    for s in source:
+                        if source_obj is None:
+                            source_obj = NULL
+                            break
+                        assert hasattr(source_obj, s)
+                        source_obj = getattr(source_obj, s)
+
 
                     f[dest_field[field_config_key]] = source_obj
 
