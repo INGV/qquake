@@ -180,6 +180,10 @@ class BasicTextParser:
         """
         Constructs event field definitions
         """
+        print(self.headers)
+        if(len(self.headers) == 0):
+            return QgsFields()
+        
         fields = QgsFields()
 
         # 0 EventId
