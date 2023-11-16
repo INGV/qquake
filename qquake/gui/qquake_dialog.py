@@ -1007,7 +1007,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                     self.message_bar.pushMessage(
                         self.tr("Query returned a large number of results ({})".format(events_count)), Qgis.Warning, 0)
                 elif events_count == 0:
-                    print("pippo")
+                    
                     self.message_bar.pushMessage(
                         self.tr("The query submitted to the web service returned no results, check whether the parameters you entered are valid."),
                         Qgis.Critical,
