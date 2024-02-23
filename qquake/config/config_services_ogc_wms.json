@@ -2418,7 +2418,7 @@
 			"configlastupdate": "2023-08-28T12:04:00+00:00"
 		},
 		"EFEHR ESRM20 Seismic Risk Index": {
-			"title": "EFEHR ESRM20 Seismic Risk Index. A data service of the European Facilities for Earthquake Hazard and Risk (<a href='http://www.efehr.org'>EFEHR</a>), providing exposure, vulnerability and risk data and results for Europe.",
+			"title": "EFEHR ESRM20 Seismic Risk Index. A data service of the European Facilities for Earthquake Hazard and Risk (<a href='http://www.efehr.org'>EFEHR</a>), providing seismic risk index results for Europe.",
 			"group": "Seismic risk",
 			"servicedescription": "Crowley H., Dabbeek J., Despotaki V., Rodrigues D., Martins L., Silva V., Romão X., Pereira N., Weatherill G., Danciu L. (2022) European Seismic Risk Index Viewer (v1.0). https://doi.org/10.7414/EUC-ESRM20-RISK-INDEX-VIEWER",
 			"servicedescriptionurl": "https://doi.org/10.7414/EUC-ESRM20-RISK-INDEX-VIEWER",
@@ -2512,7 +2512,7 @@
 			"configlastupdate": "2024-02-22T15:03:00+00:00"
 		},
 		"EFEHR ESRM20 Site Response": {
-			"title": "EFEHR ESRM20 Site Response. A data service of the European Facilities for Earthquake Hazard and Risk (<a href='http://www.efehr.org'>EFEHR</a>), providing exposure, vulnerability and risk data and results for Europe.",
+			"title": "EFEHR ESRM20 Site Response. A data service of the European Facilities for Earthquake Hazard and Risk (<a href='http://www.efehr.org'>EFEHR</a>), providing site responsedata and results for Europe.",
 			"group": "Seismic risk",
 			"servicedescription": "Weatherill G.A, Crowley H., Roullé A., Tourlière B, Lemoine A., Gracianne Hidalgo C., Kotha S.R., Cotton, F., Dabbeek J. (2021). European Site Response Model Datasets Viewer (v1.0). https://doi.org/10.7414/EUC-EUROPEAN-SITE-MODEL-DATA-VIEWER",
 			"servicedescriptionurl": "https://doi.org/10.7414/EUC-EUROPEAN-SITE-MODEL-DATA-VIEWER",
