@@ -1,6 +1,6 @@
 {
   "wmts": {
-    "TINITALY": {
+    "INGV TINITALY": {
       "title": "TINITALY, a digital elevation model of Italy with a 10 meters cell size (Version 1.1)<p></p><table><tr><td style='font-weight:bold; border-bottom:1px solid #CCC;'>Style Name</td><td style='font-weight:bold; border-bottom:1px solid #CCC;'>Description</td></tr><tr><td>tinitaly_dem</td><td>TINItaly DEM</td></tr><tr><td>tinitaly_hshd</td><td>Shaded relief map</td></tr><tr><td>tinitaly_hsv</td><td>Hue-Saturation-Value (HSV) composition image with slope (2.5σ clipping) as saturation and SVF (2.5σ clipping) as value, according to RRIM (Red Relief Image Maps) style maps</td></tr><tr><td>tinitaly_od</td><td>Openness down map using equal area equalization as technique for image enhancement</td></tr><tr><td>tinitaly_slope</td><td>Slope map using 2.5σ clipping as technique for image enhancement</td></tr><tr><td>tinitaly_svf_2d5&nbsp;&nbsp;</td><td>Sky view Factor (SVF) map using 2.5σ clipping as technique for image enhancement</td></tr><tr><td>tinitaly_svf_ea</td><td>SVF map using equal area equalization as technique for image enhancement</td></tr></table>",
       "group": "Digital Elevation Models",
       "servicedescription": "OGS WMTS provided by INGV",
