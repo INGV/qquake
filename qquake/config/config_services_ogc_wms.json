@@ -147,6 +147,42 @@
 			"configversion": 0.3,
 			"configlastupdate": "2022-01-24T16:25:12+00:00"
 		},
+		"ESHM20 unified catalogue": {
+			"title": "ESHM20 Unified Earthquake Catalogue",
+			"group": "Earthquake catalogues",
+			"servicedescription": "OGC WMS provided by EFEHR",
+			"servicedescriptionurl": "https://www.emidius.eu/AHEAD/services/",
+			"datadescription": "<ul style='margin-top:0; padding-top:0;'><li style='margin-top:0; padding-top:0;'>Rovida A., Antonucci A. (2021). EPICA - European PreInstrumental Earthquake CAtalogue, version 1.1 [Data set]. Istituto Nazionale di Geofisica e Vulcanologia (INGV). <a href='https://doi.org/10.13127/epica.1.1'>https://doi.org/10.13127/epica.1.1</a></li><li style='margin-top:10px;'>Lammers S., Weatherill G., Grünthal G., Cotton F. (2023). EMEC-2021 - The European-Mediterranean Earthquake Catalogue – Version 2021 [dataset]. GFZ German Research Center for Geosciences. <a href='https://doi.org/10.5880/GFZ.EMEC.2021.001'>https://doi.org/10.5880/GFZ.EMEC.2021.001</a></li></ul>",
+			"datadescriptionurl": "",
+			"datalicense": "CC BY 4.0",
+			"datalicenseurl": "https://creativecommons.org/licenses/by/4.0/",
+			"dataprovider": "European Facilities for Earthquake Hazard and Risk (EFEHR)",
+			"dataproviderurl": "http://hazard.efehr.org/",
+			"help": "",
+			"publications": [
+				"Rovida A., Antonucci A., Locati M. (2022). The European Preinstrumental Earthquake Catalogue EPICA, the 1000–1899 catalogue for the European Seismic Hazard Model 2020. Earth System Science Data. https://doi.org/10.5194/essd-14-5213-2022",
+				"Grünthal G., Wahlström R. (2012). The European‐Mediterranean Earthquake Catalogue (EMEC) for the last millennium, Journal of Seismology, 16, 3, 535‐57, https://doi.org/10.1007/s10950-012-9302-y",
+				"Danciu L., Nandan S., Reyes C., Basili R., Weatherill G., Beauval C., Rovida A., Vilanova S., Sesetyan K., Bard P-Y., Cotton F., Wiemer S., Giardini D. (2021) - The 2020 update of the European Seismic Hazard Model: Model Overview. EFEHR Technical Report 001, v1.0.0, https://doi.org/10.12686/a15"
+			],
+			"endpointurl": "https://efehrmaps.ethz.ch/cgi-bin/mapserv?MAP=/var/www/mapfile/eshm20sources.map&typename=catalogue",
+			"datestart": "1000-01-01T00:00:00+00:00",
+			"dateend": "2014-12-31T23:59:59+00:00",
+			"srs": "EPSG:4326",
+			"default": {
+				"wmsversion": "1.3.0",
+				"layers": [
+					{
+						"layername": "catalogue",
+						"styles": [""]
+					}
+				]
+			},
+			"settings": {
+				"queryCQL": true
+			},
+			"configversion": 1.0,
+			"configlastupdate": "2024-06-11T18:33:11+00:00"
+		},
 		"INGV MPS04 PGA": {
 			"title": "MPS04 Maps in Peak Ground Acceleration<p></p><table><thead><tr><th style='font-weight:bold; border-bottom:1px solid #CCC;'>Layer</th><th style='font-weight:bold; border-bottom:1px solid #CCC;'>Description</th></tr></thead><tbody><tr><td>shkValsPoeCost_PGA_16oPerc_2poe_&nbsp;&nbsp;&nbsp;</td><td>PGA values with PoE of 2% in 50 years - 16th percentile</td></tr><tr><td>shkValsPoeCost_PGA_16oPerc_5poe_</td><td>PGA values with PoE of 5% in 50 years - 16th percentile</td></tr><tr><td>shkValsPoeCost_PGA_16oPerc_10poe_</td><td>PGA values with PoE of 10% in 50 years - 16th percentile</td></tr><tr><td>shkValsPoeCost_PGA_16oPerc_22poe_</td><td>PGA values with PoE of 22% in 50 years - 16th percentile</td></tr><tr><td>shkValsPoeCost_PGA_16oPerc_30poe_</td><td>PGA values with PoE of 30% in 50 years - 16th percentile</td></tr><tr><td>shkValsPoeCost_PGA_16oPerc_39poe_</td><td>PGA values with PoE of 39% in 50 years - 16th percentile</td></tr><tr><td>shkValsPoeCost_PGA_16oPerc_50poe_</td><td>PGA values with PoE of 50% in 50 years - 16th percentile</td></tr><tr><td>shkValsPoeCost_PGA_16oPerc_63poe_</td><td>PGA values with PoE of 63% in 50 years - 16th percentile</td></tr><tr><td>shkValsPoeCost_PGA_16oPerc_81poe_</td><td>PGA values with PoE of 81% in 50 years - 16th percentile</td></tr><tr><td>shkValsPoeCost_PGA_50oPerc_2poe_</td><td>PGA values with PoE of 2% in 50 years - 50th percentile</td></tr><tr><td>shkValsPoeCost_PGA_50oPerc_5poe_</td><td>PGA values with PoE of 5% in 50 years - 50th percentile</td></tr><tr><td>shkValsPoeCost_PGA_50oPerc_10poe_</td><td>PGA values with PoE of 10% in 50 years - 50th percentile</td></tr><tr><td>shkValsPoeCost_PGA_50oPerc_22poe_</td><td>PGA values with PoE of 22% in 50 years - 50th percentile</td></tr><tr><td>shkValsPoeCost_PGA_50oPerc_30poe_</td><td>PGA values with PoE of 30% in 50 years - 50th percentile</td></tr><tr><td>shkValsPoeCost_PGA_50oPerc_39poe_</td><td>PGA values with PoE of 39% in 50 years - 50th percentile</td></tr><tr><td>shkValsPoeCost_PGA_50oPerc_50poe_</td><td>PGA values with PoE of 50% in 50 years - 50th percentile</td></tr><tr><td>shkValsPoeCost_PGA_50oPerc_63poe_</td><td>PGA values with PoE of 63% in 50 years - 50th percentile</td></tr><tr><td>shkValsPoeCost_PGA_50oPerc_81poe_</td><td>PGA values with PoE of 81% in 50 years - 50th percentile</td></tr><tr><td>shkValsPoeCost_PGA_84oPerc_2poe_</td><td>PGA values with PoE of 2% in 50 years - 84th percentile</td></tr><tr><td>shkValsPoeCost_PGA_84oPerc_5poe_</td><td>PGA values with PoE of 5% in 50 years - 84th percentile</td></tr><tr><td>shkValsPoeCost_PGA_84oPerc_10poe_</td><td>PGA values with PoE of 10% in 50 years - 84th percentile</td></tr><tr><td>shkValsPoeCost_PGA_84oPerc_22poe_</td><td>PGA values with PoE of 22% in 50 years - 84th percentile</td></tr><tr><td>shkValsPoeCost_PGA_84oPerc_30poe_</td><td>PGA values with PoE of 30% in 50 years - 84th percentile</td></tr><tr><td>shkValsPoeCost_PGA_84oPerc_39poe_</td><td>PGA values with PoE of 39% in 50 years - 84th percentile</td></tr><tr><td>shkValsPoeCost_PGA_84oPerc_50poe_</td><td>PGA values with PoE of 50% in 50 years - 84th percentile</td></tr><tr><td>shkValsPoeCost_PGA_84oPerc_63poe_</td><td>PGA values with PoE of 63% in 50 years - 84th percentile</td></tr><tr><td>shkValsPoeCost_PGA_84oPerc_81poe_</td><td>PGA values with PoE of 81% in 50 years - 84th percentile</td></tr><tbody></table>",
 			"group": "Seismic hazard",
