@@ -6,7 +6,7 @@
 name=QQuake
 qgisMinimumVersion=3.0
 description=A plugin that makes the download of seismological data from web services easy
-version=1.7
+version=2.0
 author=Istituto Nazionale di Geofisica e Vulcanologia (INGV)
 email=mario.locati@ingv.it
 
