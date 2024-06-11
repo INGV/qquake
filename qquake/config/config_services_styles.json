@@ -45,6 +45,11 @@
       "type": "wfs",
       "url": "https://www.emidius.eu/qquake/symbology/EPICA_symbols_wfs.qml"
     },
+    "ESHM20_eq_symbols_wfs": {
+      "label": "",
+      "type": "wfs",
+      "url": "https://www.emidius.eu/qquake/symbology/ESHM20_eq_symbols_wfs.qml"
+    },
     "EFSM20_bot": {
       "label": "EFSM20 trace of fault planes lower edge",
       "type": "wfs",
