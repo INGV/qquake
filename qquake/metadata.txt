@@ -20,9 +20,7 @@ repository=https://github.com/INGV/qquake
 
 hasProcessingProvider=no
 
-changelog=2024-06-11 v2.0 Added the WFS and WMS providing the ESHM20 Unified Earthquake Catalogue
-    2024-02-23 v1.9 Added the WMS endpoint providing EFEHR ESRM20
-    2024-01-08 v1.8 Added the fdsnws-event endpoint providing GEOFON-GFZ
+changelog=2024-06-26 v1.8 Added the fdsnws-event endpoint providing GEOFON-GFZ, the WMS providing EFEHR ESRM20, and the WFS and WMS providing the ESHM20 Unified Earthquake Catalogue
     2023-11-16 v1.7 Fixed a bug that would lead to a Python error when the web service return no data
     2023-10-06 v1.6 Added OGC WFS and WMS services providing access to NEAMTHM18 and MPS04, removed the outdated WMS and WMS EDSF13 dataset, added fdsnws-events endpoints for ETHZ-SED, NOA, and Résif, added two buttons for checking and unchecking layers provided via OGC services, introduced datetime instead of the simple date for the event, fixed a bug preventing the correct use of predefined symbology when using fdsn-event in conjunction with the extended output based on QuakeML, removed unwanted spaces from FDSN query parameters that may cause a Python error, splitted the monolithic JSON configuration file in multiple JSON files based on the service type 
     2023-01-22 v1.5 Updated the OGC enpoints of DISS, EDSF, EMTC, ITED and TINITALY, added the OGC endpoint of EFSM20, introduced support for WMTS
