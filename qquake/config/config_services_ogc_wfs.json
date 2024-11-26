@@ -2858,6 +2858,84 @@
       },
       "configversion": 0.1,
       "configlastupdate": "2023-08-28T10:35:00+00:00"
+    },
+    "EFSM20 Meshes": {
+      "title": "EFSM20-Meshes was designed to provide the users of the European Fault-Source Model 2020 (EFSM20) with 3D geometric realizations of the fault sources made by triangular meshes. Triangular meshes are useful for several applications of earthquake modelling that require a discretization of the fault plane, e.g., heterogeneous slip distributions. EFSM20-Meshes was created to fulfil the objectives of the Geo-INQUIRE project and is hosted, maintained, and distributed by INGV through the EDSF installation (https://seismofaults.eu/) operated under the auspices of the EPOS-ERIC, TCS EPOS-Seismology, EFEHR Consortium, and the EPOS-MIUR Joint Research Unit.",
+      "group": "Seismogenic faults",
+      "servicedescription": "OGC WFS provided by Seismofaults.eu",
+      "servicedescriptionurl": "https://seismofaults.eu/efsm20/",
+      "datadescription": "Basili R., Taccone R., Vallone R., Maesano F. E. (2024). European Fault-Source Model 2020 (EFSM20): 3D triangular meshes [Data set]. Istituto Nazionale di Geofisica e Vulcanologia (INGV).",
+      "datadescriptionurl": "https://doi.org/10.13127/efsm20/meshes",
+      "datalicense": "CC BY 4.0",
+      "datalicenseurl": "https://creativecommons.org/licenses/by/4.0/",
+      "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+      "dataproviderurl": "http://www.ingv.it/",
+      "help": "",
+      "publications": [
+
+      ],
+      "endpointurl": "https://services.seismofaults.eu/EFSM20_Meshes/ows?",
+      "datestart": "2024-11-25T00:00:00+00:00",
+      "dateend": "",
+      "srs": "EPSG:4326",
+      "default": {
+        "wfsversion": "2.0.0",
+        "layers": [
+          {
+            "layername": "EFSM20_Meshes:efsm20_cf_meshes",
+            "style": {
+              "wfs": {
+                "style": ""
+              }
+            }
+          },
+	  {
+	    "layername": "EFSM20_Meshes:efsm20_cf_points",
+            "style": {
+              "wfs": {
+                "style": ""
+              }
+            }
+	  },
+	  {
+	    "layername": "EFSM20_Meshes:efsm20_cf_polygons",
+            "style": {
+              "wfs": {
+                "style": ""
+              }
+            } 
+	  },
+	  {
+	    "layername": "EFSM20_Meshes:efsm20_si_meshes",
+            "style": {
+              "wfs": {
+                "style": ""
+              }
+            }
+	  },
+	  {
+	    "layername": "EFSM20_Meshes:efsm20_si_points",
+            "style": {
+              "wfs": {
+                "style": ""
+              }
+            }
+	  },
+	  {
+	    "layername": "EFSM20_Meshes:efsm20_si_polygons",
+            "style": {
+              "wfs": {
+                "style": ""
+              }
+            }
+	  }
+        ]
+      },
+      "settings": {
+        "queryCQL": true
+      },
+      "configversion": 0.1,
+      "configlastupdate": "2024-11-26T11:40:00+00:00"
     }
 
   }
