@@ -2656,16 +2656,16 @@
       "settings": {
         "queryCQL": true
       },
-      "configversion": 0.5,
-      "configlastupdate": "2023-08-30T09:00:00+00:00"
+      "configversion": 0.6,
+      "configlastupdate": "2025-05-15T09:00:00+00:00"
     },
     "INGV DISS": {
-      "title": "Database of Individual Seismogenic Sources (DISS) version 3.3.0<p></p><table><thead><tr><th style='font-weight:bold; border-bottom:1px solid #CCC;'>Layer</th><th style='font-weight:bold; border-bottom:1px solid #CCC;'>Description</th></tr></thead><tbody><tr><td>iss330</td><td>Individual Seismogenic Sources. Vertical projection of the dipping fault planes onto the ground surface. Polygons.</td></tr><tr><td>csstop330</td><td>Composite Seismogenic Sources (top). Fault plane upper edge. Polylines.</td></tr><tr><td>csspln330</td><td>Composite Seismogenic Sources (planes). Vertical projection of the inclined dipping fault planes (in the local dip direction along strike) onto the ground surface. Polygons.</td></tr><tr><td>csscnt330</td><td>Composite Seismogenic Sources (contours). Depth isolines [...]. Polylines.</td></tr><tr><td>dss330</td><td>Debated Seismogenic Sources. Polygons.</td></tr><tr><td>subdcnt330</td><td>Subduction zones depth isolines (contours). Polylines.</td></tr><tr><td>subzon330</td><td>Subduction zones. Vertical projection of the dipping slab onto the ground surface. Polygons.</td></tr></tbody></table>",
+      "title": "Database of Individual Seismogenic Sources (DISS) version 3.3.1<p></p><table><thead><tr><th style='font-weight:bold; border-bottom:1px solid #CCC;'>Layer</th><th style='font-weight:bold; border-bottom:1px solid #CCC;'>Description</th></tr></thead><tbody><tr><td>iss331</td><td>Individual Seismogenic Sources. Vertical projection of the dipping fault planes onto the ground surface. Polygons.</td></tr><tr><td>csstop331</td><td>Composite Seismogenic Sources (top). Fault plane upper edge. Polylines.</td></tr><tr><td>csspln331</td><td>Composite Seismogenic Sources (planes). Vertical projection of the inclined dipping fault planes (in the local dip direction along strike) onto the ground surface. Polygons.</td></tr><tr><td>csscnt331</td><td>Composite Seismogenic Sources (contours). Depth isolines [...]. Polylines.</td></tr><tr><td>dss331</td><td>Debated Seismogenic Sources. Polygons.</td></tr><tr><td>subdcnt331</td><td>Subduction zones depth isolines (contours). Polylines.</td></tr><tr><td>subzon331</td><td>Subduction zones. Vertical projection of the dipping slab onto the ground surface. Polygons.</td></tr></tbody></table>",
       "group": "Seismogenic faults",
       "servicedescription": "OGC WFS provided by Seismofaults.eu",
       "servicedescriptionurl": "https://seismofaults.eu/index.php/services/diss-services/",
-      "datadescription": "DISS Working Group. (2021). Database of Individual Seismogenic Sources (DISS), version 3.3.0: A compilation of potential sources for earthquakes larger than M 5.5 in Italy and surrounding areas.. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/diss3.3.0",
-      "datadescriptionurl": "https://doi.org/10.13127/diss3.3.0",
+      "datadescription": "DISS Working Group. (2025). Database of Individual Seismogenic Sources (DISS), version 3.3.1: A compilation of potential sources for earthquakes larger than M 5.5 in Italy and surrounding areas. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/diss3.3.1",
+      "datadescriptionurl": "https://doi.org/10.13127/diss3.3.1",
       "datalicense": "CC BY 4.0",
       "datalicenseurl": "https://creativecommons.org/licenses/by/4.0/",
       "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
@@ -2674,7 +2674,7 @@
       "publications": [
         "Basili R., Valensise G., Vannoli P., Burrato P., Fracassi U., Mariano S., Tiberti M.M., Boschi E. (2008). The Database of Individual Seismogenic Sources (DISS), version 3: Summarizing 20 years of research on Italy’s earthquake geology. Tectonophysics, 453(1–4), 20–43. https://doi.org/10.1016/j.tecto.2007.04.014"
       ],
-      "endpointurl": "https://services.seismofaults.eu/DISS330/wfs?",
+      "endpointurl": "https://services.seismofaults.eu/DISS331/wfs?",
       "datestart": "",
       "dateend": "",
       "srs": "EPSG:4326",
@@ -2682,7 +2682,7 @@
         "wfsversion": "2.0.0",
         "layers": [
           {
-            "layername": "DISS330:csstop330",
+            "layername": "DISS331:csstop331",
             "style": {
               "wfs": {
                 "style": "csstop"
@@ -2690,7 +2690,7 @@
             }
           },
           {
-            "layername": "DISS330:dss330",
+            "layername": "DISS331:dss331",
             "style": {
               "wfs": {
                 "style": "dss"
@@ -2698,7 +2698,7 @@
             }
           },
           {
-            "layername": "DISS330:iss330",
+            "layername": "DISS331:iss331",
             "style": {
               "wfs": {
                 "style": "iss"
@@ -2706,7 +2706,7 @@
             }
           },
           {
-            "layername": "DISS330:csspln330",
+            "layername": "DISS331:csspln331",
             "style": {
               "wfs": {
                 "style": "csspln"
@@ -2714,7 +2714,7 @@
             }
           },
 	  {
-            "layername": "DISS330:csscnt330",
+            "layername": "DISS331:csscnt331",
 	    "style": {
 	      "wfs": {
 		"style": "csscnt"
@@ -2722,7 +2722,7 @@
 	    }
 	  },
           {
-            "layername": "DISS330:subdcnt330",
+            "layername": "DISS331:subdcnt331",
             "style": {
               "wfs": {
                 "style": "subdcnt"
@@ -2730,7 +2730,7 @@
             }
           },
           {
-            "layername": "DISS330:subdzon330",
+            "layername": "DISS331:subdzon331",
             "style": {
               "wfs": {
                 "style": "subdzon"

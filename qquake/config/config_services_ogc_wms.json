@@ -2100,16 +2100,16 @@
 			"settings": {
 				"queryCQL": true
 			},
-			"configversion": 0.5,
-			"configlastupdate": "2023-08-30T09:00:00+00:00"
+			"configversion": 0.6,
+			"configlastupdate": "2025-05-15T09:00:00+00:00"
 		},
 		"INGV DISS": {
-			"title": "Database of Individual Seismogenic Sources (DISS) version 3.3.0<p></p><table><thead><tr><th style='font-weight:bold; border-bottom:1px solid #CCC;'>Layer</th><th style='font-weight:bold; border-bottom:1px solid #CCC;'>Description</th></tr></thead><tbody><tr><td>iss330</td><td>Individual Seismogenic Sources. Vertical projection of the dipping fault planes onto the ground surface. Polygons.</td></tr><tr><td>csstop330</td><td>Composite Seismogenic Sources (top). Fault plane upper edge. Polylines.</td></tr><tr><td>csspln330</td><td>Composite Seismogenic Sources (planes). Vertical projection of the inclined dipping fault planes (in the local dip direction along strike) onto the ground surface. Polygons.</td></tr><tr><td>dss330</td><td>Debated Seismogenic Sources. Polygons.</td></tr><tr><td>subdcnt330</td><td>Subduction zones depth isolines (contours). Polylines.</td></tr><tr><td>subzon330</td><td>Subduction zones. Vertical projection of the dipping slab onto the ground surface. Polygons.</td></tr></tbody></table>",
+			"title": "Database of Individual Seismogenic Sources (DISS) version 3.3.1<p></p><table><thead><tr><th style='font-weight:bold; border-bottom:1px solid #CCC;'>Layer</th><th style='font-weight:bold; border-bottom:1px solid #CCC;'>Description</th></tr></thead><tbody><tr><td>iss331</td><td>Individual Seismogenic Sources. Vertical projection of the dipping fault planes onto the ground surface. Polygons.</td></tr><tr><td>csstop331</td><td>Composite Seismogenic Sources (top). Fault plane upper edge. Polylines.</td></tr><tr><td>csspln331</td><td>Composite Seismogenic Sources (planes). Vertical projection of the inclined dipping fault planes (in the local dip direction along strike) onto the ground surface. Polygons.</td></tr><tr><td>dss331</td><td>Debated Seismogenic Sources. Polygons.</td></tr><tr><td>subdcnt331</td><td>Subduction zones depth isolines (contours). Polylines.</td></tr><tr><td>subzon331</td><td>Subduction zones. Vertical projection of the dipping slab onto the ground surface. Polygons.</td></tr></tbody></table>",
 			"group": "Seismogenic faults",
 			"servicedescription": "OGC WMS provided by Seismofaults.eu",
 			"servicedescriptionurl": "https://seismofaults.eu/index.php/services/diss-services/",
-			"datadescription": "DISS Working Group. (2021). Database of Individual Seismogenic Sources (DISS), version 3.3.0: A compilation of potential sources for earthquakes larger than M 5.5 in Italy and surrounding areas. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/diss3.3.0",
-			"datadescriptionurl": "https://doi.org/10.13127/diss3.3.0",
+			"datadescription": "DISS Working Group. (2025). Database of Individual Seismogenic Sources (DISS), version 3.3.1: A compilation of potential sources for earthquakes larger than M 5.5 in Italy and surrounding areas. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/diss3.3.1",
+			"datadescriptionurl": "https://doi.org/10.13127/diss3.3.1",
 			"datalicense": "CC BY 4.0",
 			"datalicenseurl": "https://creativecommons.org/licenses/by/4.0/",
 			"dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
@@ -2118,7 +2118,7 @@
 			"publications": [
 				"Basili R., Valensise G., Vannoli P., Burrato P., Fracassi U., Mariano S., Tiberti M.M., Boschi E. (2008). The Database of Individual Seismogenic Sources (DISS), version 3: Summarizing 20 years of research on Italy’s earthquake geology. Tectonophysics, 453(1–4), 20–43. https://doi.org/10.1016/j.tecto.2007.04.014"
 			],
-			"endpointurl": "https://services.seismofaults.eu/geoserver/DISS330/wms?",
+			"endpointurl": "https://services.seismofaults.eu/geoserver/DISS331/wms?",
 			"datestart": "",
 			"dateend": "",
 			"srs": "EPSG:3857",
@@ -2126,39 +2126,39 @@
 				"wmsversion": "1.3.0",
 				"layers": [
 					{
-						"layername": "iss330",
+						"layername": "iss331",
 						"styles": [
-							"iss330"
+							"iss331"
 						]
 					},
 					{
-						"layername": "csstop330",
+						"layername": "csstop331",
 						"styles": [
-							"csstop330"
+							"csstop331"
 						]
 					},
 					{
-						"layername": "csspln330",
+						"layername": "csspln331",
 						"styles": [
-							"csspln330"
+							"csspln331"
 						]
 					},
 					{
-						"layername": "dss330",
+						"layername": "dss331",
 						"styles": [
-							"dss330"
+							"dss331"
 						]
 					},
 					{
-						"layername": "subdcnt330",
+						"layername": "subdcnt331",
 						"styles": [
-							"subdcnt330"
+							"subdcnt331"
 						]
 					},
 					{
-						"layername": "subdzon330",
+						"layername": "subdzon331",
 						"styles": [
-							"subdzon330"
+							"subdzon331"
 						]
 					}
 				]
