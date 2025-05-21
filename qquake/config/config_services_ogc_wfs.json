@@ -2776,7 +2776,7 @@
 			      }
 		      },
 		      {
-			      "layername": "GREDASS300:dss331",
+			      "layername": "GREDASS300:dss30g",
 			      "style": {
 				      "wfs": {
 					      "style": "dss"
@@ -2784,7 +2784,7 @@
 			      }
 		      },
 		      {
-			      "layername": "GREDASS300:iss331",
+			      "layername": "GREDASS300:iss30g",
 			      "style": {
 				      "wfs": {
 					      "style": "iss"
@@ -2792,7 +2792,7 @@
 			      }
 		      },
 		      {
-			      "layername": "GREDASS300:csspln331",
+			      "layername": "GREDASS300:csspln30g",
 			      "style": {
 				      "wfs": {
 					      "style": "csspln"
@@ -2800,7 +2800,7 @@
 			      }
 		      },
 		      {
-			      "layername": "GREDASS300:csscnt331",
+			      "layername": "GREDASS300:csscnt30g",
 			      "style": {
 				      "wfs": {
 					      "style": "csscnt"
@@ -2808,7 +2808,7 @@
 			      }
 		      },
 		      {
-			      "layername": "GREDASS300:subdcnt331",
+			      "layername": "GREDASS300:subdcnt30g",
 			      "style": {
 				      "wfs": {
 					      "style": "subdcnt"
@@ -2816,7 +2816,7 @@
 			      }
 		      },
 		      {
-			      "layername": "GREDASS300:subdzon331",
+			      "layername": "GREDASS300:subdzon30g",
 			      "style": {
 				      "wfs": {
 					      "style": "subdzon"
