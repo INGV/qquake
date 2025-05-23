@@ -53,29 +53,29 @@
 			"help": "",
 			"publications": [
 				"Rovida A., Locati M., Camassi R., Lolli B., Gasperini P. (2020). The Italian earthquake catalogue CPTI15. Bulletin of Earthquake Engineering, 18(7), 2953–2984. https://doi.org/10.1007/s10518-020-00818-y"
-      ],
-      "endpointurl": "https://emidius.mi.ingv.it/services/italy/wfs?",
-      "datestart": "1000-01-01T00:00:00+00:00",
-      "dateend": "2020-12-31T23:59:59+00:00",
-      "srs": "EPSG:4326",
-      "default": {
-	      "wfsversion": "2.0.0",
-	      "layers": [
-		      {
-			      "layername": "italy:CPTI_current",
-			      "style": {
-				      "wfs": {
-					      "style": "CPTI_wfs"
-				      }
-			      }
-		      }
-	      ]
-      },
-      "settings": {
-	      "queryCQL": true
-      },
-      "configversion": 0.3,
-      "configlastupdate": "2022-01-24T16:25:12+00:00"
+			],
+			"endpointurl": "https://emidius.mi.ingv.it/services/italy/wfs?",
+			"datestart": "1000-01-01T00:00:00+00:00",
+			"dateend": "2020-12-31T23:59:59+00:00",
+			"srs": "EPSG:4326",
+			"default": {
+				"wfsversion": "2.0.0",
+				"layers": [
+					{
+						"layername": "italy:CPTI_current",
+						"style": {
+							"wfs": {
+								"style": "CPTI_wfs"
+							}
+						}
+					}
+				]
+			},
+			"settings": {
+				"queryCQL": true
+			},
+			"configversion": 0.3,
+			"configlastupdate": "2022-01-24T16:25:12+00:00"
 		},
 		"ESHM20 unified catalogue": {
 			"title": "ESHM20 Unified Earthquake Catalogue",
@@ -93,29 +93,29 @@
 				"Rovida A., Antonucci A., Locati M. (2022). The European Preinstrumental Earthquake Catalogue EPICA, the 1000–1899 catalogue for the European Seismic Hazard Model 2020. Earth System Science Data. https://doi.org/10.5194/essd-14-5213-2022",
 				"Grünthal G., Wahlström R. (2012). The European‐Mediterranean Earthquake Catalogue (EMEC) for the last millennium, Journal of Seismology, 16, 3, 535‐57, https://doi.org/10.1007/s10950-012-9302-y",
 				"Danciu L., Nandan S., Reyes C., Basili R., Weatherill G., Beauval C., Rovida A., Vilanova S., Sesetyan K., Bard P-Y., Cotton F., Wiemer S., Giardini D. (2021) - The 2020 update of the European Seismic Hazard Model: Model Overview. EFEHR Technical Report 001, v1.0.0, https://doi.org/10.12686/a15"
-      ],
-      "endpointurl": "https://efehrmaps.ethz.ch/cgi-bin/mapserv?MAP=/var/www/mapfile/eshm20sources.map&typename=ms:catalogue",
-      "datestart": "1000-01-01T00:00:00+00:00",
-      "dateend": "2014-12-31T23:59:59+00:00",
-      "srs": "EPSG:4326",
-      "default": {
-	      "wfsversion": "2.0.0",
-	      "layers": [
-		      {
-			      "layername": "ms:catalogue",
-			      "style": {
-				      "wfs": {
-					      "style": "ESHM20_eq_symbols_wfs"
-				      }
-			      }
-		      }
-	      ]
-      },
-      "settings": {
-	      "queryCQL": true
-      },
-      "configversion": 1.0,
-      "configlastupdate": "2024-06-11T18:33:11+00:00"
+			],
+			"endpointurl": "https://efehrmaps.ethz.ch/cgi-bin/mapserv?MAP=/var/www/mapfile/eshm20sources.map&typename=ms:catalogue",
+			"datestart": "1000-01-01T00:00:00+00:00",
+			"dateend": "2014-12-31T23:59:59+00:00",
+			"srs": "EPSG:4326",
+			"default": {
+				"wfsversion": "2.0.0",
+				"layers": [
+					{
+						"layername": "ms:catalogue",
+						"style": {
+							"wfs": {
+								"style": "ESHM20_eq_symbols_wfs"
+							}
+						}
+					}
+				]
+			},
+			"settings": {
+				"queryCQL": true
+			},
+			"configversion": 1.0,
+			"configlastupdate": "2024-06-11T18:33:11+00:00"
 		},
 		"INGV MPS04 PGA": {
 			"title": "MPS04 Maps in Peak Ground Acceleration<p></p><table><thead><tr><th style='font-weight:bold; border-bottom:1px solid #CCC;'>Layer</th><th style='font-weight:bold; border-bottom:1px solid #CCC;'>Description</th></tr></thead><tbody><tr><td>shkValsPoeCost_PGA_16oPerc_2poe_&nbsp;&nbsp;&nbsp;</td><td>PGA values with PoE of 2% in 50 years - 16th percentile</td></tr><tr><td>shkValsPoeCost_PGA_16oPerc_5poe_</td><td>PGA values with PoE of 5% in 50 years - 16th percentile</td></tr><tr><td>shkValsPoeCost_PGA_16oPerc_10poe_</td><td>PGA values with PoE of 10% in 50 years - 16th percentile</td></tr><tr><td>shkValsPoeCost_PGA_16oPerc_22poe_</td><td>PGA values with PoE of 22% in 50 years - 16th percentile</td></tr><tr><td>shkValsPoeCost_PGA_16oPerc_30poe_</td><td>PGA values with PoE of 30% in 50 years - 16th percentile</td></tr><tr><td>shkValsPoeCost_PGA_16oPerc_39poe_</td><td>PGA values with PoE of 39% in 50 years - 16th percentile</td></tr><tr><td>shkValsPoeCost_PGA_16oPerc_50poe_</td><td>PGA values with PoE of 50% in 50 years - 16th percentile</td></tr><tr><td>shkValsPoeCost_PGA_16oPerc_63poe_</td><td>PGA values with PoE of 63% in 50 years - 16th percentile</td></tr><tr><td>shkValsPoeCost_PGA_16oPerc_81poe_</td><td>PGA values with PoE of 81% in 50 years - 16th percentile</td></tr><tr><td>shkValsPoeCost_PGA_50oPerc_2poe_</td><td>PGA values with PoE of 2% in 50 years - 50th percentile</td></tr><tr><td>shkValsPoeCost_PGA_50oPerc_5poe_</td><td>PGA values with PoE of 5% in 50 years - 50th percentile</td></tr><tr><td>shkValsPoeCost_PGA_50oPerc_10poe_</td><td>PGA values with PoE of 10% in 50 years - 50th percentile</td></tr><tr><td>shkValsPoeCost_PGA_50oPerc_22poe_</td><td>PGA values with PoE of 22% in 50 years - 50th percentile</td></tr><tr><td>shkValsPoeCost_PGA_50oPerc_30poe_</td><td>PGA values with PoE of 30% in 50 years - 50th percentile</td></tr><tr><td>shkValsPoeCost_PGA_50oPerc_39poe_</td><td>PGA values with PoE of 39% in 50 years - 50th percentile</td></tr><tr><td>shkValsPoeCost_PGA_50oPerc_50poe_</td><td>PGA values with PoE of 50% in 50 years - 50th percentile</td></tr><tr><td>shkValsPoeCost_PGA_50oPerc_63poe_</td><td>PGA values with PoE of 63% in 50 years - 50th percentile</td></tr><tr><td>shkValsPoeCost_PGA_50oPerc_81poe_</td><td>PGA values with PoE of 81% in 50 years - 50th percentile</td></tr><tr><td>shkValsPoeCost_PGA_84oPerc_2poe_</td><td>PGA values with PoE of 2% in 50 years - 84th percentile</td></tr><tr><td>shkValsPoeCost_PGA_84oPerc_5poe_</td><td>PGA values with PoE of 5% in 50 years - 84th percentile</td></tr><tr><td>shkValsPoeCost_PGA_84oPerc_10poe_</td><td>PGA values with PoE of 10% in 50 years - 84th percentile</td></tr><tr><td>shkValsPoeCost_PGA_84oPerc_22poe_</td><td>PGA values with PoE of 22% in 50 years - 84th percentile</td></tr><tr><td>shkValsPoeCost_PGA_84oPerc_30poe_</td><td>PGA values with PoE of 30% in 50 years - 84th percentile</td></tr><tr><td>shkValsPoeCost_PGA_84oPerc_39poe_</td><td>PGA values with PoE of 39% in 50 years - 84th percentile</td></tr><tr><td>shkValsPoeCost_PGA_84oPerc_50poe_</td><td>PGA values with PoE of 50% in 50 years - 84th percentile</td></tr><tr><td>shkValsPoeCost_PGA_84oPerc_63poe_</td><td>PGA values with PoE of 63% in 50 years - 84th percentile</td></tr><tr><td>shkValsPoeCost_PGA_84oPerc_81poe_</td><td>PGA values with PoE of 81% in 50 years - 84th percentile</td></tr><tbody></table>",
@@ -2571,93 +2571,93 @@
 			"help": "https://seismofaults.eu/efsm20documentation",
 			"publications": [
 				"Basili R., Danciu L., Beauval C., Sesetyan K., Vilanova S., Adamia S., Arroucau P., Atanackov J., Baize S., Canora C., Caputo R., Carafa M., Cushing M., Custódio S., Demircioglu Tumsa M., Duarte J., Ganas A., García-Mayordomo J., Gómez de la Peña L., Gràcia E., Jamšek Rupnik P., Jomard H., Kastelic V., Maesano F., Martín-Banda R., Martínez-Loriente S., Neres M., Perea H., Sket-Motnikar B., Tiberti M., Tsereteli N., Tsironi V., Vallone R., Vanneste K., Zupančič P. (2022). European Fault-Source Model 2020 (EFSM20): online data on fault geometry and activity parameters. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/efsm20"
-      ],
-      "endpointurl": "https://services.seismofaults.eu/EFSM20/wfs?",
-      "datestart": "",
-      "dateend": "",
-      "srs": "EPSG:4326",
-      "default": {
-	      "wfsversion": "2.0.0",
-	      "layers": [
-		      {
-			      "layername": "EFSM20:efsm20_cf_bot",
-			      "style": {
-				      "wfs": {
-					      "style": "EFSM20_bot"
-				      }
-			      }
-		      },
-		      {
-			      "layername": "EFSM20:efsm20_cf_mid",
-			      "style": {
-				      "wfs": {
-					      "style": "EFSM20_mid"
-				      }
-			      }
-		      },
-		      {
-			      "layername": "EFSM20:efsm20_cf_pld",
-			      "style": {
-				      "wfs": {
-					      "style": "EFSM20_pld"
-				      }
-			      }
-		      },
-		      {
-			      "layername": "EFSM20:efsm20_cf_top",
-			      "style": {
-				      "wfs": {
-					      "style": "EFSM20_top"
-				      }
-			      }
-		      },
-		      {
-			      "layername": "EFSM20:efsm20_is_lattice",
-			      "style": {
-				      "wfs": {
-					      "style": "EFSM20_is_lattice"
-				      }
-			      }
-		      },
-		      {
-			      "layername": "EFSM20:efsm20_si_discretization",
-			      "style": {
-				      "wfs": {
-					      "style": "EFSM20_si_discretization"
-				      }
-			      }
-		      },
-		      {
-			      "layername": "EFSM20:efsm20_si_parameters",
-			      "style": {
-				      "wfs": {
-					      "style": "EFSM20_si_parameters"
-				      }
-			      }
-		      },
-		      {
-			      "layername": "EFSM20:efsm20_si_realizations",
-			      "style": {
-				      "wfs": {
-					      "style": "EFSM20_si_realizations"
-				      }
-			      }
-		      },
-		      {
-			      "layername": "EFSM20:efsm20_slabdepths",
-			      "style": {
-				      "wfs": {
-					      "style": "EFSM20_slabdepths"
-				      }
-			      }
-		      }
-	      ]
-      },
-      "settings": {
-	      "queryCQL": true
-      },
-      "configversion": 0.5,
-      "configlastupdate": "2024-05-1T09:00:00+00:00"
+			],
+			"endpointurl": "https://services.seismofaults.eu/EFSM20/wfs?",
+			"datestart": "",
+			"dateend": "",
+			"srs": "EPSG:4326",
+			"default": {
+				"wfsversion": "2.0.0",
+				"layers": [
+					{
+						"layername": "EFSM20:efsm20_cf_bot",
+						"style": {
+							"wfs": {
+								"style": "EFSM20_bot"
+							}
+						}
+					},
+					{
+						"layername": "EFSM20:efsm20_cf_mid",
+						"style": {
+							"wfs": {
+								"style": "EFSM20_mid"
+							}
+						}
+					},
+					{
+						"layername": "EFSM20:efsm20_cf_pld",
+						"style": {
+							"wfs": {
+								"style": "EFSM20_pld"
+							}
+						}
+					},
+					{
+						"layername": "EFSM20:efsm20_cf_top",
+						"style": {
+							"wfs": {
+								"style": "EFSM20_top"
+							}
+						}
+					},
+					{
+						"layername": "EFSM20:efsm20_is_lattice",
+						"style": {
+							"wfs": {
+								"style": "EFSM20_is_lattice"
+							}
+						}
+					},
+					{
+						"layername": "EFSM20:efsm20_si_discretization",
+						"style": {
+							"wfs": {
+								"style": "EFSM20_si_discretization"
+							}
+						}
+					},
+					{
+						"layername": "EFSM20:efsm20_si_parameters",
+						"style": {
+							"wfs": {
+								"style": "EFSM20_si_parameters"
+							}
+						}
+					},
+					{
+						"layername": "EFSM20:efsm20_si_realizations",
+						"style": {
+							"wfs": {
+								"style": "EFSM20_si_realizations"
+							}
+						}
+					},
+					{
+						"layername": "EFSM20:efsm20_slabdepths",
+						"style": {
+							"wfs": {
+								"style": "EFSM20_slabdepths"
+							}
+						}
+					}
+				]
+			},
+			"settings": {
+				"queryCQL": true
+			},
+			"configversion": 0.5,
+			"configlastupdate": "2024-05-1T09:00:00+00:00"
 		},
 		"INGV DISS": {
 			"title": "Database of Individual Seismogenic Sources (DISS) version 3.3.1<p></p><table><thead><tr><th style='font-weight:bold; border-bottom:1px solid #CCC;'>Layer</th><th style='font-weight:bold; border-bottom:1px solid #CCC;'>Description</th></tr></thead><tbody><tr><td>iss331</td><td>Individual Seismogenic Sources. Vertical projection of the dipping fault planes onto the ground surface. Polygons.</td></tr><tr><td>csstop331</td><td>Composite Seismogenic Sources (top). Fault plane upper edge. Polylines.</td></tr><tr><td>csspln331</td><td>Composite Seismogenic Sources (planes). Vertical projection of the inclined dipping fault planes (in the local dip direction along strike) onto the ground surface. Polygons.</td></tr><tr><td>csscnt331</td><td>Composite Seismogenic Sources (contours). Depth isolines [...]. Polylines.</td></tr><tr><td>dss331</td><td>Debated Seismogenic Sources. Polygons.</td></tr><tr><td>subdcnt331</td><td>Subduction zones depth isolines (contours). Polylines.</td></tr><tr><td>subzon331</td><td>Subduction zones. Vertical projection of the dipping slab onto the ground surface. Polygons.</td></tr></tbody></table>",
@@ -2673,77 +2673,77 @@
 			"help": "https://diss.ingv.it/help/kb",
 			"publications": [
 				"Basili R., Valensise G., Vannoli P., Burrato P., Fracassi U., Mariano S., Tiberti M.M., Boschi E. (2008). The Database of Individual Seismogenic Sources (DISS), version 3: Summarizing 20 years of research on Italy’s earthquake geology. Tectonophysics, 453(1–4), 20–43. https://doi.org/10.1016/j.tecto.2007.04.014"
-      ],
-      "endpointurl": "https://services.seismofaults.eu/DISS331/wfs?",
-      "datestart": "",
-      "dateend": "",
-      "srs": "EPSG:4326",
-      "default": {
-	      "wfsversion": "2.0.0",
-	      "layers": [
-		      {
-			      "layername": "DISS331:csstop331",
-			      "style": {
-				      "wfs": {
-					      "style": "csstop"
-				      }
-			      }
-		      },
-		      {
-			      "layername": "DISS331:dss331",
-			      "style": {
-				      "wfs": {
-					      "style": "dss"
-				      }
-			      }
-		      },
-		      {
-			      "layername": "DISS331:iss331",
-			      "style": {
-				      "wfs": {
-					      "style": "iss"
-				      }
-			      }
-		      },
-		      {
-			      "layername": "DISS331:csspln331",
-			      "style": {
-				      "wfs": {
-					      "style": "csspln"
-				      }
-			      }
-		      },
-		      {
-			      "layername": "DISS331:csscnt331",
-			      "style": {
-				      "wfs": {
-					      "style": "csscnt"
-				      }
-			      }
-		      },
-		      {
-			      "layername": "DISS331:subdcnt331",
-			      "style": {
-				      "wfs": {
-					      "style": "subdcnt"
-				      }
-			      }
-		      },
-		      {
-			      "layername": "DISS331:subdzon331",
-			      "style": {
-				      "wfs": {
-					      "style": "subdzon"
-				      }
-			      }
-		      }
-	      ]
-      },
-      "settings": {
-	      "queryCQL": true
-      },
-      "configversion": 0.5,
-      "configlastupdate": "2025-05-15T09:00:00+00:00"
+			],
+			"endpointurl": "https://services.seismofaults.eu/DISS331/wfs?",
+			"datestart": "",
+			"dateend": "",
+			"srs": "EPSG:4326",
+			"default": {
+				"wfsversion": "2.0.0",
+				"layers": [
+					{
+						"layername": "DISS331:csstop331",
+						"style": {
+							"wfs": {
+								"style": "csstop"
+							}
+						}
+					},
+					{
+						"layername": "DISS331:dss331",
+						"style": {
+							"wfs": {
+								"style": "dss"
+							}
+						}
+					},
+					{
+						"layername": "DISS331:iss331",
+						"style": {
+							"wfs": {
+								"style": "iss"
+							}
+						}
+					},
+					{
+						"layername": "DISS331:csspln331",
+						"style": {
+							"wfs": {
+								"style": "csspln"
+							}
+						}
+					},
+					{
+						"layername": "DISS331:csscnt331",
+						"style": {
+							"wfs": {
+								"style": "csscnt"
+							}
+						}
+					},
+					{
+						"layername": "DISS331:subdcnt331",
+						"style": {
+							"wfs": {
+								"style": "subdcnt"
+							}
+						}
+					},
+					{
+						"layername": "DISS331:subdzon331",
+						"style": {
+							"wfs": {
+								"style": "subdzon"
+							}
+						}
+					}
+				]
+			},
+			"settings": {
+				"queryCQL": true
+			},
+			"configversion": 0.5,
+			"configlastupdate": "2025-05-15T09:00:00+00:00"
 		},
 		"UniFE GreDaSS": {
 			"title": "Greek Database of Seismogenic Sources (GreDaSS) version 3.0.0<p></p><table><thead><tr><th style='font-weight:bold; border-bottom:1px solid #CCC;'>Layer</th><th style='font-weight:bold; border-bottom:1px solid #CCC;'>Description</th></tr></thead><tbody><tr><td>iss30g</td><td>Individual Seismogenic Sources. Vertical projection of the dipping fault planes onto the ground surface. Polygons.</td></tr><tr><td>csstop30g</td><td>Composite Seismogenic Sources (top). Fault plane upper edge. Polylines.</td></tr><tr><td>csspln30g</td><td>Composite Seismogenic Sources (planes). Vertical projection of the inclined dipping fault planes (in the local dip direction along strike) onto the ground surface. Polygons.</td></tr><tr><td>csscnt30g</td><td>Composite Seismogenic Sources (contours). Depth isolines [...]. Polylines.</td></tr><tr><td>dss331</td><td>Debated Seismogenic Sources. Polygons.</td></tr><tr><td>subdcnt30g</td><td>Subduction zones depth isolines (contours). Polylines.</td></tr><tr><td>subzon30g</td><td>Subduction zones. Vertical projection of the dipping slab onto the ground surface. Polygons.</td></tr></tbody></table>",
@@ -2759,77 +2759,77 @@
 			"help": "https://gredass.unife.it/",
 			"publications": [
 				"Caputo R., Chatzipetros A., Pavlides S. and Sboras S. (2012): The Greek Database of Seismogenic Sources (GreDaSS): state-of-the-art for northern Greece. Ann. Geophys., 55(5), 859-894."
-      ],
-      "endpointurl": "https://services.seismofaults.eu/GREDASS300/wfs?",
-      "datestart": "",
-      "dateend": "",
-      "srs": "EPSG:4326",
-      "default": {
-	      "wfsversion": "2.0.0",
-	      "layers": [
-		      {
-			      "layername": "GREDASS300:csstop30g",
-			      "style": {
-				      "wfs": {
-					      "style": "csstop"
-				      }
-			      }
-		      },
-		      {
-			      "layername": "GREDASS300:dss30g",
-			      "style": {
-				      "wfs": {
-					      "style": "dss"
-				      }
-			      }
-		      },
-		      {
-			      "layername": "GREDASS300:iss30g",
-			      "style": {
-				      "wfs": {
-					      "style": "iss"
-				      }
-			      }
-		      },
-		      {
-			      "layername": "GREDASS300:csspln30g",
-			      "style": {
-				      "wfs": {
-					      "style": "csspln"
-				      }
-			      }
-		      },
-		      {
-			      "layername": "GREDASS300:csscnt30g",
-			      "style": {
-				      "wfs": {
-					      "style": "csscnt"
-				      }
-			      }
-		      },
-		      {
-			      "layername": "GREDASS300:subdcnt30g",
-			      "style": {
-				      "wfs": {
-					      "style": "subdcnt"
-				      }
-			      }
-		      },
-		      {
-			      "layername": "GREDASS300:subdzon30g",
-			      "style": {
-				      "wfs": {
-					      "style": "subdzon"
-				      }
-			      }
-		      }
-	      ]
-      },
-      "settings": {
-	      "queryCQL": true
-      },
-      "configversion": 0.1,
-      "configlastupdate": "2025-05-21T15:30:00+00:00"
+			],
+			"endpointurl": "https://services.seismofaults.eu/GREDASS300/wfs?",
+			"datestart": "",
+			"dateend": "",
+			"srs": "EPSG:4326",
+			"default": {
+				"wfsversion": "2.0.0",
+				"layers": [
+					{
+						"layername": "GREDASS300:csstop30g",
+						"style": {
+							"wfs": {
+								"style": "csstop"
+							}
+						}
+					},
+					{
+						"layername": "GREDASS300:dss30g",
+						"style": {
+							"wfs": {
+								"style": "dss"
+							}
+						}
+					},
+					{
+						"layername": "GREDASS300:iss30g",
+						"style": {
+							"wfs": {
+								"style": "iss"
+							}
+						}
+					},
+					{
+						"layername": "GREDASS300:csspln30g",
+						"style": {
+							"wfs": {
+								"style": "csspln"
+							}
+						}
+					},
+					{
+						"layername": "GREDASS300:csscnt30g",
+						"style": {
+							"wfs": {
+								"style": "csscnt"
+							}
+						}
+					},
+					{
+						"layername": "GREDASS300:subdcnt30g",
+						"style": {
+							"wfs": {
+								"style": "subdcnt"
+							}
+						}
+					},
+					{
+						"layername": "GREDASS300:subdzon30g",
+						"style": {
+							"wfs": {
+								"style": "subdzon"
+							}
+						}
+					}
+				]
+			},
+			"settings": {
+				"queryCQL": true
+			},
+			"configversion": 0.1,
+			"configlastupdate": "2025-05-21T15:30:00+00:00"
 		},
 		"INGV EMTC": {
 			"title": "Euro-Mediterranean Tsunami Catalogue (EMTC), version 2.0",
@@ -2845,29 +2845,29 @@
 			"help": "",
 			"publications": [
 				"Maramai A., Brizuela B., Graziani L. (2014). The Euro-Mediterranean Tsunami Catalogue. Annals of Geophysics, 57(4). https://doi.org/10.4401/ag-6437"
-      ],
-      "endpointurl": "https://tsunamiarchiveservices.ingv.it/services/tsunami/wfs/wfs?",
-      "datestart": "1000-01-01T00:00:00+00:00",
-      "dateend": "",
-      "srs": "EPSG:4326",
-      "default": {
-	      "wfsversion": "2.0.0",
-	      "layers": [
-		      {
-			      "layername": "tsunami:EMTC_current",
-			      "style": {
-				      "wfs": {
-					      "style": "EMTC_wfs"
-				      }
-			      }
-		      }
-	      ]
-      },
-      "settings": {
-	      "queryCQL": true
-      },
-      "configversion": 0.1,
-      "configlastupdate": "2021-03-04T14:34:00+00:00"
+			],
+			"endpointurl": "https://tsunamiarchiveservices.ingv.it/services/tsunami/wfs/wfs?",
+			"datestart": "1000-01-01T00:00:00+00:00",
+			"dateend": "",
+			"srs": "EPSG:4326",
+			"default": {
+				"wfsversion": "2.0.0",
+				"layers": [
+					{
+						"layername": "tsunami:EMTC_current",
+						"style": {
+							"wfs": {
+								"style": "EMTC_wfs"
+							}
+						}
+					}
+				]
+			},
+			"settings": {
+				"queryCQL": true
+			},
+			"configversion": 0.1,
+			"configlastupdate": "2021-03-04T14:34:00+00:00"
 		},
 		"INGV ITED": {
 			"title": "Italian Tsunami Effects Database (ITED)",
@@ -3022,7 +3022,46 @@
 			},
 			"configversion": 0.1,
 			"configlastupdate": "2024-11-26T11:40:00+00:00"
+		},
+		"G-DIP": {
+			"title": "G-DIP is a compilation of 597 uniquely determined fault plane dip angles corresponding to 269 individual earthquakes. It includes two main types of dip determinations: one based on the Global Centroid-Moment-Tensor Project (https://www.globalcmt.org/), the CMT collection, with 253 dip determinations of the activated nodal plane, and the other based on studies that used various techniques, the FLT collection, with 229 fault dip determinations. The FLT collection includes 525 cases of multiple determinations for the same earthquake. The paired determinations, i.e., earthquakes for which the CMT solution and at least one FLT solution exist, are 221. All determinations are classified depending on faulting categories as normal, reverse, transcurrent crustal faulting, and subduction-interface reverse faulting. Most of these earthquakes are located near plate boundaries; 63 are reverse faulting events identified as having occurred on subduction interfaces, 184 occurred in the continental crust, and 18 in the oceanic crust. Four subduction interface earthquakes were discarded because their faulting mechanism is inconsistent with reverse faulting. Among all the 202 crustal earthquakes, 68 events are located at a distance greater than 300 km from the plate boundaries. Several of these earthquakes that occurred in the plate interiors are located very far away from plate margins, such as those in the North American, Australian, and Asian continental interiors; one of them is in the middle of the Pacific plate. The transcurrent faulting earthquakes include both oceanic transforms and continental strike-slip faults. None of the normal faulting earthquakes belong to oceanic spreading ridges because of the lack of univocal fault plane determinations in that specific tectonic setting. Earthquakes classified as intraslab are not included.",
+			"group": "Seismogenic faults",
+			"servicedescription": "OGC WFS provided by Seismofaults.eu",
+			"servicedescriptionurl": "https://seismofaults.eu/gdip/",
+			"datadescription": "Basili R., Tiberti M.M. (2025). Global Dip (G-DIP 1.0): a collection of earthquake fault dip angles [Data set]. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/gdip1.0",
+			"datadescriptionurl": "https://doi.org/10.13127/gdip1.0",
+			"datalicense": "CC BY 4.0",
+			"datalicenseurl": "https://creativecommons.org/licenses/by/4.0/",
+			"dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+			"dataproviderurl": "http://www.ingv.it/",
+			"help": "",
+			"publications": [
+
+			],
+			"endpointurl": "https://services.seismofaults.eu/G-DIP1.0/ows?",
+			"datestart": "2025-05-02T00:00:00+00:00",
+			"dateend": "",
+			"srs": "EPSG:4326",
+			"default": {
+				"wfsversion": "2.0.0",
+				"layers": [
+					{
+						"layername": "G-DIP1.0:g_dip1",
+						"style": {
+							"wfs": {
+								"style": ""
+							}
+						}
+					}
+				]
+			},
+			"settings": {
+				"queryCQL": true
+			},
+			"configversion": 0.1,
+			"configlastupdate": "2025-05-23T14:30:00+00:00"
 		}
+
 
 	}
 }
