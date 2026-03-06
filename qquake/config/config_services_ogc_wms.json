@@ -2028,7 +2028,7 @@
 			"configlastupdate": "2023-09-04T09:33:11+00:00"
 		},
 		"EFSM20": {
-			"title": "EFSM20, European Fault Source Model 2020<p></p><table><thead><tr><th style='font-weight:bold; border-bottom:1px solid #CCC;'>Layer</th><th style='font-weight:bold; border-bottom:1px solid #CCC;'>Description</th></tr></thead><tbody><tr><td>efsm20_cf_faulttypes</td><td>Color-coded fault types: normal, reverse, right-lateral, left-lateral.</td></tr><tr><td>efsm20_cf_maxmagnitude</td><td>Color-coded maximum magnitude. Five different layers for the average (default), and the 2nd, 5th, 95th, and 98th percentiles.</td></tr><tr><td>efsm20_cf_momentrates</td><td>Color-coded moment rates. Log scale. Four different layers for minimum, maximum, arithmetic mean (default), and geometric mean.</td></tr><tr><td>efsm20_cf_sliprates</td><td>Color-coded slip rates. Log-linear separation scale. Four different layers for minimum, maximum, arithmetic mean (default), and geometric mean. </td></tr><tr><td>efsm20_cfdepths</td><td>Color-coded depth isolines of the fault planes, including the top and bottom. Spacing interval is 0.5 km.</td></tr><tr><td>efsm20_slabdepths</td><td>Color-coded depth isolines of the top surface of the slab. Spacing interval is 1 km between 0-40 km, and 10 km between 40-300 km.</td></tr></tbody></table>",
+			"title": "EFSM20, European Fault Source Model 2020<p></p><table><thead><tr><th style='font-weight:bold; border-bottom:1px solid #CCC;'>Layer</th><th style='font-weight:bold; border-bottom:1px solid #CCC;'>Description</th></tr></thead><tbody><tr><td>EFSM20:efsm20_cf_faulttypes</td><td>Color-coded fault types: normal, reverse, right-lateral, left-lateral.</td></tr><tr><td>EFSM20:efsm20_cf_maxmagnitude</td><td>Color-coded maximum magnitude. Five different layers for the average (default), and the 2nd, 5th, 95th, and 98th percentiles.</td></tr><tr><td>EFSM20:efsm20_cf_momentrates</td><td>Color-coded moment rates. Log scale. Four different layers for minimum, maximum, arithmetic mean (default), and geometric mean.</td></tr><tr><td>EFSM20:efsm20_cf_sliprates</td><td>Color-coded slip rates. Log-linear separation scale. Four different layers for minimum, maximum, arithmetic mean (default), and geometric mean. </td></tr><tr><td>EFSM20:efsm20_cfdepths</td><td>Color-coded depth isolines of the fault planes, including the top and bottom. Spacing interval is 0.5 km.</td></tr><tr><td>EFSM20:efsm20_slabdepths</td><td>Color-coded depth isolines of the top surface of the slab. Spacing interval is 1 km between 0-40 km, and 10 km between 40-300 km.</td></tr></tbody></table>",
 			"group": "Seismogenic faults",
 			"servicedescription": "OGC WMS provided by Seismofaults.eu",
 			"servicedescriptionurl": "https://seismofaults.eu/services/efsm20-services",
@@ -2050,13 +2050,13 @@
 				"wmsversion": "1.3.0",
 				"layers": [
 					{
-						"layername": "efsm20_cf_faulttypes",
+						"layername": "EFSM20:efsm20_cf_faulttypes",
 						"styles": [
 							"FaultTypes"
 						]
 					},
 					{
-						"layername": "efsm20_cf_maxmagnitude",
+						"layername": "EFSM20:efsm20_cf_maxmagnitude",
 						"styles": [
 							"Mw_Average",
 							"Mw_Percentile_02",
@@ -2066,7 +2066,7 @@
 						]
 					},
 					{
-						"layername": "efsm20_cf_momentrates",
+						"layername": "EFSM20:efsm20_cf_momentrates",
 						"styles": [
 							"M0R_Arithmetic_Mean",
 							"M0R_Geometric_Mean",
@@ -2075,7 +2075,7 @@
 						]
 					},
 					{
-						"layername": "efsm20_cf_sliprates",
+						"layername": "EFSM20:efsm20_cf_sliprates",
 						"styles": [
 							"SR_AMean",
 							"SR_GMean",
@@ -2084,13 +2084,13 @@
 						]
 					},
 					{
-						"layername": "efsm20_cfdepths",
+						"layername": "EFSM20:efsm20_cfdepths",
 						"styles": [
 							"CFDepths"
 						]
 					},
 					{
-						"layername": "efsm20_slabdepths",
+						"layername": "EFSM20:efsm20_slabdepths",
 						"styles": [
 							"SlabDepths"
 						]
@@ -2126,37 +2126,37 @@
 				"wmsversion": "1.3.0",
 				"layers": [
 					{
-						"layername": "iss331",
+						"layername": "DISS331:iss331",
 						"styles": [
 							"iss"
 						]
 					},
 					{
-						"layername": "csstop331",
+						"layername": "DISS331:csstop331",
 						"styles": [
 							"csstop"
 						]
 					},
 					{
-						"layername": "csspln331",
+						"layername": "DISS331:csspln331",
 						"styles": [
 							"csspln"
 						]
 					},
 					{
-						"layername": "dss331",
+						"layername": "DISS331:dss331",
 						"styles": [
 							"dss"
 						]
 					},
 					{
-						"layername": "subdcnt331",
+						"layername": "DISS331:subdcnt331",
 						"styles": [
 							"subdcnt"
 						]
 					},
 					{
-						"layername": "subdzon331",
+						"layername": "DISS331:subdzon331",
 						"styles": [
 							"subdzon"
 						]
@@ -2192,37 +2192,37 @@
 				"wmsversion": "1.3.0",
 				"layers": [
 					{
-						"layername": "iss30g",
+						"layername": GREDASS300:"iss30g",
 						"styles": [
 							"iss"
 						]
 					},
 					{
-						"layername": "csstop30g",
+						"layername": "GREDASS300:csstop30g",
 						"styles": [
 							"csstop"
 						]
 					},
 					{
-						"layername": "csspln30g",
+						"layername": "GREDASS300:csspln30g",
 						"styles": [
 							"csspln"
 						]
 					},
 					{
-						"layername": "dss30g",
+						"layername": "GREDASS300:dss30g",
 						"styles": [
 							"dss"
 						]
 					},
 					{
-						"layername": "subdcnt30g",
+						"layername": "GREDASS300:subdcnt30g",
 						"styles": [
 							"subdcnt"
 						]
 					},
 					{
-						"layername": "subdzon30g",
+						"layername": "GREDASS300:subdzon30g",
 						"styles": [
 							"subdzon"
 						]
@@ -2332,181 +2332,181 @@
 				"wmsversion": "1.3.0",
 				"layers": [
 					{
-						"layername": "arp2475_avg",
+						"layername": "NEAMTHM18:arp2475_avg",
 						"styles": [
 							"neamthm18"
 						]
 					},
 					{
-						"layername": "arp2475_p02",
+						"layername": "NEAMTHM18:arp2475_p02",
 						"styles": [
 							"neamthm18"
 						]
 					},
 					{
-						"layername": "arp2475_p16",
+						"layername": "NEAMTHM18:arp2475_p16",
 						"styles": [
 							"neamthm18"
 						]
 					},
 					{
-						"layername": "arp2475_p50",
+						"layername": "NEAMTHM18:arp2475_p50",
 						"styles": [
 							"neamthm18"
 						]
 					},
 					{
-						"layername": "arp2475_p84",
+						"layername": "NEAMTHM18:arp2475_p84",
 						"styles": [
 							"neamthm18"
 						]
 					},
 					{
-						"layername": "arp2475_p98",
+						"layername": "NEAMTHM18:arp2475_p98",
 						"styles": [
 							"neamthm18"
 						]
 					},
 					{
-						"layername": "arp4975_avg",
+						"layername": "NEAMTHM18:arp4975_avg",
 						"styles": [
 							"neamthm18"
 						]
 					},
 					{
-						"layername": "arp4975_p02",
+						"layername": "NEAMTHM18:arp4975_p02",
 						"styles": [
 							"neamthm18"
 						]
 					},
 					{
-						"layername": "arp4975_p16",
+						"layername": "NEAMTHM18:arp4975_p16",
 						"styles": [
 							"neamthm18"
 						]
 					},
 					{
-						"layername": "arp4975_p50",
+						"layername": "NEAMTHM18:arp4975_p50",
 						"styles": [
 							"neamthm18"
 						]
 					},
 					{
-						"layername": "arp4975_p84",
+						"layername": "NEAMTHM18:arp4975_p84",
 						"styles": [
 							"neamthm18"
 						]
 					},
 					{
-						"layername": "arp4975_p98",
+						"layername": "NEAMTHM18:arp4975_p98",
 						"styles": [
 							"neamthm18"
 						]
 					},
 					{
-						"layername": "arp9975_avg",
+						"layername": "NEAMTHM18:arp9975_avg",
 						"styles": [
 							"neamthm18"
 						]
 					},
 					{
-						"layername": "arp9975_p02",
+						"layername": "NEAMTHM18:arp9975_p02",
 						"styles": [
 							"neamthm18"
 						]
 					},
 					{
-						"layername": "arp9975_p16",
+						"layername": "NEAMTHM18:arp9975_p16",
 						"styles": [
 							"neamthm18"
 						]
 					},
 					{
-						"layername": "arp9975_p50",
+						"layername": "NEAMTHM18:arp9975_p50",
 						"styles": [
 							"neamthm18"
 						]
 					},
 					{
-						"layername": "arp9975_p84",
+						"layername": "NEAMTHM18:arp9975_p84",
 						"styles": [
 							"neamthm18"
 						]
 					},
 					{
-						"layername": "arp9975_p98",
+						"layername": "NEAMTHM18:arp9975_p98",
 						"styles": [
 							"neamthm18"
 						]
 					},
 					{
-						"layername": "arp_475_avg",
+						"layername": "NEAMTHM18:arp_475_avg",
 						"styles": [
 							"neamthm18"
 						]
 					},
 					{
-						"layername": "arp_475_p02",
+						"layername": "NEAMTHM18:arp_475_p02",
 						"styles": [
 							"neamthm18"
 						]
 					},
 					{
-						"layername": "arp_475_p16",
+						"layername": "NEAMTHM18:arp_475_p16",
 						"styles": [
 							"neamthm18"
 						]
 					},
 					{
-						"layername": "arp_475_p50",
+						"layername": "NEAMTHM18:arp_475_p50",
 						"styles": [
 							"neamthm18"
 						]
 					},
 					{
-						"layername": "arp_475_p84",
+						"layername": "NEAMTHM18:arp_475_p84",
 						"styles": [
 							"neamthm18"
 						]
 					},
 					{
-						"layername": "arp_475_p98",
+						"layername": "NEAMTHM18:arp_475_p98",
 						"styles": [
 							"neamthm18"
 						]
 					},
 					{
-						"layername": "arp_975_avg",
+						"layername": "NEAMTHM18:arp_975_avg",
 						"styles": [
 							"neamthm18"
 						]
 					},
 					{
-						"layername": "arp_975_p02",
+						"layername": "NEAMTHM18:arp_975_p02",
 						"styles": [
 							"neamthm18"
 						]
 					},
 					{
-						"layername": "arp_975_p16",
+						"layername": "NEAMTHM18:arp_975_p16",
 						"styles": [
 							"neamthm18"
 						]
 					},
 					{
-						"layername": "arp_975_p50",
+						"layername": "NEAMTHM18:arp_975_p50",
 						"styles": [
 							"neamthm18"
 						]
 					},
 					{
-						"layername": "arp_975_p84",
+						"layername": "NEAMTHM18:arp_975_p84",
 						"styles": [
 							"neamthm18"
 						]
 					},
 					{
-						"layername": "arp_975_p98",
+						"layername": "NEAMTHM18:arp_975_p98",
 						"styles": [
 							"neamthm18"
 						]
