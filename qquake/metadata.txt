@@ -20,7 +20,7 @@ repository=https://github.com/INGV/qquake
 
 hasProcessingProvider=no
 
-changelog=2024-11-26 v1.8 Changes:
+changelog=2026-04-21 v1.8 Changes:
                     - fdsnws-event v GEOFON-GFZ
                     - the WMS for EFEHR ESRM20
                     - the WMS for Etna Geological Map
