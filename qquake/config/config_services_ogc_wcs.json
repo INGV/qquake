@@ -1,5 +1,44 @@
 {
   "wcs": {
+    "INGV DEM Mt Etna": {
+      "title": "Digital Elevation Model of Mt Etna updated to 18 December 2015",
+      "group": "Digital Elevation Models",
+      "servicedescription": "OGS WMS provided by Osservatorio Etneo",
+      "servicedescriptionurl": "https://geodb.ct.ingv.it/",
+      "datadescription": "Ganci G., Cappello A., Bilotta G., Hérault, A., Zago V., Del Negro C. (2019). Digital Elevation Model of Mt Etna updated to 18 December 2015, supplement to: Ganci, Gaetana; Cappello, Annalisa; Bilotta, Giuseppe; Hérault, Alexis; Zago, Vito; Del Negro, Ciro (2018): Mapping Volcanic Deposits of the 2011–2015 Etna Eruptive Events Using Satellite Remote Sensing. Frontiers in Earth Science, 6:83 [Data set]. PANGAEA - Data Publisher for Earth & Environmental Science. https://doi.pangaea.de/10.1594/PANGAEA.899140",
+      "datadescriptionurl": "https://doi.org/10.1594/pangaea.899140",
+      "datalicense": "CC BY 4.0",
+      "datalicenseurl": "https://creativecommons.org/licenses/by/4.0/",
+      "dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+      "dataproviderurl": "http://www.ingv.it/",
+      "help": "",
+      "publications": [
+        "Ganci, G., Cappello, A., Bilotta, G., Herault, A., Zago, V., Del Negro, C. (2018, June 21). Mapping Volcanic Deposits of the 2011–2015 Etna Eruptive Events Using Satellite Remote Sensing. Frontiers in Earth Science. Frontiers Media SA. https://doi.org/10.3389/feart.2018.00083",
+        "Ganci, G., Cappello, A., Zago, V., Bilotta, G., Herault, A., Del Negro, C. (2018, September 11). 3D Lava flow mapping of the 17–25 May 2016 Etna eruption using tri-stereo optical satellite data. Annals of Geophysics. Instituto Nazionale di Geofisica e Vulcanologia, INGV. https://doi.org/10.4401/ag-7875"
+      ],
+      "endpointurl": "https://geodb.ct.ingv.it/EtnaDEM/dem_2015_4m/wcs?",
+      "datestart": "",
+      "dateend": "",
+      "srs": "EPSG:32632",
+      "default": {
+        "wcsversion": "2.0",
+        "layers": [
+          {
+            "layername": "EtnaDEM:dem_2015_4m",
+            "style": {
+              "wcs": {
+                "style": ""
+              }
+            }
+          }
+        ]
+      },
+      "settings": {
+        "queryCQL": true
+      },
+      "configversion": 1.0,
+      "configlastupdate": "2026-04-20T18:25:12+00:00"
+    },
     "INGV TINITALY": {
       "title": "TINITALY, a digital elevation model of Italy with a 10 meters cell size (Version 1.1)<p></p><table><tr><td style='font-weight:bold; border-bottom:1px solid #CCC;'>Style Name</td><td style='font-weight:bold; border-bottom:1px solid #CCC;'>Description</td></tr><tr><td>tinitaly_dem</td><td>TINItaly DEM</td></tr><tr><td>tinitaly_hshd</td><td>Shaded relief map</td></tr><tr><td>tinitaly_hsv</td><td>Hue-Saturation-Value (HSV) composition image with slope (2.5σ clipping) as saturation and SVF (2.5σ clipping) as value, according to RRIM (Red Relief Image Maps) style maps</td></tr><tr><td>tinitaly_od</td><td>Openness down map using equal area equalization as technique for image enhancement</td></tr><tr><td>tinitaly_slope</td><td>Slope map using 2.5σ clipping as technique for image enhancement</td></tr><tr><td>tinitaly_svf_2d5&nbsp;&nbsp;</td><td>Sky view Factor (SVF) map using 2.5σ clipping as technique for image enhancement</td></tr><tr><td>tinitaly_svf_ea</td><td>SVF map using equal area equalization as technique for image enhancement</td></tr></table>",
       "group": "Digital Elevation Models",
