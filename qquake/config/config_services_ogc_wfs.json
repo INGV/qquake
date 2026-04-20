@@ -2846,7 +2846,7 @@
 			"publications": [
 				"Maramai A., Brizuela B., Graziani L. (2014). The Euro-Mediterranean Tsunami Catalogue. Annals of Geophysics, 57(4). https://doi.org/10.4401/ag-6437"
 			],
-			"endpointurl": "https://tsunamiarchiveservices.ingv.it/services/tsunami/wfs/wfs?",
+			"endpointurl": "https://services.tsunamidata.org/ITED-EMTC/ows?",
 			"datestart": "1000-01-01T00:00:00+00:00",
 			"dateend": "",
 			"srs": "EPSG:4326",
@@ -2854,7 +2854,7 @@
 				"wfsversion": "2.0.0",
 				"layers": [
 					{
-						"layername": "tsunami:EMTC_current",
+						"layername": "tsunami:EMTC_v2",
 						"style": {
 							"wfs": {
 								"style": "EMTC_wfs"
@@ -2884,7 +2884,7 @@
 			"publications": [
 
 			],
-			"endpointurl": "https://tsunamiarchiveservices.ingv.it/services/tsunami/wfs/wfs?",
+			"endpointurl": "https://services.tsunamidata.org/ITED-EMTC/ows?",
 			"datestart": "0001-01-01T00:00:00+00:00",
 			"dateend": "",
 			"srs": "EPSG:4326",
@@ -2892,7 +2892,7 @@
 				"wfsversion": "2.0.0",
 				"layers": [
 					{
-						"layername": "tsunami:ITED_current",
+						"layername": "ITED-EMTC:ITED_v1",
 						"style": {
 							"wfs": {
 								"style": "ITED_wfs_int"
