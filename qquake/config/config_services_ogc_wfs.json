@@ -1,5 +1,122 @@
 {
 	"wfs": {
+		"INGV IPSI": {
+			"title": "IPSI, Database of Italian Present-day Stress Indicators v1.7",
+			"group": "Crustal Stress Field",
+			"servicedescription": "OGC WFS provided by Seismofaults.eu",
+			"servicedescriptionurl": "https://ipsi.rm.ingv.it/",
+			"datadescription": "Mariucci M. T., Montone P. (2025, April). IPSI 1.7, Database of Italian Present-day Stress Indicators (Version 1.7). Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/ipsi.1.7",
+			"datadescriptionurl": "https://doi.org/10.13127/ipsi.1.7",
+			"datalicense": "CC BY 4.0",
+			"datalicenseurl": "https://creativecommons.org/licenses/by/4.0/",
+			"dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+			"dataproviderurl": "http://www.ingv.it/",
+			"help": "",
+			"publications": [
+				"Montone P., Mariucci M. T. (2016). The new release of the Italian contemporary stress map. Geophysical Journal International, 205(3), 1525–1531. https://doi.org/10.1093/gji/ggw100"
+			],
+			"endpointurl": "https://geodb.ingv.it/geoserver/IPSI_1.7_Sh-min/ows?",
+			"datestart": "",
+			"dateend": "",
+			"srs": "EPSG:4326",
+			"default": {
+				"wfsversion": "2.0.0",
+				"layers": [
+					{
+						"layername": "IPSI_1.7_Sh-min:Overcoring_1.7",
+						"style": {
+							"wfs": {
+								"style": ""
+							}
+						}
+					},
+					{
+						"layername": "IPSI_1.7_Sh-min:Inversion_1.7",
+						"style": {
+							"wfs": {
+								"style": ""
+							}
+						}
+					},
+					{
+						"layername": "IPSI_1.7_Sh-min:Focal_mechanism_1.7",
+						"style": {
+							"wfs": {
+								"style": ""
+							}
+						}
+					},
+					{
+						"layername": "IPSI_1.7_Sh-min:Fault_1.7",
+						"style": {
+							"wfs": {
+								"style": ""
+							}
+						}
+					},
+					{
+						"layername": "IPSI_1.7_Sh-min:Breakout_1.7",
+						"style": {
+							"wfs": {
+								"style": ""
+							}
+						}
+					}
+				]
+			},
+			"settings": {
+				"queryCQL": true
+			},
+			"configversion": 1.0,
+			"configlastupdate": "2026-04-20T18:25:12+00:00"
+		},
+		"INGV CFTIlandslides": {
+			"title": "CFTIlandslides, Italian database of historical earthquake-induced landslides",
+			"group": "Geology",
+			"servicedescription": "OGC WFS provided by Seismofaults.eu",
+			"servicedescriptionurl": "https://cfti.ingv.it/landslides/",
+			"datadescription": "Zei C., Tarabusi G., Ciuccarelli C., Burrato P., Sgattoni G., Taccone R. C., Mariotti D. (2024). CFTIlandslides, Italian database of historical earthquake-induced landslides [Data set]. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/cfti/landslides",
+			"datadescriptionurl": "https://doi.org/10.13127/cfti/landslides",
+			"datalicense": "CC BY 4.0",
+			"datalicenseurl": "https://creativecommons.org/licenses/by/4.0/",
+			"dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+			"dataproviderurl": "http://www.ingv.it/",
+			"help": "",
+			"publications": [
+				"Guidoboni, E., Ferrari, G., Mariotti, D., Comastri, A., Tarabusi, G., Sgattoni, G., Valensise, G. (2018, April 1). CFTI5Med, Catalogo dei Forti Terremoti in Italia (461 a.C.-1997) e nell’area Mediterranea (760 a.C.-1500) (Version 5). Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.6092/INGV.IT-CFTI5",
+				"Zei, C., Tarabusi, G., Ciuccarelli, C., Burrato, P., Sgattoni, G., Taccone, R. C., Mariotti, D. (2024, August 2). CFTIlandslides, Italian database of historical earthquake-induced landslides. Scientific Data. Springer Science and Business Media LLC. https://doi.org/10.1038/s41597-024-03692-4"
+			],
+			"endpointurl": "https://cfti.ingv.it/geoserver/CFTIlandslides/wfs?",
+			"datestart": "0068-01-01T00:00:00+00:00",
+			"dateend": "1997-12-31T23:59:59+00:00",
+			"srs": "EPSG:4326",
+			"default": {
+				"wfsversion": "2.0.0",
+				"layers": [
+					{
+						"layername": "CFTIlandslides:Landslide_effects",
+						"style": {
+							"wfs": {
+								"style": "CFTI_landslides_wfs"
+							}
+						}
+					},
+					{
+						"layername": "CFTIlandslides:EqSeq_Catalogue",
+						"style": {
+							"wfs": {
+								"style": ""
+							}
+						}
+					}
+				]
+			},
+			"settings": {
+				"queryCQL": true
+			},
+			"configversion": 1.0,
+			"configlastupdate": "2026-04-20T18:25:12+00:00"
+		},
 		"AHEAD-EPICA": {
 			"title": "European PreInstrumental earthquake CAtalogue (EPICA) 1000-1899",
 			"group": "Earthquake catalogues",
@@ -39,44 +156,6 @@
 			"configversion": 0.1,
 			"configlastupdate": "2021-05-12T18:33:11+00:00"
 		},
-		"INGV CPTI": {
-			"title": "Catalogo Parametrico dei Terremoti Italiani (CPTI15), versione 4.0",
-			"group": "Earthquake catalogues",
-			"servicedescription": "OGC WFS provided by ASMI",
-			"servicedescriptionurl": "https://emidius.mi.ingv.it/ASMI/services/",
-			"datadescription": "Rovida A., Locati M., Camassi R., Lolli B., Gasperini P., Antonucci A. (2022). Catalogo Parametrico dei Terremoti Italiani (CPTI15), versione 4.0. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/CPTI/CPTI15.4",
-			"datadescriptionurl": "https://doi.org/10.13127/CPTI/CPTI15.4",
-			"datalicense": "CC BY 4.0",
-			"datalicenseurl": "https://creativecommons.org/licenses/by/4.0/",
-			"dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
-			"dataproviderurl": "http://www.ingv.it/",
-			"help": "",
-			"publications": [
-				"Rovida A., Locati M., Camassi R., Lolli B., Gasperini P. (2020). The Italian earthquake catalogue CPTI15. Bulletin of Earthquake Engineering, 18(7), 2953–2984. https://doi.org/10.1007/s10518-020-00818-y"
-			],
-			"endpointurl": "https://emidius.mi.ingv.it/services/italy/wfs?",
-			"datestart": "1000-01-01T00:00:00+00:00",
-			"dateend": "2020-12-31T23:59:59+00:00",
-			"srs": "EPSG:4326",
-			"default": {
-				"wfsversion": "2.0.0",
-				"layers": [
-					{
-						"layername": "italy:CPTI_current",
-						"style": {
-							"wfs": {
-								"style": "CPTI_wfs"
-							}
-						}
-					}
-				]
-			},
-			"settings": {
-				"queryCQL": true
-			},
-			"configversion": 0.3,
-			"configlastupdate": "2022-01-24T16:25:12+00:00"
-		},
 		"ESHM20 unified catalogue": {
 			"title": "ESHM20 Unified Earthquake Catalogue",
 			"group": "Earthquake catalogues",
@@ -115,7 +194,45 @@
 				"queryCQL": true
 			},
 			"configversion": 1.0,
-			"configlastupdate": "2024-06-11T18:33:11+00:00"
+			"configlastupdate": "2026-04-20T18:25:12+00:00"
+		},
+		"INGV CPTI": {
+			"title": "Catalogo Parametrico dei Terremoti Italiani (CPTI15), versione 4.0",
+			"group": "Earthquake catalogues",
+			"servicedescription": "OGC WFS provided by ASMI",
+			"servicedescriptionurl": "https://emidius.mi.ingv.it/ASMI/services/",
+			"datadescription": "Rovida A., Locati M., Camassi R., Lolli B., Gasperini P., Antonucci A. (2022). Catalogo Parametrico dei Terremoti Italiani (CPTI15), versione 4.0. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/CPTI/CPTI15.4",
+			"datadescriptionurl": "https://doi.org/10.13127/CPTI/CPTI15.4",
+			"datalicense": "CC BY 4.0",
+			"datalicenseurl": "https://creativecommons.org/licenses/by/4.0/",
+			"dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+			"dataproviderurl": "http://www.ingv.it/",
+			"help": "",
+			"publications": [
+				"Rovida A., Locati M., Camassi R., Lolli B., Gasperini P. (2020). The Italian earthquake catalogue CPTI15. Bulletin of Earthquake Engineering, 18(7), 2953–2984. https://doi.org/10.1007/s10518-020-00818-y"
+			],
+			"endpointurl": "https://emidius.mi.ingv.it/services/italy/wfs?",
+			"datestart": "1000-01-01T00:00:00+00:00",
+			"dateend": "2020-12-31T23:59:59+00:00",
+			"srs": "EPSG:4326",
+			"default": {
+				"wfsversion": "2.0.0",
+				"layers": [
+					{
+						"layername": "italy:CPTI_current",
+						"style": {
+							"wfs": {
+								"style": "CPTI_wfs"
+							}
+						}
+					}
+				]
+			},
+			"settings": {
+				"queryCQL": true
+			},
+			"configversion": 0.3,
+			"configlastupdate": "2022-01-24T16:25:12+00:00"
 		},
 		"INGV MPS04 PGA": {
 			"title": "MPS04 Maps in Peak Ground Acceleration<p></p><table><thead><tr><th style='font-weight:bold; border-bottom:1px solid #CCC;'>Layer</th><th style='font-weight:bold; border-bottom:1px solid #CCC;'>Description</th></tr></thead><tbody><tr><td>shkValsPoeCost_PGA_16oPerc_2poe_&nbsp;&nbsp;&nbsp;</td><td>PGA values with PoE of 2% in 50 years - 16th percentile</td></tr><tr><td>shkValsPoeCost_PGA_16oPerc_5poe_</td><td>PGA values with PoE of 5% in 50 years - 16th percentile</td></tr><tr><td>shkValsPoeCost_PGA_16oPerc_10poe_</td><td>PGA values with PoE of 10% in 50 years - 16th percentile</td></tr><tr><td>shkValsPoeCost_PGA_16oPerc_22poe_</td><td>PGA values with PoE of 22% in 50 years - 16th percentile</td></tr><tr><td>shkValsPoeCost_PGA_16oPerc_30poe_</td><td>PGA values with PoE of 30% in 50 years - 16th percentile</td></tr><tr><td>shkValsPoeCost_PGA_16oPerc_39poe_</td><td>PGA values with PoE of 39% in 50 years - 16th percentile</td></tr><tr><td>shkValsPoeCost_PGA_16oPerc_50poe_</td><td>PGA values with PoE of 50% in 50 years - 16th percentile</td></tr><tr><td>shkValsPoeCost_PGA_16oPerc_63poe_</td><td>PGA values with PoE of 63% in 50 years - 16th percentile</td></tr><tr><td>shkValsPoeCost_PGA_16oPerc_81poe_</td><td>PGA values with PoE of 81% in 50 years - 16th percentile</td></tr><tr><td>shkValsPoeCost_PGA_50oPerc_2poe_</td><td>PGA values with PoE of 2% in 50 years - 50th percentile</td></tr><tr><td>shkValsPoeCost_PGA_50oPerc_5poe_</td><td>PGA values with PoE of 5% in 50 years - 50th percentile</td></tr><tr><td>shkValsPoeCost_PGA_50oPerc_10poe_</td><td>PGA values with PoE of 10% in 50 years - 50th percentile</td></tr><tr><td>shkValsPoeCost_PGA_50oPerc_22poe_</td><td>PGA values with PoE of 22% in 50 years - 50th percentile</td></tr><tr><td>shkValsPoeCost_PGA_50oPerc_30poe_</td><td>PGA values with PoE of 30% in 50 years - 50th percentile</td></tr><tr><td>shkValsPoeCost_PGA_50oPerc_39poe_</td><td>PGA values with PoE of 39% in 50 years - 50th percentile</td></tr><tr><td>shkValsPoeCost_PGA_50oPerc_50poe_</td><td>PGA values with PoE of 50% in 50 years - 50th percentile</td></tr><tr><td>shkValsPoeCost_PGA_50oPerc_63poe_</td><td>PGA values with PoE of 63% in 50 years - 50th percentile</td></tr><tr><td>shkValsPoeCost_PGA_50oPerc_81poe_</td><td>PGA values with PoE of 81% in 50 years - 50th percentile</td></tr><tr><td>shkValsPoeCost_PGA_84oPerc_2poe_</td><td>PGA values with PoE of 2% in 50 years - 84th percentile</td></tr><tr><td>shkValsPoeCost_PGA_84oPerc_5poe_</td><td>PGA values with PoE of 5% in 50 years - 84th percentile</td></tr><tr><td>shkValsPoeCost_PGA_84oPerc_10poe_</td><td>PGA values with PoE of 10% in 50 years - 84th percentile</td></tr><tr><td>shkValsPoeCost_PGA_84oPerc_22poe_</td><td>PGA values with PoE of 22% in 50 years - 84th percentile</td></tr><tr><td>shkValsPoeCost_PGA_84oPerc_30poe_</td><td>PGA values with PoE of 30% in 50 years - 84th percentile</td></tr><tr><td>shkValsPoeCost_PGA_84oPerc_39poe_</td><td>PGA values with PoE of 39% in 50 years - 84th percentile</td></tr><tr><td>shkValsPoeCost_PGA_84oPerc_50poe_</td><td>PGA values with PoE of 50% in 50 years - 84th percentile</td></tr><tr><td>shkValsPoeCost_PGA_84oPerc_63poe_</td><td>PGA values with PoE of 63% in 50 years - 84th percentile</td></tr><tr><td>shkValsPoeCost_PGA_84oPerc_81poe_</td><td>PGA values with PoE of 81% in 50 years - 84th percentile</td></tr><tbody></table>",
@@ -2659,6 +2776,85 @@
 			"configversion": 0.5,
 			"configlastupdate": "2024-05-1T09:00:00+00:00"
 		},
+
+		"EFSM20 Meshes": {
+			"title": "EFSM20-Meshes was designed to provide the users of the European Fault-Source Model 2020 (EFSM20) with 3D geometric realizations of the fault sources made by triangular meshes. Triangular meshes are useful for several applications of earthquake modelling that require a discretization of the fault plane, e.g., heterogeneous slip distributions. EFSM20-Meshes was created to fulfil the objectives of the Geo-INQUIRE project and is hosted, maintained, and distributed by INGV through the EDSF installation (https://seismofaults.eu/) operated under the auspices of the EPOS-ERIC, TCS EPOS-Seismology, EFEHR Consortium, and the EPOS-MIUR Joint Research Unit.",
+			"group": "Seismogenic faults",
+			"servicedescription": "OGC WFS provided by Seismofaults.eu",
+			"servicedescriptionurl": "https://seismofaults.eu/efsm20/",
+			"datadescription": "Basili R., Taccone R., Vallone R., Maesano F. E. (2024). European Fault-Source Model 2020 (EFSM20): 3D triangular meshes [Data set]. Istituto Nazionale di Geofisica e Vulcanologia (INGV).",
+			"datadescriptionurl": "https://doi.org/10.13127/efsm20/meshes",
+			"datalicense": "CC BY 4.0",
+			"datalicenseurl": "https://creativecommons.org/licenses/by/4.0/",
+			"dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+			"dataproviderurl": "http://www.ingv.it/",
+			"help": "",
+			"publications": [
+
+			],
+			"endpointurl": "https://services.seismofaults.eu/EFSM20_Meshes/ows?",
+			"datestart": "2024-11-25T00:00:00+00:00",
+			"dateend": "",
+			"srs": "EPSG:4326",
+			"default": {
+				"wfsversion": "2.0.0",
+				"layers": [
+					{
+						"layername": "EFSM20_Meshes:efsm20_cf_meshes",
+						"style": {
+							"wfs": {
+								"style": ""
+							}
+						}
+					},
+					{
+						"layername": "EFSM20_Meshes:efsm20_cf_points",
+						"style": {
+							"wfs": {
+								"style": ""
+							}
+						}
+					},
+					{
+						"layername": "EFSM20_Meshes:efsm20_cf_polygons",
+						"style": {
+							"wfs": {
+								"style": ""
+							}
+						} 
+					},
+					{
+						"layername": "EFSM20_Meshes:efsm20_si_meshes",
+						"style": {
+							"wfs": {
+								"style": ""
+							}
+						}
+					},
+					{
+						"layername": "EFSM20_Meshes:efsm20_si_points",
+						"style": {
+							"wfs": {
+								"style": ""
+							}
+						}
+					},
+					{
+						"layername": "EFSM20_Meshes:efsm20_si_polygons",
+						"style": {
+							"wfs": {
+								"style": ""
+							}
+						}
+					}
+				]
+			},
+			"settings": {
+				"queryCQL": true
+			},
+			"configversion": 0.1,
+			"configlastupdate": "2024-11-26T11:40:00+00:00"
+		},
 		"INGV DISS": {
 			"title": "Database of Individual Seismogenic Sources (DISS) version 3.3.1<p></p><table><thead><tr><th style='font-weight:bold; border-bottom:1px solid #CCC;'>Layer</th><th style='font-weight:bold; border-bottom:1px solid #CCC;'>Description</th></tr></thead><tbody><tr><td>iss331</td><td>Individual Seismogenic Sources. Vertical projection of the dipping fault planes onto the ground surface. Polygons.</td></tr><tr><td>csstop331</td><td>Composite Seismogenic Sources (top). Fault plane upper edge. Polylines.</td></tr><tr><td>csspln331</td><td>Composite Seismogenic Sources (planes). Vertical projection of the inclined dipping fault planes (in the local dip direction along strike) onto the ground surface. Polygons.</td></tr><tr><td>csscnt331</td><td>Composite Seismogenic Sources (contours). Depth isolines [...]. Polylines.</td></tr><tr><td>dss331</td><td>Debated Seismogenic Sources. Polygons.</td></tr><tr><td>subdcnt331</td><td>Subduction zones depth isolines (contours). Polylines.</td></tr><tr><td>subzon331</td><td>Subduction zones. Vertical projection of the dipping slab onto the ground surface. Polygons.</td></tr></tbody></table>",
 			"group": "Seismogenic faults",
@@ -2743,7 +2939,45 @@
 				"queryCQL": true
 			},
 			"configversion": 0.5,
-			"configlastupdate": "2025-05-15T09:00:00+00:00"
+			"configlastupdate": "2026-04-20T18:25:12+00:00"
+		},
+		"INGV G-DIP": {
+			"title": "G-DIP is a compilation of 597 uniquely determined fault plane dip angles corresponding to 269 individual earthquakes. It includes two main types of dip determinations: one based on the Global Centroid-Moment-Tensor Project (https://www.globalcmt.org/), the CMT collection, with 253 dip determinations of the activated nodal plane, and the other based on studies that used various techniques, the FLT collection, with 229 fault dip determinations. The FLT collection includes 525 cases of multiple determinations for the same earthquake. The paired determinations, i.e., earthquakes for which the CMT solution and at least one FLT solution exist, are 221. All determinations are classified depending on faulting categories as normal, reverse, transcurrent crustal faulting, and subduction-interface reverse faulting. Most of these earthquakes are located near plate boundaries; 63 are reverse faulting events identified as having occurred on subduction interfaces, 184 occurred in the continental crust, and 18 in the oceanic crust. Four subduction interface earthquakes were discarded because their faulting mechanism is inconsistent with reverse faulting. Among all the 202 crustal earthquakes, 68 events are located at a distance greater than 300 km from the plate boundaries. Several of these earthquakes that occurred in the plate interiors are located very far away from plate margins, such as those in the North American, Australian, and Asian continental interiors; one of them is in the middle of the Pacific plate. The transcurrent faulting earthquakes include both oceanic transforms and continental strike-slip faults. None of the normal faulting earthquakes belong to oceanic spreading ridges because of the lack of univocal fault plane determinations in that specific tectonic setting. Earthquakes classified as intraslab are not included.",
+			"group": "Seismogenic faults",
+			"servicedescription": "OGC WFS provided by Seismofaults.eu",
+			"servicedescriptionurl": "https://seismofaults.eu/gdip/",
+			"datadescription": "Basili R., Tiberti M.M. (2025). Global Dip (G-DIP 1.0): a collection of earthquake fault dip angles [Data set]. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/gdip1.0",
+			"datadescriptionurl": "https://doi.org/10.13127/gdip1.0",
+			"datalicense": "CC BY 4.0",
+			"datalicenseurl": "https://creativecommons.org/licenses/by/4.0/",
+			"dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+			"dataproviderurl": "http://www.ingv.it/",
+			"help": "",
+			"publications": [
+
+			],
+			"endpointurl": "https://services.seismofaults.eu/G-DIP1.0/ows?",
+			"datestart": "2025-05-02T00:00:00+00:00",
+			"dateend": "",
+			"srs": "EPSG:4326",
+			"default": {
+				"wfsversion": "2.0.0",
+				"layers": [
+					{
+						"layername": "G-DIP1.0:g_dip1",
+						"style": {
+							"wfs": {
+								"style": ""
+							}
+						}
+					}
+				]
+			},
+			"settings": {
+				"queryCQL": true
+			},
+			"configversion": 1.0,
+			"configlastupdate": "2026-04-20T18:25:12+00:00"
 		},
 		"UniFE GreDaSS": {
 			"title": "Greek Database of Seismogenic Sources (GreDaSS) version 3.0.0<p></p><table><thead><tr><th style='font-weight:bold; border-bottom:1px solid #CCC;'>Layer</th><th style='font-weight:bold; border-bottom:1px solid #CCC;'>Description</th></tr></thead><tbody><tr><td>iss30g</td><td>Individual Seismogenic Sources. Vertical projection of the dipping fault planes onto the ground surface. Polygons.</td></tr><tr><td>csstop30g</td><td>Composite Seismogenic Sources (top). Fault plane upper edge. Polylines.</td></tr><tr><td>csspln30g</td><td>Composite Seismogenic Sources (planes). Vertical projection of the inclined dipping fault planes (in the local dip direction along strike) onto the ground surface. Polygons.</td></tr><tr><td>csscnt30g</td><td>Composite Seismogenic Sources (contours). Depth isolines [...]. Polylines.</td></tr><tr><td>dss331</td><td>Debated Seismogenic Sources. Polygons.</td></tr><tr><td>subdcnt30g</td><td>Subduction zones depth isolines (contours). Polylines.</td></tr><tr><td>subzon30g</td><td>Subduction zones. Vertical projection of the dipping slab onto the ground surface. Polygons.</td></tr></tbody></table>",
@@ -2828,8 +3062,46 @@
 			"settings": {
 				"queryCQL": true
 			},
-			"configversion": 0.1,
-			"configlastupdate": "2025-05-21T15:30:00+00:00"
+			"configversion": 1.0,
+			"configlastupdate": "2026-04-20T18:25:12+00:00"
+		},
+		"INGV ASTARTE": {
+			"title": "ASTARTE, Paleotsunami deposits database - NEAM region",
+			"group": "Tsunami",
+			"servicedescription": "OGC WFS provided by Seismofaults.eu",
+			"servicedescriptionurl": "https://paleotsunami.ingv.it/",
+			"datadescription": "De Martini P. M., Pantosti D., Orefice S., Smedile A., Patera A., Paris R., Terrinha P., Hunt J., Papadopoulos G., Noiva J., Triantafyllou I., Yalçıner A. C. (2017). The ASTARTE Paleotsunami deposits database - NEAM region [Data set]. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/tsunami/paleodeposits",
+			"datadescriptionurl": "https://doi.org/10.13127/ipsi.1.7",
+			"datalicense": "CC BY 4.0",
+			"datalicenseurl": "https://creativecommons.org/licenses/by/4.0/",
+			"dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+			"dataproviderurl": "http://www.ingv.it/",
+			"help": "",
+			"publications": [
+				"Pantosti P., De Martini D., Orefice O., Smedile S., Patera P., Paris P., Terrinha T., Hunt H., Papadopoulos P., Noiva N., Triantafyllou T., Yalciner Y. (2017). The ASTARTE Paleotsunami Deposits data base – web-based references for tsunami research in the NEAM region. https://hdl.handle.net/2122/11136"
+			],
+			"endpointurl": "https://services.tsunamidata.org/PALEOTSUNAMI/ows?",
+			"datestart": "",
+			"dateend": "",
+			"srs": "EPSG:4326",
+			"default": {
+				"wfsversion": "2.0.0",
+				"layers": [
+					{
+						"layername": "PALEOTSUNAMI:astarte",
+						"style": {
+							"wfs": {
+								"style": "ASTARTE_wfs"
+							}
+						}
+					}
+				]
+			},
+			"settings": {
+				"queryCQL": true
+			},
+			"configversion": 1.0,
+			"configlastupdate": "2026-04-20T18:25:12+00:00"
 		},
 		"INGV EMTC": {
 			"title": "Euro-Mediterranean Tsunami Catalogue (EMTC), version 2.0",
@@ -2854,7 +3126,7 @@
 				"wfsversion": "2.0.0",
 				"layers": [
 					{
-						"layername": "tsunami:EMTC_v2",
+						"layername": "ITED-EMTC:emtc_v2",
 						"style": {
 							"wfs": {
 								"style": "EMTC_wfs"
@@ -2866,8 +3138,8 @@
 			"settings": {
 				"queryCQL": true
 			},
-			"configversion": 0.1,
-			"configlastupdate": "2021-03-04T14:34:00+00:00"
+			"configversion": 0.2,
+			"configlastupdate": "2026-04-20T18:25:12+00:00"
 		},
 		"INGV ITED": {
 			"title": "Italian Tsunami Effects Database (ITED)",
@@ -2892,10 +3164,18 @@
 				"wfsversion": "2.0.0",
 				"layers": [
 					{
-						"layername": "ITED-EMTC:ITED_v1",
+						"layername": "ITED-EMTC:ited_v1",
 						"style": {
 							"wfs": {
 								"style": "ITED_wfs_int"
+							}
+						}
+					},
+					{
+						"layername": "ITED-EMTC:ited_v1_localities",
+						"style": {
+							"wfs": {
+								"style": "ITED_wfs_localities"
 							}
 						}
 					}
@@ -2904,8 +3184,8 @@
 			"settings": {
 				"queryCQL": true
 			},
-			"configversion": 0.1,
-			"configlastupdate": "2021-04-20T16:46:00+00:00"
+			"configversion": 0.2,
+			"configlastupdate": "2026-04-20T18:25:12+00:00"
 		},
 		"NEAMTHM18": {
 			"title": "NEAM Tsunami Hazard Model 2018 (NEAMTHM18). Points of interest (POI) where the tsunami hazard is calculated for various average return periods and epistemic uncertainty. Points.",
@@ -2944,124 +3224,6 @@
 			},
 			"configversion": 0.1,
 			"configlastupdate": "2023-08-28T10:35:00+00:00"
-		},
-		"EFSM20 Meshes": {
-			"title": "EFSM20-Meshes was designed to provide the users of the European Fault-Source Model 2020 (EFSM20) with 3D geometric realizations of the fault sources made by triangular meshes. Triangular meshes are useful for several applications of earthquake modelling that require a discretization of the fault plane, e.g., heterogeneous slip distributions. EFSM20-Meshes was created to fulfil the objectives of the Geo-INQUIRE project and is hosted, maintained, and distributed by INGV through the EDSF installation (https://seismofaults.eu/) operated under the auspices of the EPOS-ERIC, TCS EPOS-Seismology, EFEHR Consortium, and the EPOS-MIUR Joint Research Unit.",
-			"group": "Seismogenic faults",
-			"servicedescription": "OGC WFS provided by Seismofaults.eu",
-			"servicedescriptionurl": "https://seismofaults.eu/efsm20/",
-			"datadescription": "Basili R., Taccone R., Vallone R., Maesano F. E. (2024). European Fault-Source Model 2020 (EFSM20): 3D triangular meshes [Data set]. Istituto Nazionale di Geofisica e Vulcanologia (INGV).",
-			"datadescriptionurl": "https://doi.org/10.13127/efsm20/meshes",
-			"datalicense": "CC BY 4.0",
-			"datalicenseurl": "https://creativecommons.org/licenses/by/4.0/",
-			"dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
-			"dataproviderurl": "http://www.ingv.it/",
-			"help": "",
-			"publications": [
-
-			],
-			"endpointurl": "https://services.seismofaults.eu/EFSM20_Meshes/ows?",
-			"datestart": "2024-11-25T00:00:00+00:00",
-			"dateend": "",
-			"srs": "EPSG:4326",
-			"default": {
-				"wfsversion": "2.0.0",
-				"layers": [
-					{
-						"layername": "EFSM20_Meshes:efsm20_cf_meshes",
-						"style": {
-							"wfs": {
-								"style": ""
-							}
-						}
-					},
-					{
-						"layername": "EFSM20_Meshes:efsm20_cf_points",
-						"style": {
-							"wfs": {
-								"style": ""
-							}
-						}
-					},
-					{
-						"layername": "EFSM20_Meshes:efsm20_cf_polygons",
-						"style": {
-							"wfs": {
-								"style": ""
-							}
-						} 
-					},
-					{
-						"layername": "EFSM20_Meshes:efsm20_si_meshes",
-						"style": {
-							"wfs": {
-								"style": ""
-							}
-						}
-					},
-					{
-						"layername": "EFSM20_Meshes:efsm20_si_points",
-						"style": {
-							"wfs": {
-								"style": ""
-							}
-						}
-					},
-					{
-						"layername": "EFSM20_Meshes:efsm20_si_polygons",
-						"style": {
-							"wfs": {
-								"style": ""
-							}
-						}
-					}
-				]
-			},
-			"settings": {
-				"queryCQL": true
-			},
-			"configversion": 0.1,
-			"configlastupdate": "2024-11-26T11:40:00+00:00"
-		},
-		"G-DIP": {
-			"title": "G-DIP is a compilation of 597 uniquely determined fault plane dip angles corresponding to 269 individual earthquakes. It includes two main types of dip determinations: one based on the Global Centroid-Moment-Tensor Project (https://www.globalcmt.org/), the CMT collection, with 253 dip determinations of the activated nodal plane, and the other based on studies that used various techniques, the FLT collection, with 229 fault dip determinations. The FLT collection includes 525 cases of multiple determinations for the same earthquake. The paired determinations, i.e., earthquakes for which the CMT solution and at least one FLT solution exist, are 221. All determinations are classified depending on faulting categories as normal, reverse, transcurrent crustal faulting, and subduction-interface reverse faulting. Most of these earthquakes are located near plate boundaries; 63 are reverse faulting events identified as having occurred on subduction interfaces, 184 occurred in the continental crust, and 18 in the oceanic crust. Four subduction interface earthquakes were discarded because their faulting mechanism is inconsistent with reverse faulting. Among all the 202 crustal earthquakes, 68 events are located at a distance greater than 300 km from the plate boundaries. Several of these earthquakes that occurred in the plate interiors are located very far away from plate margins, such as those in the North American, Australian, and Asian continental interiors; one of them is in the middle of the Pacific plate. The transcurrent faulting earthquakes include both oceanic transforms and continental strike-slip faults. None of the normal faulting earthquakes belong to oceanic spreading ridges because of the lack of univocal fault plane determinations in that specific tectonic setting. Earthquakes classified as intraslab are not included.",
-			"group": "Seismogenic faults",
-			"servicedescription": "OGC WFS provided by Seismofaults.eu",
-			"servicedescriptionurl": "https://seismofaults.eu/gdip/",
-			"datadescription": "Basili R., Tiberti M.M. (2025). Global Dip (G-DIP 1.0): a collection of earthquake fault dip angles [Data set]. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/gdip1.0",
-			"datadescriptionurl": "https://doi.org/10.13127/gdip1.0",
-			"datalicense": "CC BY 4.0",
-			"datalicenseurl": "https://creativecommons.org/licenses/by/4.0/",
-			"dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
-			"dataproviderurl": "http://www.ingv.it/",
-			"help": "",
-			"publications": [
-
-			],
-			"endpointurl": "https://services.seismofaults.eu/G-DIP1.0/ows?",
-			"datestart": "2025-05-02T00:00:00+00:00",
-			"dateend": "",
-			"srs": "EPSG:4326",
-			"default": {
-				"wfsversion": "2.0.0",
-				"layers": [
-					{
-						"layername": "G-DIP1.0:g_dip1",
-						"style": {
-							"wfs": {
-								"style": ""
-							}
-						}
-					}
-				]
-			},
-			"settings": {
-				"queryCQL": true
-			},
-			"configversion": 0.1,
-			"configlastupdate": "2025-05-23T14:30:00+00:00"
 		}
-
-
 	}
 }
