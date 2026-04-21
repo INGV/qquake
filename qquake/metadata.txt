@@ -30,7 +30,8 @@ changelog=2026-04-21 v1.8 Changes:
                     - the WMS and WFS for ASTARTE
                     - the WMS and WFS for CFTI landslides
                     - the WMS and WFS for ESHM20 Unified Earthquake Catalogue
-                    - the WMS and WFS v IPSI
+                    - the WMS and WFS for HSFIT
+                    - the WMS and WFS for IPSI
                     - the WMS and WCS for DEM Mt Etna
                     - the WFS for GreDaSS
                     - the WFS for G-DIP
