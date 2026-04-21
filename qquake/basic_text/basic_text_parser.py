@@ -252,10 +252,28 @@ class BasicTextParser:
                 if self.convert_negative_depths:
                     v = -v
             f[k] = v
+            
+        z = None
+        depth_field_name = 'DepthMeters' if self.depth_unit == QgsUnitTypes.DistanceMeters else 'DepthKm'
+        depth_field_index = fields.lookupField(depth_field_name)
+        if depth_field_index >= 0:
+            depth_value = f[depth_field_name]
+            if depth_value != NULL:
+                try:
+                    z = float(depth_value)
+                except Exception:  # pylint: disable=broad-except
+                    z = None
 
         if event.get('Latitude') and event.get('Longitude'):
-            geom = QgsPoint(
-                x=float(event['Longitude']), y=float(event['Latitude']))
+            if z is not None:
+                geom = QgsPoint(
+                    x=float(event['Longitude']),
+                    y=float(event['Latitude']),
+                    z=z)
+            else:
+                geom = QgsPoint(
+                    x=float(event['Longitude']),
+                    y=float(event['Latitude']))
             f.setGeometry(QgsGeometry(geom))
 
         return f
