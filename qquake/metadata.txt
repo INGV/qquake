@@ -21,7 +21,10 @@ repository=https://github.com/INGV/qquake
 hasProcessingProvider=no
 
 changelog=2026-04-21 v1.8 Changes:
-                    - fdsnws-event v GEOFON-GFZ
+                    - added fdsnws-event for AusPass
+                    - added fdsnws-event for GEOFON-GFZ
+                    - added fdsnws-event for GeoNet
+                    - changed the Résif fdsnws-event endpoint into EPOS France
                     - the WMS for EFEHR ESRM20
                     - the WMS for Etna Geological Map
                     - the WMS and WFS for ASTARTE
