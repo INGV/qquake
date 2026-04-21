@@ -272,6 +272,15 @@
         48
       ]
     },
+    "oceania": {
+      "title": "Oceania",
+      "boundingbox": [
+        -58,
+        93,
+        11.5,
+        180
+      ]
+    },
     "switzerland": {
       "title": "Switzerland",
       "boundingbox": [
