@@ -59,9 +59,7 @@
 			"dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
 			"dataproviderurl": "http://www.ingv.it/",
 			"help": "",
-			"publications": [
-				"Pantosti P., De Martini D., Orefice O., Smedile S., Patera P., Paris P., Terrinha T., Hunt H., Papadopoulos P., Noiva N., Triantafyllou T., Yalciner Y. (2017). The ASTARTE Paleotsunami Deposits data base – web-based references for tsunami research in the NEAM region. https://hdl.handle.net/2122/11136"
-			],
+			"publications": [],
 			"endpointurl": "https://services.seismofaults.eu/SFIT1.0/ows?",
 			"datestart": "",
 			"dateend": "",
