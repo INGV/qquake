@@ -192,10 +192,20 @@ class Event(QuakeMlElement):
                     assert False
 
                 feature[matching_field[0][field_config_key]] = component_value
+        
+        z = None
+        if origin.depth is not None:
+            z = origin.depth.value
+            if depth_unit == QgsUnitTypes.DistanceKilometers:
+                z /= 1000
+            if convert_negative_depths:
+                z = -z
 
-        if origin.depth is not None and origin.longitude is not None and origin.latitude is not None:
-            geom = QgsPoint(x=origin.longitude.value, y=origin.latitude.value,
-                            z=-origin.depth.value * 1000)
+        if z is not None and origin.longitude is not None and origin.latitude is not None:
+            geom = QgsPoint(
+                x=origin.longitude.value,
+                y=origin.latitude.value,
+                z=z)
         elif origin.longitude is not None and origin.latitude is not None:
             geom = QgsPoint(x=origin.longitude.value, y=origin.latitude.value)
         else:
