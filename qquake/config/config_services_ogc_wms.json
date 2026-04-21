@@ -1,55 +1,5 @@
 {
 	"wms": {
-		"INGV IPSI": {
-			"title": "IPSI, Database of Italian Present-day Stress Indicators v1.7",
-			"group": "Crustal Stress Field",
-			"servicedescription": "OGC WMS provided by Seismofaults.eu",
-			"servicedescriptionurl": "https://ipsi.rm.ingv.it/",
-			"datadescription": "Mariucci M. T., Montone P. (2025, April). IPSI 1.7, Database of Italian Present-day Stress Indicators (Version 1.7). Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/ipsi.1.7",
-			"datadescriptionurl": "https://doi.org/10.13127/ipsi.1.7",
-			"datalicense": "CC BY 4.0",
-			"datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
-			"dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
-			"dataproviderurl": "http://www.ingv.it/",
-			"help": "",
-			"publications": [
-				"Montone P., Mariucci M. T. (2016). The new release of the Italian contemporary stress map. Geophysical Journal International, 205(3), 1525–1531. https://doi.org/10.1093/gji/ggw100"
-			],
-			"endpointurl": "https://geodb.ingv.it/geoserver/IPSI_1.7_Sh-min/ows?",
-			"datestart": "",
-			"dateend": "",
-			"srs": "EPSG:32632",
-			"default": {
-				"wmsversion": "1.3.0",
-				"layers": [
-					{
-						"layername": "Overcoring_1.7",
-						"styles": [ "" ]
-					},
-					{
-						"layername": "Inversion_1.7",
-						"styles": [ "" ]
-					},
-					{
-						"layername": "Focal_mechanism_1.7",
-						"styles": [ "" ]
-					},
-					{
-						"layername": "Fault_1.7",
-						"styles": [ "" ]
-					},
-					{
-						"layername": "Breakout_1.7",
-						"styles": [ "" ]
-					}
-				]
-			},
-			"settings": {
-				"queryCQL": true
-			},
-			"configversion": 1.0,
-			"configlastupdate": "2026-04-20T18:25:12+00:00"
-		},
 		"INGV DEM Mt Etna": {
 			"title": "Digital Elevation Model of Mt Etna updated to 18 December 2015",
 			"group": "Digital Elevation Models",
@@ -220,6 +170,92 @@
 				"layers": [
 					{
 						"layername": "EtnaGeologicalMap",
+						"styles": [ "" ]
+					}
+				]
+			},
+			"settings": {
+				"queryCQL": true
+			},
+			"configversion": 1.0,
+			"configlastupdate": "2026-04-20T18:25:12+00:00"
+		},
+		"INGV HSFIT": {
+			"title": "HSFIT, Historical Surface Faulting events of ITaly",
+			"group": "Geology",
+			"servicedescription": "OGC WMS provided by Seismofaults.eu",
+			"servicedescriptionurl": "https://ingv.maps.arcgis.com/apps/instant/sidebar/index.html?appid=71f0322aa4dc4bc9b67b17ca36fba402",
+			"datadescription": "Cinti F. R., Pantosti D., Olle’ Lopez, M., Martinelli C., Blumetti A. M., Civico R., Guerrieri L. (2025, January). Historical Surface Faulting events of ITaly (HSFIT) (Version 1). ArcGIS Online, Environmental Systems Research Institute (ESRI). https://doi.org/10.13127/sfit/hsfit-2024",
+			"datadescriptionurl": "https://doi.org/10.13127/sfit/hsfit-2024",
+			"datalicense": "CC BY 4.0",
+			"datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
+			"dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+			"dataproviderurl": "http://www.ingv.it/",
+			"help": "",
+			"publications": [],
+			"endpointurl": "https://services.seismofaults.eu/SFIT1.0/ows?",
+			"datestart": "",
+			"dateend": "",
+			"srs": "EPSG:32632",
+			"default": {
+				"wmsversion": "1.3.0",
+				"layers": [
+					{
+						"layername": "SFIT1.0:fucino_1915_traces",
+						"styles": [ "" ]
+					},
+					{
+						"layername": "SFIT1.0:fucino_1915_points",
+						"styles": [ "" ]
+					}
+				]
+			},
+			"settings": {
+				"queryCQL": true
+			},
+			"configversion": 1.0,
+			"configlastupdate": "2026-04-20T18:25:12+00:00"
+		},
+		"INGV IPSI": {
+			"title": "IPSI, Database of Italian Present-day Stress Indicators v1.7",
+			"group": "Geology",
+			"servicedescription": "OGC WMS provided by INGV",
+			"servicedescriptionurl": "https://ipsi.rm.ingv.it/",
+			"datadescription": "Mariucci M. T., Montone P. (2025, April). IPSI 1.7, Database of Italian Present-day Stress Indicators (Version 1.7). Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/ipsi.1.7",
+			"datadescriptionurl": "https://doi.org/10.13127/ipsi.1.7",
+			"datalicense": "CC BY 4.0",
+			"datalicenseurl": "https://creativecommons.org/licenses/by-sa/4.0/",
+			"dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+			"dataproviderurl": "http://www.ingv.it/",
+			"help": "",
+			"publications": [
+				"Montone P., Mariucci M. T. (2016). The new release of the Italian contemporary stress map. Geophysical Journal International, 205(3), 1525–1531. https://doi.org/10.1093/gji/ggw100"
+			],
+			"endpointurl": "https://geodb.ingv.it/geoserver/IPSI_1.7_Sh-min/ows?",
+			"datestart": "",
+			"dateend": "",
+			"srs": "EPSG:32632",
+			"default": {
+				"wmsversion": "1.3.0",
+				"layers": [
+					{
+						"layername": "Overcoring_1.7",
+						"styles": [ "" ]
+					},
+					{
+						"layername": "Inversion_1.7",
+						"styles": [ "" ]
+					},
+					{
+						"layername": "Focal_mechanism_1.7",
+						"styles": [ "" ]
+					},
+					{
+						"layername": "Fault_1.7",
+						"styles": [ "" ]
+					},
+					{
+						"layername": "Breakout_1.7",
 						"styles": [ "" ]
 					}
 				]
