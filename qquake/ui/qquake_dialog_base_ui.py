@@ -405,7 +405,7 @@ class Ui_QQuakeDialogBase(object):
         self.fdsn_tab_widget.setTabText(self.fdsn_tab_widget.indexOf(self.tab_11), _translate("QQuakeDialogBase", "Search by Identifiers"))
         self.fdsn_tab_widget.setTabText(self.fdsn_tab_widget.indexOf(self.tab_14), _translate("QQuakeDialogBase", "Load QuakeML Directly"))
         self.fdsn_tab_widget.setTabText(self.fdsn_tab_widget.indexOf(self.tab_6), _translate("QQuakeDialogBase", "Service Information"))
-        self.service_tab_widget.setTabText(self.service_tab_widget.indexOf(self.fdsn_event_tab), _translate("QQuakeDialogBase", "Earthquakes parameters"))
+        self.service_tab_widget.setTabText(self.service_tab_widget.indexOf(self.fdsn_event_tab), _translate("QQuakeDialogBase", "Earthquake parameters"))
         self.button_macro_new_service.setText(_translate("QQuakeDialogBase", "Add"))
         self.button_macro_edit_service.setText(_translate("QQuakeDialogBase", "Edit"))
         self.button_macro_rename_service.setText(_translate("QQuakeDialogBase", "Rename"))
