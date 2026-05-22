@@ -1,15 +1,18 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'c:\Users\giorg\AppData\Roaming\QGIS\QGIS3\profiles\qquake\python\plugins\qquake\ui\service_information_widget.ui'
+# Form implementation generated from reading ui file 'service_information_widget.ui'
 #
 # Created by: PyQt5 UI code generator 5.13.2
 #
 # WARNING! All changes made in this file will be lost!
 
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+from qgis.PyQt import QtCore, QtGui, QtWidgets
 
 
+from qquake.qt_compat import (
+    QT_FRAME_NO_FRAME,
+)
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
@@ -19,7 +22,7 @@ class Ui_Form(object):
         self.verticalLayout.setObjectName("verticalLayout")
         self.info_browser = QtWidgets.QTextBrowser(Form)
         self.info_browser.setAutoFillBackground(False)
-        self.info_browser.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.info_browser.setFrameShape(QT_FRAME_NO_FRAME)
         self.info_browser.setOpenExternalLinks(True)
         self.info_browser.setObjectName("info_browser")
         self.verticalLayout.addWidget(self.info_browser)
