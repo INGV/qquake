@@ -52,6 +52,18 @@ from qquake.quakeml.fdsn_station import (
 )
 from qquake.services import SERVICE_MANAGER
 from qquake.style_utils import StyleUtils
+from qquake.qt_compat import (
+    QGIS_CRITICAL,
+    QGIS_INFO,
+    QGIS_WARNING,
+    QGS_DISTANCE_DEGREES,
+    QGS_DISTANCE_KILOMETERS,
+    QGS_DISTANCE_METERS,
+    QGS_TEMPORAL_MODE_FEATURE_DATE_TIME_INSTANT_FROM_FIELD,
+    QT_ISO_DATE,
+    QT_NETWORK_REPLY_NO_ERROR,
+    set_request_follow_redirects
+)
 
 
 class Fetcher(QObject):
@@ -94,7 +106,7 @@ class Fetcher(QObject):
                  circle_longitude=None,
                  circle_min_radius=None,
                  circle_max_radius=None,
-                 circle_radius_unit=QgsUnitTypes.DistanceDegrees,
+                 circle_radius_unit=QGS_DISTANCE_DEGREES,
                  earthquake_number_mdps_greater=None,
                  earthquake_max_intensity_greater=None,
                  event_ids=None,
@@ -106,7 +118,7 @@ class Fetcher(QObject):
                  output_fields=None,
                  output_type=EXTENDED,
                  convert_negative_depths=False,
-                 depth_unit=QgsUnitTypes.DistanceMeters,
+                 depth_unit=QGS_DISTANCE_METERS,
                  event_type: Optional[str] = None,
                  updated_after: Optional[QDateTime] = None,
                  split_strategy: Optional[str] = None,
@@ -127,10 +139,10 @@ class Fetcher(QObject):
 
         # if we have a split strategy set, we HAVE to have a full date range available
         if self.split_strategy is not None and self.event_start_date is None:
-            self.event_start_date = QDateTime.fromString(self.service_config.get('datestart'), Qt.ISODate)
+            self.event_start_date = QDateTime.fromString(self.service_config.get('datestart'), QT_ISO_DATE)
         if self.split_strategy is not None and self.event_end_date is None:
             self.event_end_date = QDateTime.fromString(self.service_config.get('dateend'),
-                                                       Qt.ISODate) if self.service_config.get(
+                                                       QT_ISO_DATE) if self.service_config.get(
                 'dateend') else QDateTime.currentDateTime()
 
         self.event_start_date_limit = self.event_start_date
@@ -209,9 +221,9 @@ class Fetcher(QObject):
         Suggests a split strategy based on the fetchers' date range
         """
         start_date = self.event_start_date if self.event_start_date is not None else QDateTime.fromString(
-            self.service_config.get('datestart'), Qt.ISODate)
+            self.service_config.get('datestart'), QT_ISO_DATE)
         end_date = self.event_end_date if self.event_end_date is not None else (
-            QDateTime.fromString(self.service_config.get('dateend'), Qt.ISODate) if self.service_config.get(
+            QDateTime.fromString(self.service_config.get('dateend'), QT_ISO_DATE) if self.service_config.get(
                 'dateend') else QDateTime.currentDateTime()
         )
 
@@ -263,13 +275,13 @@ class Fetcher(QObject):
         query = []
         # append to the string the parameter of the UI (starttime, endtime, etc)
         if self.event_start_date is not None and self.event_start_date.isValid():
-            query.append('starttime={}'.format(self.event_start_date.toString(Qt.ISODate)))
+            query.append('starttime={}'.format(self.event_start_date.toString(QT_ISO_DATE)))
 
         if self.event_end_date is not None and self.event_end_date.isValid():
-            query.append('endtime={}'.format(self.event_end_date.toString(Qt.ISODate)))
+            query.append('endtime={}'.format(self.event_end_date.toString(QT_ISO_DATE)))
 
         if self.updated_after is not None and self.updated_after.isValid():
-            query.append('updatedafter={}'.format(self.updated_after.toString(Qt.ISODate)))
+            query.append('updatedafter={}'.format(self.updated_after.toString(QT_ISO_DATE)))
 
         if self.event_min_magnitude is not None:
             query.append('minmagnitude={}'.format(self.event_min_magnitude))
@@ -293,12 +305,12 @@ class Fetcher(QObject):
                 (self.circle_min_radius is not None or self.circle_max_radius is not None):
             query.append('latitude={}'.format(self.circle_latitude))
             query.append('longitude={}'.format(self.circle_longitude))
-            if self.circle_radius_unit == QgsUnitTypes.DistanceDegrees:
+            if self.circle_radius_unit == QGS_DISTANCE_DEGREES:
                 if self.circle_min_radius is not None:
                     query.append('minradius={}'.format(self.circle_min_radius))
                 if self.circle_max_radius is not None:
                     query.append('maxradius={}'.format(self.circle_max_radius))
-            elif self.circle_radius_unit == QgsUnitTypes.DistanceKilometers:
+            elif self.circle_radius_unit == QGS_DISTANCE_KILOMETERS:
                 if self.circle_min_radius is not None:
                     query.append('minradiuskm={}'.format(self.circle_min_radius))
                 if self.circle_max_radius is not None:
@@ -357,7 +369,7 @@ class Fetcher(QObject):
             self.is_first_request = False
 
         request = QNetworkRequest(QUrl(self.generate_url()))
-        request.setAttribute(QNetworkRequest.FollowRedirectsAttribute, True)
+        set_request_follow_redirects(request)
 
         reply = QgsNetworkAccessManager.instance().get(request)
 
@@ -371,7 +383,7 @@ class Fetcher(QObject):
         # pop first missing origin from front of queue and fetch it
         self.message.emit(
             self.tr('Returned XML was incomplete. {} missing origins left to fetch').format(len(self.missing_origins)),
-            Qgis.Warning)
+            QGIS_WARNING)
 
         remaining = list(self.missing_origins)
         next_origin = remaining[0]
@@ -384,7 +396,7 @@ class Fetcher(QObject):
         self.is_missing_origin_request = True
 
         request = QNetworkRequest(QUrl(next_origin))
-        request.setAttribute(QNetworkRequest.FollowRedirectsAttribute, True)
+        set_request_follow_redirects(request)
 
         reply = QgsNetworkAccessManager.instance().get(request)
 
@@ -396,7 +408,7 @@ class Fetcher(QObject):
         Fetches next event by ID
         """
         # pop first id from front of queue and fetch it
-        self.message.emit(self.tr('{} events left to fetch').format(len(self.pending_event_ids)), Qgis.Info)
+        self.message.emit(self.tr('{} events left to fetch').format(len(self.pending_event_ids)), QGIS_INFO)
         self.fetch_data()
 
     def fetch_basic_mdp(self):
@@ -405,12 +417,12 @@ class Fetcher(QObject):
         """
         self.require_mdp_basic_text_request = False
         self.is_mdp_basic_text_request = True
-        self.message.emit(self.tr('Fetching MDPs'), Qgis.Info)
+        self.message.emit(self.tr('Fetching MDPs'), QGIS_INFO)
 
         self.pending_event_ids = self.macro_pending_event_ids[:1]
         self.macro_pending_event_ids = self.macro_pending_event_ids[1:]
         request = QNetworkRequest(QUrl(self.generate_url()))
-        request.setAttribute(QNetworkRequest.FollowRedirectsAttribute, True)
+        set_request_follow_redirects(request)
 
         reply = QgsNetworkAccessManager.instance().get(request)
         reply.finished.connect(lambda r=reply: self._reply_finished(r))
@@ -427,8 +439,8 @@ class Fetcher(QObject):
         """
         Triggered when a reply is finished
         """
-        if reply.error() != QNetworkReply.NoError:
-            self.message.emit(self.tr('Error: {}').format(reply.errorString()), Qgis.Critical)
+        if reply.error() != QT_NETWORK_REPLY_NO_ERROR:
+            self.message.emit(self.tr('Error: {}').format(reply.errorString()), QGIS_CRITICAL)
             self.finished.emit(False)
             return
 
@@ -480,7 +492,7 @@ class Fetcher(QObject):
                     self.message.emit(
                         self.tr('QuakeML file is incomplete. {} origins are missing from the data').format(
                             len(self.missing_origins)),
-                        Qgis.Warning)
+                        QGIS_WARNING)
                     self.finished.emit(True)
                 else:
                     self.fetch_missing()
@@ -575,10 +587,10 @@ class Fetcher(QObject):
                 temporal_props = vl.temporalProperties()
                 temporal_props.setIsActive(True)
                 temporal_props.setStartField('time')
-                from qgis.core import QgsVectorLayerTemporalProperties  # pylint: disable=import-outside-toplevel
-                temporal_props.setMode(QgsVectorLayerTemporalProperties.ModeFeatureDateTimeInstantFromField)
+                if QGS_TEMPORAL_MODE_FEATURE_DATE_TIME_INSTANT_FROM_FIELD is not None:
+                    temporal_props.setMode(QGS_TEMPORAL_MODE_FEATURE_DATE_TIME_INSTANT_FROM_FIELD)
 
-        except AttributeError:
+        except (AttributeError, ImportError):
             pass
 
         return vl
@@ -624,7 +636,7 @@ class Fetcher(QObject):
         except MissingOriginException as e:
             self.message.emit(
                 str(e),
-                Qgis.Critical)
+                QGIS_CRITICAL)
             return None
 
         ok, _ = vl.dataProvider().addFeatures(features)
@@ -637,11 +649,11 @@ class Fetcher(QObject):
             default_style_url = epicenter_style_url or StyleUtils.default_style_for_events_url()
             err = StyleUtils.fetch_and_apply_style(vl, default_style_url)
             if err:
-                self.message.emit(err, Qgis.Warning)
+                self.message.emit(err, QGIS_WARNING)
         elif not self.url and (epicenter_style_url or self.service_config.get('styleurl')):
             err = StyleUtils.fetch_and_apply_style(vl, epicenter_style_url or self.service_config.get('styleurl'))
             if err:
-                self.message.emit(err, Qgis.Warning)
+                self.message.emit(err, QGIS_WARNING)
         elif not self.url and (
                 epicenter_style_url or (isinstance(self.service_config.get('default', {}).get('style', {}), dict) and
                                         self.service_config['default']['style'].get('events'))):
@@ -664,7 +676,7 @@ class Fetcher(QObject):
                                                                   style.get('classified_attribute_xml'))
                 err = StyleUtils.fetch_and_apply_style(vl, style_url, style_attr)
                 if err:
-                    self.message.emit(err, Qgis.Warning)
+                    self.message.emit(err, QGIS_WARNING)
 
         return vl
 
@@ -688,11 +700,11 @@ class Fetcher(QObject):
             default_style_url = mdp_style_url or StyleUtils.default_style_for_macro_url()
             err = StyleUtils.fetch_and_apply_style(vl, default_style_url)
             if err:
-                self.message.emit(err, Qgis.Warning)
+                self.message.emit(err, QGIS_WARNING)
         elif self.service_config.get('mdpstyleurl'):
             err = StyleUtils.fetch_and_apply_style(vl, mdp_style_url or self.service_config.get('mdpstyleurl'))
             if err:
-                self.message.emit(err, Qgis.Warning)
+                self.message.emit(err, QGIS_WARNING)
         elif isinstance(self.service_config.get('default', {}).get('style', {}), dict) and \
                 self.service_config['default']['style'].get('mdp'):
 
@@ -715,7 +727,7 @@ class Fetcher(QObject):
 
                 err = StyleUtils.fetch_and_apply_style(vl, style_url, style_attr)
                 if err:
-                    self.message.emit(err, Qgis.Warning)
+                    self.message.emit(err, QGIS_WARNING)
 
         return vl
 
@@ -741,7 +753,7 @@ class Fetcher(QObject):
         if station_style_url or self.service_config.get('styleurl'):
             err = StyleUtils.fetch_and_apply_style(vl, station_style_url or self.service_config.get('styleurl'))
             if err:
-                self.message.emit(err, Qgis.Warning)
+                self.message.emit(err, QGIS_WARNING)
 
         elif isinstance(self.service_config.get('default', {}).get('style', {}), dict) and \
                 self.service_config['default']['style'].get('stations'):
@@ -763,7 +775,7 @@ class Fetcher(QObject):
 
                 err = StyleUtils.fetch_and_apply_style(vl, style_url, style_attr)
                 if err:
-                    self.message.emit(err, Qgis.Warning)
+                    self.message.emit(err, QGIS_WARNING)
 
         return vl
 
