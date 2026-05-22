@@ -35,6 +35,9 @@ from qgis.core import (
 from qquake.gui.base_filter_widget import BaseFilterWidget
 from qquake.gui.gui_utils import GuiUtils
 from qquake.services import SERVICE_MANAGER
+from qquake.qt_compat import (
+    set_request_follow_redirects
+)
 
 FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('filter_by_id_widget_base.ui'))
 
@@ -227,7 +230,7 @@ class FilterByIdWidget(QWidget, FORM_CLASS, BaseFilterWidget):
 
         self.button_refresh_contributors.setEnabled(False)
         request = QNetworkRequest(QUrl(url))
-        request.setAttribute(QNetworkRequest.FollowRedirectsAttribute, True)
+        set_request_follow_redirects(request)
 
         reply = QgsNetworkAccessManager.instance().get(request)
 
