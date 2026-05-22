@@ -48,6 +48,14 @@ from qgis.gui import (
 
 from qquake.gui.gui_utils import GuiUtils
 from qquake.services import SERVICE_MANAGER, WadlServiceParser
+from qquake.qt_compat import (
+    QGIS_CRITICAL,
+    QGIS_WARNING,
+    QT_BUTTON_CANCEL,
+    QT_BUTTON_OK,
+    QT_ISO_DATE,
+    set_request_follow_redirects
+)
 
 FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('service_configuration_widget_base.ui'))
 
@@ -204,7 +212,7 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
         res, reason = self.is_valid()
         if not res:
             self.message_bar.clearWidgets()
-            self.message_bar.pushMessage('', reason, Qgis.Warning, 0)
+            self.message_bar.pushMessage('', reason, QGIS_WARNING, 0)
             self.validChanged.emit(False)
         else:
             self.message_bar.clearWidgets()
@@ -260,12 +268,12 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
             self.qml_style_name_combo_mdp.findData(config.get('default', {}).get('mdp_style')))
 
         if config.get('datestart'):
-            self.start_date_edit.setDateTime(QDateTime.fromString(config.get('datestart'), Qt.ISODate))
+            self.start_date_edit.setDateTime(QDateTime.fromString(config.get('datestart'), QT_ISO_DATE))
         else:
             self.start_date_edit.clear()
 
         if config.get('dateend'):
-            self.end_date_edit.setDateTime(QDateTime.fromString(config.get('dateend'), Qt.ISODate))
+            self.end_date_edit.setDateTime(QDateTime.fromString(config.get('dateend'), QT_ISO_DATE))
         else:
             self.end_date_edit.clear()
 
@@ -333,12 +341,12 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
         config['default']['mdp_style'] = self.qml_style_name_combo_mdp.currentData()
 
         if self.start_date_edit.dateTime().isValid():
-            config['datestart'] = self.start_date_edit.dateTime().toString(Qt.ISODate)
+            config['datestart'] = self.start_date_edit.dateTime().toString(QT_ISO_DATE)
         else:
             config['datestart'] = ''
 
         if self.end_date_edit.dateTime().isValid():
-            config['dateend'] = self.end_date_edit.dateTime().toString(Qt.ISODate)
+            config['dateend'] = self.end_date_edit.dateTime().toString(QT_ISO_DATE)
         else:
             config['dateend'] = ''
 
@@ -386,7 +394,7 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
         url = WadlServiceParser.find_url(url)
 
         request = QNetworkRequest(QUrl(url))
-        request.setAttribute(QNetworkRequest.FollowRedirectsAttribute, True)
+        set_request_follow_redirects(request)
         reply = QgsNetworkAccessManager.instance().get(request)
 
         def response_finished(_reply: QNetworkReply):
@@ -401,7 +409,7 @@ class ServiceConfigurationWidget(QWidget, FORM_CLASS):
                 self._set_state_from_wadl(WadlServiceParser.parse_wadl(content, self.service_type, url))
             except AssertionError:
                 self.message_bar.pushMessage('', self.tr('Could not load web service capabilities from {}'.format(url)),
-                                             Qgis.Critical, 0)
+                                             QGIS_CRITICAL, 0)
 
         self.button_load_service.setEnabled(False)
         self.button_load_service.setText(self.tr('Loading'))
@@ -444,7 +452,7 @@ class ServiceConfigurationDialog(QDialog):
         self.config_widget = ServiceConfigurationWidget(iface, service_type, service_id)
         layout = QVBoxLayout()
         layout.addWidget(self.config_widget, 1)
-        self.button_box = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
+        self.button_box = QDialogButtonBox(QT_BUTTON_OK | QT_BUTTON_CANCEL)
         self.button_box.accepted.connect(self.accept)
         self.button_box.rejected.connect(self.reject)
         layout.addWidget(self.button_box)
@@ -456,7 +464,7 @@ class ServiceConfigurationDialog(QDialog):
         """
         Triggered when the widget valid state is changed
         """
-        self.button_box.button(QDialogButtonBox.Ok).setEnabled(is_valid)
+        self.button_box.button(QT_BUTTON_OK).setEnabled(is_valid)
 
     def accept(self):  # pylint: disable=missing-function-docstring
         self.config_widget.save_changes()
