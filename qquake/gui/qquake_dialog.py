@@ -28,13 +28,16 @@ from qgis.PyQt.QtGui import (
     QStandardItem,
     QStandardItemModel
 )
+try:
+    from qgis.PyQt.QtGui import QAction
+except ImportError:
+    from qgis.PyQt.QtWidgets import QAction
 from qgis.PyQt.QtWidgets import (
     QDialogButtonBox,
     QDialog,
     QSizePolicy,
     QVBoxLayout,
     QMenu,
-    QAction,
     QMessageBox,
     QInputDialog,
     QFileDialog
@@ -62,6 +65,25 @@ from qquake.gui.ogc_service_options_widget import OgcServiceWidget
 from qquake.gui.service_configuration_widget import ServiceConfigurationDialog
 from qquake.gui.service_information_widget import ServiceInformationWidget
 from qquake.services import SERVICE_MANAGER
+from qquake.qt_compat import (
+    QGIS_CRITICAL,
+    QGIS_INFO,
+    QGIS_SUCCESS,
+    QGIS_WARNING,
+    QT_BUTTON_OK,
+    QT_ISO_DATE,
+    QT_ITEM_IS_ENABLED,
+    QT_ITEM_IS_SELECTABLE,
+    QT_MATCH_CONTAINS,
+    QT_MATCH_EXACTLY,
+    QT_MATCH_RECURSIVE,
+    QT_MESSAGEBOX_YES,
+    QT_SELECTION_CLEAR_AND_SELECT,
+    QT_SIZE_POLICY_FIXED,
+    QT_SIZE_POLICY_MINIMUM,
+    qt_exec,
+    QT_USER_ROLE
+)
 
 FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('qquake_dialog_base.ui'))
 
@@ -165,14 +187,14 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.ogc_service_info_container.setLayout(vl)
 
         self.message_bar = QgsMessageBar()
-        self.message_bar.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
+        self.message_bar.setSizePolicy(QT_SIZE_POLICY_MINIMUM, QT_SIZE_POLICY_FIXED)
         self.verticalLayout.insertWidget(0, self.message_bar)
 
         self.fdsn_event_url_text_browser.viewport().setAutoFillBackground(False)
         self.fdsn_macro_url_text_browser.viewport().setAutoFillBackground(False)
         self.fdsn_station_url_text_browser.viewport().setAutoFillBackground(False)
 
-        self.button_box.button(QDialogButtonBox.Ok).setText(self.tr('Fetch Data'))
+        self.button_box.button(QT_BUTTON_OK).setText(self.tr('Fetch Data'))
         self.button_box.rejected.connect(self._save_settings)
 
         self.iface = iface
@@ -367,14 +389,14 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         if last_service is not None:
             try:
                 self.fdsn_event_list.setCurrentItem(
-                    self.fdsn_event_list.findItems(last_service, Qt.MatchContains)[0])
+                    self.fdsn_event_list.findItems(last_service, QT_MATCH_CONTAINS)[0])
             except IndexError:
                 pass
 
         last_service = s.value('/plugins/qquake/macro_last_event_service')
         if last_service is not None:
             self.fdsn_macro_list.setCurrentItem(
-                self.fdsn_macro_list.findItems(last_service, Qt.MatchContains)[0])
+                self.fdsn_macro_list.findItems(last_service, QT_MATCH_CONTAINS)[0])
 
         self.fdsn_event_filter.restore_settings('fdsn_event')
         self.fdsn_by_id_filter.restore_settings('fdsn_event')
@@ -551,17 +573,17 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         if not service_type:
             service_type = self.get_current_service_type()
             if service_type is None:
-                self.button_box.button(QDialogButtonBox.Ok).setEnabled(False)
+                self.button_box.button(QT_BUTTON_OK).setEnabled(False)
                 return
 
             if service_type not in (
                     SERVICE_MANAGER.FDSNEVENT, SERVICE_MANAGER.MACROSEISMIC, SERVICE_MANAGER.FDSNSTATION):
-                self.button_box.button(QDialogButtonBox.Ok).setEnabled(True)
+                self.button_box.button(QT_BUTTON_OK).setEnabled(True)
                 return
 
         fetcher = self.get_fetcher(service_type)
         if not fetcher:
-            self.button_box.button(QDialogButtonBox.Ok).setEnabled(False)
+            self.button_box.button(QT_BUTTON_OK).setEnabled(False)
             return
 
         self._valid_changed()
@@ -580,11 +602,11 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         service_type = self.get_current_service_type()
         if service_type not in (
                 SERVICE_MANAGER.FDSNEVENT, SERVICE_MANAGER.MACROSEISMIC, SERVICE_MANAGER.FDSNSTATION):
-            self.button_box.button(QDialogButtonBox.Ok).setEnabled(True)
+            self.button_box.button(QT_BUTTON_OK).setEnabled(True)
             return
 
         filter_widget = self.get_service_filter_widget(service_type)
-        self.button_box.button(QDialogButtonBox.Ok).setEnabled(filter_widget.is_valid())
+        self.button_box.button(QT_BUTTON_OK).setEnabled(filter_widget.is_valid())
 
     def _update_service_widgets(self,  # pylint: disable=too-many-locals,too-many-branches
                                 service_type, service_id, filter_widget, filter_by_id_widget, fetch_by_url_widget,
@@ -597,22 +619,22 @@ class QQuakeDialog(QDialog, FORM_CLASS):
 
         date_start = QDateTime.fromString(
             service_config['datestart'],
-            Qt.ISODate
+            QT_ISO_DATE
         )
         default_date_start = QDateTime.fromString(
             service_config['default']['datestart'],
-            Qt.ISODate
+            QT_ISO_DATE
         ) if service_config['default'].get('datestart') else None
 
         # if the dateend is not set in the config.json set the date to NOW
         date_end = QDateTime.fromString(
             service_config['dateend'],
-            Qt.ISODate
+            QT_ISO_DATE
         ) if 'dateend' in service_config and service_config['dateend'] else None
 
         default_date_end = QDateTime.fromString(
             service_config['default']['dateend'],
-            Qt.ISODate
+            QT_ISO_DATE
         ) if service_config['default'].get('dateend') else None
 
         filter_widget.set_date_range_limits(date_start, date_end)
@@ -648,7 +670,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
             filter_widget.set_event_type(service_config['default'].get('eventtype'))
         updated_after = QDateTime.fromString(
             service_config['default']['updatedafter'],
-            Qt.ISODate
+            QT_ISO_DATE
         ) if service_config['default'].get('updatedafter') else None
         if updated_after:
             filter_widget.set_updated_after(updated_after)
@@ -740,15 +762,15 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                 continue
 
             group_item = QStandardItem(group)
-            group_item.setFlags(Qt.ItemIsEnabled)
+            group_item.setFlags(QT_ITEM_IS_ENABLED)
             self.ogc_list_model.appendRow([group_item])
             group_items[group] = group_item
 
         first_item = None
         for service in services:
             item = QStandardItem(service)
-            item.setFlags(Qt.ItemIsEnabled | Qt.ItemIsSelectable)
-            item.setData(service, role=Qt.UserRole)
+            item.setFlags(QT_ITEM_IS_ENABLED | QT_ITEM_IS_SELECTABLE)
+            item.setData(service, role=QT_USER_ROLE)
             if not first_item:
                 first_item = item
 
@@ -762,7 +784,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
 
         self.ogc_list.expandAll()
         first_item_index = self.ogc_list_model.indexFromItem(first_item)
-        self.ogc_list.selectionModel().select(first_item_index, QItemSelectionModel.ClearAndSelect)
+        self.ogc_list.selectionModel().select(first_item_index, QT_SELECTION_CLEAR_AND_SELECT)
 
         service_config = SERVICE_MANAGER.service_details(ogc_selection, self.get_current_service_id(ogc_selection))
         self.button_ogc_edit_service.setEnabled(not service_config['read_only'])
@@ -776,7 +798,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         if not self.ogc_list.selectionModel().selectedIndexes():
             return
 
-        current_service = self.ogc_list.selectionModel().selectedIndexes()[0].data(Qt.UserRole)
+        current_service = self.ogc_list.selectionModel().selectedIndexes()[0].data(QT_USER_ROLE)
         if not current_service:
             return
 
@@ -799,7 +821,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         service_type = self.get_current_service_type()
         service_id = self.get_current_service_id(service_type)
         if QMessageBox.question(self, self.tr('Remove Service'),
-                                self.tr('Are you sure you want to remove "{}"?'.format(service_id))) != QMessageBox.Yes:
+                                self.tr('Are you sure you want to remove "{}"?'.format(service_id))) != QT_MESSAGEBOX_YES:
             return
 
         SERVICE_MANAGER.remove_service(service_type, service_id)
@@ -812,7 +834,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         service_id = self.get_current_service_id(service_type)
 
         config_dialog = ServiceConfigurationDialog(self.iface, service_type, service_id, self)
-        if config_dialog.exec_():
+        if qt_exec(config_dialog):
             self.set_current_service(service_type, service_id)
 
     def _rename_service(self):
@@ -827,7 +849,7 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         dlg.setWindowTitle(self.tr('Rename Service Configuration'))
         dlg.setOverwriteEnabled(False)
         dlg.setConflictingNameWarning(self.tr('A configuration with this name already exists'))
-        if not dlg.exec_():
+        if not qt_exec(dlg):
             return
 
         new_name = dlg.name()
@@ -839,18 +861,18 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         Sets the current service
         """
         if service_type == SERVICE_MANAGER.FDSNEVENT:
-            self.fdsn_event_list.setCurrentItem(self.fdsn_event_list.findItems(service_id, Qt.MatchContains)[0])
+            self.fdsn_event_list.setCurrentItem(self.fdsn_event_list.findItems(service_id, QT_MATCH_CONTAINS)[0])
         elif service_type == SERVICE_MANAGER.MACROSEISMIC:
-            self.fdsn_macro_list.setCurrentItem(self.fdsn_macro_list.findItems(service_id, Qt.MatchContains)[0])
+            self.fdsn_macro_list.setCurrentItem(self.fdsn_macro_list.findItems(service_id, QT_MATCH_CONTAINS)[0])
         elif service_type == SERVICE_MANAGER.FDSNSTATION:
-            self.fdsn_station_list.setCurrentItem(self.fdsn_station_list.findItems(service_id, Qt.MatchContains)[0])
+            self.fdsn_station_list.setCurrentItem(self.fdsn_station_list.findItems(service_id, QT_MATCH_CONTAINS)[0])
         elif service_type in (SERVICE_MANAGER.WMS, SERVICE_MANAGER.WMTS, SERVICE_MANAGER.WFS, SERVICE_MANAGER.WCS):
             self.ogc_combo.setCurrentIndex(self.ogc_combo.findData(service_type))
 
-            indexes = self.ogc_list_model.match(self.ogc_list_model.index(0, 0), Qt.UserRole, service_id,
-                                                flags=Qt.MatchExactly | Qt.MatchRecursive)
+            indexes = self.ogc_list_model.match(self.ogc_list_model.index(0, 0), QT_USER_ROLE, service_id,
+                                                flags=QT_MATCH_EXACTLY | QT_MATCH_RECURSIVE)
             if len(indexes) > 0:
-                self.ogc_list.selectionModel().select(indexes[0], QItemSelectionModel.ClearAndSelect)
+                self.ogc_list.selectionModel().select(indexes[0], QT_SELECTION_CLEAR_AND_SELECT)
 
     def _create_configuration(self):
         """
@@ -862,12 +884,12 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         dlg.setWindowTitle(self.tr('New Service Configuration'))
         dlg.setOverwriteEnabled(False)
         dlg.setConflictingNameWarning(self.tr('A configuration with this name already exists'))
-        if not dlg.exec_():
+        if not qt_exec(dlg):
             return
 
         name = dlg.name()
         config_dialog = ServiceConfigurationDialog(self.iface, service_type, name, self)
-        if config_dialog.exec_():
+        if qt_exec(config_dialog):
             self.set_current_service(service_type, name)
 
     def _export_service(self):
@@ -885,10 +907,10 @@ class QQuakeDialog(QDialog, FORM_CLASS):
 
         if SERVICE_MANAGER.export_service(service_type, service_id, file):
             self.message_bar.pushMessage(
-                self.tr("Service exported"), Qgis.Success, 5)
+                self.tr("Service exported"), QGIS_SUCCESS, 5)
         else:
             self.message_bar.pushMessage(
-                self.tr("An error occurred while exporting service"), Qgis.Critical, 5)
+                self.tr("An error occurred while exporting service"), QGIS_CRITICAL, 5)
 
     def _import_configuration(self):
         """
@@ -901,10 +923,10 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         res, err = SERVICE_MANAGER.import_service(file)
         if res:
             self.message_bar.pushMessage(
-                self.tr("Service imported"), Qgis.Success, 5)
+                self.tr("Service imported"), QGIS_SUCCESS, 5)
         else:
             self.message_bar.pushMessage(
-                err, Qgis.Critical, 5)
+                err, QGIS_CRITICAL, 5)
 
     def _getEventList(self, split_strategy: Optional[str] = None):
         """
@@ -932,8 +954,8 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         self.fetcher.progress.connect(on_progress)
         self.fetcher.finished.connect(self._fetcher_finished)
         self.fetcher.message.connect(self._fetcher_message)
-        self.button_box.button(QDialogButtonBox.Ok).setText(self.tr('Fetching'))
-        self.button_box.button(QDialogButtonBox.Ok).setEnabled(False)
+        self.button_box.button(QT_BUTTON_OK).setText(self.tr('Fetching'))
+        self.button_box.button(QT_BUTTON_OK).setEnabled(False)
 
         self.fetcher.fetch_data()
 
@@ -951,8 +973,8 @@ class QQuakeDialog(QDialog, FORM_CLASS):
         """
         self.progressBar.setRange(0, 100)
         self.progressBar.reset()
-        self.button_box.button(QDialogButtonBox.Ok).setText(self.tr('Fetch Data'))
-        self.button_box.button(QDialogButtonBox.Ok).setEnabled(True)
+        self.button_box.button(QT_BUTTON_OK).setText(self.tr('Fetch Data'))
+        self.button_box.button(QT_BUTTON_OK).setEnabled(True)
 
         if not res:
             self.fetcher.deleteLater()
@@ -997,24 +1019,24 @@ class QQuakeDialog(QDialog, FORM_CLASS):
                             return
 
                         self.message_bar.pushMessage(self.tr("Query exceeded the service's result limit"),
-                                                     Qgis.Critical, 0)
+                                                     QGIS_CRITICAL, 0)
 
                     elif self.fetcher.exceeded_limit:
                         self.message_bar.pushMessage(self.tr(
                             "One or more queries exceeded the service's result limit. Please retry using an alternative strategy."),
-                            Qgis.Critical, 0)
+                            QGIS_CRITICAL, 0)
                 elif events_count > 500:
                     self.message_bar.pushMessage(
-                        self.tr("Query returned a large number of results ({})".format(events_count)), Qgis.Warning, 0)
+                        self.tr("Query returned a large number of results ({})".format(events_count)), QGIS_WARNING, 0)
                 elif events_count == 0:
                     
                     self.message_bar.pushMessage(
                         self.tr("The query submitted to the web service returned no results, check whether the parameters you entered are valid."),
-                        Qgis.Critical,
+                        QGIS_CRITICAL,
                         0)
                 else:
                     self.message_bar.pushMessage(
-                        self.tr("Query returned {} records").format(events_count), Qgis.Success, 0)
+                        self.tr("Query returned {} records").format(events_count), QGIS_SUCCESS, 0)
         elif self.fetcher.service_type == SERVICE_MANAGER.FDSNSTATION:
             layers.append(self.fetcher.create_stations_layer())
             stations_count = layers[0].featureCount()
@@ -1023,11 +1045,11 @@ class QQuakeDialog(QDialog, FORM_CLASS):
             if stations_count == 0:
                 self.message_bar.pushMessage(
                     self.tr("The query submitted to the web service returned no results, check whether the parameters you entered are valid."),
-                    Qgis.Critical,
+                    QGIS_CRITICAL,
                     0)
             else:
                 self.message_bar.pushMessage(
-                    self.tr("Query returned {} stations").format(stations_count), Qgis.Info, 0)
+                    self.tr("Query returned {} stations").format(stations_count), QGIS_INFO, 0)
         else:
             assert False
 
