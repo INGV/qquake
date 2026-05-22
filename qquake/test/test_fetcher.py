@@ -13,6 +13,9 @@ from qgis.PyQt.QtCore import QDateTime, Qt
 
 from qquake.fetcher import Fetcher
 from qquake.services import ServiceManager, SERVICE_MANAGER
+from qquake.qt_compat import (
+    QT_UTC
+)
 
 
 class TestFetcher(unittest.TestCase):
@@ -189,7 +192,7 @@ class TestFetcher(unittest.TestCase):
                           "EMSC-CSEM",
                           event_end_date=QDateTime(2000, 1, 1, 0, 0, 0),
                           split_strategy=Fetcher.SPLIT_STRATEGY_DAY)
-        self.assertEqual(fetcher.event_start_date_limit, QDateTime(1998, 1, 1, 0, 0, 0, 0, Qt.UTC))
+        self.assertEqual(fetcher.event_start_date_limit, QDateTime(1998, 1, 1, 0, 0, 0, 0, QT_UTC))
         self.assertEqual(fetcher.event_end_date_limit, QDateTime(2000, 1, 1, 0, 0, 0))
 
         # no explicit end date
@@ -199,7 +202,7 @@ class TestFetcher(unittest.TestCase):
                           event_start_date=QDateTime(1997, 1, 1, 0, 0, 0),
                           split_strategy=Fetcher.SPLIT_STRATEGY_DAY)
         self.assertEqual(fetcher.event_start_date_limit, QDateTime(1997, 1, 1, 0, 0, 0, 0))
-        self.assertEqual(fetcher.event_end_date_limit, QDateTime(1998, 1, 1, 0, 0, 0, 0, Qt.UTC))
+        self.assertEqual(fetcher.event_end_date_limit, QDateTime(1998, 1, 1, 0, 0, 0, 0, QT_UTC))
         SERVICE_MANAGER.services[ServiceManager.FDSNEVENT]['EMSC-CSEM']["dateend"] = ''
         fetcher = Fetcher(ServiceManager.FDSNEVENT,
                           "EMSC-CSEM",
