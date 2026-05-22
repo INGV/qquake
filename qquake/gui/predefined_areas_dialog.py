@@ -33,6 +33,12 @@ from qgis.utils import iface
 
 from qquake.gui.gui_utils import GuiUtils
 from qquake.services import SERVICE_MANAGER
+from qquake.qt_compat import (
+    QT_BUTTON_CANCEL,
+    QT_BUTTON_OK,
+    qt_user_role,
+    QT_USER_ROLE
+)
 
 FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('predefined_areas_widget_base.ui'))
 
@@ -54,13 +60,13 @@ class PredefinedAreasWidget(QDialog, FORM_CLASS):
         for name in SERVICE_MANAGER.available_predefined_bounding_boxes():
             extent = SERVICE_MANAGER.predefined_bounding_box(name)
             item = QListWidgetItem(extent['title'])
-            item.setData(Qt.UserRole, name)
-            item.setData(Qt.UserRole + 1, extent.get('read_only', False))
-            item.setData(Qt.UserRole + 2, extent.get('title', ''))
-            item.setData(Qt.UserRole + 3, extent.get('boundingbox', [0, 0, 0, 0])[0])
-            item.setData(Qt.UserRole + 4, extent.get('boundingbox', [0, 0, 0, 0])[1])
-            item.setData(Qt.UserRole + 5, extent.get('boundingbox', [0, 0, 0, 0])[2])
-            item.setData(Qt.UserRole + 6, extent.get('boundingbox', [0, 0, 0, 0])[3])
+            item.setData(QT_USER_ROLE, name)
+            item.setData(qt_user_role(1), extent.get('read_only', False))
+            item.setData(qt_user_role(2), extent.get('title', ''))
+            item.setData(qt_user_role(3), extent.get('boundingbox', [0, 0, 0, 0])[0])
+            item.setData(qt_user_role(4), extent.get('boundingbox', [0, 0, 0, 0])[1])
+            item.setData(qt_user_role(5), extent.get('boundingbox', [0, 0, 0, 0])[2])
+            item.setData(qt_user_role(6), extent.get('boundingbox', [0, 0, 0, 0])[3])
             self.region_list.addItem(item)
 
         self.region_list.currentItemChanged.connect(self._item_changed)
@@ -84,17 +90,17 @@ class PredefinedAreasWidget(QDialog, FORM_CLASS):
             return
 
         current = self.region_list.currentItem()
-        read_only = current.data(Qt.UserRole + 1)
+        read_only = current.data(qt_user_role(1))
         if read_only:
             return
 
         self.blocked = True
-        current.setData(Qt.UserRole + 2, self.edit_label.text())
+        current.setData(qt_user_role(2), self.edit_label.text())
         current.setText(self.edit_label.text())
-        current.setData(Qt.UserRole + 3, self.spin_min_long.value())
-        current.setData(Qt.UserRole + 5, self.spin_max_long.value())
-        current.setData(Qt.UserRole + 4, self.spin_min_lat.value())
-        current.setData(Qt.UserRole + 6, self.spin_max_lat.value())
+        current.setData(qt_user_role(3), self.spin_min_long.value())
+        current.setData(qt_user_role(5), self.spin_max_long.value())
+        current.setData(qt_user_role(4), self.spin_min_lat.value())
+        current.setData(qt_user_role(6), self.spin_max_lat.value())
         self.blocked = False
 
     def _item_changed(self, current, previous):  # pylint: disable=unused-argument
@@ -105,13 +111,13 @@ class PredefinedAreasWidget(QDialog, FORM_CLASS):
             return
 
         self.blocked = True
-        self.edit_label.setText(current.data(Qt.UserRole + 2))
-        self.spin_min_long.setValue(current.data(Qt.UserRole + 3))
-        self.spin_max_long.setValue(current.data(Qt.UserRole + 5))
-        self.spin_min_lat.setValue(current.data(Qt.UserRole + 4))
-        self.spin_max_lat.setValue(current.data(Qt.UserRole + 6))
+        self.edit_label.setText(current.data(qt_user_role(2)))
+        self.spin_min_long.setValue(current.data(qt_user_role(3)))
+        self.spin_max_long.setValue(current.data(qt_user_role(5)))
+        self.spin_min_lat.setValue(current.data(qt_user_role(4)))
+        self.spin_max_lat.setValue(current.data(qt_user_role(6)))
 
-        read_only = current.data(Qt.UserRole + 1)
+        read_only = current.data(qt_user_role(1))
         for w in [self.edit_label, self.spin_min_long, self.spin_max_long, self.spin_min_lat, self.spin_max_lat,
                   self.button_draw_on_map]:
             w.setEnabled(not read_only)
@@ -123,13 +129,13 @@ class PredefinedAreasWidget(QDialog, FORM_CLASS):
         Adds a new item
         """
         item = QListWidgetItem('New Area')
-        item.setData(Qt.UserRole, None)
-        item.setData(Qt.UserRole + 1, False)
-        item.setData(Qt.UserRole + 2, 'New Area')
-        item.setData(Qt.UserRole + 3, 0)
-        item.setData(Qt.UserRole + 4, 0)
-        item.setData(Qt.UserRole + 5, 0)
-        item.setData(Qt.UserRole + 6, 0)
+        item.setData(QT_USER_ROLE, None)
+        item.setData(qt_user_role(1), False)
+        item.setData(qt_user_role(2), 'New Area')
+        item.setData(qt_user_role(3), 0)
+        item.setData(qt_user_role(4), 0)
+        item.setData(qt_user_role(5), 0)
+        item.setData(qt_user_role(6), 0)
         self.region_list.addItem(item)
         self.region_list.setCurrentItem(item)
 
@@ -153,15 +159,15 @@ class PredefinedAreasWidget(QDialog, FORM_CLASS):
 
         for i in range(self.region_list.count()):
             item = self.region_list.item(i)
-            if item.data(Qt.UserRole + 1):
+            if item.data(qt_user_role(1)):
                 # read only
                 continue
 
-            title = item.data(Qt.UserRole + 2)
-            bounding_box = [item.data(Qt.UserRole + 3),
-                            item.data(Qt.UserRole + 4),
-                            item.data(Qt.UserRole + 5),
-                            item.data(Qt.UserRole + 6)]
+            title = item.data(qt_user_role(2))
+            bounding_box = [item.data(qt_user_role(3)),
+                            item.data(qt_user_role(4)),
+                            item.data(qt_user_role(5)),
+                            item.data(qt_user_role(6))]
 
             SERVICE_MANAGER.add_predefined_bounding_box(title, {'title': title, 'boundingbox': bounding_box})
 
@@ -227,7 +233,7 @@ class PredefinedAreasDialog(QDialog):
         self.widget = PredefinedAreasWidget()
         layout = QVBoxLayout()
         layout.addWidget(self.widget)
-        self.button_box = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
+        self.button_box = QDialogButtonBox(QT_BUTTON_OK | QT_BUTTON_CANCEL)
         self.button_box.accepted.connect(self.accept)
         self.button_box.rejected.connect(self.reject)
         layout.addWidget(self.button_box)
