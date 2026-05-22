@@ -23,6 +23,9 @@ from qgis.PyQt.QtCore import (
     Qt
 )
 from qgis.core import NULL
+from qquake.qt_compat import (
+    QT_UTC
+)
 
 
 class ElementParser:  # pylint: disable=too-many-public-methods
@@ -80,11 +83,11 @@ class ElementParser:  # pylint: disable=too-many-public-methods
                 if val[-1].upper() == 'Z':
                     val = val[:-1]
                 dt = QDateTime.fromString((val + '000')[:23], 'yyyy-MM-ddThh:mm:ss.zzz')
-                dt.setTimeSpec(Qt.UTC)
+                dt.setTimeSpec(QT_UTC)
                 return dt
 
             dt = QDateTime(QDate.fromString(val, 'yyyy-MM-dd'), QTime())
-            dt.setTimeSpec(Qt.UTC)
+            dt.setTimeSpec(QT_UTC)
             return dt
 
         if is_attribute:
