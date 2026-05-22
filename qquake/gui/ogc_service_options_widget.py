@@ -32,6 +32,13 @@ from qquake.gui.gui_utils import GuiUtils
 from qquake.gui.simple_node_model import SimpleNodeModel, ModelNode
 from qquake.services import SERVICE_MANAGER
 from qquake.style_utils import StyleUtils
+from qquake.qt_compat import (
+    QT_CHECK_STATE_ROLE,
+    QT_DISPLAY_ROLE,
+    QT_ITEM_IS_USER_CHECKABLE,
+    qt_exec,
+    QT_USER_ROLE
+)
 
 FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('ogc_service_widget.ui'))
 
@@ -138,7 +145,7 @@ class OgcServiceWidget(QWidget, FORM_CLASS):
 
         for r in range(self.layer_model.rowCount(QModelIndex())):
             
-            if self.layer_model.flags(self.layer_model.index(r, 0, QModelIndex())) & Qt.ItemIsUserCheckable:
+            if self.layer_model.flags(self.layer_model.index(r, 0, QModelIndex())) & QT_ITEM_IS_USER_CHECKABLE:
                 continue
 
             self.layers_tree_view.setFirstColumnSpanned(r, QModelIndex(), True)
@@ -263,18 +270,18 @@ class OgcServiceWidget(QWidget, FORM_CLASS):
             print("r attuale: ", r)
             parent = self.layer_model.index(r, 0, QModelIndex())
             
-            if self.layer_model.flags(parent) & Qt.ItemIsUserCheckable:
+            if self.layer_model.flags(parent) & QT_ITEM_IS_USER_CHECKABLE:
                 print("caso #1")
-                layer_name = self.layer_model.data(self.layer_model.index(r, 1, QModelIndex()), Qt.DisplayRole)
-                preset_style = self.layer_model.data(self.layer_model.index(r, 1, QModelIndex()), Qt.UserRole)
+                layer_name = self.layer_model.data(self.layer_model.index(r, 1, QModelIndex()), QT_DISPLAY_ROLE)
+                preset_style = self.layer_model.data(self.layer_model.index(r, 1, QModelIndex()), QT_USER_ROLE)
                 add_layer(layer_name, preset_style=preset_style)
             else:
                 print("caso #2")
-                layer_name = self.layer_model.data(parent, Qt.DisplayRole)
+                layer_name = self.layer_model.data(parent, QT_DISPLAY_ROLE)
                 for rc in range(self.layer_model.rowCount(parent)):
-                    style = self.layer_model.data(self.layer_model.index(rc, 1, parent), Qt.DisplayRole)
-                    checked = self.layer_model.data(self.layer_model.index(rc, 0, parent), Qt.CheckStateRole)
-                    preset_style = self.layer_model.data(self.layer_model.index(rc, 1, parent), Qt.UserRole)
+                    style = self.layer_model.data(self.layer_model.index(rc, 1, parent), QT_DISPLAY_ROLE)
+                    checked = self.layer_model.data(self.layer_model.index(rc, 0, parent), QT_CHECK_STATE_ROLE)
+                    preset_style = self.layer_model.data(self.layer_model.index(rc, 1, parent), QT_USER_ROLE)
                     #test = self.layer_model.
 
                     print("questo è preset style:", preset_style)
@@ -292,11 +299,11 @@ class OgcServiceWidget(QWidget, FORM_CLASS):
         for r in range(self.layer_model.rowCount(QModelIndex())):
             parent = self.layer_model.index(r, 0, QModelIndex())
 
-            if self.layer_model.flags(parent) & Qt.ItemIsUserCheckable:
-                layer_name = self.layer_model.data(self.layer_model.index(r, 1, QModelIndex()), Qt.DisplayRole)
+            if self.layer_model.flags(parent) & QT_ITEM_IS_USER_CHECKABLE:
+                layer_name = self.layer_model.data(self.layer_model.index(r, 1, QModelIndex()), QT_DISPLAY_ROLE)
                 layers.append(layer_name)
             else:
-                layer_name = self.layer_model.data(parent, Qt.DisplayRole)
+                layer_name = self.layer_model.data(parent, QT_DISPLAY_ROLE)
                 layers.append(layer_name)
 
         return layers
@@ -308,14 +315,14 @@ class OgcServiceWidget(QWidget, FORM_CLASS):
         for r in range(self.layer_model.rowCount(QModelIndex())):
             parent = self.layer_model.index(r, 0, QModelIndex())
 
-            if self.layer_model.flags(parent) & Qt.ItemIsUserCheckable:
+            if self.layer_model.flags(parent) & QT_ITEM_IS_USER_CHECKABLE:
                 continue
 
-            if self.layer_model.data(parent, Qt.DisplayRole) == layer:
+            if self.layer_model.data(parent, QT_DISPLAY_ROLE) == layer:
                 for rc in range(self.layer_model.rowCount(parent)):
-                    row_style = self.layer_model.data(self.layer_model.index(rc, 1, parent), Qt.DisplayRole)
+                    row_style = self.layer_model.data(self.layer_model.index(rc, 1, parent), QT_DISPLAY_ROLE)
                     if style == row_style:
-                        return self.layer_model.data(self.layer_model.index(rc, 0, parent), Qt.CheckStateRole)
+                        return self.layer_model.data(self.layer_model.index(rc, 0, parent), QT_CHECK_STATE_ROLE)
         return False
 
     def to_service_definition(self) -> dict:
@@ -343,7 +350,7 @@ class OgcServiceWidget(QWidget, FORM_CLASS):
         for r in range(self.layer_model.rowCount(QModelIndex())):
             parent = self.layer_model.index(r, 0, QModelIndex())
             for rc in range(self.layer_model.rowCount(parent)):
-                self.layer_model.setData(self.layer_model.index(rc, 0, parent), checked, Qt.CheckStateRole)
+                self.layer_model.setData(self.layer_model.index(rc, 0, parent), checked, QT_CHECK_STATE_ROLE)
                 
     def _set_filter(self):
         """
@@ -359,7 +366,7 @@ class OgcServiceWidget(QWidget, FORM_CLASS):
             w.set_simple_query_fields(self.simple_cql)
         w.set_use_advanced(self.use_advanced_cql)
 
-        if w.exec_():
+        if qt_exec(w):
             self.cql = w.cql()
             self.simple_cql = w.simple_query_fields()
             self.use_advanced_cql = w.use_advanced_cql()
