@@ -47,13 +47,13 @@
 			"configversion": 1.0,
 			"configlastupdate": "2026-04-20T18:25:12+00:00"
 		},
-		"INGV HSFIT": {
-			"title": "HSFIT, Historical Surface Faulting events of ITaly",
+		"INGV SFIT": {
+			"title": "SFIT, Database of Surface Faulting events in ITaly",
 			"group": "Geology",
 			"servicedescription": "OGC WFS provided by Seismofaults.eu",
 			"servicedescriptionurl": "https://ingv.maps.arcgis.com/apps/instant/sidebar/index.html?appid=71f0322aa4dc4bc9b67b17ca36fba402",
-			"datadescription": "Cinti F. R., Pantosti D., Olle’ Lopez, M., Martinelli C., Blumetti A. M., Civico R., Guerrieri L. (2025, January). Historical Surface Faulting events of ITaly (HSFIT) (Version 1). ArcGIS Online, Environmental Systems Research Institute (ESRI). https://doi.org/10.13127/sfit/hsfit-2024",
-			"datadescriptionurl": "https://doi.org/10.13127/sfit/hsfit-2024",
+			"datadescription": "Cinti F. R., Pantosti D., Civico R. (2026). Database of Surface Faulting events in ITaly - SFIT (Version 1) [Data set]. Istituto Nazionale di Geofisica e Vulcanologia (INGV). https://doi.org/10.13127/sfit/sfit.1",
+			"datadescriptionurl": "https://doi.org/10.13127/sfit/sfit.1",
 			"datalicense": "CC BY 4.0",
 			"datalicenseurl": "https://creativecommons.org/licenses/by/4.0/",
 			"dataprovider": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
