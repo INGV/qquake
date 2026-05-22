@@ -7,7 +7,7 @@
 # WARNING! All changes made in this file will be lost!
 
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+from qgis.PyQt import QtCore, QtGui, QtWidgets
 
 
 class Ui_filter_by_id_widget_base(object):
@@ -18,7 +18,7 @@ class Ui_filter_by_id_widget_base(object):
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.setObjectName("verticalLayout")
         self.scroll_area = QtWidgets.QScrollArea(filter_by_id_widget_base)
-        self.scroll_area.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.scroll_area.setFrameShape(QT_FRAME_NO_FRAME)
         self.scroll_area.setWidgetResizable(True)
         self.scroll_area.setObjectName("scroll_area")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
@@ -34,7 +34,7 @@ class Ui_filter_by_id_widget_base(object):
         self.buttonGroup.setObjectName("buttonGroup")
         self.buttonGroup.addButton(self.radio_single_event)
         self.gridLayout.addWidget(self.radio_single_event, 0, 0, 1, 2)
-        spacerItem = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum)
+        spacerItem = QtWidgets.QSpacerItem(20, 20, QT_SIZE_POLICY_FIXED, QT_SIZE_POLICY_MINIMUM)
         self.gridLayout.addItem(spacerItem, 1, 0, 1, 1)
         self.label_event_id = QtWidgets.QLabel(self.scrollAreaWidgetContents)
         self.label_event_id.setObjectName("label_event_id")
@@ -47,7 +47,7 @@ class Ui_filter_by_id_widget_base(object):
         self.radio_multiple_events.setObjectName("radio_multiple_events")
         self.buttonGroup.addButton(self.radio_multiple_events)
         self.gridLayout.addWidget(self.radio_multiple_events, 2, 0, 1, 2)
-        spacerItem1 = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum)
+        spacerItem1 = QtWidgets.QSpacerItem(20, 20, QT_SIZE_POLICY_FIXED, QT_SIZE_POLICY_MINIMUM)
         self.gridLayout.addItem(spacerItem1, 3, 0, 1, 1)
         self.multi_event_widget = QtWidgets.QWidget(self.scrollAreaWidgetContents)
         self.multi_event_widget.setObjectName("multi_event_widget")
@@ -91,7 +91,7 @@ class Ui_filter_by_id_widget_base(object):
         self.output_table_options_widget = OutputTableOptionsWidget(self.scrollAreaWidgetContents)
         self.output_table_options_widget.setObjectName("output_table_options_widget")
         self.gridLayout.addWidget(self.output_table_options_widget, 7, 0, 1, 3)
-        spacerItem2 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        spacerItem2 = QtWidgets.QSpacerItem(20, 40, QT_SIZE_POLICY_MINIMUM, QT_SIZE_POLICY_EXPANDING)
         self.gridLayout.addItem(spacerItem2, 8, 0, 1, 1)
         self.scroll_area.setWidget(self.scrollAreaWidgetContents)
         self.verticalLayout.addWidget(self.scroll_area)
@@ -113,3 +113,9 @@ class Ui_filter_by_id_widget_base(object):
         self.button_refresh_contributors.setText(_translate("filter_by_id_widget_base", "Refresh"))
 from qquake.gui.output_options_widget import OutputOptionsWidget
 from qquake.gui.output_table_options_widget import OutputTableOptionsWidget
+from qquake.qt_compat import (
+    QT_FRAME_NO_FRAME,
+    QT_SIZE_POLICY_EXPANDING,
+    QT_SIZE_POLICY_FIXED,
+    QT_SIZE_POLICY_MINIMUM,
+)
