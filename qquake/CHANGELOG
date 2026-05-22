@@ -1,4 +1,9 @@
-2026-04-21 v1.8 Changes:
+2026-05-22 v1.9
+- Added compatibility with QGIS 4 (Qt 6) while preserving QGIS 3 (Qt 5 support)
+- Buttons have been added that allow users to select a date to view data for time periods such as the last year, month, week or 24 hours. This feature is available for services that provide earthquake parameters in accordance with the FDSN-event standard.
+- The selection of networks and stations in the 'Search by Identifiers' sub-section of the 'Seismic stations' module has been simplified for services that comply with the FDSN-station standard.
+			
+2026-04-21 v1.8
 - added fdsnws-event for AusPass
 - added fdsnws-event for GEOFON-GFZ
 - added fdsnws-event for GeoNet
