@@ -19,6 +19,10 @@ from qgis.PyQt.QtWidgets import QWidget
 from qgis.core import QgsUnitTypes
 
 from qquake.gui.gui_utils import GuiUtils
+from qquake.qt_compat import (
+    QGS_DISTANCE_KILOMETERS,
+    QGS_DISTANCE_METERS
+)
 
 FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('output_options_base.ui'))
 
@@ -34,8 +38,8 @@ class OutputOptionsWidget(QWidget, FORM_CLASS):
 
         self.setupUi(self)
 
-        self.depth_unit_combo_box.addItem(self.tr('Meters'), QgsUnitTypes.DistanceMeters)
-        self.depth_unit_combo_box.addItem(self.tr('Kilometers'), QgsUnitTypes.DistanceKilometers)
+        self.depth_unit_combo_box.addItem(self.tr('Meters'), QGS_DISTANCE_METERS)
+        self.depth_unit_combo_box.addItem(self.tr('Kilometers'), QGS_DISTANCE_KILOMETERS)
 
         self.depth_values_combo_box.addItem(
             self.tr('Positive Values when Below the Sea Level, Negative when Above the Sea Level'), False)
