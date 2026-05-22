@@ -7,7 +7,7 @@
 # WARNING! All changes made in this file will be lost!
 
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+from qgis.PyQt import QtCore, QtGui, QtWidgets
 
 
 class Ui_Form(object):
@@ -18,7 +18,7 @@ class Ui_Form(object):
         self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.splitter = QtWidgets.QSplitter(Form)
-        self.splitter.setOrientation(QtCore.Qt.Horizontal)
+        self.splitter.setOrientation(QT_HORIZONTAL)
         self.splitter.setObjectName("splitter")
         self.layoutWidget = QtWidgets.QWidget(self.splitter)
         self.layoutWidget.setObjectName("layoutWidget")
@@ -88,3 +88,6 @@ class Ui_Form(object):
         self.cql_help_button.setText(_translate("Form", "Help on how to write a CQL query"))
         self.tab_widget.setTabText(self.tab_widget.indexOf(self.tab_2), _translate("Form", "Advanced Query (CQL Editor)"))
 from qgis.gui import QgsCodeEditorSQL
+from qquake.qt_compat import (
+    QT_HORIZONTAL
+)
