@@ -7,7 +7,14 @@
 # WARNING! All changes made in this file will be lost!
 
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+from qgis.PyQt import QtCore, QtGui, QtWidgets
+from qquake.qt_compat import (
+    QT_BUTTON_CANCEL,
+    QT_BUTTON_OK,
+    QT_HORIZONTAL,
+    QT_SIZE_POLICY_EXPANDING,
+    QT_SIZE_POLICY_MINIMUM
+)
 
 
 class Ui_Form(object):
@@ -17,15 +24,15 @@ class Ui_Form(object):
         self.gridLayout_2 = QtWidgets.QGridLayout(Form)
         self.gridLayout_2.setObjectName("gridLayout_2")
         self.button_box = QtWidgets.QDialogButtonBox(Form)
-        self.button_box.setOrientation(QtCore.Qt.Horizontal)
-        self.button_box.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Ok)
+        self.button_box.setOrientation(QT_HORIZONTAL)
+        self.button_box.setStandardButtons(QT_BUTTON_CANCEL|QT_BUTTON_OK)
         self.button_box.setObjectName("button_box")
         self.gridLayout_2.addWidget(self.button_box, 3, 0, 1, 2)
         self.groupBox = QtWidgets.QGroupBox(Form)
         self.groupBox.setObjectName("groupBox")
         self.gridLayout = QtWidgets.QGridLayout(self.groupBox)
         self.gridLayout.setObjectName("gridLayout")
-        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem = QtWidgets.QSpacerItem(40, 20, QT_SIZE_POLICY_EXPANDING, QT_SIZE_POLICY_MINIMUM)
         self.gridLayout.addItem(spacerItem, 3, 0, 1, 1)
         self.check_all_button = QtWidgets.QPushButton(self.groupBox)
         self.check_all_button.setObjectName("check_all_button")
