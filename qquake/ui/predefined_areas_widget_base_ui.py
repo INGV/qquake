@@ -1,13 +1,17 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'c:\Users\giorg\AppData\Roaming\QGIS\QGIS3\profiles\qquake\python\plugins\qquake\ui\predefined_areas_widget_base.ui'
+# Form implementation generated from reading ui file 'predefined_areas_widget_base.ui'
 #
 # Created by: PyQt5 UI code generator 5.13.2
 #
 # WARNING! All changes made in this file will be lost!
 
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+from qgis.PyQt import QtCore, QtGui, QtWidgets
+from qquake.qt_compat import (
+    QT_SIZE_POLICY_EXPANDING,
+    QT_SIZE_POLICY_MINIMUM
+)
 
 
 class Ui_predefined_areas_widget_base(object):
@@ -35,7 +39,7 @@ class Ui_predefined_areas_widget_base(object):
         self.spin_min_lat.setMaximum(90.0)
         self.spin_min_lat.setObjectName("spin_min_lat")
         self.gridLayout_2.addWidget(self.spin_min_lat, 3, 2, 1, 1)
-        spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        spacerItem = QtWidgets.QSpacerItem(20, 40, QT_SIZE_POLICY_MINIMUM, QT_SIZE_POLICY_EXPANDING)
         self.gridLayout_2.addItem(spacerItem, 6, 2, 1, 1)
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setContentsMargins(-1, 0, -1, -1)
@@ -46,7 +50,7 @@ class Ui_predefined_areas_widget_base(object):
         self.button_remove = QtWidgets.QPushButton(predefined_areas_widget_base)
         self.button_remove.setObjectName("button_remove")
         self.horizontalLayout.addWidget(self.button_remove)
-        spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem1 = QtWidgets.QSpacerItem(40, 20, QT_SIZE_POLICY_EXPANDING, QT_SIZE_POLICY_MINIMUM)
         self.horizontalLayout.addItem(spacerItem1)
         self.gridLayout_2.addLayout(self.horizontalLayout, 7, 0, 1, 1)
         self.edit_label = QtWidgets.QLineEdit(predefined_areas_widget_base)
