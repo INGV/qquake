@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'c:\Users\giorg\AppData\Roaming\QGIS\QGIS3\profiles\qquake\python\plugins\qquake\ui\filter_parameter_widget_base.ui'
+# Form implementation generated from reading ui file 'filter_parameter_widget_base.ui'
 #
 # Created by: PyQt5 UI code generator 5.13.2
 #
