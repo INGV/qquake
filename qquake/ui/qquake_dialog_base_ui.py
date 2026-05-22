@@ -1,13 +1,25 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'c:\Users\giorg\AppData\Roaming\QGIS\QGIS3\profiles\qquake\python\plugins\qquake\ui\qquake_dialog_base.ui'
+# Form implementation generated from reading ui file 'qquake_dialog_base.ui'
 #
 # Created by: PyQt5 UI code generator 5.13.2
 #
 # WARNING! All changes made in this file will be lost!
 
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+from qgis.PyQt import QtCore, QtGui, QtWidgets
+from qquake.qt_compat import (
+    QT_BUTTON_CLOSE,
+    QT_BUTTON_OK,
+    QT_FRAME_NO_FRAME,
+    QT_HORIZONTAL,
+    QT_LAYOUT_SET_DEFAULT_CONSTRAINT,
+    QT_SIZE_POLICY_EXPANDING,
+    QT_SIZE_POLICY_MINIMUM,
+    QT_SIZE_POLICY_PREFERRED,
+    QT_TAB_POSITION_NORTH,
+    QT_TOOLBUTTON_INSTANT_POPUP,
+)
 
 
 class Ui_QQuakeDialogBase(object):
@@ -17,7 +29,7 @@ class Ui_QQuakeDialogBase(object):
         self.verticalLayout = QtWidgets.QVBoxLayout(QQuakeDialogBase)
         self.verticalLayout.setObjectName("verticalLayout")
         self.service_tab_widget = QtWidgets.QTabWidget(QQuakeDialogBase)
-        self.service_tab_widget.setTabPosition(QtWidgets.QTabWidget.North)
+        self.service_tab_widget.setTabPosition(QT_TAB_POSITION_NORTH)
         self.service_tab_widget.setTabsClosable(False)
         self.service_tab_widget.setMovable(False)
         self.service_tab_widget.setObjectName("service_tab_widget")
@@ -26,7 +38,7 @@ class Ui_QQuakeDialogBase(object):
         self.gridLayout_2 = QtWidgets.QGridLayout(self.fdsn_event_tab)
         self.gridLayout_2.setObjectName("gridLayout_2")
         self.splitter = QtWidgets.QSplitter(self.fdsn_event_tab)
-        self.splitter.setOrientation(QtCore.Qt.Horizontal)
+        self.splitter.setOrientation(QT_HORIZONTAL)
         self.splitter.setChildrenCollapsible(False)
         self.splitter.setObjectName("splitter")
         self.layoutWidget = QtWidgets.QWidget(self.splitter)
@@ -40,25 +52,25 @@ class Ui_QQuakeDialogBase(object):
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.button_fdsn_new_service = QtWidgets.QToolButton(self.layoutWidget)
-        self.button_fdsn_new_service.setPopupMode(QtWidgets.QToolButton.InstantPopup)
+        self.button_fdsn_new_service.setPopupMode(QT_TOOLBUTTON_INSTANT_POPUP)
         self.button_fdsn_new_service.setObjectName("button_fdsn_new_service")
         self.horizontalLayout.addWidget(self.button_fdsn_new_service)
         self.button_fdsn_edit_service = QtWidgets.QToolButton(self.layoutWidget)
-        self.button_fdsn_edit_service.setPopupMode(QtWidgets.QToolButton.InstantPopup)
+        self.button_fdsn_edit_service.setPopupMode(QT_TOOLBUTTON_INSTANT_POPUP)
         self.button_fdsn_edit_service.setObjectName("button_fdsn_edit_service")
         self.horizontalLayout.addWidget(self.button_fdsn_edit_service)
         self.button_fdsn_rename_service = QtWidgets.QToolButton(self.layoutWidget)
-        self.button_fdsn_rename_service.setPopupMode(QtWidgets.QToolButton.InstantPopup)
+        self.button_fdsn_rename_service.setPopupMode(QT_TOOLBUTTON_INSTANT_POPUP)
         self.button_fdsn_rename_service.setObjectName("button_fdsn_rename_service")
         self.horizontalLayout.addWidget(self.button_fdsn_rename_service)
         self.button_fdsn_remove_service = QtWidgets.QToolButton(self.layoutWidget)
         self.button_fdsn_remove_service.setObjectName("button_fdsn_remove_service")
         self.horizontalLayout.addWidget(self.button_fdsn_remove_service)
         self.button_fdsn_export_service = QtWidgets.QToolButton(self.layoutWidget)
-        self.button_fdsn_export_service.setPopupMode(QtWidgets.QToolButton.InstantPopup)
+        self.button_fdsn_export_service.setPopupMode(QT_TOOLBUTTON_INSTANT_POPUP)
         self.button_fdsn_export_service.setObjectName("button_fdsn_export_service")
         self.horizontalLayout.addWidget(self.button_fdsn_export_service)
-        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem = QtWidgets.QSpacerItem(40, 20, QT_SIZE_POLICY_EXPANDING, QT_SIZE_POLICY_MINIMUM)
         self.horizontalLayout.addItem(spacerItem)
         self.verticalLayout_3.addLayout(self.horizontalLayout)
         self.widget = QtWidgets.QWidget(self.splitter)
@@ -66,12 +78,12 @@ class Ui_QQuakeDialogBase(object):
         self.widget.setBaseSize(QtCore.QSize(0, 0))
         self.widget.setObjectName("widget")
         self.verticalLayout_11 = QtWidgets.QVBoxLayout(self.widget)
-        self.verticalLayout_11.setSizeConstraint(QtWidgets.QLayout.SetDefaultConstraint)
+        self.verticalLayout_11.setSizeConstraint(QT_LAYOUT_SET_DEFAULT_CONSTRAINT)
         self.verticalLayout_11.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_11.setObjectName("verticalLayout_11")
         self.fdsn_tab_widget = QtWidgets.QTabWidget(self.widget)
         self.fdsn_tab_widget.setEnabled(True)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy = QtWidgets.QSizePolicy(QT_SIZE_POLICY_PREFERRED, QT_SIZE_POLICY_EXPANDING)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.fdsn_tab_widget.sizePolicy().hasHeightForWidth())
@@ -112,7 +124,7 @@ class Ui_QQuakeDialogBase(object):
         self.verticalLayout_11.addWidget(self.fdsn_tab_widget)
         self.gridLayout_2.addWidget(self.splitter, 0, 0, 1, 1)
         self.fdsn_event_url_text_browser = QtWidgets.QTextBrowser(self.fdsn_event_tab)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy = QtWidgets.QSizePolicy(QT_SIZE_POLICY_EXPANDING, QT_SIZE_POLICY_MINIMUM)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.fdsn_event_url_text_browser.sizePolicy().hasHeightForWidth())
@@ -120,7 +132,7 @@ class Ui_QQuakeDialogBase(object):
         self.fdsn_event_url_text_browser.setMinimumSize(QtCore.QSize(0, 80))
         self.fdsn_event_url_text_browser.setMaximumSize(QtCore.QSize(16777215, 80))
         self.fdsn_event_url_text_browser.setBaseSize(QtCore.QSize(10, 10))
-        self.fdsn_event_url_text_browser.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.fdsn_event_url_text_browser.setFrameShape(QT_FRAME_NO_FRAME)
         self.fdsn_event_url_text_browser.setOpenExternalLinks(True)
         self.fdsn_event_url_text_browser.setObjectName("fdsn_event_url_text_browser")
         self.gridLayout_2.addWidget(self.fdsn_event_url_text_browser, 1, 0, 1, 1)
@@ -130,7 +142,7 @@ class Ui_QQuakeDialogBase(object):
         self.gridLayout_3 = QtWidgets.QGridLayout(self.fdsn_macro_tab)
         self.gridLayout_3.setObjectName("gridLayout_3")
         self.splitter_2 = QtWidgets.QSplitter(self.fdsn_macro_tab)
-        self.splitter_2.setOrientation(QtCore.Qt.Horizontal)
+        self.splitter_2.setOrientation(QT_HORIZONTAL)
         self.splitter_2.setChildrenCollapsible(False)
         self.splitter_2.setObjectName("splitter_2")
         self.layoutWidget1 = QtWidgets.QWidget(self.splitter_2)
@@ -145,7 +157,7 @@ class Ui_QQuakeDialogBase(object):
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.button_macro_new_service = QtWidgets.QToolButton(self.layoutWidget1)
-        self.button_macro_new_service.setPopupMode(QtWidgets.QToolButton.InstantPopup)
+        self.button_macro_new_service.setPopupMode(QT_TOOLBUTTON_INSTANT_POPUP)
         self.button_macro_new_service.setObjectName("button_macro_new_service")
         self.horizontalLayout_2.addWidget(self.button_macro_new_service)
         self.button_macro_edit_service = QtWidgets.QToolButton(self.layoutWidget1)
@@ -160,7 +172,7 @@ class Ui_QQuakeDialogBase(object):
         self.button_macro_export_service = QtWidgets.QToolButton(self.layoutWidget1)
         self.button_macro_export_service.setObjectName("button_macro_export_service")
         self.horizontalLayout_2.addWidget(self.button_macro_export_service)
-        spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem1 = QtWidgets.QSpacerItem(40, 20, QT_SIZE_POLICY_EXPANDING, QT_SIZE_POLICY_MINIMUM)
         self.horizontalLayout_2.addItem(spacerItem1)
         self.verticalLayout_19.addLayout(self.horizontalLayout_2)
         self.widget_3 = QtWidgets.QWidget(self.splitter_2)
@@ -208,7 +220,7 @@ class Ui_QQuakeDialogBase(object):
         self.fdsn_macro_url_text_browser = QtWidgets.QTextBrowser(self.fdsn_macro_tab)
         self.fdsn_macro_url_text_browser.setMinimumSize(QtCore.QSize(0, 80))
         self.fdsn_macro_url_text_browser.setMaximumSize(QtCore.QSize(16777215, 80))
-        self.fdsn_macro_url_text_browser.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.fdsn_macro_url_text_browser.setFrameShape(QT_FRAME_NO_FRAME)
         self.fdsn_macro_url_text_browser.setOpenExternalLinks(True)
         self.fdsn_macro_url_text_browser.setObjectName("fdsn_macro_url_text_browser")
         self.gridLayout_3.addWidget(self.fdsn_macro_url_text_browser, 1, 0, 1, 1)
@@ -218,7 +230,7 @@ class Ui_QQuakeDialogBase(object):
         self.gridLayout_5 = QtWidgets.QGridLayout(self.tab)
         self.gridLayout_5.setObjectName("gridLayout_5")
         self.splitter_3 = QtWidgets.QSplitter(self.tab)
-        self.splitter_3.setOrientation(QtCore.Qt.Horizontal)
+        self.splitter_3.setOrientation(QT_HORIZONTAL)
         self.splitter_3.setChildrenCollapsible(False)
         self.splitter_3.setObjectName("splitter_3")
         self.layoutWidget2 = QtWidgets.QWidget(self.splitter_3)
@@ -232,7 +244,7 @@ class Ui_QQuakeDialogBase(object):
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
         self.button_station_new_service = QtWidgets.QToolButton(self.layoutWidget2)
-        self.button_station_new_service.setPopupMode(QtWidgets.QToolButton.InstantPopup)
+        self.button_station_new_service.setPopupMode(QT_TOOLBUTTON_INSTANT_POPUP)
         self.button_station_new_service.setObjectName("button_station_new_service")
         self.horizontalLayout_3.addWidget(self.button_station_new_service)
         self.button_station_edit_service = QtWidgets.QToolButton(self.layoutWidget2)
@@ -247,7 +259,7 @@ class Ui_QQuakeDialogBase(object):
         self.button_station_export_service = QtWidgets.QToolButton(self.layoutWidget2)
         self.button_station_export_service.setObjectName("button_station_export_service")
         self.horizontalLayout_3.addWidget(self.button_station_export_service)
-        spacerItem2 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem2 = QtWidgets.QSpacerItem(40, 20, QT_SIZE_POLICY_EXPANDING, QT_SIZE_POLICY_MINIMUM)
         self.horizontalLayout_3.addItem(spacerItem2)
         self.verticalLayout_2.addLayout(self.horizontalLayout_3)
         self.widget_4 = QtWidgets.QWidget(self.splitter_3)
@@ -295,7 +307,7 @@ class Ui_QQuakeDialogBase(object):
         self.fdsn_station_url_text_browser = QtWidgets.QTextBrowser(self.tab)
         self.fdsn_station_url_text_browser.setMinimumSize(QtCore.QSize(0, 80))
         self.fdsn_station_url_text_browser.setMaximumSize(QtCore.QSize(16777215, 80))
-        self.fdsn_station_url_text_browser.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.fdsn_station_url_text_browser.setFrameShape(QT_FRAME_NO_FRAME)
         self.fdsn_station_url_text_browser.setOpenExternalLinks(True)
         self.fdsn_station_url_text_browser.setObjectName("fdsn_station_url_text_browser")
         self.gridLayout_5.addWidget(self.fdsn_station_url_text_browser, 1, 0, 1, 1)
@@ -305,7 +317,7 @@ class Ui_QQuakeDialogBase(object):
         self.gridLayout_6 = QtWidgets.QGridLayout(self.tab_2)
         self.gridLayout_6.setObjectName("gridLayout_6")
         self.splitter_4 = QtWidgets.QSplitter(self.tab_2)
-        self.splitter_4.setOrientation(QtCore.Qt.Horizontal)
+        self.splitter_4.setOrientation(QT_HORIZONTAL)
         self.splitter_4.setChildrenCollapsible(False)
         self.splitter_4.setObjectName("splitter_4")
         self.layoutWidget3 = QtWidgets.QWidget(self.splitter_4)
@@ -324,7 +336,7 @@ class Ui_QQuakeDialogBase(object):
         self.horizontalLayout_4.setContentsMargins(-1, -1, -1, 0)
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
         self.button_ogc_new_service = QtWidgets.QToolButton(self.layoutWidget3)
-        self.button_ogc_new_service.setPopupMode(QtWidgets.QToolButton.InstantPopup)
+        self.button_ogc_new_service.setPopupMode(QT_TOOLBUTTON_INSTANT_POPUP)
         self.button_ogc_new_service.setObjectName("button_ogc_new_service")
         self.horizontalLayout_4.addWidget(self.button_ogc_new_service)
         self.button_ogc_edit_service = QtWidgets.QToolButton(self.layoutWidget3)
@@ -339,7 +351,7 @@ class Ui_QQuakeDialogBase(object):
         self.button_ogc_export_service = QtWidgets.QToolButton(self.layoutWidget3)
         self.button_ogc_export_service.setObjectName("button_ogc_export_service")
         self.horizontalLayout_4.addWidget(self.button_ogc_export_service)
-        spacerItem3 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem3 = QtWidgets.QSpacerItem(40, 20, QT_SIZE_POLICY_EXPANDING, QT_SIZE_POLICY_MINIMUM)
         self.horizontalLayout_4.addItem(spacerItem3)
         self.verticalLayout_20.addLayout(self.horizontalLayout_4)
         self.scrollArea_4 = QtWidgets.QScrollArea(self.splitter_4)
@@ -379,8 +391,8 @@ class Ui_QQuakeDialogBase(object):
         self.progressBar.setObjectName("progressBar")
         self.verticalLayout.addWidget(self.progressBar)
         self.button_box = QtWidgets.QDialogButtonBox(QQuakeDialogBase)
-        self.button_box.setOrientation(QtCore.Qt.Horizontal)
-        self.button_box.setStandardButtons(QtWidgets.QDialogButtonBox.Close|QtWidgets.QDialogButtonBox.Ok)
+        self.button_box.setOrientation(QT_HORIZONTAL)
+        self.button_box.setStandardButtons(QT_BUTTON_CLOSE|QT_BUTTON_OK)
         self.button_box.setObjectName("button_box")
         self.verticalLayout.addWidget(self.button_box)
 
