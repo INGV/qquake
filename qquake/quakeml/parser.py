@@ -44,6 +44,9 @@ from .macroseismic import (
     MsMdp,
     MsMdpSet
 )
+from qquake.qt_compat import (
+    QGS_DISTANCE_METERS
+)
 
 
 class QuakeMlParser:
@@ -53,7 +56,7 @@ class QuakeMlParser:
 
     def __init__(self,
                  convert_negative_depths=False,
-                 depth_unit=QgsUnitTypes.DistanceMeters):
+                 depth_unit=QGS_DISTANCE_METERS):
         self.events = []
         self.origins = {}
         self.magnitudes = {}
