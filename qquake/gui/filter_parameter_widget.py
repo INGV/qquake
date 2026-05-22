@@ -44,6 +44,13 @@ from qquake.gui.gui_utils import GuiUtils
 from qquake.gui.predefined_areas_dialog import PredefinedAreasDialog
 from qquake.quakeml.common import EVENT_TYPES
 from qquake.services import SERVICE_MANAGER
+from qquake.qt_compat import (
+    QGS_DISTANCE_DEGREES,
+    QGS_DISTANCE_KILOMETERS,
+    QT_ISO_DATE,
+    QT_WA_DELETE_ON_CLOSE,
+    enum_value
+)
 
 FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('filter_parameter_widget_base.ui'))
 
@@ -76,6 +83,16 @@ class FilterParameterWidget(QWidget, FORM_CLASS, BaseFilterWidget):  # pylint: d
         self.previous_map_tool = None
         self.extent_tool = None
         self.customize_areas_dialog = None
+
+        self._quick_date_range_buttons = [
+            self.last_5_years_button,
+            self.last_year_button,
+            self.last_6_months_button,
+            self.last_month_button,
+            self.last_week_button,
+            self.today_button,
+        ]
+        self._set_quick_date_range_buttons_visible(False)
 
         self.set_extent_from_canvas_extent(self.iface.mapCanvas().extent())
         self.set_center_from_canvas_point(self.iface.mapCanvas().extent().center())
@@ -120,6 +137,12 @@ class FilterParameterWidget(QWidget, FORM_CLASS, BaseFilterWidget):  # pylint: d
 
         self.rect_extent_draw_on_map.clicked.connect(self.draw_rect_on_map)
         self.circle_center_draw_on_map.clicked.connect(self.draw_center_on_map)
+        self.last_5_years_button.clicked.connect(lambda: self._set_relative_date_range(years=5))
+        self.last_year_button.clicked.connect(lambda: self._set_relative_date_range(years=1))
+        self.last_6_months_button.clicked.connect(lambda: self._set_relative_date_range(months=6))
+        self.last_month_button.clicked.connect(lambda: self._set_relative_date_range(months=1))
+        self.last_week_button.clicked.connect(lambda: self._set_relative_date_range(days=7))
+        self.today_button.clicked.connect(lambda: self._set_relative_date_range(seconds=24 * 60 * 60))
 
         self.radio_rectangular_area.toggled.connect(self._enable_widgets)
         self.radio_circular_area.toggled.connect(self._enable_widgets)
@@ -157,6 +180,48 @@ class FilterParameterWidget(QWidget, FORM_CLASS, BaseFilterWidget):  # pylint: d
         self.service_id = None
         self.set_service_type(service_type)
 
+    def _set_quick_date_range_buttons_visible(self, visible: bool):
+        """
+        Shows or hides the quick date range buttons.
+        """
+        self.quick_date_range_widget.setVisible(visible)
+        for button in self._quick_date_range_buttons:
+            button.setVisible(visible)
+
+    def _update_quick_date_range_buttons_visibility(self, service_config: Optional[dict] = None):
+        """
+        Shows quick date range buttons only for FDSN event services with no service-level end date.
+        """
+        visible = False
+        if self.service_type == SERVICE_MANAGER.FDSNEVENT and self.service_id:
+            if service_config is None:
+                service_config = SERVICE_MANAGER.service_details(self.service_type, self.service_id)
+            service_date_end = service_config.get('dateend', '')
+            visible = service_date_end is None or str(service_date_end).strip() == ''
+
+        self._set_quick_date_range_buttons_visible(visible)
+
+    def _set_relative_date_range(self, years: int = 0, months: int = 0, days: int = 0, seconds: int = 0):
+        """
+        Sets the date range using a period relative to the current date and time.
+        """
+        now = QDateTime.currentDateTime()
+        start = now
+        if years:
+            start = start.addYears(-years)
+        if months:
+            start = start.addMonths(-months)
+        if days:
+            start = start.addDays(-days)
+        if seconds:
+            start = start.addSecs(-seconds)
+
+        self.min_time_check.setChecked(True)
+        self.max_time_check.setChecked(True)
+        self.fdsn_event_end_date.setDateTime(now)
+        self.fdsn_event_start_date.setDateTime(start)
+        self.changed.emit()
+
     def is_valid(self) -> bool:
         for check in [self.min_time_check, self.max_time_check, self.min_mag_check, self.max_mag_check,
                       self.limit_extent_checkbox, self.earthquake_max_intensity_greater_check,
@@ -173,6 +238,7 @@ class FilterParameterWidget(QWidget, FORM_CLASS, BaseFilterWidget):  # pylint: d
             self.service_type in (SERVICE_MANAGER.MACROSEISMIC, SERVICE_MANAGER.FDSNEVENT, SERVICE_MANAGER.FDSNSTATION))
         self.magnitude_group.setVisible(self.service_type in (SERVICE_MANAGER.MACROSEISMIC, SERVICE_MANAGER.FDSNEVENT))
         self.macroseismic_data_group.setVisible(self.service_type == SERVICE_MANAGER.MACROSEISMIC)
+        self._update_quick_date_range_buttons_visibility()
 
         self.output_table_options_widget.set_service_type(service_type)
 
@@ -180,6 +246,7 @@ class FilterParameterWidget(QWidget, FORM_CLASS, BaseFilterWidget):  # pylint: d
         self.service_id = service_id
 
         service_config = SERVICE_MANAGER.service_details(self.service_type, self.service_id)
+        self._update_quick_date_range_buttons_visibility(service_config)
 
         self.output_table_options_widget.set_service_id(service_id)
 
@@ -205,9 +272,9 @@ class FilterParameterWidget(QWidget, FORM_CLASS, BaseFilterWidget):  # pylint: d
             self.events_updated_after_check.setEnabled(True)
 
         self.radius_unit_combobox.clear()
-        self.radius_unit_combobox.addItem(self.tr('Degrees'), QgsUnitTypes.DistanceDegrees)
+        self.radius_unit_combobox.addItem(self.tr('Degrees'), QGS_DISTANCE_DEGREES)
         if service_config['settings'].get('querycircularradiuskm', False):
-            self.radius_unit_combobox.insertItem(0, self.tr('Kilometers'), QgsUnitTypes.DistanceKilometers)
+            self.radius_unit_combobox.insertItem(0, self.tr('Kilometers'), QGS_DISTANCE_KILOMETERS)
         self.radius_unit_combobox.setCurrentIndex(0)
 
     def restore_settings(self, prefix: str):  # pylint: disable=too-many-locals,too-many-branches,too-many-statements
@@ -260,7 +327,7 @@ class FilterParameterWidget(QWidget, FORM_CLASS, BaseFilterWidget):  # pylint: d
         self.radius_unit_combobox.setCurrentIndex(
             max(0, self.radius_unit_combobox.findData(
                 s.value('/plugins/qquake/{}_last_event_circle_unit'.format(prefix),
-                        int(QgsUnitTypes.DistanceKilometers), int))))
+                        enum_value(QGS_DISTANCE_KILOMETERS), int))))
 
         last_event_min_lat = s.value('/plugins/qquake/{}_last_event_min_lat'.format(prefix))
         if last_event_min_lat is not None:
@@ -889,8 +956,8 @@ class FilterParameterWidget(QWidget, FORM_CLASS, BaseFilterWidget):  # pylint: d
 
         defaults = base_config.get('default', {})
 
-        for k, v in {'datestart': self.start_date().toString(Qt.ISODate) if self.start_date() else None,
-                     'dateend': self.end_date().toString(Qt.ISODate) if self.end_date() else None,
+        for k, v in {'datestart': self.start_date().toString(QT_ISO_DATE) if self.start_date() else None,
+                     'dateend': self.end_date().toString(QT_ISO_DATE) if self.end_date() else None,
                      'boundingboxpredefined': self.combo_predefined_area.currentData() if self.radio_predefined_area.isChecked() else None,
                      'minimumlatitude': self.min_latitude() if self.radio_rectangular_area.isChecked() else None,
                      'maximumlatitude': self.max_latitude() if self.radio_rectangular_area.isChecked() else None,
@@ -905,7 +972,7 @@ class FilterParameterWidget(QWidget, FORM_CLASS, BaseFilterWidget):  # pylint: d
                      'macromaxintensitygreater': self.earthquake_max_intensity_greater(),
                      'macromdpsgreaterthan': self.earthquake_number_mdps_greater(),
                      'eventtype': self.event_type(),
-                     'updatedafter': self.updated_after().toString(Qt.ISODate) if self.updated_after() else None,
+                     'updatedafter': self.updated_after().toString(QT_ISO_DATE) if self.updated_after() else None,
                      }.items():
             if v:
                 defaults[k] = v
@@ -924,7 +991,7 @@ class FilterParameterWidget(QWidget, FORM_CLASS, BaseFilterWidget):  # pylint: d
             return
 
         self.customize_areas_dialog = PredefinedAreasDialog(self)
-        self.customize_areas_dialog.setAttribute(Qt.WA_DeleteOnClose, True)
+        self.customize_areas_dialog.setAttribute(QT_WA_DELETE_ON_CLOSE, True)
         self.customize_areas_dialog.show()
 
         def accepted():
