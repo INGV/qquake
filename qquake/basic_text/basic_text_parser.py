@@ -17,7 +17,6 @@ __revision__ = '$Format:%H$'
 from typing import List, Optional
 
 from qgis.PyQt.QtCore import (
-    QVariant,
     QByteArray,
     QDate,
     QDateTime,
@@ -33,6 +32,11 @@ from qgis.core import (
     QgsPoint,
     NULL,
     QgsUnitTypes
+)
+from qquake.qt_compat import (
+    QGS_DISTANCE_METERS,
+    QT_ISO_DATE,
+    QVariant
 )
 
 EVENT_FIELD_TYPE = {
@@ -89,7 +93,7 @@ class BasicTextParser:
     """
 
     def __init__(self, convert_negative_depths=False,
-                 depth_unit=QgsUnitTypes.DistanceMeters):
+                 depth_unit=QGS_DISTANCE_METERS):
         self.headers = []
         self.mdp_headers = []
         self.events = []
@@ -101,7 +105,7 @@ class BasicTextParser:
         """
         Sets headers
         """
-        if self.depth_unit == QgsUnitTypes.DistanceMeters:
+        if self.depth_unit == QGS_DISTANCE_METERS:
             deep = 'DepthMeters'
         else:
             deep = 'DepthKm'
@@ -224,7 +228,7 @@ class BasicTextParser:
         f = QgsFeature(fields)
         for k, v in event.items():
 
-            if k == 'Depth/km' and self.depth_unit == QgsUnitTypes.DistanceMeters:
+            if k == 'Depth/km' and self.depth_unit == QGS_DISTANCE_METERS:
                 k = 'DepthMeters'
             elif k == 'Depth/km':
                 k = 'DepthKm'
@@ -232,11 +236,11 @@ class BasicTextParser:
             try:
                 if fields[fields.lookupField(k)].type() == QVariant.DateTime:
                     v = v.replace('--', '00')
-                    v = QDateTime.fromString(v, Qt.ISODate)
+                    v = QDateTime.fromString(v, QT_ISO_DATE)
                 elif fields[fields.lookupField(k)].type() == QVariant.Date:
-                    v = QDate.fromString(v, Qt.ISODate)
+                    v = QDate.fromString(v, QT_ISO_DATE)
                 elif fields[fields.lookupField(k)].type() == QVariant.Time:
-                    v = QTime.fromString(v, Qt.ISODate)
+                    v = QTime.fromString(v, QT_ISO_DATE)
                 elif fields[fields.lookupField(k)].type() == QVariant.Double:
                     v = float(v)
                 elif fields[fields.lookupField(k)].type() == QVariant.Int:
@@ -247,14 +251,14 @@ class BasicTextParser:
                 v = NULL
 
             if k in ('DepthKm', 'DepthMeters') and v != NULL:
-                if self.depth_unit == QgsUnitTypes.DistanceMeters:
+                if self.depth_unit == QGS_DISTANCE_METERS:
                     v *= 1000
                 if self.convert_negative_depths:
                     v = -v
             f[k] = v
             
         z = None
-        depth_field_name = 'DepthMeters' if self.depth_unit == QgsUnitTypes.DistanceMeters else 'DepthKm'
+        depth_field_name = 'DepthMeters' if self.depth_unit == QGS_DISTANCE_METERS else 'DepthKm'
         depth_field_index = fields.lookupField(depth_field_name)
         if depth_field_index >= 0:
             depth_value = f[depth_field_name]
@@ -315,11 +319,11 @@ class BasicTextParser:
             try:
                 if fields[fields.lookupField(k)].type() == QVariant.DateTime:
                     v = v.replace('--', '00')
-                    v = QDateTime.fromString(v, Qt.ISODate)
+                    v = QDateTime.fromString(v, QT_ISO_DATE)
                 elif fields[fields.lookupField(k)].type() == QVariant.Date:
-                    v = QDate.fromString(v, Qt.ISODate)
+                    v = QDate.fromString(v, QT_ISO_DATE)
                 elif fields[fields.lookupField(k)].type() == QVariant.Time:
-                    v = QTime.fromString(v, Qt.ISODate)
+                    v = QTime.fromString(v, QT_ISO_DATE)
                 elif fields[fields.lookupField(k)].type() == QVariant.Double:
                     v = float(v)
                 elif fields[fields.lookupField(k)].type() == QVariant.Int:
@@ -407,11 +411,11 @@ class BasicStationParser:
             try:
                 if fields[fields.lookupField(k)].type() == QVariant.DateTime:
                     v = v.replace('--', '00')
-                    v = QDateTime.fromString(v, Qt.ISODate)
+                    v = QDateTime.fromString(v, QT_ISO_DATE)
                 elif fields[fields.lookupField(k)].type() == QVariant.Date:
-                    v = QDate.fromString(v, Qt.ISODate)
+                    v = QDate.fromString(v, QT_ISO_DATE)
                 elif fields[fields.lookupField(k)].type() == QVariant.Time:
-                    v = QTime.fromString(v, Qt.ISODate)
+                    v = QTime.fromString(v, QT_ISO_DATE)
                 elif fields[fields.lookupField(k)].type() == QVariant.Double:
                     v = float(v)
                 elif fields[fields.lookupField(k)].type() == QVariant.Int:
