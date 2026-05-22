@@ -20,6 +20,9 @@ from qgis.PyQt.QtCore import (
 from qgis.core import NULL
 
 from qquake.quakeml import QuakeMlParser, FDSNStationXMLParser
+from qquake.qt_compat import (
+    QT_UTC
+)
 
 
 class TestQuakeMlParser(unittest.TestCase):
@@ -126,7 +129,7 @@ class TestQuakeMlParser(unittest.TestCase):
 
         features = list(parser.create_event_features([], False, False))
         self.assertEqual(len(features), 1)
-        self.assertEqual(features[0]['time'], QDateTime(2020, 1, 19, 2, 52, 9, 500, Qt.UTC))
+        self.assertEqual(features[0]['time'], QDateTime(2020, 1, 19, 2, 52, 9, 500, QT_UTC))
         self.assertEqual(features[0]['year'], 2020)
         self.assertEqual(features[0]['month'], 1)
         self.assertEqual(features[0]['day'], 19)
@@ -139,7 +142,7 @@ class TestQuakeMlParser(unittest.TestCase):
                                                       'eventParameters>event>origin>compositeTime>month>value'],
                                                      False, False))
         self.assertEqual(len(features), 1)
-        self.assertEqual(features[0]['time'], QDateTime(2020, 1, 19, 2, 52, 9, 500, Qt.UTC))
+        self.assertEqual(features[0]['time'], QDateTime(2020, 1, 19, 2, 52, 9, 500, QT_UTC))
         with self.assertRaises(KeyError):
             _ = features[0]['year']
         self.assertEqual(features[0]['month'], 1)
