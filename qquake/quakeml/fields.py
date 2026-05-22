@@ -18,9 +18,6 @@ import json
 import os
 from typing import Optional, List
 
-from qgis.PyQt.QtCore import (
-    QVariant
-)
 from qgis.core import (
     QgsField,
     QgsFields,
@@ -28,6 +25,9 @@ from qgis.core import (
 )
 
 from qquake.services import SERVICE_MANAGER
+from qquake.qt_compat import (
+    QVariant
+)
 
 CONFIG_FIELDS_PATH = os.path.join(
     os.path.dirname(__file__),
