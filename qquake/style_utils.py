@@ -31,6 +31,9 @@ from qgis.core import (
 )
 
 from qquake.services import SERVICE_MANAGER
+from qquake.qt_compat import (
+    QGS_BLOCKING_NETWORK_NO_ERROR
+)
 
 
 class StyleUtils:
@@ -78,7 +81,7 @@ class StyleUtils:
         @return: Returns a str if an error occurred, or None if the fetch and apply was successful
         """
         request = QgsBlockingNetworkRequest()
-        if request.get(QNetworkRequest(QUrl(url))) != QgsBlockingNetworkRequest.NoError:
+        if request.get(QNetworkRequest(QUrl(url))) != QGS_BLOCKING_NETWORK_NO_ERROR:
             return 'Error while fetching QML style: {}'.format(request.errorMessage())
 
         reply = request.reply().content()
