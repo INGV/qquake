@@ -24,6 +24,9 @@ from qgis.gui import (
 
 from qquake.gui.gui_utils import GuiUtils
 from qquake.services import SERVICE_MANAGER
+from qquake.qt_compat import (
+    QT_MATCH_EXACTLY
+)
 
 FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('qquake_options.ui'))
 
@@ -79,7 +82,7 @@ class QQuakeOptionsWidget(FORM_CLASS, QgsOptionsPageWidget):
         self._user_styles[self.tr('Untitled')] = {}
         self._refresh_styles_list()
 
-        new_items = self.styles_list.findItems(self.tr('Untitled'), Qt.MatchExactly)
+        new_items = self.styles_list.findItems(self.tr('Untitled'), QT_MATCH_EXACTLY)
         if new_items:
             self.styles_list.setCurrentItem(new_items[0])
 
@@ -134,7 +137,7 @@ class QQuakeOptionsWidget(FORM_CLASS, QgsOptionsPageWidget):
         del self._user_styles[prev_name]
         self._refresh_styles_list()
 
-        self.styles_list.setCurrentItem(self.styles_list.findItems(name, Qt.MatchExactly)[0])
+        self.styles_list.setCurrentItem(self.styles_list.findItems(name, QT_MATCH_EXACTLY)[0])
 
         self.block_style_updates = False
 
