@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'c:\Users\giorg\AppData\Roaming\QGIS\QGIS3\profiles\qquake\python\plugins\qquake\ui\cql_filter_builder.ui'
+# Form implementation generated from reading ui file 'cql_filter_builder.ui'
 #
 # Created by: PyQt5 UI code generator 5.13.2
 #
