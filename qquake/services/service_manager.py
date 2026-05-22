@@ -27,6 +27,9 @@ from qgis.core import (
     QgsMessageLog,
     Qgis
 )
+from qquake.qt_compat import (
+    QGIS_WARNING
+)
 
 _CONFIG_SERVICES_STYLES_PATH = os.path.join(
     os.path.dirname(__file__),
@@ -112,6 +115,7 @@ class ServiceManager(QObject):  # pylint:disable=too-many-public-methods
         self.services = {}
         self._user_styles = {}
         self.contributors = defaultdict(dict)
+        self.station_networks = defaultdict(dict)
         self.refresh_services()
         self._load_predefined_areas()
         self._load_user_styles()
@@ -192,7 +196,7 @@ class ServiceManager(QObject):  # pylint:disable=too-many-public-methods
                     # duplicate service, skip it
                     QgsMessageLog.logMessage(
                         'Duplicate service name found, service will not be loaded: {}'.format(p.stem), 'QQuake',
-                        Qgis.Warning)
+                        QGIS_WARNING)
                     continue
 
                 self.services[service_type][p.stem] = service
@@ -442,7 +446,7 @@ class ServiceManager(QObject):  # pylint:disable=too-many-public-methods
             # duplicate service, skip it
             QgsMessageLog.logMessage(
                 'Duplicate service name found, service will not be loaded: {}'.format(service_id), 'QQuake',
-                Qgis.Warning)
+                QGIS_WARNING)
             return False, 'A duplicate service name was found'
 
         self.save_service(service_type, service_id, service)
@@ -490,6 +494,24 @@ class ServiceManager(QObject):  # pylint:disable=too-many-public-methods
         Sets a list of previously retrieved contributors for the specified service and service ID
         """
         self.contributors[service_type][service_id] = contributors
+
+    def get_station_networks(self, service_type: str, service_id: str) -> List[Dict[str, str]]:
+        """
+        Returns a list of previously retrieved station networks for the specified service and service ID
+        """
+        return self.station_networks[service_type].get(service_id, [])
+
+    def set_station_networks(self, service_type: str, service_id: str, networks: List[Dict[str, str]]):
+        """
+        Sets a list of previously retrieved station networks for the specified service and service ID
+        """
+        self.station_networks[service_type][service_id] = networks
+
+    def clear_station_networks(self, service_type: str, service_id: str):
+        """
+        Clears any cached station networks for the specified service and service ID
+        """
+        self.station_networks[service_type].pop(service_id, None)
 
     def user_styles(self) -> List[str]:
         """
