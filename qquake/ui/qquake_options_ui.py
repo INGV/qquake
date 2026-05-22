@@ -1,13 +1,17 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'c:\Users\giorg\AppData\Roaming\QGIS\QGIS3\profiles\qquake\python\plugins\qquake\ui\qquake_options.ui'
+# Form implementation generated from reading ui file 'qquake_options.ui'
 #
 # Created by: PyQt5 UI code generator 5.13.2
 #
 # WARNING! All changes made in this file will be lost!
 
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+from qgis.PyQt import QtCore, QtGui, QtWidgets
+from qquake.qt_compat import (
+    QT_SIZE_POLICY_EXPANDING,
+    QT_SIZE_POLICY_MINIMUM
+)
 
 
 class Ui_qquake_options_widget_base(object):
@@ -42,7 +46,7 @@ class Ui_qquake_options_widget_base(object):
         self.style_url_edit.setObjectName("style_url_edit")
         self.gridLayout.addWidget(self.style_url_edit, 2, 1, 1, 1)
         self.gridLayout_2.addLayout(self.gridLayout, 0, 2, 1, 1)
-        spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        spacerItem = QtWidgets.QSpacerItem(20, 40, QT_SIZE_POLICY_MINIMUM, QT_SIZE_POLICY_EXPANDING)
         self.gridLayout_2.addItem(spacerItem, 1, 2, 1, 1)
         self.styles_list = QtWidgets.QListWidget(self.groupBox)
         self.styles_list.setObjectName("styles_list")
@@ -55,7 +59,7 @@ class Ui_qquake_options_widget_base(object):
         self.button_remove_style = QtWidgets.QToolButton(self.groupBox)
         self.button_remove_style.setObjectName("button_remove_style")
         self.verticalLayout_2.addWidget(self.button_remove_style)
-        spacerItem1 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        spacerItem1 = QtWidgets.QSpacerItem(20, 40, QT_SIZE_POLICY_MINIMUM, QT_SIZE_POLICY_EXPANDING)
         self.verticalLayout_2.addItem(spacerItem1)
         self.gridLayout_2.addLayout(self.verticalLayout_2, 0, 1, 2, 1)
         self.verticalLayout.addWidget(self.groupBox)
