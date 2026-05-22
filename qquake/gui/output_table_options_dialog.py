@@ -28,6 +28,11 @@ from qgis.gui import QgsGui
 from qquake.gui.gui_utils import GuiUtils
 from qquake.gui.simple_node_model import SimpleNodeModel, ModelNode
 from qquake.services import SERVICE_MANAGER
+from qquake.qt_compat import (
+    QT_CHECK_STATE_ROLE,
+    QT_DISPLAY_ROLE,
+    QT_USER_ROLE
+)
 
 FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('output_table_options.ui'))
 
@@ -154,8 +159,8 @@ class OutputTableOptionsDialog(QDialog, FORM_CLASS):
         for r in range(self.field_model.rowCount(QModelIndex())):
             parent = self.field_model.index(r, 0, QModelIndex())
             for rc in range(self.field_model.rowCount(parent)):
-                path = self.field_model.data(self.field_model.index(rc, 2, parent), Qt.DisplayRole)
-                checked = self.field_model.data(self.field_model.index(rc, 0, parent), Qt.CheckStateRole)
+                path = self.field_model.data(self.field_model.index(rc, 2, parent), QT_DISPLAY_ROLE)
+                checked = self.field_model.data(self.field_model.index(rc, 0, parent), QT_CHECK_STATE_ROLE)
                 s.setValue('/plugins/qquake/output_field_{}'.format(path.replace('>', '_')), checked)
 
         s.setValue('/plugins/qquake/output_preferred_origins',
@@ -184,10 +189,10 @@ class OutputTableOptionsDialog(QDialog, FORM_CLASS):
             parent = self.field_model.index(r, 0, QModelIndex())
             for rc in range(self.field_model.rowCount(parent)):
                 index = self.field_model.index(rc, 2, parent)
-                data = self.field_model.data(index, Qt.UserRole)
+                data = self.field_model.data(index, QT_USER_ROLE)
                 new_name = data['field_short' if short_field_names else 'field_long']
                 index = self.field_model.index(rc, 1, parent)
-                self.field_model.setData(index, new_name, Qt.DisplayRole)
+                self.field_model.setData(index, new_name, QT_DISPLAY_ROLE)
 
     def selected_fields(self) -> List[str]:
         """
@@ -197,8 +202,8 @@ class OutputTableOptionsDialog(QDialog, FORM_CLASS):
         for r in range(self.field_model.rowCount(QModelIndex())):
             parent = self.field_model.index(r, 0, QModelIndex())
             for rc in range(self.field_model.rowCount(parent)):
-                path = self.field_model.data(self.field_model.index(rc, 2, parent), Qt.UserRole)['source']
-                checked = self.field_model.data(self.field_model.index(rc, 0, parent), Qt.CheckStateRole)
+                path = self.field_model.data(self.field_model.index(rc, 2, parent), QT_USER_ROLE)['source']
+                checked = self.field_model.data(self.field_model.index(rc, 0, parent), QT_CHECK_STATE_ROLE)
                 if checked:
                     fields.append(path)
         return fields
@@ -213,9 +218,9 @@ class OutputTableOptionsDialog(QDialog, FORM_CLASS):
         for r in range(self.field_model.rowCount(QModelIndex())):
             parent = self.field_model.index(r, 0, QModelIndex())
             for rc in range(self.field_model.rowCount(parent)):
-                path = self.field_model.data(self.field_model.index(rc, 2, parent), Qt.UserRole)['source']
+                path = self.field_model.data(self.field_model.index(rc, 2, parent), QT_USER_ROLE)['source']
                 self.field_model.setData(self.field_model.index(rc, 0, parent), path in self.default_fields,
-                                         Qt.CheckStateRole)
+                                         QT_CHECK_STATE_ROLE)
 
     def _check_all(self, checked: bool = True):
         """
@@ -224,7 +229,7 @@ class OutputTableOptionsDialog(QDialog, FORM_CLASS):
         for r in range(self.field_model.rowCount(QModelIndex())):
             parent = self.field_model.index(r, 0, QModelIndex())
             for rc in range(self.field_model.rowCount(parent)):
-                self.field_model.setData(self.field_model.index(rc, 0, parent), checked, Qt.CheckStateRole)
+                self.field_model.setData(self.field_model.index(rc, 0, parent), checked, QT_CHECK_STATE_ROLE)
 
     def set_default_fields(self, fields: List[str]):
         """
