@@ -22,6 +22,16 @@ from qgis.PyQt.QtCore import (
     Qt
 )
 from qgis.PyQt.QtGui import QFont
+from qquake.qt_compat import (
+    QT_CHECKED,
+    QT_CHECK_STATE_ROLE,
+    QT_DISPLAY_ROLE,
+    QT_FONT_ROLE,
+    QT_HORIZONTAL,
+    QT_ITEM_IS_USER_CHECKABLE,
+    QT_UNCHECKED,
+    QT_USER_ROLE
+)
 
 
 class ModelNode:
@@ -188,15 +198,15 @@ class SimpleNodeModel(QAbstractItemModel):
         node = index.internalPointer()
 
         if node.checkable() and index.column() == 0:
-            if role == Qt.CheckStateRole:
-                return Qt.Checked if node.checked() else Qt.Unchecked
+            if role == QT_CHECK_STATE_ROLE:
+                return QT_CHECKED if node.checked() else QT_UNCHECKED
             return None
 
-        if role == Qt.DisplayRole:
+        if role == QT_DISPLAY_ROLE:
             return node.data(index.column())
-        if role == Qt.UserRole:
+        if role == QT_USER_ROLE:
             return node.user_data()
-        if role == Qt.FontRole and node.show_bold():
+        if role == QT_FONT_ROLE and node.show_bold():
             f = QFont()
             f.setBold(True)
             return f
@@ -209,11 +219,11 @@ class SimpleNodeModel(QAbstractItemModel):
 
         if node.checkable() and index.column() == 0:
             node.setChecked(value)
-            self.dataChanged.emit(index, index, [Qt.CheckStateRole])
+            self.dataChanged.emit(index, index, [QT_CHECK_STATE_ROLE])
             return True
         if index.column() == 1:
             if node.setData(index.column(), value):
-                self.dataChanged.emit(index, index, [Qt.DisplayRole])
+                self.dataChanged.emit(index, index, [QT_DISPLAY_ROLE])
                 return True
             return False
 
@@ -224,10 +234,10 @@ class SimpleNodeModel(QAbstractItemModel):
 
         node = index.internalPointer()
         if node.checkable() and index.column() == 0:
-            f = f | Qt.ItemIsUserCheckable
+            f = f | QT_ITEM_IS_USER_CHECKABLE
         return f
 
     def headerData(self, section, orientation, role):  # pylint: disable=missing-function-docstring
-        if self.headers and orientation == Qt.Horizontal and role == Qt.DisplayRole:
+        if self.headers and orientation == QT_HORIZONTAL and role == QT_DISPLAY_ROLE:
             return self.headers[section]
         return super().headerData(section, orientation, role)
