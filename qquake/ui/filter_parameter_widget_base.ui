@@ -61,8 +61,15 @@
          <property name="title">
           <string>Magnitude</string>
          </property>
-         <layout class="QGridLayout" name="gridLayout_7" columnstretch="1,2">
-          <item row="0" column="1">
+         <layout class="QHBoxLayout" name="horizontalLayout_magnitude" stretch="0,1,0,1">
+          <item>
+           <widget class="QCheckBox" name="min_mag_check">
+            <property name="text">
+             <string>Min</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QDoubleSpinBox" name="fdsn_event_min_magnitude">
             <property name="decimals">
              <number>1</number>
@@ -81,21 +88,14 @@
             </property>
            </widget>
           </item>
-          <item row="1" column="0">
+          <item>
            <widget class="QCheckBox" name="max_mag_check">
             <property name="text">
              <string>Max</string>
             </property>
            </widget>
           </item>
-          <item row="0" column="0">
-           <widget class="QCheckBox" name="min_mag_check">
-            <property name="text">
-             <string>Min</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
+          <item>
            <widget class="QDoubleSpinBox" name="fdsn_event_max_magnitude">
             <property name="decimals">
              <number>1</number>
@@ -172,6 +172,66 @@
             <property name="text">
              <string>End</string>
             </property>
+           </widget>
+          </item>
+          <item row="2" column="0" colspan="2">
+           <widget class="QWidget" name="quick_date_range_widget" native="true">
+            <layout class="QHBoxLayout" name="quick_date_range_layout">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QPushButton" name="last_5_years_button">
+               <property name="text">
+                <string>Last 5 years</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="last_year_button">
+               <property name="text">
+                <string>Last year</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="last_6_months_button">
+               <property name="text">
+                <string>Last 6 months</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="last_month_button">
+               <property name="text">
+                <string>Last month</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="last_week_button">
+               <property name="text">
+                <string>Last week</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="today_button">
+               <property name="text">
+                <string>Today</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </widget>
           </item>
          </layout>
