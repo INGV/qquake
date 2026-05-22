@@ -7,7 +7,7 @@
 # WARNING! All changes made in this file will be lost!
 
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+from qgis.PyQt import QtCore, QtGui, QtWidgets
 
 
 class Ui_fetch_by_url_widget_base(object):
@@ -18,7 +18,7 @@ class Ui_fetch_by_url_widget_base(object):
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.setObjectName("verticalLayout")
         self.scroll_area = QtWidgets.QScrollArea(fetch_by_url_widget_base)
-        self.scroll_area.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.scroll_area.setFrameShape(QT_FRAME_NO_FRAME)
         self.scroll_area.setWidgetResizable(True)
         self.scroll_area.setObjectName("scroll_area")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
@@ -59,7 +59,7 @@ class Ui_fetch_by_url_widget_base(object):
         self.output_table_options_widget = OutputTableOptionsWidget(self.scrollAreaWidgetContents)
         self.output_table_options_widget.setObjectName("output_table_options_widget")
         self.verticalLayout_2.addWidget(self.output_table_options_widget)
-        spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        spacerItem = QtWidgets.QSpacerItem(20, 40, QT_SIZE_POLICY_MINIMUM, QT_SIZE_POLICY_EXPANDING)
         self.verticalLayout_2.addItem(spacerItem)
         self.scroll_area.setWidget(self.scrollAreaWidgetContents)
         self.verticalLayout.addWidget(self.scroll_area)
@@ -75,3 +75,8 @@ class Ui_fetch_by_url_widget_base(object):
         self.import_file_button.setText(_translate("fetch_by_url_widget_base", "Import from File…"))
 from qquake.gui.output_options_widget import OutputOptionsWidget
 from qquake.gui.output_table_options_widget import OutputTableOptionsWidget
+from qquake.qt_compat import (
+    QT_FRAME_NO_FRAME,
+    QT_SIZE_POLICY_EXPANDING,
+    QT_SIZE_POLICY_MINIMUM,
+)
