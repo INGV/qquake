@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'c:\Users\giorg\AppData\Roaming\QGIS\QGIS3\profiles\qquake\python\plugins\qquake\ui\service_configuration_widget_base.ui'
+# Form implementation generated from reading ui file 'service_configuration_widget_base.ui'
 #
 # Created by: PyQt5 UI code generator 5.13.2
 #
 # WARNING! All changes made in this file will be lost!
 
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+from qgis.PyQt import QtCore, QtGui, QtWidgets
 
 
 class Ui_service_configuration_widget_base(object):
@@ -21,7 +21,7 @@ class Ui_service_configuration_widget_base(object):
         self.message_bar.setObjectName("message_bar")
         self.gridLayout_4.addWidget(self.message_bar, 0, 0, 1, 1)
         self.scrollArea = QtWidgets.QScrollArea(service_configuration_widget_base)
-        self.scrollArea.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.scrollArea.setFrameShape(QT_FRAME_NO_FRAME)
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
@@ -260,7 +260,7 @@ class Ui_service_configuration_widget_base(object):
         self.label_17 = QtWidgets.QLabel(self.group_capabilities)
         self.label_17.setObjectName("label_17")
         self.horizontalLayout.addWidget(self.label_17)
-        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem = QtWidgets.QSpacerItem(40, 20, QT_SIZE_POLICY_EXPANDING, QT_SIZE_POLICY_MINIMUM)
         self.horizontalLayout.addItem(spacerItem)
         self.gridLayout_5.addLayout(self.horizontalLayout, 1, 1, 1, 1)
         self.check_filter_by_contributorid = QtWidgets.QCheckBox(self.group_capabilities)
@@ -281,7 +281,7 @@ class Ui_service_configuration_widget_base(object):
         self.combo_http_code_nodata = QtWidgets.QComboBox(self.group_capabilities)
         self.combo_http_code_nodata.setObjectName("combo_http_code_nodata")
         self.horizontalLayout_2.addWidget(self.combo_http_code_nodata)
-        spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem1 = QtWidgets.QSpacerItem(40, 20, QT_SIZE_POLICY_EXPANDING, QT_SIZE_POLICY_MINIMUM)
         self.horizontalLayout_2.addItem(spacerItem1)
         self.gridLayout_5.addLayout(self.horizontalLayout_2, 11, 1, 1, 1)
         self.gridLayout.addWidget(self.group_capabilities, 6, 0, 1, 1)
@@ -417,3 +417,8 @@ class Ui_service_configuration_widget_base(object):
         self.button_load_service.setText(_translate("service_configuration_widget_base", "Load Web Service Capabilities"))
 from qgis.gui import QgsCodeEditor, QgsMessageBar
 from qgsdatetimeedit import QgsDateTimeEdit
+from qquake.qt_compat import (
+    QT_FRAME_NO_FRAME,
+    QT_SIZE_POLICY_EXPANDING,
+    QT_SIZE_POLICY_MINIMUM,
+)
