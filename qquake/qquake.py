@@ -22,10 +22,11 @@ from qgis.PyQt.QtCore import (
     QCoreApplication
 )
 from qgis.PyQt.QtGui import QIcon
-from qgis.PyQt.QtWidgets import (
-    QAction,
-    QMenu
-)
+try:
+    from qgis.PyQt.QtGui import QAction
+except ImportError:
+    from qgis.PyQt.QtWidgets import QAction
+from qgis.PyQt.QtWidgets import QMenu
 
 from qgis.gui import (
     QgsOptionsWidgetFactory
@@ -35,6 +36,9 @@ from qquake.gui.gui_utils import GuiUtils
 # Import the code for the dialog
 from qquake.gui.qquake_dialog import QQuakeDialog
 from qquake.gui.qquake_options_widget import QQuakeOptionsWidget
+from qquake.qt_compat import (
+    QT_WA_DELETE_ON_CLOSE
+)
 
 
 class QQuakeOptionsFactory(QgsOptionsWidgetFactory):
@@ -223,7 +227,7 @@ class QQuake:
         Shows the QQuake dialog
         """
         self.dlg = QQuakeDialog(self.iface)
-        # dlg.setAttribute(Qt.WA_DeleteOnClose)
+        # dlg.setAttribute(QT_WA_DELETE_ON_CLOSE)
 
         # show the dialog
         self.dlg.show()
