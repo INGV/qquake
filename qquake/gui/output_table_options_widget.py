@@ -26,6 +26,9 @@ from qquake.fetcher import Fetcher
 from qquake.gui.gui_utils import GuiUtils
 from qquake.gui.output_table_options_dialog import OutputTableOptionsDialog
 from qquake.services import SERVICE_MANAGER
+from qquake.qt_compat import (
+    qt_exec
+)
 
 FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('table_options_widget_base.ui'))
 
@@ -249,7 +252,7 @@ class OutputTableOptionsWidget(QWidget, FORM_CLASS):
         Triggers the output table options dialog
         """
         dlg = OutputTableOptionsDialog(self.service_type, self.service_id, self.output_fields, self)
-        if dlg.exec_():
+        if qt_exec(dlg):
             self.output_fields = dlg.selected_fields()
             self.changed.emit()
 
