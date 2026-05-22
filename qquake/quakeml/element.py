@@ -21,6 +21,9 @@ from qgis.PyQt.QtCore import (
     Qt
 )
 from qgis.core import NULL
+from qquake.qt_compat import (
+    QT_ISO_DATE
+)
 
 
 class QuakeMlElement:
@@ -45,7 +48,7 @@ class QuakeMlElement:
             if isinstance(value, (str, float, bool, int)):
                 return value
             if isinstance(value, QDateTime):
-                return value.toString(Qt.ISODate)
+                return value.toString(QT_ISO_DATE)
             if isinstance(value, QuakeMlElement):
                 return value.to_dict()
             if isinstance(value, list):
