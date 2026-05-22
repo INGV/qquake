@@ -45,6 +45,14 @@ from qgis.gui import (
 )
 
 from qquake.gui.gui_utils import GuiUtils
+from qquake.qt_compat import (
+    QT_BUTTON_CANCEL,
+    QT_BUTTON_OK,
+    QT_ITEM_IS_EDITABLE,
+    QT_ITEM_IS_ENABLED,
+    QT_ITEM_IS_SELECTABLE,
+    set_request_follow_redirects
+)
 
 FORM_CLASS, _ = uic.loadUiType(GuiUtils.get_ui_file_path('cql_filter_builder.ui'))
 
@@ -155,7 +163,7 @@ class CqlBuilderWidget(QWidget, FORM_CLASS):
             'WFS')
 
         request = QNetworkRequest(QUrl(url))
-        request.setAttribute(QNetworkRequest.FollowRedirectsAttribute, True)
+        set_request_follow_redirects(request)
         reply = QgsNetworkAccessManager.instance().get(request)
 
         def response_finished(_reply: QNetworkReply):
@@ -220,7 +228,7 @@ class CqlBuilderWidget(QWidget, FORM_CLASS):
 
         filter_item = QTreeWidgetItem()
         filter_item.setText(0, field_name)
-        filter_item.setFlags(Qt.ItemIsEnabled | Qt.ItemIsSelectable | Qt.ItemIsEditable)
+        filter_item.setFlags(QT_ITEM_IS_ENABLED | QT_ITEM_IS_SELECTABLE | QT_ITEM_IS_EDITABLE)
         filter_item.setText(2, value)
         self.simple_query_list.addTopLevelItem(filter_item)
         self.simple_query_list.setItemWidget(filter_item, 1, combo)
@@ -274,7 +282,7 @@ class CqlBuilderDialog(QDialog):
         self.widget = CqlBuilderWidget()
         layout = QVBoxLayout()
         layout.addWidget(self.widget)
-        self.button_box = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
+        self.button_box = QDialogButtonBox(QT_BUTTON_OK | QT_BUTTON_CANCEL)
         self.button_box.accepted.connect(self.accept)
         self.button_box.rejected.connect(self.reject)
         layout.addWidget(self.button_box)
