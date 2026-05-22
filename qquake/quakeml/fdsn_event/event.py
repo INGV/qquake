@@ -37,6 +37,9 @@ from ..fields import (
     CONFIG_FIELDS,
     get_service_fields
 )
+from qquake.qt_compat import (
+    QGS_DISTANCE_KILOMETERS
+)
 
 
 class Event(QuakeMlElement):
@@ -138,7 +141,7 @@ class Event(QuakeMlElement):
                     break
 
             if is_depth_field and source_obj != NULL and source_obj is not None:
-                if depth_unit == QgsUnitTypes.DistanceKilometers:
+                if depth_unit == QGS_DISTANCE_KILOMETERS:
                     source_obj /= 1000
                 if convert_negative_depths:
                     source_obj = -source_obj
@@ -196,7 +199,7 @@ class Event(QuakeMlElement):
         z = None
         if origin.depth is not None:
             z = origin.depth.value
-            if depth_unit == QgsUnitTypes.DistanceKilometers:
+            if depth_unit == QGS_DISTANCE_KILOMETERS:
                 z /= 1000
             if convert_negative_depths:
                 z = -z
